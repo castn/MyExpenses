@@ -6,4 +6,7 @@
     <string name="next_tab_insurance">Versicherung</string>
     <string name="next_tab_menu">Menü</string>
     <string name="next_coming_soon">Kommt bald</string>
+    <string name="next_budgets">Budgets</string>
+    <string name="next_show_all">Alle anzeigen</string>
+    <string name="next_add_budget">Budget hinzufügen</string>
 </resources>

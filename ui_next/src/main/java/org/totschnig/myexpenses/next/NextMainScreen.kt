@@ -69,6 +69,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -82,6 +83,7 @@ import org.totschnig.myexpenses.activity.HELP_VARIANT_BALANCE_SHEET
 import org.totschnig.myexpenses.activity.HELP_VARIANT_PORTFOLIO
 import org.totschnig.myexpenses.activity.HELP_VARIANT_TRANSACTIONS
 import org.totschnig.myexpenses.activity.StartScreen
+import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
 import org.totschnig.myexpenses.compose.TEST_TAG_NAV_ACCOUNTS
 import org.totschnig.myexpenses.compose.TEST_TAG_NAV_OVERFLOW
 import org.totschnig.myexpenses.compose.TEST_TAG_NAV_TRANSACTIONS
@@ -104,6 +106,7 @@ import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model.Grouping
 import org.totschnig.myexpenses.model.sort.TransactionSort
 import org.totschnig.myexpenses.preference.PreferenceState
+import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.viewmodel.AccountsScreenTab
 import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
 import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel.AccountPanelState
@@ -420,6 +423,42 @@ fun NextMainScreen(
                         extraPadding = !is2Pane
                     ) {
                         AnimatedPane {
+                            if (useNextBar) {
+                                // Provisional wiring: only accounts, budgets are not connected yet
+                                val format = LocalCurrencyFormatter.current
+                                val resources = LocalResources.current
+                                NextOverviewScreen(
+                                    budgets = emptyList(),
+                                    sections = accounts
+                                        .filter { it.visible }
+                                        .groupBy { accountGrouping.getGroupKey(it) }
+                                        .map { (key, groupAccounts) ->
+                                            OverviewSection(
+                                                title = key.title(context),
+                                                accounts = groupAccounts.map {
+                                                    OverviewAccount(
+                                                        id = it.id,
+                                                        label = it.label,
+                                                        balance = format.convAmount(it.effectiveBalance, it.currencyUnit),
+                                                        isNegative = it.effectiveBalance < 0,
+                                                        color = Color(it.color(resources)),
+                                                        bankId = it.bankId
+                                                    )
+                                                }
+                                            )
+                                        },
+                                    bankIcon = bankIcon,
+                                    onShowAllBudgets = { onAppEvent(AppEvent.MenuItemClicked(R.id.BUDGET_COMMAND, null)) },
+                                    onAddBudget = { onAppEvent(AppEvent.MenuItemClicked(R.id.BUDGET_COMMAND, null)) },
+                                    onAccountClick = {
+                                        viewModel.selectAccount(it.id)
+                                        scope.launch {
+                                            navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+                                        }
+                                    }
+                                )
+                                return@AnimatedPane
+                            }
                             AccountsScreen(
                                 containerColor = Color.Transparent,
                                 navigationIcon = navigationIcon,
