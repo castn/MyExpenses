@@ -12,4 +12,5 @@
     <string name="next_add_account">Konto hinzufügen</string>
     <string name="next_no_accounts">Noch keine Konten</string>
     <string name="next_no_accounts_hint">Lege ein Konto an, um deine Kontostände im Blick zu behalten.</string>
+    <string name="next_daily_accounts">Tägliche Konten</string>
 </resources>

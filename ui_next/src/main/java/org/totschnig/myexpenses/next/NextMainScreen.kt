@@ -429,12 +429,14 @@ fun NextMainScreen(
                                 val resources = LocalResources.current
                                 NextOverviewScreen(
                                     budgets = emptyList(),
-                                    sections = accounts
-                                        .filter { it.visible }
-                                        .groupBy { accountGrouping.getGroupKey(it) }
-                                        .map { (key, groupAccounts) ->
+                                    sections = groupAccountsForOverview(
+                                        accounts.filter { it.visible },
+                                        accountGrouping,
+                                        context
+                                    )
+                                        .map { (title, groupAccounts) ->
                                             OverviewSection(
-                                                title = key.title(context),
+                                                title = title,
                                                 accounts = groupAccounts.map {
                                                     OverviewAccount(
                                                         id = it.id,

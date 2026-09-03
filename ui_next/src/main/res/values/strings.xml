@@ -12,4 +12,5 @@
     <string name="next_add_account">Add account</string>
     <string name="next_no_accounts">No accounts yet</string>
     <string name="next_no_accounts_hint">Create an account to keep track of your balances.</string>
+    <string name="next_daily_accounts">Daily accounts</string>
 </resources>
