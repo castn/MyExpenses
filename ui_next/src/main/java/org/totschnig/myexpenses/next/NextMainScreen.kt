@@ -450,6 +450,7 @@ fun NextMainScreen(
                                     bankIcon = bankIcon,
                                     onShowAllBudgets = { onAppEvent(AppEvent.MenuItemClicked(R.id.BUDGET_COMMAND, null)) },
                                     onAddBudget = { onAppEvent(AppEvent.MenuItemClicked(R.id.BUDGET_COMMAND, null)) },
+                                    onAddAccount = { onAppEvent(AppEvent.CreateAccount) },
                                     onAccountClick = {
                                         viewModel.selectAccount(it.id)
                                         scope.launch {

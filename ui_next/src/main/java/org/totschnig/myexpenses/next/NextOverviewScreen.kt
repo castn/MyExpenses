@@ -23,10 +23,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Savings
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -44,6 +48,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -88,6 +93,7 @@ fun NextOverviewScreen(
     onShowAllBudgets: () -> Unit = {},
     onAddBudget: () -> Unit = {},
     onAccountClick: (OverviewAccount) -> Unit = {},
+    onAddAccount: () -> Unit = {},
     bankIcon: (@Composable (Modifier, Long) -> Unit)? = null,
 ) {
     LazyColumn(
@@ -105,14 +111,21 @@ fun NextOverviewScreen(
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)
             )
         }
-        sections.forEach { section ->
+        if (sections.isEmpty()) {
+            item(key = "no_accounts") {
+                NoAccountsCard(
+                    onAddAccount = onAddAccount,
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 24.dp)
+                )
+            }
+        }
+        sections.forEachIndexed { index, section ->
             item(key = "header_${section.title}") {
-                Text(
-                    text = section.title,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 24.dp, bottom = 8.dp)
+                // Accounts are added rarely, so instead of a dedicated row the add action
+                // only takes up the trailing end of the first section header
+                SectionHeader(
+                    title = section.title,
+                    onAdd = onAddAccount.takeIf { index == 0 }
                 )
             }
             item(key = "section_${section.title}") {
@@ -244,6 +257,97 @@ private fun BudgetRing(
 }
 
 @Composable
+private fun SectionHeader(
+    title: String,
+    onAdd: (() -> Unit)?,
+) {
+    Row(
+        // Vertical padding is reduced by the extra height of the 48dp touch target,
+        // so the header is as high as without the button
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 4.dp, top = 14.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier
+                .weight(1f)
+                .padding(vertical = 10.dp)
+        )
+        if (onAdd != null) {
+            IconButton(onClick = onAdd) {
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = stringResource(R.string.next_add_account),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun NoAccountsCard(
+    onAddAccount: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = CardShape,
+        color = MaterialTheme.colorScheme.surfaceContainerLowest
+    ) {
+        Column(
+            modifier = Modifier.padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(56.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.surfaceContainerHigh),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    Icons.Default.AccountBalance,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
+            Text(
+                text = stringResource(R.string.next_no_accounts),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 16.dp)
+            )
+            Text(
+                text = stringResource(R.string.next_no_accounts_hint),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+            Button(
+                onClick = onAddAccount,
+                contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                modifier = Modifier.padding(top = 16.dp)
+            ) {
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = null,
+                    modifier = Modifier.size(ButtonDefaults.IconSize)
+                )
+                Spacer(Modifier.width(ButtonDefaults.IconSpacing))
+                Text(stringResource(R.string.next_add_account))
+            }
+        }
+    }
+}
+
+@Composable
 private fun AccountCard(
     accounts: List<OverviewAccount>,
     onAccountClick: (OverviewAccount) -> Unit,
@@ -348,5 +452,13 @@ private fun NextOverviewScreenPreview() {
     // AppTheme/NextTheme need MyApplication (injector), which is not available in previews
     MaterialTheme(colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()) {
         NextOverviewScreen(budgets = previewBudgets, sections = previewSections)
+    }
+}
+
+@Preview(name = "No accounts", heightDp = 640)
+@Composable
+private fun NextOverviewScreenEmptyPreview() {
+    MaterialTheme(colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()) {
+        NextOverviewScreen(budgets = previewBudgets, sections = emptyList())
     }
 }
