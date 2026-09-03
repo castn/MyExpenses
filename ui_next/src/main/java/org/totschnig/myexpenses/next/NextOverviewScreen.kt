@@ -1,6 +1,8 @@
 package org.totschnig.myexpenses.next
 
 import android.content.res.Configuration
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,13 +21,20 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.DragHandle
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Savings
+import androidx.compose.material.icons.filled.SwapVert
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -37,6 +46,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,13 +60,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.totschnig.myexpenses.compose.LocalColors
+import sh.calvin.reorderable.ReorderableItem
+import sh.calvin.reorderable.rememberReorderableLazyListState
 
 /**
  * UI models of the overview screen. They are deliberately independent of the data layer;
@@ -94,50 +115,157 @@ fun NextOverviewScreen(
     onAddBudget: () -> Unit = {},
     onAccountClick: (OverviewAccount) -> Unit = {},
     onAddAccount: () -> Unit = {},
+    /** Called with the ids of all shown accounts in their new order, after the user moved one */
+    onReorderAccounts: (List<Long>) -> Unit = {},
     bankIcon: (@Composable (Modifier, Long) -> Unit)? = null,
 ) {
-    LazyColumn(
+    var isReordering by rememberSaveable { mutableStateOf(false) }
+    BackHandler(enabled = isReordering) { isReordering = false }
+
+    // Local copy, so that moves are shown immediately. It is replaced by fresh data,
+    // which after persisting a move comes back in the same order.
+    var orderedSections by remember(sections) { mutableStateOf(sections) }
+
+    // Accounts can only be moved within their section, since the section follows from their type
+    fun move(fromId: Long, toId: Long): Boolean {
+        val sectionIndex = orderedSections.indexOfFirst { section -> section.accounts.any { it.id == fromId } }
+        val section = orderedSections.getOrNull(sectionIndex) ?: return false
+        val fromIndex = section.accounts.indexOfFirst { it.id == fromId }
+        val toIndex = section.accounts.indexOfFirst { it.id == toId }
+        if (toIndex == -1) return false
+        orderedSections = orderedSections.toMutableList().apply {
+            set(sectionIndex, section.copy(accounts = section.accounts.toMutableList().apply {
+                add(toIndex, removeAt(fromIndex))
+            }))
+        }
+        return true
+    }
+
+    fun persistOrder() {
+        onReorderAccounts(orderedSections.flatMap { section -> section.accounts.map { it.id } })
+    }
+
+    val haptic = LocalHapticFeedback.current
+    val lazyListState = rememberLazyListState()
+    val reorderableState = rememberReorderableLazyListState(lazyListState) { from, to ->
+        val fromId = from.key as? Long ?: return@rememberReorderableLazyListState
+        val toId = to.key as? Long ?: return@rememberReorderableLazyListState
+        if (move(fromId, toId)) {
+            haptic.performHapticFeedback(HapticFeedbackType.SegmentFrequentTick)
+        }
+    }
+
+    Column(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surfaceContainer),
-        contentPadding = contentPadding
+            .background(MaterialTheme.colorScheme.surfaceContainer)
     ) {
-        item(key = "budgets") {
-            BudgetCard(
-                budgets = budgets,
-                onBudgetClick = onBudgetClick,
-                onShowAll = onShowAllBudgets,
-                onAdd = onAddBudget,
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)
-            )
-        }
-        if (sections.isEmpty()) {
-            item(key = "no_accounts") {
-                NoAccountsCard(
-                    onAddAccount = onAddAccount,
-                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 24.dp)
-                )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 4.dp),
+            horizontalArrangement = Arrangement.End
+        ) {
+            if (orderedSections.sumOf { it.accounts.size } > 1) {
+                IconButton(onClick = { isReordering = !isReordering }) {
+                    if (isReordering) {
+                        Icon(
+                            Icons.Default.Check,
+                            contentDescription = stringResource(R.string.next_done),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    } else {
+                        Icon(
+                            Icons.AutoMirrored.Filled.List,
+                            contentDescription = stringResource(R.string.next_reorder_accounts),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
             }
         }
-        sections.forEachIndexed { index, section ->
-            item(key = "header_${section.title}") {
-                // Accounts are added rarely, so instead of a dedicated row the add action
-                // only takes up the trailing end of the first section header
-                SectionHeader(
-                    title = section.title,
-                    onAdd = onAddAccount.takeIf { index == 0 }
-                )
-            }
-            item(key = "section_${section.title}") {
-                AccountCard(
-                    accounts = section.accounts,
-                    onAccountClick = onAccountClick,
-                    bankIcon = bankIcon,
+        LazyColumn(
+            state = lazyListState,
+            modifier = Modifier.weight(1f),
+            contentPadding = contentPadding
+        ) {
+            item(key = "budgets") {
+                BudgetCard(
+                    budgets = budgets,
+                    onBudgetClick = onBudgetClick,
+                    onShowAll = onShowAllBudgets,
+                    onAdd = onAddBudget,
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
             }
+            if (orderedSections.isEmpty()) {
+                item(key = "no_accounts") {
+                    NoAccountsCard(
+                        onAddAccount = onAddAccount,
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 24.dp)
+                    )
+                }
+            }
+            orderedSections.forEachIndexed { sectionIndex, section ->
+                item(key = "header_${section.title}") {
+                    // Accounts are added rarely, so instead of a dedicated row the add action
+                    // only takes up the trailing end of the first section header
+                    SectionHeader(
+                        title = section.title,
+                        onAdd = onAddAccount.takeIf { sectionIndex == 0 && !isReordering }
+                    )
+                }
+                itemsIndexed(section.accounts, key = { _, account -> account.id }) { index, account ->
+                    ReorderableItem(reorderableState, key = account.id, enabled = isReordering) { isDragging ->
+                        val moveUp = stringResource(org.totschnig.myexpenses.R.string.action_move_up)
+                        val moveDown = stringResource(org.totschnig.myexpenses.R.string.action_move_down)
+                        AccountItem(
+                            account = account,
+                            isFirst = index == 0,
+                            isLast = index == section.accounts.lastIndex,
+                            isDragging = isDragging,
+                            bankIcon = bankIcon,
+                            onClick = { onAccountClick(account) }.takeIf { !isReordering },
+                            dragHandle = if (isReordering) {
+                                {
+                                    Icon(
+                                        Icons.Default.DragHandle,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier
+                                            .draggableHandle(
+                                                onDragStarted = {
+                                                    haptic.performHapticFeedback(HapticFeedbackType.GestureThresholdActivate)
+                                                },
+                                                onDragStopped = {
+                                                    haptic.performHapticFeedback(HapticFeedbackType.GestureEnd)
+                                                    persistOrder()
+                                                }
+                                            )
+                                            .padding(12.dp)
+                                    )
+                                }
+                            } else null,
+                            // Dragging is not accessible, so screen reader users move accounts step by step
+                            accessibilityActions = if (isReordering) buildList {
+                                section.accounts.getOrNull(index - 1)?.let { previous ->
+                                    add(CustomAccessibilityAction(moveUp) {
+                                        move(account.id, previous.id).also { if (it) persistOrder() }
+                                    })
+                                }
+                                section.accounts.getOrNull(index + 1)?.let { next ->
+                                    add(CustomAccessibilityAction(moveDown) {
+                                        move(account.id, next.id).also { if (it) persistOrder() }
+                                    })
+                                }
+                            } else emptyList(),
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+                    }
+                }
+            }
+            item { Spacer(Modifier.padding(bottom = 16.dp)) }
         }
-        item { Spacer(Modifier.padding(bottom = 16.dp)) }
     }
 }
 
@@ -348,24 +476,38 @@ private fun NoAccountsCard(
 }
 
 @Composable
-private fun AccountCard(
-    accounts: List<OverviewAccount>,
-    onAccountClick: (OverviewAccount) -> Unit,
+private fun AccountItem(
+    account: OverviewAccount,
+    isFirst: Boolean,
+    isLast: Boolean,
+    isDragging: Boolean,
     bankIcon: (@Composable (Modifier, Long) -> Unit)?,
+    onClick: (() -> Unit)?,
+    dragHandle: (@Composable () -> Unit)?,
+    accessibilityActions: List<CustomAccessibilityAction>,
     modifier: Modifier = Modifier,
 ) {
+    // Each account is a separate list item so that it can be dragged. Together they look like
+    // one card: only the outer corners are rounded, and dividers separate the rows.
+    val elevation by animateDpAsState(if (isDragging) 6.dp else 0.dp)
     Surface(
-        modifier = modifier.fillMaxWidth(),
-        shape = CardShape,
-        color = MaterialTheme.colorScheme.surfaceContainerLowest
+        modifier = modifier
+            .fillMaxWidth()
+            .semantics { customActions = accessibilityActions },
+        shape = if (isDragging) CardShape else RoundedCornerShape(
+            topStart = if (isFirst) 16.dp else 0.dp,
+            topEnd = if (isFirst) 16.dp else 0.dp,
+            bottomStart = if (isLast) 16.dp else 0.dp,
+            bottomEnd = if (isLast) 16.dp else 0.dp,
+        ),
+        color = MaterialTheme.colorScheme.surfaceContainerLowest,
+        shadowElevation = elevation
     ) {
         Column {
-            accounts.forEachIndexed { index, account ->
-                if (index > 0) {
-                    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
-                }
-                AccountRow(account, bankIcon, onClick = { onAccountClick(account) })
+            if (!isFirst && !isDragging) {
+                HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
             }
+            AccountRow(account, bankIcon, onClick, dragHandle)
         }
     }
 }
@@ -374,13 +516,16 @@ private fun AccountCard(
 private fun AccountRow(
     account: OverviewAccount,
     bankIcon: (@Composable (Modifier, Long) -> Unit)?,
-    onClick: () -> Unit,
+    onClick: (() -> Unit)?,
+    dragHandle: (@Composable () -> Unit)?,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(start = 16.dp, end = 8.dp, top = 18.dp, bottom = 18.dp),
+            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
+            // The drag handle brings its own padding for a large enough touch target
+            .padding(start = 16.dp, end = if (dragHandle != null) 0.dp else 8.dp)
+            .padding(vertical = if (dragHandle != null) 10.dp else 18.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         val iconModifier = Modifier.size(32.dp)
@@ -415,11 +560,15 @@ private fun AccountRow(
             color = if (account.isNegative) MaterialTheme.colorScheme.onSurface else LocalColors.current.income,
             modifier = Modifier.padding(start = 8.dp)
         )
-        Icon(
-            Icons.AutoMirrored.Filled.KeyboardArrowRight,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        if (dragHandle != null) {
+            dragHandle()
+        } else {
+            Icon(
+                Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
     }
 }
 

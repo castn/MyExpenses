@@ -453,6 +453,11 @@ fun NextMainScreen(
                                     onShowAllBudgets = { onAppEvent(AppEvent.MenuItemClicked(R.id.BUDGET_COMMAND, null)) },
                                     onAddBudget = { onAppEvent(AppEvent.MenuItemClicked(R.id.BUDGET_COMMAND, null)) },
                                     onAddAccount = { onAppEvent(AppEvent.CreateAccount) },
+                                    onReorderAccounts = { shownIds ->
+                                        // Hidden accounts are not shown in the overview, they keep their relative order behind the shown ones
+                                        val hiddenIds = accounts.filter { !it.visible }.sortedBy { it.sortKey }.map { it.id }
+                                        viewModel.sortAccounts((shownIds + hiddenIds).toLongArray())
+                                    },
                                     onAccountClick = {
                                         viewModel.selectAccount(it.id)
                                         scope.launch {

@@ -13,4 +13,6 @@
     <string name="next_no_accounts">No accounts yet</string>
     <string name="next_no_accounts_hint">Create an account to keep track of your balances.</string>
     <string name="next_daily_accounts">Daily accounts</string>
+    <string name="next_reorder_accounts">Reorder accounts</string>
+    <string name="next_done">Done</string>
 </resources>

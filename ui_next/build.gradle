@@ -41,6 +41,7 @@ dependencies {
     implementation libs.androidx.compose.adaptive.navigation
     implementation libs.androidx.compose.material3.adaptive.navigation.suite
     implementation libs.androidx.lifecycle.runtime.compose
+    implementation libs.reorderable
     implementation project(':setupwizard')
 
     testImplementation libs.junit

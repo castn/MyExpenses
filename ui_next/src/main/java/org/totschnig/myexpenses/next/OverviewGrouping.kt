@@ -18,15 +18,18 @@ private val dailyAccountTypes = setOf(PREDEFINED_NAME_CASH, PREDEFINED_NAME_BANK
  * Groups [accounts] into titled sections for the overview, following the user's [grouping].
  * With grouping by type, cash, bank and credit card accounts are merged into one section
  * that comes first, all other types keep their own section.
+ * Within a section, accounts are in the custom order the user arranged them in the overview,
+ * independent of the sort order configured for the classic account list.
  */
 fun groupAccountsForOverview(
     accounts: List<FullAccount>,
     grouping: AccountGrouping<*>,
     context: Context,
 ): List<Pair<String, List<FullAccount>>> {
+    val sorted = accounts.sortedBy { it.sortKey }
     val (daily, others) = if (grouping == AccountGrouping.TYPE)
-        accounts.partition { it.type.name in dailyAccountTypes }
-    else emptyList<FullAccount>() to accounts
+        sorted.partition { it.type.name in dailyAccountTypes }
+    else emptyList<FullAccount>() to sorted
 
     @Suppress("UNCHECKED_CAST")
     val comparator = grouping.comparator as Comparator<in AccountGroupingKey>
