@@ -38,4 +38,9 @@
     <string name="next_interval_quarterly">Quarterly</string>
     <string name="next_interval_half_yearly">Half-yearly</string>
     <string name="next_interval_yearly">Yearly</string>
+    <string name="next_contracts_consent_title">Find contracts automatically?</string>
+    <string name="next_contracts_consent_text">MyExpenses can search your transactions for regular debits, so that you don\'t have to look for your contracts by hand. The analysis runs only on your device. You can remove wrong matches afterwards.</string>
+    <string name="next_contracts_declined">Contracts are not detected automatically. You can start the analysis of your transactions at any time.</string>
+    <string name="next_contracts_consent_accept">Analyse transactions</string>
+    <string name="next_contracts_consent_decline">Not now</string>
 </resources>

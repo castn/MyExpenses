@@ -120,8 +120,12 @@ class MyExpensesNext : MyExpensesV2() {
                 }
             },
             contractsContent = {
-                val contracts by contractsViewModel.contracts.collectAsStateWithLifecycle()
-                NextContractsScreen(contracts, contractsViewModel.homeCurrency)
+                val state by contractsViewModel.state.collectAsStateWithLifecycle()
+                NextContractsScreen(
+                    state = state,
+                    currency = contractsViewModel.homeCurrency,
+                    onConsent = contractsViewModel::setConsent
+                )
             }
         )
     }

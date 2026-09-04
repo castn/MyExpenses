@@ -26,6 +26,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -34,6 +36,7 @@ import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -49,18 +52,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import org.totschnig.myexpenses.compose.LocalColors
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.next.R
 import org.totschnig.myexpenses.util.convAmount
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import org.totschnig.myexpenses.compose.Icon as CategoryIcon
 
 private enum class ContractsTab(@param:StringRes val labelRes: Int) {
@@ -71,15 +75,16 @@ private val CardShape = RoundedCornerShape(16.dp)
 
 /**
  * Contracts detected from recurring debits, grouped by how often they are debited.
+ * On first opening, the user is asked whether transactions may be analysed.
  *
- * @param contracts null while loading
- * @param currency the currency all amounts of [contracts] are in
+ * @param currency the currency all amounts of the contracts are in
  */
 @Composable
 fun NextContractsScreen(
-    contracts: List<Contract>?,
+    state: ContractsUiState,
     currency: CurrencyUnit,
     modifier: Modifier = Modifier,
+    onConsent: (Boolean) -> Unit = {},
 ) {
     var selectedTab by rememberSaveable { mutableStateOf(ContractsTab.Contracts) }
     Column(modifier.fillMaxSize()) {
@@ -92,11 +97,98 @@ fun NextContractsScreen(
                 )
             }
         }
+        val contentModifier = Modifier.weight(1f)
         when (selectedTab) {
-            ContractsTab.Contracts -> ContractList(contracts, currency, Modifier.weight(1f))
+            ContractsTab.Contracts -> when (state) {
+                ContractsUiState.Loading -> ContractList(null, currency, contentModifier)
+
+                ContractsUiState.AskConsent -> ConsentCard(
+                    isDeclined = false,
+                    onConsent = onConsent,
+                    modifier = contentModifier
+                )
+
+                ContractsUiState.Declined -> ConsentCard(
+                    isDeclined = true,
+                    onConsent = onConsent,
+                    modifier = contentModifier
+                )
+
+                is ContractsUiState.Ready -> ContractList(state.contracts, currency, contentModifier)
+            }
         }
     }
 }
+
+/**
+ * Asks whether transactions may be analysed. Once declined, only offers to start the analysis.
+ */
+@Composable
+private fun ConsentCard(
+    isDeclined: Boolean,
+    onConsent: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Surface(
+            shape = CardShape,
+            color = MaterialTheme.colorScheme.surfaceContainerLowest,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(56.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.primaryContainer),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        Icons.Default.Search,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+                Text(
+                    stringResource(R.string.next_contracts_consent_title),
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+                Text(
+                    stringResource(
+                        if (isDeclined) R.string.next_contracts_declined
+                        else R.string.next_contracts_consent_text
+                    ),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+                Button(
+                    onClick = { onConsent(true) },
+                    modifier = Modifier.padding(top = 24.dp)
+                ) {
+                    Text(stringResource(R.string.next_contracts_consent_accept))
+                }
+                if (!isDeclined) {
+                    TextButton(onClick = { onConsent(false) }) {
+                        Text(stringResource(R.string.next_contracts_consent_decline))
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 @Composable
 private fun ContractList(
@@ -462,15 +554,25 @@ private fun NextContractsScreenPreview() {
     MaterialTheme(colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()) {
         Surface {
             NextContractsScreen(
-                contracts = listOf(
+                state = ContractsUiState.Ready(listOf(
                     contract("Netflix", ContractInterval.MONTHLY, 1299, 1299, 1799),
                     contract("Stadtwerke", ContractInterval.MONTHLY, 8500, 8500, 8500),
                     contract("Kfz-Versicherung", ContractInterval.QUARTERLY, 12050, 12050, 12050),
                     contract("ADAC", ContractInterval.YEARLY, 9400, 9400),
                     contract("Fitnessstudio", ContractInterval.MONTHLY, 2990, 2990, 2990, last = today.minusMonths(5)),
-                ),
+                )),
                 currency = CurrencyUnit.DebugInstance
             )
+        }
+    }
+}
+
+@Preview(showBackground = true, heightDp = 600)
+@Composable
+private fun ConsentPreview() {
+    MaterialTheme(colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()) {
+        Surface {
+            NextContractsScreen(state = ContractsUiState.AskConsent, currency = CurrencyUnit.DebugInstance)
         }
     }
 }
