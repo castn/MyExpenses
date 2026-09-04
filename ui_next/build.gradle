@@ -43,6 +43,7 @@ dependencies {
     implementation libs.androidx.lifecycle.runtime.compose
     implementation libs.reorderable
     implementation libs.androidx.paging.compose
+    implementation libs.copper.flow
     implementation project(':setupwizard')
 
     testImplementation libs.junit

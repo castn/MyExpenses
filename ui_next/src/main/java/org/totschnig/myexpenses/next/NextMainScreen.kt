@@ -169,6 +169,7 @@ fun NextMainScreen(
     onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -> CurrencyUnit? = { _, _, _, _, _ -> null },
     pageContent: @Composable (pageAccount: PageAccount, isCurrent: Boolean) -> Unit,
     transactionList: @Composable (PageAccount) -> Unit,
+    contractsContent: @Composable () -> Unit,
 ) {
 
     LaunchedEffect(Unit) {
@@ -388,7 +389,12 @@ fun NextMainScreen(
 
             if (useNextBar && selectedTab != NextTab.Overview) {
                 BackHandler { selectedTab = NextTab.Overview }
-                NextPlaceholderScreen(selectedTab)
+                when (selectedTab) {
+                    NextTab.Contracts -> Surface(Modifier.windowInsetsPadding(WindowInsets.statusBars)) {
+                        contractsContent()
+                    }
+                    else -> NextPlaceholderScreen(selectedTab)
+                }
                 return@NavigationSuiteScaffold
             }
 

@@ -19,4 +19,23 @@
     <string name="next_yesterday">Yesterday</string>
     <string name="next_no_transactions">No transactions yet</string>
     <string name="next_no_matching_transactions">No transactions match the filter</string>
+    <string name="next_contracts_per_month">Fixed costs per month</string>
+    <string name="next_contracts_per_year">%1$s per year</string>
+    <plurals name="next_contracts_count">
+        <item quantity="one">%d contract</item>
+        <item quantity="other">%d contracts</item>
+    </plurals>
+    <string name="next_contracts_ended">Ended</string>
+    <string name="next_contracts_next">Next: %1$s</string>
+    <string name="next_contracts_last">Last: %1$s</string>
+    <string name="next_contracts_previously">Previously %1$s</string>
+    <string name="next_contracts_empty">No recurring payments found</string>
+    <string name="next_contracts_empty_hint">Contracts are detected automatically from regular debits to the same payee.</string>
+    <string name="next_interval_weekly">Weekly</string>
+    <string name="next_interval_biweekly">Every two weeks</string>
+    <string name="next_interval_monthly">Monthly</string>
+    <string name="next_interval_bimonthly">Every two months</string>
+    <string name="next_interval_quarterly">Quarterly</string>
+    <string name="next_interval_half_yearly">Half-yearly</string>
+    <string name="next_interval_yearly">Yearly</string>
 </resources>

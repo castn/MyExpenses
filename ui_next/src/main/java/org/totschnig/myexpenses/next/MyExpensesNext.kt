@@ -22,6 +22,8 @@ import org.totschnig.myexpenses.model.CommodityType
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model.Grouping
+import org.totschnig.myexpenses.next.contracts.ContractsViewModel
+import org.totschnig.myexpenses.next.contracts.NextContractsScreen
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.provider.KEY_DATE
 import org.totschnig.myexpenses.provider.KEY_ROWID
@@ -46,10 +48,12 @@ private const val TAG_ADD_BUDGET = "ADD_BUDGET"
 class MyExpensesNext : MyExpensesV2() {
 
     private val budgetViewModel: BudgetListViewModel by viewModels()
+    private val contractsViewModel: ContractsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injector.inject(budgetViewModel)
+        injector.inject(contractsViewModel)
         if (prefHandler.getInt(PrefKey.CURRENT_VERSION, -1) == -1) {
             // Fresh install: onboarding is handled by the regular entry point
             startActivity(Intent(this, SplashActivity::class.java))
@@ -114,6 +118,10 @@ class MyExpensesNext : MyExpensesV2() {
                 Page(pageAccount.copy(grouping = grouping), accounts.size, true, v2 = true) { content ->
                     NextTransactionList(content, Modifier.weight(1f))
                 }
+            },
+            contractsContent = {
+                val contracts by contractsViewModel.contracts.collectAsStateWithLifecycle()
+                NextContractsScreen(contracts, contractsViewModel.homeCurrency)
             }
         )
     }
