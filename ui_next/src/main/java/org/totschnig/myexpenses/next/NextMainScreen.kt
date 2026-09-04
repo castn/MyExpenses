@@ -168,6 +168,7 @@ fun NextMainScreen(
     isCurrencyUsed: suspend (String) -> Boolean = { false },
     onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -> CurrencyUnit? = { _, _, _, _, _ -> null },
     pageContent: @Composable (pageAccount: PageAccount, isCurrent: Boolean) -> Unit,
+    transactionList: @Composable (PageAccount) -> Unit,
 ) {
 
     LaunchedEffect(Unit) {
@@ -214,14 +215,14 @@ fun NextMainScreen(
                 },
             )
         },
-        initialDestinationHistory = listOf(
-            ThreePaneScaffoldDestinationItem(
-                pane = when (viewModel.startScreen) {
-                    StartScreen.Accounts, StartScreen.BalanceSheet -> ListDetailPaneScaffoldRole.List
-                    else -> ListDetailPaneScaffoldRole.Detail
-                }
-            )
-        ),
+        // The overview (list pane) is always the root, so that back from the account page leads there,
+        // even if the app starts on the account page
+        initialDestinationHistory = buildList {
+            add(ThreePaneScaffoldDestinationItem(ListDetailPaneScaffoldRole.List))
+            if (viewModel.startScreen != StartScreen.Accounts && viewModel.startScreen != StartScreen.BalanceSheet) {
+                add(ThreePaneScaffoldDestinationItem(ListDetailPaneScaffoldRole.Detail))
+            }
+        },
         isDestinationHistoryAware = false
     )
 
@@ -427,6 +428,9 @@ fun NextMainScreen(
                     ) {
                         AnimatedPane {
                             if (useNextBar) {
+                                LaunchedEffect(Unit) {
+                                    viewModel.setLastVisited(StartScreen.Accounts)
+                                }
                                 val format = LocalCurrencyFormatter.current
                                 val resources = LocalResources.current
                                 NextOverviewScreen(
@@ -516,7 +520,47 @@ fun NextMainScreen(
                         extraPadding = true
                     ) {
                         AnimatedPane {
+                            val visibleActionItems = when {
+                                adaptiveInfo.windowSizeClass.isWidthAtLeastBreakpoint(
+                                    WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND
+                                ) -> if (is2Pane) 4 else 6
 
+                                adaptiveInfo.windowSizeClass.isWidthAtLeastBreakpoint(
+                                    WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND
+                                ) && !is2Pane -> 4
+
+                                else -> when {
+                                    fontScale > 1.5f -> 0
+                                    fontScale > 1.1f -> if (toggleableRail) 0 else 1
+                                    else -> if (toggleableRail) 1 else 2
+                                }
+                            }
+                            val detailInsets = with(customInsets) {
+                                if (is2Pane) only(WindowInsetsSides.Vertical + WindowInsetsSides.End) else this
+                            }
+                            if (useNextBar) {
+                                NextAccountScreen(
+                                    viewModel = viewModel,
+                                    accounts = accounts,
+                                    selectedAccountId = selectedAccountId,
+                                    visibleActionItems = visibleActionItems,
+                                    onEvent = onAppEvent,
+                                    onAccountEvent = onAccountEvent,
+                                    onPrepareContextMenuItem = onPrepareContextMenuItem,
+                                    onPrepareMenuItem = onPrepareMenuItem,
+                                    pageContent = pageContent,
+                                    transactionList = transactionList,
+                                    allCurrencies = allCurrencies,
+                                    isCurrencyUsed = isCurrencyUsed,
+                                    onCreateAsset = onCreateAsset,
+                                    windowInsets = detailInsets,
+                                    bankIcon = bankIcon,
+                                    onBack = if (is2Pane) null else {
+                                        { scope.launch { navigator.navigateToRoot(ListDetailPaneScaffoldRole.List) } }
+                                    }
+                                )
+                                return@AnimatedPane
+                            }
                             TransactionScreen(
                                 containerColor = Color.Transparent,
                                 availableFilters = availableFilters,
@@ -531,24 +575,8 @@ fun NextMainScreen(
                                 allCurrencies = allCurrencies,
                                 isCurrencyUsed = isCurrencyUsed,
                                 onCreateAsset = onCreateAsset,
-                                visibleActionItems = when {
-                                    adaptiveInfo.windowSizeClass.isWidthAtLeastBreakpoint(
-                                        WindowSizeClass.WIDTH_DP_EXPANDED_LOWER_BOUND
-                                    ) -> if (is2Pane) 4 else 6
-
-                                    adaptiveInfo.windowSizeClass.isWidthAtLeastBreakpoint(
-                                        WindowSizeClass.WIDTH_DP_MEDIUM_LOWER_BOUND
-                                    ) && !is2Pane -> 4
-
-                                    else -> when {
-                                        fontScale > 1.5f -> 0
-                                        fontScale > 1.1f -> if (toggleableRail) 0 else 1
-                                        else -> if (toggleableRail) 1 else 2
-                                    }
-                                },
-                                windowInsets = with(customInsets) {
-                                    if (is2Pane) only(WindowInsetsSides.Vertical + WindowInsetsSides.End) else this
-                                },
+                                visibleActionItems = visibleActionItems,
+                                windowInsets = detailInsets,
                                 isFramed = isRail,
                                 navigationIcon = navigationIcon,
                             )

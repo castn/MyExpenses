@@ -21,7 +21,9 @@ import org.totschnig.myexpenses.model.AccountGroupingKey
 import org.totschnig.myexpenses.model.CommodityType
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.CurrencyUnit
+import org.totschnig.myexpenses.model.Grouping
 import org.totschnig.myexpenses.preference.PrefKey
+import org.totschnig.myexpenses.provider.KEY_DATE
 import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.viewmodel.BudgetListViewModel
 import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
@@ -105,7 +107,14 @@ class MyExpensesNext : MyExpensesV2() {
             isNavigationVisible = isNavigationVisible,
             isCurrencyUsed = isCurrencyUsed,
             onCreateAsset = onCreateAsset,
-            pageContent = pageContent
+            pageContent = pageContent,
+            transactionList = { pageAccount ->
+                // Day groups with the balance at the end of each day only make sense when sorted by date
+                val grouping = if (pageAccount.sortBy == KEY_DATE) Grouping.DAY else Grouping.NONE
+                Page(pageAccount.copy(grouping = grouping), accounts.size, true, v2 = true) { content ->
+                    NextTransactionList(content, Modifier.weight(1f))
+                }
+            }
         )
     }
 

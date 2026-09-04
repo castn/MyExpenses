@@ -324,10 +324,7 @@ private fun BudgetCard(
                     BudgetRing(budget, onClick = { onBudgetClick(budget) })
                 }
                 item(key = "add") {
-                    BudgetTile(
-                        label = stringResource(R.string.next_new),
-                        onClick = onAdd
-                    ) {
+                    BudgetTile(label = null, onClick = onAdd) {
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -351,11 +348,11 @@ private val BudgetTileWidth = 64.dp
 private val BudgetRingSize = 56.dp
 
 /**
- * A circle of [BudgetRingSize] with a short [label] below, shared by the budget rings and the add button
+ * A circle of [BudgetRingSize] with an optional short [label] below, shared by the budget rings and the add button
  */
 @Composable
 private fun BudgetTile(
-    label: String,
+    label: String?,
     onClick: () -> Unit,
     labelColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
     circle: @Composable () -> Unit,
@@ -374,15 +371,17 @@ private fun BudgetTile(
         ) {
             circle()
         }
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelSmall,
-            color = labelColor,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(top = 4.dp)
-        )
+        if (label != null) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelSmall,
+                color = labelColor,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+        }
     }
 }
 

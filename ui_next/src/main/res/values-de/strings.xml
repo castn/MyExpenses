@@ -9,11 +9,14 @@
     <string name="next_budgets">Budgets</string>
     <string name="next_show_all">Alle anzeigen</string>
     <string name="next_add_budget">Budget hinzufügen</string>
-    <string name="next_new">Neu</string>
     <string name="next_add_account">Konto hinzufügen</string>
     <string name="next_no_accounts">Noch keine Konten</string>
     <string name="next_no_accounts_hint">Lege ein Konto an, um deine Kontostände im Blick zu behalten.</string>
     <string name="next_daily_accounts">Tägliche Konten</string>
     <string name="next_reorder_accounts">Konten anordnen</string>
     <string name="next_done">Fertig</string>
+    <string name="next_today">Heute</string>
+    <string name="next_yesterday">Gestern</string>
+    <string name="next_no_transactions">Noch keine Buchungen</string>
+    <string name="next_no_matching_transactions">Keine Buchungen passen zum Filter</string>
 </resources>
