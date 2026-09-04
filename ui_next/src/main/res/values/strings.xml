@@ -9,6 +9,7 @@
     <string name="next_budgets">Budgets</string>
     <string name="next_show_all">Show all</string>
     <string name="next_add_budget">Add budget</string>
+    <string name="next_new">New</string>
     <string name="next_add_account">Add account</string>
     <string name="next_no_accounts">No accounts yet</string>
     <string name="next_no_accounts_hint">Create an account to keep track of your balances.</string>

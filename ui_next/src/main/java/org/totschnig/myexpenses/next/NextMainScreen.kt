@@ -151,6 +151,9 @@ suspend fun ThreePaneScaffoldNavigator<*>.navigateToRoot(pane: ThreePaneScaffold
 fun NextMainScreen(
     viewModel: MyExpensesV2ViewModel,
     accounts: List<FullAccount>,
+    budgets: List<OverviewBudget>,
+    onBudgetClick: (budgetId: Long) -> Unit,
+    onAddBudget: () -> Unit,
     allCurrencies: List<CurrencyUnit>,
     availableFilters: List<AccountGroupingKey>,
     selectedAccountId: Long,
@@ -424,11 +427,11 @@ fun NextMainScreen(
                     ) {
                         AnimatedPane {
                             if (useNextBar) {
-                                // Provisional wiring: only accounts, budgets are not connected yet
                                 val format = LocalCurrencyFormatter.current
                                 val resources = LocalResources.current
                                 NextOverviewScreen(
-                                    budgets = emptyList(),
+                                    budgets = budgets,
+                                    onBudgetClick = { onBudgetClick(it.id) },
                                     sections = groupAccountsForOverview(
                                         accounts.filter { it.visible },
                                         accountGrouping,
@@ -451,7 +454,7 @@ fun NextMainScreen(
                                         },
                                     bankIcon = bankIcon,
                                     onShowAllBudgets = { onAppEvent(AppEvent.MenuItemClicked(R.id.BUDGET_COMMAND, null)) },
-                                    onAddBudget = { onAppEvent(AppEvent.MenuItemClicked(R.id.BUDGET_COMMAND, null)) },
+                                    onAddBudget = onAddBudget,
                                     onAddAccount = { onAppEvent(AppEvent.CreateAccount) },
                                     onReorderAccounts = { shownIds ->
                                         // Hidden accounts are not shown in the overview, they keep their relative order behind the shown ones

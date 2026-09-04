@@ -2,21 +2,35 @@ package org.totschnig.myexpenses.next
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.totschnig.myexpenses.activity.BudgetActivity
+import org.totschnig.myexpenses.activity.BudgetEdit
 import org.totschnig.myexpenses.activity.MyExpensesV2
 import org.totschnig.myexpenses.activity.SplashActivity
 import org.totschnig.myexpenses.compose.accounts.AccountEventHandler
+import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.compose.main.AppEventHandler
 import org.totschnig.myexpenses.model.AccountFlag
 import org.totschnig.myexpenses.model.AccountGroupingKey
 import org.totschnig.myexpenses.model.CommodityType
+import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.preference.PrefKey
+import org.totschnig.myexpenses.provider.KEY_ROWID
+import org.totschnig.myexpenses.viewmodel.BudgetListViewModel
 import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.viewmodel.data.PageAccount
+import java.io.Serializable
+
+/** Tag for the budget feature request, to create a new budget instead of showing the budget list */
+private const val TAG_ADD_BUDGET = "ADD_BUDGET"
 
 /**
  * Entry point of the new UI, started from its own launcher icon ("MyExpenses Next").
@@ -29,8 +43,11 @@ import org.totschnig.myexpenses.viewmodel.data.PageAccount
  */
 class MyExpensesNext : MyExpensesV2() {
 
+    private val budgetViewModel: BudgetListViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        injector.inject(budgetViewModel)
         if (prefHandler.getInt(PrefKey.CURRENT_VERSION, -1) == -1) {
             // Fresh install: onboarding is handled by the regular entry point
             startActivity(Intent(this, SplashActivity::class.java))
@@ -62,8 +79,18 @@ class MyExpensesNext : MyExpensesV2() {
         onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -> CurrencyUnit?,
         pageContent: @Composable (pageAccount: PageAccount, isCurrent: Boolean) -> Unit,
     ) {
+        val budgets by remember { budgetViewModel.overviewBudgets() }
+            .collectAsStateWithLifecycle(emptyList())
         NextMainScreen(
             viewModel = viewModel,
+            budgets = budgets,
+            // Goes through the licence check, which shows the upgrade dialog without access
+            onAddBudget = { contribFeatureRequested(ContribFeature.BUDGET, TAG_ADD_BUDGET) },
+            onBudgetClick = { budgetId ->
+                startActivity(Intent(this, BudgetActivity::class.java).apply {
+                    putExtra(KEY_ROWID, budgetId)
+                })
+            },
             accounts = accounts,
             allCurrencies = allCurrencies,
             availableFilters = availableFilters,
@@ -80,6 +107,15 @@ class MyExpensesNext : MyExpensesV2() {
             onCreateAsset = onCreateAsset,
             pageContent = pageContent
         )
+    }
+
+    override fun contribFeatureCalled(feature: ContribFeature, tag: Serializable?) {
+        if (feature == ContribFeature.BUDGET && tag == TAG_ADD_BUDGET) {
+            recordUsage(feature)
+            startActivity(Intent(this, BudgetEdit::class.java))
+        } else {
+            super.contribFeatureCalled(feature, tag)
+        }
     }
 
     override fun dispatchCommand(command: Int, tag: Any?): Boolean =

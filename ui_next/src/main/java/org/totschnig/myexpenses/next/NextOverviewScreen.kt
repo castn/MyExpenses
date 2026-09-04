@@ -32,8 +32,8 @@ import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DragHandle
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Savings
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.SwapVert
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -59,7 +59,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
@@ -69,6 +68,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import java.text.NumberFormat
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.totschnig.myexpenses.compose.LocalColors
@@ -84,7 +84,6 @@ data class OverviewBudget(
     val title: String,
     /** Spent share of the budget, 1f = fully spent, values above 1f = exceeded. */
     val progress: Float,
-    val icon: ImageVector = Icons.Default.Savings,
 )
 
 data class OverviewAccount(
@@ -325,23 +324,65 @@ private fun BudgetCard(
                     BudgetRing(budget, onClick = { onBudgetClick(budget) })
                 }
                 item(key = "add") {
-                    Box(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.surfaceContainerHigh)
-                            .clickable(onClick = onAdd),
-                        contentAlignment = Alignment.Center
+                    BudgetTile(
+                        label = stringResource(R.string.next_new),
+                        onClick = onAdd
                     ) {
-                        Icon(
-                            Icons.Default.Add,
-                            contentDescription = stringResource(R.string.next_add_budget),
-                            tint = MaterialTheme.colorScheme.tertiary
-                        )
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(MaterialTheme.colorScheme.surfaceContainerHigh),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                Icons.Default.Add,
+                                contentDescription = stringResource(R.string.next_add_budget),
+                                tint = MaterialTheme.colorScheme.tertiary
+                            )
+                        }
                     }
                 }
             }
         }
+    }
+}
+
+private val BudgetTileWidth = 64.dp
+private val BudgetRingSize = 56.dp
+
+/**
+ * A circle of [BudgetRingSize] with a short [label] below, shared by the budget rings and the add button
+ */
+@Composable
+private fun BudgetTile(
+    label: String,
+    onClick: () -> Unit,
+    labelColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    circle: @Composable () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .width(BudgetTileWidth)
+            .clip(RoundedCornerShape(8.dp))
+            .clickable(onClick = onClick),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+            modifier = Modifier
+                .size(BudgetRingSize)
+                .clip(CircleShape)
+        ) {
+            circle()
+        }
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelSmall,
+            color = labelColor,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(top = 4.dp)
+        )
     }
 }
 
@@ -357,30 +398,34 @@ private fun BudgetRing(
         else -> colors.income
     }
     val trackColor = MaterialTheme.colorScheme.surfaceContainerHigh
-    Box(
-        modifier = Modifier
-            .size(48.dp)
-            .clip(CircleShape)
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center
+    val percentFormat = remember { NumberFormat.getPercentInstance() }
+    BudgetTile(
+        label = percentFormat.format(budget.progress),
+        labelColor = if (budget.progress > 1f) colors.expense else MaterialTheme.colorScheme.onSurfaceVariant,
+        onClick = onClick
     ) {
-        Canvas(Modifier.fillMaxSize()) {
-            val stroke = 4.dp.toPx()
-            val inset = stroke / 2
-            val arcSize = Size(size.width - stroke, size.height - stroke)
-            val topLeft = Offset(inset, inset)
-            drawArc(trackColor, 0f, 360f, false, topLeft, arcSize, style = Stroke(stroke))
-            drawArc(
-                ringColor, -90f, 360f * budget.progress.coerceIn(0f, 1f), false, topLeft, arcSize,
-                style = Stroke(stroke, cap = StrokeCap.Round)
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Canvas(Modifier.fillMaxSize()) {
+                val stroke = 4.dp.toPx()
+                val inset = stroke / 2
+                val arcSize = Size(size.width - stroke, size.height - stroke)
+                val topLeft = Offset(inset, inset)
+                drawArc(trackColor, 0f, 360f, false, topLeft, arcSize, style = Stroke(stroke))
+                drawArc(
+                    ringColor, -90f, 360f * budget.progress.coerceIn(0f, 1f), false, topLeft, arcSize,
+                    style = Stroke(stroke, cap = StrokeCap.Round)
+                )
+            }
+            Icon(
+                Icons.Default.Savings,
+                contentDescription = budget.title,
+                modifier = Modifier.size(24.dp),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        Icon(
-            budget.icon,
-            contentDescription = budget.title,
-            modifier = Modifier.size(24.dp),
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
-        )
     }
 }
 
