@@ -43,4 +43,9 @@
     <string name="next_contracts_declined">Contracts are not detected automatically. You can start the analysis of your transactions at any time.</string>
     <string name="next_contracts_consent_accept">Analyse transactions</string>
     <string name="next_contracts_consent_decline">Not now</string>
+    <string name="next_contracts_edit">Edit contracts</string>
+    <string name="next_contracts_dismiss">Not a contract</string>
+    <string name="next_contracts_restore">Restore</string>
+    <string name="next_contracts_rename">Rename</string>
+    <string name="next_contracts_hidden">Hidden</string>
 </resources>

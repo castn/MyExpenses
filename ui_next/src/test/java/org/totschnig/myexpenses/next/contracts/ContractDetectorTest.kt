@@ -141,4 +141,24 @@ class ContractDetectorTest {
         assertEquals(12000, quarterly.yearlyAmount)
         assertEquals(1000, quarterly.monthlyAmount)
     }
+
+    @Test
+    fun signatureIsStableWhenDebitsAreAdded() {
+        val debits = series(6, Period.ofMonths(1), last = today.minusMonths(1)) { if (it < 3) -999 else -1299 }
+        val before = detector.detect(debits).single().signature
+        val after = detector.detect(debits + transaction(today.minusDays(2), -1299)).single().signature
+        assertEquals("p1|MONTHLY", before)
+        assertEquals(before, after)
+    }
+
+    @Test
+    fun contractsOfSamePayeeAndIntervalGetDistinctSignatures() {
+        val cheap = series(6, Period.ofMonths(1), amount = -500)
+        val expensive = series(6, Period.ofMonths(1), amount = -5000)
+        val contracts = detector.detect(cheap + expensive)
+        assertEquals(
+            mapOf(500L to "p1|MONTHLY", 5000L to "p1|MONTHLY|1"),
+            contracts.associate { it.lastAmount to it.signature }
+        )
+    }
 }

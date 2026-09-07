@@ -43,4 +43,9 @@
     <string name="next_contracts_declined">Verträge werden nicht automatisch erkannt. Du kannst die Auswertung deiner Buchungen jederzeit starten.</string>
     <string name="next_contracts_consent_accept">Buchungen auswerten</string>
     <string name="next_contracts_consent_decline">Nicht jetzt</string>
+    <string name="next_contracts_edit">Verträge bearbeiten</string>
+    <string name="next_contracts_dismiss">Kein Vertrag</string>
+    <string name="next_contracts_restore">Wiederherstellen</string>
+    <string name="next_contracts_rename">Umbenennen</string>
+    <string name="next_contracts_hidden">Ausgeblendet</string>
 </resources>

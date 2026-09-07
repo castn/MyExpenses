@@ -38,36 +38,58 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
         isTemplate: Boolean,
     ): List<Contract> {
         // Transactions created from a template belong together, whatever their amount
-        if (isTemplate || group.hasSimilarAmounts(GROUP_AMOUNT_TOLERANCE)) {
-            detectSeries(key, group)?.let { return listOf(it) }
-        }
-        if (isTemplate) return emptyList()
-        return group.clusterByAmount(CLUSTER_AMOUNT_TOLERANCE)
-            .mapIndexedNotNull { index, cluster -> detectSeries("$key:$index", cluster) }
+        val series = if (isTemplate || group.hasSimilarAmounts(GROUP_AMOUNT_TOLERANCE)) {
+            detectSeries(group)?.let { listOf(it) }
+        } else null
+        return (series ?: if (isTemplate) emptyList() else
+            group.clusterByAmount(CLUSTER_AMOUNT_TOLERANCE).mapNotNull { detectSeries(it) })
+            .withSignatures(key)
+    }
+
+    private class Series(val interval: ContractInterval, val transactions: List<ContractTransaction>)
+
+    /**
+     * @param transactions sorted by date
+     */
+    private fun detectSeries(transactions: List<ContractTransaction>): Series? {
+        if (transactions.size < 2) return null
+        val gaps = transactions.zipWithNext { a, b -> ChronoUnit.DAYS.between(a.date, b.date) }
+        val median = gaps.sorted()[gaps.size / 2]
+        val interval = ContractInterval.forDays(median) ?: return null
+        if (transactions.size < interval.minOccurrences) return null
+        if (gaps.count { it in interval } < gaps.size * MIN_REGULAR_SHARE) return null
+        return Series(interval, transactions)
     }
 
     /**
-     * @param series sorted by date
+     * The signature is made of group key and interval. In the rare case that a payee has several
+     * contracts with the same interval, they are told apart by the order of their amounts.
      */
-    private fun detectSeries(key: String, series: List<ContractTransaction>): Contract? {
-        if (series.size < 2) return null
-        val gaps = series.zipWithNext { a, b -> ChronoUnit.DAYS.between(a.date, b.date) }
-        val median = gaps.sorted()[gaps.size / 2]
-        val interval = ContractInterval.forDays(median) ?: return null
-        if (series.size < interval.minOccurrences) return null
-        if (gaps.count { it in interval } < gaps.size * MIN_REGULAR_SHARE) return null
+    private fun List<Series>.withSignatures(key: String) =
+        groupBy { it.interval }.flatMap { (interval, sameInterval) ->
+            sameInterval.sortedBy { series -> series.transactions.minOf { it.amount.absoluteValue } }
+                .mapIndexed { index, series ->
+                    toContract(
+                        signature = "$key|${interval.name}" + if (index > 0) "|$index" else "",
+                        series = series
+                    )
+                }
+        }
 
-        val last = series.last()
+    private fun toContract(signature: String, series: Series): Contract {
+        val transactions = series.transactions
+        val interval = series.interval
+        val last = transactions.last()
         val daysSinceLast = ChronoUnit.DAYS.between(last.date, today)
         val grace = max(MIN_GRACE_DAYS, interval.maxDays / 10)
         return Contract(
-            key = key,
-            name = series.asReversed().firstNotNullOfOrNull { it.payeeName?.takeIf(String::isNotBlank) }
+            signature = signature,
+            name = transactions.asReversed().firstNotNullOfOrNull { it.payeeName?.takeIf(String::isNotBlank) }
                 ?: last.comment?.takeIf(String::isNotBlank)
                 ?: last.categoryPath
                 ?: "",
             interval = interval,
-            transactions = series,
+            transactions = transactions,
             nextExpectedDate = last.date.plus(interval.step),
             isActive = daysSinceLast <= interval.maxDays + grace
         )

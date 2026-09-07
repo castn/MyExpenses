@@ -124,7 +124,10 @@ class MyExpensesNext : MyExpensesV2() {
                 NextContractsScreen(
                     state = state,
                     currency = contractsViewModel.homeCurrency,
-                    onConsent = contractsViewModel::setConsent
+                    onConsent = contractsViewModel::setConsent,
+                    onDismiss = contractsViewModel::dismiss,
+                    onRestore = contractsViewModel::restore,
+                    onRename = contractsViewModel::rename
                 )
             }
         )

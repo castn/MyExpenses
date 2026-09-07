@@ -58,9 +58,15 @@ data class ContractTransaction(
  * All amounts are positive and in minor units of the home currency.
  */
 data class Contract(
-    /** Stable key, e.g. for lazy lists */
-    val key: String,
+    /**
+     * Identifies the contract across detections, also when further debits are added or the price changes.
+     * Built from the payee (or template) and the interval. Used to store decisions of the user.
+     */
+    val signature: String,
+    /** Name derived from the debits */
     val name: String,
+    /** Name given by the user, overrides [name] */
+    val customName: String? = null,
     val interval: ContractInterval,
     /** Debits that make up this contract, oldest first */
     val transactions: List<ContractTransaction>,
@@ -68,6 +74,8 @@ data class Contract(
     /** False, if the contract has not been debited for longer than its interval */
     val isActive: Boolean,
 ) {
+    val displayName: String get() = customName ?: name
+
     val lastTransaction: ContractTransaction get() = transactions.last()
     val lastDate: LocalDate get() = lastTransaction.date
     val lastAmount: Long get() = -lastTransaction.amount
