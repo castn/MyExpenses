@@ -3,7 +3,6 @@ package org.totschnig.myexpenses.next.contracts
 import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -105,6 +104,20 @@ fun NextContractsScreen(
     onRename: (Contract, String) -> Unit = { _, _ -> },
 ) {
     var selectedTab by rememberSaveable { mutableStateOf(ContractsTab.Contracts) }
+    var openedSignature by rememberSaveable { mutableStateOf<String?>(null) }
+    val openedContract = (state as? ContractsUiState.Ready)?.let { ready ->
+        openedSignature?.let { signature -> (ready.active + ready.ended).find { it.signature == signature } }
+    }
+    if (openedContract != null) {
+        BackHandler { openedSignature = null }
+        ContractDetailScreen(
+            contract = openedContract,
+            currency = currency,
+            onBack = { openedSignature = null },
+            modifier = modifier
+        )
+        return
+    }
     Column(modifier.fillMaxSize()) {
         PrimaryTabRow(selectedTabIndex = selectedTab.ordinal) {
             ContractsTab.entries.forEach { tab ->
@@ -142,6 +155,7 @@ fun NextContractsScreen(
                     onDismiss = onDismiss,
                     onRestore = onRestore,
                     onRename = onRename,
+                    onOpen = { openedSignature = it.signature },
                     modifier = contentModifier
                 )
             }
@@ -225,11 +239,11 @@ private fun ContractList(
     onDismiss: (Contract) -> Unit,
     onRestore: (Contract) -> Unit,
     onRename: (Contract, String) -> Unit,
+    onOpen: (Contract) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var isEditing by rememberSaveable { mutableStateOf(false) }
     BackHandler(enabled = isEditing) { isEditing = false }
-    var expanded by rememberSaveable { mutableStateOf<String?>(null) }
     var renaming by rememberSaveable { mutableStateOf<String?>(null) }
 
     if (state.isEmpty) {
@@ -291,11 +305,10 @@ private fun ContractList(
                     currency = currency,
                     isFirst = index == 0,
                     isLast = index == contracts.lastIndex,
-                    isExpanded = !isEditing && expanded == contract.signature,
                     onClick = if (isEditing) {
                         { renaming = contract.signature }
                     } else {
-                        { expanded = if (expanded == contract.signature) null else contract.signature }
+                        { onOpen(contract) }
                     },
                     editAction = if (isEditing) {
                         if (isDismissed) EditAction(Icons.Default.Restore, restoreLabel) { onRestore(contract) }
@@ -362,7 +375,7 @@ private fun ContractList(
 }
 
 @get:StringRes
-private val ContractInterval.labelRes: Int
+internal val ContractInterval.labelRes: Int
     get() = when (this) {
         ContractInterval.WEEKLY -> R.string.next_interval_weekly
         ContractInterval.BIWEEKLY -> R.string.next_interval_biweekly
@@ -501,7 +514,7 @@ private class EditAction(
 
 /**
  * One contract. Contracts of a section look like one card, like the days of the transaction list.
- * A tap shows the debits the contract was detected from. In edit mode, [editAction] replaces the amount.
+ * A tap opens the details of the contract. In edit mode, [editAction] replaces the amount.
  */
 @Composable
 private fun ContractItem(
@@ -509,7 +522,6 @@ private fun ContractItem(
     currency: CurrencyUnit,
     isFirst: Boolean,
     isLast: Boolean,
-    isExpanded: Boolean,
     onClick: () -> Unit,
     editAction: EditAction?,
     accessibilityActions: List<CustomAccessibilityAction>,
@@ -528,7 +540,7 @@ private fun ContractItem(
         ),
         color = MaterialTheme.colorScheme.surfaceContainerLowest
     ) {
-        Column(Modifier.animateContentSize()) {
+        Column {
             if (!isFirst) {
                 HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
             }
@@ -605,9 +617,6 @@ private fun ContractItem(
                     }
                 }
             }
-            if (isExpanded) {
-                ContractDetails(contract, currency, dateFormatter)
-            }
         }
     }
 }
@@ -629,59 +638,6 @@ private fun PriceChangeIndicator(contract: Contract, currency: CurrencyUnit) {
         tint = if (increased) LocalColors.current.expense else LocalColors.current.income,
         modifier = Modifier.size(16.dp)
     )
-}
-
-@Composable
-private fun ContractDetails(
-    contract: Contract,
-    currency: CurrencyUnit,
-    dateFormatter: DateTimeFormatter,
-) {
-    val formatter = LocalCurrencyFormatter.current
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surfaceContainerLow)
-            .padding(start = 72.dp, end = 16.dp, top = 8.dp, bottom = 12.dp)
-    ) {
-        contract.categoryPath?.let {
-            Text(
-                it,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
-        }
-        contract.transactions.asReversed().forEach { transaction ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 2.dp)
-            ) {
-                Text(
-                    dateFormatter.format(transaction.date),
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.weight(1f)
-                )
-                transaction.accountLabel?.let {
-                    Text(
-                        it,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(horizontal = 8.dp)
-                    )
-                }
-                Text(
-                    formatter.convAmount(-transaction.amount, currency),
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-        }
-    }
 }
 
 @Composable

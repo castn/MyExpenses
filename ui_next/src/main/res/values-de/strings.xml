@@ -48,4 +48,16 @@
     <string name="next_contracts_restore">Wiederherstellen</string>
     <string name="next_contracts_rename">Umbenennen</string>
     <string name="next_contracts_hidden">Ausgeblendet</string>
+    <string name="next_back">Zurück</string>
+    <string name="next_contracts_previous_amount">Vorheriger Betrag</string>
+    <string name="next_contracts_total">Gesamtkosten</string>
+    <string name="next_contracts_next_debit">Nächste Abbuchung</string>
+    <string name="next_contracts_last_debit">Letzte Abbuchung</string>
+    <plurals name="next_contracts_based_on">
+        <item quantity="one">Basierend auf %d Buchung</item>
+        <item quantity="other">Basierend auf %d Buchungen</item>
+    </plurals>
+    <string name="next_contracts_details">Details</string>
+    <string name="next_contracts_account">Zahlungskonto</string>
+    <string name="next_contracts_purpose">Zweck</string>
 </resources>
