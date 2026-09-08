@@ -23,7 +23,6 @@ import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Icon
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -52,7 +51,6 @@ enum class NextTab(val icon: ImageVector, @param:StringRes val labelRes: Int) {
     Contracts(Icons.Default.Description, R.string.next_tab_contracts),
     Analysis(Icons.Default.BarChart, R.string.next_tab_analysis),
     Overview(Icons.Default.Home, R.string.next_tab_overview),
-    Insurance(Icons.Default.Shield, R.string.next_tab_insurance),
     Menu(Icons.Default.Menu, R.string.next_tab_menu)
 }
 

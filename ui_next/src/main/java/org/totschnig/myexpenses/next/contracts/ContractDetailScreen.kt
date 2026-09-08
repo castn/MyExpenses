@@ -1,7 +1,9 @@
 package org.totschnig.myexpenses.next.contracts
 
 import android.content.res.Configuration
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,41 +16,52 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
-import org.totschnig.myexpenses.model.CurrencyUnit
-import org.totschnig.myexpenses.next.R
-import org.totschnig.myexpenses.util.convAmount
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
+import org.totschnig.myexpenses.model.CurrencyUnit
+import org.totschnig.myexpenses.next.R
+import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.compose.Icon as CategoryIcon
 
 /**
@@ -61,7 +74,39 @@ fun ContractDetailScreen(
     currency: CurrencyUnit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
+    /** Categories the contract can be put into */
+    areas: List<ContractArea> = BuiltInArea.entries,
+    onSetArea: (AreaChoice) -> Unit = {},
+    onCreateArea: (String) -> CustomArea = { CustomArea(it, it) },
 ) {
+    var showAreaDialog by rememberSaveable { mutableStateOf(false) }
+    var showCreateAreaDialog by rememberSaveable { mutableStateOf(false) }
+    if (showAreaDialog) {
+        AreaDialog(
+            contract = contract,
+            areas = areas,
+            onSelect = {
+                onSetArea(it)
+                showAreaDialog = false
+            },
+            onCreate = {
+                showAreaDialog = false
+                showCreateAreaDialog = true
+            },
+            onDismiss = { showAreaDialog = false }
+        )
+    }
+    if (showCreateAreaDialog) {
+        NameDialog(
+            title = stringResource(R.string.next_contracts_new_area),
+            initialName = "",
+            onConfirm = {
+                onSetArea(AreaChoice.Fixed(onCreateArea(it)))
+                showCreateAreaDialog = false
+            },
+            onDismiss = { showCreateAreaDialog = false }
+        )
+    }
     val formatter = LocalCurrencyFormatter.current
     val dateFormatter = remember { DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM) }
     fun debit(amount: Long) = "− " + formatter.convAmount(amount, currency)
@@ -85,6 +130,11 @@ fun ContractDetailScreen(
         ) {
             DetailCard {
                 Header(contract)
+                CategoryChip(
+                    contract = contract,
+                    onClick = { showAreaDialog = true },
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                )
                 InfoRow(stringResource(contract.interval.labelRes), debit(contract.lastAmount))
                 contract.previousAmount?.takeIf { it != contract.lastAmount }?.let {
                     InfoRow(stringResource(R.string.next_contracts_previous_amount), debit(it))
@@ -135,6 +185,9 @@ fun ContractDetailScreen(
                         .ifEmpty { "–" },
                     isFirst = true
                 )
+                contract.categoryPath?.let {
+                    InfoRow(stringResource(R.string.next_contracts_transaction_category), it)
+                }
                 contract.lastTransaction.comment?.takeIf { it.isNotBlank() }?.let {
                     InfoRow(stringResource(R.string.next_contracts_purpose), it)
                 }
@@ -201,13 +254,48 @@ private fun Header(contract: Contract) {
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             )
-            contract.categoryPath?.let {
-                Text(
-                    it,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+        }
+    }
+}
+
+/**
+ * The category ([ContractArea]) of the contract as small box, or an invitation to choose one.
+ * Opens the choice of the category.
+ */
+@Composable
+private fun CategoryChip(
+    contract: Contract,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val area = contract.area
+    val label = stringResource(R.string.next_contracts_area)
+    Surface(
+        onClick = onClick,
+        shape = RoundedCornerShape(8.dp),
+        color = if (area != null) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent,
+        contentColor = if (area != null) MaterialTheme.colorScheme.onSecondaryContainer
+        else MaterialTheme.colorScheme.onSurfaceVariant,
+        border = if (area == null) BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant) else null,
+        modifier = modifier
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (area == null) {
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(18.dp)
+                        .padding(end = 4.dp)
                 )
             }
+            Text(
+                if (area == null) label else area.label(),
+                style = MaterialTheme.typography.labelLarge
+            )
         }
     }
 }
@@ -216,7 +304,11 @@ private fun Header(contract: Contract) {
  * Label on the left, value on the right, separated from the row above by a divider
  */
 @Composable
-private fun InfoRow(label: String, value: String, isFirst: Boolean = false) {
+private fun InfoRow(
+    label: String,
+    value: String,
+    isFirst: Boolean = false,
+) {
     if (!isFirst) {
         HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
     }
@@ -243,6 +335,80 @@ private fun InfoRow(label: String, value: String, isFirst: Boolean = false) {
                 .padding(start = 16.dp)
         )
     }
+}
+
+/**
+ * Lets the user choose the area of [contract], or go back to the one suggested by its category
+ */
+@Composable
+private fun AreaDialog(
+    contract: Contract,
+    areas: List<ContractArea>,
+    onSelect: (AreaChoice) -> Unit,
+    onCreate: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val choices = listOf(AreaChoice.Automatic, AreaChoice.Fixed(null)) + areas.map { AreaChoice.Fixed(it) }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.next_contracts_area)) },
+        text = {
+            Column(
+                Modifier
+                    .selectableGroup()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                choices.forEach { choice ->
+                    val selected = choice == contract.areaChoice
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .selectable(selected = selected, role = Role.RadioButton, onClick = { onSelect(choice) })
+                            .padding(vertical = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(selected = selected, onClick = null)
+                        Text(
+                            when (choice) {
+                                AreaChoice.Automatic -> stringResource(
+                                    R.string.next_contracts_area_automatic,
+                                    contract.suggestedArea.label()
+                                )
+
+                                is AreaChoice.Fixed -> choice.area.label()
+                            },
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(start = 16.dp)
+                        )
+                    }
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(onClick = onCreate)
+                        .padding(vertical = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        Icons.Default.Add,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                    Text(
+                        stringResource(R.string.next_contracts_new_area),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(start = 16.dp)
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(android.R.string.cancel))
+            }
+        }
+    )
 }
 
 @Composable

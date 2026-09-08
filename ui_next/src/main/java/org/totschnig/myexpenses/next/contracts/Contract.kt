@@ -67,6 +67,8 @@ data class Contract(
     val name: String,
     /** Name given by the user, overrides [name] */
     val customName: String? = null,
+    /** How the user wants the [area] to be determined */
+    val areaChoice: AreaChoice = AreaChoice.Automatic,
     val interval: ContractInterval,
     /** Debits that make up this contract, oldest first */
     val transactions: List<ContractTransaction>,
@@ -75,6 +77,15 @@ data class Contract(
     val isActive: Boolean,
 ) {
     val displayName: String get() = customName ?: name
+
+    /** Area suggested by the category of the last debit */
+    val suggestedArea: ContractArea? get() = BuiltInArea.suggest(categoryPath)
+
+    val area: ContractArea?
+        get() = when (val choice = areaChoice) {
+            AreaChoice.Automatic -> suggestedArea
+            is AreaChoice.Fixed -> choice.area
+        }
 
     val lastTransaction: ContractTransaction get() = transactions.last()
     val lastDate: LocalDate get() = lastTransaction.date

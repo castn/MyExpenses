@@ -3,7 +3,6 @@
     <string name="next_tab_contracts">Contracts</string>
     <string name="next_tab_analysis">Analysis</string>
     <string name="next_tab_overview">Overview</string>
-    <string name="next_tab_insurance">Insurance</string>
     <string name="next_tab_menu">Menu</string>
     <string name="next_coming_soon">Coming soon</string>
     <string name="next_budgets">Budgets</string>
@@ -60,4 +59,28 @@
     <string name="next_contracts_details">Details</string>
     <string name="next_contracts_account">Payment account</string>
     <string name="next_contracts_purpose">Reference</string>
+    <string name="next_contracts_transaction_category">Transaction category</string>
+    <string name="next_contracts_tab_all">All contracts</string>
+    <string name="next_contracts_area">Category</string>
+    <string name="next_contracts_area_none">No category</string>
+    <string name="next_contracts_area_automatic">Automatic (%1$s)</string>
+    <string name="next_contracts_empty_area">No contracts in this category</string>
+    <string name="next_contracts_empty_area_hint">Contracts are assigned by the category of their transactions. You can change the category in the details of a contract.</string>
+    <string name="next_contract_area_insurance">Insurance</string>
+    <string name="next_contract_area_housing">Home &amp; household</string>
+    <string name="next_contract_area_telecom">Internet &amp; phone</string>
+    <string name="next_contract_area_streaming">Streaming &amp; pay TV</string>
+    <string name="next_contract_area_fitness">Fitness &amp; sports</string>
+    <string name="next_contract_area_mobility">Mobility</string>
+    <string name="next_contract_area_finance">Loans &amp; finance</string>
+    <string name="next_contract_area_software">Software &amp; cloud</string>
+    <string name="next_contract_area_press">Newspapers &amp; magazines</string>
+    <string name="next_contract_area_membership">Memberships &amp; clubs</string>
+    <string name="next_contract_area_donations">Donations</string>
+    <string name="next_contract_area_education">Children &amp; education</string>
+    <string name="next_contracts_new_area">New category</string>
+    <string name="next_contracts_rename_area">Rename category</string>
+    <string name="next_contracts_delete_area">Delete category</string>
+    <string name="next_contracts_area_options">Category options</string>
+    <string name="next_contracts_delete_area_confirm">Contracts in “%1$s” go back to their automatic category.</string>
 </resources>

@@ -127,7 +127,11 @@ class MyExpensesNext : MyExpensesV2() {
                     onConsent = contractsViewModel::setConsent,
                     onDismiss = contractsViewModel::dismiss,
                     onRestore = contractsViewModel::restore,
-                    onRename = contractsViewModel::rename
+                    onRename = contractsViewModel::rename,
+                    onSetArea = contractsViewModel::setArea,
+                    onCreateArea = contractsViewModel::createArea,
+                    onRenameArea = contractsViewModel::renameArea,
+                    onDeleteArea = contractsViewModel::deleteArea
                 )
             }
         )

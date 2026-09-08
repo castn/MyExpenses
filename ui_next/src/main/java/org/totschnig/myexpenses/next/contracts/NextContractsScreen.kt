@@ -26,21 +26,24 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.RemoveCircleOutline
 import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.PrimaryTabRow
+import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -69,19 +72,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import org.totschnig.myexpenses.compose.LocalColors
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.next.R
 import org.totschnig.myexpenses.util.convAmount
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import org.totschnig.myexpenses.compose.Icon as CategoryIcon
-
-private enum class ContractsTab(@param:StringRes val labelRes: Int) {
-    Contracts(R.string.next_tab_contracts)
-}
 
 private val CardShape = RoundedCornerShape(16.dp)
 
@@ -90,6 +89,8 @@ private val CardShape = RoundedCornerShape(16.dp)
  *
  * Like the account list of the overview, the list has an edit mode. In it, the user removes
  * contracts that were detected by mistake, restores them and renames contracts.
+ * Besides all contracts, tabs show the contracts of each category ([ContractArea]) that has some,
+ * and each category created by the user. The last tab creates a new category.
  *
  * @param currency the currency all amounts of the contracts are in
  */
@@ -102,10 +103,20 @@ fun NextContractsScreen(
     onDismiss: (Contract) -> Unit = {},
     onRestore: (Contract) -> Unit = {},
     onRename: (Contract, String) -> Unit = { _, _ -> },
+    onSetArea: (Contract, AreaChoice) -> Unit = { _, _ -> },
+    onCreateArea: (String) -> CustomArea = { CustomArea(it, it) },
+    onRenameArea: (CustomArea, String) -> Unit = { _, _ -> },
+    onDeleteArea: (CustomArea) -> Unit = {},
 ) {
-    var selectedTab by rememberSaveable { mutableStateOf(ContractsTab.Contracts) }
+    /** Key of the category of the selected tab, null for all contracts */
+    var selectedAreaKey by rememberSaveable { mutableStateOf<String?>(null) }
+    var showCreateAreaDialog by rememberSaveable { mutableStateOf(false) }
+    val ready = state as? ContractsUiState.Ready
+    val areas = ready?.areas.orEmpty()
+    // The category may have lost its last contract or been deleted
+    val selectedArea = areas.find { it.key == selectedAreaKey }
     var openedSignature by rememberSaveable { mutableStateOf<String?>(null) }
-    val openedContract = (state as? ContractsUiState.Ready)?.let { ready ->
+    val openedContract = ready?.let {
         openedSignature?.let { signature -> (ready.active + ready.ended).find { it.signature == signature } }
     }
     if (openedContract != null) {
@@ -114,51 +125,83 @@ fun NextContractsScreen(
             contract = openedContract,
             currency = currency,
             onBack = { openedSignature = null },
+            areas = ready.selectableAreas,
+            onSetArea = { onSetArea(openedContract, it) },
+            onCreateArea = onCreateArea,
             modifier = modifier
         )
         return
     }
     Column(modifier.fillMaxSize()) {
-        PrimaryTabRow(selectedTabIndex = selectedTab.ordinal) {
-            ContractsTab.entries.forEach { tab ->
+        if (showCreateAreaDialog) {
+            NameDialog(
+                title = stringResource(R.string.next_contracts_new_area),
+                initialName = "",
+                onConfirm = {
+                    selectedAreaKey = onCreateArea(it).key
+                    showCreateAreaDialog = false
+                },
+                onDismiss = { showCreateAreaDialog = false }
+            )
+        }
+        PrimaryScrollableTabRow(
+            selectedTabIndex = selectedArea?.let { areas.indexOf(it) + 1 } ?: 0,
+            edgePadding = 16.dp
+        ) {
+            Tab(
+                selected = selectedArea == null,
+                onClick = { selectedAreaKey = null },
+                text = { Text(stringResource(R.string.next_contracts_tab_all)) }
+            )
+            areas.forEach { area ->
                 Tab(
-                    selected = tab == selectedTab,
-                    onClick = { selectedTab = tab },
-                    text = { Text(stringResource(tab.labelRes)) }
+                    selected = area == selectedArea,
+                    onClick = { selectedAreaKey = area.key },
+                    text = { Text(area.label()) }
+                )
+            }
+            if (ready != null) {
+                Tab(
+                    selected = false,
+                    onClick = { showCreateAreaDialog = true },
+                    icon = {
+                        Icon(Icons.Default.Add, contentDescription = stringResource(R.string.next_contracts_new_area))
+                    }
                 )
             }
         }
         val contentModifier = Modifier.weight(1f)
-        when (selectedTab) {
-            ContractsTab.Contracts -> when (state) {
-                ContractsUiState.Loading -> CircularProgressIndicator(
-                    contentModifier
-                        .fillMaxSize()
-                        .wrapContentSize()
-                )
+        when (state) {
+            ContractsUiState.Loading -> CircularProgressIndicator(
+                contentModifier
+                    .fillMaxSize()
+                    .wrapContentSize()
+            )
 
-                ContractsUiState.AskConsent -> ConsentCard(
-                    isDeclined = false,
-                    onConsent = onConsent,
-                    modifier = contentModifier
-                )
+            ContractsUiState.AskConsent -> ConsentCard(
+                isDeclined = false,
+                onConsent = onConsent,
+                modifier = contentModifier
+            )
 
-                ContractsUiState.Declined -> ConsentCard(
-                    isDeclined = true,
-                    onConsent = onConsent,
-                    modifier = contentModifier
-                )
+            ContractsUiState.Declined -> ConsentCard(
+                isDeclined = true,
+                onConsent = onConsent,
+                modifier = contentModifier
+            )
 
-                is ContractsUiState.Ready -> ContractList(
-                    state = state,
-                    currency = currency,
-                    onDismiss = onDismiss,
-                    onRestore = onRestore,
-                    onRename = onRename,
-                    onOpen = { openedSignature = it.signature },
-                    modifier = contentModifier
-                )
-            }
+            is ContractsUiState.Ready -> ContractList(
+                state = selectedArea?.let(state::forArea) ?: state,
+                area = selectedArea,
+                onRenameArea = onRenameArea,
+                onDeleteArea = onDeleteArea,
+                currency = currency,
+                onDismiss = onDismiss,
+                onRestore = onRestore,
+                onRename = onRename,
+                onOpen = { openedSignature = it.signature },
+                modifier = contentModifier
+            )
         }
     }
 }
@@ -235,6 +278,10 @@ private fun ConsentCard(
 @Composable
 private fun ContractList(
     state: ContractsUiState.Ready,
+    /** The category [state] is limited to, null for all contracts */
+    area: ContractArea?,
+    onRenameArea: (CustomArea, String) -> Unit,
+    onDeleteArea: (CustomArea) -> Unit,
     currency: CurrencyUnit,
     onDismiss: (Contract) -> Unit,
     onRestore: (Contract) -> Unit,
@@ -245,16 +292,16 @@ private fun ContractList(
     var isEditing by rememberSaveable { mutableStateOf(false) }
     BackHandler(enabled = isEditing) { isEditing = false }
     var renaming by rememberSaveable { mutableStateOf<String?>(null) }
-
-    if (state.isEmpty) {
-        EmptyState(modifier)
-        return
-    }
+    val isArea = area != null
 
     renaming?.let { signature ->
         (state.active + state.ended + state.dismissed).find { it.signature == signature }?.let { contract ->
-            RenameDialog(
-                contract = contract,
+            NameDialog(
+                title = stringResource(R.string.next_contracts_rename),
+                initialName = contract.displayName,
+                // An empty name goes back to the detected one
+                placeholder = contract.name,
+                allowBlank = true,
                 onConfirm = {
                     onRename(contract, it)
                     renaming = null
@@ -264,6 +311,12 @@ private fun ContractList(
         }
     }
 
+    // Custom categories can be managed even without contracts, so they get the toolbar anyway
+    if (state.isEmpty && area !is CustomArea) {
+        EmptyState(isArea, modifier)
+        return
+    }
+
     Column(modifier.fillMaxSize()) {
         Row(
             modifier = Modifier
@@ -271,7 +324,10 @@ private fun ContractList(
                 .padding(horizontal = 4.dp),
             horizontalArrangement = Arrangement.End
         ) {
-            IconButton(onClick = { isEditing = !isEditing }) {
+            if (area is CustomArea) {
+                AreaMenu(area, onRenameArea, onDeleteArea)
+            }
+            if (!state.isEmpty) IconButton(onClick = { isEditing = !isEditing }) {
                 if (isEditing) {
                     Icon(
                         Icons.Default.Check,
@@ -289,8 +345,8 @@ private fun ContractList(
         }
 
         // All contracts removed: nothing to show outside of the edit mode
-        if (!isEditing && state.active.isEmpty() && state.ended.isEmpty()) {
-            EmptyState(Modifier.weight(1f))
+        if (state.isEmpty || !isEditing && state.active.isEmpty() && state.ended.isEmpty()) {
+            EmptyState(isArea, Modifier.weight(1f))
             return@Column
         }
 
@@ -387,7 +443,7 @@ internal val ContractInterval.labelRes: Int
     }
 
 @Composable
-private fun EmptyState(modifier: Modifier = Modifier) {
+private fun EmptyState(isArea: Boolean, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -396,12 +452,12 @@ private fun EmptyState(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            stringResource(R.string.next_contracts_empty),
+            stringResource(if (isArea) R.string.next_contracts_empty_area else R.string.next_contracts_empty),
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center
         )
         Text(
-            stringResource(R.string.next_contracts_empty_hint),
+            stringResource(if (isArea) R.string.next_contracts_empty_area_hint else R.string.next_contracts_empty_hint),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
@@ -410,36 +466,74 @@ private fun EmptyState(modifier: Modifier = Modifier) {
     }
 }
 
+/**
+ * Rename or delete a category created by the user
+ */
 @Composable
-private fun RenameDialog(
-    contract: Contract,
-    onConfirm: (String) -> Unit,
-    onDismiss: () -> Unit,
+private fun AreaMenu(
+    area: CustomArea,
+    onRename: (CustomArea, String) -> Unit,
+    onDelete: (CustomArea) -> Unit,
 ) {
-    var name by rememberSaveable { mutableStateOf(contract.displayName) }
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.next_contracts_rename)) },
-        text = {
-            OutlinedTextField(
-                value = name,
-                onValueChange = { name = it },
-                singleLine = true,
-                // An empty name goes back to the detected one
-                placeholder = { Text(contract.name) }
+    var showMenu by remember { mutableStateOf(false) }
+    var showRename by rememberSaveable { mutableStateOf(false) }
+    var showDelete by rememberSaveable { mutableStateOf(false) }
+    Box {
+        IconButton(onClick = { showMenu = true }) {
+            Icon(
+                Icons.Default.MoreVert,
+                contentDescription = stringResource(R.string.next_contracts_area_options),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
-        },
-        confirmButton = {
-            TextButton(onClick = { onConfirm(name) }) {
-                Text(stringResource(android.R.string.ok))
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(android.R.string.cancel))
-            }
         }
-    )
+        DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.next_contracts_rename_area)) },
+                onClick = {
+                    showMenu = false
+                    showRename = true
+                }
+            )
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.next_contracts_delete_area)) },
+                onClick = {
+                    showMenu = false
+                    showDelete = true
+                }
+            )
+        }
+    }
+    if (showRename) {
+        NameDialog(
+            title = stringResource(R.string.next_contracts_rename_area),
+            initialName = area.name,
+            onConfirm = {
+                onRename(area, it)
+                showRename = false
+            },
+            onDismiss = { showRename = false }
+        )
+    }
+    if (showDelete) {
+        AlertDialog(
+            onDismissRequest = { showDelete = false },
+            title = { Text(stringResource(R.string.next_contracts_delete_area)) },
+            text = { Text(stringResource(R.string.next_contracts_delete_area_confirm, area.name)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    onDelete(area)
+                    showDelete = false
+                }) {
+                    Text(stringResource(R.string.next_contracts_delete_area))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDelete = false }) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            }
+        )
+    }
 }
 
 @Composable

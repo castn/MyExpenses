@@ -3,7 +3,6 @@
     <string name="next_tab_contracts">Verträge</string>
     <string name="next_tab_analysis">Analyse</string>
     <string name="next_tab_overview">Übersicht</string>
-    <string name="next_tab_insurance">Versicherung</string>
     <string name="next_tab_menu">Menü</string>
     <string name="next_coming_soon">Kommt bald</string>
     <string name="next_budgets">Budgets</string>
@@ -60,4 +59,28 @@
     <string name="next_contracts_details">Details</string>
     <string name="next_contracts_account">Zahlungskonto</string>
     <string name="next_contracts_purpose">Zweck</string>
+    <string name="next_contracts_transaction_category">Buchungskategorie</string>
+    <string name="next_contracts_tab_all">Alle Verträge</string>
+    <string name="next_contracts_area">Kategorie</string>
+    <string name="next_contracts_area_none">Keine Kategorie</string>
+    <string name="next_contracts_area_automatic">Automatisch (%1$s)</string>
+    <string name="next_contracts_empty_area">Keine Verträge in dieser Kategorie</string>
+    <string name="next_contracts_empty_area_hint">Verträge werden anhand der Kategorie ihrer Buchungen zugeordnet. Die Kategorie kannst du in den Details eines Vertrags ändern.</string>
+    <string name="next_contract_area_insurance">Versicherungen</string>
+    <string name="next_contract_area_housing">Wohnen &amp; Haushalt</string>
+    <string name="next_contract_area_telecom">Internet &amp; Telefon</string>
+    <string name="next_contract_area_streaming">Streaming &amp; Pay-TV</string>
+    <string name="next_contract_area_fitness">Fitness &amp; Sport</string>
+    <string name="next_contract_area_mobility">Mobilität</string>
+    <string name="next_contract_area_finance">Kredite &amp; Finanzen</string>
+    <string name="next_contract_area_software">Software &amp; Cloud</string>
+    <string name="next_contract_area_press">Zeitungen &amp; Magazine</string>
+    <string name="next_contract_area_membership">Mitgliedschaften &amp; Vereine</string>
+    <string name="next_contract_area_donations">Spenden</string>
+    <string name="next_contract_area_education">Kinder &amp; Bildung</string>
+    <string name="next_contracts_new_area">Neue Kategorie</string>
+    <string name="next_contracts_rename_area">Kategorie umbenennen</string>
+    <string name="next_contracts_delete_area">Kategorie löschen</string>
+    <string name="next_contracts_area_options">Kategorie-Optionen</string>
+    <string name="next_contracts_delete_area_confirm">Verträge in „%1$s“ werden wieder automatisch zugeordnet.</string>
 </resources>

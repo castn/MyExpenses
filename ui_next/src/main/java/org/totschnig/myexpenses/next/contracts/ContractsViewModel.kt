@@ -50,16 +50,18 @@ import org.totschnig.myexpenses.provider.getStringOrNull
 import org.totschnig.myexpenses.util.epoch2LocalDate
 import org.totschnig.myexpenses.util.toEpoch
 import org.totschnig.myexpenses.viewmodel.ContentResolvingAndroidViewModel
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.time.LocalDate
+import java.util.UUID
 
 /**
  * Detects contracts in the debits of all accounts that are not excluded from totals.
  * Amounts are converted into the home currency, so that contracts of all accounts can be summed up.
  *
  * Transactions are only analysed after the user agreed. Decisions of the user (consent, dismissed
- * contracts, custom names) are stored in the data store, which is part of the backup.
+ * contracts, custom names, categories) are stored in the data store, which is part of the backup.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class ContractsViewModel(application: Application) : ContentResolvingAndroidViewModel(application) {
@@ -72,7 +74,9 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
             ContractSettings(
                 consent = preferences[KEY_CONSENT],
                 dismissed = preferences[KEY_DISMISSED] ?: emptySet(),
-                names = preferences[KEY_NAMES]?.let(::parseNames) ?: emptyMap()
+                names = preferences[KEY_NAMES]?.let(::parseMap) ?: emptyMap(),
+                areas = preferences[KEY_AREAS]?.let(::parseMap) ?: emptyMap(),
+                customAreas = preferences[KEY_CUSTOM_AREAS]?.let(::parseCustomAreas) ?: emptyList()
             )
         }
     }
@@ -125,14 +129,60 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
      */
     fun rename(contract: Contract, name: String) {
         edit { preferences ->
-            val names = preferences[KEY_NAMES]?.let(::parseNames) ?: emptyMap()
+            val names = preferences[KEY_NAMES]?.let(::parseMap) ?: emptyMap()
             val trimmed = name.trim()
-            preferences[KEY_NAMES] = serializeNames(
+            preferences[KEY_NAMES] = serializeMap(
                 if (trimmed.isEmpty() || trimmed == contract.name) names - contract.signature
                 else names + (contract.signature to trimmed)
             )
         }
     }
+
+    fun setArea(contract: Contract, choice: AreaChoice) {
+        edit { preferences ->
+            val areas = preferences[KEY_AREAS]?.let(::parseMap) ?: emptyMap()
+            preferences[KEY_AREAS] = serializeMap(
+                when (choice) {
+                    AreaChoice.Automatic -> areas - contract.signature
+                    is AreaChoice.Fixed -> areas + (contract.signature to (choice.area?.key ?: ContractSettings.AREA_NONE))
+                }
+            )
+        }
+    }
+
+    /**
+     * @return the new category, so that a contract can be put into it right away
+     */
+    fun createArea(name: String): CustomArea {
+        val area = CustomArea(UUID.randomUUID().toString(), name.trim())
+        edit { preferences ->
+            preferences[KEY_CUSTOM_AREAS] = serializeCustomAreas(customAreas(preferences) + area)
+        }
+        return area
+    }
+
+    fun renameArea(area: CustomArea, name: String) {
+        edit { preferences ->
+            preferences[KEY_CUSTOM_AREAS] = serializeCustomAreas(
+                customAreas(preferences).map { if (it.id == area.id) it.copy(name = name.trim()) else it }
+            )
+        }
+    }
+
+    /**
+     * Contracts in the deleted category go back to their suggested category
+     */
+    fun deleteArea(area: CustomArea) {
+        edit { preferences ->
+            preferences[KEY_CUSTOM_AREAS] = serializeCustomAreas(customAreas(preferences).filter { it.id != area.id })
+            preferences[KEY_AREAS]?.let(::parseMap)?.let { areas ->
+                preferences[KEY_AREAS] = serializeMap(areas.filterValues { it != area.key })
+            }
+        }
+    }
+
+    private fun customAreas(preferences: MutablePreferences) =
+        preferences[KEY_CUSTOM_AREAS]?.let(::parseCustomAreas) ?: emptyList()
 
     private fun edit(block: (MutablePreferences) -> Unit) {
         viewModelScope.launch { dataStore.edit(block) }
@@ -157,14 +207,32 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
         private val KEY_DISMISSED = stringSetPreferencesKey("next_contracts_dismissed")
         /** JSON object mapping signatures to custom names */
         private val KEY_NAMES = stringPreferencesKey("next_contracts_names")
+        /** JSON object mapping signatures to the key of a [ContractArea] or [ContractSettings.AREA_NONE] */
+        private val KEY_AREAS = stringPreferencesKey("next_contracts_areas")
+        /** JSON array of the categories created by the user */
+        private val KEY_CUSTOM_AREAS = stringPreferencesKey("next_contracts_custom_areas")
 
-        private fun parseNames(json: String): Map<String, String> = try {
+        private fun parseMap(json: String): Map<String, String> = try {
             JSONObject(json).let { obj -> obj.keys().asSequence().associateWith { obj.getString(it) } }
         } catch (_: JSONException) {
             emptyMap()
         }
 
-        private fun serializeNames(names: Map<String, String>) = JSONObject(names).toString()
+        private fun serializeMap(map: Map<String, String>) = JSONObject(map).toString()
+
+        private fun parseCustomAreas(json: String): List<CustomArea> = try {
+            JSONArray(json).let { array ->
+                (0 until array.length()).map { i ->
+                    array.getJSONObject(i).let { CustomArea(it.getString("id"), it.getString("name")) }
+                }
+            }
+        } catch (_: JSONException) {
+            emptyList()
+        }
+
+        private fun serializeCustomAreas(areas: List<CustomArea>) = JSONArray(
+            areas.map { JSONObject(mapOf("id" to it.id, "name" to it.name)) }
+        ).toString()
 
         /** A bit more than two years, so that yearly contracts have been debited at least twice */
         const val HISTORY_MONTHS = 26L

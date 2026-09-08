@@ -8,11 +8,19 @@ class ContractsStateTest {
 
     private val today: LocalDate = LocalDate.of(2026, 9, 25)
 
-    private fun contract(signature: String, amount: Long, isActive: Boolean = true, last: LocalDate = today) = Contract(
+    private fun contract(
+        signature: String,
+        amount: Long,
+        isActive: Boolean = true,
+        last: LocalDate = today,
+        category: String? = null,
+    ) = Contract(
         signature = signature,
         name = signature,
         interval = ContractInterval.MONTHLY,
-        transactions = listOf(ContractTransaction(id = 1, date = last, amount = -amount, accountId = 1)),
+        transactions = listOf(
+            ContractTransaction(id = 1, date = last, amount = -amount, accountId = 1, categoryPath = category)
+        ),
         nextExpectedDate = last.plusMonths(1),
         isActive = isActive
     )
@@ -42,5 +50,44 @@ class ContractsStateTest {
         )
         assertEquals(setOf("Strom", "b"), state.active.map { it.displayName }.toSet())
         assertEquals("a", state.active.single { it.signature == "a" }.name)
+    }
+
+    @Test
+    fun assignsAreasByCategoryAndUserChoice() {
+        val gym = CustomArea("1", "Gym")
+        val state = buildContractsState(
+            listOf(
+                contract("liability", 100, category = "Versicherungen > Haftpflicht"),
+                contract("rent", 900, category = "Wohnen > Miete"),
+                contract("phone", 300, category = "Kommunikation"),
+                contract("notInsurance", 200, category = "Versicherungen"),
+                contract("studio", 50, category = "Freizeit"),
+                contract("deletedArea", 40, category = "Wohnen"),
+            ),
+            ContractSettings(
+                consent = true,
+                areas = mapOf(
+                    "phone" to BuiltInArea.HOUSING.key,
+                    "notInsurance" to ContractSettings.AREA_NONE,
+                    "studio" to gym.key,
+                    "deletedArea" to "custom:gone"
+                ),
+                customAreas = listOf(gym)
+            )
+        )
+        assertEquals(listOf("liability"), state.forArea(BuiltInArea.INSURANCE).active.map { it.signature })
+        assertEquals(listOf("rent", "phone", "deletedArea"), state.forArea(BuiltInArea.HOUSING).active.map { it.signature })
+        assertEquals(listOf("studio"), state.forArea(gym).active.map { it.signature })
+        assertEquals(6, state.active.size)
+    }
+
+    @Test
+    fun showsTabsForUsedBuiltInAndAllCustomAreas() {
+        val empty = CustomArea("1", "Empty")
+        val state = buildContractsState(
+            listOf(contract("rent", 900, category = "Wohnen > Miete"), contract("tv", 100, category = "Streaming")),
+            ContractSettings(consent = true, customAreas = listOf(empty))
+        )
+        assertEquals(listOf(BuiltInArea.HOUSING, BuiltInArea.STREAMING, empty), state.areas)
     }
 }
