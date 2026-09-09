@@ -24,6 +24,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -78,9 +79,33 @@ fun ContractDetailScreen(
     areas: List<ContractArea> = BuiltInArea.entries,
     onSetArea: (AreaChoice) -> Unit = {},
     onCreateArea: (String) -> CustomArea = { CustomArea(it, it) },
+    onRenameArea: (CustomArea, String) -> Unit = { _, _ -> },
+    onDeleteArea: (CustomArea) -> Unit = {},
 ) {
     var showAreaDialog by rememberSaveable { mutableStateOf(false) }
     var showCreateAreaDialog by rememberSaveable { mutableStateOf(false) }
+    /** Key of the custom category being edited */
+    var editedAreaKey by rememberSaveable { mutableStateOf<String?>(null) }
+    // Back to the choice after editing, so that the user sees the result
+    areas.filterIsInstance<CustomArea>().find { it.key == editedAreaKey }?.let { area ->
+        EditAreaDialog(
+            area = area,
+            onRename = {
+                onRenameArea(area, it)
+                editedAreaKey = null
+                showAreaDialog = true
+            },
+            onDelete = {
+                onDeleteArea(area)
+                editedAreaKey = null
+                showAreaDialog = true
+            },
+            onDismiss = {
+                editedAreaKey = null
+                showAreaDialog = true
+            }
+        )
+    }
     if (showAreaDialog) {
         AreaDialog(
             contract = contract,
@@ -92,6 +117,10 @@ fun ContractDetailScreen(
             onCreate = {
                 showAreaDialog = false
                 showCreateAreaDialog = true
+            },
+            onEdit = {
+                showAreaDialog = false
+                editedAreaKey = it.key
             },
             onDismiss = { showAreaDialog = false }
         )
@@ -346,6 +375,7 @@ private fun AreaDialog(
     areas: List<ContractArea>,
     onSelect: (AreaChoice) -> Unit,
     onCreate: () -> Unit,
+    onEdit: (CustomArea) -> Unit,
     onDismiss: () -> Unit,
 ) {
     val choices = listOf(AreaChoice.Automatic, AreaChoice.Fixed(null)) + areas.map { AreaChoice.Fixed(it) }
@@ -378,8 +408,20 @@ private fun AreaDialog(
                                 is AreaChoice.Fixed -> choice.area.label()
                             },
                             style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier.padding(start = 16.dp)
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = 16.dp)
                         )
+                        val custom = (choice as? AreaChoice.Fixed)?.area as? CustomArea
+                        if (custom != null) {
+                            IconButton(onClick = { onEdit(custom) }) {
+                                Icon(
+                                    Icons.Default.Edit,
+                                    contentDescription = stringResource(R.string.next_contracts_edit_area),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
                     }
                 }
                 Row(

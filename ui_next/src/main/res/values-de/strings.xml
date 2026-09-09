@@ -79,8 +79,7 @@
     <string name="next_contract_area_donations">Spenden</string>
     <string name="next_contract_area_education">Kinder &amp; Bildung</string>
     <string name="next_contracts_new_area">Neue Kategorie</string>
-    <string name="next_contracts_rename_area">Kategorie umbenennen</string>
+    <string name="next_contracts_edit_area">Kategorie bearbeiten</string>
     <string name="next_contracts_delete_area">Kategorie löschen</string>
-    <string name="next_contracts_area_options">Kategorie-Optionen</string>
     <string name="next_contracts_delete_area_confirm">Verträge in „%1$s“ werden wieder automatisch zugeordnet.</string>
 </resources>

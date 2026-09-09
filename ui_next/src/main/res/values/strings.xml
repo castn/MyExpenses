@@ -79,8 +79,7 @@
     <string name="next_contract_area_donations">Donations</string>
     <string name="next_contract_area_education">Children &amp; education</string>
     <string name="next_contracts_new_area">New category</string>
-    <string name="next_contracts_rename_area">Rename category</string>
+    <string name="next_contracts_edit_area">Edit category</string>
     <string name="next_contracts_delete_area">Delete category</string>
-    <string name="next_contracts_area_options">Category options</string>
     <string name="next_contracts_delete_area_confirm">Contracts in “%1$s” go back to their automatic category.</string>
 </resources>

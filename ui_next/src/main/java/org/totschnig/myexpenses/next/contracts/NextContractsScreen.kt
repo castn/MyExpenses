@@ -30,15 +30,12 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.RemoveCircleOutline
 import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -128,6 +125,8 @@ fun NextContractsScreen(
             areas = ready.selectableAreas,
             onSetArea = { onSetArea(openedContract, it) },
             onCreateArea = onCreateArea,
+            onRenameArea = onRenameArea,
+            onDeleteArea = onDeleteArea,
             modifier = modifier
         )
         return
@@ -325,7 +324,7 @@ private fun ContractList(
             horizontalArrangement = Arrangement.End
         ) {
             if (area is CustomArea) {
-                AreaMenu(area, onRenameArea, onDeleteArea)
+                EditAreaButton(area, onRenameArea, onDeleteArea)
             }
             if (!state.isEmpty) IconButton(onClick = { isEditing = !isEditing }) {
                 if (isEditing) {
@@ -467,71 +466,34 @@ private fun EmptyState(isArea: Boolean, modifier: Modifier = Modifier) {
 }
 
 /**
- * Rename or delete a category created by the user
+ * Opens the editing of a category created by the user
  */
 @Composable
-private fun AreaMenu(
+private fun EditAreaButton(
     area: CustomArea,
     onRename: (CustomArea, String) -> Unit,
     onDelete: (CustomArea) -> Unit,
 ) {
-    var showMenu by remember { mutableStateOf(false) }
-    var showRename by rememberSaveable { mutableStateOf(false) }
-    var showDelete by rememberSaveable { mutableStateOf(false) }
-    Box {
-        IconButton(onClick = { showMenu = true }) {
-            Icon(
-                Icons.Default.MoreVert,
-                contentDescription = stringResource(R.string.next_contracts_area_options),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-        DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.next_contracts_rename_area)) },
-                onClick = {
-                    showMenu = false
-                    showRename = true
-                }
-            )
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.next_contracts_delete_area)) },
-                onClick = {
-                    showMenu = false
-                    showDelete = true
-                }
-            )
-        }
-    }
-    if (showRename) {
-        NameDialog(
-            title = stringResource(R.string.next_contracts_rename_area),
-            initialName = area.name,
-            onConfirm = {
-                onRename(area, it)
-                showRename = false
-            },
-            onDismiss = { showRename = false }
+    var showDialog by rememberSaveable { mutableStateOf(false) }
+    IconButton(onClick = { showDialog = true }) {
+        Icon(
+            Icons.Default.Edit,
+            contentDescription = stringResource(R.string.next_contracts_edit_area),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
-    if (showDelete) {
-        AlertDialog(
-            onDismissRequest = { showDelete = false },
-            title = { Text(stringResource(R.string.next_contracts_delete_area)) },
-            text = { Text(stringResource(R.string.next_contracts_delete_area_confirm, area.name)) },
-            confirmButton = {
-                TextButton(onClick = {
-                    onDelete(area)
-                    showDelete = false
-                }) {
-                    Text(stringResource(R.string.next_contracts_delete_area))
-                }
+    if (showDialog) {
+        EditAreaDialog(
+            area = area,
+            onRename = {
+                onRename(area, it)
+                showDialog = false
             },
-            dismissButton = {
-                TextButton(onClick = { showDelete = false }) {
-                    Text(stringResource(android.R.string.cancel))
-                }
-            }
+            onDelete = {
+                onDelete(area)
+                showDialog = false
+            },
+            onDismiss = { showDialog = false }
         )
     }
 }
