@@ -48,6 +48,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -288,7 +289,10 @@ private fun ContractList(
     onOpen: (Contract) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    // Contracts are only removed from the list of all contracts, where the user has the full picture
     var isEditing by rememberSaveable { mutableStateOf(false) }
+    val canEdit = area == null
+    LaunchedEffect(area) { if (!canEdit) isEditing = false }
     BackHandler(enabled = isEditing) { isEditing = false }
     var renaming by rememberSaveable { mutableStateOf<String?>(null) }
     val isArea = area != null
@@ -317,28 +321,32 @@ private fun ContractList(
     }
 
     Column(modifier.fillMaxSize()) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 4.dp),
-            horizontalArrangement = Arrangement.End
-        ) {
-            if (area is CustomArea) {
-                EditAreaButton(area, onRenameArea, onDeleteArea)
-            }
-            if (!state.isEmpty) IconButton(onClick = { isEditing = !isEditing }) {
-                if (isEditing) {
-                    Icon(
-                        Icons.Default.Check,
-                        contentDescription = stringResource(R.string.next_done),
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                } else {
-                    Icon(
-                        Icons.AutoMirrored.Filled.List,
-                        contentDescription = stringResource(R.string.next_contracts_edit),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+        // Toolbar only if it has something to offer
+        val hasToolbar = area is CustomArea || canEdit && !state.isEmpty
+        if (hasToolbar) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 4.dp),
+                horizontalArrangement = Arrangement.End
+            ) {
+                if (area is CustomArea) {
+                    EditAreaButton(area, onRenameArea, onDeleteArea)
+                }
+                if (canEdit && !state.isEmpty) IconButton(onClick = { isEditing = !isEditing }) {
+                    if (isEditing) {
+                        Icon(
+                            Icons.Default.Check,
+                            contentDescription = stringResource(R.string.next_done),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    } else {
+                        Icon(
+                            Icons.AutoMirrored.Filled.List,
+                            contentDescription = stringResource(R.string.next_contracts_edit),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
             }
         }
@@ -373,14 +381,15 @@ private fun ContractList(
                     accessibilityActions = if (isEditing) listOf(
                         CustomAccessibilityAction(renameLabel) { renaming = contract.signature; true }
                     ) else emptyList(),
-                    isFaded = isDismissed || !contract.isActive
+                    isFaded = isDismissed || !contract.isActive,
+                    showArea = area == null
                 )
             }
         }
 
         LazyColumn(
             modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 16.dp)
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = if (hasToolbar) 0.dp else 16.dp, bottom = 16.dp)
         ) {
             if (state.active.isNotEmpty()) {
                 item(key = "summary") {
@@ -582,6 +591,8 @@ private fun ContractItem(
     editAction: EditAction?,
     accessibilityActions: List<CustomAccessibilityAction>,
     isFaded: Boolean,
+    /** Whether the category of the contract is shown, not needed within the tab of a category */
+    showArea: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val formatter = LocalCurrencyFormatter.current
@@ -642,16 +653,26 @@ private fun ContractItem(
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
-                        Text(
-                            text = if (contract.isActive)
-                                stringResource(R.string.next_contracts_next, dateFormatter.format(contract.nextExpectedDate))
-                            else
-                                stringResource(R.string.next_contracts_last, dateFormatter.format(contract.lastDate)),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = if (contract.isActive)
+                                    stringResource(R.string.next_contracts_next, dateFormatter.format(contract.nextExpectedDate))
+                                else
+                                    stringResource(R.string.next_contracts_last, dateFormatter.format(contract.lastDate)),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 1
+                            )
+                            val area = contract.area
+                            if (showArea && area != null) {
+                                AreaBadge(
+                                    area,
+                                    Modifier
+                                        .padding(start = 6.dp)
+                                        .weight(1f, fill = false)
+                                )
+                            }
+                        }
                     }
                     if (editAction == null) {
                         PriceChangeIndicator(contract, currency)
@@ -674,6 +695,27 @@ private fun ContractItem(
                 }
             }
         }
+    }
+}
+
+/**
+ * Category of a contract as small box in the second line of a list item
+ */
+@Composable
+private fun AreaBadge(area: ContractArea, modifier: Modifier = Modifier) {
+    Surface(
+        shape = RoundedCornerShape(4.dp),
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        modifier = modifier
+    ) {
+        Text(
+            area.label(),
+            style = MaterialTheme.typography.labelSmall,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(horizontal = 6.dp, vertical = 1.dp)
+        )
     }
 }
 
@@ -706,7 +748,13 @@ private fun PreviewTheme(content: @Composable () -> Unit) {
 
 private fun previewState(): ContractsUiState.Ready {
     val today = LocalDate.now()
-    fun contract(name: String, interval: ContractInterval, vararg amounts: Long, last: LocalDate = today.minusDays(5)) =
+    fun contract(
+        name: String,
+        interval: ContractInterval,
+        vararg amounts: Long,
+        category: String? = null,
+        last: LocalDate = today.minusDays(5),
+    ) =
         Contract(
             signature = name,
             name = name,
@@ -717,7 +765,8 @@ private fun previewState(): ContractsUiState.Ready {
                     date = last.minus(interval.step.multipliedBy(amounts.size - 1 - i)),
                     amount = -amount,
                     accountId = 1,
-                    accountLabel = "Girokonto"
+                    accountLabel = "Girokonto",
+                    categoryPath = category
                 )
             },
             nextExpectedDate = last.plus(interval.step),
@@ -725,11 +774,14 @@ private fun previewState(): ContractsUiState.Ready {
         )
     return buildContractsState(
         listOf(
-            contract("Netflix", ContractInterval.MONTHLY, 1299, 1299, 1799),
-            contract("Stadtwerke", ContractInterval.MONTHLY, 8500, 8500, 8500),
-            contract("Kfz-Versicherung", ContractInterval.QUARTERLY, 12050, 12050, 12050),
+            contract("Netflix", ContractInterval.MONTHLY, 1299, 1299, 1799, category = "Freizeit > Streaming"),
+            contract("Stadtwerke", ContractInterval.MONTHLY, 8500, 8500, 8500, category = "Wohnen > Strom"),
+            contract("Kfz-Versicherung", ContractInterval.QUARTERLY, 12050, 12050, 12050, category = "Auto > Kfz-Versicherung"),
             contract("ADAC", ContractInterval.YEARLY, 9400, 9400),
-            contract("Fitnessstudio", ContractInterval.MONTHLY, 2990, 2990, 2990, last = today.minusMonths(5)),
+            contract(
+                "Fitnessstudio", ContractInterval.MONTHLY, 2990, 2990, 2990,
+                category = "Freizeit > Fitness", last = today.minusMonths(5)
+            ),
             contract("Bäckerei", ContractInterval.WEEKLY, 450, 480, 450, 470),
         ),
         ContractSettings(consent = true, dismissed = setOf("Bäckerei"), names = mapOf("Stadtwerke" to "Strom"))
