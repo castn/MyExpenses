@@ -15,6 +15,7 @@ import androidx.paging.cachedIn
 import app.cash.copper.flow.mapToList
 import app.cash.copper.flow.observeQuery
 import java.time.LocalDate
+import java.time.ZoneId
 import java.util.UUID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -29,6 +30,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.json.JSONArray
@@ -38,6 +40,10 @@ import org.totschnig.myexpenses.adapter.TransactionPagingSource
 import org.totschnig.myexpenses.db2.tagMapFlow
 import org.totschnig.myexpenses.model.AccountGrouping
 import org.totschnig.myexpenses.model.CurrencyUnit
+import org.totschnig.myexpenses.next.balance.BalancePeriod
+import org.totschnig.myexpenses.next.balance.BalanceTransaction
+import org.totschnig.myexpenses.next.balance.BalanceUiState
+import org.totschnig.myexpenses.next.balance.MonthlyBalance
 import org.totschnig.myexpenses.provider.DataBaseAccount.Companion.HOME_AGGREGATE_ID
 import org.totschnig.myexpenses.provider.DatabaseConstants.WHERE_NOT_SPLIT_PART
 import org.totschnig.myexpenses.provider.DatabaseConstants.WHERE_NOT_VOID
@@ -54,6 +60,7 @@ import org.totschnig.myexpenses.provider.KEY_PAYEE_NAME
 import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.provider.KEY_STATUS
 import org.totschnig.myexpenses.provider.KEY_TEMPLATEID
+import org.totschnig.myexpenses.provider.KEY_TRANSFER_ACCOUNT
 import org.totschnig.myexpenses.provider.KEY_TRANSFER_PEER
 import org.totschnig.myexpenses.provider.STATUS_ARCHIVE
 import org.totschnig.myexpenses.provider.STATUS_UNCOMMITTED
@@ -113,17 +120,80 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                 .flowOn(Dispatchers.Default)
             else flowOf(null)
         }
+            // Contracts, incomes and the balance all need the detection, it should run only once
+            .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), replay = 1)
     }
 
-    val state: StateFlow<ContractsUiState> by lazy {
+    private fun stateOf(direction: ContractDirection) =
         combine(settings, detected) { settings, contracts ->
             when (settings.consent) {
                 null -> ContractsUiState.AskConsent
                 false -> ContractsUiState.Declined
-                true -> contracts?.let { buildContractsState(it, settings) } ?: ContractsUiState.Loading
+                true -> contracts?.let { all -> buildContractsState(all.filter { it.direction == direction }, settings) }
+                    ?: ContractsUiState.Loading
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ContractsUiState.Loading)
+
+    /** Contracts, i.e. recurring debits */
+    val state: StateFlow<ContractsUiState> by lazy { stateOf(ContractDirection.EXPENSE) }
+
+    /** Recurring credits, e.g. salary */
+    val incomeState: StateFlow<ContractsUiState> by lazy { stateOf(ContractDirection.INCOME) }
+
+    /** Ids of cash, bank and credit card accounts, set from the account list */
+    private val dailyAccountIds = MutableStateFlow<Set<Long>?>(null)
+
+    fun setDailyAccountIds(ids: Set<Long>) {
+        dailyAccountIds.value = ids
     }
+
+    /**
+     * What came in and went out of the daily accounts since the last salary, including the
+     * contract debits still to come until the next one
+     */
+    val balance: StateFlow<BalanceUiState> by lazy {
+        combine(state, incomeState, dailyAccountIds) { contracts, incomes, daily -> Triple(contracts, incomes, daily) }
+            .flatMapLatest { (contracts, incomes, daily) ->
+                when {
+                    contracts == ContractsUiState.AskConsent -> flowOf(BalanceUiState.AskConsent)
+                    contracts == ContractsUiState.Declined -> flowOf(BalanceUiState.Declined)
+                    contracts !is ContractsUiState.Ready || incomes !is ContractsUiState.Ready || daily == null ->
+                        flowOf(BalanceUiState.Loading)
+
+                    else -> {
+                        val today = LocalDate.now()
+                        val period = BalancePeriod.of(incomes.active, today)
+                        periodTransactions(period).map {
+                            BalanceUiState.Ready(
+                                MonthlyBalance.compute(period, it, daily, contracts.active + contracts.ended),
+                                today
+                            )
+                        }
+                    }
+                }
+            }
+            .flowOn(Dispatchers.Default)
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), BalanceUiState.Loading)
+    }
+
+    private fun periodTransactions(period: BalancePeriod): Flow<List<BalanceTransaction>> =
+        contentResolver.observeQuery(
+            uri = TRANSACTIONS_URI,
+            projection = BALANCE_PROJECTION,
+            selection = BALANCE_SELECTION,
+            selectionArgs = arrayOf(period.start.startOfDayEpoch().toString(), period.end.startOfDayEpoch().toString()),
+            notifyForDescendants = true
+        ).mapToList {
+            BalanceTransaction(
+                id = it.getLong(KEY_ROWID),
+                date = epoch2LocalDate(it.getLong(KEY_DATE)),
+                amount = it.getLong(KEY_AMOUNT_HOME_EQUIVALENT),
+                accountId = it.getLong(KEY_ACCOUNTID),
+                transferAccountId = it.getLongOrNull(KEY_TRANSFER_ACCOUNT)
+            )
+        }
+
+    private fun LocalDate.startOfDayEpoch() = atStartOfDay(ZoneId.systemDefault()).toEpochSecond()
 
     /** Fixed filter of [contractTransactions], never persisted, so that it cannot affect the account screens */
     private val contractFilter = MutableStateFlow<Criterion?>(null)
@@ -158,7 +228,12 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
     }
 
     fun showTransactionsOf(contract: Contract) {
-        contractFilter.value = TransactionIdCriterion(contract.displayName, contract.transactions.map { it.id })
+        showTransactions(contract.displayName, contract.transactions.map { it.id })
+    }
+
+    /** Shows the given transactions in [contractTransactions] */
+    fun showTransactions(label: String, ids: List<Long>) {
+        contractFilter.value = TransactionIdCriterion(label, ids)
     }
 
     fun setConsent(consent: Boolean) {
@@ -252,6 +327,14 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
     )
 
     companion object {
+        private val BALANCE_PROJECTION = arrayOf(
+            KEY_ROWID, KEY_DATE, KEY_AMOUNT_HOME_EQUIVALENT, KEY_ACCOUNTID, KEY_TRANSFER_ACCOUNT
+        )
+
+        /** All transactions of the period, transfers included, split parts not, since their parents count */
+        private val BALANCE_SELECTION = "$KEY_DATE >= ? AND $KEY_DATE < ? AND $WHERE_NOT_SPLIT_PART" +
+                " AND $KEY_STATUS NOT IN ($STATUS_UNCOMMITTED, $STATUS_ARCHIVE) AND $WHERE_NOT_VOID"
+
         private val KEY_CONSENT = booleanPreferencesKey("next_contracts_consent")
         private val KEY_DISMISSED = stringSetPreferencesKey("next_contracts_dismissed")
         /** JSON object mapping signatures to custom names */
@@ -301,10 +384,10 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
         )
 
         /**
-         * Debits that are no transfers. Split transactions are taken as a whole, because the payee
+         * Debits and credits that are no transfers. Split transactions are taken as a whole, because the payee
          * is stored with the parent. Archived transactions are left out (they are split parts of the archive).
          */
-        private val SELECTION = "$KEY_AMOUNT < 0 AND $KEY_TRANSFER_PEER IS NULL AND $WHERE_NOT_SPLIT_PART" +
+        private val SELECTION = "$KEY_AMOUNT != 0 AND $KEY_TRANSFER_PEER IS NULL AND $WHERE_NOT_SPLIT_PART" +
                 " AND $KEY_STATUS NOT IN ($STATUS_UNCOMMITTED, $STATUS_ARCHIVE) AND $WHERE_NOT_VOID" +
                 " AND $KEY_DATE >= ?"
     }

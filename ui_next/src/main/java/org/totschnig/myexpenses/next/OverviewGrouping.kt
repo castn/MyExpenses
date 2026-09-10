@@ -15,6 +15,12 @@ import org.totschnig.myexpenses.viewmodel.data.FullAccount
 private val dailyAccountTypes = setOf(PREDEFINED_NAME_CASH, PREDEFINED_NAME_BANK, PREDEFINED_NAME_CCARD)
 
 /**
+ * Cash, bank and credit card accounts: where the money for daily life comes from and goes to
+ */
+val FullAccount.isDailyAccount: Boolean
+    get() = type.name in dailyAccountTypes
+
+/**
  * Groups [accounts] into titled sections for the overview, following the user's [grouping].
  * With grouping by type, cash, bank and credit card accounts are merged into one section
  * that comes first, all other types keep their own section.
@@ -28,7 +34,7 @@ fun groupAccountsForOverview(
 ): List<Pair<String, List<FullAccount>>> {
     val sorted = accounts.sortedBy { it.sortKey }
     val (daily, others) = if (grouping == AccountGrouping.TYPE)
-        sorted.partition { it.type.name in dailyAccountTypes }
+        sorted.partition { it.isDailyAccount }
     else emptyList<FullAccount>() to sorted
 
     @Suppress("UNCHECKED_CAST")

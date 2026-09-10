@@ -84,9 +84,44 @@ class ContractDetectorTest {
     }
 
     @Test
-    fun ignoresIncomeAndTransactionsWithoutPayee() {
-        assertTrue(detector.detect(series(6, Period.ofMonths(1), amount = 300000)).isEmpty())
+    fun ignoresTransactionsWithoutPayee() {
         assertTrue(detector.detect(series(6, Period.ofMonths(1), payeeId = null)).isEmpty())
+    }
+
+    @Test
+    fun detectsIncome() {
+        val salary = detector.detect(series(6, Period.ofMonths(1), amount = 300000)).single()
+        assertEquals(ContractDirection.INCOME, salary.direction)
+        assertEquals(300000, salary.lastAmount)
+        assertEquals("in:p1|MONTHLY", salary.signature)
+    }
+
+    @Test
+    fun keepsContractSignatures() {
+        val contract = detector.detect(series(6, Period.ofMonths(1))).single()
+        assertEquals(ContractDirection.EXPENSE, contract.direction)
+        assertEquals("p1|MONTHLY", contract.signature)
+    }
+
+    @Test
+    fun ignoresSalaryWithChristmasBonus() {
+        // Bonus paid together with the salary: one booking with twice the amount
+        val salary = series(12, Period.ofMonths(1)) { if (it == 6) 600000 else 300000 }
+        val contract = detector.detect(salary).single()
+        assertEquals(ContractInterval.MONTHLY, contract.interval)
+        assertEquals(11, contract.transactions.size)
+        assertEquals(300000, contract.lastAmount)
+    }
+
+    @Test
+    fun separatesDebitsAndRefundsOfSamePayee() {
+        val debits = series(6, Period.ofMonths(1), amount = -5000)
+        val refunds = series(3, Period.ofMonths(3), amount = 5000, last = today.minusDays(20))
+        val contracts = detector.detect(debits + refunds)
+        assertEquals(
+            setOf(ContractDirection.EXPENSE to 6, ContractDirection.INCOME to 3),
+            contracts.map { it.direction to it.transactions.size }.toSet()
+        )
     }
 
     @Test

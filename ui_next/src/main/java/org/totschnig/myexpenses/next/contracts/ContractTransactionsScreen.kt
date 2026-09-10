@@ -12,6 +12,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import org.totschnig.myexpenses.compose.transactions.FutureCriterion
 import org.totschnig.myexpenses.compose.transactions.TransactionEvent
 import org.totschnig.myexpenses.compose.transactions.TransactionEventHandler
@@ -43,6 +45,30 @@ fun ContractTransactionsScreen(
     modifier: Modifier = Modifier,
     transactionList: @Composable (Modifier) -> Unit,
 ) {
+    FixedTransactionsScreen(
+        title = contract.displayName.ifEmpty { "–" },
+        subtitle = pluralStringResource(
+            R.plurals.next_contracts_based_on,
+            contract.transactions.size,
+            contract.transactions.size
+        ),
+        onBack = onBack,
+        modifier = modifier,
+        transactionList = transactionList
+    )
+}
+
+/**
+ * A fixed set of transactions with a title, e.g. the debits of a contract
+ */
+@Composable
+fun FixedTransactionsScreen(
+    title: String,
+    subtitle: String?,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    transactionList: @Composable (Modifier) -> Unit,
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -60,22 +86,20 @@ fun ContractTransactionsScreen(
             }
             Column(Modifier.padding(start = 4.dp, end = 16.dp)) {
                 Text(
-                    contract.displayName.ifEmpty { "–" },
+                    title,
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
-                Text(
-                    pluralStringResource(
-                        R.plurals.next_contracts_based_on,
-                        contract.transactions.size,
-                        contract.transactions.size
-                    ),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                subtitle?.let {
+                    Text(
+                        it,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
         }
         transactionList(Modifier.weight(1f))
@@ -113,4 +137,17 @@ fun ContractTransactionList(
         isReadOnly = true,
         showDateAndAccount = true
     )
+}
+
+/**
+ * The debits of [contract] from [viewModel], updated when further debits are detected
+ */
+@Composable
+fun ContractTransactionList(
+    viewModel: ContractsViewModel,
+    contract: Contract,
+    modifier: Modifier = Modifier,
+) {
+    LaunchedEffect(contract.transactions) { viewModel.showTransactionsOf(contract) }
+    ContractTransactionList(viewModel.contractTransactions.collectAsLazyPagingItems(), modifier)
 }

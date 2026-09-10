@@ -82,4 +82,33 @@
     <string name="next_contracts_edit_area">Edit category</string>
     <string name="next_contracts_delete_area">Delete category</string>
     <string name="next_contracts_delete_area_confirm">Contracts in “%1$s” go back to their automatic category.</string>
+    <string name="next_balance_title">Current month</string>
+    <string name="next_balance_income">Income</string>
+    <string name="next_balance_expenses">Expenses</string>
+    <string name="next_balance_available">available</string>
+    <plurals name="next_balance_until_salary">
+        <item quantity="one">until your next salary in %d day</item>
+        <item quantity="other">until your next salary in %d days</item>
+    </plurals>
+    <plurals name="next_balance_until_month_end">
+        <item quantity="one">until the end of the month in %d day</item>
+        <item quantity="other">until the end of the month in %d days</item>
+    </plurals>
+    <string name="next_balance_consent">See at a glance how much is left until your next salary. For this, regular payments are detected in your transactions. The analysis runs only on your device.</string>
+    <string name="next_balance_details">In detail</string>
+    <string name="next_balance_contracts_upcoming">%1$s of it still to come</string>
+    <string name="next_balance_savings">Savings</string>
+    <string name="next_balance_other">Other expenses</string>
+    <string name="next_balance_available_total">Available</string>
+    <string name="next_balance_per_day">Ø %1$s / day</string>
+    <string name="next_income_title">Regular income</string>
+    <string name="next_income_per_month">Regular income per month</string>
+    <plurals name="next_income_count">
+        <item quantity="one">%d income</item>
+        <item quantity="other">%d incomes</item>
+    </plurals>
+    <string name="next_income_empty">No regular income found</string>
+    <string name="next_income_empty_hint">Regular income like your salary is detected automatically from regular credits of the same payer.</string>
+    <string name="next_income_next">Next credit</string>
+    <string name="next_income_account">Receiving account</string>
 </resources>

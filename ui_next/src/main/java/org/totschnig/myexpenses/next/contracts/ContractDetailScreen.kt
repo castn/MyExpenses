@@ -60,6 +60,7 @@ import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import kotlin.math.absoluteValue
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.next.R
@@ -158,7 +159,7 @@ fun ContractDetailScreen(
     }
     val formatter = LocalCurrencyFormatter.current
     val dateFormatter = remember { DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM) }
-    fun debit(amount: Long) = "− " + formatter.convAmount(amount, currency)
+    fun debit(amount: Long) = (if (contract.isIncome) "+ " else "− ") + formatter.convAmount(amount, currency)
 
     Column(
         modifier = modifier
@@ -179,7 +180,7 @@ fun ContractDetailScreen(
         ) {
             DetailCard {
                 Header(contract, onRename = { showRenameDialog = true })
-                CategoryChip(
+                if (!contract.isIncome) CategoryChip(
                     contract = contract,
                     onClick = { showAreaDialog = true },
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
@@ -190,11 +191,11 @@ fun ContractDetailScreen(
                 }
                 InfoRow(
                     stringResource(R.string.next_contracts_total),
-                    debit(contract.transactions.sumOf { -it.amount })
+                    debit(contract.transactions.sumOf { it.amount.absoluteValue })
                 )
                 if (contract.isActive) {
                     InfoRow(
-                        stringResource(R.string.next_contracts_next_debit),
+                        stringResource(if (contract.isIncome) R.string.next_income_next else R.string.next_contracts_next_debit),
                         dateFormatter.format(contract.nextExpectedDate)
                     )
                 } else {
@@ -216,7 +217,7 @@ fun ContractDetailScreen(
             SectionTitle(stringResource(R.string.next_contracts_details))
             DetailCard {
                 InfoRow(
-                    stringResource(R.string.next_contracts_account),
+                    stringResource(if (contract.isIncome) R.string.next_income_account else R.string.next_contracts_account),
                     contract.transactions.mapNotNull { it.accountLabel }.distinct().joinToString()
                         .ifEmpty { "–" },
                     isFirst = true

@@ -2,6 +2,7 @@ package org.totschnig.myexpenses.next.contracts
 
 import java.time.LocalDate
 import java.time.Period
+import kotlin.math.absoluteValue
 
 /**
  * How often a contract is debited.
@@ -53,7 +54,18 @@ data class ContractTransaction(
 )
 
 /**
- * A detected recurring payment.
+ * Whether money goes out of (contracts) or comes into (e.g. salary) the accounts
+ */
+enum class ContractDirection {
+    EXPENSE, INCOME;
+
+    companion object {
+        fun of(amount: Long) = if (amount < 0) EXPENSE else INCOME
+    }
+}
+
+/**
+ * A detected recurring payment, a contract for debits or a regular income for credits.
  *
  * All amounts are positive and in minor units of the home currency.
  */
@@ -70,11 +82,12 @@ data class Contract(
     /** How the user wants the [area] to be determined */
     val areaChoice: AreaChoice = AreaChoice.Automatic,
     val interval: ContractInterval,
-    /** Debits that make up this contract, oldest first */
+    /** Payments that make up this contract, oldest first */
     val transactions: List<ContractTransaction>,
     val nextExpectedDate: LocalDate,
     /** False, if the contract has not been debited for longer than its interval */
     val isActive: Boolean,
+    val direction: ContractDirection = ContractDirection.EXPENSE,
 ) {
     val displayName: String get() = customName ?: name
 
@@ -89,10 +102,12 @@ data class Contract(
 
     val lastTransaction: ContractTransaction get() = transactions.last()
     val lastDate: LocalDate get() = lastTransaction.date
-    val lastAmount: Long get() = -lastTransaction.amount
+    val lastAmount: Long get() = lastTransaction.amount.absoluteValue
 
-    /** Amount of the debit before the last one, null if there is none */
-    val previousAmount: Long? get() = transactions.getOrNull(transactions.size - 2)?.amount?.let { -it }
+    /** Amount of the payment before the last one, null if there is none */
+    val previousAmount: Long? get() = transactions.getOrNull(transactions.size - 2)?.amount?.absoluteValue
+
+    val isIncome: Boolean get() = direction == ContractDirection.INCOME
 
     val categoryPath: String? get() = lastTransaction.categoryPath
     val categoryIcon: String? get() = lastTransaction.categoryIcon

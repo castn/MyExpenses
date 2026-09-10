@@ -170,6 +170,9 @@ fun NextMainScreen(
     pageContent: @Composable (pageAccount: PageAccount, isCurrent: Boolean) -> Unit,
     transactionList: @Composable (PageAccount) -> Unit,
     contractsContent: @Composable () -> Unit,
+    /** Card of the overview, opens [balanceDetails] */
+    balanceCard: @Composable (modifier: Modifier, onOpen: () -> Unit) -> Unit = { _, _ -> },
+    balanceDetails: @Composable (onBack: () -> Unit, onOpenContracts: () -> Unit) -> Unit = { _, _ -> },
 ) {
 
     LaunchedEffect(Unit) {
@@ -259,6 +262,7 @@ fun NextMainScreen(
     // On phones the bottom bar of the new design replaces the bar of the navigation suite
     val useNextBar = layoutType.isBar()
     var selectedTab by rememberSaveable { mutableStateOf(NextTab.Overview) }
+    var showBalanceDetails by rememberSaveable { mutableStateOf(false) }
 
     val isRail = layoutType.isRail()
     val context = LocalContext.current
@@ -398,6 +402,19 @@ fun NextMainScreen(
                 return@NavigationSuiteScaffold
             }
 
+            if (useNextBar && showBalanceDetails) {
+                Surface(Modifier.windowInsetsPadding(WindowInsets.statusBars)) {
+                    balanceDetails(
+                        { showBalanceDetails = false },
+                        {
+                            showBalanceDetails = false
+                            selectedTab = NextTab.Contracts
+                        }
+                    )
+                }
+                return@NavigationSuiteScaffold
+            }
+
             BackHandler(enabled = !is2Pane && navigator.canNavigateBack()) {
                 scope.launch {
                     navigator.navigateBack()
@@ -440,6 +457,7 @@ fun NextMainScreen(
                                 val format = LocalCurrencyFormatter.current
                                 val resources = LocalResources.current
                                 NextOverviewScreen(
+                                    header = { modifier -> balanceCard(modifier) { showBalanceDetails = true } },
                                     budgets = budgets,
                                     onBudgetClick = { onBudgetClick(it.id) },
                                     sections = groupAccountsForOverview(
@@ -599,6 +617,7 @@ fun NextMainScreen(
                         NextTab.Menu -> showBottomSheet = true
                         NextTab.Overview -> {
                             selectedTab = tab
+                            showBalanceDetails = false
                             scope.launch {
                                 navigator.navigateToRoot(ListDetailPaneScaffoldRole.List)
                             }

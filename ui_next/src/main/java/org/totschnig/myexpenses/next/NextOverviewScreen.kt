@@ -117,6 +117,8 @@ fun NextOverviewScreen(
     /** Called with the ids of all shown accounts in their new order, after the user moved one */
     onReorderAccounts: (List<Long>) -> Unit = {},
     bankIcon: (@Composable (Modifier, Long) -> Unit)? = null,
+    /** First card, above the budgets, e.g. the balance of the current month */
+    header: (@Composable (Modifier) -> Unit)? = null,
 ) {
     var isReordering by rememberSaveable { mutableStateOf(false) }
     BackHandler(enabled = isReordering) { isReordering = false }
@@ -188,6 +190,11 @@ fun NextOverviewScreen(
             modifier = Modifier.weight(1f),
             contentPadding = contentPadding
         ) {
+            if (header != null) {
+                item(key = "header") {
+                    header(Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp))
+                }
+            }
             item(key = "budgets") {
                 BudgetCard(
                     budgets = budgets,

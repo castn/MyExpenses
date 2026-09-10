@@ -24,6 +24,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
 import androidx.compose.material.icons.filled.Add
@@ -58,6 +59,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -107,12 +109,18 @@ fun NextContractsScreen(
     onDeleteArea: (CustomArea) -> Unit = {},
     /** Renders the debits of a contract, see [ContractTransactionList] */
     contractTransactions: @Composable (Contract, Modifier) -> Unit = { _, _ -> },
+    /**
+     * Shows regular incomes instead of contracts: without categories, with a title and [onBack]
+     * instead of the tabs
+     */
+    isIncome: Boolean = false,
+    onBack: () -> Unit = {},
 ) {
     /** Key of the category of the selected tab, null for all contracts */
     var selectedAreaKey by rememberSaveable { mutableStateOf<String?>(null) }
     var showCreateAreaDialog by rememberSaveable { mutableStateOf(false) }
     val ready = state as? ContractsUiState.Ready
-    val areas = ready?.areas.orEmpty()
+    val areas = if (isIncome) emptyList() else ready?.areas.orEmpty()
     // The category may have lost its last contract or been deleted
     val selectedArea = areas.find { it.key == selectedAreaKey }
     var openedSignature by rememberSaveable { mutableStateOf<String?>(null) }
@@ -160,7 +168,26 @@ fun NextContractsScreen(
                 onDismiss = { showCreateAreaDialog = false }
             )
         }
-        PrimaryScrollableTabRow(
+        if (isIncome) {
+            Row(
+                modifier = Modifier.padding(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = onBack) {
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.next_back)
+                    )
+                }
+                Text(
+                    stringResource(R.string.next_income_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(start = 4.dp)
+                )
+            }
+        } else PrimaryScrollableTabRow(
             selectedTabIndex = selectedArea?.let { areas.indexOf(it) + 1 } ?: 0,
             edgePadding = 16.dp
         ) {
@@ -209,6 +236,7 @@ fun NextContractsScreen(
             is ContractsUiState.Ready -> ContractList(
                 state = selectedArea?.let(state::forArea) ?: state,
                 area = selectedArea,
+                isIncome = isIncome,
                 onRenameArea = onRenameArea,
                 onDeleteArea = onDeleteArea,
                 currency = currency,
@@ -299,6 +327,7 @@ private fun ContractList(
     state: ContractsUiState.Ready,
     /** The category [state] is limited to, null for all contracts */
     area: ContractArea?,
+    isIncome: Boolean,
     onRenameArea: (CustomArea, String) -> Unit,
     onDeleteArea: (CustomArea) -> Unit,
     currency: CurrencyUnit,
@@ -335,7 +364,7 @@ private fun ContractList(
 
     // Custom categories can be managed even without contracts, so they get the toolbar anyway
     if (state.isEmpty && area !is CustomArea) {
-        EmptyState(isArea, modifier)
+        EmptyState(isArea, modifier, isIncome)
         return
     }
 
@@ -372,7 +401,7 @@ private fun ContractList(
 
         // All contracts removed: nothing to show outside of the edit mode
         if (state.isEmpty || !isEditing && state.active.isEmpty() && state.ended.isEmpty()) {
-            EmptyState(isArea, Modifier.weight(1f))
+            EmptyState(isArea, Modifier.weight(1f), isIncome)
             return@Column
         }
 
@@ -401,7 +430,7 @@ private fun ContractList(
                         CustomAccessibilityAction(renameLabel) { renaming = contract.signature; true }
                     ) else emptyList(),
                     isFaded = isDismissed || !contract.isActive,
-                    showArea = area == null
+                    showArea = area == null && !isIncome
                 )
             }
         }
@@ -416,7 +445,8 @@ private fun ContractList(
                         monthlyAmount = state.active.sumOf { it.monthlyAmount },
                         yearlyAmount = state.active.sumOf { it.yearlyAmount },
                         count = state.active.size,
-                        currency = currency
+                        currency = currency,
+                        isIncome = isIncome
                     )
                 }
             }
@@ -470,7 +500,7 @@ internal val ContractInterval.labelRes: Int
     }
 
 @Composable
-private fun EmptyState(isArea: Boolean, modifier: Modifier = Modifier) {
+private fun EmptyState(isArea: Boolean, modifier: Modifier = Modifier, isIncome: Boolean = false) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -479,12 +509,24 @@ private fun EmptyState(isArea: Boolean, modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            stringResource(if (isArea) R.string.next_contracts_empty_area else R.string.next_contracts_empty),
+            stringResource(
+                when {
+                    isIncome -> R.string.next_income_empty
+                    isArea -> R.string.next_contracts_empty_area
+                    else -> R.string.next_contracts_empty
+                }
+            ),
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center
         )
         Text(
-            stringResource(if (isArea) R.string.next_contracts_empty_area_hint else R.string.next_contracts_empty_hint),
+            stringResource(
+                when {
+                    isIncome -> R.string.next_income_empty_hint
+                    isArea -> R.string.next_contracts_empty_area_hint
+                    else -> R.string.next_contracts_empty_hint
+                }
+            ),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
@@ -532,6 +574,7 @@ private fun SummaryCard(
     yearlyAmount: Long,
     count: Int,
     currency: CurrencyUnit,
+    isIncome: Boolean,
 ) {
     val formatter = LocalCurrencyFormatter.current
     Surface(
@@ -541,7 +584,7 @@ private fun SummaryCard(
     ) {
         Column(Modifier.padding(20.dp)) {
             Text(
-                stringResource(R.string.next_contracts_per_month),
+                stringResource(if (isIncome) R.string.next_income_per_month else R.string.next_contracts_per_month),
                 style = MaterialTheme.typography.labelLarge
             )
             Text(
@@ -553,7 +596,9 @@ private fun SummaryCard(
                 stringResource(
                     R.string.next_contracts_per_year,
                     formatter.convAmount(yearlyAmount, currency)
-                ) + " · " + pluralStringResource(R.plurals.next_contracts_count, count, count),
+                ) + " · " + pluralStringResource(
+                    if (isIncome) R.plurals.next_income_count else R.plurals.next_contracts_count, count, count
+                ),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 4.dp)
             )
@@ -696,9 +741,10 @@ private fun ContractItem(
                     if (editAction == null) {
                         PriceChangeIndicator(contract, currency)
                         Text(
-                            text = formatter.convAmount(contract.lastAmount, currency),
+                            text = (if (contract.isIncome) "+ " else "") + formatter.convAmount(contract.lastAmount, currency),
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.SemiBold,
+                            color = if (contract.isIncome) LocalColors.current.income else Color.Unspecified,
                             modifier = Modifier.padding(start = 8.dp)
                         )
                     }
@@ -752,7 +798,8 @@ private fun PriceChangeIndicator(contract: Contract, currency: CurrencyUnit) {
             R.string.next_contracts_previously,
             LocalCurrencyFormatter.current.convAmount(previous, currency)
         ),
-        tint = if (increased) LocalColors.current.expense else LocalColors.current.income,
+        // More money going out is bad, more coming in is good
+        tint = if (increased != contract.isIncome) LocalColors.current.expense else LocalColors.current.income,
         modifier = Modifier.size(16.dp)
     )
 }

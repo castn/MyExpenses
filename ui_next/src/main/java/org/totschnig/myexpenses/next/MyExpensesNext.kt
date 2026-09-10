@@ -10,7 +10,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.paging.compose.collectAsLazyPagingItems
 import java.io.Serializable
 import org.totschnig.myexpenses.activity.BudgetActivity
 import org.totschnig.myexpenses.activity.BudgetEdit
@@ -25,6 +24,8 @@ import org.totschnig.myexpenses.model.CommodityType
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model.Grouping
+import org.totschnig.myexpenses.next.balance.MonthlyBalanceCard
+import org.totschnig.myexpenses.next.balance.MonthlyBalanceFlow
 import org.totschnig.myexpenses.next.contracts.ContractTransactionList
 import org.totschnig.myexpenses.next.contracts.ContractsViewModel
 import org.totschnig.myexpenses.next.contracts.NextContractsScreen
@@ -122,6 +123,24 @@ class MyExpensesNext : MyExpensesV2() {
                     NextTransactionList(content, Modifier.weight(1f))
                 }
             },
+            balanceCard = { modifier, onOpen ->
+                LaunchedEffect(accounts) {
+                    contractsViewModel.setDailyAccountIds(
+                        accounts.filter { !it.isAggregate && it.isDailyAccount }.map { it.id }.toSet()
+                    )
+                }
+                val balance by contractsViewModel.balance.collectAsStateWithLifecycle()
+                MonthlyBalanceCard(
+                    state = balance,
+                    currency = contractsViewModel.homeCurrency,
+                    onOpen = onOpen,
+                    onConsent = { contractsViewModel.setConsent(true) },
+                    modifier = modifier
+                )
+            },
+            balanceDetails = { onBack, onOpenContracts ->
+                MonthlyBalanceFlow(contractsViewModel, onBack, onOpenContracts)
+            },
             contractsContent = {
                 val state by contractsViewModel.state.collectAsStateWithLifecycle()
                 NextContractsScreen(
@@ -136,12 +155,7 @@ class MyExpensesNext : MyExpensesV2() {
                     onRenameArea = contractsViewModel::renameArea,
                     onDeleteArea = contractsViewModel::deleteArea,
                     contractTransactions = { contract, modifier ->
-                        // Ids change when further debits are detected
-                        LaunchedEffect(contract.transactions) { contractsViewModel.showTransactionsOf(contract) }
-                        ContractTransactionList(
-                            contractsViewModel.contractTransactions.collectAsLazyPagingItems(),
-                            modifier
-                        )
+                        ContractTransactionList(contractsViewModel, contract, modifier)
                     }
                 )
             }
