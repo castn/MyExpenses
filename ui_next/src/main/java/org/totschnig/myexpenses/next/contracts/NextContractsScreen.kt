@@ -125,6 +125,7 @@ fun NextContractsScreen(
             onBack = { openedSignature = null },
             areas = ready.selectableAreas,
             onSetArea = { onSetArea(openedContract, it) },
+            onRename = { onRename(openedContract, it) },
             onCreateArea = onCreateArea,
             onRenameArea = onRenameArea,
             onDeleteArea = onDeleteArea,

@@ -81,7 +81,24 @@ fun ContractDetailScreen(
     onCreateArea: (String) -> CustomArea = { CustomArea(it, it) },
     onRenameArea: (CustomArea, String) -> Unit = { _, _ -> },
     onDeleteArea: (CustomArea) -> Unit = {},
+    /** Blank to go back to the detected name */
+    onRename: (String) -> Unit = {},
 ) {
+    var showRenameDialog by rememberSaveable { mutableStateOf(false) }
+    if (showRenameDialog) {
+        NameDialog(
+            title = stringResource(R.string.next_contracts_rename),
+            initialName = contract.displayName,
+            // An empty name goes back to the detected one
+            placeholder = contract.name,
+            allowBlank = true,
+            onConfirm = {
+                onRename(it)
+                showRenameDialog = false
+            },
+            onDismiss = { showRenameDialog = false }
+        )
+    }
     var showAreaDialog by rememberSaveable { mutableStateOf(false) }
     var showCreateAreaDialog by rememberSaveable { mutableStateOf(false) }
     /** Key of the custom category being edited */
@@ -158,7 +175,7 @@ fun ContractDetailScreen(
                 .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
         ) {
             DetailCard {
-                Header(contract)
+                Header(contract, onRename = { showRenameDialog = true })
                 CategoryChip(
                     contract = contract,
                     onClick = { showAreaDialog = true },
@@ -251,7 +268,7 @@ private fun SectionTitle(
 }
 
 @Composable
-private fun Header(contract: Contract) {
+private fun Header(contract: Contract, onRename: () -> Unit) {
     Row(
         modifier = Modifier.padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -276,12 +293,29 @@ private fun Header(contract: Contract) {
             }
         }
         Spacer(Modifier.width(16.dp))
-        Column {
+        // Tapping the name renames the contract, the pencil shows that this is possible
+        Row(
+            modifier = Modifier
+                .weight(1f)
+                .clip(RoundedCornerShape(8.dp))
+                .clickable(onClickLabel = stringResource(R.string.next_contracts_rename), onClick = onRename)
+                .padding(vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(
                 contract.displayName.ifEmpty { "–" },
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.weight(1f, fill = false)
+            )
+            Icon(
+                Icons.Default.Edit,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .size(18.dp)
             )
         }
     }
