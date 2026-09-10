@@ -41,6 +41,7 @@ import androidx.paging.LoadState
 import org.totschnig.myexpenses.compose.HierarchicalMenu
 import org.totschnig.myexpenses.compose.LocalColors
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
+import org.totschnig.myexpenses.compose.conditional
 import org.totschnig.myexpenses.compose.Menu
 import org.totschnig.myexpenses.compose.transactions.FutureCriterion
 import org.totschnig.myexpenses.compose.transactions.SelectionHandler
@@ -64,11 +65,17 @@ import kotlin.math.absoluteValue
  * Transaction list of the new design: transactions are grouped by day, each day has a header
  * with the date and the balance of the account at the end of that day.
  * Expects the account of [content] to be grouped by [Grouping.DAY], otherwise day headers are omitted.
+ *
+ * @param isReadOnly transactions only shown, tapping them does nothing
+ * @param showDateAndAccount second line shows date and account instead of details, for lists
+ * without day headers that span several accounts
  */
 @Composable
 fun NextTransactionList(
     content: TransactionListContent,
     modifier: Modifier = Modifier,
+    isReadOnly: Boolean = false,
+    showDateAndAccount: Boolean = false,
 ) {
     val lazyPagingItems = content.lazyPagingItems
     val headerData = content.headerData as? HeaderData
@@ -147,6 +154,8 @@ fun NextTransactionList(
                         isFirst = isFirstInGroup,
                         isLast = isLastInGroup,
                         isFuture = transaction.date >= futureCriterionDate,
+                        isReadOnly = isReadOnly,
+                        showDateAndAccount = showDateAndAccount,
                         selectionHandler = content.selectionHandler,
                         menu = {
                             transactionMenu(
@@ -216,6 +225,8 @@ private fun TransactionItem(
     isFirst: Boolean,
     isLast: Boolean,
     isFuture: Boolean,
+    isReadOnly: Boolean,
+    showDateAndAccount: Boolean,
     selectionHandler: SelectionHandler?,
     menu: () -> Menu,
     modifier: Modifier = Modifier,
@@ -242,18 +253,20 @@ private fun TransactionItem(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .combinedClickable(
-                        onLongClick = if (isSelectable) {
-                            { selectionHandler.toggle(transaction) }
-                        } else null,
-                        onClick = {
-                            if ((selectionHandler?.selectionCount ?: 0) == 0) {
-                                showMenu.value = true
-                            } else if (isSelectable) {
-                                selectionHandler.toggle(transaction)
+                    .conditional(!isReadOnly) {
+                        combinedClickable(
+                            onLongClick = if (isSelectable) {
+                                { selectionHandler.toggle(transaction) }
+                            } else null,
+                            onClick = {
+                                if ((selectionHandler?.selectionCount ?: 0) == 0) {
+                                    showMenu.value = true
+                                } else if (isSelectable) {
+                                    selectionHandler.toggle(transaction)
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                     .voidMarker(transaction.crStatus)
                     .padding(horizontal = 16.dp, vertical = 12.dp)
                     // Planned transactions in the future are shown faded
@@ -275,7 +288,12 @@ private fun TransactionItem(
                     )
                 }
                 Spacer(Modifier.width(16.dp))
-                val (title, subtitle) = transaction.titleAndSubtitle()
+                val (title, details) = transaction.titleAndSubtitle()
+                val dateFormatter = remember { DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM) }
+                val subtitle = if (showDateAndAccount) listOfNotNull(
+                    dateFormatter.format(transaction.date),
+                    transaction.accountLabel?.takeIf { it.isNotBlank() }
+                ).joinToString(" · ") else details
                 Column(Modifier.weight(1f)) {
                     Text(
                         text = title ?: "–",

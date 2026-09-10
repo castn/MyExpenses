@@ -4,24 +4,28 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.collectAsLazyPagingItems
+import java.io.Serializable
 import org.totschnig.myexpenses.activity.BudgetActivity
 import org.totschnig.myexpenses.activity.BudgetEdit
 import org.totschnig.myexpenses.activity.MyExpensesV2
 import org.totschnig.myexpenses.activity.SplashActivity
 import org.totschnig.myexpenses.compose.accounts.AccountEventHandler
-import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.compose.main.AppEventHandler
+import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.model.AccountFlag
 import org.totschnig.myexpenses.model.AccountGroupingKey
 import org.totschnig.myexpenses.model.CommodityType
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model.Grouping
+import org.totschnig.myexpenses.next.contracts.ContractTransactionList
 import org.totschnig.myexpenses.next.contracts.ContractsViewModel
 import org.totschnig.myexpenses.next.contracts.NextContractsScreen
 import org.totschnig.myexpenses.preference.PrefKey
@@ -31,7 +35,6 @@ import org.totschnig.myexpenses.viewmodel.BudgetListViewModel
 import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.viewmodel.data.PageAccount
-import java.io.Serializable
 
 /** Tag for the budget feature request, to create a new budget instead of showing the budget list */
 private const val TAG_ADD_BUDGET = "ADD_BUDGET"
@@ -131,7 +134,15 @@ class MyExpensesNext : MyExpensesV2() {
                     onSetArea = contractsViewModel::setArea,
                     onCreateArea = contractsViewModel::createArea,
                     onRenameArea = contractsViewModel::renameArea,
-                    onDeleteArea = contractsViewModel::deleteArea
+                    onDeleteArea = contractsViewModel::deleteArea,
+                    contractTransactions = { contract, modifier ->
+                        // Ids change when further debits are detected
+                        LaunchedEffect(contract.transactions) { contractsViewModel.showTransactionsOf(contract) }
+                        ContractTransactionList(
+                            contractsViewModel.contractTransactions.collectAsLazyPagingItems(),
+                            modifier
+                        )
+                    }
                 )
             }
         )

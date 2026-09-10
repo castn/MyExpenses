@@ -105,6 +105,8 @@ fun NextContractsScreen(
     onCreateArea: (String) -> CustomArea = { CustomArea(it, it) },
     onRenameArea: (CustomArea, String) -> Unit = { _, _ -> },
     onDeleteArea: (CustomArea) -> Unit = {},
+    /** Renders the debits of a contract, see [ContractTransactionList] */
+    contractTransactions: @Composable (Contract, Modifier) -> Unit = { _, _ -> },
 ) {
     /** Key of the category of the selected tab, null for all contracts */
     var selectedAreaKey by rememberSaveable { mutableStateOf<String?>(null) }
@@ -117,6 +119,18 @@ fun NextContractsScreen(
     val openedContract = ready?.let {
         openedSignature?.let { signature -> (ready.active + ready.ended).find { it.signature == signature } }
     }
+    var showTransactions by rememberSaveable { mutableStateOf(false) }
+    if (openedContract != null && showTransactions) {
+        BackHandler { showTransactions = false }
+        ContractTransactionsScreen(
+            contract = openedContract,
+            onBack = { showTransactions = false },
+            modifier = modifier
+        ) {
+            contractTransactions(openedContract, it)
+        }
+        return
+    }
     if (openedContract != null) {
         BackHandler { openedSignature = null }
         ContractDetailScreen(
@@ -126,6 +140,7 @@ fun NextContractsScreen(
             areas = ready.selectableAreas,
             onSetArea = { onSetArea(openedContract, it) },
             onRename = { onRename(openedContract, it) },
+            onShowTransactions = { showTransactions = true },
             onCreateArea = onCreateArea,
             onRenameArea = onRenameArea,
             onDeleteArea = onDeleteArea,
@@ -200,7 +215,10 @@ fun NextContractsScreen(
                 onDismiss = onDismiss,
                 onRestore = onRestore,
                 onRename = onRename,
-                onOpen = { openedSignature = it.signature },
+                onOpen = {
+                    openedSignature = it.signature
+                    showTransactions = false
+                },
                 modifier = contentModifier
             )
         }

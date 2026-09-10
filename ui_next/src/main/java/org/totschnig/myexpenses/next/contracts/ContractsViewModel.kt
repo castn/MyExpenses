@@ -8,11 +8,18 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import app.cash.copper.flow.mapToList
 import app.cash.copper.flow.observeQuery
+import java.time.LocalDate
+import java.util.UUID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -24,7 +31,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
+import org.totschnig.myexpenses.adapter.TransactionPagingSource
+import org.totschnig.myexpenses.db2.tagMapFlow
+import org.totschnig.myexpenses.model.AccountGrouping
 import org.totschnig.myexpenses.model.CurrencyUnit
+import org.totschnig.myexpenses.provider.DataBaseAccount.Companion.HOME_AGGREGATE_ID
 import org.totschnig.myexpenses.provider.DatabaseConstants.WHERE_NOT_SPLIT_PART
 import org.totschnig.myexpenses.provider.DatabaseConstants.WHERE_NOT_VOID
 import org.totschnig.myexpenses.provider.KEY_ACCOUNTID
@@ -44,17 +58,16 @@ import org.totschnig.myexpenses.provider.KEY_TRANSFER_PEER
 import org.totschnig.myexpenses.provider.STATUS_ARCHIVE
 import org.totschnig.myexpenses.provider.STATUS_UNCOMMITTED
 import org.totschnig.myexpenses.provider.TransactionProvider.TRANSACTIONS_URI
+import org.totschnig.myexpenses.provider.filter.Criterion
+import org.totschnig.myexpenses.provider.filter.TransactionIdCriterion
 import org.totschnig.myexpenses.provider.getLong
 import org.totschnig.myexpenses.provider.getLongOrNull
 import org.totschnig.myexpenses.provider.getStringOrNull
 import org.totschnig.myexpenses.util.epoch2LocalDate
 import org.totschnig.myexpenses.util.toEpoch
 import org.totschnig.myexpenses.viewmodel.ContentResolvingAndroidViewModel
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
-import java.time.LocalDate
-import java.util.UUID
+import org.totschnig.myexpenses.viewmodel.data.PageAccount
+import org.totschnig.myexpenses.viewmodel.data.Transaction2
 
 /**
  * Detects contracts in the debits of all accounts that are not excluded from totals.
@@ -110,6 +123,42 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                 true -> contracts?.let { buildContractsState(it, settings) } ?: ContractsUiState.Loading
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ContractsUiState.Loading)
+    }
+
+    /** Fixed filter of [contractTransactions], never persisted, so that it cannot affect the account screens */
+    private val contractFilter = MutableStateFlow<Criterion?>(null)
+
+    private val tags: StateFlow<Map<String, Pair<String, Int?>>> by lazy {
+        contentResolver.tagMapFlow.stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
+    }
+
+    /**
+     * The debits a contract was detected from, as in the transaction list of an account.
+     * They are loaded from the aggregate of all accounts, since a contract can span several accounts.
+     * Which contract is set with [showTransactionsOf].
+     */
+    val contractTransactions: Flow<PagingData<Transaction2>> by lazy {
+        val allAccounts = PageAccount(
+            id = HOME_AGGREGATE_ID,
+            currencyUnit = homeCurrency,
+            label = "",
+            accountGrouping = AccountGrouping.NONE
+        )
+        Pager(PagingConfig(pageSize = 50)) {
+            TransactionPagingSource(
+                getApplication(),
+                allAccounts,
+                contractFilter,
+                tags,
+                currencyContext,
+                viewModelScope,
+                prefHandler
+            )
+        }.flow.cachedIn(viewModelScope)
+    }
+
+    fun showTransactionsOf(contract: Contract) {
+        contractFilter.value = TransactionIdCriterion(contract.displayName, contract.transactions.map { it.id })
     }
 
     fun setConsent(consent: Boolean) {

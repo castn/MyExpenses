@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
@@ -83,6 +84,8 @@ fun ContractDetailScreen(
     onDeleteArea: (CustomArea) -> Unit = {},
     /** Blank to go back to the detected name */
     onRename: (String) -> Unit = {},
+    /** Opens the debits the contract was detected from */
+    onShowTransactions: () -> Unit = {},
 ) {
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     if (showRenameDialog) {
@@ -200,27 +203,14 @@ fun ContractDetailScreen(
                         dateFormatter.format(contract.lastDate)
                     )
                 }
-            }
-
-            SectionTitle(
-                pluralStringResource(
-                    R.plurals.next_contracts_based_on,
-                    contract.transactions.size,
-                    contract.transactions.size
-                ),
-                color = MaterialTheme.colorScheme.tertiary
-            )
-            DetailCard {
-                contract.transactions.asReversed().forEachIndexed { index, transaction ->
-                    if (index > 0) {
-                        HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
-                    }
-                    TransactionRow(
-                        date = dateFormatter.format(transaction.date),
-                        account = transaction.accountLabel,
-                        amount = debit(-transaction.amount)
-                    )
-                }
+                LinkRow(
+                    pluralStringResource(
+                        R.plurals.next_contracts_based_on,
+                        contract.transactions.size,
+                        contract.transactions.size
+                    ),
+                    onClick = onShowTransactions
+                )
             }
 
             SectionTitle(stringResource(R.string.next_contracts_details))
@@ -254,15 +244,12 @@ private fun DetailCard(content: @Composable ColumnScope.() -> Unit) {
 }
 
 @Composable
-private fun SectionTitle(
-    text: String,
-    color: Color = MaterialTheme.colorScheme.primary,
-) {
+private fun SectionTitle(text: String) {
     Text(
         text,
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Bold,
-        color = color,
+        color = MaterialTheme.colorScheme.primary,
         modifier = Modifier.padding(start = 4.dp, top = 24.dp, bottom = 8.dp)
     )
 }
@@ -487,30 +474,30 @@ private fun AreaDialog(
     )
 }
 
+/**
+ * Row that leads to another page, like "show all" on the overview
+ */
 @Composable
-private fun TransactionRow(date: String, account: String?, amount: String) {
+private fun LinkRow(text: String, onClick: () -> Unit) {
+    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .clickable(onClick = onClick)
+            .padding(start = 16.dp, end = 8.dp, top = 14.dp, bottom = 14.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Column(Modifier.weight(1f)) {
-            Text(date, style = MaterialTheme.typography.bodyLarge)
-            account?.let {
-                Text(
-                    it,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-        }
         Text(
-            amount,
+            text,
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(start = 8.dp)
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.tertiary,
+            modifier = Modifier.weight(1f)
+        )
+        Icon(
+            Icons.AutoMirrored.Filled.KeyboardArrowRight,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.tertiary
         )
     }
 }
