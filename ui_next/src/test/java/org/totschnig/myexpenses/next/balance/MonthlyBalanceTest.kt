@@ -40,28 +40,26 @@ class MonthlyBalanceTest {
 
     @Test
     fun periodRunsFromSalaryToSalary() {
-        val period = BalancePeriod.of(listOf(salary(LocalDate.of(2026, 7, 28), LocalDate.of(2026, 8, 28))), today)
+        val period = BalancePeriod.of(salary(LocalDate.of(2026, 7, 28), LocalDate.of(2026, 8, 28)), today)
         assertEquals(BalancePeriod(LocalDate.of(2026, 8, 28), LocalDate.of(2026, 9, 28), true), period)
         assertEquals(3, period.daysLeft(today))
     }
 
     @Test
     fun salaryBookedInAdvanceDoesNotStartPeriod() {
-        val period = BalancePeriod.of(
-            listOf(salary(LocalDate.of(2026, 8, 28), LocalDate.of(2026, 9, 28))), today
-        )
+        val period = BalancePeriod.of(salary(LocalDate.of(2026, 8, 28), LocalDate.of(2026, 9, 28)), today)
         assertEquals(LocalDate.of(2026, 8, 28), period.start)
     }
 
     @Test
     fun lateSalaryIsExpectedTomorrow() {
-        val period = BalancePeriod.of(listOf(salary(LocalDate.of(2026, 7, 20), LocalDate.of(2026, 8, 20))), today)
+        val period = BalancePeriod.of(salary(LocalDate.of(2026, 7, 20), LocalDate.of(2026, 8, 20)), today)
         assertEquals(today.plusDays(1), period.end)
     }
 
     @Test
     fun fallsBackToCalendarMonth() {
-        val period = BalancePeriod.of(emptyList(), today)
+        val period = BalancePeriod.of(null, today)
         assertEquals(BalancePeriod(LocalDate.of(2026, 9, 1), LocalDate.of(2026, 10, 1), false), period)
         assertFalse(period.isSalaryCycle)
     }

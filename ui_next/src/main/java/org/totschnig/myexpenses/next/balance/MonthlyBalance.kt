@@ -1,7 +1,6 @@
 package org.totschnig.myexpenses.next.balance
 
 import org.totschnig.myexpenses.next.contracts.Contract
-import org.totschnig.myexpenses.next.contracts.ContractInterval
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
@@ -24,15 +23,9 @@ data class BalancePeriod(
 
     companion object {
         /**
-         * From the last salary to the next one. The salary is the highest active monthly income.
-         * Without salary, the calendar month.
-         *
-         * @param incomes regular incomes, without those the user dismissed
+         * From the last payment of [salary] to the next one. Without salary, the calendar month.
          */
-        fun of(incomes: List<Contract>, today: LocalDate): BalancePeriod {
-            val salary = incomes
-                .filter { it.isIncome && it.isActive && it.interval == ContractInterval.MONTHLY }
-                .maxByOrNull { it.lastAmount }
+        fun of(salary: Contract?, today: LocalDate): BalancePeriod {
             // Salaries booked in advance do not start a new period before they arrive
             val lastSalary = salary?.transactions?.map { it.date }?.filter { !it.isAfter(today) }?.maxOrNull()
             if (salary != null && lastSalary != null) {

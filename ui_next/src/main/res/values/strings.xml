@@ -111,4 +111,12 @@
     <string name="next_income_empty_hint">Regular income like your salary is detected automatically from regular credits of the same payer.</string>
     <string name="next_income_next">Next credit</string>
     <string name="next_income_account">Receiving account</string>
+    <string name="next_salary">Salary</string>
+    <string name="next_salary_set">Set as salary</string>
+    <string name="next_salary_automatic">Automatic (%1$s)</string>
+    <string name="next_salary_none_detected">none detected</string>
+    <string name="next_salary_none">No salary, use the calendar month</string>
+    <string name="next_salary_explanation">The monthly balance runs from one salary to the next.</string>
+    <string name="next_balance_salary">Salary: %1$s</string>
+    <string name="next_balance_calendar_month">Calendar month</string>
 </resources>

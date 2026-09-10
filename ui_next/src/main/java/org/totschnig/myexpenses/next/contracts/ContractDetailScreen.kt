@@ -87,6 +87,9 @@ fun ContractDetailScreen(
     onRename: (String) -> Unit = {},
     /** Opens the debits the contract was detected from */
     onShowTransactions: () -> Unit = {},
+    /** For incomes: whether it is the salary */
+    isSalary: Boolean = false,
+    onSalaryClick: () -> Unit = {},
 ) {
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     if (showRenameDialog) {
@@ -180,10 +183,17 @@ fun ContractDetailScreen(
         ) {
             DetailCard {
                 Header(contract, onRename = { showRenameDialog = true })
-                if (!contract.isIncome) CategoryChip(
-                    contract = contract,
+                val chipModifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                if (contract.isIncome) LabelChip(
+                    text = if (isSalary) stringResource(R.string.next_salary) else null,
+                    placeholder = stringResource(R.string.next_salary_set),
+                    onClick = onSalaryClick,
+                    modifier = chipModifier
+                ) else LabelChip(
+                    text = contract.area?.label(),
+                    placeholder = stringResource(R.string.next_contracts_area),
                     onClick = { showAreaDialog = true },
-                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                    modifier = chipModifier
                 )
                 InfoRow(stringResource(contract.interval.labelRes), debit(contract.lastAmount))
                 contract.previousAmount?.takeIf { it != contract.lastAmount }?.let {
@@ -310,31 +320,30 @@ private fun Header(contract: Contract, onRename: () -> Unit) {
 }
 
 /**
- * The category ([ContractArea]) of the contract as small box, or an invitation to choose one.
- * Opens the choice of the category.
+ * A property of the contract as small box, e.g. its category. Without [text], an outlined box
+ * with a plus invites to set it. Tapping it lets the user choose.
  */
 @Composable
-private fun CategoryChip(
-    contract: Contract,
+private fun LabelChip(
+    text: String?,
+    placeholder: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val area = contract.area
-    val label = stringResource(R.string.next_contracts_area)
     Surface(
         onClick = onClick,
         shape = RoundedCornerShape(8.dp),
-        color = if (area != null) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent,
-        contentColor = if (area != null) MaterialTheme.colorScheme.onSecondaryContainer
+        color = if (text != null) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent,
+        contentColor = if (text != null) MaterialTheme.colorScheme.onSecondaryContainer
         else MaterialTheme.colorScheme.onSurfaceVariant,
-        border = if (area == null) BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant) else null,
+        border = if (text == null) BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant) else null,
         modifier = modifier
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (area == null) {
+            if (text == null) {
                 Icon(
                     Icons.Default.Add,
                     contentDescription = null,
@@ -343,10 +352,7 @@ private fun CategoryChip(
                         .padding(end = 4.dp)
                 )
             }
-            Text(
-                if (area == null) label else area.label(),
-                style = MaterialTheme.typography.labelLarge
-            )
+            Text(text ?: placeholder, style = MaterialTheme.typography.labelLarge)
         }
     }
 }

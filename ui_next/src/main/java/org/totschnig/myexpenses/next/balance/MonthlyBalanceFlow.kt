@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
 import org.totschnig.myexpenses.next.R
 import org.totschnig.myexpenses.next.contracts.ContractTransactionList
+import org.totschnig.myexpenses.next.contracts.ContractsUiState
 import org.totschnig.myexpenses.next.contracts.ContractsViewModel
 import org.totschnig.myexpenses.next.contracts.FixedTransactionsScreen
 import org.totschnig.myexpenses.next.contracts.NextContractsScreen
@@ -46,6 +47,20 @@ fun MonthlyBalanceFlow(
         return
     }
     val balance = ready.balance
+    val incomeState by viewModel.incomeState.collectAsStateWithLifecycle()
+    val incomes = incomeState as? ContractsUiState.Ready
+    var showSalaryDialog by rememberSaveable { mutableStateOf(false) }
+    if (showSalaryDialog && incomes != null) {
+        SalaryDialog(
+            incomes = incomes.active,
+            choice = incomes.salaryChoice,
+            onSelect = {
+                viewModel.setSalary(it)
+                showSalaryDialog = false
+            },
+            onDismiss = { showSalaryDialog = false }
+        )
+    }
     val savingsLabel = stringResource(R.string.next_balance_savings)
     val otherLabel = stringResource(R.string.next_balance_other)
 
@@ -61,6 +76,8 @@ fun MonthlyBalanceFlow(
                 onOpenContracts = onOpenContracts,
                 onOpenSavings = { page = BalancePage.Savings }.takeIf { balance.savingsTransactionIds.isNotEmpty() },
                 onOpenOther = { page = BalancePage.Other }.takeIf { balance.otherTransactionIds.isNotEmpty() },
+                salaryName = incomes?.salary?.displayName?.takeIf { balance.period.isSalaryCycle },
+                onChangeSalary = { showSalaryDialog = true },
                 modifier = modifier
             )
         }
@@ -68,7 +85,6 @@ fun MonthlyBalanceFlow(
         BalancePage.Income -> {
             // Registered before the screen, so that its own back handling for details takes precedence
             BackHandler { page = BalancePage.Details }
-            val incomeState by viewModel.incomeState.collectAsStateWithLifecycle()
             NextContractsScreen(
                 state = incomeState,
                 currency = currency,
@@ -77,6 +93,7 @@ fun MonthlyBalanceFlow(
                 onDismiss = viewModel::dismiss,
                 onRestore = viewModel::restore,
                 onRename = viewModel::rename,
+                onSetSalary = viewModel::setSalary,
                 contractTransactions = { contract, contentModifier ->
                     ContractTransactionList(viewModel, contract, contentModifier)
                 },

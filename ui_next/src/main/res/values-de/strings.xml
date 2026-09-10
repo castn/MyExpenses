@@ -111,4 +111,12 @@
     <string name="next_income_empty_hint">Regelmäßige Einnahmen wie dein Gehalt werden automatisch aus regelmäßigen Gutschriften desselben Auftraggebers erkannt.</string>
     <string name="next_income_next">Nächster Eingang</string>
     <string name="next_income_account">Empfangskonto</string>
+    <string name="next_salary">Gehalt</string>
+    <string name="next_salary_set">Als Gehalt festlegen</string>
+    <string name="next_salary_automatic">Automatisch (%1$s)</string>
+    <string name="next_salary_none_detected">keins erkannt</string>
+    <string name="next_salary_none">Kein Gehalt, Kalendermonat verwenden</string>
+    <string name="next_salary_explanation">Die Monatsübersicht läuft von einem Gehalt zum nächsten.</string>
+    <string name="next_balance_salary">Gehalt: %1$s</string>
+    <string name="next_balance_calendar_month">Kalendermonat</string>
 </resources>

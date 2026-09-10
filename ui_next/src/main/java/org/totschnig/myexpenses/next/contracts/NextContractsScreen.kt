@@ -79,6 +79,8 @@ import org.totschnig.myexpenses.compose.LocalColors
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.next.R
+import org.totschnig.myexpenses.next.balance.SalaryChoice
+import org.totschnig.myexpenses.next.balance.SalaryDialog
 import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.compose.Icon as CategoryIcon
 
@@ -115,6 +117,7 @@ fun NextContractsScreen(
      */
     isIncome: Boolean = false,
     onBack: () -> Unit = {},
+    onSetSalary: (SalaryChoice) -> Unit = {},
 ) {
     /** Key of the category of the selected tab, null for all contracts */
     var selectedAreaKey by rememberSaveable { mutableStateOf<String?>(null) }
@@ -139,8 +142,21 @@ fun NextContractsScreen(
         }
         return
     }
+    var showSalaryDialog by rememberSaveable { mutableStateOf(false) }
+    if (showSalaryDialog && ready != null) {
+        SalaryDialog(
+            incomes = ready.active,
+            choice = ready.salaryChoice,
+            onSelect = {
+                onSetSalary(it)
+                showSalaryDialog = false
+            },
+            onDismiss = { showSalaryDialog = false }
+        )
+    }
     if (openedContract != null) {
         BackHandler { openedSignature = null }
+        val isSalary = ready.salary?.signature == openedContract.signature
         ContractDetailScreen(
             contract = openedContract,
             currency = currency,
@@ -149,6 +165,12 @@ fun NextContractsScreen(
             onSetArea = { onSetArea(openedContract, it) },
             onRename = { onRename(openedContract, it) },
             onShowTransactions = { showTransactions = true },
+            isSalary = isSalary,
+            // Making an income the salary is one tap, changing the salary needs the choice
+            onSalaryClick = {
+                if (isSalary) showSalaryDialog = true
+                else onSetSalary(SalaryChoice.Fixed(openedContract.signature))
+            },
             onCreateArea = onCreateArea,
             onRenameArea = onRenameArea,
             onDeleteArea = onDeleteArea,
@@ -430,7 +452,13 @@ private fun ContractList(
                         CustomAccessibilityAction(renameLabel) { renaming = contract.signature; true }
                     ) else emptyList(),
                     isFaded = isDismissed || !contract.isActive,
-                    showArea = area == null && !isIncome
+                    badge = when {
+                        isIncome -> stringResource(R.string.next_salary)
+                            .takeIf { contract.signature == state.salary?.signature }
+                        // Within the tab of a category, it goes without saying
+                        area == null -> contract.area?.label()
+                        else -> null
+                    }
                 )
             }
         }
@@ -655,8 +683,8 @@ private fun ContractItem(
     editAction: EditAction?,
     accessibilityActions: List<CustomAccessibilityAction>,
     isFaded: Boolean,
-    /** Whether the category of the contract is shown, not needed within the tab of a category */
-    showArea: Boolean,
+    /** Small box in the second line, e.g. the category of the contract */
+    badge: String?,
     modifier: Modifier = Modifier,
 ) {
     val formatter = LocalCurrencyFormatter.current
@@ -727,10 +755,9 @@ private fun ContractItem(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 maxLines = 1
                             )
-                            val area = contract.area
-                            if (showArea && area != null) {
-                                AreaBadge(
-                                    area,
+                            if (badge != null) {
+                                Badge(
+                                    badge,
                                     Modifier
                                         .padding(start = 6.dp)
                                         .weight(1f, fill = false)
@@ -764,10 +791,10 @@ private fun ContractItem(
 }
 
 /**
- * Category of a contract as small box in the second line of a list item
+ * Small box in the second line of a list item, e.g. for the category of a contract
  */
 @Composable
-private fun AreaBadge(area: ContractArea, modifier: Modifier = Modifier) {
+private fun Badge(text: String, modifier: Modifier = Modifier) {
     Surface(
         shape = RoundedCornerShape(4.dp),
         color = MaterialTheme.colorScheme.secondaryContainer,
@@ -775,7 +802,7 @@ private fun AreaBadge(area: ContractArea, modifier: Modifier = Modifier) {
         modifier = modifier
     ) {
         Text(
-            area.label(),
+            text,
             style = MaterialTheme.typography.labelSmall,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,

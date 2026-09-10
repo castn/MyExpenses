@@ -1,5 +1,8 @@
 package org.totschnig.myexpenses.next.contracts
 
+import org.totschnig.myexpenses.next.balance.SalaryChoice
+import org.totschnig.myexpenses.next.balance.salary
+
 /**
  * Decisions of the user about detected contracts.
  *
@@ -9,6 +12,7 @@ package org.totschnig.myexpenses.next.contracts
  * @param areas keys of the categories chosen by the user (or [AREA_NONE]) by signature,
  * contracts without entry use the suggested category
  * @param customAreas categories created by the user, in the order they were created
+ * @param salary which regular income is the salary
  */
 data class ContractSettings(
     val consent: Boolean? = null,
@@ -16,6 +20,7 @@ data class ContractSettings(
     val names: Map<String, String> = emptyMap(),
     val areas: Map<String, String> = emptyMap(),
     val customAreas: List<CustomArea> = emptyList(),
+    val salary: SalaryChoice = SalaryChoice.Automatic,
 ) {
     fun areaChoice(signature: String): AreaChoice {
         val key = areas[signature] ?: return AreaChoice.Automatic
@@ -47,7 +52,11 @@ sealed interface ContractsUiState {
         /** Removed by the user, sorted by name */
         val dismissed: List<Contract>,
         val customAreas: List<CustomArea> = emptyList(),
+        val salaryChoice: SalaryChoice = SalaryChoice.Automatic,
     ) : ContractsUiState {
+        /** The regular income that is the salary, see [SalaryChoice] */
+        val salary: Contract? get() = active.salary(salaryChoice)
+
         val isEmpty: Boolean get() = active.isEmpty() && ended.isEmpty() && dismissed.isEmpty()
 
         /**
@@ -86,6 +95,7 @@ fun buildContractsState(contracts: List<Contract>, settings: ContractSettings): 
         active = active.sortedByDescending { it.monthlyAmount },
         ended = ended.sortedByDescending { it.lastDate },
         dismissed = dismissed.sortedBy { it.displayName.lowercase() },
-        customAreas = settings.customAreas
+        customAreas = settings.customAreas,
+        salaryChoice = settings.salary
     )
 }

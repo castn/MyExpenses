@@ -44,6 +44,7 @@ import org.totschnig.myexpenses.next.balance.BalancePeriod
 import org.totschnig.myexpenses.next.balance.BalanceTransaction
 import org.totschnig.myexpenses.next.balance.BalanceUiState
 import org.totschnig.myexpenses.next.balance.MonthlyBalance
+import org.totschnig.myexpenses.next.balance.SalaryChoice
 import org.totschnig.myexpenses.provider.DataBaseAccount.Companion.HOME_AGGREGATE_ID
 import org.totschnig.myexpenses.provider.DatabaseConstants.WHERE_NOT_SPLIT_PART
 import org.totschnig.myexpenses.provider.DatabaseConstants.WHERE_NOT_VOID
@@ -96,7 +97,12 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                 dismissed = preferences[KEY_DISMISSED] ?: emptySet(),
                 names = preferences[KEY_NAMES]?.let(::parseMap) ?: emptyMap(),
                 areas = preferences[KEY_AREAS]?.let(::parseMap) ?: emptyMap(),
-                customAreas = preferences[KEY_CUSTOM_AREAS]?.let(::parseCustomAreas) ?: emptyList()
+                customAreas = preferences[KEY_CUSTOM_AREAS]?.let(::parseCustomAreas) ?: emptyList(),
+                salary = when (val salary = preferences[KEY_SALARY]) {
+                    null -> SalaryChoice.Automatic
+                    SALARY_NONE -> SalaryChoice.None
+                    else -> SalaryChoice.Fixed(salary)
+                }
             )
         }
     }
@@ -162,7 +168,7 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
 
                     else -> {
                         val today = LocalDate.now()
-                        val period = BalancePeriod.of(incomes.active, today)
+                        val period = BalancePeriod.of(incomes.salary, today)
                         periodTransactions(period).map {
                             BalanceUiState.Ready(
                                 MonthlyBalance.compute(period, it, daily, contracts.active + contracts.ended),
@@ -234,6 +240,16 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
     /** Shows the given transactions in [contractTransactions] */
     fun showTransactions(label: String, ids: List<Long>) {
         contractFilter.value = TransactionIdCriterion(label, ids)
+    }
+
+    fun setSalary(choice: SalaryChoice) {
+        edit { preferences ->
+            when (choice) {
+                SalaryChoice.Automatic -> preferences.remove(KEY_SALARY)
+                SalaryChoice.None -> preferences[KEY_SALARY] = SALARY_NONE
+                is SalaryChoice.Fixed -> preferences[KEY_SALARY] = choice.signature
+            }
+        }
     }
 
     fun setConsent(consent: Boolean) {
@@ -343,6 +359,9 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
         private val KEY_AREAS = stringPreferencesKey("next_contracts_areas")
         /** JSON array of the categories created by the user */
         private val KEY_CUSTOM_AREAS = stringPreferencesKey("next_contracts_custom_areas")
+        /** Signature of the income chosen as salary or [SALARY_NONE], missing for the automatic choice */
+        private val KEY_SALARY = stringPreferencesKey("next_contracts_salary")
+        private const val SALARY_NONE = "NONE"
 
         private fun parseMap(json: String): Map<String, String> = try {
             JSONObject(json).let { obj -> obj.keys().asSequence().associateWith { obj.getString(it) } }
