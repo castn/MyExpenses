@@ -255,4 +255,50 @@ class ContractDetectorTest {
         assertTrue(contract.isActive)
         assertEquals(169594, contract.lastAmount)
     }
+
+    @Test
+    fun detectsYearlyIncomeWithSameAmountOnSameDay() {
+        val bonus = detector.detect(
+            listOf(transaction(LocalDate.of(2025, 6, 30), 150000), transaction(LocalDate.of(2026, 6, 30), 150000))
+        ).single()
+        assertEquals(ContractInterval.YEARLY, bonus.interval)
+    }
+
+    @Test
+    fun ignoresYearlyIncomeWithChangingAmount() {
+        // Tax refunds and credits from annual statements differ every year
+        assertTrue(
+            detector.detect(
+                listOf(transaction(LocalDate.of(2025, 7, 22), 50457), transaction(LocalDate.of(2026, 7, 22), 43205))
+            ).isEmpty()
+        )
+    }
+
+    @Test
+    fun ignoresYearlyIncomeOnMovingDate() {
+        // Easter: same amount, but two weeks apart from one year to the next
+        assertTrue(
+            detector.detect(
+                listOf(transaction(LocalDate.of(2025, 4, 17), 2000), transaction(LocalDate.of(2026, 4, 2), 2000))
+            ).isEmpty()
+        )
+    }
+
+    @Test
+    fun ignoresHalfYearlyIncomeByChance() {
+        assertTrue(
+            detector.detect(
+                listOf(transaction(LocalDate.of(2025, 9, 1), 3193), transaction(LocalDate.of(2026, 3, 6), 2678))
+            ).isEmpty()
+        )
+    }
+
+    @Test
+    fun keepsYearlyContractWithChangingAmount() {
+        // Only incomes are checked more strictly, e.g. a yearly inspection costs different amounts
+        val inspection = detector.detect(
+            listOf(transaction(LocalDate.of(2025, 3, 17), -18697), transaction(LocalDate.of(2026, 3, 16), -25578))
+        ).single()
+        assertEquals(ContractInterval.YEARLY, inspection.interval)
+    }
 }

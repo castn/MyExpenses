@@ -59,7 +59,7 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
         val isTemplate = groupKey.isTemplate
         // Transactions created from a template belong together, whatever their amount
         val series = if (isTemplate || group.hasSimilarAmounts(GROUP_AMOUNT_TOLERANCE)) {
-            detectSeries(group)?.let { listOf(it) }
+            detectSeries(group, groupKey.direction)?.let { listOf(it) }
         } else null
         return (series ?: if (isTemplate) emptyList() else
             group.clusterByAmount(CLUSTER_AMOUNT_TOLERANCE).let { clusters ->
@@ -72,7 +72,7 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
                     val own = regularInterval(cluster)
                     if (own != null && own != interval) listOf(cluster) else cluster.splitAtGaps(interval)
                 }.joinConsecutive(interval)
-            }.mapNotNull { detectSeries(it) })
+            }.mapNotNull { detectSeries(it, groupKey.direction) })
             .withSignatures(key, groupKey.direction)
     }
 
@@ -81,10 +81,26 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
     /**
      * @param transactions sorted by date
      */
-    private fun detectSeries(transactions: List<ContractTransaction>): Series? {
+    private fun detectSeries(transactions: List<ContractTransaction>, direction: ContractDirection): Series? {
         val interval = regularInterval(transactions) ?: return null
         if (transactions.size < interval.minOccurrences) return null
+        if (direction == ContractDirection.INCOME && !transactions.isLikelyRareIncome(interval)) return null
         return Series(interval, transactions)
+    }
+
+    /**
+     * Yearly and half-yearly incomes are received only twice in the analysed period, and a single
+     * gap can match by chance, e.g. with gifts, tax refunds or credits from annual statements.
+     * With only two payments, they must therefore come on the expected day and with the same amount.
+     */
+    private fun List<ContractTransaction>.isLikelyRareIncome(interval: ContractInterval): Boolean {
+        if (interval != ContractInterval.YEARLY && interval != ContractInterval.HALF_YEARLY) return true
+        if (size > 2) return true
+        val (first, second) = this
+        val daysOff = ChronoUnit.DAYS.between(first.date.plus(interval.step), second.date).absoluteValue
+        val amounts = listOf(first.amount.absoluteValue, second.amount.absoluteValue)
+        return daysOff <= RARE_INCOME_MAX_DAYS_OFF &&
+                amounts.max() <= amounts.min() * (1 + RARE_INCOME_AMOUNT_TOLERANCE)
     }
 
     /**
@@ -221,6 +237,12 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
 
         /** Maximum deviation of amounts within one cluster */
         const val CLUSTER_AMOUNT_TOLERANCE = 0.2
+
+        /** How many days a yearly or half-yearly income with only two payments may deviate from the expected date */
+        const val RARE_INCOME_MAX_DAYS_OFF = 7
+
+        /** How much the two payments of a yearly or half-yearly income may differ */
+        const val RARE_INCOME_AMOUNT_TOLERANCE = 0.1
 
         /** A contract counts as ended, if it has not been debited for its interval plus this grace period */
         const val MIN_GRACE_DAYS = 7
