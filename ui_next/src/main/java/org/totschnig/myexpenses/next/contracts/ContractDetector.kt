@@ -13,7 +13,9 @@ import kotlin.math.max
  *    by payee. Payments without either are ignored.
  * 2. If the whole group is debited regularly with similar amounts (price changes allowed),
  *    it is one contract. Otherwise the group is split into clusters of similar amounts
- *    (e.g. two different subscriptions from the same payee) and each cluster is checked.
+ *    (e.g. two different subscriptions from the same payee). Clusters that follow each other
+ *    in the rhythm of the series are joined again, since they are one contract with a larger
+ *    change of the amount, e.g. a raise of the salary. Each resulting series is checked.
  * 3. A series is regular, if the median of the days between its debits matches a
  *    [ContractInterval] and at least [MIN_REGULAR_SHARE] of all gaps match that interval.
  */
@@ -60,7 +62,17 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
             detectSeries(group)?.let { listOf(it) }
         } else null
         return (series ?: if (isTemplate) emptyList() else
-            group.clusterByAmount(CLUSTER_AMOUNT_TOLERANCE).mapNotNull { detectSeries(it) })
+            group.clusterByAmount(CLUSTER_AMOUNT_TOLERANCE).let { clusters ->
+                // Only a payee with a clear rhythm, e.g. an employer, continues a series with other
+                // amounts. For shops, joining single purchases would invent contracts.
+                val interval = group.usualInterval()
+                if (interval == null) clusters
+                else clusters.flatMap { cluster ->
+                    // A cluster with a rhythm of its own is a separate contract, e.g. a yearly one
+                    val own = regularInterval(cluster)
+                    if (own != null && own != interval) listOf(cluster) else cluster.splitAtGaps(interval)
+                }.joinConsecutive(interval)
+            }.mapNotNull { detectSeries(it) })
             .withSignatures(key, groupKey.direction)
     }
 
@@ -70,13 +82,71 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
      * @param transactions sorted by date
      */
     private fun detectSeries(transactions: List<ContractTransaction>): Series? {
+        val interval = regularInterval(transactions) ?: return null
+        if (transactions.size < interval.minOccurrences) return null
+        return Series(interval, transactions)
+    }
+
+    /**
+     * The interval, if [transactions] (sorted by date) follow one regularly, regardless of how many they are
+     */
+    private fun regularInterval(transactions: List<ContractTransaction>): ContractInterval? {
         if (transactions.size < 2) return null
         val gaps = transactions.zipWithNext { a, b -> ChronoUnit.DAYS.between(a.date, b.date) }
         val median = gaps.sorted()[gaps.size / 2]
         val interval = ContractInterval.forDays(median) ?: return null
-        if (transactions.size < interval.minOccurrences) return null
-        if (gaps.count { it in interval } < gaps.size * MIN_REGULAR_SHARE) return null
-        return Series(interval, transactions)
+        return interval.takeIf { gaps.count { it in interval } >= gaps.size * MIN_REGULAR_SHARE }
+    }
+
+    /**
+     * The interval payments of a whole group (sorted by date) usually follow, even if it is
+     * not regular as a whole, e.g. because of bonus payments in between
+     */
+    private fun List<ContractTransaction>.usualInterval(): ContractInterval? {
+        if (size < 2) return null
+        val gaps = zipWithNext { a, b -> ChronoUnit.DAYS.between(a.date, b.date) }
+        return ContractInterval.forDays(gaps.sorted()[gaps.size / 2])
+    }
+
+    /**
+     * Splits a cluster of similar amounts (sorted by date) where it pauses longer than [interval]
+     * of the whole group. With an amount that varies a lot, e.g. a salary, amounts of distant
+     * months then do not end up in one cluster, which would hide that the series continued
+     * with other amounts.
+     */
+    private fun List<ContractTransaction>.splitAtGaps(interval: ContractInterval): List<List<ContractTransaction>> {
+        val runs = mutableListOf(mutableListOf(first()))
+        zipWithNext().forEach { (previous, next) ->
+            if (ChronoUnit.DAYS.between(previous.date, next.date) > interval.maxDays) runs += mutableListOf<ContractTransaction>()
+            runs.last() += next
+        }
+        return runs
+    }
+
+    /**
+     * Joins runs of amounts that follow each other: a run starts after the last payment of
+     * another one, at most one missed payment later, and together they stay regular. That is a
+     * change of the amount, e.g. a raise, not a second contract, which would run at the same time.
+     *
+     * @param this runs, each sorted by date
+     */
+    private fun List<List<ContractTransaction>>.joinConsecutive(interval: ContractInterval): List<List<ContractTransaction>> {
+        val series = mutableListOf<List<ContractTransaction>>()
+        sortedBy { it.first().date }.forEach { cluster ->
+            val predecessor = series.indices
+                .filter { series[it].isContinuedBy(cluster, interval) }
+                .maxByOrNull { series[it].last().date }
+            if (predecessor != null) series[predecessor] = series[predecessor] + cluster
+            else series += cluster
+        }
+        return series
+    }
+
+    private fun List<ContractTransaction>.isContinuedBy(next: List<ContractTransaction>, interval: ContractInterval): Boolean {
+        if (!next.first().date.isAfter(last().date)) return false
+        if (regularInterval(this + next) != interval) return false
+        val gap = ChronoUnit.DAYS.between(last().date, next.first().date)
+        return gap >= interval.minDays && gap <= interval.maxDays * 2
     }
 
     /**

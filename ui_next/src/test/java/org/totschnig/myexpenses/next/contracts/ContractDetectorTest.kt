@@ -104,12 +104,12 @@ class ContractDetectorTest {
     }
 
     @Test
-    fun ignoresSalaryWithChristmasBonus() {
-        // Bonus paid together with the salary: one booking with twice the amount
+    fun keepsSalaryWithChristmasBonus() {
+        // Bonus paid together with the salary: one booking with twice the amount, still the salary of that month
         val salary = series(12, Period.ofMonths(1)) { if (it == 6) 600000 else 300000 }
         val contract = detector.detect(salary).single()
         assertEquals(ContractInterval.MONTHLY, contract.interval)
-        assertEquals(11, contract.transactions.size)
+        assertEquals(12, contract.transactions.size)
         assertEquals(300000, contract.lastAmount)
     }
 
@@ -195,5 +195,64 @@ class ContractDetectorTest {
             mapOf(500L to "p1|MONTHLY", 5000L to "p1|MONTHLY|1"),
             contracts.associate { it.lastAmount to it.signature }
         )
+    }
+
+    @Test
+    fun keepsSalaryAfterLargeRaise() {
+        // 1.200 € → 1.750 €, more than the tolerance for similar amounts
+        val salary = detector.detect(
+            series(8, Period.ofMonths(1)) { if (it < 6) 120000 else 175000 }
+        ).single()
+        assertEquals(8, salary.transactions.size)
+        assertTrue(salary.isActive)
+        assertEquals(175000, salary.lastAmount)
+        assertEquals(120000, salary.transactions[5].amount)
+    }
+
+    @Test
+    fun keepsSalaryRightAfterRaise() {
+        val salary = detector.detect(
+            series(7, Period.ofMonths(1)) { if (it < 6) 120000 else 175000 }
+        ).single()
+        assertEquals(7, salary.transactions.size)
+        assertTrue(salary.isActive)
+    }
+
+    @Test
+    fun keepsContractAfterSeveralPriceChanges() {
+        val contract = detector.detect(
+            series(9, Period.ofMonths(1)) { -1000L - 500L * (it / 3) * (it / 3) }
+        ).single()
+        assertEquals(9, contract.transactions.size)
+        assertEquals(3000, contract.lastAmount)
+    }
+
+    @Test
+    fun doesNotJoinOneOffAfterEndedContract() {
+        val ended = series(6, Period.ofMonths(1), amount = -2000, last = today.minusMonths(5))
+        val oneOff = transaction(today.minusDays(10), -9000)
+        val contract = detector.detect(ended + oneOff).single()
+        assertEquals(6, contract.transactions.size)
+        assertFalse(contract.isActive)
+    }
+
+    @Test
+    fun keepsSalaryWithStronglyVaryingAmounts() {
+        // Salary of a part-time job over two years: varying hours, bonus months, two raises,
+        // plus extra payments in November
+        val amounts = listOf(
+            49618L, 129732, 115415, 49755, 52133, 48919, 39842, 47104, 42843,
+            82040, 82040, 82040, 82040, 159520, 161114, 82040, 82040, 82040,
+            114000, 114000, 114000, 114000, 114000, 114000, 167962, 169594
+        )
+        val salary = series(amounts.size, Period.ofMonths(1), last = LocalDate.of(2026, 8, 31)) { amounts[it] }
+        val extras = listOf(
+            transaction(LocalDate.of(2024, 11, 18), 37807),
+            transaction(LocalDate.of(2025, 11, 18), 33516)
+        )
+        val contract = detector.detect(salary + extras).single { it.interval == ContractInterval.MONTHLY }
+        assertEquals(26, contract.transactions.size)
+        assertTrue(contract.isActive)
+        assertEquals(169594, contract.lastAmount)
     }
 }
