@@ -4,7 +4,8 @@ import org.totschnig.myexpenses.next.contracts.Contract
 import org.totschnig.myexpenses.next.contracts.ContractInterval
 
 /**
- * Which regular income is the salary, it determines the period of the monthly balance
+ * Which regular incomes are salaries. The highest one determines the period of the monthly balance,
+ * the others are expected as income within it.
  */
 sealed interface SalaryChoice {
     /** The highest active monthly income */
@@ -13,7 +14,8 @@ sealed interface SalaryChoice {
     /** No salary, the balance uses the calendar month */
     data object None : SalaryChoice
 
-    data class Fixed(val signature: String) : SalaryChoice
+    /** Chosen by the user, e.g. for people with more than one job */
+    data class Fixed(val signatures: Set<String>) : SalaryChoice
 }
 
 /**
@@ -24,12 +26,13 @@ fun List<Contract>.automaticSalary(): Contract? =
         .maxByOrNull { it.lastAmount }
 
 /**
- * The salary according to [choice]. A chosen income that is no longer received falls back
- * to the automatic choice.
+ * The salaries according to [choice], highest first. Chosen incomes that are no longer received
+ * are left out; if none is left, the automatic choice applies.
  */
-fun List<Contract>.salary(choice: SalaryChoice): Contract? = when (choice) {
-    SalaryChoice.Automatic -> automaticSalary()
-    SalaryChoice.None -> null
-    is SalaryChoice.Fixed -> find { it.signature == choice.signature && it.isIncome && it.isActive }
-        ?: automaticSalary()
+fun List<Contract>.salaries(choice: SalaryChoice): List<Contract> = when (choice) {
+    SalaryChoice.Automatic -> listOfNotNull(automaticSalary())
+    SalaryChoice.None -> emptyList()
+    is SalaryChoice.Fixed -> filter { it.signature in choice.signatures && it.isIncome && it.isActive }
+        .sortedByDescending { it.lastAmount }
+        .ifEmpty { listOfNotNull(automaticSalary()) }
 }

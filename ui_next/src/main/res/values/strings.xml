@@ -115,8 +115,9 @@
     <string name="next_salary_set">Set as salary</string>
     <string name="next_salary_automatic">Automatic (%1$s)</string>
     <string name="next_salary_none_detected">none detected</string>
-    <string name="next_salary_none">No salary, use the calendar month</string>
     <string name="next_salary_explanation">The monthly balance runs from one salary to the next.</string>
     <string name="next_balance_salary">Salary: %1$s</string>
     <string name="next_balance_calendar_month">Calendar month</string>
+    <string name="next_salary_none_hint">Without any, the calendar month is used.</string>
+    <string name="next_balance_income_upcoming">%1$s of it still expected</string>
 </resources>

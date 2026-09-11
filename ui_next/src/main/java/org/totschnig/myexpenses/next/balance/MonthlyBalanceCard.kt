@@ -193,7 +193,8 @@ private fun AmountBar(
 
 internal fun previewBalance() = MonthlyBalance(
     period = BalancePeriod(LocalDate.now().minusDays(22), LocalDate.now().plusDays(8), true),
-    income = 153684,
+    incomeBooked = 153684,
+    incomeUpcoming = 0,
     contractsBooked = -70000,
     contractsUpcoming = -12526,
     savings = -35000,

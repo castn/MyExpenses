@@ -115,8 +115,9 @@
     <string name="next_salary_set">Als Gehalt festlegen</string>
     <string name="next_salary_automatic">Automatisch (%1$s)</string>
     <string name="next_salary_none_detected">keins erkannt</string>
-    <string name="next_salary_none">Kein Gehalt, Kalendermonat verwenden</string>
     <string name="next_salary_explanation">Die Monatsübersicht läuft von einem Gehalt zum nächsten.</string>
     <string name="next_balance_salary">Gehalt: %1$s</string>
     <string name="next_balance_calendar_month">Kalendermonat</string>
+    <string name="next_salary_none_hint">Ohne Auswahl gilt der Kalendermonat.</string>
+    <string name="next_balance_income_upcoming">davon %1$s noch erwartet</string>
 </resources>

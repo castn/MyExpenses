@@ -76,7 +76,8 @@ fun MonthlyBalanceFlow(
                 onOpenContracts = onOpenContracts,
                 onOpenSavings = { page = BalancePage.Savings }.takeIf { balance.savingsTransactionIds.isNotEmpty() },
                 onOpenOther = { page = BalancePage.Other }.takeIf { balance.otherTransactionIds.isNotEmpty() },
-                salaryName = incomes?.salary?.displayName?.takeIf { balance.period.isSalaryCycle },
+                salaryName = incomes?.salaries?.takeIf { balance.period.isSalaryCycle && it.isNotEmpty() }
+                    ?.joinToString { it.displayName },
                 onChangeSalary = { showSalaryDialog = true },
                 modifier = modifier
             )

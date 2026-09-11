@@ -57,12 +57,14 @@ data class BalanceTransaction(
  * What came in and went out of the daily accounts in a [period]. Amounts in minor units of the
  * home currency; money going out is negative.
  *
+ * @param incomeUpcoming further salaries expected until the end of the period, not booked yet
  * @param contractsUpcoming contract debits expected until the end of the period, not booked yet
  * @param savings transfers between daily accounts and other accounts, negative if money was saved
  */
 data class MonthlyBalance(
     val period: BalancePeriod,
-    val income: Long,
+    val incomeBooked: Long,
+    val incomeUpcoming: Long,
     val contractsBooked: Long,
     val contractsUpcoming: Long,
     val savings: Long,
@@ -71,6 +73,8 @@ data class MonthlyBalance(
     val savingsTransactionIds: List<Long>,
     val otherTransactionIds: List<Long>,
 ) {
+    val income: Long get() = incomeBooked + incomeUpcoming
+
     val contracts: Long get() = contractsBooked + contractsUpcoming
 
     /** Everything going out, as positive amount */
@@ -82,12 +86,15 @@ data class MonthlyBalance(
         /**
          * @param transactions of all accounts, only those of [dailyAccountIds] within [period] count
          * @param contracts detected contracts, without those the user dismissed
+         * @param salaries see [salaries], the first one determines the period, the others are
+         * expected within it
          */
         fun compute(
             period: BalancePeriod,
             transactions: List<BalanceTransaction>,
             dailyAccountIds: Set<Long>,
             contracts: List<Contract>,
+            salaries: List<Contract> = emptyList(),
         ): MonthlyBalance {
             val expenseContracts = contracts.filter { !it.isIncome }
             val contractTransactionIds = expenseContracts.flatMapTo(HashSet()) { contract -> contract.transactions.map { it.id } }
@@ -110,11 +117,10 @@ data class MonthlyBalance(
                 }
             return MonthlyBalance(
                 period = period,
-                income = income.sumOf { it.amount },
+                incomeBooked = income.sumOf { it.amount },
+                incomeUpcoming = salaries.upcoming(period, dailyAccountIds),
                 contractsBooked = contractDebits.sumOf { it.amount },
-                contractsUpcoming = -expenseContracts
-                    .filter { it.isActive && it.lastTransaction.accountId in dailyAccountIds }
-                    .sumOf { it.lastAmount * it.upcomingDebits(period) },
+                contractsUpcoming = -expenseContracts.upcoming(period, dailyAccountIds),
                 savings = savings.sumOf { it.amount },
                 other = other.sumOf { it.amount },
                 incomeTransactionIds = income.map { it.id },
@@ -124,10 +130,17 @@ data class MonthlyBalance(
         }
 
         /**
-         * Number of debits still expected in [period]. Includes debits of the period that are
+         * Sum of the payments still expected in [period] on daily accounts
+         */
+        private fun List<Contract>.upcoming(period: BalancePeriod, dailyAccountIds: Set<Long>) =
+            filter { it.isActive && it.lastTransaction.accountId in dailyAccountIds }
+                .sumOf { it.lastAmount * it.upcomingPayments(period) }
+
+        /**
+         * Number of payments still expected in [period]. Includes payments of the period that are
          * a few days late, since they are still going to come.
          */
-        private fun Contract.upcomingDebits(period: BalancePeriod): Int {
+        private fun Contract.upcomingPayments(period: BalancePeriod): Int {
             var count = 0
             var date = nextExpectedDate
             while (date.isBefore(period.end)) {

@@ -98,10 +98,10 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                 names = preferences[KEY_NAMES]?.let(::parseMap) ?: emptyMap(),
                 areas = preferences[KEY_AREAS]?.let(::parseMap) ?: emptyMap(),
                 customAreas = preferences[KEY_CUSTOM_AREAS]?.let(::parseCustomAreas) ?: emptyList(),
-                salary = when (val salary = preferences[KEY_SALARY]) {
-                    null -> SalaryChoice.Automatic
-                    SALARY_NONE -> SalaryChoice.None
-                    else -> SalaryChoice.Fixed(salary)
+                salary = when {
+                    preferences[KEY_SALARY] == SALARY_NONE -> SalaryChoice.None
+                    preferences[KEY_SALARIES].isNullOrEmpty() -> SalaryChoice.Automatic
+                    else -> SalaryChoice.Fixed(preferences[KEY_SALARIES]!!)
                 }
             )
         }
@@ -168,10 +168,11 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
 
                     else -> {
                         val today = LocalDate.now()
-                        val period = BalancePeriod.of(incomes.salary, today)
+                        val salaries = incomes.salaries
+                        val period = BalancePeriod.of(salaries.firstOrNull(), today)
                         periodTransactions(period).map {
                             BalanceUiState.Ready(
-                                MonthlyBalance.compute(period, it, daily, contracts.active + contracts.ended),
+                                MonthlyBalance.compute(period, it, daily, contracts.active + contracts.ended, salaries),
                                 today
                             )
                         }
@@ -244,10 +245,12 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
 
     fun setSalary(choice: SalaryChoice) {
         edit { preferences ->
+            preferences.remove(KEY_SALARY)
+            preferences.remove(KEY_SALARIES)
             when (choice) {
-                SalaryChoice.Automatic -> preferences.remove(KEY_SALARY)
+                SalaryChoice.Automatic -> {}
                 SalaryChoice.None -> preferences[KEY_SALARY] = SALARY_NONE
-                is SalaryChoice.Fixed -> preferences[KEY_SALARY] = choice.signature
+                is SalaryChoice.Fixed -> preferences[KEY_SALARIES] = choice.signatures
             }
         }
     }
@@ -359,8 +362,10 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
         private val KEY_AREAS = stringPreferencesKey("next_contracts_areas")
         /** JSON array of the categories created by the user */
         private val KEY_CUSTOM_AREAS = stringPreferencesKey("next_contracts_custom_areas")
-        /** Signature of the income chosen as salary or [SALARY_NONE], missing for the automatic choice */
+        /** [SALARY_NONE] for the calendar month */
         private val KEY_SALARY = stringPreferencesKey("next_contracts_salary")
+        /** Signatures of the incomes chosen as salaries, missing for the automatic choice */
+        private val KEY_SALARIES = stringSetPreferencesKey("next_contracts_salaries")
         private const val SALARY_NONE = "NONE"
 
         private fun parseMap(json: String): Map<String, String> = try {

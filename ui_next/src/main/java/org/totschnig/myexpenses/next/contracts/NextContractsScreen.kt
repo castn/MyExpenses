@@ -156,7 +156,7 @@ fun NextContractsScreen(
     }
     if (openedContract != null) {
         BackHandler { openedSignature = null }
-        val isSalary = ready.salary?.signature == openedContract.signature
+        val isSalary = ready.isSalary(openedContract)
         ContractDetailScreen(
             contract = openedContract,
             currency = currency,
@@ -166,10 +166,12 @@ fun NextContractsScreen(
             onRename = { onRename(openedContract, it) },
             onShowTransactions = { showTransactions = true },
             isSalary = isSalary,
-            // Making an income the salary is one tap, changing the salary needs the choice
+            // Adding an income to the salaries is one tap, changing them needs the choice
             onSalaryClick = {
                 if (isSalary) showSalaryDialog = true
-                else onSetSalary(SalaryChoice.Fixed(openedContract.signature))
+                else onSetSalary(
+                    SalaryChoice.Fixed(ready.salaries.map { it.signature }.toSet() + openedContract.signature)
+                )
             },
             onCreateArea = onCreateArea,
             onRenameArea = onRenameArea,
@@ -454,7 +456,7 @@ private fun ContractList(
                     isFaded = isDismissed || !contract.isActive,
                     badge = when {
                         isIncome -> stringResource(R.string.next_salary)
-                            .takeIf { contract.signature == state.salary?.signature }
+                            .takeIf { state.isSalary(contract) }
                         // Within the tab of a category, it goes without saying
                         area == null -> contract.area?.label()
                         else -> null

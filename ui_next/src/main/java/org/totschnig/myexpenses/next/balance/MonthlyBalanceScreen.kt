@@ -51,7 +51,7 @@ import org.totschnig.myexpenses.util.convAmount
  *
  * @param onOpenSavings null, if there is nothing to show
  * @param onOpenOther null, if there is nothing to show
- * @param salaryName name of the income the period is based on, null for the calendar month
+ * @param salaryName names of the salaries the period is based on, null for the calendar month
  * @param onChangeSalary lets the user choose the salary
  */
 @Composable
@@ -144,6 +144,10 @@ fun MonthlyBalanceScreen(
                         stringResource(R.string.next_balance_income),
                         signed(balance.income),
                         colors.income,
+                        hint = if (balance.incomeUpcoming != 0L) stringResource(
+                            R.string.next_balance_income_upcoming,
+                            formatter.convAmount(balance.incomeUpcoming, currency)
+                        ) else null,
                         onClick = onOpenIncome
                     )
                     BalanceRow(

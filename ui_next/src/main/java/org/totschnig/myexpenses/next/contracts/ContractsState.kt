@@ -1,7 +1,7 @@
 package org.totschnig.myexpenses.next.contracts
 
 import org.totschnig.myexpenses.next.balance.SalaryChoice
-import org.totschnig.myexpenses.next.balance.salary
+import org.totschnig.myexpenses.next.balance.salaries
 
 /**
  * Decisions of the user about detected contracts.
@@ -12,7 +12,7 @@ import org.totschnig.myexpenses.next.balance.salary
  * @param areas keys of the categories chosen by the user (or [AREA_NONE]) by signature,
  * contracts without entry use the suggested category
  * @param customAreas categories created by the user, in the order they were created
- * @param salary which regular income is the salary
+ * @param salary which regular incomes are salaries
  */
 data class ContractSettings(
     val consent: Boolean? = null,
@@ -54,8 +54,10 @@ sealed interface ContractsUiState {
         val customAreas: List<CustomArea> = emptyList(),
         val salaryChoice: SalaryChoice = SalaryChoice.Automatic,
     ) : ContractsUiState {
-        /** The regular income that is the salary, see [SalaryChoice] */
-        val salary: Contract? get() = active.salary(salaryChoice)
+        /** The regular incomes that are salaries, highest first, see [SalaryChoice] */
+        val salaries: List<Contract> get() = active.salaries(salaryChoice)
+
+        fun isSalary(contract: Contract) = salaries.any { it.signature == contract.signature }
 
         val isEmpty: Boolean get() = active.isEmpty() && ended.isEmpty() && dismissed.isEmpty()
 

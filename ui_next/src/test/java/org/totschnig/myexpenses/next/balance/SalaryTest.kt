@@ -1,7 +1,7 @@
 package org.totschnig.myexpenses.next.balance
 
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.totschnig.myexpenses.next.contracts.Contract
 import org.totschnig.myexpenses.next.contracts.ContractDirection
@@ -37,22 +37,26 @@ class SalaryTest {
 
     @Test
     fun automaticChoosesHighestActiveMonthlyIncome() {
-        assertEquals(rent, incomes.salary(SalaryChoice.Automatic))
+        assertEquals(listOf(rent), incomes.salaries(SalaryChoice.Automatic))
     }
 
     @Test
-    fun userCanChooseSalary() {
-        assertEquals(salary, incomes.salary(SalaryChoice.Fixed("salary")))
+    fun userCanChooseSeveralSalariesHighestFirst() {
+        assertEquals(listOf(salary, childBenefit), incomes.salaries(SalaryChoice.Fixed(setOf("child", "salary"))))
     }
 
     @Test
     fun userCanChooseNoSalary() {
-        assertNull(incomes.salary(SalaryChoice.None))
+        assertTrue(incomes.salaries(SalaryChoice.None).isEmpty())
     }
 
     @Test
-    fun chosenIncomeNoLongerReceivedFallsBackToAutomatic() {
-        assertEquals(rent, incomes.salary(SalaryChoice.Fixed("oldJob")))
-        assertEquals(rent, incomes.salary(SalaryChoice.Fixed("dismissed")))
+    fun incomesNoLongerReceivedAreLeftOut() {
+        assertEquals(listOf(salary), incomes.salaries(SalaryChoice.Fixed(setOf("salary", "oldJob"))))
+    }
+
+    @Test
+    fun fallsBackToAutomaticWhenNoChosenIncomeIsLeft() {
+        assertEquals(listOf(rent), incomes.salaries(SalaryChoice.Fixed(setOf("oldJob", "dismissed"))))
     }
 }

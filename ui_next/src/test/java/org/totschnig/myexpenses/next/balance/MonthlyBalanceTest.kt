@@ -119,4 +119,23 @@ class MonthlyBalanceTest {
         val fromSavings = contract(-1000, LocalDate.of(2026, 8, 28), account = savingsAccount)
         assertTrue(MonthlyBalance.compute(period, emptyList(), daily, listOf(fromSavings)).contractsUpcoming == 0L)
     }
+
+    @Test
+    fun expectsFurtherSalariesWithinPeriod() {
+        val period = BalancePeriod(LocalDate.of(2026, 9, 1), LocalDate.of(2026, 10, 1), true)
+        // Determines the period, next payment on 01.10.
+        val jobA = contract(300000, LocalDate.of(2026, 8, 1), LocalDate.of(2026, 9, 1), firstId = 1)
+        // Next payment on 15.09., already booked
+        val jobB = contract(80000, LocalDate.of(2026, 8, 15), LocalDate.of(2026, 9, 15), firstId = 10)
+        // Next payment on 28.09., still expected
+        val jobC = contract(20000, LocalDate.of(2026, 7, 28), LocalDate.of(2026, 8, 28), firstId = 20)
+        val transactions = listOf(
+            BalanceTransaction(2, LocalDate.of(2026, 9, 1), 300000, giro),
+            BalanceTransaction(11, LocalDate.of(2026, 9, 15), 80000, giro),
+        )
+        val balance = MonthlyBalance.compute(period, transactions, daily, emptyList(), listOf(jobA, jobB, jobC))
+        assertEquals(380000, balance.incomeBooked)
+        assertEquals(20000, balance.incomeUpcoming)
+        assertEquals(400000, balance.available)
+    }
 }
