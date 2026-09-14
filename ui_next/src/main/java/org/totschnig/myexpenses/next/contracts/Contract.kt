@@ -92,6 +92,8 @@ data class Contract(
     val direction: ContractDirection = ContractDirection.EXPENSE,
     /** True, if a [ContractRule] of the user defines the contract, false for a suggestion of [ContractDetector] */
     val isConfirmed: Boolean = false,
+    /** For a suggestion: detected with so much certainty that it is confirmed without asking the user */
+    val isConfident: Boolean = false,
 ) {
     val displayName: String get() = customName ?: name
 

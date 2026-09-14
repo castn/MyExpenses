@@ -13,7 +13,7 @@ import kotlin.math.roundToLong
  * [payeeIds], and, if given, its amount lies in [amountRange].
  *
  * @param amountRange absolute amounts in minor units, only for payees that also have payments
- * that are not part of the contract, e.g. single orders besides a subscription
+ * with other amounts that are not part of the contract, e.g. single orders besides a subscription
  * @param interval how often the contract is paid, as confirmed by the user
  * @param name custom name
  * @param areaKey key of the chosen [ContractArea], [ContractSettings.AREA_NONE] for none,
@@ -83,14 +83,15 @@ data class ContractRule(
                 }
             )
             val ids = payments.mapTo(HashSet()) { it.id }
-            val hasOtherPayments = transactions.any { it.id !in ids && rule.matches(it) }
-            return if (hasOtherPayments) {
-                val amounts = payments.map { it.amount.absoluteValue }
-                rule.copy(
-                    amountRange = (amounts.min() * (1 - AMOUNT_RANGE_TOLERANCE)).roundToLong()..
-                            (amounts.max() * (1 + AMOUNT_RANGE_TOLERANCE)).roundToLong()
-                )
-            } else rule
+            val otherPayments = transactions.filter { it.id !in ids && rule.matches(it) }
+            if (otherPayments.isEmpty()) return rule
+            val amounts = payments.map { it.amount.absoluteValue }
+            val withRange = rule.copy(
+                amountRange = (amounts.min() * (1 - AMOUNT_RANGE_TOLERANCE)).roundToLong()..
+                        (amounts.max() * (1 + AMOUNT_RANGE_TOLERANCE)).roundToLong()
+            )
+            // A range that does not tell anything apart would only cut off a future raise
+            return if (otherPayments.any { !withRange.matches(it) }) withRange else rule
         }
     }
 }

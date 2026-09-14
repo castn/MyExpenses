@@ -3,6 +3,7 @@ package org.totschnig.myexpenses.next.contracts
 import android.app.Application
 import android.database.Cursor
 import androidx.datastore.preferences.core.MutablePreferences
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -29,6 +30,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
@@ -91,24 +93,11 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
         get() = currencyContext.homeCurrencyUnit
 
     private val settings: Flow<ContractSettings> by lazy {
-        dataStore.data.map { preferences ->
-            ContractSettings(
-                consent = preferences[KEY_CONSENT],
-                dismissed = preferences[KEY_DISMISSED] ?: emptySet(),
-                names = preferences[KEY_NAMES]?.let(::parseMap) ?: emptyMap(),
-                areas = preferences[KEY_AREAS]?.let(::parseMap) ?: emptyMap(),
-                customAreas = preferences[KEY_CUSTOM_AREAS]?.let(::parseCustomAreas) ?: emptyList(),
-                salary = when {
-                    preferences[KEY_SALARY] == SALARY_NONE -> SalaryChoice.None
-                    preferences[KEY_SALARIES].isNullOrEmpty() -> SalaryChoice.Automatic
-                    else -> SalaryChoice.Fixed(preferences[KEY_SALARIES]!!)
-                }
-            )
-        }
+        dataStore.data.map { it.toContractSettings() }
     }
 
-    /** Detected contracts, null while loading or without consent */
-    private val detected: Flow<List<Contract>?> by lazy {
+    /** Transactions to analyse, null while loading or without consent */
+    private val transactions: Flow<List<ContractTransaction>?> by lazy {
         settings.map { it.consent == true }.distinctUntilChanged().flatMapLatest { hasConsent ->
             if (hasConsent) contentResolver.observeQuery(
                 uri = TRANSACTIONS_URI,
@@ -121,22 +110,72 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                 notifyForDescendants = true
             )
                 .mapToList { it.toContractTransaction() }
-                .map<List<ContractTransaction>, List<Contract>?> { ContractDetector().detect(it) }
+                .map<List<ContractTransaction>, List<ContractTransaction>?> { it }
                 .onStart { emit(null) }
-                .flowOn(Dispatchers.Default)
             else flowOf(null)
         }
-            // Contracts, incomes and the balance all need the detection, it should run only once
+    }
+
+    /** The analysis actions work on, e.g. to create the rule of a suggestion */
+    private val latestAnalysis = MutableStateFlow<ContractAnalysis?>(null)
+
+    /**
+     * Confirmed contracts from the rules of the user and suggestions for the other payments,
+     * null while loading or without consent
+     */
+    private val analysis: Flow<ContractAnalysis?> by lazy {
+        combine(transactions, settings.map { it.rules }.distinctUntilChanged()) { transactions, rules ->
+            transactions?.let { ContractAnalysis.of(it, rules, LocalDate.now()) }
+        }
+            .onEach {
+                latestAnalysis.value = it
+                if (it != null) applyAutomaticDecisions(it)
+            }
+            .flowOn(Dispatchers.Default)
+            // Contracts, incomes and the balance all need the analysis, it should run only once
             .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), replay = 1)
     }
 
+    /**
+     * Once: takes over the decisions stored by signature before there were rules.
+     * Then: confirms suggestions that are certain enough.
+     * Both change the rules, which leads to a new analysis.
+     */
+    private suspend fun applyAutomaticDecisions(analysis: ContractAnalysis) {
+        dataStore.edit { preferences ->
+            val settings = preferences.toContractSettings()
+            var rules = settings.rules
+            if (!settings.rulesMigrated) {
+                // Only an analysis without rules shows the contracts the old decisions refer to
+                if (rules.isEmpty()) {
+                    val (migrated, salary) = migrateToRules(settings, analysis)
+                    rules = migrated
+                    preferences.writeSalary(salary)
+                    preferences.remove(KEY_DISMISSED)
+                    preferences.remove(KEY_NAMES)
+                    preferences.remove(KEY_AREAS)
+                }
+                preferences[KEY_RULES_MIGRATED] = true
+            }
+            val automatic = analysis.automaticRules(rules)
+            if (rules !== settings.rules || automatic.isNotEmpty()) {
+                preferences[KEY_RULES] = serializeRules(rules + automatic)
+            }
+        }
+    }
+
     private fun stateOf(direction: ContractDirection) =
-        combine(settings, detected) { settings, contracts ->
+        combine(settings, analysis) { settings, analysis ->
             when (settings.consent) {
                 null -> ContractsUiState.AskConsent
                 false -> ContractsUiState.Declined
-                true -> contracts?.let { all -> buildContractsState(all.filter { it.direction == direction }, settings) }
-                    ?: ContractsUiState.Loading
+                true -> analysis?.let {
+                    buildContractsState(
+                        it.contracts.filter { contract -> contract.direction == direction },
+                        settings,
+                        it.dismissed.filter { contract -> contract.direction == direction }
+                    )
+                } ?: ContractsUiState.Loading
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ContractsUiState.Loading)
 
@@ -243,15 +282,24 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
         contractFilter.value = TransactionIdCriterion(label, ids)
     }
 
+    /**
+     * Incomes chosen as salary are confirmed, so that the choice refers to their rules
+     */
     fun setSalary(choice: SalaryChoice) {
-        edit { preferences ->
-            preferences.remove(KEY_SALARY)
-            preferences.remove(KEY_SALARIES)
-            when (choice) {
-                SalaryChoice.Automatic -> {}
-                SalaryChoice.None -> preferences[KEY_SALARY] = SALARY_NONE
-                is SalaryChoice.Fixed -> preferences[KEY_SALARIES] = choice.signatures
-            }
+        updateRules { rules, analysis, preferences ->
+            var updated = rules
+            val salary = if (choice is SalaryChoice.Fixed) SalaryChoice.Fixed(
+                choice.signatures.mapTo(HashSet()) { signature ->
+                    val suggestion = analysis.suggestions.find { it.signature == signature }
+                    if (suggestion == null) signature
+                    else updated.withRuleFor(suggestion, analysis.transactions).let { (all, rule) ->
+                        updated = all
+                        rule.key
+                    }
+                }
+            ) else choice
+            preferences.writeSalary(salary)
+            updated
         }
     }
 
@@ -259,37 +307,73 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
         edit { it[KEY_CONSENT] = consent }
     }
 
+    /** Confirms a suggestion */
+    fun confirm(contract: Contract) {
+        updateRules { rules, analysis, _ -> rules.withRuleFor(contract, analysis.transactions).first }
+    }
+
+    /** Declares the payments of [contract] as no contract */
     fun dismiss(contract: Contract) {
-        edit { it[KEY_DISMISSED] = (it[KEY_DISMISSED] ?: emptySet()) + contract.signature }
+        updateRules { rules, analysis, _ -> rules.dismissing(contract, analysis.transactions) }
     }
 
     fun restore(contract: Contract) {
-        edit { it[KEY_DISMISSED] = (it[KEY_DISMISSED] ?: emptySet()) - contract.signature }
-    }
-
-    /**
-     * @param name blank to go back to the detected name
-     */
-    fun rename(contract: Contract, name: String) {
-        edit { preferences ->
-            val names = preferences[KEY_NAMES]?.let(::parseMap) ?: emptyMap()
-            val trimmed = name.trim()
-            preferences[KEY_NAMES] = serializeMap(
-                if (trimmed.isEmpty() || trimmed == contract.name) names - contract.signature
-                else names + (contract.signature to trimmed)
-            )
+        updateRules { rules, _, preferences ->
+            // Dismissed before there were rules
+            preferences[KEY_DISMISSED]?.let { preferences[KEY_DISMISSED] = it - contract.signature }
+            rules.restoring(contract)
         }
     }
 
+    /**
+     * Confirms a suggestion
+     *
+     * @param name blank to go back to the detected name
+     */
+    fun rename(contract: Contract, name: String) {
+        val trimmed = name.trim()
+        updateRules { rules, analysis, _ ->
+            rules.withRuleFor(contract, analysis.transactions) {
+                it.copy(name = trimmed.takeIf { name -> name.isNotEmpty() && name != contract.name })
+            }.first
+        }
+    }
+
+    /** Confirms a suggestion */
     fun setArea(contract: Contract, choice: AreaChoice) {
+        updateRules { rules, analysis, _ ->
+            rules.withRuleFor(contract, analysis.transactions) {
+                it.copy(
+                    areaKey = when (choice) {
+                        AreaChoice.Automatic -> null
+                        is AreaChoice.Fixed -> choice.area?.key ?: ContractSettings.AREA_NONE
+                    }
+                )
+            }.first
+        }
+    }
+
+    /**
+     * Changes the rules based on the latest analysis. Does nothing before there is one,
+     * since actions can only be triggered on contracts shown from it.
+     */
+    private fun updateRules(
+        change: (List<ContractRule>, ContractAnalysis, MutablePreferences) -> List<ContractRule>,
+    ) {
+        val analysis = latestAnalysis.value ?: return
         edit { preferences ->
-            val areas = preferences[KEY_AREAS]?.let(::parseMap) ?: emptyMap()
-            preferences[KEY_AREAS] = serializeMap(
-                when (choice) {
-                    AreaChoice.Automatic -> areas - contract.signature
-                    is AreaChoice.Fixed -> areas + (contract.signature to (choice.area?.key ?: ContractSettings.AREA_NONE))
-                }
-            )
+            val rules = preferences[KEY_RULES]?.let(::parseRules) ?: emptyList()
+            preferences[KEY_RULES] = serializeRules(change(rules, analysis, preferences))
+        }
+    }
+
+    private fun MutablePreferences.writeSalary(choice: SalaryChoice) {
+        remove(KEY_SALARY)
+        remove(KEY_SALARIES)
+        when (choice) {
+            SalaryChoice.Automatic -> {}
+            SalaryChoice.None -> this[KEY_SALARY] = SALARY_NONE
+            is SalaryChoice.Fixed -> this[KEY_SALARIES] = choice.signatures
         }
     }
 
@@ -320,6 +404,11 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
             preferences[KEY_CUSTOM_AREAS] = serializeCustomAreas(customAreas(preferences).filter { it.id != area.id })
             preferences[KEY_AREAS]?.let(::parseMap)?.let { areas ->
                 preferences[KEY_AREAS] = serializeMap(areas.filterValues { it != area.key })
+            }
+            preferences[KEY_RULES]?.let(::parseRules)?.let { rules ->
+                preferences[KEY_RULES] = serializeRules(
+                    rules.map { if (it.areaKey == area.key) it.copy(areaKey = null) else it }
+                )
             }
         }
     }
@@ -366,6 +455,73 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
         private val KEY_SALARY = stringPreferencesKey("next_contracts_salary")
         /** Signatures of the incomes chosen as salaries, missing for the automatic choice */
         private val KEY_SALARIES = stringSetPreferencesKey("next_contracts_salaries")
+        /** JSON array of [ContractRule]s */
+        private val KEY_RULES = stringPreferencesKey("next_contracts_rules")
+        private val KEY_RULES_MIGRATED = booleanPreferencesKey("next_contracts_rules_migrated")
+
+        private fun Preferences.toContractSettings() = ContractSettings(
+            consent = this[KEY_CONSENT],
+            dismissed = this[KEY_DISMISSED] ?: emptySet(),
+            names = this[KEY_NAMES]?.let(::parseMap) ?: emptyMap(),
+            areas = this[KEY_AREAS]?.let(::parseMap) ?: emptyMap(),
+            customAreas = this[KEY_CUSTOM_AREAS]?.let(::parseCustomAreas) ?: emptyList(),
+            salary = when {
+                this[KEY_SALARY] == SALARY_NONE -> SalaryChoice.None
+                this[KEY_SALARIES].isNullOrEmpty() -> SalaryChoice.Automatic
+                else -> SalaryChoice.Fixed(this[KEY_SALARIES]!!)
+            },
+            rules = this[KEY_RULES]?.let(::parseRules) ?: emptyList(),
+            rulesMigrated = this[KEY_RULES_MIGRATED] ?: false
+        )
+
+        /** Rules that cannot be read, e.g. from a later version, are left out */
+        private fun parseRules(json: String): List<ContractRule> = try {
+            JSONArray(json).let { array ->
+                (0 until array.length()).mapNotNull { i ->
+                    try {
+                        array.getJSONObject(i).toRule()
+                    } catch (_: JSONException) {
+                        null
+                    } catch (_: IllegalArgumentException) {
+                        null
+                    }
+                }
+            }
+        } catch (_: JSONException) {
+            emptyList()
+        }
+
+        private fun JSONObject.toRule() = ContractRule(
+            id = getString("id"),
+            kind = ContractRule.Kind.valueOf(getString("kind")),
+            direction = ContractDirection.valueOf(getString("direction")),
+            payeeIds = optJSONArray("payees")?.let { payees -> (0 until payees.length()).mapTo(HashSet()) { payees.getLong(it) } }
+                ?: emptySet(),
+            templateId = if (has("template")) getLong("template") else null,
+            amountRange = if (has("min") && has("max")) getLong("min")..getLong("max") else null,
+            interval = ContractInterval.valueOf(getString("interval")),
+            name = if (has("name")) getString("name") else null,
+            areaKey = if (has("area")) getString("area") else null
+        )
+
+        private fun serializeRules(rules: List<ContractRule>) = JSONArray(
+            rules.map { rule ->
+                JSONObject().apply {
+                    put("id", rule.id)
+                    put("kind", rule.kind.name)
+                    put("direction", rule.direction.name)
+                    put("payees", JSONArray(rule.payeeIds.toList()))
+                    rule.templateId?.let { put("template", it) }
+                    rule.amountRange?.let {
+                        put("min", it.first)
+                        put("max", it.last)
+                    }
+                    put("interval", rule.interval.name)
+                    rule.name?.let { put("name", it) }
+                    rule.areaKey?.let { put("area", it) }
+                }
+            }
+        ).toString()
         private const val SALARY_NONE = "NONE"
 
         private fun parseMap(json: String): Map<String, String> = try {

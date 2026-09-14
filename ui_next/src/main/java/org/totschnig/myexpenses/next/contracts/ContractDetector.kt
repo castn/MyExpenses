@@ -72,7 +72,7 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
                     if (own != null && own != interval) listOf(cluster) else cluster.splitAtGaps(interval)
                 }.joinConsecutive(interval)
             }.mapNotNull { detectSeries(it, groupKey.direction) })
-            .withSignatures(key, groupKey.direction)
+            .withSignatures(key, groupKey.direction, isTemplate)
     }
 
     private class Series(val interval: ContractInterval, val transactions: List<ContractTransaction>)
@@ -168,20 +168,31 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
      * The signature is made of group key and interval. In the rare case that a payee has several
      * contracts with the same interval, they are told apart by the order of their amounts.
      */
-    private fun List<Series>.withSignatures(key: String, direction: ContractDirection) =
+    private fun List<Series>.withSignatures(key: String, direction: ContractDirection, isTemplate: Boolean) =
         groupBy { it.interval }.flatMap { (interval, sameInterval) ->
             sameInterval.sortedBy { series -> series.transactions.minOf { it.amount.absoluteValue } }
                 .mapIndexed { index, series ->
                     toContract(
                         signature = "$key|${interval.name}" + if (index > 0) "|$index" else "",
                         series = series,
-                        direction = direction
+                        direction = direction,
+                        isTemplate = isTemplate
                     )
                 }
         }
 
-    private fun toContract(signature: String, series: Series, direction: ContractDirection) =
+    private fun toContract(signature: String, series: Series, direction: ContractDirection, isTemplate: Boolean) =
         contractOf(signature, series.transactions, series.interval, direction, today)
+            .copy(isConfident = isTemplate || series.isRegularEnoughToConfirm())
+
+    /**
+     * Many payments that nearly all follow the interval: a contract without doubt
+     */
+    private fun Series.isRegularEnoughToConfirm(): Boolean {
+        if (transactions.size < CONFIDENT_MIN_PAYMENTS) return false
+        val gaps = transactions.zipWithNext { a, b -> ChronoUnit.DAYS.between(a.date, b.date) }
+        return gaps.count { it in interval } >= gaps.size * CONFIDENT_REGULAR_SHARE
+    }
 
     private fun List<ContractTransaction>.hasSimilarAmounts(tolerance: Double): Boolean {
         val amounts = map { it.amount.absoluteValue }.sorted()
@@ -225,6 +236,12 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
 
         /** How much the two payments of a yearly or half-yearly income may differ */
         const val RARE_INCOME_AMOUNT_TOLERANCE = 0.1
+
+        /** A suggestion with at least this many payments … */
+        const val CONFIDENT_MIN_PAYMENTS = 6
+
+        /** … whose gaps match the interval at least to this share is confirmed without asking the user */
+        const val CONFIDENT_REGULAR_SHARE = 0.9
 
         /** A contract counts as ended, if it has not been debited for its interval plus this grace period */
         const val MIN_GRACE_DAYS = 7

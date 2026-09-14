@@ -109,4 +109,14 @@ class ContractRuleTest {
         assertEquals("Salary", rule.name)
         assertEquals(ContractSettings.AREA_NONE, rule.areaKey)
     }
+
+    @Test
+    fun noAmountRangeIfOtherPaymentsHaveSimilarAmounts() {
+        // Extra payment of the employer within the range of the salaries
+        val salary = monthly(6, 150000)
+        val extra = transaction(today.minusDays(50), 140000)
+        val transactions = salary + extra
+        val contract = detected(salary).single()
+        assertNull(ContractRule.of(contract, transactions).amountRange)
+    }
 }

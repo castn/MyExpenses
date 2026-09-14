@@ -13,6 +13,9 @@ import org.totschnig.myexpenses.next.balance.salaries
  * contracts without entry use the suggested category
  * @param customAreas categories created by the user, in the order they were created
  * @param salary which regular incomes are salaries
+ * @param rules confirmed contracts and payments that are no contract, see [ContractRule]
+ * @param rulesMigrated whether [dismissed], [names] and [areas], which were stored by signature
+ * before there were rules, have been taken over into [rules]
  */
 data class ContractSettings(
     val consent: Boolean? = null,
@@ -21,9 +24,16 @@ data class ContractSettings(
     val areas: Map<String, String> = emptyMap(),
     val customAreas: List<CustomArea> = emptyList(),
     val salary: SalaryChoice = SalaryChoice.Automatic,
+    val rules: List<ContractRule> = emptyList(),
+    val rulesMigrated: Boolean = false,
 ) {
-    fun areaChoice(signature: String): AreaChoice {
-        val key = areas[signature] ?: return AreaChoice.Automatic
+    fun areaChoice(signature: String) = areaChoiceOf(areas[signature])
+
+    /**
+     * @param key of a [ContractArea], [AREA_NONE], or null for the suggested category
+     */
+    fun areaChoiceOf(key: String?): AreaChoice {
+        if (key == null) return AreaChoice.Automatic
         if (key == AREA_NONE) return AreaChoice.Fixed(null)
         // A deleted custom category falls back to the suggestion
         val area = BuiltInArea.fromKey(key) ?: customAreas.find { it.key == key } ?: return AreaChoice.Automatic
@@ -81,22 +91,29 @@ sealed interface ContractsUiState {
 }
 
 /**
- * Applies the [settings] to the [contracts] found by [ContractDetector].
+ * Applies the [settings] to the [contracts] of a [ContractAnalysis]: names and categories from the
+ * rules (or, before they were taken over, from the maps by signature).
+ *
+ * @param dismissed payments the user declared as no contract, see [ContractAnalysis.dismissed]
  */
-fun buildContractsState(contracts: List<Contract>, settings: ContractSettings): ContractsUiState.Ready {
-    val (dismissed, shown) = contracts
-        .map { contract ->
-            contract.copy(
-                customName = settings.names[contract.signature],
-                areaChoice = settings.areaChoice(contract.signature)
-            )
-        }
+fun buildContractsState(
+    contracts: List<Contract>,
+    settings: ContractSettings,
+    dismissed: List<Contract> = emptyList(),
+): ContractsUiState.Ready {
+    val rules = settings.rules.associateBy { it.key }
+    fun Contract.withDecisions() = rules[signature]?.let { rule ->
+        copy(customName = rule.name, areaChoice = settings.areaChoiceOf(rule.areaKey))
+    } ?: copy(customName = settings.names[signature], areaChoice = settings.areaChoice(signature))
+
+    val (dismissedBefore, shown) = contracts
+        .map { it.withDecisions() }
         .partition { it.signature in settings.dismissed }
     val (active, ended) = shown.partition { it.isActive }
     return ContractsUiState.Ready(
         active = active.sortedByDescending { it.monthlyAmount },
         ended = ended.sortedByDescending { it.lastDate },
-        dismissed = dismissed.sortedBy { it.displayName.lowercase() },
+        dismissed = (dismissedBefore + dismissed.map { it.withDecisions() }).sortedBy { it.displayName.lowercase() },
         customAreas = settings.customAreas,
         salaryChoice = settings.salary
     )
