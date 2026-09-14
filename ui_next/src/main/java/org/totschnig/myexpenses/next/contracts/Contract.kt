@@ -2,7 +2,9 @@ package org.totschnig.myexpenses.next.contracts
 
 import java.time.LocalDate
 import java.time.Period
+import java.time.temporal.ChronoUnit
 import kotlin.math.absoluteValue
+import kotlin.math.max
 
 /**
  * How often a contract is debited.
@@ -88,6 +90,8 @@ data class Contract(
     /** False, if the contract has not been debited for longer than its interval */
     val isActive: Boolean,
     val direction: ContractDirection = ContractDirection.EXPENSE,
+    /** True, if a [ContractRule] of the user defines the contract, false for a suggestion of [ContractDetector] */
+    val isConfirmed: Boolean = false,
 ) {
     val displayName: String get() = customName ?: name
 
@@ -115,4 +119,35 @@ data class Contract(
 
     val yearlyAmount: Long get() = lastAmount * interval.perYear
     val monthlyAmount: Long get() = yearlyAmount / 12
+}
+
+/**
+ * Builds a contract from its payments with a known interval
+ *
+ * @param transactions sorted by date
+ */
+internal fun contractOf(
+    signature: String,
+    transactions: List<ContractTransaction>,
+    interval: ContractInterval,
+    direction: ContractDirection,
+    today: LocalDate,
+    isConfirmed: Boolean = false,
+): Contract {
+    val last = transactions.last()
+    val daysSinceLast = ChronoUnit.DAYS.between(last.date, today)
+    val grace = max(ContractDetector.MIN_GRACE_DAYS, interval.maxDays / 10)
+    return Contract(
+        signature = signature,
+        name = transactions.asReversed().firstNotNullOfOrNull { it.payeeName?.takeIf(String::isNotBlank) }
+            ?: last.comment?.takeIf(String::isNotBlank)
+            ?: last.categoryPath
+            ?: "",
+        interval = interval,
+        transactions = transactions,
+        nextExpectedDate = last.date.plus(interval.step),
+        isActive = daysSinceLast <= interval.maxDays + grace,
+        direction = direction,
+        isConfirmed = isConfirmed
+    )
 }

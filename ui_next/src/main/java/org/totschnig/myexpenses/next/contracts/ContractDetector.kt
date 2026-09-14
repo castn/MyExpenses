@@ -3,7 +3,6 @@ package org.totschnig.myexpenses.next.contracts
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import kotlin.math.absoluteValue
-import kotlin.math.max
 
 /**
  * Finds recurring debits (contracts, subscriptions, …) and recurring credits (salary, …)
@@ -181,25 +180,8 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
                 }
         }
 
-    private fun toContract(signature: String, series: Series, direction: ContractDirection): Contract {
-        val transactions = series.transactions
-        val interval = series.interval
-        val last = transactions.last()
-        val daysSinceLast = ChronoUnit.DAYS.between(last.date, today)
-        val grace = max(MIN_GRACE_DAYS, interval.maxDays / 10)
-        return Contract(
-            signature = signature,
-            name = transactions.asReversed().firstNotNullOfOrNull { it.payeeName?.takeIf(String::isNotBlank) }
-                ?: last.comment?.takeIf(String::isNotBlank)
-                ?: last.categoryPath
-                ?: "",
-            interval = interval,
-            transactions = transactions,
-            nextExpectedDate = last.date.plus(interval.step),
-            isActive = daysSinceLast <= interval.maxDays + grace,
-            direction = direction
-        )
-    }
+    private fun toContract(signature: String, series: Series, direction: ContractDirection) =
+        contractOf(signature, series.transactions, series.interval, direction, today)
 
     private fun List<ContractTransaction>.hasSimilarAmounts(tolerance: Double): Boolean {
         val amounts = map { it.amount.absoluteValue }.sorted()
