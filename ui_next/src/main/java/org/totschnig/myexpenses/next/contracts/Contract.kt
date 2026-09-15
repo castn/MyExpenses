@@ -94,6 +94,8 @@ data class Contract(
     val isConfirmed: Boolean = false,
     /** For a suggestion: detected with so much certainty that it is confirmed without asking the user */
     val isConfident: Boolean = false,
+    /** The rule that defines a confirmed contract */
+    val rule: ContractRule? = null,
 ) {
     val displayName: String get() = customName ?: name
 

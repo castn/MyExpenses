@@ -25,26 +25,37 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import kotlin.math.absoluteValue
 import org.totschnig.myexpenses.compose.HierarchicalMenu
 import org.totschnig.myexpenses.compose.LocalColors
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
-import org.totschnig.myexpenses.compose.conditional
 import org.totschnig.myexpenses.compose.Menu
+import org.totschnig.myexpenses.compose.conditional
 import org.totschnig.myexpenses.compose.transactions.FutureCriterion
 import org.totschnig.myexpenses.compose.transactions.SelectionHandler
+import org.totschnig.myexpenses.compose.transactions.TransactionEvent
+import org.totschnig.myexpenses.compose.transactions.TransactionEventHandler
 import org.totschnig.myexpenses.compose.transactions.TransactionListContent
 import org.totschnig.myexpenses.compose.transactions.transactionMenu
 import org.totschnig.myexpenses.compose.transactions.voidMarker
@@ -54,12 +65,6 @@ import org.totschnig.myexpenses.model.sort.SortDirection
 import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.viewmodel.data.HeaderData
 import org.totschnig.myexpenses.viewmodel.data.Transaction2
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
-import kotlin.math.absoluteValue
 
 /**
  * Transaction list of the new design: transactions are grouped by day, each day has a header
@@ -69,6 +74,8 @@ import kotlin.math.absoluteValue
  * @param isReadOnly transactions only shown, tapping them does nothing
  * @param showDateAndAccount second line shows date and account instead of details, for lists
  * without day headers that span several accounts
+ * @param detailsContent if given, tapping a transaction opens its details instead of its menu,
+ * which then is found in the details. Adds content to the details, e.g. the contract of the transaction.
  */
 @Composable
 fun NextTransactionList(
@@ -76,8 +83,43 @@ fun NextTransactionList(
     modifier: Modifier = Modifier,
     isReadOnly: Boolean = false,
     showDateAndAccount: Boolean = false,
+    detailsContent: (@Composable (Transaction2) -> Unit)? = null,
 ) {
     val lazyPagingItems = content.lazyPagingItems
+    var openedId by rememberSaveable { mutableStateOf<Long?>(null) }
+    // The last version found is kept while the list reloads, e.g. after editing the transaction
+    // from its details. Not observed, it only bridges until the list has the transaction again.
+    val lastOpened = remember { arrayOfNulls<Transaction2>(1) }
+    val opened = openedId?.let { id ->
+        lazyPagingItems.itemSnapshotList.find { it?.id == id } ?: lastOpened[0]?.takeIf { it.id == id }
+    }
+    lastOpened[0] = opened
+    val context = LocalContext.current
+    val currencyFormatter = LocalCurrencyFormatter.current
+    if (detailsContent != null) opened?.let { transaction ->
+        TransactionDetailDialog(
+            transaction = transaction,
+            menu = {
+                transactionMenu(
+                    content.modificationAllowed,
+                    content.accountCount,
+                    context,
+                    currencyFormatter,
+                    transaction,
+                    object : TransactionEventHandler {
+                        override fun invoke(event: TransactionEvent, transaction: Transaction2) {
+                            // Nothing left to show
+                            if (event == TransactionEvent.Delete) openedId = null
+                            content.onEvent(event, transaction)
+                        }
+                    }
+                )
+            },
+            onDismiss = { openedId = null }
+        ) {
+            detailsContent(transaction)
+        }
+    }
     val headerData = content.headerData as? HeaderData
     val withDayHeaders = headerData?.account?.grouping == Grouping.DAY
 
@@ -97,8 +139,6 @@ fun NextTransactionList(
         return
     }
 
-    val context = LocalContext.current
-    val currencyFormatter = LocalCurrencyFormatter.current
     val futureCriterionDate = when (content.futureCriterion) {
         FutureCriterion.Current -> ZonedDateTime.now(ZoneId.systemDefault())
         FutureCriterion.EndOfDay -> LocalDate.now().plusDays(1).atStartOfDay().atZone(ZoneId.systemDefault())
@@ -156,6 +196,9 @@ fun NextTransactionList(
                         isFuture = transaction.date >= futureCriterionDate,
                         isReadOnly = isReadOnly,
                         showDateAndAccount = showDateAndAccount,
+                        onOpen = if (detailsContent != null) {
+                            { openedId = transaction.id }
+                        } else null,
                         selectionHandler = content.selectionHandler,
                         menu = {
                             transactionMenu(
@@ -227,6 +270,8 @@ private fun TransactionItem(
     isFuture: Boolean,
     isReadOnly: Boolean,
     showDateAndAccount: Boolean,
+    /** Opens the details, if null, tapping opens the menu */
+    onOpen: (() -> Unit)?,
     selectionHandler: SelectionHandler?,
     menu: () -> Menu,
     modifier: Modifier = Modifier,
@@ -260,7 +305,7 @@ private fun TransactionItem(
                             } else null,
                             onClick = {
                                 if ((selectionHandler?.selectionCount ?: 0) == 0) {
-                                    showMenu.value = true
+                                    if (onOpen != null) onOpen() else showMenu.value = true
                                 } else if (isSelectable) {
                                     selectionHandler.toggle(transaction)
                                 }
@@ -327,9 +372,10 @@ private fun TransactionItem(
  * Amount with explicit sign: incoming money green with "+", outgoing money red with "−"
  */
 @Composable
-private fun SignedAmount(
+internal fun SignedAmount(
     money: Money,
     modifier: Modifier = Modifier,
+    style: TextStyle = MaterialTheme.typography.bodyLarge,
 ) {
     val amount = money.amountMinor
     val colors = LocalColors.current
@@ -340,7 +386,7 @@ private fun SignedAmount(
             amount < 0 -> "− $formatted"
             else -> formatted
         },
-        style = MaterialTheme.typography.bodyLarge,
+        style = style,
         fontWeight = FontWeight.SemiBold,
         color = when {
             amount > 0 -> colors.income

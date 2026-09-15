@@ -96,6 +96,10 @@ fun MonthlyBalanceFlow(
                 onRename = viewModel::rename,
                 onSetSalary = viewModel::setSalary,
                 onConfirm = viewModel::confirm,
+                onSetInterval = viewModel::setInterval,
+                onRemovePayee = viewModel::removePayee,
+                onSetAmountRange = viewModel::setAmountRange,
+                onMerge = viewModel::merge,
                 contractTransactions = { contract, contentModifier ->
                     ContractTransactionList(viewModel, contract, contentModifier)
                 },

@@ -121,6 +121,11 @@ fun NextContractsScreen(
     onSetSalary: (SalaryChoice) -> Unit = {},
     /** Confirms a suggestion */
     onConfirm: (Contract) -> Unit = {},
+    onSetInterval: (Contract, ContractInterval) -> Unit = { _, _ -> },
+    onRemovePayee: (Contract, Long) -> Unit = { _, _ -> },
+    onSetAmountRange: (Contract, LongRange?) -> Unit = { _, _ -> },
+    /** Joins the second contract into the first one */
+    onMerge: (Contract, Contract) -> Unit = { _, _ -> },
 ) {
     /** Key of the category of the selected tab, null for all contracts */
     var selectedAreaKey by rememberSaveable { mutableStateOf<String?>(null) }
@@ -174,6 +179,12 @@ fun NextContractsScreen(
             onBack = { closeContract() },
             onConfirm = { onConfirm(openedContract) }.takeIf { !openedContract.isConfirmed },
             onReject = { onDismiss(openedContract) }.takeIf { !openedContract.isConfirmed },
+            mergeCandidates = (ready.active + ready.ended + ready.suggestions)
+                .filter { it.signature != openedContract.signature },
+            onSetInterval = { onSetInterval(openedContract, it) },
+            onRemovePayee = { onRemovePayee(openedContract, it) },
+            onSetAmountRange = { onSetAmountRange(openedContract, it) },
+            onMerge = { onMerge(openedContract, it) },
             areas = ready.selectableAreas,
             onSetArea = { onSetArea(openedContract, it) },
             onRename = { onRename(openedContract, it) },

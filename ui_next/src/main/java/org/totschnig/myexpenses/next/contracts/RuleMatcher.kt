@@ -52,5 +52,5 @@ class RuleMatcher(private val today: LocalDate = LocalDate.now()) {
      */
     private fun ContractRule.toContract(payments: List<ContractTransaction>) =
         contractOf(key, payments, interval, direction, today, isConfirmed = true)
-            .copy(customName = name)
+            .copy(customName = name, rule = this)
 }

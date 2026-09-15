@@ -29,6 +29,7 @@ import org.totschnig.myexpenses.next.balance.MonthlyBalanceFlow
 import org.totschnig.myexpenses.next.contracts.ContractTransactionList
 import org.totschnig.myexpenses.next.contracts.ContractsViewModel
 import org.totschnig.myexpenses.next.contracts.NextContractsScreen
+import org.totschnig.myexpenses.next.contracts.PaymentContractSection
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.provider.KEY_DATE
 import org.totschnig.myexpenses.provider.KEY_ROWID
@@ -120,7 +121,11 @@ class MyExpensesNext : MyExpensesV2() {
                 // Day groups with the balance at the end of each day only make sense when sorted by date
                 val grouping = if (pageAccount.sortBy == KEY_DATE) Grouping.DAY else Grouping.NONE
                 Page(pageAccount.copy(grouping = grouping), accounts.size, true, v2 = true) { content ->
-                    NextTransactionList(content, Modifier.weight(1f))
+                    NextTransactionList(
+                        content,
+                        Modifier.weight(1f),
+                        detailsContent = { transaction -> PaymentContractSection(contractsViewModel, transaction.id) }
+                    )
                 }
             },
             balanceCard = { modifier, onOpen ->
@@ -155,6 +160,10 @@ class MyExpensesNext : MyExpensesV2() {
                     onRenameArea = contractsViewModel::renameArea,
                     onDeleteArea = contractsViewModel::deleteArea,
                     onConfirm = contractsViewModel::confirm,
+                    onSetInterval = contractsViewModel::setInterval,
+                    onRemovePayee = contractsViewModel::removePayee,
+                    onSetAmountRange = contractsViewModel::setAmountRange,
+                    onMerge = contractsViewModel::merge,
                     contractTransactions = { contract, modifier ->
                         ContractTransactionList(contractsViewModel, contract, modifier)
                     }

@@ -309,7 +309,7 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
 
     /** Confirms a suggestion */
     fun confirm(contract: Contract) {
-        updateRules { rules, analysis, _ -> rules.withRuleFor(contract, analysis.transactions).first }
+        changeRule(contract) { it }
     }
 
     /** Declares the payments of [contract] as no contract */
@@ -332,25 +332,60 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
      */
     fun rename(contract: Contract, name: String) {
         val trimmed = name.trim()
-        updateRules { rules, analysis, _ ->
-            rules.withRuleFor(contract, analysis.transactions) {
-                it.copy(name = trimmed.takeIf { name -> name.isNotEmpty() && name != contract.name })
-            }.first
-        }
+        changeRule(contract) { it.copy(name = trimmed.takeIf { name -> name.isNotEmpty() && name != contract.name }) }
     }
 
     /** Confirms a suggestion */
     fun setArea(contract: Contract, choice: AreaChoice) {
-        updateRules { rules, analysis, _ ->
-            rules.withRuleFor(contract, analysis.transactions) {
-                it.copy(
-                    areaKey = when (choice) {
-                        AreaChoice.Automatic -> null
-                        is AreaChoice.Fixed -> choice.area?.key ?: ContractSettings.AREA_NONE
-                    }
-                )
-            }.first
+        changeRule(contract) {
+            it.copy(
+                areaKey = when (choice) {
+                    AreaChoice.Automatic -> null
+                    is AreaChoice.Fixed -> choice.area?.key ?: ContractSettings.AREA_NONE
+                }
+            )
         }
+    }
+
+    fun setInterval(contract: Contract, interval: ContractInterval) {
+        changeRule(contract) { it.copy(interval = interval) }
+    }
+
+    /** Takes back that the payments of [payeeId] belong to [contract], e.g. after a wrong merge */
+    fun removePayee(contract: Contract, payeeId: Long) {
+        changeRule(contract) { it.copy(payeeIds = it.payeeIds - payeeId) }
+    }
+
+    /**
+     * @param range absolute amounts in minor units, null for all amounts
+     */
+    fun setAmountRange(contract: Contract, range: LongRange?) {
+        changeRule(contract) { it.copy(amountRange = range) }
+    }
+
+    /** Joins [other] into [contract], see [merging] */
+    fun merge(contract: Contract, other: Contract) {
+        updateRules { rules, analysis, preferences ->
+            val (merged, rule) = rules.merging(contract, other, analysis.transactions)
+            preferences[KEY_SALARIES]?.takeIf { other.signature in it }?.let {
+                preferences[KEY_SALARIES] = it - other.signature + rule.key
+            }
+            merged
+        }
+    }
+
+    /** What the analysis knows about a payment, see [PaymentContractInfo] */
+    fun paymentInfo(transactionId: Long): Flow<PaymentContractInfo> =
+        analysis.map { it?.infoFor(transactionId) ?: PaymentContractInfo.Unavailable }
+
+    /** Declares a payment as part of a contract paid every [interval] */
+    fun markAsContract(transactionId: Long, interval: ContractInterval) {
+        updateRules { rules, analysis, _ -> rules.marking(transactionId, interval, analysis.transactions, LocalDate.now()) }
+    }
+
+    /** Changes the rule of [contract], which confirms a suggestion */
+    private fun changeRule(contract: Contract, change: (ContractRule) -> ContractRule) {
+        updateRules { rules, analysis, _ -> rules.withRuleFor(contract, analysis.transactions, change).first }
     }
 
     /**

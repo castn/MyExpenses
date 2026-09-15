@@ -96,6 +96,12 @@ fun ContractDetailScreen(
     onConfirm: (() -> Unit)? = null,
     /** For a suggestion: the user declares it as no contract */
     onReject: (() -> Unit)? = null,
+    /** Contracts that can be joined into this one, see [ContractRuleSettings] */
+    mergeCandidates: List<Contract> = emptyList(),
+    onSetInterval: (ContractInterval) -> Unit = {},
+    onRemovePayee: (Long) -> Unit = {},
+    onSetAmountRange: (LongRange?) -> Unit = {},
+    onMerge: (Contract) -> Unit = {},
 ) {
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     if (showRenameDialog) {
@@ -248,6 +254,18 @@ fun ContractDetailScreen(
                     InfoRow(stringResource(R.string.next_contracts_purpose), it)
                 }
             }
+            contract.rule?.let { rule ->
+                ContractRuleSettings(
+                    contract = contract,
+                    rule = rule,
+                    currency = currency,
+                    mergeCandidates = mergeCandidates,
+                    onSetInterval = onSetInterval,
+                    onRemovePayee = onRemovePayee,
+                    onSetAmountRange = onSetAmountRange,
+                    onMerge = onMerge
+                )
+            }
         }
     }
 }
@@ -294,7 +312,7 @@ private fun SuggestionQuestion(isIncome: Boolean, onConfirm: () -> Unit, onRejec
 }
 
 @Composable
-private fun DetailCard(content: @Composable ColumnScope.() -> Unit) {
+internal fun DetailCard(content: @Composable ColumnScope.() -> Unit) {
     Surface(
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.surfaceContainerLowest,
@@ -305,7 +323,7 @@ private fun DetailCard(content: @Composable ColumnScope.() -> Unit) {
 }
 
 @Composable
-private fun SectionTitle(text: String) {
+internal fun SectionTitle(text: String) {
     Text(
         text,
         style = MaterialTheme.typography.titleMedium,
@@ -411,7 +429,7 @@ private fun LabelChip(
  * Label on the left, value on the right, separated from the row above by a divider
  */
 @Composable
-private fun InfoRow(
+internal fun InfoRow(
     label: String,
     value: String,
     isFirst: Boolean = false,
@@ -535,8 +553,10 @@ private fun AreaDialog(
  * Row that leads to another page, like "show all" on the overview
  */
 @Composable
-private fun LinkRow(text: String, onClick: () -> Unit) {
-    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+internal fun LinkRow(text: String, onClick: () -> Unit, isFirst: Boolean = false) {
+    if (!isFirst) {
+        HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()

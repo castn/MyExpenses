@@ -156,4 +156,75 @@ class ContractAnalysisTest {
         assertEquals(BuiltInArea.HOUSING, rent.area)
         assertEquals(listOf(gym), state.dismissed.map { it.transactions })
     }
+
+    @Test
+    fun mergingJoinsPayeesAndRemovesOtherRule() {
+        // Provider renamed: the old contract ended, the new one runs since
+        val old = monthly(8, -4000, payeeId = 6, last = today.minusMonths(6))
+        val new = monthly(5, -4200, payeeId = 7)
+        val transactions = old + new
+        val (rules, _) = emptyList<ContractRule>().withRuleFor(analysis(transactions = transactions).contract(7), transactions) {
+            it.copy(name = "Internet")
+        }
+        val before = analysis(rules, transactions)
+        val (merged, rule) = rules.merging(before.contract(7), before.contract(6), transactions)
+        assertEquals(1, merged.size)
+        assertEquals(setOf(6L, 7L), rule.payeeIds)
+        assertEquals("Internet", rule.name)
+        val after = analysis(merged, transactions)
+        val contract = after.contracts.single()
+        assertEquals(13, contract.transactions.size)
+        assertTrue(contract.isActive)
+        assertEquals("Internet", contract.displayName)
+    }
+
+    @Test
+    fun mergingDropsAmountRangeUnlessBothHaveOne() {
+        val a = ContractRule("a", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, setOf(1), amountRange = 700L..1100L, interval = ContractInterval.MONTHLY)
+        val b = ContractRule("b", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, setOf(2), amountRange = 1000L..1500L, interval = ContractInterval.MONTHLY)
+        val c = ContractRule("c", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, setOf(3), interval = ContractInterval.MONTHLY)
+        val payments = monthly(3, -900, payeeId = 1) + monthly(3, -1200, payeeId = 2) + monthly(3, -5000, payeeId = 3)
+        val analysis = analysis(listOf(a, b, c), payments)
+        val (_, ab) = listOf(a, b, c).merging(analysis.contract(1), analysis.contract(2), payments)
+        assertEquals(700L..1500L, ab.amountRange)
+        val (_, ac) = listOf(a, b, c).merging(analysis.contract(1), analysis.contract(3), payments)
+        assertNull(ac.amountRange)
+    }
+
+    @Test
+    fun infoForPayments() {
+        val insurance = listOf(
+            ContractTransaction(id = 900, date = today.minusDays(40), amount = -23000, accountId = 1, payeeId = 8, payeeName = "HUK")
+        )
+        val withoutPayee = ContractTransaction(id = 901, date = today.minusDays(5), amount = -500, accountId = 1)
+        val payments = transactions + insurance + withoutPayee
+        val confirmedRules = analysis(transactions = payments).automaticRules(emptyList())
+        val rules = confirmedRules.dismissing(analysis(confirmedRules, payments).contract(2), payments)
+        val analysis = analysis(rules, payments)
+        assertTrue(analysis.infoFor(rent.first().id) is PaymentContractInfo.Confirmed)
+        assertTrue(analysis.infoFor(gym.first().id) is PaymentContractInfo.Dismissed)
+        assertEquals(PaymentContractInfo.Markable(isIncome = false), analysis.infoFor(900))
+        assertEquals(PaymentContractInfo.NoPayee, analysis.infoFor(901))
+        assertEquals(PaymentContractInfo.Unavailable, analysis.infoFor(12345))
+    }
+
+    @Test
+    fun infoForSuggestedPayment() {
+        // Too few payments to be confirmed automatically
+        val analysis = analysis(transactions = gym)
+        assertTrue(analysis.infoFor(gym.first().id) is PaymentContractInfo.Suggested)
+    }
+
+    @Test
+    fun markingSinglePaymentCreatesContract() {
+        // Yearly insurance, paid only once so far: never suggested
+        val insurance = ContractTransaction(id = 900, date = today.minusDays(40), amount = -23000, accountId = 1, payeeId = 8, payeeName = "HUK")
+        val payments = transactions + insurance
+        val rules = emptyList<ContractRule>().marking(900, ContractInterval.YEARLY, payments, today)
+        val contract = analysis(rules, payments).contracts.single { it.isConfirmed }
+        assertEquals(ContractInterval.YEARLY, contract.interval)
+        assertEquals(listOf(insurance), contract.transactions)
+        assertTrue(contract.isActive)
+        assertEquals(today.minusDays(40).plusYears(1), contract.nextExpectedDate)
+    }
 }
