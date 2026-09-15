@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -27,6 +28,7 @@ import androidx.compose.material.icons.automirrored.filled.ReceiptLong
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -90,6 +92,10 @@ fun ContractDetailScreen(
     /** For incomes: whether it is the salary */
     isSalary: Boolean = false,
     onSalaryClick: () -> Unit = {},
+    /** For a suggestion: the user confirms it, null for a confirmed contract */
+    onConfirm: (() -> Unit)? = null,
+    /** For a suggestion: the user declares it as no contract */
+    onReject: (() -> Unit)? = null,
 ) {
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     if (showRenameDialog) {
@@ -181,6 +187,9 @@ fun ContractDetailScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
         ) {
+            if (onConfirm != null && onReject != null) {
+                SuggestionQuestion(contract.isIncome, onConfirm, onReject)
+            }
             DetailCard {
                 Header(contract, onRename = { showRenameDialog = true })
                 val chipModifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
@@ -237,6 +246,47 @@ fun ContractDetailScreen(
                 }
                 contract.lastTransaction.comment?.takeIf { it.isNotBlank() }?.let {
                     InfoRow(stringResource(R.string.next_contracts_purpose), it)
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Asks whether a suggestion is a contract (or regular income)
+ */
+@Composable
+private fun SuggestionQuestion(isIncome: Boolean, onConfirm: () -> Unit, onReject: () -> Unit) {
+    Surface(
+        shape = RoundedCornerShape(16.dp),
+        color = MaterialTheme.colorScheme.tertiaryContainer,
+        contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp)
+    ) {
+        Column(Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp)) {
+            Text(
+                stringResource(if (isIncome) R.string.next_income_question else R.string.next_contracts_question),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                stringResource(if (isIncome) R.string.next_income_question_hint else R.string.next_contracts_question_hint),
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                horizontalArrangement = Arrangement.End
+            ) {
+                TextButton(onClick = onReject) {
+                    Text(stringResource(R.string.next_no))
+                }
+                Button(onClick = onConfirm, modifier = Modifier.padding(start = 8.dp)) {
+                    Text(stringResource(R.string.next_yes))
                 }
             }
         }

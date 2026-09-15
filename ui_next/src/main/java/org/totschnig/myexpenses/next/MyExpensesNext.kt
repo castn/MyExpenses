@@ -154,6 +154,7 @@ class MyExpensesNext : MyExpensesV2() {
                     onCreateArea = contractsViewModel::createArea,
                     onRenameArea = contractsViewModel::renameArea,
                     onDeleteArea = contractsViewModel::deleteArea,
+                    onConfirm = contractsViewModel::confirm,
                     contractTransactions = { contract, modifier ->
                         ContractTransactionList(contractsViewModel, contract, modifier)
                     }

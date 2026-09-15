@@ -31,6 +31,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.RemoveCircleOutline
 import androidx.compose.material.icons.filled.Restore
@@ -118,6 +119,8 @@ fun NextContractsScreen(
     isIncome: Boolean = false,
     onBack: () -> Unit = {},
     onSetSalary: (SalaryChoice) -> Unit = {},
+    /** Confirms a suggestion */
+    onConfirm: (Contract) -> Unit = {},
 ) {
     /** Key of the category of the selected tab, null for all contracts */
     var selectedAreaKey by rememberSaveable { mutableStateOf<String?>(null) }
@@ -127,8 +130,16 @@ fun NextContractsScreen(
     // The category may have lost its last contract or been deleted
     val selectedArea = areas.find { it.key == selectedAreaKey }
     var openedSignature by rememberSaveable { mutableStateOf<String?>(null) }
+    // A payment of the opened contract: confirming a suggestion gives it the key of its new rule
+    var openedPayment by rememberSaveable { mutableStateOf<Long?>(null) }
     val openedContract = ready?.let {
-        openedSignature?.let { signature -> (ready.active + ready.ended).find { it.signature == signature } }
+        val all = ready.active + ready.ended + ready.suggestions
+        all.find { it.signature == openedSignature }
+            ?: openedPayment?.let { id -> all.find { contract -> contract.transactions.any { it.id == id } } }
+    }
+    fun closeContract() {
+        openedSignature = null
+        openedPayment = null
     }
     var showTransactions by rememberSaveable { mutableStateOf(false) }
     if (openedContract != null && showTransactions) {
@@ -155,12 +166,14 @@ fun NextContractsScreen(
         )
     }
     if (openedContract != null) {
-        BackHandler { openedSignature = null }
+        BackHandler { closeContract() }
         val isSalary = ready.isSalary(openedContract)
         ContractDetailScreen(
             contract = openedContract,
             currency = currency,
-            onBack = { openedSignature = null },
+            onBack = { closeContract() },
+            onConfirm = { onConfirm(openedContract) }.takeIf { !openedContract.isConfirmed },
+            onReject = { onDismiss(openedContract) }.takeIf { !openedContract.isConfirmed },
             areas = ready.selectableAreas,
             onSetArea = { onSetArea(openedContract, it) },
             onRename = { onRename(openedContract, it) },
@@ -269,8 +282,10 @@ fun NextContractsScreen(
                 onRename = onRename,
                 onOpen = {
                     openedSignature = it.signature
+                    openedPayment = it.transactions.first().id
                     showTransactions = false
                 },
+                onConfirm = onConfirm,
                 modifier = contentModifier
             )
         }
@@ -359,6 +374,7 @@ private fun ContractList(
     onRestore: (Contract) -> Unit,
     onRename: (Contract, String) -> Unit,
     onOpen: (Contract) -> Unit,
+    onConfirm: (Contract) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     // Contracts are only removed from the list of all contracts, where the user has the full picture
@@ -370,7 +386,7 @@ private fun ContractList(
     val isArea = area != null
 
     renaming?.let { signature ->
-        (state.active + state.ended + state.dismissed).find { it.signature == signature }?.let { contract ->
+        (state.active + state.ended + state.dismissed + state.suggestions).find { it.signature == signature }?.let { contract ->
             NameDialog(
                 title = stringResource(R.string.next_contracts_rename),
                 initialName = contract.displayName,
@@ -424,12 +440,13 @@ private fun ContractList(
         }
 
         // All contracts removed: nothing to show outside of the edit mode
-        if (state.isEmpty || !isEditing && state.active.isEmpty() && state.ended.isEmpty()) {
+        if (state.isEmpty || !isEditing && state.active.isEmpty() && state.ended.isEmpty() && state.suggestions.isEmpty()) {
             EmptyState(isArea, Modifier.weight(1f), isIncome)
             return@Column
         }
 
-        val dismissLabel = stringResource(R.string.next_contracts_dismiss)
+        val dismissLabel = stringResource(if (isIncome) R.string.next_income_dismiss else R.string.next_contracts_dismiss)
+        val confirmLabel = stringResource(if (isIncome) R.string.next_income_confirm else R.string.next_contracts_confirm)
         val restoreLabel = stringResource(R.string.next_contracts_restore)
         val renameLabel = stringResource(R.string.next_contracts_rename)
 
@@ -469,6 +486,28 @@ private fun ContractList(
             modifier = Modifier.weight(1f),
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = if (hasToolbar) 0.dp else 16.dp, bottom = 16.dp)
         ) {
+            if (state.suggestions.isNotEmpty()) {
+                item(key = "header_suggestions") {
+                    SuggestionsHeader(state.suggestions.size)
+                }
+                itemsIndexed(state.suggestions, key = { _, contract -> contract.signature }) { index, contract ->
+                    ContractItem(
+                        contract = contract,
+                        currency = currency,
+                        isFirst = index == 0,
+                        isLast = index == state.suggestions.lastIndex,
+                        onClick = { onOpen(contract) },
+                        editAction = null,
+                        suggestionActions = SuggestionActions(
+                            confirm = EditAction(Icons.Default.Check, confirmLabel) { onConfirm(contract) },
+                            reject = EditAction(Icons.Default.Close, dismissLabel) { onDismiss(contract) }
+                        ),
+                        accessibilityActions = emptyList(),
+                        isFaded = false,
+                        badge = if (isIncome) null else contract.area?.label()
+                    )
+                }
+            }
             if (state.active.isNotEmpty()) {
                 item(key = "summary") {
                     SummaryCard(
@@ -665,6 +704,27 @@ private fun SectionHeader(
     }
 }
 
+private class SuggestionActions(val confirm: EditAction, val reject: EditAction)
+
+/**
+ * Suggestions are listed first, the user decides on them with the buttons of each item
+ */
+@Composable
+private fun SuggestionsHeader(count: Int) {
+    Column(Modifier.padding(start = 4.dp, end = 4.dp, top = 8.dp, bottom = 8.dp)) {
+        Text(
+            "${stringResource(R.string.next_contracts_suggestions)} ($count)",
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.tertiary
+        )
+        Text(
+            stringResource(R.string.next_contracts_suggestions_hint),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
+
 private class EditAction(
     val icon: ImageVector,
     val label: String,
@@ -684,6 +744,8 @@ private fun ContractItem(
     onClick: () -> Unit,
     editAction: EditAction?,
     accessibilityActions: List<CustomAccessibilityAction>,
+    /** For suggestions: buttons to confirm or reject them, next to the amount */
+    suggestionActions: SuggestionActions? = null,
     isFaded: Boolean,
     /** Small box in the second line, e.g. the category of the contract */
     badge: String?,
@@ -710,7 +772,7 @@ private fun ContractItem(
                     .fillMaxWidth()
                     .clickable(onClick = onClick)
                     .semantics { customActions = accessibilityActions }
-                    .padding(start = 16.dp, end = if (editAction != null) 4.dp else 16.dp)
+                    .padding(start = 16.dp, end = if (editAction != null || suggestionActions != null) 4.dp else 16.dp)
                     .padding(vertical = if (editAction != null) 4.dp else 12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -787,6 +849,24 @@ private fun ContractItem(
                         )
                     }
                 }
+                if (suggestionActions != null) {
+                    Row(Modifier.padding(start = 4.dp)) {
+                        IconButton(onClick = suggestionActions.reject.onClick) {
+                            Icon(
+                                suggestionActions.reject.icon,
+                                contentDescription = suggestionActions.reject.label,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        IconButton(onClick = suggestionActions.confirm.onClick) {
+                            Icon(
+                                suggestionActions.confirm.icon,
+                                contentDescription = suggestionActions.confirm.label,
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -849,6 +929,7 @@ private fun previewState(): ContractsUiState.Ready {
         vararg amounts: Long,
         category: String? = null,
         last: LocalDate = today.minusDays(5),
+        isConfirmed: Boolean = true,
     ) =
         Contract(
             signature = name,
@@ -865,14 +946,15 @@ private fun previewState(): ContractsUiState.Ready {
                 )
             },
             nextExpectedDate = last.plus(interval.step),
-            isActive = last.isAfter(today.minusDays(interval.maxDays.toLong()))
+            isActive = last.isAfter(today.minusDays(interval.maxDays.toLong())),
+            isConfirmed = isConfirmed
         )
     return buildContractsState(
         listOf(
             contract("Netflix", ContractInterval.MONTHLY, 1299, 1299, 1799, category = "Freizeit > Streaming"),
             contract("Stadtwerke", ContractInterval.MONTHLY, 8500, 8500, 8500, category = "Wohnen > Strom"),
             contract("Kfz-Versicherung", ContractInterval.QUARTERLY, 12050, 12050, 12050, category = "Auto > Kfz-Versicherung"),
-            contract("ADAC", ContractInterval.YEARLY, 9400, 9400),
+            contract("ADAC", ContractInterval.YEARLY, 9400, 9400, isConfirmed = false),
             contract(
                 "Fitnessstudio", ContractInterval.MONTHLY, 2990, 2990, 2990,
                 category = "Freizeit > Fitness", last = today.minusMonths(5)

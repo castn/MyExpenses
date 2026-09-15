@@ -1,6 +1,7 @@
 package org.totschnig.myexpenses.next.contracts
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.time.LocalDate
 
@@ -14,6 +15,7 @@ class ContractsStateTest {
         isActive: Boolean = true,
         last: LocalDate = today,
         category: String? = null,
+        isConfirmed: Boolean = true,
     ) = Contract(
         signature = signature,
         name = signature,
@@ -22,7 +24,8 @@ class ContractsStateTest {
             ContractTransaction(id = 1, date = last, amount = -amount, accountId = 1, categoryPath = category)
         ),
         nextExpectedDate = last.plusMonths(1),
-        isActive = isActive
+        isActive = isActive,
+        isConfirmed = isConfirmed
     )
 
     @Test
@@ -89,5 +92,24 @@ class ContractsStateTest {
             ContractSettings(consent = true, customAreas = listOf(empty))
         )
         assertEquals(listOf(BuiltInArea.HOUSING, BuiltInArea.STREAMING, empty), state.areas)
+    }
+
+    @Test
+    fun separatesSuggestionsFromConfirmedContracts() {
+        val state = buildContractsState(
+            listOf(
+                contract("confirmed", 100),
+                contract("small", 50, isConfirmed = false),
+                contract("big", 500, isConfirmed = false, category = "Wohnen"),
+                contract("endedSuggestion", 300, isActive = false, isConfirmed = false),
+            ),
+            ContractSettings(consent = true)
+        )
+        assertEquals(listOf("confirmed"), state.active.map { it.signature })
+        assertEquals(listOf("big", "small"), state.suggestions.map { it.signature })
+        assertTrue(state.ended.isEmpty())
+        // Suggestions neither make a category appear nor show up in its tab
+        assertEquals(emptyList<ContractArea>(), state.areas)
+        assertTrue(state.forArea(BuiltInArea.HOUSING).suggestions.isEmpty())
     }
 }

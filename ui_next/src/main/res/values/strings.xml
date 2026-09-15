@@ -120,4 +120,15 @@
     <string name="next_balance_calendar_month">Calendar month</string>
     <string name="next_salary_none_hint">Without any, the calendar month is used.</string>
     <string name="next_balance_income_upcoming">%1$s of it still expected</string>
+    <string name="next_contracts_suggestions">Suggestions</string>
+    <string name="next_contracts_suggestions_hint">Only included in the totals once you confirm them.</string>
+    <string name="next_contracts_confirm">Is a contract</string>
+    <string name="next_income_confirm">Is a regular income</string>
+    <string name="next_income_dismiss">Not a regular income</string>
+    <string name="next_contracts_question">Is this a contract?</string>
+    <string name="next_contracts_question_hint">Confirmed contracts count towards your fixed costs and the monthly balance.</string>
+    <string name="next_income_question">Is this a regular income?</string>
+    <string name="next_income_question_hint">Confirmed incomes can be chosen as salary for the monthly balance.</string>
+    <string name="next_yes">Yes</string>
+    <string name="next_no">No</string>
 </resources>

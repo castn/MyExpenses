@@ -55,12 +55,17 @@ sealed interface ContractsUiState {
     data object Declined : ContractsUiState
 
     data class Ready(
-        /** Sorted by monthly amount, highest first */
+        /** Confirmed, sorted by monthly amount, highest first */
         val active: List<Contract>,
-        /** Last debited first */
+        /** Confirmed, last debited first */
         val ended: List<Contract>,
         /** Removed by the user, sorted by name */
         val dismissed: List<Contract>,
+        /**
+         * Active contracts detected, but not confirmed by the user, sorted by monthly amount.
+         * They do not count in any sums.
+         */
+        val suggestions: List<Contract> = emptyList(),
         val customAreas: List<CustomArea> = emptyList(),
         val salaryChoice: SalaryChoice = SalaryChoice.Automatic,
     ) : ContractsUiState {
@@ -69,7 +74,8 @@ sealed interface ContractsUiState {
 
         fun isSalary(contract: Contract) = salaries.any { it.signature == contract.signature }
 
-        val isEmpty: Boolean get() = active.isEmpty() && ended.isEmpty() && dismissed.isEmpty()
+        val isEmpty: Boolean
+            get() = active.isEmpty() && ended.isEmpty() && dismissed.isEmpty() && suggestions.isEmpty()
 
         /**
          * Categories that get a tab: built-in ones only if they contain contracts,
@@ -81,18 +87,20 @@ sealed interface ContractsUiState {
         /** All categories a contract can be put into */
         val selectableAreas: List<ContractArea> get() = BuiltInArea.entries + customAreas
 
-        /** Only contracts of [area] */
+        /** Only contracts of [area]. Suggestions are decided on in the list of all contracts. */
         fun forArea(area: ContractArea) = copy(
             active = active.filter { it.area == area },
             ended = ended.filter { it.area == area },
-            dismissed = dismissed.filter { it.area == area }
+            dismissed = dismissed.filter { it.area == area },
+            suggestions = emptyList()
         )
     }
 }
 
 /**
  * Applies the [settings] to the [contracts] of a [ContractAnalysis]: names and categories from the
- * rules (or, before they were taken over, from the maps by signature).
+ * rules (or, before they were taken over, from the maps by signature). Separates suggestions from
+ * confirmed contracts.
  *
  * @param dismissed payments the user declared as no contract, see [ContractAnalysis.dismissed]
  */
@@ -109,8 +117,11 @@ fun buildContractsState(
     val (dismissedBefore, shown) = contracts
         .map { it.withDecisions() }
         .partition { it.signature in settings.dismissed }
-    val (active, ended) = shown.partition { it.isActive }
+    val (confirmed, detected) = shown.partition { it.isConfirmed }
+    val (active, ended) = confirmed.partition { it.isActive }
     return ContractsUiState.Ready(
+        // A suggestion that is not paid anymore is not worth a decision
+        suggestions = detected.filter { it.isActive }.sortedByDescending { it.monthlyAmount },
         active = active.sortedByDescending { it.monthlyAmount },
         ended = ended.sortedByDescending { it.lastDate },
         dismissed = (dismissedBefore + dismissed.map { it.withDecisions() }).sortedBy { it.displayName.lowercase() },

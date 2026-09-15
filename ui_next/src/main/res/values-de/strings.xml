@@ -120,4 +120,15 @@
     <string name="next_balance_calendar_month">Kalendermonat</string>
     <string name="next_salary_none_hint">Ohne Auswahl gilt der Kalendermonat.</string>
     <string name="next_balance_income_upcoming">davon %1$s noch erwartet</string>
+    <string name="next_contracts_suggestions">Vorschläge</string>
+    <string name="next_contracts_suggestions_hint">Erst nach deiner Bestätigung in den Summen enthalten.</string>
+    <string name="next_contracts_confirm">Ist ein Vertrag</string>
+    <string name="next_income_confirm">Ist eine regelmäßige Einnahme</string>
+    <string name="next_income_dismiss">Keine regelmäßige Einnahme</string>
+    <string name="next_contracts_question">Ist das ein Vertrag?</string>
+    <string name="next_contracts_question_hint">Bestätigte Verträge zählen zu deinen Fixkosten und zur Monatsübersicht.</string>
+    <string name="next_income_question">Ist das eine regelmäßige Einnahme?</string>
+    <string name="next_income_question_hint">Bestätigte Einnahmen können als Gehalt die Monatsübersicht bestimmen.</string>
+    <string name="next_yes">Ja</string>
+    <string name="next_no">Nein</string>
 </resources>
