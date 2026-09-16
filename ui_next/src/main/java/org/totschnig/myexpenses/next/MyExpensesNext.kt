@@ -17,6 +17,8 @@ import org.totschnig.myexpenses.activity.MyExpensesV2
 import org.totschnig.myexpenses.activity.SplashActivity
 import org.totschnig.myexpenses.compose.accounts.AccountEventHandler
 import org.totschnig.myexpenses.compose.main.AppEventHandler
+import org.totschnig.myexpenses.compose.transactions.TransactionEvent
+import org.totschnig.myexpenses.compose.transactions.TransactionEventHandler
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.model.AccountFlag
 import org.totschnig.myexpenses.model.AccountGroupingKey
@@ -30,6 +32,7 @@ import org.totschnig.myexpenses.next.contracts.ContractTransactionList
 import org.totschnig.myexpenses.next.contracts.ContractsViewModel
 import org.totschnig.myexpenses.next.contracts.NextContractsScreen
 import org.totschnig.myexpenses.next.contracts.PaymentContractSection
+import org.totschnig.myexpenses.next.contracts.TransactionActions
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.provider.KEY_DATE
 import org.totschnig.myexpenses.provider.KEY_ROWID
@@ -37,6 +40,7 @@ import org.totschnig.myexpenses.viewmodel.BudgetListViewModel
 import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.viewmodel.data.PageAccount
+import org.totschnig.myexpenses.viewmodel.data.Transaction2
 
 /** Tag for the budget feature request, to create a new budget instead of showing the budget list */
 private const val TAG_ADD_BUDGET = "ADD_BUDGET"
@@ -53,6 +57,13 @@ private const val TAG_ADD_BUDGET = "ADD_BUDGET"
 class MyExpensesNext : MyExpensesV2() {
 
     private val budgetViewModel: BudgetListViewModel by viewModels()
+
+    /** Actions on transactions shown outside of the list of an account, e.g. those of a contract */
+    private val transactionEvents = object : TransactionEventHandler {
+        override fun invoke(event: TransactionEvent, transaction: Transaction2) {
+            handleTransactionEvent(event, transaction, isCurrentPage = true)
+        }
+    }
     private val contractsViewModel: ContractsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,6 +103,7 @@ class MyExpensesNext : MyExpensesV2() {
     ) {
         val budgets by remember { budgetViewModel.overviewBudgets() }
             .collectAsStateWithLifecycle(emptyList())
+        val transactionActions = remember(accounts.size) { TransactionActions(transactionEvents, accounts.size) }
         NextMainScreen(
             viewModel = viewModel,
             budgets = budgets,
@@ -144,7 +156,7 @@ class MyExpensesNext : MyExpensesV2() {
                 )
             },
             balanceDetails = { onBack, onOpenContracts ->
-                MonthlyBalanceFlow(contractsViewModel, onBack, onOpenContracts)
+                MonthlyBalanceFlow(contractsViewModel, onBack, onOpenContracts, transactionActions = transactionActions)
             },
             contractsContent = {
                 val state by contractsViewModel.state.collectAsStateWithLifecycle()
@@ -165,7 +177,7 @@ class MyExpensesNext : MyExpensesV2() {
                     onSetAmountRange = contractsViewModel::setAmountRange,
                     onMerge = contractsViewModel::merge,
                     contractTransactions = { contract, modifier ->
-                        ContractTransactionList(contractsViewModel, contract, modifier)
+                        ContractTransactionList(contractsViewModel, contract, modifier, transactionActions)
                     }
                 )
             }

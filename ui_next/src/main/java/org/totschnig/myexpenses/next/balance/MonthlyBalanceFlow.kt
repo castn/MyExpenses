@@ -21,6 +21,7 @@ import org.totschnig.myexpenses.next.contracts.ContractsViewModel
 import org.totschnig.myexpenses.next.contracts.FixedTransactionsScreen
 import org.totschnig.myexpenses.next.contracts.NextContractsScreen
 import org.totschnig.myexpenses.next.contracts.PaymentContractSection
+import org.totschnig.myexpenses.next.contracts.TransactionActions
 
 private enum class BalancePage { Details, Income, Savings, Other }
 
@@ -30,6 +31,7 @@ private enum class BalancePage { Details, Income, Savings, Other }
  *
  * @param onBack leaves the breakdown
  * @param onOpenContracts shows the contracts, which have their own tab
+ * @param transactionActions offered in the details of the transactions shown
  */
 @Composable
 fun MonthlyBalanceFlow(
@@ -37,6 +39,7 @@ fun MonthlyBalanceFlow(
     onBack: () -> Unit,
     onOpenContracts: () -> Unit,
     modifier: Modifier = Modifier,
+    transactionActions: TransactionActions? = null,
 ) {
     val state by viewModel.balance.collectAsStateWithLifecycle()
     var page by rememberSaveable { mutableStateOf(BalancePage.Details) }
@@ -102,7 +105,7 @@ fun MonthlyBalanceFlow(
                 onSetAmountRange = viewModel::setAmountRange,
                 onMerge = viewModel::merge,
                 contractTransactions = { contract, contentModifier ->
-                    ContractTransactionList(viewModel, contract, contentModifier)
+                    ContractTransactionList(viewModel, contract, contentModifier, transactionActions)
                 },
                 modifier = modifier
             )
@@ -119,7 +122,9 @@ fun MonthlyBalanceFlow(
                 onBack = { page = BalancePage.Details },
                 modifier = modifier
             ) {
-                ContractTransactionList(viewModel.contractTransactions.collectAsLazyPagingItems(), it) { transaction ->
+                ContractTransactionList(
+                    viewModel.contractTransactions.collectAsLazyPagingItems(), it, transactionActions
+                ) { transaction ->
                     PaymentContractSection(viewModel, transaction.id)
                 }
             }

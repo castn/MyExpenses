@@ -52,6 +52,7 @@ import org.totschnig.myexpenses.compose.HierarchicalMenu
 import org.totschnig.myexpenses.compose.LocalColors
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
 import org.totschnig.myexpenses.compose.Menu
+import org.totschnig.myexpenses.compose.SubMenuEntry
 import org.totschnig.myexpenses.compose.conditional
 import org.totschnig.myexpenses.compose.transactions.FutureCriterion
 import org.totschnig.myexpenses.compose.transactions.SelectionHandler
@@ -72,8 +73,10 @@ import org.totschnig.myexpenses.viewmodel.data.Transaction2
  * with the date and the balance of the account at the end of that day.
  * Expects the account of [content] to be grouped by [Grouping.DAY], otherwise day headers are omitted.
  *
- * @param isReadOnly transactions can neither be selected nor changed: tapping them only opens
- * the details, if there are [detailsContent], which then have no menu
+ * @param isReadOnly for lists other than of an account: transactions cannot be selected, tapping
+ * them only opens the details, if there are [detailsContent]. The details have a menu only if
+ * [TransactionListContent.modificationAllowed], without selecting and filtering, which belong to
+ * the list of an account.
  * @param showDateAndAccount second line shows date and account instead of details, for lists
  * without day headers that span several accounts
  * @param detailsContent if given, tapping a transaction opens its details instead of its menu,
@@ -115,8 +118,8 @@ fun NextTransactionList(
                             content.onEvent(event, transaction)
                         }
                     }
-                )
-            }.takeIf { !isReadOnly },
+                ).let { if (isReadOnly) it.withoutListActions() else it }
+            }.takeIf { !isReadOnly || content.modificationAllowed },
             onDismiss = { openedId = null }
         ) {
             detailsContent(transaction)
@@ -422,3 +425,9 @@ private fun Transaction2.titleAndSubtitle(): Pair<String?, String?> {
     )
     return candidates.firstOrNull() to candidates.drop(1).takeIf { it.isNotEmpty() }?.joinToString(" · ")
 }
+
+/**
+ * Leaves out the actions that work on the list of an account: selecting, and the filter submenu
+ */
+private fun Menu.withoutListActions() = filterNot { it.command == "SELECT_TRANSACTION" || it is SubMenuEntry }
+

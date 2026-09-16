@@ -1434,7 +1434,7 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
     val hasItems
         get() = sumInfo.value.hasItems
 
-    private fun handleTransactionEvent(
+    protected fun handleTransactionEvent(
         event: TransactionEvent,
         transaction: Transaction2,
         isCurrentPage: Boolean,

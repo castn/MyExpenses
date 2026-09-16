@@ -106,6 +106,13 @@ fun FixedTransactionsScreen(
     }
 }
 
+/**
+ * What can be done with a transaction from its details, like in the transaction list of an account
+ *
+ * @param accountCount number of accounts, transforming into a transfer needs at least two
+ */
+class TransactionActions(val onEvent: TransactionEventHandler, val accountCount: Int)
+
 private val NoTransactionEvents = object : TransactionEventHandler {
     override fun invoke(event: TransactionEvent, transaction: Transaction2) {}
 }
@@ -118,17 +125,19 @@ private val NoTransactionEvents = object : TransactionEventHandler {
 fun ContractTransactionList(
     items: LazyPagingItems<Transaction2>,
     modifier: Modifier = Modifier,
+    /** Offered in the details of a transaction, null if transactions cannot be changed */
+    actions: TransactionActions? = null,
     /** Added to the details of a transaction, which a tap opens */
     detailsContent: (@Composable (Transaction2) -> Unit)? = null,
 ) {
-    val content = remember(items) {
+    val content = remember(items, actions) {
         TransactionListContent(
             lazyPagingItems = items,
             headerData = HeaderDataEmpty,
             selectionHandler = null,
-            onEvent = NoTransactionEvents,
-            modificationAllowed = false,
-            accountCount = 0,
+            onEvent = actions?.onEvent ?: NoTransactionEvents,
+            modificationAllowed = actions != null,
+            accountCount = actions?.accountCount ?: 0,
             isFiltered = true,
             futureCriterion = FutureCriterion.EndOfDay
         )
@@ -150,9 +159,10 @@ fun ContractTransactionList(
     viewModel: ContractsViewModel,
     contract: Contract,
     modifier: Modifier = Modifier,
+    actions: TransactionActions? = null,
 ) {
     LaunchedEffect(contract.transactions) { viewModel.showTransactionsOf(contract) }
-    ContractTransactionList(viewModel.contractTransactions.collectAsLazyPagingItems(), modifier) {
+    ContractTransactionList(viewModel.contractTransactions.collectAsLazyPagingItems(), modifier, actions) {
         PaymentContractSection(viewModel, it.id)
     }
 }
