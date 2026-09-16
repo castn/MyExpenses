@@ -2,6 +2,7 @@ package org.totschnig.myexpenses.next
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -71,7 +72,8 @@ import org.totschnig.myexpenses.viewmodel.data.Transaction2
  * with the date and the balance of the account at the end of that day.
  * Expects the account of [content] to be grouped by [Grouping.DAY], otherwise day headers are omitted.
  *
- * @param isReadOnly transactions only shown, tapping them does nothing
+ * @param isReadOnly transactions can neither be selected nor changed: tapping them only opens
+ * the details, if there are [detailsContent], which then have no menu
  * @param showDateAndAccount second line shows date and account instead of details, for lists
  * without day headers that span several accounts
  * @param detailsContent if given, tapping a transaction opens its details instead of its menu,
@@ -114,7 +116,7 @@ fun NextTransactionList(
                         }
                     }
                 )
-            },
+            }.takeIf { !isReadOnly },
             onDismiss = { openedId = null }
         ) {
             detailsContent(transaction)
@@ -298,6 +300,9 @@ private fun TransactionItem(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .conditional(isReadOnly && onOpen != null) {
+                        clickable(onClick = onOpen!!)
+                    }
                     .conditional(!isReadOnly) {
                         combinedClickable(
                             onLongClick = if (isSelectable) {

@@ -49,13 +49,13 @@ import org.totschnig.myexpenses.compose.Icon as CategoryIcon
  *
  * Only the basics for now, the details of transactions are to be designed further.
  *
- * @param menu actions of the transaction
+ * @param menu actions of the transaction, null if it cannot be changed here
  * @param content added below the details, e.g. the contract the transaction belongs to
  */
 @Composable
 fun TransactionDetailDialog(
     transaction: Transaction2,
-    menu: () -> Menu,
+    menu: (() -> Menu)?,
     onDismiss: () -> Unit,
     content: @Composable () -> Unit = {},
 ) {
@@ -75,7 +75,7 @@ fun TransactionDetailDialog(
 @Composable
 private fun TransactionDetailScreen(
     transaction: Transaction2,
-    menu: () -> Menu,
+    menu: (() -> Menu)?,
     onBack: () -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -89,8 +89,8 @@ private fun TransactionDetailScreen(
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.next_back))
             }
             Spacer(Modifier.weight(1f))
-            val showMenu = rememberSaveable { mutableStateOf(false) }
-            Box {
+            if (menu != null) Box {
+                val showMenu = rememberSaveable { mutableStateOf(false) }
                 IconButton(onClick = { showMenu.value = true }) {
                     Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.next_transaction_actions))
                 }

@@ -20,6 +20,7 @@ import org.totschnig.myexpenses.next.contracts.ContractsUiState
 import org.totschnig.myexpenses.next.contracts.ContractsViewModel
 import org.totschnig.myexpenses.next.contracts.FixedTransactionsScreen
 import org.totschnig.myexpenses.next.contracts.NextContractsScreen
+import org.totschnig.myexpenses.next.contracts.PaymentContractSection
 
 private enum class BalancePage { Details, Income, Savings, Other }
 
@@ -118,7 +119,9 @@ fun MonthlyBalanceFlow(
                 onBack = { page = BalancePage.Details },
                 modifier = modifier
             ) {
-                ContractTransactionList(viewModel.contractTransactions.collectAsLazyPagingItems(), it)
+                ContractTransactionList(viewModel.contractTransactions.collectAsLazyPagingItems(), it) { transaction ->
+                    PaymentContractSection(viewModel, transaction.id)
+                }
             }
         }
     }

@@ -118,6 +118,8 @@ private val NoTransactionEvents = object : TransactionEventHandler {
 fun ContractTransactionList(
     items: LazyPagingItems<Transaction2>,
     modifier: Modifier = Modifier,
+    /** Added to the details of a transaction, which a tap opens */
+    detailsContent: (@Composable (Transaction2) -> Unit)? = null,
 ) {
     val content = remember(items) {
         TransactionListContent(
@@ -135,7 +137,8 @@ fun ContractTransactionList(
         content = content,
         modifier = modifier,
         isReadOnly = true,
-        showDateAndAccount = true
+        showDateAndAccount = true,
+        detailsContent = detailsContent
     )
 }
 
@@ -149,5 +152,7 @@ fun ContractTransactionList(
     modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(contract.transactions) { viewModel.showTransactionsOf(contract) }
-    ContractTransactionList(viewModel.contractTransactions.collectAsLazyPagingItems(), modifier)
+    ContractTransactionList(viewModel.contractTransactions.collectAsLazyPagingItems(), modifier) {
+        PaymentContractSection(viewModel, it.id)
+    }
 }
