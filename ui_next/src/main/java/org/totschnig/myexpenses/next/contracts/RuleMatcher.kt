@@ -36,10 +36,15 @@ class RuleMatcher(private val today: LocalDate = LocalDate.now()) {
                 if (rule == null) remaining += transaction
                 else matched.getOrPut(rule) { mutableListOf() } += transaction
             }
+        // Cancelled contracts stay visible, also when their payments are older than the analysed period
+        val onlyKnownFromSnapshot = rules.filter {
+            it.kind == ContractRule.Kind.CONTRACT && it.snapshot != null && it !in matched
+        }
         return RuleMatch(
             confirmed = matched
                 .filterKeys { it.kind == ContractRule.Kind.CONTRACT }
-                .map { (rule, payments) -> rule.toContract(payments) },
+                .map { (rule, payments) -> rule.toContract(payments) } +
+                    onlyKnownFromSnapshot.map { rule -> rule.toContract(listOf(rule.snapshotPayment())) },
             ignored = matched
                 .filterKeys { it.kind == ContractRule.Kind.IGNORE }
                 .mapKeys { it.key.id },
@@ -51,6 +56,23 @@ class RuleMatcher(private val today: LocalDate = LocalDate.now()) {
      * The category of the rule is applied with the settings, since custom categories are needed for it
      */
     private fun ContractRule.toContract(payments: List<ContractTransaction>) =
-        contractOf(key, payments, interval, direction, today, isConfirmed = true)
-            .copy(customName = name, rule = this)
+        contractOf(key, payments, interval, direction, today, isConfirmed = true).let {
+            it.copy(
+                customName = name,
+                rule = this,
+                cancelledOn = cancelledOn,
+                // Not expected to be paid anymore
+                isActive = it.isActive && cancelledOn == null
+            )
+        }
+
+    private fun ContractRule.snapshotPayment() = snapshot!!.let {
+        ContractTransaction(
+            id = SNAPSHOT_TRANSACTION_ID,
+            date = it.lastDate,
+            amount = if (direction == ContractDirection.INCOME) it.lastAmount else -it.lastAmount,
+            accountId = 0,
+            payeeName = it.name
+        )
+    }
 }

@@ -15,6 +15,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import app.cash.copper.flow.mapToList
 import app.cash.copper.flow.observeQuery
+import java.time.DateTimeException
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.UUID
@@ -211,7 +212,12 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                         val period = BalancePeriod.of(salaries.firstOrNull(), today)
                         periodTransactions(period).map {
                             BalanceUiState.Ready(
-                                MonthlyBalance.compute(period, it, daily, contracts.active + contracts.ended, salaries),
+                                MonthlyBalance.compute(
+                                    period, it, daily,
+                                    // Payments of cancelled contracts, e.g. the last one, are still contract payments
+                                    contracts.active + contracts.ended + contracts.cancelled,
+                                    salaries
+                                ),
                                 today
                             )
                         }
@@ -345,6 +351,23 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                 }
             )
         }
+    }
+
+    /**
+     * The user cancelled the contract (or an income was discontinued): it is not expected anymore,
+     * but stays visible
+     */
+    fun cancel(contract: Contract) {
+        changeRule(contract) {
+            it.copy(
+                cancelledOn = LocalDate.now(),
+                snapshot = ContractRule.Snapshot(contract.name, contract.lastAmount, contract.lastDate)
+            )
+        }
+    }
+
+    fun revokeCancellation(contract: Contract) {
+        changeRule(contract) { it.copy(cancelledOn = null, snapshot = null) }
     }
 
     fun setInterval(contract: Contract, interval: ContractInterval) {
@@ -519,6 +542,8 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                         null
                     } catch (_: IllegalArgumentException) {
                         null
+                    } catch (_: DateTimeException) {
+                        null
                     }
                 }
             }
@@ -536,7 +561,13 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
             amountRange = if (has("min") && has("max")) getLong("min")..getLong("max") else null,
             interval = ContractInterval.valueOf(getString("interval")),
             name = if (has("name")) getString("name") else null,
-            areaKey = if (has("area")) getString("area") else null
+            areaKey = if (has("area")) getString("area") else null,
+            cancelledOn = if (has("cancelled")) LocalDate.parse(getString("cancelled")) else null,
+            snapshot = if (has("snapshotName")) ContractRule.Snapshot(
+                getString("snapshotName"),
+                getLong("snapshotAmount"),
+                LocalDate.parse(getString("snapshotDate"))
+            ) else null
         )
 
         private fun serializeRules(rules: List<ContractRule>) = JSONArray(
@@ -554,6 +585,12 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                     put("interval", rule.interval.name)
                     rule.name?.let { put("name", it) }
                     rule.areaKey?.let { put("area", it) }
+                    rule.cancelledOn?.let { put("cancelled", it.toString()) }
+                    rule.snapshot?.let {
+                        put("snapshotName", it.name)
+                        put("snapshotAmount", it.lastAmount)
+                        put("snapshotDate", it.lastDate.toString())
+                    }
                 }
             }
         ).toString()

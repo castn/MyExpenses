@@ -102,6 +102,11 @@ fun ContractDetailScreen(
     onRemovePayee: (Long) -> Unit = {},
     onSetAmountRange: (LongRange?) -> Unit = {},
     onMerge: (Contract) -> Unit = {},
+    /** For a confirmed contract: the user cancelled it (or the income was discontinued) */
+    onCancel: () -> Unit = {},
+    onRevokeCancellation: () -> Unit = {},
+    /** For a confirmed contract: the user declares it as no contract */
+    onDismiss: () -> Unit = {},
 ) {
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     if (showRenameDialog) {
@@ -218,6 +223,12 @@ fun ContractDetailScreen(
                     stringResource(R.string.next_contracts_total),
                     debit(contract.transactions.sumOf { it.amount.absoluteValue })
                 )
+                contract.cancelledOn?.let {
+                    InfoRow(
+                        stringResource(if (contract.isIncome) R.string.next_income_cancelled_row else R.string.next_contracts_cancelled_row),
+                        dateFormatter.format(it)
+                    )
+                }
                 if (contract.isActive) {
                     InfoRow(
                         stringResource(if (contract.isIncome) R.string.next_income_next else R.string.next_contracts_next_debit),
@@ -229,7 +240,8 @@ fun ContractDetailScreen(
                         dateFormatter.format(contract.lastDate)
                     )
                 }
-                LinkRow(
+                // Payments older than the analysed period cannot be shown
+                if (contract.hasPayments) LinkRow(
                     pluralStringResource(
                         R.plurals.next_contracts_based_on,
                         contract.transactions.size,
@@ -265,6 +277,21 @@ fun ContractDetailScreen(
                     onSetAmountRange = onSetAmountRange,
                     onMerge = onMerge
                 )
+                DetailCard(Modifier.padding(top = 16.dp)) {
+                    if (contract.isCancelled) LinkRow(
+                        stringResource(if (contract.isIncome) R.string.next_income_uncancel else R.string.next_contracts_uncancel),
+                        onClick = onRevokeCancellation,
+                        isFirst = true
+                    ) else LinkRow(
+                        stringResource(if (contract.isIncome) R.string.next_income_cancel else R.string.next_contracts_cancel),
+                        onClick = onCancel,
+                        isFirst = true
+                    )
+                    LinkRow(
+                        stringResource(if (contract.isIncome) R.string.next_income_dismiss else R.string.next_contracts_dismiss),
+                        onClick = onDismiss
+                    )
+                }
             }
         }
     }
@@ -312,11 +339,11 @@ private fun SuggestionQuestion(isIncome: Boolean, onConfirm: () -> Unit, onRejec
 }
 
 @Composable
-internal fun DetailCard(content: @Composable ColumnScope.() -> Unit) {
+internal fun DetailCard(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
     Surface(
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.surfaceContainerLowest,
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         Column(content = content)
     }

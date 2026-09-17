@@ -96,8 +96,15 @@ data class Contract(
     val isConfident: Boolean = false,
     /** The rule that defines a confirmed contract */
     val rule: ContractRule? = null,
+    /** When the user marked the contract as cancelled, see [ContractRule.cancelledOn] */
+    val cancelledOn: LocalDate? = null,
 ) {
     val displayName: String get() = customName ?: name
+
+    val isCancelled: Boolean get() = cancelledOn != null
+
+    /** False for a cancelled contract only known from its [ContractRule.snapshot] */
+    val hasPayments: Boolean get() = transactions.any { it.id != SNAPSHOT_TRANSACTION_ID }
 
     /** Area suggested by the category of the last debit */
     val suggestedArea: ContractArea? get() = BuiltInArea.suggest(categoryPath)
@@ -155,3 +162,6 @@ internal fun contractOf(
         isConfirmed = isConfirmed
     )
 }
+
+/** Id of the payment that stands for the last one of a [ContractRule.snapshot] */
+const val SNAPSHOT_TRANSACTION_ID = -1L

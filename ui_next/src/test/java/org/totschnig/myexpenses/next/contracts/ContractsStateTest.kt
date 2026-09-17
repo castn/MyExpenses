@@ -112,4 +112,19 @@ class ContractsStateTest {
         assertEquals(emptyList<ContractArea>(), state.areas)
         assertTrue(state.forArea(BuiltInArea.HOUSING).suggestions.isEmpty())
     }
+
+    @Test
+    fun separatesCancelledContracts() {
+        val state = buildContractsState(
+            listOf(
+                contract("running", 100),
+                contract("cancelledEarlier", 200, isActive = false).copy(cancelledOn = today.minusMonths(2)),
+                contract("cancelledNow", 300, isActive = false).copy(cancelledOn = today),
+            ),
+            ContractSettings(consent = true)
+        )
+        assertEquals(listOf("running"), state.active.map { it.signature })
+        assertEquals(listOf("cancelledNow", "cancelledEarlier"), state.cancelled.map { it.signature })
+        assertTrue(state.ended.isEmpty())
+    }
 }

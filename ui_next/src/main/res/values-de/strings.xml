@@ -160,4 +160,14 @@
     <string name="next_payment_mark_income">Als regelmäßige Einnahme markieren</string>
     <string name="next_payment_interval_question">Wie oft wird gezahlt?</string>
     <string name="next_payment_no_payee">Buchungen ohne Empfänger können keinem Vertrag zugeordnet werden.</string>
+    <string name="next_contracts_cancel">Vertrag gekündigt</string>
+    <string name="next_contracts_uncancel">Kündigung zurücknehmen</string>
+    <string name="next_contracts_cancelled">Gekündigt</string>
+    <string name="next_contracts_cancelled_on">Gekündigt am %1$s</string>
+    <string name="next_contracts_cancelled_row">Gekündigt am</string>
+    <string name="next_income_cancel">Einnahme eingestellt</string>
+    <string name="next_income_uncancel">Doch nicht eingestellt</string>
+    <string name="next_income_cancelled">Eingestellt</string>
+    <string name="next_income_cancelled_on">Eingestellt am %1$s</string>
+    <string name="next_income_cancelled_row">Eingestellt am</string>
 </resources>

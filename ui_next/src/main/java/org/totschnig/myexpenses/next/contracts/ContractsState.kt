@@ -57,7 +57,7 @@ sealed interface ContractsUiState {
     data class Ready(
         /** Confirmed, sorted by monthly amount, highest first */
         val active: List<Contract>,
-        /** Confirmed, last debited first */
+        /** Confirmed, not paid anymore without being cancelled, last debited first */
         val ended: List<Contract>,
         /** Removed by the user, sorted by name */
         val dismissed: List<Contract>,
@@ -66,6 +66,8 @@ sealed interface ContractsUiState {
          * They do not count in any sums.
          */
         val suggestions: List<Contract> = emptyList(),
+        /** Marked as cancelled by the user, last cancelled first. They do not count in any sums. */
+        val cancelled: List<Contract> = emptyList(),
         val customAreas: List<CustomArea> = emptyList(),
         val salaryChoice: SalaryChoice = SalaryChoice.Automatic,
     ) : ContractsUiState {
@@ -75,7 +77,8 @@ sealed interface ContractsUiState {
         fun isSalary(contract: Contract) = salaries.any { it.signature == contract.signature }
 
         val isEmpty: Boolean
-            get() = active.isEmpty() && ended.isEmpty() && dismissed.isEmpty() && suggestions.isEmpty()
+            get() = active.isEmpty() && ended.isEmpty() && dismissed.isEmpty() && suggestions.isEmpty() &&
+                    cancelled.isEmpty()
 
         /**
          * Categories that get a tab: built-in ones only if they contain contracts,
@@ -92,7 +95,8 @@ sealed interface ContractsUiState {
             active = active.filter { it.area == area },
             ended = ended.filter { it.area == area },
             dismissed = dismissed.filter { it.area == area },
-            suggestions = emptyList()
+            suggestions = emptyList(),
+            cancelled = cancelled.filter { it.area == area }
         )
     }
 }
@@ -118,11 +122,13 @@ fun buildContractsState(
         .map { it.withDecisions() }
         .partition { it.signature in settings.dismissed }
     val (confirmed, detected) = shown.partition { it.isConfirmed }
-    val (active, ended) = confirmed.partition { it.isActive }
+    val (cancelled, running) = confirmed.partition { it.isCancelled }
+    val (active, ended) = running.partition { it.isActive }
     return ContractsUiState.Ready(
         // A suggestion that is not paid anymore is not worth a decision
         suggestions = detected.filter { it.isActive }.sortedByDescending { it.monthlyAmount },
         active = active.sortedByDescending { it.monthlyAmount },
+        cancelled = cancelled.sortedByDescending { it.cancelledOn },
         ended = ended.sortedByDescending { it.lastDate },
         dismissed = (dismissedBefore + dismissed.map { it.withDecisions() }).sortedBy { it.displayName.lowercase() },
         customAreas = settings.customAreas,

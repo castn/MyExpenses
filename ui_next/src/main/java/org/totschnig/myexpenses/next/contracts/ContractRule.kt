@@ -1,5 +1,6 @@
 package org.totschnig.myexpenses.next.contracts
 
+import java.time.LocalDate
 import java.util.UUID
 import kotlin.math.absoluteValue
 import kotlin.math.roundToLong
@@ -18,6 +19,9 @@ import kotlin.math.roundToLong
  * @param name custom name
  * @param areaKey key of the chosen [ContractArea], [ContractSettings.AREA_NONE] for none,
  * null for the suggested one
+ * @param cancelledOn when the user marked the contract as cancelled (for an income: discontinued)
+ * @param snapshot the contract when it was cancelled, to still show it when its payments are
+ * older than the analysed period
  */
 data class ContractRule(
     val id: String,
@@ -29,7 +33,15 @@ data class ContractRule(
     val interval: ContractInterval,
     val name: String? = null,
     val areaKey: String? = null,
+    val cancelledOn: LocalDate? = null,
+    val snapshot: Snapshot? = null,
 ) {
+    /**
+     * @param name detected name of the contract
+     * @param lastAmount absolute, in minor units
+     */
+    data class Snapshot(val name: String, val lastAmount: Long, val lastDate: LocalDate)
+
     enum class Kind {
         /** The payments form a contract */
         CONTRACT,

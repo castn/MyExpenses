@@ -126,6 +126,8 @@ fun NextContractsScreen(
     onSetAmountRange: (Contract, LongRange?) -> Unit = { _, _ -> },
     /** Joins the second contract into the first one */
     onMerge: (Contract, Contract) -> Unit = { _, _ -> },
+    onCancel: (Contract) -> Unit = {},
+    onRevokeCancellation: (Contract) -> Unit = {},
 ) {
     /** Key of the category of the selected tab, null for all contracts */
     var selectedAreaKey by rememberSaveable { mutableStateOf<String?>(null) }
@@ -138,7 +140,7 @@ fun NextContractsScreen(
     // A payment of the opened contract: confirming a suggestion gives it the key of its new rule
     var openedPayment by rememberSaveable { mutableStateOf<Long?>(null) }
     val openedContract = ready?.let {
-        val all = ready.active + ready.ended + ready.suggestions
+        val all = ready.active + ready.ended + ready.suggestions + ready.cancelled
         all.find { it.signature == openedSignature }
             ?: openedPayment?.let { id -> all.find { contract -> contract.transactions.any { it.id == id } } }
     }
@@ -179,12 +181,15 @@ fun NextContractsScreen(
             onBack = { closeContract() },
             onConfirm = { onConfirm(openedContract) }.takeIf { !openedContract.isConfirmed },
             onReject = { onDismiss(openedContract) }.takeIf { !openedContract.isConfirmed },
-            mergeCandidates = (ready.active + ready.ended + ready.suggestions)
+            mergeCandidates = (ready.active + ready.ended + ready.suggestions + ready.cancelled)
                 .filter { it.signature != openedContract.signature },
             onSetInterval = { onSetInterval(openedContract, it) },
             onRemovePayee = { onRemovePayee(openedContract, it) },
             onSetAmountRange = { onSetAmountRange(openedContract, it) },
             onMerge = { onMerge(openedContract, it) },
+            onCancel = { onCancel(openedContract) },
+            onRevokeCancellation = { onRevokeCancellation(openedContract) },
+            onDismiss = { onDismiss(openedContract) },
             areas = ready.selectableAreas,
             onSetArea = { onSetArea(openedContract, it) },
             onRename = { onRename(openedContract, it) },
@@ -397,7 +402,8 @@ private fun ContractList(
     val isArea = area != null
 
     renaming?.let { signature ->
-        (state.active + state.ended + state.dismissed + state.suggestions).find { it.signature == signature }?.let { contract ->
+        (state.active + state.ended + state.dismissed + state.suggestions + state.cancelled)
+            .find { it.signature == signature }?.let { contract ->
             NameDialog(
                 title = stringResource(R.string.next_contracts_rename),
                 initialName = contract.displayName,
@@ -451,7 +457,9 @@ private fun ContractList(
         }
 
         // All contracts removed: nothing to show outside of the edit mode
-        if (state.isEmpty || !isEditing && state.active.isEmpty() && state.ended.isEmpty() && state.suggestions.isEmpty()) {
+        if (state.isEmpty || !isEditing && state.active.isEmpty() && state.ended.isEmpty() && state.suggestions.isEmpty() &&
+            state.cancelled.isEmpty()
+        ) {
             EmptyState(isArea, Modifier.weight(1f), isIncome)
             return@Column
         }
@@ -540,6 +548,17 @@ private fun ContractList(
                     )
                 }
                 section(group, isDismissed = false)
+            }
+            if (state.cancelled.isNotEmpty()) {
+                item(key = "header_cancelled") {
+                    SectionHeader(
+                        title = stringResource(if (isIncome) R.string.next_income_cancelled else R.string.next_contracts_cancelled),
+                        count = state.cancelled.size,
+                        total = null,
+                        currency = currency
+                    )
+                }
+                section(state.cancelled, isDismissed = false)
             }
             if (state.ended.isNotEmpty()) {
                 item(key = "header_ended") {
@@ -822,10 +841,17 @@ private fun ContractItem(
                         )
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
-                                text = if (contract.isActive)
-                                    stringResource(R.string.next_contracts_next, dateFormatter.format(contract.nextExpectedDate))
-                                else
-                                    stringResource(R.string.next_contracts_last, dateFormatter.format(contract.lastDate)),
+                                text = when {
+                                    contract.cancelledOn != null -> stringResource(
+                                        if (contract.isIncome) R.string.next_income_cancelled_on else R.string.next_contracts_cancelled_on,
+                                        dateFormatter.format(contract.cancelledOn)
+                                    )
+
+                                    contract.isActive ->
+                                        stringResource(R.string.next_contracts_next, dateFormatter.format(contract.nextExpectedDate))
+
+                                    else -> stringResource(R.string.next_contracts_last, dateFormatter.format(contract.lastDate))
+                                },
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 maxLines = 1

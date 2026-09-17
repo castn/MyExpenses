@@ -176,6 +176,8 @@ class MyExpensesNext : MyExpensesV2() {
                     onRemovePayee = contractsViewModel::removePayee,
                     onSetAmountRange = contractsViewModel::setAmountRange,
                     onMerge = contractsViewModel::merge,
+                    onCancel = contractsViewModel::cancel,
+                    onRevokeCancellation = contractsViewModel::revokeCancellation,
                     contractTransactions = { contract, modifier ->
                         ContractTransactionList(contractsViewModel, contract, modifier, transactionActions)
                     }

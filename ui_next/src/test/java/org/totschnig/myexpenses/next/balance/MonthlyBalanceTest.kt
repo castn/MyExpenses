@@ -138,4 +138,23 @@ class MonthlyBalanceTest {
         assertEquals(20000, balance.incomeUpcoming)
         assertEquals(400000, balance.available)
     }
+
+    @Test
+    fun cancelledContractIsPaidButNotExpected() {
+        val period = BalancePeriod(LocalDate.of(2026, 9, 1), LocalDate.of(2026, 10, 1), true)
+        // Last payment on 10.09. after cancelling, the next one on 10.10. is not expected
+        val cancelled = contract(-4000, LocalDate.of(2026, 8, 10), LocalDate.of(2026, 9, 10), firstId = 20)
+            .copy(cancelledOn = LocalDate.of(2026, 9, 5), isActive = false)
+        val weekly = contract(-1000, LocalDate.of(2026, 9, 3), interval = ContractInterval.WEEKLY, firstId = 30)
+            .copy(cancelledOn = LocalDate.of(2026, 9, 5), isActive = false)
+        val balance = MonthlyBalance.compute(
+            period,
+            listOf(BalanceTransaction(21, LocalDate.of(2026, 9, 10), -4000, giro)),
+            daily,
+            listOf(cancelled, weekly)
+        )
+        assertEquals(-4000, balance.contractsBooked)
+        assertEquals(0, balance.contractsUpcoming)
+        assertEquals(0, balance.other)
+    }
 }

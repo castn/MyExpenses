@@ -160,4 +160,14 @@
     <string name="next_payment_mark_income">Mark as regular income</string>
     <string name="next_payment_interval_question">How often is it paid?</string>
     <string name="next_payment_no_payee">Transactions without payee cannot be assigned to a contract.</string>
+    <string name="next_contracts_cancel">Contract cancelled</string>
+    <string name="next_contracts_uncancel">Undo cancellation</string>
+    <string name="next_contracts_cancelled">Cancelled</string>
+    <string name="next_contracts_cancelled_on">Cancelled on %1$s</string>
+    <string name="next_contracts_cancelled_row">Cancelled on</string>
+    <string name="next_income_cancel">Income discontinued</string>
+    <string name="next_income_uncancel">Not discontinued</string>
+    <string name="next_income_cancelled">Discontinued</string>
+    <string name="next_income_cancelled_on">Discontinued on %1$s</string>
+    <string name="next_income_cancelled_row">Discontinued on</string>
 </resources>

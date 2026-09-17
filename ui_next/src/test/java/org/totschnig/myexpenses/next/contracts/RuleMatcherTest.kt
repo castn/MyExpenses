@@ -116,4 +116,31 @@ class RuleMatcherTest {
         assertTrue(result.confirmed.isEmpty())
         assertEquals(3, result.remaining.size)
     }
+
+    @Test
+    fun cancelledContractIsNotActive() {
+        val payments = monthly(listOf(-3000, -3000, -3000))
+        val contract = matcher.apply(
+            listOf(rule("gym").copy(cancelledOn = today.minusDays(1))), payments
+        ).confirmed.single()
+        assertTrue(contract.isCancelled)
+        assertFalse(contract.isActive)
+        assertTrue(contract.hasPayments)
+        assertEquals(payments, contract.transactions)
+    }
+
+    @Test
+    fun cancelledContractWithoutRecentPaymentsComesFromSnapshot() {
+        val cancelled = rule("old", payeeId = 9, name = "Old gym").copy(
+            cancelledOn = LocalDate.of(2024, 1, 10),
+            snapshot = ContractRule.Snapshot("Gym GmbH", 2990, LocalDate.of(2024, 1, 1))
+        )
+        val contract = matcher.apply(listOf(cancelled), emptyList()).confirmed.single()
+        assertFalse(contract.hasPayments)
+        assertEquals("Gym GmbH", contract.name)
+        assertEquals("Old gym", contract.displayName)
+        assertEquals(2990, contract.lastAmount)
+        assertEquals(LocalDate.of(2024, 1, 1), contract.lastDate)
+        assertFalse(contract.isIncome)
+    }
 }
