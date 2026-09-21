@@ -170,4 +170,14 @@
     <string name="next_income_cancelled">Discontinued</string>
     <string name="next_income_cancelled_on">Discontinued on %1$s</string>
     <string name="next_income_cancelled_row">Discontinued on</string>
+    <string name="next_news">News</string>
+    <string name="next_news_mark_all_read">Mark all as read</string>
+    <string name="next_news_payment_after_cancellation">%1$s debited on %2$s despite the cancellation on %3$s. The contract is active again.</string>
+    <string name="next_news_income_after_cancellation">%1$s received on %2$s although discontinued on %3$s. The income is active again.</string>
+    <string name="next_news_price_up">Price increased from %1$s to %2$s.</string>
+    <string name="next_news_price_down">Price decreased from %1$s to %2$s.</string>
+    <string name="next_news_income_up">Amount increased from %1$s to %2$s.</string>
+    <string name="next_news_income_down">Amount decreased from %1$s to %2$s.</string>
+    <string name="next_news_cancel_again">Mark as cancelled again</string>
+    <string name="next_news_income_cancel_again">Mark as discontinued again</string>
 </resources>

@@ -170,4 +170,14 @@
     <string name="next_income_cancelled">Eingestellt</string>
     <string name="next_income_cancelled_on">Eingestellt am %1$s</string>
     <string name="next_income_cancelled_row">Eingestellt am</string>
+    <string name="next_news">Neuigkeiten</string>
+    <string name="next_news_mark_all_read">Alle gelesen</string>
+    <string name="next_news_payment_after_cancellation">Trotz Kündigung am %3$s wurden am %2$s %1$s abgebucht. Der Vertrag ist wieder aktiv.</string>
+    <string name="next_news_income_after_cancellation">Obwohl am %3$s eingestellt, kamen am %2$s %1$s an. Die Einnahme ist wieder aktiv.</string>
+    <string name="next_news_price_up">Preis gestiegen von %1$s auf %2$s.</string>
+    <string name="next_news_price_down">Preis gesunken von %1$s auf %2$s.</string>
+    <string name="next_news_income_up">Betrag gestiegen von %1$s auf %2$s.</string>
+    <string name="next_news_income_down">Betrag gesunken von %1$s auf %2$s.</string>
+    <string name="next_news_cancel_again">Erneut als gekündigt markieren</string>
+    <string name="next_news_income_cancel_again">Erneut als eingestellt markieren</string>
 </resources>

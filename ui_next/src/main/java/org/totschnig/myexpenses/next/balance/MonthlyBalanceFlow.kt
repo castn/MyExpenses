@@ -106,6 +106,8 @@ fun MonthlyBalanceFlow(
                 onMerge = viewModel::merge,
                 onCancel = viewModel::cancel,
                 onRevokeCancellation = viewModel::revokeCancellation,
+                news = viewModel.news.collectAsStateWithLifecycle().value,
+                onMarkNewsRead = viewModel::markNewsRead,
                 contractTransactions = { contract, contentModifier ->
                     ContractTransactionList(viewModel, contract, contentModifier, transactionActions)
                 },

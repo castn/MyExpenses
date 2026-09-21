@@ -107,6 +107,8 @@ fun ContractDetailScreen(
     onRevokeCancellation: () -> Unit = {},
     /** For a confirmed contract: the user declares it as no contract */
     onDismiss: () -> Unit = {},
+    /** Unread news of this contract, shown at the top */
+    news: List<ContractNews> = emptyList(),
 ) {
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     if (showRenameDialog) {
@@ -198,6 +200,9 @@ fun ContractDetailScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
         ) {
+            if (news.isNotEmpty()) {
+                NewsBanner(news, currency, onCancelAgain = onCancel.takeIf { !contract.isCancelled })
+            }
             if (onConfirm != null && onReject != null) {
                 SuggestionQuestion(contract.isIncome, onConfirm, onReject)
             }

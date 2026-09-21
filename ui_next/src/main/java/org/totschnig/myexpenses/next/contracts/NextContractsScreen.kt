@@ -128,7 +128,11 @@ fun NextContractsScreen(
     onMerge: (Contract, Contract) -> Unit = { _, _ -> },
     onCancel: (Contract) -> Unit = {},
     onRevokeCancellation: (Contract) -> Unit = {},
+    /** News about contracts and incomes, the ones of this list are shown */
+    news: List<ContractNews> = emptyList(),
+    onMarkNewsRead: (Set<String>) -> Unit = {},
 ) {
+    val unreadNews = news.filter { !it.isRead && it.isIncome == isIncome }
     /** Key of the category of the selected tab, null for all contracts */
     var selectedAreaKey by rememberSaveable { mutableStateOf<String?>(null) }
     var showCreateAreaDialog by rememberSaveable { mutableStateOf(false) }
@@ -175,9 +179,17 @@ fun NextContractsScreen(
     if (openedContract != null) {
         BackHandler { closeContract() }
         val isSalary = ready.isSalary(openedContract)
+        // Opening the contract reads its news, they stay visible until it is closed
+        val openedNews = remember(openedContract.signature) {
+            unreadNews.filter { it.contractKey == openedContract.signature }
+        }
+        LaunchedEffect(openedContract.signature) {
+            if (openedNews.isNotEmpty()) onMarkNewsRead(openedNews.mapTo(HashSet()) { it.id })
+        }
         ContractDetailScreen(
             contract = openedContract,
             currency = currency,
+            news = openedNews,
             onBack = { closeContract() },
             onConfirm = { onConfirm(openedContract) }.takeIf { !openedContract.isConfirmed },
             onReject = { onDismiss(openedContract) }.takeIf { !openedContract.isConfirmed },
@@ -302,6 +314,20 @@ fun NextContractsScreen(
                     showTransactions = false
                 },
                 onConfirm = onConfirm,
+                news = unreadNews,
+                onOpenNews = { item ->
+                    val contract = (state.active + state.ended + state.cancelled)
+                        .find { it.signature == item.contractKey }
+                    if (contract != null) {
+                        openedSignature = contract.signature
+                        openedPayment = contract.transactions.first().id
+                        showTransactions = false
+                    } else {
+                        // The contract is gone, e.g. declared as no contract
+                        onMarkNewsRead(setOf(item.id))
+                    }
+                },
+                onMarkAllNewsRead = { onMarkNewsRead(unreadNews.mapTo(HashSet()) { it.id }) },
                 modifier = contentModifier
             )
         }
@@ -391,8 +417,13 @@ private fun ContractList(
     onRename: (Contract, String) -> Unit,
     onOpen: (Contract) -> Unit,
     onConfirm: (Contract) -> Unit,
+    /** Unread news, shown on top of the list of all contracts, and as dot on their contracts */
+    news: List<ContractNews>,
+    onOpenNews: (ContractNews) -> Unit,
+    onMarkAllNewsRead: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val contractsWithNews = news.mapTo(HashSet()) { it.contractKey }
     // Contracts are only removed from the list of all contracts, where the user has the full picture
     var isEditing by rememberSaveable { mutableStateOf(false) }
     val canEdit = area == null
@@ -490,6 +521,7 @@ private fun ContractList(
                         CustomAccessibilityAction(renameLabel) { renaming = contract.signature; true }
                     ) else emptyList(),
                     isFaded = isDismissed || !contract.isActive,
+                    hasNews = contract.signature in contractsWithNews,
                     badge = when {
                         isIncome -> stringResource(R.string.next_salary)
                             .takeIf { state.isSalary(contract) }
@@ -505,6 +537,11 @@ private fun ContractList(
             modifier = Modifier.weight(1f),
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = if (hasToolbar) 0.dp else 16.dp, bottom = 16.dp)
         ) {
+            if (area == null && news.isNotEmpty()) {
+                item(key = "news") {
+                    NewsSection(news, currency, onOpen = onOpenNews, onMarkAllRead = onMarkAllNewsRead)
+                }
+            }
             if (state.suggestions.isNotEmpty()) {
                 item(key = "header_suggestions") {
                     SuggestionsHeader(state.suggestions.size)
@@ -776,6 +813,8 @@ private fun ContractItem(
     accessibilityActions: List<CustomAccessibilityAction>,
     /** For suggestions: buttons to confirm or reject them, next to the amount */
     suggestionActions: SuggestionActions? = null,
+    /** Shows a dot for unread news */
+    hasNews: Boolean = false,
     isFaded: Boolean,
     /** Small box in the second line, e.g. the category of the contract */
     badge: String?,
@@ -833,12 +872,16 @@ private fun ContractItem(
                     }
                     Spacer(Modifier.width(16.dp))
                     Column(Modifier.weight(1f)) {
-                        Text(
-                            text = contract.displayName.ifEmpty { "–" },
-                            style = MaterialTheme.typography.bodyLarge,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = contract.displayName.ifEmpty { "–" },
+                                style = MaterialTheme.typography.bodyLarge,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier.weight(1f, fill = false)
+                            )
+                            if (hasNews) NewsDot(Modifier.padding(start = 6.dp))
+                        }
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
                                 text = when {
@@ -1007,7 +1050,17 @@ private fun previewState(): ContractsUiState.Ready {
 @Composable
 private fun NextContractsScreenPreview() {
     PreviewTheme {
-        NextContractsScreen(state = previewState(), currency = CurrencyUnit.DebugInstance)
+        NextContractsScreen(
+            state = previewState(),
+            currency = CurrencyUnit.DebugInstance,
+            news = listOf(
+                ContractNews(
+                    id = "preview", type = ContractNews.Type.PRICE_CHANGE, ruleId = "netflix", transactionId = 1,
+                    date = LocalDate.now().minusDays(5), createdAt = LocalDate.now(), contractName = "Netflix",
+                    isIncome = false, amount = 1799, previousAmount = 1299
+                )
+            )
+        )
     }
 }
 
