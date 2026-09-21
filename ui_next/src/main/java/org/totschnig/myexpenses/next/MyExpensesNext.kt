@@ -155,6 +155,8 @@ class MyExpensesNext : MyExpensesV2() {
                     modifier = modifier
                 )
             },
+            contractsHaveNews = contractsViewModel.news.collectAsStateWithLifecycle().value
+                .any { !it.isRead && !it.isIncome },
             balanceDetails = { onBack, onOpenContracts ->
                 MonthlyBalanceFlow(contractsViewModel, onBack, onOpenContracts, transactionActions = transactionActions)
             },

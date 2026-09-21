@@ -23,12 +23,14 @@ import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -59,6 +61,8 @@ fun NextBottomBar(
     selectedTab: NextTab,
     onTabClick: (NextTab) -> Unit,
     modifier: Modifier = Modifier,
+    /** Tabs with something new, e.g. unread news about contracts, get a dot */
+    badges: Set<NextTab> = emptySet(),
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
@@ -79,7 +83,13 @@ fun NextBottomBar(
                 if (tab == NextTab.Overview) {
                     CenterItem(tab, selected = selectedTab == tab, onClick = { onTabClick(tab) }, modifier = itemModifier)
                 } else {
-                    BarItem(tab, selected = selectedTab == tab, onClick = { onTabClick(tab) }, modifier = itemModifier)
+                    BarItem(
+                        tab,
+                        selected = selectedTab == tab,
+                        hasBadge = tab in badges,
+                        onClick = { onTabClick(tab) },
+                        modifier = itemModifier
+                    )
                 }
             }
         }
@@ -90,6 +100,7 @@ fun NextBottomBar(
 private fun BarItem(
     tab: NextTab,
     selected: Boolean,
+    hasBadge: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -99,7 +110,9 @@ private fun BarItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Icon(tab.icon, contentDescription = null, tint = color)
+        BadgedBox(badge = { if (hasBadge) Badge() }) {
+            Icon(tab.icon, contentDescription = null, tint = color)
+        }
         Text(
             text = stringResource(tab.labelRes),
             color = color,

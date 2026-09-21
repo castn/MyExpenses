@@ -43,6 +43,7 @@ import org.totschnig.myexpenses.compose.LocalColors
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.next.R
+import org.totschnig.myexpenses.next.contracts.NewsDot
 import org.totschnig.myexpenses.util.convAmount
 
 /**
@@ -53,6 +54,7 @@ import org.totschnig.myexpenses.util.convAmount
  * @param onOpenOther null, if there is nothing to show
  * @param salaryName names of the salaries the period is based on, null for the calendar month
  * @param onChangeSalary lets the user choose the salary
+ * @param hasIncomeNews unread news about regular incomes, shown as dot on the income
  */
 @Composable
 fun MonthlyBalanceScreen(
@@ -67,6 +69,7 @@ fun MonthlyBalanceScreen(
     salaryName: String?,
     onChangeSalary: () -> Unit,
     modifier: Modifier = Modifier,
+    hasIncomeNews: Boolean = false,
 ) {
     val formatter = LocalCurrencyFormatter.current
     val colors = LocalColors.current
@@ -144,6 +147,7 @@ fun MonthlyBalanceScreen(
                         stringResource(R.string.next_balance_income),
                         signed(balance.income),
                         colors.income,
+                        hasNews = hasIncomeNews,
                         hint = if (balance.incomeUpcoming != 0L) stringResource(
                             R.string.next_balance_income_upcoming,
                             formatter.convAmount(balance.incomeUpcoming, currency)
@@ -193,6 +197,7 @@ private fun BalanceRow(
     color: Color,
     onClick: (() -> Unit)?,
     hint: String? = null,
+    hasNews: Boolean = false,
 ) {
     Row(
         modifier = Modifier
@@ -202,7 +207,10 @@ private fun BalanceRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(Modifier.weight(1f)) {
-            Text(label, style = MaterialTheme.typography.bodyLarge)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(label, style = MaterialTheme.typography.bodyLarge)
+                if (hasNews) NewsDot(Modifier.padding(start = 6.dp))
+            }
             hint?.let {
                 Text(
                     it,

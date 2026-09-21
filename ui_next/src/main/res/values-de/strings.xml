@@ -182,4 +182,10 @@
     <string name="next_news_income_cancel_again">Erneut als eingestellt markieren</string>
     <string name="next_news_history">Verlauf</string>
     <string name="next_news_history_empty">Noch keine Neuigkeiten.</string>
+    <string name="next_news_new_contract">Als neuer Vertrag übernommen (%1$s, %2$s).</string>
+    <string name="next_news_new_income">Als neue regelmäßige Einnahme übernommen (%1$s, %2$s).</string>
+    <string name="next_news_payment_missing">Die für den %1$s erwartete Abbuchung (%2$s) ist noch nicht erfolgt.</string>
+    <string name="next_news_income_missing">Der für den %1$s erwartete Eingang (%2$s) ist noch nicht erfolgt.</string>
+    <string name="next_news_contract_stopped">Seit dem %1$s keine Abbuchung mehr. Wurde der Vertrag gekündigt?</string>
+    <string name="next_news_income_stopped">Seit dem %1$s kein Eingang mehr. Wurde die Einnahme eingestellt?</string>
 </resources>

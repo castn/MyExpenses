@@ -85,6 +85,23 @@ internal fun ContractNews.text(currency: CurrencyUnit): String {
                 amount
             )
         }
+
+        ContractNews.Type.NEW_CONTRACT -> stringResource(
+            if (isIncome) R.string.next_news_new_income else R.string.next_news_new_contract,
+            amount,
+            interval?.let { stringResource(it.labelRes) } ?: "–"
+        )
+
+        ContractNews.Type.PAYMENT_MISSING -> stringResource(
+            if (isIncome) R.string.next_news_income_missing else R.string.next_news_payment_missing,
+            dateFormatter.format(date),
+            amount
+        )
+
+        ContractNews.Type.CONTRACT_STOPPED -> stringResource(
+            if (isIncome) R.string.next_news_income_stopped else R.string.next_news_contract_stopped,
+            dateFormatter.format(date)
+        )
     }
 }
 
@@ -164,7 +181,7 @@ private fun NewsRow(news: ContractNews, currency: CurrencyUnit, onClick: () -> U
 /**
  * News of a contract at the top of its details
  *
- * @param onCancelAgain for news of a payment after cancellation, if the contract is still running
+ * @param onCancelAgain for news suggesting that the contract ended, if it is not cancelled
  */
 @Composable
 internal fun NewsBanner(
@@ -193,8 +210,11 @@ internal fun NewsBanner(
                     modifier = Modifier.padding(top = 4.dp)
                 )
             }
-            val afterCancellation = news.firstOrNull { it.type == ContractNews.Type.PAYMENT_AFTER_CANCELLATION }
-            if (afterCancellation != null && onCancelAgain != null) {
+            // News that suggest the contract has ended, the user confirms with one tap
+            val cancelling = news.firstOrNull {
+                it.type == ContractNews.Type.PAYMENT_AFTER_CANCELLATION || it.type == ContractNews.Type.CONTRACT_STOPPED
+            }
+            if (cancelling != null && onCancelAgain != null) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -204,8 +224,13 @@ internal fun NewsBanner(
                     Button(onClick = onCancelAgain) {
                         Text(
                             stringResource(
-                                if (afterCancellation.isIncome) R.string.next_news_income_cancel_again
-                                else R.string.next_news_cancel_again
+                                when {
+                                    cancelling.type == ContractNews.Type.CONTRACT_STOPPED && cancelling.isIncome ->
+                                        R.string.next_income_cancel
+                                    cancelling.type == ContractNews.Type.CONTRACT_STOPPED -> R.string.next_contracts_cancel
+                                    cancelling.isIncome -> R.string.next_news_income_cancel_again
+                                    else -> R.string.next_news_cancel_again
+                                }
                             )
                         )
                     }

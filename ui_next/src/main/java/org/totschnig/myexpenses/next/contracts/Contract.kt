@@ -147,7 +147,7 @@ internal fun contractOf(
 ): Contract {
     val last = transactions.last()
     val daysSinceLast = ChronoUnit.DAYS.between(last.date, today)
-    val grace = max(ContractDetector.MIN_GRACE_DAYS, interval.maxDays / 10)
+    val grace = interval.graceDays()
     return Contract(
         signature = signature,
         name = transactions.asReversed().firstNotNullOfOrNull { it.payeeName?.takeIf(String::isNotBlank) }
@@ -165,3 +165,8 @@ internal fun contractOf(
 
 /** Id of the payment that stands for the last one of a [ContractRule.snapshot] */
 const val SNAPSHOT_TRANSACTION_ID = -1L
+
+/**
+ * Days beyond [ContractInterval.maxDays] without payment until a contract counts as ended
+ */
+internal fun ContractInterval.graceDays() = max(ContractDetector.MIN_GRACE_DAYS, maxDays / 10)

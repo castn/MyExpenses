@@ -80,6 +80,7 @@ fun MonthlyBalanceFlow(
                 onOpenContracts = onOpenContracts,
                 onOpenSavings = { page = BalancePage.Savings }.takeIf { balance.savingsTransactionIds.isNotEmpty() },
                 onOpenOther = { page = BalancePage.Other }.takeIf { balance.otherTransactionIds.isNotEmpty() },
+                hasIncomeNews = viewModel.news.collectAsStateWithLifecycle().value.any { !it.isRead && it.isIncome },
                 salaryName = incomes?.salaries?.takeIf { balance.period.isSalaryCycle && it.isNotEmpty() }
                     ?.joinToString { it.displayName },
                 onChangeSalary = { showSalaryDialog = true },

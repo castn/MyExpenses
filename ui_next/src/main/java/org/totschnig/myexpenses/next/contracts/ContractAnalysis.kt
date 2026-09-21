@@ -43,10 +43,16 @@ class ContractAnalysis(
  * nothing is added twice, e.g. when the analysis ran again before the stored rules arrived
  */
 fun ContractAnalysis.automaticRules(existing: List<ContractRule>): List<ContractRule> =
+    automaticConfirmations(existing).map { it.second }
+
+/**
+ * Like [automaticRules], with the suggestion each rule confirms
+ */
+fun ContractAnalysis.automaticConfirmations(existing: List<ContractRule>): List<Pair<Contract, ContractRule>> =
     suggestions
         .filter { it.isConfident && it.isActive }
         .filter { contract -> contract.transactions.none { payment -> existing.any { it.matches(payment) } } }
-        .map { ContractRule.of(it, transactions) }
+        .map { it to ContractRule.of(it, transactions) }
 
 /**
  * Takes over the decisions the user made before there were rules: they were stored by the

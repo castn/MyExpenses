@@ -161,12 +161,15 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
             }
             val today = LocalDate.now()
             val detection = analysis.detectNews(today)
-            val updated = (rules + analysis.automaticRules(rules)).reactivating(detection.reactivated)
+            val confirmations = analysis.automaticConfirmations(rules)
+            val updated = (rules + confirmations.map { it.second }).reactivating(detection.reactivated)
             if (updated != settings.rules) {
                 preferences[KEY_RULES] = serializeRules(updated)
             }
             val stored = preferences[KEY_NEWS]?.let(::parseNews) ?: emptyList()
-            val news = stored.adding(detection.news, today)
+            // The first analysis confirms all contracts found so far, which are nothing new to the user
+            val newContracts = if (settings.rulesMigrated) newContractNews(confirmations, today) else emptyList()
+            val news = stored.settling(analysis).adding(detection.news + newContracts, today)
             if (news != stored) {
                 preferences[KEY_NEWS] = serializeNews(news)
             }
@@ -572,6 +575,7 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
             amount = getLong("amount"),
             previousAmount = if (has("previous")) getLong("previous") else null,
             cancelledOn = if (has("cancelled")) LocalDate.parse(getString("cancelled")) else null,
+            interval = if (has("interval")) ContractInterval.valueOf(getString("interval")) else null,
             isRead = optBoolean("read")
         )
 
@@ -589,6 +593,7 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                     put("amount", item.amount)
                     item.previousAmount?.let { put("previous", it) }
                     item.cancelledOn?.let { put("cancelled", it.toString()) }
+                    item.interval?.let { put("interval", it.name) }
                     put("read", item.isRead)
                 }
             }

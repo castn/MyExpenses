@@ -89,7 +89,7 @@ class ContractNewsTest {
     @Test
     fun noPriceChangeFromHistory() {
         val old = monthly(listOf(-1399, -1399, -1799), last = today.minusDays(60))
-        assertTrue(detect(listOf(rule()), old).news.isEmpty())
+        assertTrue(detect(listOf(rule()), old).news.none { it.type == ContractNews.Type.PRICE_CHANGE })
     }
 
     @Test
@@ -115,5 +115,58 @@ class ContractNewsTest {
         assertEquals(ContractNews.MAX_COUNT, result.size)
         assertTrue(result.none { it.id == "old" })
         assertEquals("n1", result.first().id)
+    }
+
+    @Test
+    fun missingPaymentAfterTolerance() {
+        // Last payment 36 days ago, expected 5 days ago: beyond the tolerance of 4 days
+        val late = detect(listOf(rule()), monthly(listOf(-4000, -4000, -4000), last = today.minusDays(36))).news.single()
+        assertEquals(ContractNews.Type.PAYMENT_MISSING, late.type)
+        assertEquals(today.minusDays(36).plusMonths(1), late.date)
+        // Expected 2 days ago: within the tolerance, e.g. moved by a weekend
+        assertTrue(detect(listOf(rule()), monthly(listOf(-4000, -4000, -4000), last = today.minusDays(33))).news.isEmpty())
+    }
+
+    @Test
+    fun missingPaymentIsSettledWhenItArrives() {
+        val before = monthly(listOf(-4000, -4000, -4000), last = today.minusDays(36))
+        val missing = detect(listOf(rule()), before).news
+        val stored = emptyList<ContractNews>().adding(missing, today)
+        val arrived = before + ContractTransaction(
+            id = 999, date = today.minusDays(1), amount = -4000, accountId = 1, payeeId = 1, payeeName = "Payee 1"
+        )
+        val settled = stored.settling(ContractAnalysis.of(arrived, listOf(rule()), today))
+        assertTrue(settled.single().isRead)
+    }
+
+    @Test
+    fun stoppedContractRecentlyEnded() {
+        // Monthly contract ends 42 days after the last payment
+        val stopped = detect(listOf(rule()), monthly(listOf(-3000, -3000, -3000), last = today.minusDays(50))).news.single()
+        assertEquals(ContractNews.Type.CONTRACT_STOPPED, stopped.type)
+        // Ended long ago: history, no news
+        assertTrue(detect(listOf(rule()), monthly(listOf(-3000, -3000, -3000), last = today.minusDays(120))).news.isEmpty())
+        // Cancelled by the user: expected to stop
+        assertTrue(
+            detect(listOf(rule(cancelledOn = today.minusDays(60))), monthly(listOf(-3000, -3000, -3000), last = today.minusDays(70)))
+                .news.isEmpty()
+        )
+    }
+
+    @Test
+    fun stoppedContractIsSettledWhenCancelled() {
+        val payments = monthly(listOf(-3000, -3000, -3000), last = today.minusDays(50))
+        val stored = emptyList<ContractNews>().adding(detect(listOf(rule()), payments).news, today)
+        val settled = stored.settling(ContractAnalysis.of(payments, listOf(rule(cancelledOn = today)), today))
+        assertTrue(settled.single().isRead)
+    }
+
+    @Test
+    fun newContractNews() {
+        val analysis = ContractAnalysis.of(monthly(List(8) { -1500L }), emptyList(), today)
+        val news = newContractNews(analysis.automaticConfirmations(emptyList()), today).single()
+        assertEquals(ContractNews.Type.NEW_CONTRACT, news.type)
+        assertEquals(ContractInterval.MONTHLY, news.interval)
+        assertEquals(1500, news.amount)
     }
 }

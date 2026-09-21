@@ -58,8 +58,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -173,6 +173,8 @@ fun NextMainScreen(
     /** Card of the overview, opens [balanceDetails] */
     balanceCard: @Composable (modifier: Modifier, onOpen: () -> Unit) -> Unit = { _, _ -> },
     balanceDetails: @Composable (onBack: () -> Unit, onOpenContracts: () -> Unit) -> Unit = { _, _ -> },
+    /** Unread news about contracts, shown as dot on their tab */
+    contractsHaveNews: Boolean = false,
 ) {
 
     LaunchedEffect(Unit) {
@@ -612,6 +614,7 @@ fun NextMainScreen(
         if (useNextBar) {
             NextBottomBar(
                 selectedTab = selectedTab,
+                badges = if (contractsHaveNews) setOf(NextTab.Contracts) else emptySet(),
                 onTabClick = { tab ->
                     when (tab) {
                         NextTab.Menu -> showBottomSheet = true

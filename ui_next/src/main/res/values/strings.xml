@@ -182,4 +182,10 @@
     <string name="next_news_income_cancel_again">Mark as discontinued again</string>
     <string name="next_news_history">History</string>
     <string name="next_news_history_empty">No news yet.</string>
+    <string name="next_news_new_contract">Taken over as new contract (%1$s, %2$s).</string>
+    <string name="next_news_new_income">Taken over as new regular income (%1$s, %2$s).</string>
+    <string name="next_news_payment_missing">The debit expected on %1$s (%2$s) has not happened yet.</string>
+    <string name="next_news_income_missing">The credit expected on %1$s (%2$s) has not arrived yet.</string>
+    <string name="next_news_contract_stopped">No debit since %1$s. Was the contract cancelled?</string>
+    <string name="next_news_income_stopped">No credit since %1$s. Was the income discontinued?</string>
 </resources>

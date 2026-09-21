@@ -11,13 +11,14 @@ import kotlin.math.absoluteValue
  *
  * @param id made of [type], rule and payment, so that the same news is never stored twice
  * @param ruleId the [ContractRule] of the contract
- * @param transactionId the payment that caused the news
- * @param date of that payment
+ * @param transactionId the payment that caused the news, for news about missing payments the last one
+ * @param date of that payment, for [Type.PAYMENT_MISSING] the date the payment was expected
  * @param createdAt when the news was detected
  * @param contractName name of the contract when the news was detected, for the history
  * @param amount of the payment, absolute, in minor units of the home currency
  * @param previousAmount for [Type.PRICE_CHANGE]: the amount before
  * @param cancelledOn for [Type.PAYMENT_AFTER_CANCELLATION]: when the contract had been cancelled
+ * @param interval for [Type.NEW_CONTRACT]: how often the new contract is paid
  */
 data class ContractNews(
     val id: String,
@@ -31,6 +32,7 @@ data class ContractNews(
     val amount: Long,
     val previousAmount: Long? = null,
     val cancelledOn: LocalDate? = null,
+    val interval: ContractInterval? = null,
     val isRead: Boolean = false,
 ) {
     enum class Type {
@@ -38,7 +40,16 @@ data class ContractNews(
         PAYMENT_AFTER_CANCELLATION,
 
         /** The amount changed after it had been stable */
-        PRICE_CHANGE
+        PRICE_CHANGE,
+
+        /** A suggestion was confirmed automatically */
+        NEW_CONTRACT,
+
+        /** An active contract has not been paid when expected */
+        PAYMENT_MISSING,
+
+        /** A confirmed contract that was not cancelled is not paid anymore */
+        CONTRACT_STOPPED
     }
 
     /** Key of the contract, see [ContractRule.key] */
@@ -48,8 +59,11 @@ data class ContractNews(
         /** A change of the amount below this share is no price change, e.g. rounding of exchange rates */
         const val PRICE_CHANGE_TOLERANCE = 0.01
 
-        /** Only a payment this recent reports a price change, not the history found on the first analysis */
-        const val PRICE_CHANGE_MAX_AGE_DAYS = 40L
+        /** Only this recent events are reported, not the history found on the first analysis */
+        const val MAX_AGE_DAYS = 40L
+
+        /** A payment is reported as missing not before this many days after it was expected */
+        const val MISSING_MIN_DAYS = 3L
 
         /** How long news are kept in the history */
         const val KEEP_MONTHS = 24L
@@ -102,13 +116,76 @@ fun ContractAnalysis.detectNews(today: LocalDate): NewsDetection {
             fun differ(a: Long, b: Long) = (a - b).absoluteValue > b * ContractNews.PRICE_CHANGE_TOLERANCE
             val lastPayment = payments.last()
             if (!differ(previous, beforePrevious) && differ(last, previous) &&
-                ChronoUnit.DAYS.between(lastPayment.date, today) <= ContractNews.PRICE_CHANGE_MAX_AGE_DAYS
+                ChronoUnit.DAYS.between(lastPayment.date, today) <= ContractNews.MAX_AGE_DAYS
             ) {
                 news += newsOf(ContractNews.Type.PRICE_CHANGE, lastPayment, previousAmount = previous)
             }
         }
+
+        val lastPayment = payments.lastOrNull() ?: return@forEach
+        if (contract.isActive) {
+            val expected = contract.nextExpectedDate
+            if (today.isAfter(expected.plusDays(contract.interval.missingTolerance()))) {
+                news += newsOf(ContractNews.Type.PAYMENT_MISSING, lastPayment).let {
+                    // One news per expected payment
+                    it.copy(id = "${it.type.name}:${rule.id}:$expected", date = expected)
+                }
+            }
+        } else if (!contract.isCancelled) {
+            val endedOn = lastPayment.date.plusDays((contract.interval.maxDays + contract.interval.graceDays()).toLong())
+            if (!endedOn.isAfter(today) && ChronoUnit.DAYS.between(endedOn, today) <= ContractNews.MAX_AGE_DAYS) {
+                news += newsOf(ContractNews.Type.CONTRACT_STOPPED, lastPayment)
+            }
+        }
     }
     return NewsDetection(news, reactivated)
+}
+
+/**
+ * How late a payment may be before it is missing: the spread of the interval beyond its step,
+ * e.g. 5 days for monthly payments, which are moved by weekends and bank holidays
+ */
+private fun ContractInterval.missingTolerance(): Long {
+    val stepDays = ChronoUnit.DAYS.between(LocalDate.of(2001, 1, 1), LocalDate.of(2001, 1, 1).plus(step))
+    return maxOf(ContractNews.MISSING_MIN_DAYS, maxDays - stepDays)
+}
+
+/**
+ * News for suggestions that were confirmed automatically
+ */
+fun newContractNews(confirmed: List<Pair<Contract, ContractRule>>, today: LocalDate): List<ContractNews> =
+    confirmed.map { (contract, rule) ->
+        val last = contract.lastTransaction
+        ContractNews(
+            id = "${ContractNews.Type.NEW_CONTRACT.name}:${rule.id}:${last.id}",
+            type = ContractNews.Type.NEW_CONTRACT,
+            ruleId = rule.id,
+            transactionId = last.id,
+            date = last.date,
+            createdAt = today,
+            contractName = contract.displayName,
+            isIncome = contract.isIncome,
+            amount = contract.lastAmount,
+            interval = contract.interval
+        )
+    }
+
+/**
+ * Marks news as read that are settled: a missing payment arrived, a stopped contract was cancelled
+ * or is paid again
+ */
+fun List<ContractNews>.settling(analysis: ContractAnalysis): List<ContractNews> {
+    val contracts = analysis.contracts.associateBy { it.signature }
+    return map { news ->
+        if (news.isRead) return@map news
+        val contract = contracts[news.contractKey]
+        val settled = when (news.type) {
+            ContractNews.Type.PAYMENT_MISSING -> contract == null || contract.nextExpectedDate.isAfter(news.date)
+            ContractNews.Type.CONTRACT_STOPPED -> contract == null || contract.isActive || contract.isCancelled
+            else -> false
+        }
+        if (settled) news.copy(isRead = true) else news
+    }
 }
 
 /**
