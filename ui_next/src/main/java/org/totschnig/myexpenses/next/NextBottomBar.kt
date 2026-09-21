@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -17,12 +16,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.DashboardCustomize
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Insights
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Percent
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
@@ -46,13 +47,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 /**
- * Tabs of the bottom bar of the new UI. [Overview] is rendered as the highlighted center button.
+ * Tabs of the bottom bar of the new UI, in the order they are shown.
  * Icons are placeholders.
  */
 enum class NextTab(val icon: ImageVector, @param:StringRes val labelRes: Int) {
+    Overview(Icons.Default.DashboardCustomize, R.string.next_tab_overview),
     Contracts(Icons.Default.Description, R.string.next_tab_contracts),
-    Analysis(Icons.Default.BarChart, R.string.next_tab_analysis),
-    Overview(Icons.Default.Home, R.string.next_tab_overview),
+    Analysis(Icons.Default.Insights, R.string.next_tab_analysis),
+    Savings(Icons.Default.Percent, R.string.next_tab_savings),
     Menu(Icons.Default.Menu, R.string.next_tab_menu)
 }
 
@@ -80,17 +82,13 @@ fun NextBottomBar(
                 val itemModifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
-                if (tab == NextTab.Overview) {
-                    CenterItem(tab, selected = selectedTab == tab, onClick = { onTabClick(tab) }, modifier = itemModifier)
-                } else {
-                    BarItem(
-                        tab,
-                        selected = selectedTab == tab,
-                        hasBadge = tab in badges,
-                        onClick = { onTabClick(tab) },
-                        modifier = itemModifier
-                    )
-                }
+                BarItem(
+                    tab,
+                    selected = selectedTab == tab,
+                    hasBadge = tab in badges,
+                    onClick = { onTabClick(tab) },
+                    modifier = itemModifier
+                )
             }
         }
     }
@@ -121,34 +119,6 @@ private fun BarItem(
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(top = 4.dp)
         )
-    }
-}
-
-@Composable
-private fun CenterItem(
-    tab: NextTab,
-    selected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Box(modifier = modifier, contentAlignment = Alignment.Center) {
-        Surface(
-            selected = selected,
-            onClick = onClick,
-            shape = CircleShape,
-            color = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
-            shadowElevation = 4.dp,
-            modifier = Modifier.size(56.dp)
-        ) {
-            Box(contentAlignment = Alignment.Center) {
-                Icon(
-                    tab.icon,
-                    contentDescription = stringResource(tab.labelRes),
-                    modifier = Modifier.size(28.dp)
-                )
-            }
-        }
     }
 }
 
