@@ -139,8 +139,9 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
 
     /**
      * Once: takes over the decisions stored by signature before there were rules.
-     * Then: confirms suggestions that are certain enough.
-     * Both change the rules, which leads to a new analysis.
+     * Then: confirms suggestions that are certain enough, stores news and lifts the cancellation
+     * of contracts that were paid again.
+     * Changes of the rules lead to a new analysis.
      */
     private suspend fun applyAutomaticDecisions(analysis: ContractAnalysis) {
         dataStore.edit { preferences ->
@@ -158,9 +159,30 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                 }
                 preferences[KEY_RULES_MIGRATED] = true
             }
-            val automatic = analysis.automaticRules(rules)
-            if (rules !== settings.rules || automatic.isNotEmpty()) {
-                preferences[KEY_RULES] = serializeRules(rules + automatic)
+            val today = LocalDate.now()
+            val detection = analysis.detectNews(today)
+            val updated = (rules + analysis.automaticRules(rules)).reactivating(detection.reactivated)
+            if (updated != settings.rules) {
+                preferences[KEY_RULES] = serializeRules(updated)
+            }
+            val stored = preferences[KEY_NEWS]?.let(::parseNews) ?: emptyList()
+            val news = stored.adding(detection.news, today)
+            if (news != stored) {
+                preferences[KEY_NEWS] = serializeNews(news)
+            }
+        }
+    }
+
+    /** News about confirmed contracts, newest first, see [ContractNews] */
+    val news: StateFlow<List<ContractNews>> by lazy {
+        dataStore.data.map { preferences -> preferences[KEY_NEWS]?.let(::parseNews) ?: emptyList() }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    }
+
+    fun markNewsRead(ids: Set<String>) {
+        edit { preferences ->
+            preferences[KEY_NEWS]?.let(::parseNews)?.let { news ->
+                preferences[KEY_NEWS] = serializeNews(news.map { if (it.id in ids) it.copy(isRead = true) else it })
             }
         }
     }
@@ -516,6 +538,61 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
         /** JSON array of [ContractRule]s */
         private val KEY_RULES = stringPreferencesKey("next_contracts_rules")
         private val KEY_RULES_MIGRATED = booleanPreferencesKey("next_contracts_rules_migrated")
+        /** JSON array of [ContractNews] */
+        private val KEY_NEWS = stringPreferencesKey("next_contracts_news")
+
+        /** News that cannot be read, e.g. of a type from a later version, are left out */
+        private fun parseNews(json: String): List<ContractNews> = try {
+            JSONArray(json).let { array ->
+                (0 until array.length()).mapNotNull { i ->
+                    try {
+                        array.getJSONObject(i).toNews()
+                    } catch (_: JSONException) {
+                        null
+                    } catch (_: IllegalArgumentException) {
+                        null
+                    } catch (_: DateTimeException) {
+                        null
+                    }
+                }
+            }
+        } catch (_: JSONException) {
+            emptyList()
+        }
+
+        private fun JSONObject.toNews() = ContractNews(
+            id = getString("id"),
+            type = ContractNews.Type.valueOf(getString("type")),
+            ruleId = getString("rule"),
+            transactionId = getLong("transaction"),
+            date = LocalDate.parse(getString("date")),
+            createdAt = LocalDate.parse(getString("created")),
+            contractName = getString("name"),
+            isIncome = getBoolean("income"),
+            amount = getLong("amount"),
+            previousAmount = if (has("previous")) getLong("previous") else null,
+            cancelledOn = if (has("cancelled")) LocalDate.parse(getString("cancelled")) else null,
+            isRead = optBoolean("read")
+        )
+
+        private fun serializeNews(news: List<ContractNews>) = JSONArray(
+            news.map { item ->
+                JSONObject().apply {
+                    put("id", item.id)
+                    put("type", item.type.name)
+                    put("rule", item.ruleId)
+                    put("transaction", item.transactionId)
+                    put("date", item.date.toString())
+                    put("created", item.createdAt.toString())
+                    put("name", item.contractName)
+                    put("income", item.isIncome)
+                    put("amount", item.amount)
+                    item.previousAmount?.let { put("previous", it) }
+                    item.cancelledOn?.let { put("cancelled", it.toString()) }
+                    put("read", item.isRead)
+                }
+            }
+        ).toString()
 
         private fun Preferences.toContractSettings() = ContractSettings(
             consent = this[KEY_CONSENT],
