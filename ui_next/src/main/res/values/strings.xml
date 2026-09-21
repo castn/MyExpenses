@@ -180,4 +180,6 @@
     <string name="next_news_income_down">Amount decreased from %1$s to %2$s.</string>
     <string name="next_news_cancel_again">Mark as cancelled again</string>
     <string name="next_news_income_cancel_again">Mark as discontinued again</string>
+    <string name="next_news_history">History</string>
+    <string name="next_news_history_empty">No news yet.</string>
 </resources>

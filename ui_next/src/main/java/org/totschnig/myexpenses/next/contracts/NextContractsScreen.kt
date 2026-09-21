@@ -33,6 +33,7 @@ import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.RemoveCircleOutline
 import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material.icons.filled.Search
@@ -132,7 +133,9 @@ fun NextContractsScreen(
     news: List<ContractNews> = emptyList(),
     onMarkNewsRead: (Set<String>) -> Unit = {},
 ) {
-    val unreadNews = news.filter { !it.isRead && it.isIncome == isIncome }
+    val listNews = news.filter { it.isIncome == isIncome }
+    val unreadNews = listNews.filter { !it.isRead }
+    var showHistory by rememberSaveable { mutableStateOf(false) }
     /** Key of the category of the selected tab, null for all contracts */
     var selectedAreaKey by rememberSaveable { mutableStateOf<String?>(null) }
     var showCreateAreaDialog by rememberSaveable { mutableStateOf(false) }
@@ -190,6 +193,7 @@ fun NextContractsScreen(
             contract = openedContract,
             currency = currency,
             news = openedNews,
+            history = listNews.filter { it.contractKey == openedContract.signature },
             onBack = { closeContract() },
             onConfirm = { onConfirm(openedContract) }.takeIf { !openedContract.isConfirmed },
             onReject = { onDismiss(openedContract) }.takeIf { !openedContract.isConfirmed },
@@ -217,6 +221,28 @@ fun NextContractsScreen(
             onCreateArea = onCreateArea,
             onRenameArea = onRenameArea,
             onDeleteArea = onDeleteArea,
+            modifier = modifier
+        )
+        return
+    }
+    fun openNews(item: ContractNews) {
+        val contract = ready?.let { (it.active + it.ended + it.cancelled).find { contract -> contract.signature == item.contractKey } }
+        if (contract != null) {
+            openedSignature = contract.signature
+            openedPayment = contract.transactions.first().id
+            showTransactions = false
+        } else {
+            // The contract is gone, e.g. declared as no contract
+            onMarkNewsRead(setOf(item.id))
+        }
+    }
+    if (showHistory) {
+        BackHandler { showHistory = false }
+        NewsHistoryScreen(
+            news = listNews,
+            currency = currency,
+            onBack = { showHistory = false },
+            onOpen = ::openNews,
             modifier = modifier
         )
         return
@@ -315,18 +341,8 @@ fun NextContractsScreen(
                 },
                 onConfirm = onConfirm,
                 news = unreadNews,
-                onOpenNews = { item ->
-                    val contract = (state.active + state.ended + state.cancelled)
-                        .find { it.signature == item.contractKey }
-                    if (contract != null) {
-                        openedSignature = contract.signature
-                        openedPayment = contract.transactions.first().id
-                        showTransactions = false
-                    } else {
-                        // The contract is gone, e.g. declared as no contract
-                        onMarkNewsRead(setOf(item.id))
-                    }
-                },
+                onOpenNews = ::openNews,
+                onOpenHistory = { showHistory = true }.takeIf { listNews.isNotEmpty() },
                 onMarkAllNewsRead = { onMarkNewsRead(unreadNews.mapTo(HashSet()) { it.id }) },
                 modifier = contentModifier
             )
@@ -421,6 +437,8 @@ private fun ContractList(
     news: List<ContractNews>,
     onOpenNews: (ContractNews) -> Unit,
     onMarkAllNewsRead: () -> Unit,
+    /** Opens the history of news, null if there are none */
+    onOpenHistory: (() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
     val contractsWithNews = news.mapTo(HashSet()) { it.contractKey }
@@ -458,7 +476,8 @@ private fun ContractList(
 
     Column(modifier.fillMaxSize()) {
         // Toolbar only if it has something to offer
-        val hasToolbar = area is CustomArea || canEdit && !state.isEmpty
+        val showHistoryButton = area == null && onOpenHistory != null
+        val hasToolbar = area is CustomArea || canEdit && !state.isEmpty || showHistoryButton
         if (hasToolbar) {
             Row(
                 modifier = Modifier
@@ -468,6 +487,13 @@ private fun ContractList(
             ) {
                 if (area is CustomArea) {
                     EditAreaButton(area, onRenameArea, onDeleteArea)
+                }
+                if (showHistoryButton) IconButton(onClick = onOpenHistory) {
+                    Icon(
+                        Icons.Default.History,
+                        contentDescription = stringResource(R.string.next_news_history),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
                 if (canEdit && !state.isEmpty) IconButton(onClick = { isEditing = !isEditing }) {
                     if (isEditing) {

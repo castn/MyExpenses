@@ -109,6 +109,8 @@ fun ContractDetailScreen(
     onDismiss: () -> Unit = {},
     /** Unread news of this contract, shown at the top */
     news: List<ContractNews> = emptyList(),
+    /** All news of this contract, newest first */
+    history: List<ContractNews> = emptyList(),
 ) {
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     if (showRenameDialog) {
@@ -297,6 +299,9 @@ fun ContractDetailScreen(
                         onClick = onDismiss
                     )
                 }
+            }
+            if (history.isNotEmpty()) {
+                NewsHistorySection(history, currency)
             }
         }
     }
