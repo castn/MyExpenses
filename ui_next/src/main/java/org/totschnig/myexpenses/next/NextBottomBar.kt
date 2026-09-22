@@ -17,10 +17,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.DashboardCustomize
 import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Insights
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Percent
@@ -54,7 +52,7 @@ enum class NextTab(val icon: ImageVector, @param:StringRes val labelRes: Int) {
     Overview(Icons.Default.DashboardCustomize, R.string.next_tab_overview),
     Contracts(Icons.Default.Description, R.string.next_tab_contracts),
     Analysis(Icons.Default.Insights, R.string.next_tab_analysis),
-    Savings(Icons.Default.Percent, R.string.next_tab_savings),
+    SavingTips(Icons.Default.Percent, R.string.next_tab_saving_tips),
     Menu(Icons.Default.Menu, R.string.next_tab_menu)
 }
 

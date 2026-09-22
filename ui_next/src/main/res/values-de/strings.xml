@@ -2,7 +2,7 @@
 <resources>
     <string name="next_tab_contracts">Verträge</string>
     <string name="next_tab_analysis">Analyse</string>
-    <string name="next_tab_savings">Sparen</string>
+    <string name="next_tab_saving_tips">Spartipps</string>
     <string name="next_tab_overview">Übersicht</string>
     <string name="next_tab_menu">Menü</string>
     <string name="next_coming_soon">Kommt bald</string>
@@ -98,7 +98,7 @@
     <string name="next_balance_consent">Sieh auf einen Blick, wie viel dir bis zum nächsten Gehalt bleibt. Dafür werden regelmäßige Zahlungen in deinen Buchungen erkannt. Die Auswertung passiert nur auf deinem Gerät.</string>
     <string name="next_balance_details">Im Detail</string>
     <string name="next_balance_contracts_upcoming">davon %1$s noch offen</string>
-    <string name="next_balance_savings">Sparen</string>
+    <string name="next_balance_savings">Rücklagen</string>
     <string name="next_balance_other">Sonstige Ausgaben</string>
     <string name="next_balance_available_total">Frei verfügbar</string>
     <string name="next_balance_per_day">Ø %1$s / Tag</string>
