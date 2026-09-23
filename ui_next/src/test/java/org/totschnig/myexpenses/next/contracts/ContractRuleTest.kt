@@ -119,4 +119,11 @@ class ContractRuleTest {
         val contract = detected(salary).single()
         assertNull(ContractRule.of(contract, transactions).amountRange)
     }
+
+    @Test
+    fun ruleKeepsReserveChoice() {
+        val transactions = monthly(6, -15000)
+        val contract = detected(transactions).single().copy(reserveChoice = true)
+        assertEquals(true, ContractRule.of(contract, transactions).reserve)
+    }
 }

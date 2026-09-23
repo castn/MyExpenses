@@ -189,4 +189,8 @@
     <string name="next_news_income_missing">Der für den %1$s erwartete Eingang (%2$s) ist noch nicht erfolgt.</string>
     <string name="next_news_contract_stopped">Seit dem %1$s keine Abbuchung mehr. Wurde der Vertrag gekündigt?</string>
     <string name="next_news_income_stopped">Seit dem %1$s kein Eingang mehr. Wurde die Einnahme eingestellt?</string>
+    <string name="next_reserve">Rücklage</string>
+    <string name="next_reserve_hint">Geld, das du zurücklegst, z. B. Bausparvertrag, Sparplan oder Tagesgeld.</string>
+    <string name="next_reserve_automatic">Automatisch erkannt. Geld, das du zurücklegst, zählt nicht als Ausgabe.</string>
+    <string name="next_contracts_of_which_reserves">davon Rücklagen %1$s</string>
 </resources>

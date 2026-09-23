@@ -129,6 +129,7 @@ fun NextContractsScreen(
     onMerge: (Contract, Contract) -> Unit = { _, _ -> },
     onCancel: (Contract) -> Unit = {},
     onRevokeCancellation: (Contract) -> Unit = {},
+    onSetReserve: (Contract, Boolean) -> Unit = { _, _ -> },
     /** News about contracts and incomes, the ones of this list are shown */
     news: List<ContractNews> = emptyList(),
     onMarkNewsRead: (Set<String>) -> Unit = {},
@@ -205,6 +206,7 @@ fun NextContractsScreen(
             onMerge = { onMerge(openedContract, it) },
             onCancel = { onCancel(openedContract) },
             onRevokeCancellation = { onRevokeCancellation(openedContract) },
+            onSetReserve = { onSetReserve(openedContract, it) },
             onDismiss = { onDismiss(openedContract) },
             areas = ready.selectableAreas,
             onSetArea = { onSetArea(openedContract, it) },
@@ -551,6 +553,7 @@ private fun ContractList(
                     badge = when {
                         isIncome -> stringResource(R.string.next_salary)
                             .takeIf { state.isSalary(contract) }
+                        contract.isReserve -> stringResource(R.string.next_reserve)
                         // Within the tab of a category, it goes without saying
                         area == null -> contract.area?.label()
                         else -> null
@@ -586,7 +589,11 @@ private fun ContractList(
                         ),
                         accessibilityActions = emptyList(),
                         isFaded = false,
-                        badge = if (isIncome) null else contract.area?.label()
+                        badge = when {
+                            isIncome -> null
+                            contract.isReserve -> stringResource(R.string.next_reserve)
+                            else -> contract.area?.label()
+                        }
                     )
                 }
             }
@@ -597,7 +604,8 @@ private fun ContractList(
                         yearlyAmount = state.active.sumOf { it.yearlyAmount },
                         count = state.active.size,
                         currency = currency,
-                        isIncome = isIncome
+                        isIncome = isIncome,
+                        reservesMonthlyAmount = state.active.filter { it.isReserve }.sumOf { it.monthlyAmount }
                     )
                 }
             }
@@ -737,6 +745,8 @@ private fun SummaryCard(
     count: Int,
     currency: CurrencyUnit,
     isIncome: Boolean,
+    /** Part of [monthlyAmount] that is put aside, see [Reserve] */
+    reservesMonthlyAmount: Long = 0,
 ) {
     val formatter = LocalCurrencyFormatter.current
     Surface(
@@ -754,6 +764,13 @@ private fun SummaryCard(
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.SemiBold
             )
+            if (reservesMonthlyAmount != 0L) {
+                Text(
+                    stringResource(R.string.next_contracts_of_which_reserves, formatter.convAmount(reservesMonthlyAmount, currency)),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
             Text(
                 stringResource(
                     R.string.next_contracts_per_year,

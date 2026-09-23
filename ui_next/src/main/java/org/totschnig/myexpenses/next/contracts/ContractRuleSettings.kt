@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -22,6 +23,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -38,11 +40,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import java.math.BigDecimal
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.next.R
 import org.totschnig.myexpenses.util.convAmount
-import java.math.BigDecimal
 
 /**
  * Which payments belong to a confirmed contract, as defined by its [ContractRule]:
@@ -60,6 +62,7 @@ internal fun ContractRuleSettings(
     onRemovePayee: (Long) -> Unit,
     onSetAmountRange: (LongRange?) -> Unit,
     onMerge: (Contract) -> Unit,
+    onSetReserve: (Boolean) -> Unit = {},
 ) {
     var showIntervalDialog by rememberSaveable { mutableStateOf(false) }
     var showAmountRangeDialog by rememberSaveable { mutableStateOf(false) }
@@ -147,6 +150,10 @@ internal fun ContractRuleSettings(
                 }
             }
         }
+        if (!contract.isIncome) {
+            HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+            ReserveRow(contract, onSetReserve)
+        }
         rule.amountRange?.let { range ->
             HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
             EditableRow(
@@ -164,6 +171,36 @@ internal fun ContractRuleSettings(
             stringResource(if (contract.isIncome) R.string.next_income_merge else R.string.next_contracts_merge),
             onClick = { showMergeDialog = true }
         )
+    }
+}
+
+/**
+ * Whether the contract puts money aside, with a hint whether this was detected automatically
+ */
+@Composable
+private fun ReserveRow(contract: Contract, onSetReserve: (Boolean) -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .toggleable(value = contract.isReserve, role = Role.Switch, onValueChange = onSetReserve)
+            .padding(horizontal = 16.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text(
+                stringResource(R.string.next_reserve),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Text(
+                stringResource(
+                    if (contract.reserveChoice == null) R.string.next_reserve_automatic else R.string.next_reserve_hint
+                ),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        Switch(checked = contract.isReserve, onCheckedChange = null, modifier = Modifier.padding(start = 16.dp))
     }
 }
 

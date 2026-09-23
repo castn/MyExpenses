@@ -105,6 +105,7 @@ fun ContractDetailScreen(
     /** For a confirmed contract: the user cancelled it (or the income was discontinued) */
     onCancel: () -> Unit = {},
     onRevokeCancellation: () -> Unit = {},
+    onSetReserve: (Boolean) -> Unit = {},
     /** For a confirmed contract: the user declares it as no contract */
     onDismiss: () -> Unit = {},
     /** Unread news of this contract, shown at the top */
@@ -282,7 +283,8 @@ fun ContractDetailScreen(
                     onSetInterval = onSetInterval,
                     onRemovePayee = onRemovePayee,
                     onSetAmountRange = onSetAmountRange,
-                    onMerge = onMerge
+                    onMerge = onMerge,
+                    onSetReserve = onSetReserve
                 )
                 DetailCard(Modifier.padding(top = 16.dp)) {
                     if (contract.isCancelled) LinkRow(

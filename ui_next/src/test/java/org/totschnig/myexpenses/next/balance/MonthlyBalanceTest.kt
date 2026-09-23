@@ -157,4 +157,31 @@ class MonthlyBalanceTest {
         assertEquals(0, balance.contractsUpcoming)
         assertEquals(0, balance.other)
     }
+
+    @Test
+    fun reserveContractsCountAsReserves() {
+        val period = BalancePeriod(LocalDate.of(2026, 9, 1), LocalDate.of(2026, 10, 1), true)
+        // Paid on 01.09.
+        val buildingSavings = contract(-15000, LocalDate.of(2026, 8, 1), LocalDate.of(2026, 9, 1), firstId = 10)
+            .copy(reserveChoice = true)
+        // Next on 20.09., still to come
+        val savingsPlan = contract(-10000, LocalDate.of(2026, 7, 20), LocalDate.of(2026, 8, 20), firstId = 20)
+            .copy(reserveChoice = true)
+        val rent = contract(-80000, LocalDate.of(2026, 8, 1), LocalDate.of(2026, 9, 1), firstId = 30)
+        val balance = MonthlyBalance.compute(
+            period,
+            listOf(
+                BalanceTransaction(11, LocalDate.of(2026, 9, 1), -15000, giro),
+                BalanceTransaction(31, LocalDate.of(2026, 9, 1), -80000, giro),
+            ),
+            daily,
+            listOf(buildingSavings, savingsPlan, rent)
+        )
+        assertEquals(-80000, balance.contracts)
+        assertEquals(-15000, balance.savings)
+        assertEquals(-10000, balance.savingsUpcoming)
+        assertEquals(-25000, balance.reserves)
+        assertEquals(105000, balance.expenses)
+        assertEquals(listOf(11L), balance.savingsTransactionIds)
+    }
 }

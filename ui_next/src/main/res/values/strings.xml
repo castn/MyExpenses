@@ -189,4 +189,8 @@
     <string name="next_news_income_missing">The credit expected on %1$s (%2$s) has not arrived yet.</string>
     <string name="next_news_contract_stopped">No debit since %1$s. Was the contract cancelled?</string>
     <string name="next_news_income_stopped">No credit since %1$s. Was the income discontinued?</string>
+    <string name="next_reserve">Savings</string>
+    <string name="next_reserve_hint">Money you put aside, e.g. a building savings contract, a savings plan or instant access savings.</string>
+    <string name="next_reserve_automatic">Detected automatically. Money you put aside, it does not count as spending.</string>
+    <string name="next_contracts_of_which_reserves">of which savings %1$s</string>
 </resources>

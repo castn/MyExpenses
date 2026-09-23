@@ -180,6 +180,7 @@ class MyExpensesNext : MyExpensesV2() {
                     onMerge = contractsViewModel::merge,
                     onCancel = contractsViewModel::cancel,
                     onRevokeCancellation = contractsViewModel::revokeCancellation,
+                    onSetReserve = contractsViewModel::setReserve,
                     news = contractsViewModel.news.collectAsStateWithLifecycle().value,
                     onMarkNewsRead = contractsViewModel::markNewsRead,
                     contractTransactions = { contract, modifier ->

@@ -61,6 +61,7 @@ class RuleMatcher(private val today: LocalDate = LocalDate.now()) {
                 customName = name,
                 rule = this,
                 cancelledOn = cancelledOn,
+                reserveChoice = reserve,
                 // Not expected to be paid anymore
                 isActive = it.isActive && cancelledOn == null
             )

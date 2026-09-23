@@ -59,7 +59,9 @@ data class BalanceTransaction(
  *
  * @param incomeUpcoming further salaries expected until the end of the period, not booked yet
  * @param contractsUpcoming contract debits expected until the end of the period, not booked yet
- * @param savings transfers between daily accounts and other accounts, negative if money was saved
+ * @param savings money put aside ("Rücklagen"): transfers between daily accounts and other accounts,
+ * negative if money was saved, and payments of contracts that are reserves
+ * @param savingsUpcoming payments of contracts that are reserves, expected until the end of the period
  */
 data class MonthlyBalance(
     val period: BalancePeriod,
@@ -68,6 +70,7 @@ data class MonthlyBalance(
     val contractsBooked: Long,
     val contractsUpcoming: Long,
     val savings: Long,
+    val savingsUpcoming: Long = 0,
     val other: Long,
     val incomeTransactionIds: List<Long>,
     val savingsTransactionIds: List<Long>,
@@ -77,10 +80,12 @@ data class MonthlyBalance(
 
     val contracts: Long get() = contractsBooked + contractsUpcoming
 
-    /** Everything going out, as positive amount */
-    val expenses: Long get() = -(contracts + savings + other)
+    val reserves: Long get() = savings + savingsUpcoming
 
-    val available: Long get() = income + contracts + savings + other
+    /** Everything going out, as positive amount */
+    val expenses: Long get() = -(contracts + reserves + other)
+
+    val available: Long get() = income + contracts + reserves + other
 
     companion object {
         /**
@@ -96,8 +101,9 @@ data class MonthlyBalance(
             contracts: List<Contract>,
             salaries: List<Contract> = emptyList(),
         ): MonthlyBalance {
-            val expenseContracts = contracts.filter { !it.isIncome }
+            val (reserveContracts, expenseContracts) = contracts.filter { !it.isIncome }.partition { it.isReserve }
             val contractTransactionIds = expenseContracts.flatMapTo(HashSet()) { contract -> contract.transactions.map { it.id } }
+            val reserveTransactionIds = reserveContracts.flatMapTo(HashSet()) { contract -> contract.transactions.map { it.id } }
             val income = mutableListOf<BalanceTransaction>()
             val contractDebits = mutableListOf<BalanceTransaction>()
             val savings = mutableListOf<BalanceTransaction>()
@@ -112,6 +118,7 @@ data class MonthlyBalance(
 
                         it.amount > 0 -> income += it
                         it.id in contractTransactionIds -> contractDebits += it
+                        it.id in reserveTransactionIds -> savings += it
                         else -> other += it
                     }
                 }
@@ -122,6 +129,7 @@ data class MonthlyBalance(
                 contractsBooked = contractDebits.sumOf { it.amount },
                 contractsUpcoming = -expenseContracts.upcoming(period, dailyAccountIds),
                 savings = savings.sumOf { it.amount },
+                savingsUpcoming = -reserveContracts.upcoming(period, dailyAccountIds),
                 other = other.sumOf { it.amount },
                 incomeTransactionIds = income.map { it.id },
                 savingsTransactionIds = savings.map { it.id },

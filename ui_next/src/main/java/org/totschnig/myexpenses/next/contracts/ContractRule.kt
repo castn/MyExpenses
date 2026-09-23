@@ -22,6 +22,7 @@ import kotlin.math.roundToLong
  * @param cancelledOn when the user marked the contract as cancelled (for an income: discontinued)
  * @param snapshot the contract when it was cancelled, to still show it when its payments are
  * older than the analysed period
+ * @param reserve whether the payments put money aside, null for the suggestion of [Reserve]
  */
 data class ContractRule(
     val id: String,
@@ -35,6 +36,7 @@ data class ContractRule(
     val areaKey: String? = null,
     val cancelledOn: LocalDate? = null,
     val snapshot: Snapshot? = null,
+    val reserve: Boolean? = null,
 ) {
     /**
      * @param name detected name of the contract
@@ -89,6 +91,7 @@ data class ContractRule(
                 templateId = templateId,
                 interval = contract.interval,
                 name = contract.customName,
+                reserve = contract.reserveChoice,
                 areaKey = when (val choice = contract.areaChoice) {
                     AreaChoice.Automatic -> null
                     is AreaChoice.Fixed -> choice.area?.key ?: ContractSettings.AREA_NONE

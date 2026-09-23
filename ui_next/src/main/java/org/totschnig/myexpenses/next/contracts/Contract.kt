@@ -98,10 +98,15 @@ data class Contract(
     val rule: ContractRule? = null,
     /** When the user marked the contract as cancelled, see [ContractRule.cancelledOn] */
     val cancelledOn: LocalDate? = null,
+    /** Whether the user declared the contract as reserve, null for the suggestion, see [isReserve] */
+    val reserveChoice: Boolean? = null,
 ) {
     val displayName: String get() = customName ?: name
 
     val isCancelled: Boolean get() = cancelledOn != null
+
+    /** Puts money aside instead of spending it, see [Reserve] */
+    val isReserve: Boolean get() = !isIncome && (reserveChoice ?: Reserve.suggests(this))
 
     /** False for a cancelled contract only known from its [ContractRule.snapshot] */
     val hasPayments: Boolean get() = transactions.any { it.id != SNAPSHOT_TRANSACTION_ID }

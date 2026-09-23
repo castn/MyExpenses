@@ -395,6 +395,11 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
         changeRule(contract) { it.copy(cancelledOn = null, snapshot = null) }
     }
 
+    /** Declares whether the contract puts money aside, which confirms a suggestion */
+    fun setReserve(contract: Contract, isReserve: Boolean) {
+        changeRule(contract) { it.copy(reserve = isReserve) }
+    }
+
     fun setInterval(contract: Contract, interval: ContractInterval) {
         changeRule(contract) { it.copy(interval = interval) }
     }
@@ -649,7 +654,8 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                 getString("snapshotName"),
                 getLong("snapshotAmount"),
                 LocalDate.parse(getString("snapshotDate"))
-            ) else null
+            ) else null,
+            reserve = if (has("reserve")) getBoolean("reserve") else null
         )
 
         private fun serializeRules(rules: List<ContractRule>) = JSONArray(
@@ -673,6 +679,7 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                         put("snapshotAmount", it.lastAmount)
                         put("snapshotDate", it.lastDate.toString())
                     }
+                    rule.reserve?.let { put("reserve", it) }
                 }
             }
         ).toString()
