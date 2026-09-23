@@ -1,0 +1,47 @@
+plugins {
+    id 'com.android.dynamic-feature'
+    alias libs.plugins.compose.compiler
+}
+
+android {
+    namespace "org.totschnig.myexpenses.next"
+    compileSdk project.compileSdkVersion
+
+    defaultConfig {
+        missingDimensionStrategy 'textRecognition', 'extern'
+        minSdk project.minSdkVersion
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        compose true
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/*'
+        }
+    }
+}
+
+dependencies {
+    implementation project(':myExpenses')
+    coreLibraryDesugaring libs.android.desugar
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.compose.ui
+    implementation(libs.androidx.compose.material3)
+    implementation libs.compose.ui.tooling.preview
+    debugImplementation libs.compose.ui.tooling
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.material.icons.extended
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.compose.adaptive.navigation
+    implementation libs.androidx.compose.material3.adaptive.navigation.suite
+    implementation libs.androidx.lifecycle.runtime.compose
+    implementation project(':setupwizard')
+
+    testImplementation libs.junit
+}
