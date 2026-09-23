@@ -180,7 +180,9 @@ fun ContractAnalysis.infoFor(transactionId: Long): PaymentContractInfo {
     dismissed.find { contract -> contract.transactions.any { it.id == transactionId } }?.let {
         return PaymentContractInfo.Dismissed(it)
     }
-    if (payment.payeeId == null && payment.templateId == null) return PaymentContractInfo.NoPayee
+    if (payment.payeeId == null && payment.templateId == null && payment.targetAccountId == null) {
+        return PaymentContractInfo.NoPayee
+    }
     return PaymentContractInfo.Markable(ContractDirection.of(payment.amount) == ContractDirection.INCOME)
 }
 

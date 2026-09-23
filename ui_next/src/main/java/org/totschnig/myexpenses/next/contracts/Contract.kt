@@ -53,6 +53,11 @@ data class ContractTransaction(
     val categoryPath: String? = null,
     val categoryIcon: String? = null,
     val templateId: Long? = null,
+    /**
+     * For a movement between own accounts: the account the money goes to. Set for transfers in the
+     * app and for payments whose counterpart has the IBAN of an own account.
+     */
+    val targetAccountId: Long? = null,
 )
 
 /**
@@ -106,7 +111,10 @@ data class Contract(
     val isCancelled: Boolean get() = cancelledOn != null
 
     /** Puts money aside instead of spending it, see [Reserve] */
-    val isReserve: Boolean get() = !isIncome && (reserveChoice ?: Reserve.suggests(this))
+    val isReserve: Boolean get() = !isIncome && (reserveChoice ?: (isOwnTransfer || Reserve.suggests(this)))
+
+    /** Money moved to an own account, e.g. a standing order to a savings account */
+    val isOwnTransfer: Boolean get() = lastTransaction.targetAccountId != null
 
     /** False for a cancelled contract only known from its [ContractRule.snapshot] */
     val hasPayments: Boolean get() = transactions.any { it.id != SNAPSHOT_TRANSACTION_ID }

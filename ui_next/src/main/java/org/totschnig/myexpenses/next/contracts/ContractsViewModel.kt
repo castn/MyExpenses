@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
@@ -40,6 +41,7 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import org.totschnig.myexpenses.adapter.TransactionPagingSource
+import org.totschnig.myexpenses.db2.BankingAttribute
 import org.totschnig.myexpenses.db2.tagMapFlow
 import org.totschnig.myexpenses.model.AccountGrouping
 import org.totschnig.myexpenses.model.CurrencyUnit
@@ -55,8 +57,11 @@ import org.totschnig.myexpenses.provider.KEY_ACCOUNTID
 import org.totschnig.myexpenses.provider.KEY_ACCOUNT_LABEL
 import org.totschnig.myexpenses.provider.KEY_AMOUNT
 import org.totschnig.myexpenses.provider.KEY_AMOUNT_HOME_EQUIVALENT
+import org.totschnig.myexpenses.provider.KEY_ATTRIBUTE_NAME
 import org.totschnig.myexpenses.provider.KEY_COMMENT
+import org.totschnig.myexpenses.provider.KEY_CONTEXT
 import org.totschnig.myexpenses.provider.KEY_DATE
+import org.totschnig.myexpenses.provider.KEY_IBAN
 import org.totschnig.myexpenses.provider.KEY_ICON
 import org.totschnig.myexpenses.provider.KEY_PATH
 import org.totschnig.myexpenses.provider.KEY_PAYEEID
@@ -65,14 +70,16 @@ import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.provider.KEY_STATUS
 import org.totschnig.myexpenses.provider.KEY_TEMPLATEID
 import org.totschnig.myexpenses.provider.KEY_TRANSFER_ACCOUNT
-import org.totschnig.myexpenses.provider.KEY_TRANSFER_PEER
+import org.totschnig.myexpenses.provider.KEY_VALUE
 import org.totschnig.myexpenses.provider.STATUS_ARCHIVE
 import org.totschnig.myexpenses.provider.STATUS_UNCOMMITTED
+import org.totschnig.myexpenses.provider.TransactionProvider.ACCOUNTS_ATTRIBUTES_URI
 import org.totschnig.myexpenses.provider.TransactionProvider.TRANSACTIONS_URI
 import org.totschnig.myexpenses.provider.filter.Criterion
 import org.totschnig.myexpenses.provider.filter.TransactionIdCriterion
 import org.totschnig.myexpenses.provider.getLong
 import org.totschnig.myexpenses.provider.getLongOrNull
+import org.totschnig.myexpenses.provider.getString
 import org.totschnig.myexpenses.provider.getStringOrNull
 import org.totschnig.myexpenses.util.epoch2LocalDate
 import org.totschnig.myexpenses.util.toEpoch
@@ -97,20 +104,64 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
         dataStore.data.map { it.toContractSettings() }
     }
 
+    /**
+     * Own accounts as known from the account list
+     *
+     * @param dailyIds cash, bank and credit card accounts
+     */
+    class OwnAccounts(val dailyIds: Set<Long>, val labels: Map<Long, String>)
+
+    private val ownAccounts = MutableStateFlow<OwnAccounts?>(null)
+
+    fun setOwnAccounts(dailyIds: Set<Long>, labels: Map<Long, String>) {
+        ownAccounts.value = OwnAccounts(dailyIds, labels)
+    }
+
+    /**
+     * IBANs of own accounts, stored when they were connected with the bank (FinTS), to the id of
+     * the account. A payment whose counterpart has one of them is a movement between own accounts.
+     */
+    private val ownIbans: Flow<Map<String, Long>> by lazy {
+        contentResolver.observeQuery(
+            uri = ACCOUNTS_ATTRIBUTES_URI,
+            projection = arrayOf(KEY_ACCOUNTID, KEY_VALUE),
+            selection = "$KEY_CONTEXT = ? AND $KEY_ATTRIBUTE_NAME = ?",
+            selectionArgs = arrayOf(BankingAttribute.CONTEXT, BankingAttribute.IBAN.name),
+            notifyForDescendants = true
+        ).mapToList { normalizeIban(it.getString(KEY_VALUE)) to it.getLong(KEY_ACCOUNTID) }
+            .map { it.toMap() }
+    }
+
+    /** A transaction as read, before it is known whether it is a movement between own accounts */
+    private class Row(val transaction: ContractTransaction, val transferAccountId: Long?, val iban: String?)
+
     /** Transactions to analyse, null while loading or without consent */
     private val transactions: Flow<List<ContractTransaction>?> by lazy {
         settings.map { it.consent == true }.distinctUntilChanged().flatMapLatest { hasConsent ->
-            if (hasConsent) contentResolver.observeQuery(
-                uri = TRANSACTIONS_URI,
-                projection = PROJECTION,
-                selection = SELECTION,
-                selectionArgs = arrayOf(
-                    LocalDate.now().minusMonths(HISTORY_MONTHS).toEpoch().toString()
-                ),
-                sortOrder = "$KEY_DATE ASC",
-                notifyForDescendants = true
-            )
-                .mapToList { it.toContractTransaction() }
+            if (hasConsent) combine(
+                contentResolver.observeQuery(
+                    uri = TRANSACTIONS_URI,
+                    projection = PROJECTION,
+                    selection = SELECTION,
+                    selectionArgs = arrayOf(
+                        LocalDate.now().minusMonths(HISTORY_MONTHS).toEpoch().toString()
+                    ),
+                    sortOrder = "$KEY_DATE ASC",
+                    notifyForDescendants = true
+                ).mapToList { Row(it.toContractTransaction(), it.getLongOrNull(KEY_TRANSFER_ACCOUNT), it.getStringOrNull(KEY_IBAN)) },
+                ownIbans,
+                ownAccounts.filterNotNull()
+            ) { rows, ibans, accounts ->
+                rows.map { row ->
+                    val transaction = row.transaction
+                    val target = ownTransferTarget(transaction.accountId, row.transferAccountId, row.iban, ibans)
+                    if (target == null) transaction else transaction.copy(
+                        targetAccountId = target,
+                        // Named after the account, the payee is the user or missing
+                        payeeName = accounts.labels[target]?.let { "→ $it" } ?: transaction.payeeName
+                    )
+                }.withoutMovementsOtherThanReserves(accounts.dailyIds)
+            }
                 .map<List<ContractTransaction>, List<ContractTransaction>?> { it }
                 .onStart { emit(null) }
             else flowOf(null)
@@ -211,19 +262,13 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
     /** Recurring credits, e.g. salary */
     val incomeState: StateFlow<ContractsUiState> by lazy { stateOf(ContractDirection.INCOME) }
 
-    /** Ids of cash, bank and credit card accounts, set from the account list */
-    private val dailyAccountIds = MutableStateFlow<Set<Long>?>(null)
-
-    fun setDailyAccountIds(ids: Set<Long>) {
-        dailyAccountIds.value = ids
-    }
 
     /**
      * What came in and went out of the daily accounts since the last salary, including the
      * contract debits still to come until the next one
      */
     val balance: StateFlow<BalanceUiState> by lazy {
-        combine(state, incomeState, dailyAccountIds) { contracts, incomes, daily -> Triple(contracts, incomes, daily) }
+        combine(state, incomeState, ownAccounts) { contracts, incomes, accounts -> Triple(contracts, incomes, accounts?.dailyIds) }
             .flatMapLatest { (contracts, incomes, daily) ->
                 when {
                     contracts == ContractsUiState.AskConsent -> flowOf(BalanceUiState.AskConsent)
@@ -254,20 +299,31 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
     }
 
     private fun periodTransactions(period: BalancePeriod): Flow<List<BalanceTransaction>> =
-        contentResolver.observeQuery(
-            uri = TRANSACTIONS_URI,
-            projection = BALANCE_PROJECTION,
-            selection = BALANCE_SELECTION,
-            selectionArgs = arrayOf(period.start.startOfDayEpoch().toString(), period.end.startOfDayEpoch().toString()),
-            notifyForDescendants = true
-        ).mapToList {
-            BalanceTransaction(
-                id = it.getLong(KEY_ROWID),
-                date = epoch2LocalDate(it.getLong(KEY_DATE)),
-                amount = it.getLong(KEY_AMOUNT_HOME_EQUIVALENT),
-                accountId = it.getLong(KEY_ACCOUNTID),
-                transferAccountId = it.getLongOrNull(KEY_TRANSFER_ACCOUNT)
-            )
+        combine(
+            contentResolver.observeQuery(
+                uri = TRANSACTIONS_URI,
+                projection = BALANCE_PROJECTION,
+                selection = BALANCE_SELECTION,
+                selectionArgs = arrayOf(period.start.startOfDayEpoch().toString(), period.end.startOfDayEpoch().toString()),
+                notifyForDescendants = true
+            ).mapToList {
+                Triple(
+                    BalanceTransaction(
+                        id = it.getLong(KEY_ROWID),
+                        date = epoch2LocalDate(it.getLong(KEY_DATE)),
+                        amount = it.getLong(KEY_AMOUNT_HOME_EQUIVALENT),
+                        accountId = it.getLong(KEY_ACCOUNTID)
+                    ),
+                    it.getLongOrNull(KEY_TRANSFER_ACCOUNT),
+                    it.getStringOrNull(KEY_IBAN)
+                )
+            },
+            ownIbans
+        ) { rows, ibans ->
+            // Movements between own accounts imported from the bank count like transfers in the app
+            rows.map { (transaction, transferAccountId, iban) ->
+                transaction.copy(transferAccountId = ownTransferTarget(transaction.accountId, transferAccountId, iban, ibans))
+            }
         }
 
     private fun LocalDate.startOfDayEpoch() = atStartOfDay(ZoneId.systemDefault()).toEpochSecond()
@@ -524,7 +580,7 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
 
     companion object {
         private val BALANCE_PROJECTION = arrayOf(
-            KEY_ROWID, KEY_DATE, KEY_AMOUNT_HOME_EQUIVALENT, KEY_ACCOUNTID, KEY_TRANSFER_ACCOUNT
+            KEY_ROWID, KEY_DATE, KEY_AMOUNT_HOME_EQUIVALENT, KEY_ACCOUNTID, KEY_TRANSFER_ACCOUNT, KEY_IBAN
         )
 
         /** All transactions of the period, transfers included, split parts not, since their parents count */
@@ -655,7 +711,8 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                 getLong("snapshotAmount"),
                 LocalDate.parse(getString("snapshotDate"))
             ) else null,
-            reserve = if (has("reserve")) getBoolean("reserve") else null
+            reserve = if (has("reserve")) getBoolean("reserve") else null,
+            targetAccountId = if (has("targetAccount")) getLong("targetAccount") else null
         )
 
         private fun serializeRules(rules: List<ContractRule>) = JSONArray(
@@ -680,6 +737,7 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                         put("snapshotDate", it.lastDate.toString())
                     }
                     rule.reserve?.let { put("reserve", it) }
+                    rule.targetAccountId?.let { put("targetAccount", it) }
                 }
             }
         ).toString()
@@ -721,14 +779,17 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
             KEY_COMMENT,
             KEY_PATH,
             KEY_ICON,
-            KEY_TEMPLATEID
+            KEY_TEMPLATEID,
+            KEY_TRANSFER_ACCOUNT,
+            KEY_IBAN
         )
 
         /**
-         * Debits and credits that are no transfers. Split transactions are taken as a whole, because the payee
+         * Debits and credits, transfers included, since they can put money aside, see
+         * [withoutMovementsOtherThanReserves]. Split transactions are taken as a whole, because the payee
          * is stored with the parent. Archived transactions are left out (they are split parts of the archive).
          */
-        private val SELECTION = "$KEY_AMOUNT != 0 AND $KEY_TRANSFER_PEER IS NULL AND $WHERE_NOT_SPLIT_PART" +
+        private val SELECTION = "$KEY_AMOUNT != 0 AND $WHERE_NOT_SPLIT_PART" +
                 " AND $KEY_STATUS NOT IN ($STATUS_UNCOMMITTED, $STATUS_ARCHIVE) AND $WHERE_NOT_VOID" +
                 " AND $KEY_DATE >= ?"
     }

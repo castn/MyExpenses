@@ -104,6 +104,13 @@ class MyExpensesNext : MyExpensesV2() {
         val budgets by remember { budgetViewModel.overviewBudgets() }
             .collectAsStateWithLifecycle(emptyList())
         val transactionActions = remember(accounts.size) { TransactionActions(transactionEvents, accounts.size) }
+        LaunchedEffect(accounts) {
+            val ownAccounts = accounts.filter { !it.isAggregate }
+            contractsViewModel.setOwnAccounts(
+                dailyIds = ownAccounts.filter { it.isDailyAccount }.mapTo(HashSet()) { it.id },
+                labels = ownAccounts.associate { it.id to it.label }
+            )
+        }
         NextMainScreen(
             viewModel = viewModel,
             budgets = budgets,
@@ -141,11 +148,6 @@ class MyExpensesNext : MyExpensesV2() {
                 }
             },
             balanceCard = { modifier, onOpen ->
-                LaunchedEffect(accounts) {
-                    contractsViewModel.setDailyAccountIds(
-                        accounts.filter { !it.isAggregate && it.isDailyAccount }.map { it.id }.toSet()
-                    )
-                }
                 val balance by contractsViewModel.balance.collectAsStateWithLifecycle()
                 MonthlyBalanceCard(
                     state = balance,

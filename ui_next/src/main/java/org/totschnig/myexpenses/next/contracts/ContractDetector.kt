@@ -35,18 +35,32 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
             }
             .sortedByDescending { it.monthlyAmount }
 
-    private data class GroupKey(val direction: ContractDirection, val isTemplate: Boolean, val id: Long) {
+    private data class GroupKey(
+        val direction: ContractDirection,
+        val isTemplate: Boolean,
+        val id: Long,
+        val isTargetAccount: Boolean = false,
+    ) {
         /**
          * Contracts keep the signatures they had before credits were analysed,
          * so that the stored decisions of the user still apply
          */
         override fun toString() = (if (direction == ContractDirection.INCOME) INCOME_PREFIX else "") +
-                (if (isTemplate) TEMPLATE_PREFIX else PAYEE_PREFIX) + id
+                (when {
+                    isTargetAccount -> TARGET_ACCOUNT_PREFIX
+                    isTemplate -> TEMPLATE_PREFIX
+                    else -> PAYEE_PREFIX
+                }) + id
     }
 
+    /**
+     * Movements between own accounts are grouped by the account the money goes to, since the payee
+     * is the user or missing
+     */
     private fun ContractTransaction.groupKey(): GroupKey? {
         val direction = ContractDirection.of(amount)
-        return templateId?.let { GroupKey(direction, true, it) }
+        return targetAccountId?.let { GroupKey(direction, false, it, isTargetAccount = true) }
+            ?: templateId?.let { GroupKey(direction, true, it) }
             ?: payeeId?.let { GroupKey(direction, false, it) }
     }
 
@@ -220,6 +234,7 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
     companion object {
         private const val TEMPLATE_PREFIX = "t"
         private const val PAYEE_PREFIX = "p"
+        private const val TARGET_ACCOUNT_PREFIX = "a"
         private const val INCOME_PREFIX = "in:"
 
         /** Share of gaps between debits that must match the detected interval */

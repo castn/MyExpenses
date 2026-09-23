@@ -33,3 +33,29 @@ object Reserve {
             }
     }
 }
+
+/**
+ * IBANs are compared without spaces and case
+ */
+fun normalizeIban(iban: String) = iban.filterNot { it.isWhitespace() }.uppercase()
+
+/**
+ * Of the movements between own accounts, only money going from a daily account to another kind of
+ * account (e.g. a savings account) can form a contract, a reserve. Moving money between daily
+ * accounts, e.g. paying the credit card, and the receiving side of a movement are no contracts.
+ * Other transactions are kept.
+ */
+fun List<ContractTransaction>.withoutMovementsOtherThanReserves(dailyAccountIds: Set<Long>) = filter { transaction ->
+    val target = transaction.targetAccountId ?: return@filter true
+    transaction.amount < 0 && transaction.accountId in dailyAccountIds && target !in dailyAccountIds
+}
+
+/**
+ * The account a payment goes to, if it is a movement between own accounts: a transfer in the app,
+ * or a payment whose counterpart has the IBAN of an own account, e.g. imported from the bank
+ *
+ * @param ownIbans normalized IBANs of own accounts to their id, see [normalizeIban]
+ */
+fun ownTransferTarget(accountId: Long, transferAccountId: Long?, counterpartIban: String?, ownIbans: Map<String, Long>) =
+    transferAccountId ?: counterpartIban?.let { ownIbans[normalizeIban(it)] }?.takeIf { it != accountId }
+
