@@ -23,8 +23,9 @@ import kotlin.math.roundToLong
  * @param snapshot the contract when it was cancelled, to still show it when its payments are
  * older than the analysed period
  * @param reserve whether the payments put money aside, null for the suggestion of [Reserve]
- * @param targetAccountId for movements between own accounts: the account the money goes to.
- * Such a rule matches only movements to that account, other rules match no movements.
+ * @param targetAccountIds for movements between own accounts: the accounts the money goes to.
+ * Movements are matched only by them, payments to others only by payees or template. A rule can have
+ * both, e.g. after the payments to a savings account were joined with the movements to it.
  */
 data class ContractRule(
     val id: String,
@@ -39,7 +40,7 @@ data class ContractRule(
     val cancelledOn: LocalDate? = null,
     val snapshot: Snapshot? = null,
     val reserve: Boolean? = null,
-    val targetAccountId: Long? = null,
+    val targetAccountIds: Set<Long> = emptySet(),
 ) {
     /**
      * @param name detected name of the contract
@@ -60,8 +61,7 @@ data class ContractRule(
 
     fun matches(transaction: ContractTransaction): Boolean =
         ContractDirection.of(transaction.amount) == direction &&
-                (if (targetAccountId != null) transaction.targetAccountId == targetAccountId
-                else transaction.targetAccountId == null && (
+                (transaction.targetAccountId?.let { it in targetAccountIds } ?: (
                         templateId != null && transaction.templateId == templateId ||
                                 transaction.payeeId != null && transaction.payeeId in payeeIds)) &&
                 (amountRange == null || transaction.amount.absoluteValue in amountRange)
@@ -85,11 +85,11 @@ data class ContractRule(
             id: String = UUID.randomUUID().toString(),
         ): ContractRule {
             val payments = contract.transactions
-            val targetAccountId = payments.map { it.targetAccountId }.distinct().singleOrNull()
+            val (movements, others) = payments.partition { it.targetAccountId != null }
+            val targetAccountIds = movements.mapNotNullTo(HashSet()) { it.targetAccountId }
             // Payments from a template stay with it, even if the payee is changed
-            val templateId = if (targetAccountId != null) null else payments.map { it.templateId }.distinct().singleOrNull()
-            val payeeIds = if (templateId != null || targetAccountId != null) emptySet()
-            else payments.mapNotNullTo(HashSet()) { it.payeeId }
+            val templateId = others.map { it.templateId }.distinct().singleOrNull()
+            val payeeIds = if (templateId != null) emptySet() else others.mapNotNullTo(HashSet()) { it.payeeId }
             val rule = ContractRule(
                 id = id,
                 kind = kind,
@@ -99,7 +99,7 @@ data class ContractRule(
                 interval = contract.interval,
                 name = contract.customName,
                 reserve = contract.reserveChoice,
-                targetAccountId = targetAccountId,
+                targetAccountIds = targetAccountIds,
                 areaKey = when (val choice = contract.areaChoice) {
                     AreaChoice.Automatic -> null
                     is AreaChoice.Fixed -> choice.area?.key ?: ContractSettings.AREA_NONE

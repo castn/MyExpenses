@@ -193,4 +193,6 @@
     <string name="next_reserve_hint">Geld, das du zurücklegst, z. B. Bausparvertrag, Sparplan oder Tagesgeld.</string>
     <string name="next_reserve_automatic">Automatisch erkannt. Geld, das du zurücklegst, zählt nicht als Ausgabe.</string>
     <string name="next_contracts_of_which_reserves">davon Rücklagen %1$s</string>
+    <string name="next_contracts_target_account">Konto</string>
+    <string name="next_contracts_remove_target_account">Konto entfernen</string>
 </resources>

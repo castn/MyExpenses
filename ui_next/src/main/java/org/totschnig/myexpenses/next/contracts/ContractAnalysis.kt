@@ -144,6 +144,8 @@ fun List<ContractRule>.merging(
                     if (otherRule.templateId != null && otherRule.templateId != rule.templateId)
                         other.transactions.mapNotNull { it.payeeId } else emptyList(),
             templateId = rule.templateId ?: otherRule.templateId,
+            // Joining payments to a savings account with the movements to it keeps both
+            targetAccountIds = rule.targetAccountIds + otherRule.targetAccountIds,
             // Only if both contracts were limited to amounts, the joined one stays so
             amountRange = rule.amountRange?.let { range ->
                 otherRule.amountRange?.let { minOf(range.first, it.first)..maxOf(range.last, it.last) }

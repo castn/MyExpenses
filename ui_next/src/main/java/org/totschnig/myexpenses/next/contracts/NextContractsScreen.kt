@@ -124,6 +124,7 @@ fun NextContractsScreen(
     onConfirm: (Contract) -> Unit = {},
     onSetInterval: (Contract, ContractInterval) -> Unit = { _, _ -> },
     onRemovePayee: (Contract, Long) -> Unit = { _, _ -> },
+    onRemoveTargetAccount: (Contract, Long) -> Unit = { _, _ -> },
     onSetAmountRange: (Contract, LongRange?) -> Unit = { _, _ -> },
     /** Joins the second contract into the first one */
     onMerge: (Contract, Contract) -> Unit = { _, _ -> },
@@ -202,6 +203,7 @@ fun NextContractsScreen(
                 .filter { it.signature != openedContract.signature },
             onSetInterval = { onSetInterval(openedContract, it) },
             onRemovePayee = { onRemovePayee(openedContract, it) },
+            onRemoveTargetAccount = { onRemoveTargetAccount(openedContract, it) },
             onSetAmountRange = { onSetAmountRange(openedContract, it) },
             onMerge = { onMerge(openedContract, it) },
             onCancel = { onCancel(openedContract) },

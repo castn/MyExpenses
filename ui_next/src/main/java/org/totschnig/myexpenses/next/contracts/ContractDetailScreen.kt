@@ -100,6 +100,7 @@ fun ContractDetailScreen(
     mergeCandidates: List<Contract> = emptyList(),
     onSetInterval: (ContractInterval) -> Unit = {},
     onRemovePayee: (Long) -> Unit = {},
+    onRemoveTargetAccount: (Long) -> Unit = {},
     onSetAmountRange: (LongRange?) -> Unit = {},
     onMerge: (Contract) -> Unit = {},
     /** For a confirmed contract: the user cancelled it (or the income was discontinued) */
@@ -282,6 +283,7 @@ fun ContractDetailScreen(
                     mergeCandidates = mergeCandidates,
                     onSetInterval = onSetInterval,
                     onRemovePayee = onRemovePayee,
+                    onRemoveTargetAccount = onRemoveTargetAccount,
                     onSetAmountRange = onSetAmountRange,
                     onMerge = onMerge,
                     onSetReserve = onSetReserve

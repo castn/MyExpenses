@@ -103,6 +103,7 @@ fun MonthlyBalanceFlow(
                 onConfirm = viewModel::confirm,
                 onSetInterval = viewModel::setInterval,
                 onRemovePayee = viewModel::removePayee,
+                onRemoveTargetAccount = viewModel::removeTargetAccount,
                 onSetAmountRange = viewModel::setAmountRange,
                 onMerge = viewModel::merge,
                 onCancel = viewModel::cancel,

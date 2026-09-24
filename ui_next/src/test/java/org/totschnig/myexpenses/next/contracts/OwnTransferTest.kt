@@ -65,14 +65,14 @@ class OwnTransferTest {
         assertTrue(contract.isOwnTransfer)
         assertTrue(contract.isReserve)
         val rule = ContractRule.of(contract, standingOrder)
-        assertEquals(savings, rule.targetAccountId)
+        assertEquals(setOf(savings), rule.targetAccountIds)
         assertTrue(rule.payeeIds.isEmpty())
     }
 
     @Test
     fun rulesForPayeesAndForAccountsDoNotMix() {
         val byPayee = ContractRule("p", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, setOf(9), interval = ContractInterval.MONTHLY)
-        val byAccount = ContractRule("a", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, targetAccountId = savings, interval = ContractInterval.MONTHLY)
+        val byAccount = ContractRule("a", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, targetAccountIds = setOf(savings), interval = ContractInterval.MONTHLY)
         val toSavings = payment(-10000, target = savings)
         val normal = payment(-4000)
         assertFalse(byPayee.matches(toSavings))
@@ -86,5 +86,29 @@ class OwnTransferTest {
         val transfer = payment(-10000, target = savings, payeeId = null)
         val info = ContractAnalysis.of(listOf(transfer), emptyList(), today).infoFor(transfer.id)
         assertEquals(PaymentContractInfo.Markable(isIncome = false), info)
+    }
+
+    @Test
+    fun mergingPaymentsToSavingsWithMovementsKeepsBoth() {
+        // Before: payments to the savings account found by the keyword, as contract of a payee
+        val byPayee = (3 until 9).map {
+            payment(-10000, payeeId = 7, monthsBack = it).copy(comment = "Übertrag auf Tagesgeld")
+        }.reversed()
+        // Since the account is connected: movements to it
+        val movements = (0 until 3).map { payment(-10000, target = savings, monthsBack = it) }.reversed()
+        val transactions = byPayee + movements
+        val (payeeRules, _) = emptyList<ContractRule>().withRuleFor(
+            ContractAnalysis.of(transactions, emptyList(), today).contracts.single { !it.isOwnTransfer }, transactions
+        ) { it.copy(name = "Tagesgeld") }
+        val before = ContractAnalysis.of(transactions, payeeRules, today)
+        val oldContract = before.contracts.single { it.isConfirmed }
+        val movementContract = before.contracts.single { it.isOwnTransfer }
+        val (merged, rule) = payeeRules.merging(oldContract, movementContract, transactions)
+        assertEquals(setOf(7L), rule.payeeIds)
+        assertEquals(setOf(savings), rule.targetAccountIds)
+        val contract = ContractAnalysis.of(transactions, merged, today).contracts.single()
+        assertEquals(9, contract.transactions.size)
+        assertEquals("Tagesgeld", contract.displayName)
+        assertTrue(contract.isActive)
     }
 }

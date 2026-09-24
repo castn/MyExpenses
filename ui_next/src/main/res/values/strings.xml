@@ -193,4 +193,6 @@
     <string name="next_reserve_hint">Money you put aside, e.g. a building savings contract, a savings plan or instant access savings.</string>
     <string name="next_reserve_automatic">Detected automatically. Money you put aside, it does not count as spending.</string>
     <string name="next_contracts_of_which_reserves">of which savings %1$s</string>
+    <string name="next_contracts_target_account">Account</string>
+    <string name="next_contracts_remove_target_account">Remove account</string>
 </resources>

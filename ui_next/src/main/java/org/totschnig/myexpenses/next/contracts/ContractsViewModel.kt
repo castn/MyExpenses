@@ -465,6 +465,11 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
         changeRule(contract) { it.copy(payeeIds = it.payeeIds - payeeId) }
     }
 
+    /** Takes back that the movements to [accountId] belong to [contract], e.g. after a wrong merge */
+    fun removeTargetAccount(contract: Contract, accountId: Long) {
+        changeRule(contract) { it.copy(targetAccountIds = it.targetAccountIds - accountId) }
+    }
+
     /**
      * @param range absolute amounts in minor units, null for all amounts
      */
@@ -712,7 +717,10 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                 LocalDate.parse(getString("snapshotDate"))
             ) else null,
             reserve = if (has("reserve")) getBoolean("reserve") else null,
-            targetAccountId = if (has("targetAccount")) getLong("targetAccount") else null
+            targetAccountIds = optJSONArray("targetAccounts")
+                ?.let { accounts -> (0 until accounts.length()).mapTo(HashSet()) { accounts.getLong(it) } }
+            // Stored as single account before rules could hold several
+                ?: if (has("targetAccount")) setOf(getLong("targetAccount")) else emptySet()
         )
 
         private fun serializeRules(rules: List<ContractRule>) = JSONArray(
@@ -737,7 +745,7 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                         put("snapshotDate", it.lastDate.toString())
                     }
                     rule.reserve?.let { put("reserve", it) }
-                    rule.targetAccountId?.let { put("targetAccount", it) }
+                    if (rule.targetAccountIds.isNotEmpty()) put("targetAccounts", JSONArray(rule.targetAccountIds.toList()))
                 }
             }
         ).toString()

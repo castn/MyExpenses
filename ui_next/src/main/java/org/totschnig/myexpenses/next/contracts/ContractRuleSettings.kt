@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -60,6 +61,7 @@ internal fun ContractRuleSettings(
     mergeCandidates: List<Contract>,
     onSetInterval: (ContractInterval) -> Unit,
     onRemovePayee: (Long) -> Unit,
+    onRemoveTargetAccount: (Long) -> Unit = {},
     onSetAmountRange: (LongRange?) -> Unit,
     onMerge: (Contract) -> Unit,
     onSetReserve: (Boolean) -> Unit = {},
@@ -112,43 +114,28 @@ internal fun ContractRuleSettings(
             isFirst = true
         )
         val payeeLabel = stringResource(if (contract.isIncome) R.string.next_income_payers else R.string.next_contracts_payees)
-        val removeLabel = stringResource(if (contract.isIncome) R.string.next_income_remove_payer else R.string.next_contracts_remove_payee)
-        // At least one payee or the template has to remain, or the rule would match nothing
-        val canRemove = rule.payeeIds.size > 1 || rule.templateId != null
+        val removePayeeLabel =
+            stringResource(if (contract.isIncome) R.string.next_income_remove_payer else R.string.next_contracts_remove_payee)
+        val accountLabel = stringResource(R.string.next_contracts_target_account)
+        val removeAccountLabel = stringResource(R.string.next_contracts_remove_target_account)
+        // At least one payee, account or the template has to remain, or the rule would match nothing
+        val canRemove = rule.payeeIds.size + rule.targetAccountIds.size > 1 || rule.templateId != null
         rule.payeeIds.sortedBy { it }.forEach { payeeId ->
-            HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 4.dp, top = 4.dp, bottom = 4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    payeeLabel,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Text(
-                    contract.transactions.firstOrNull { it.payeeId == payeeId }?.payeeName ?: "–",
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = 16.dp),
-                    textAlign = TextAlign.End
-                )
-                if (canRemove) {
-                    IconButton(onClick = { onRemovePayee(payeeId) }) {
-                        Icon(
-                            Icons.Default.RemoveCircleOutline,
-                            contentDescription = removeLabel,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-            }
+            MatcherRow(
+                label = payeeLabel,
+                value = contract.transactions.firstOrNull { it.payeeId == payeeId && it.targetAccountId == null }?.payeeName,
+                removeLabel = removePayeeLabel.takeIf { canRemove },
+                onRemove = { onRemovePayee(payeeId) }
+            )
+        }
+        rule.targetAccountIds.sortedBy { it }.forEach { accountId ->
+            MatcherRow(
+                label = accountLabel,
+                // Movements are named after the account they go to
+                value = contract.transactions.firstOrNull { it.targetAccountId == accountId }?.payeeName,
+                removeLabel = removeAccountLabel.takeIf { canRemove },
+                onRemove = { onRemoveTargetAccount(accountId) }
+            )
         }
         if (!contract.isIncome) {
             HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
@@ -201,6 +188,49 @@ private fun ReserveRow(contract: Contract, onSetReserve: (Boolean) -> Unit) {
             )
         }
         Switch(checked = contract.isReserve, onCheckedChange = null, modifier = Modifier.padding(start = 16.dp))
+    }
+}
+
+/**
+ * A payee or target account whose payments belong to the contract
+ *
+ * @param removeLabel null if it cannot be removed, since it is the last one
+ */
+@Composable
+private fun MatcherRow(label: String, value: String?, removeLabel: String?, onRemove: () -> Unit) {
+    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
+            .heightIn(min = 48.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            label,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Text(
+            value ?: "–",
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.SemiBold,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 16.dp),
+            textAlign = TextAlign.End
+        )
+        if (removeLabel != null) {
+            IconButton(onClick = onRemove) {
+                Icon(
+                    Icons.Default.RemoveCircleOutline,
+                    contentDescription = removeLabel,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
     }
 }
 

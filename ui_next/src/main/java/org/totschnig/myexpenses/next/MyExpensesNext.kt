@@ -178,6 +178,7 @@ class MyExpensesNext : MyExpensesV2() {
                     onConfirm = contractsViewModel::confirm,
                     onSetInterval = contractsViewModel::setInterval,
                     onRemovePayee = contractsViewModel::removePayee,
+                    onRemoveTargetAccount = contractsViewModel::removeTargetAccount,
                     onSetAmountRange = contractsViewModel::setAmountRange,
                     onMerge = contractsViewModel::merge,
                     onCancel = contractsViewModel::cancel,
