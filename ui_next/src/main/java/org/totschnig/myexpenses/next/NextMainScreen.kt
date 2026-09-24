@@ -58,6 +58,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -247,6 +248,10 @@ fun NextMainScreen(
         }
     }
 
+    // On phones the bottom bar of the new design replaces the bar of the navigation suite
+    val useNextBar = layoutType.isBar()
+    var selectedTab by rememberSaveable { mutableStateOf(NextTab.Overview) }
+
     val isRail = layoutType.isRail()
     val context = LocalContext.current
     val isAdLoaded = remember { mutableStateOf(false) }
@@ -304,7 +309,8 @@ fun NextMainScreen(
     ) {
         adView(isAdLoaded)
         NavigationSuiteScaffold(
-            layoutType = layoutType,
+            modifier = Modifier.weight(1f),
+            layoutType = if (useNextBar) NavigationSuiteType.None else layoutType,
             navigationSuiteItems = {
                 if (toggleableRail && isNavigationVisible) {
                     item(
@@ -373,6 +379,12 @@ fun NextMainScreen(
             }
         ) {
 
+            if (useNextBar && selectedTab != NextTab.Overview) {
+                BackHandler { selectedTab = NextTab.Overview }
+                NextPlaceholderScreen(selectedTab)
+                return@NavigationSuiteScaffold
+            }
+
             BackHandler(enabled = !is2Pane && navigator.canNavigateBack()) {
                 scope.launch {
                     navigator.navigateBack()
@@ -380,7 +392,7 @@ fun NextMainScreen(
             }
 
             val customInsets = with(ScaffoldDefaults.contentWindowInsets) {
-                if (layoutType.isBar()) only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top) else this
+                if (useNextBar) only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top) else this
             }
 
 
@@ -495,6 +507,23 @@ fun NextMainScreen(
                 }
             )
         }
+        if (useNextBar) {
+            NextBottomBar(
+                selectedTab = selectedTab,
+                onTabClick = { tab ->
+                    when (tab) {
+                        NextTab.Menu -> showBottomSheet = true
+                        NextTab.Overview -> {
+                            selectedTab = tab
+                            scope.launch {
+                                navigator.navigateToRoot(ListDetailPaneScaffoldRole.List)
+                            }
+                        }
+                        else -> selectedTab = tab
+                    }
+                }
+            )
+        }
     }
 
     if (showBottomSheet) {
@@ -504,7 +533,7 @@ fun NextMainScreen(
             contentWindowInsets = { WindowInsets.navigationBars }
         ) {
 
-            overflowItems
+            (if (useNextBar) menuConfig else overflowItems)
                 .forEach {
                     ListItem(
                         modifier = Modifier

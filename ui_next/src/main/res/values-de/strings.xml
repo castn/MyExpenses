@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="next_tab_contracts">Verträge</string>
+    <string name="next_tab_analysis">Analyse</string>
+    <string name="next_tab_overview">Übersicht</string>
+    <string name="next_tab_insurance">Versicherung</string>
+    <string name="next_tab_menu">Menü</string>
+    <string name="next_coming_soon">Kommt bald</string>
+</resources>
