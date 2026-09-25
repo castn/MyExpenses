@@ -29,6 +29,8 @@ data class ContractNews(
     val createdAt: LocalDate,
     val contractName: String,
     val isIncome: Boolean,
+    /** The contract puts money aside, which changes the wording, see [Reserve] */
+    val isReserve: Boolean = false,
     val amount: Long,
     val previousAmount: Long? = null,
     val cancelledOn: LocalDate? = null,
@@ -98,6 +100,7 @@ fun ContractAnalysis.detectNews(today: LocalDate): NewsDetection {
             createdAt = today,
             contractName = contract.displayName,
             isIncome = contract.isIncome,
+            isReserve = contract.isReserve,
             amount = payment.amount.absoluteValue,
             previousAmount = previousAmount,
             cancelledOn = rule.cancelledOn
@@ -165,6 +168,7 @@ fun newContractNews(confirmed: List<Pair<Contract, ContractRule>>, today: LocalD
             createdAt = today,
             contractName = contract.displayName,
             isIncome = contract.isIncome,
+            isReserve = contract.isReserve,
             amount = contract.lastAmount,
             interval = contract.interval
         )

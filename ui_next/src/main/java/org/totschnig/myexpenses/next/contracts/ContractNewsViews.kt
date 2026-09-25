@@ -66,7 +66,11 @@ internal fun ContractNews.text(currency: CurrencyUnit): String {
     val amount = formatter.convAmount(amount, currency)
     return when (type) {
         ContractNews.Type.PAYMENT_AFTER_CANCELLATION -> stringResource(
-            if (isIncome) R.string.next_news_income_after_cancellation else R.string.next_news_payment_after_cancellation,
+            when {
+                isIncome -> R.string.next_news_income_after_cancellation
+                isReserve -> R.string.next_news_reserve_after_cancellation
+                else -> R.string.next_news_payment_after_cancellation
+            },
             amount,
             dateFormatter.format(date),
             cancelledOn?.let { dateFormatter.format(it) } ?: "–"
@@ -78,6 +82,8 @@ internal fun ContractNews.text(currency: CurrencyUnit): String {
                 when {
                     isIncome && this.amount > previous -> R.string.next_news_income_up
                     isIncome -> R.string.next_news_income_down
+                    isReserve && this.amount > previous -> R.string.next_news_reserve_up
+                    isReserve -> R.string.next_news_reserve_down
                     this.amount > previous -> R.string.next_news_price_up
                     else -> R.string.next_news_price_down
                 },
@@ -87,19 +93,31 @@ internal fun ContractNews.text(currency: CurrencyUnit): String {
         }
 
         ContractNews.Type.NEW_CONTRACT -> stringResource(
-            if (isIncome) R.string.next_news_new_income else R.string.next_news_new_contract,
+            when {
+                isIncome -> R.string.next_news_new_income
+                isReserve -> R.string.next_news_new_reserve
+                else -> R.string.next_news_new_contract
+            },
             amount,
             interval?.let { stringResource(it.labelRes) } ?: "–"
         )
 
         ContractNews.Type.PAYMENT_MISSING -> stringResource(
-            if (isIncome) R.string.next_news_income_missing else R.string.next_news_payment_missing,
+            when {
+                isIncome -> R.string.next_news_income_missing
+                isReserve -> R.string.next_news_reserve_missing
+                else -> R.string.next_news_payment_missing
+            },
             dateFormatter.format(date),
             amount
         )
 
         ContractNews.Type.CONTRACT_STOPPED -> stringResource(
-            if (isIncome) R.string.next_news_income_stopped else R.string.next_news_contract_stopped,
+            when {
+                isIncome -> R.string.next_news_income_stopped
+                isReserve -> R.string.next_news_reserve_stopped
+                else -> R.string.next_news_contract_stopped
+            },
             dateFormatter.format(date)
         )
     }
@@ -224,11 +242,13 @@ internal fun NewsBanner(
                     Button(onClick = onCancelAgain) {
                         Text(
                             stringResource(
-                                when {
-                                    cancelling.type == ContractNews.Type.CONTRACT_STOPPED && cancelling.isIncome ->
-                                        R.string.next_income_cancel
-                                    cancelling.type == ContractNews.Type.CONTRACT_STOPPED -> R.string.next_contracts_cancel
+                                if (cancelling.type == ContractNews.Type.CONTRACT_STOPPED) when {
+                                    cancelling.isIncome -> R.string.next_income_cancel
+                                    cancelling.isReserve -> R.string.next_reserve_cancel
+                                    else -> R.string.next_contracts_cancel
+                                } else when {
                                     cancelling.isIncome -> R.string.next_news_income_cancel_again
+                                    cancelling.isReserve -> R.string.next_news_reserve_cancel_again
                                     else -> R.string.next_news_cancel_again
                                 }
                             )

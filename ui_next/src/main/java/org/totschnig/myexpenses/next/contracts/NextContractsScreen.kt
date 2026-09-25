@@ -931,7 +931,11 @@ private fun ContractItem(
                             Text(
                                 text = when {
                                     contract.cancelledOn != null -> stringResource(
-                                        if (contract.isIncome) R.string.next_income_cancelled_on else R.string.next_contracts_cancelled_on,
+                                        when {
+                                            contract.isIncome -> R.string.next_income_cancelled_on
+                                            contract.isReserve -> R.string.next_reserve_cancelled_on
+                                            else -> R.string.next_contracts_cancelled_on
+                                        },
                                         dateFormatter.format(contract.cancelledOn)
                                     )
 

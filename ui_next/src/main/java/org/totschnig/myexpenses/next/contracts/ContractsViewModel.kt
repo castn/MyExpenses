@@ -638,6 +638,7 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
             createdAt = LocalDate.parse(getString("created")),
             contractName = getString("name"),
             isIncome = getBoolean("income"),
+            isReserve = optBoolean("reserve"),
             amount = getLong("amount"),
             previousAmount = if (has("previous")) getLong("previous") else null,
             cancelledOn = if (has("cancelled")) LocalDate.parse(getString("cancelled")) else null,
@@ -656,6 +657,7 @@ class ContractsViewModel(application: Application) : ContentResolvingAndroidView
                     put("created", item.createdAt.toString())
                     put("name", item.contractName)
                     put("income", item.isIncome)
+                    put("reserve", item.isReserve)
                     put("amount", item.amount)
                     item.previousAmount?.let { put("previous", it) }
                     item.cancelledOn?.let { put("cancelled", it.toString()) }

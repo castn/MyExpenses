@@ -195,4 +195,15 @@
     <string name="next_contracts_of_which_reserves">davon Rücklagen %1$s</string>
     <string name="next_contracts_target_account">Konto</string>
     <string name="next_contracts_remove_target_account">Konto entfernen</string>
+    <string name="next_reserve_cancel">Rücklage beendet</string>
+    <string name="next_reserve_uncancel">Wieder aufnehmen</string>
+    <string name="next_reserve_cancelled_on">Beendet am %1$s</string>
+    <string name="next_reserve_cancelled_row">Beendet am</string>
+    <string name="next_news_reserve_after_cancellation">Obwohl am %3$s beendet, wurden am %2$s %1$s zurückgelegt. Die Rücklage ist wieder aktiv.</string>
+    <string name="next_news_reserve_up">Sparrate erhöht von %1$s auf %2$s.</string>
+    <string name="next_news_reserve_down">Sparrate gesenkt von %1$s auf %2$s.</string>
+    <string name="next_news_new_reserve">Als neue Rücklage übernommen (%1$s, %2$s).</string>
+    <string name="next_news_reserve_missing">Die für den %1$s erwartete Einzahlung (%2$s) ist noch nicht erfolgt.</string>
+    <string name="next_news_reserve_stopped">Seit dem %1$s keine Einzahlung mehr. Wurde die Rücklage beendet?</string>
+    <string name="next_news_reserve_cancel_again">Erneut als beendet markieren</string>
 </resources>

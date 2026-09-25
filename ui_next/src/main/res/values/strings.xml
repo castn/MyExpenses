@@ -195,4 +195,15 @@
     <string name="next_contracts_of_which_reserves">of which savings %1$s</string>
     <string name="next_contracts_target_account">Account</string>
     <string name="next_contracts_remove_target_account">Remove account</string>
+    <string name="next_reserve_cancel">Savings stopped</string>
+    <string name="next_reserve_uncancel">Resume</string>
+    <string name="next_reserve_cancelled_on">Stopped on %1$s</string>
+    <string name="next_reserve_cancelled_row">Stopped on</string>
+    <string name="next_news_reserve_after_cancellation">%1$s put aside on %2$s although stopped on %3$s. The savings are active again.</string>
+    <string name="next_news_reserve_up">Savings rate increased from %1$s to %2$s.</string>
+    <string name="next_news_reserve_down">Savings rate decreased from %1$s to %2$s.</string>
+    <string name="next_news_new_reserve">Taken over as new savings (%1$s, %2$s).</string>
+    <string name="next_news_reserve_missing">The deposit expected on %1$s (%2$s) has not happened yet.</string>
+    <string name="next_news_reserve_stopped">No deposit since %1$s. Were the savings stopped?</string>
+    <string name="next_news_reserve_cancel_again">Mark as stopped again</string>
 </resources>

@@ -169,4 +169,11 @@ class ContractNewsTest {
         assertEquals(ContractInterval.MONTHLY, news.interval)
         assertEquals(1500, news.amount)
     }
+
+    @Test
+    fun newsOfReserveAreMarked() {
+        val news = detect(listOf(rule().copy(reserve = true)), monthly(listOf(-10000, -10000, -10000, -15000))).news.single()
+        assertTrue(news.isReserve)
+        assertFalse(detect(listOf(rule()), monthly(listOf(-1399, -1399, -1399, -1799))).news.single().isReserve)
+    }
 }

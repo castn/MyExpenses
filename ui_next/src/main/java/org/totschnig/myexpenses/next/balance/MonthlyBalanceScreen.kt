@@ -167,7 +167,8 @@ fun MonthlyBalanceScreen(
                     BalanceRow(
                         stringResource(R.string.next_balance_savings),
                         signed(balance.reserves),
-                        if (balance.reserves > 0) colors.income else colors.expense,
+                        // Money put aside is no loss
+                        MaterialTheme.colorScheme.onSurface,
                         hint = if (balance.savingsUpcoming != 0L) stringResource(
                             R.string.next_balance_contracts_upcoming,
                             formatter.convAmount(-balance.savingsUpcoming, currency)

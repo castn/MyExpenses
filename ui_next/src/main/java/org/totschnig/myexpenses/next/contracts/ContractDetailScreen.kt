@@ -234,7 +234,13 @@ fun ContractDetailScreen(
                 )
                 contract.cancelledOn?.let {
                     InfoRow(
-                        stringResource(if (contract.isIncome) R.string.next_income_cancelled_row else R.string.next_contracts_cancelled_row),
+                        stringResource(
+                            when {
+                                contract.isIncome -> R.string.next_income_cancelled_row
+                                contract.isReserve -> R.string.next_reserve_cancelled_row
+                                else -> R.string.next_contracts_cancelled_row
+                            }
+                        ),
                         dateFormatter.format(it)
                     )
                 }
@@ -290,11 +296,23 @@ fun ContractDetailScreen(
                 )
                 DetailCard(Modifier.padding(top = 16.dp)) {
                     if (contract.isCancelled) LinkRow(
-                        stringResource(if (contract.isIncome) R.string.next_income_uncancel else R.string.next_contracts_uncancel),
+                        stringResource(
+                            when {
+                                contract.isIncome -> R.string.next_income_uncancel
+                                contract.isReserve -> R.string.next_reserve_uncancel
+                                else -> R.string.next_contracts_uncancel
+                            }
+                        ),
                         onClick = onRevokeCancellation,
                         isFirst = true
                     ) else LinkRow(
-                        stringResource(if (contract.isIncome) R.string.next_income_cancel else R.string.next_contracts_cancel),
+                        stringResource(
+                            when {
+                                contract.isIncome -> R.string.next_income_cancel
+                                contract.isReserve -> R.string.next_reserve_cancel
+                                else -> R.string.next_contracts_cancel
+                            }
+                        ),
                         onClick = onCancel,
                         isFirst = true
                     )
