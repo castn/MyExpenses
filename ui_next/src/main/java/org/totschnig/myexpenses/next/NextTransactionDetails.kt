@@ -36,8 +36,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import org.totschnig.myexpenses.compose.HierarchicalMenu
 import org.totschnig.myexpenses.compose.Menu
-import org.totschnig.myexpenses.next.contracts.DetailCard
-import org.totschnig.myexpenses.next.contracts.InfoRow
+import org.totschnig.myexpenses.designsystem.DetailCard
+import org.totschnig.myexpenses.designsystem.InfoRow
 import org.totschnig.myexpenses.viewmodel.data.Transaction2
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle

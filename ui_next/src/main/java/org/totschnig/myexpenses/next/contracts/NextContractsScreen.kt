@@ -22,7 +22,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
@@ -52,10 +51,10 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -79,14 +78,17 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import org.totschnig.myexpenses.compose.LocalColors
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
+import org.totschnig.myexpenses.designsystem.Dot
+import org.totschnig.myexpenses.designsystem.GroupPosition
+import org.totschnig.myexpenses.designsystem.NameDialog
+import org.totschnig.myexpenses.designsystem.Shapes
+import org.totschnig.myexpenses.designsystem.TextBadge
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.next.R
 import org.totschnig.myexpenses.next.balance.SalaryChoice
 import org.totschnig.myexpenses.next.balance.SalaryDialog
 import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.compose.Icon as CategoryIcon
-
-private val CardShape = RoundedCornerShape(16.dp)
 
 /**
  * Contracts detected from recurring debits, grouped by how often they are debited.
@@ -370,7 +372,7 @@ private fun ConsentCard(
         contentAlignment = Alignment.Center
     ) {
         Surface(
-            shape = CardShape,
+            shape = Shapes.card,
             color = MaterialTheme.colorScheme.surfaceContainerLowest,
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -752,7 +754,7 @@ private fun SummaryCard(
 ) {
     val formatter = LocalCurrencyFormatter.current
     Surface(
-        shape = CardShape,
+        shape = Shapes.card,
         color = MaterialTheme.colorScheme.primaryContainer,
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -794,26 +796,11 @@ private fun SectionHeader(
     total: Long?,
     currency: CurrencyUnit,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 4.dp, end = 4.dp, top = 24.dp, bottom = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            "$title ($count)",
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.weight(1f)
-        )
-        if (total != null) {
-            Text(
-                LocalCurrencyFormatter.current.convAmount(total, currency),
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-    }
+    org.totschnig.myexpenses.designsystem.SectionHeader(
+        title = title,
+        count = count,
+        trailing = total?.let { LocalCurrencyFormatter.current.convAmount(it, currency) }
+    )
 }
 
 private class SuggestionActions(val confirm: EditAction, val reject: EditAction)
@@ -869,12 +856,7 @@ private fun ContractItem(
     val dateFormatter = remember { DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM) }
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(
-            topStart = if (isFirst) 16.dp else 0.dp,
-            topEnd = if (isFirst) 16.dp else 0.dp,
-            bottomStart = if (isLast) 16.dp else 0.dp,
-            bottomEnd = if (isLast) 16.dp else 0.dp,
-        ),
+        shape = Shapes.groupItem(GroupPosition(isFirst, isLast)),
         color = MaterialTheme.colorScheme.surfaceContainerLowest
     ) {
         Column {
@@ -925,7 +907,7 @@ private fun ContractItem(
                                 overflow = TextOverflow.Ellipsis,
                                 modifier = Modifier.weight(1f, fill = false)
                             )
-                            if (hasNews) NewsDot(Modifier.padding(start = 6.dp))
+                            if (hasNews) Dot(Modifier.padding(start = 6.dp))
                         }
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
@@ -949,7 +931,7 @@ private fun ContractItem(
                                 maxLines = 1
                             )
                             if (badge != null) {
-                                Badge(
+                                TextBadge(
                                     badge,
                                     Modifier
                                         .padding(start = 6.dp)
@@ -998,27 +980,6 @@ private fun ContractItem(
                 }
             }
         }
-    }
-}
-
-/**
- * Small box in the second line of a list item, e.g. for the category of a contract
- */
-@Composable
-private fun Badge(text: String, modifier: Modifier = Modifier) {
-    Surface(
-        shape = RoundedCornerShape(4.dp),
-        color = MaterialTheme.colorScheme.secondaryContainer,
-        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-        modifier = modifier
-    ) {
-        Text(
-            text,
-            style = MaterialTheme.typography.labelSmall,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(horizontal = 6.dp, vertical = 1.dp)
-        )
     }
 }
 

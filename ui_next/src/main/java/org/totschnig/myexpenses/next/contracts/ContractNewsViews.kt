@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -30,7 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,22 +37,14 @@ import androidx.compose.ui.unit.dp
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
+import org.totschnig.myexpenses.designsystem.DetailCard
+import org.totschnig.myexpenses.designsystem.Dot
+import org.totschnig.myexpenses.designsystem.GroupPosition
+import org.totschnig.myexpenses.designsystem.SectionTitle
+import org.totschnig.myexpenses.designsystem.Shapes
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.next.R
 import org.totschnig.myexpenses.util.convAmount
-
-/**
- * Marks a contract with unread news
- */
-@Composable
-internal fun NewsDot(modifier: Modifier = Modifier) {
-    Box(
-        modifier
-            .size(8.dp)
-            .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.error)
-    )
-}
 
 /**
  * What happened, in one sentence
@@ -174,7 +164,7 @@ private fun NewsRow(news: ContractNews, currency: CurrencyUnit, onClick: () -> U
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        NewsDot()
+        Dot()
         Column(
             Modifier
                 .weight(1f)
@@ -315,12 +305,7 @@ internal fun NewsHistoryScreen(
         ) {
             itemsIndexed(news, key = { _, item -> item.id }) { index, item ->
                 Surface(
-                    shape = RoundedCornerShape(
-                        topStart = if (index == 0) 16.dp else 0.dp,
-                        topEnd = if (index == 0) 16.dp else 0.dp,
-                        bottomStart = if (index == news.lastIndex) 16.dp else 0.dp,
-                        bottomEnd = if (index == news.lastIndex) 16.dp else 0.dp,
-                    ),
+                    shape = Shapes.groupItem(GroupPosition.of(index, news.size)),
                     color = MaterialTheme.colorScheme.surfaceContainerLowest,
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -334,7 +319,7 @@ internal fun NewsHistoryScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             // Keeps the texts aligned, whether read or not
-                            Box(Modifier.size(8.dp)) { if (!item.isRead) NewsDot() }
+                            Box(Modifier.size(8.dp)) { if (!item.isRead) Dot() }
                             Column(
                                 Modifier
                                     .weight(1f)

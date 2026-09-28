@@ -1,0 +1,31 @@
+plugins {
+    id 'com.android.library'
+    alias libs.plugins.compose.compiler
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.designsystem'
+    compileSdk project.compileSdkVersion
+
+    defaultConfig {
+        minSdk project.minSdkVersion
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        compose true
+    }
+}
+
+// Building blocks of the new UI. Deliberately independent of the app: no texts of features,
+// no formatting of amounts, those are passed in.
+dependencies {
+    implementation platform(libs.androidx.compose.bom)
+    api libs.compose.ui
+    api libs.androidx.compose.material3
+    implementation libs.androidx.material.icons.extended
+    implementation libs.compose.ui.tooling.preview
+    debugImplementation libs.compose.ui.tooling
+}

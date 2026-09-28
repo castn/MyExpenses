@@ -4,45 +4,37 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.RemoveCircleOutline
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import java.math.BigDecimal
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
+import org.totschnig.myexpenses.designsystem.DetailCard
+import org.totschnig.myexpenses.designsystem.EditableRow
+import org.totschnig.myexpenses.designsystem.LinkRow
+import org.totschnig.myexpenses.designsystem.RemovableRow
+import org.totschnig.myexpenses.designsystem.SectionTitle
+import org.totschnig.myexpenses.designsystem.SingleChoiceDialog
+import org.totschnig.myexpenses.designsystem.SwitchRow
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.next.R
 import org.totschnig.myexpenses.util.convAmount
@@ -121,28 +113,34 @@ internal fun ContractRuleSettings(
         // At least one payee, account or the template has to remain, or the rule would match nothing
         val canRemove = rule.payeeIds.size + rule.targetAccountIds.size > 1 || rule.templateId != null
         rule.payeeIds.sortedBy { it }.forEach { payeeId ->
-            MatcherRow(
+            RemovableRow(
                 label = payeeLabel,
-                value = contract.transactions.firstOrNull { it.payeeId == payeeId && it.targetAccountId == null }?.payeeName,
+                value = contract.transactions.firstOrNull { it.payeeId == payeeId && it.targetAccountId == null }?.payeeName
+                    ?: "–",
                 removeLabel = removePayeeLabel.takeIf { canRemove },
                 onRemove = { onRemovePayee(payeeId) }
             )
         }
         rule.targetAccountIds.sortedBy { it }.forEach { accountId ->
-            MatcherRow(
+            RemovableRow(
                 label = accountLabel,
                 // Movements are named after the account they go to
-                value = contract.transactions.firstOrNull { it.targetAccountId == accountId }?.payeeName,
+                value = contract.transactions.firstOrNull { it.targetAccountId == accountId }?.payeeName ?: "–",
                 removeLabel = removeAccountLabel.takeIf { canRemove },
                 onRemove = { onRemoveTargetAccount(accountId) }
             )
         }
         if (!contract.isIncome) {
-            HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
-            ReserveRow(contract, onSetReserve)
+            SwitchRow(
+                label = stringResource(R.string.next_reserve),
+                checked = contract.isReserve,
+                onCheckedChange = onSetReserve,
+                supportingText = stringResource(
+                    if (contract.reserveChoice == null) R.string.next_reserve_automatic else R.string.next_reserve_hint
+                )
+            )
         }
         rule.amountRange?.let { range ->
-            HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
             EditableRow(
                 label = stringResource(R.string.next_contracts_amount_range),
                 value = stringResource(
@@ -150,124 +148,12 @@ internal fun ContractRuleSettings(
                     formatter.convAmount(range.first, currency),
                     formatter.convAmount(range.last, currency)
                 ),
-                onClick = { showAmountRangeDialog = true },
-                isFirst = true
+                onClick = { showAmountRangeDialog = true }
             )
         }
         LinkRow(
             stringResource(if (contract.isIncome) R.string.next_income_merge else R.string.next_contracts_merge),
             onClick = { showMergeDialog = true }
-        )
-    }
-}
-
-/**
- * Whether the contract puts money aside, with a hint whether this was detected automatically
- */
-@Composable
-private fun ReserveRow(contract: Contract, onSetReserve: (Boolean) -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .toggleable(value = contract.isReserve, role = Role.Switch, onValueChange = onSetReserve)
-            .padding(horizontal = 16.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column(Modifier.weight(1f)) {
-            Text(
-                stringResource(R.string.next_reserve),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Text(
-                stringResource(
-                    if (contract.reserveChoice == null) R.string.next_reserve_automatic else R.string.next_reserve_hint
-                ),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-        Switch(checked = contract.isReserve, onCheckedChange = null, modifier = Modifier.padding(start = 16.dp))
-    }
-}
-
-/**
- * A payee or target account whose payments belong to the contract
- *
- * @param removeLabel null if it cannot be removed, since it is the last one
- */
-@Composable
-private fun MatcherRow(label: String, value: String?, removeLabel: String?, onRemove: () -> Unit) {
-    HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
-            .heightIn(min = 48.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            label,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-        Text(
-            value ?: "–",
-            style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.SemiBold,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = 16.dp),
-            textAlign = TextAlign.End
-        )
-        if (removeLabel != null) {
-            IconButton(onClick = onRemove) {
-                Icon(
-                    Icons.Default.RemoveCircleOutline,
-                    contentDescription = removeLabel,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
-    }
-}
-
-/**
- * Label and value like [InfoRow], with a pencil showing that tapping changes the value
- */
-@Composable
-private fun EditableRow(label: String, value: String, onClick: () -> Unit, isFirst: Boolean = false) {
-    if (!isFirst) {
-        HorizontalDivider(color = MaterialTheme.colorScheme.surfaceContainer)
-    }
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClickLabel = label, onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 14.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            label,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.weight(1f)
-        )
-        Text(
-            value,
-            style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.tertiary
-        )
-        Icon(
-            Icons.Default.Edit,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.tertiary,
-            modifier = Modifier
-                .padding(start = 8.dp)
-                .size(16.dp)
         )
     }
 }
@@ -279,42 +165,13 @@ internal fun IntervalDialog(
     onDismiss: () -> Unit,
     title: String = stringResource(R.string.next_contracts_interval),
 ) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(title) },
-        text = {
-            Column(
-                Modifier
-                    .selectableGroup()
-                    .verticalScroll(rememberScrollState())
-            ) {
-                ContractInterval.entries.forEach { interval ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .selectable(
-                                selected = interval == current,
-                                role = Role.RadioButton,
-                                onClick = { onSelect(interval) }
-                            )
-                            .padding(vertical = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        RadioButton(selected = interval == current, onClick = null)
-                        Text(
-                            stringResource(interval.labelRes),
-                            style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier.padding(start = 16.dp)
-                        )
-                    }
-                }
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(android.R.string.cancel))
-            }
-        }
+    SingleChoiceDialog(
+        title = title,
+        options = ContractInterval.entries,
+        selected = current,
+        label = { stringResource(it.labelRes) },
+        onSelect = onSelect,
+        onDismiss = onDismiss
     )
 }
 

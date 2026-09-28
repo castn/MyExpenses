@@ -34,7 +34,6 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DragHandle
 import androidx.compose.material.icons.filled.Savings
 import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.SwapVert
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -72,6 +71,8 @@ import java.text.NumberFormat
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.totschnig.myexpenses.compose.LocalColors
+import org.totschnig.myexpenses.designsystem.GroupPosition
+import org.totschnig.myexpenses.designsystem.Shapes
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
@@ -100,8 +101,6 @@ data class OverviewSection(
     val title: String,
     val accounts: List<OverviewAccount>,
 )
-
-private val CardShape = RoundedCornerShape(16.dp)
 
 @Composable
 fun NextOverviewScreen(
@@ -285,7 +284,7 @@ private fun BudgetCard(
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = CardShape,
+        shape = Shapes.card,
         color = MaterialTheme.colorScheme.surfaceContainerLowest
     ) {
         Column(Modifier.padding(vertical = 12.dp)) {
@@ -476,7 +475,7 @@ private fun NoAccountsCard(
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = CardShape,
+        shape = Shapes.card,
         color = MaterialTheme.colorScheme.surfaceContainerLowest
     ) {
         Column(
@@ -545,12 +544,7 @@ private fun AccountItem(
         modifier = modifier
             .fillMaxWidth()
             .semantics { customActions = accessibilityActions },
-        shape = if (isDragging) CardShape else RoundedCornerShape(
-            topStart = if (isFirst) 16.dp else 0.dp,
-            topEnd = if (isFirst) 16.dp else 0.dp,
-            bottomStart = if (isLast) 16.dp else 0.dp,
-            bottomEnd = if (isLast) 16.dp else 0.dp,
-        ),
+        shape = if (isDragging) Shapes.card else Shapes.groupItem(GroupPosition(isFirst, isLast)),
         color = MaterialTheme.colorScheme.surfaceContainerLowest,
         shadowElevation = elevation
     ) {

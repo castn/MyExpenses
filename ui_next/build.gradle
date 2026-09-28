@@ -45,6 +45,7 @@ dependencies {
     implementation libs.androidx.paging.compose
     implementation libs.copper.flow
     implementation project(':setupwizard')
+    implementation project(':designsystem')
 
     testImplementation libs.junit
 }

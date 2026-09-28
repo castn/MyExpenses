@@ -27,12 +27,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.totschnig.myexpenses.compose.LocalColors
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
+import org.totschnig.myexpenses.designsystem.Shapes
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.next.R
 import org.totschnig.myexpenses.util.convAmount
 import java.time.LocalDate
-
-private val CardShape = RoundedCornerShape(16.dp)
 
 /**
  * Card of the overview: income and expenses of the current salary cycle and what is left.
@@ -67,7 +66,7 @@ private fun CardTitle() {
 private fun ConsentCard(onConsent: () -> Unit, modifier: Modifier) {
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = CardShape,
+        shape = Shapes.card,
         color = MaterialTheme.colorScheme.surfaceContainerLowest
     ) {
         Column(Modifier.padding(16.dp)) {
@@ -100,7 +99,7 @@ private fun BalanceCard(
     Surface(
         onClick = onOpen,
         modifier = modifier.fillMaxWidth(),
-        shape = CardShape,
+        shape = Shapes.card,
         color = MaterialTheme.colorScheme.surfaceContainerLowest
     ) {
         Column(Modifier.padding(16.dp)) {

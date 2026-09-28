@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
 import androidx.compose.material3.HorizontalDivider
@@ -61,6 +60,8 @@ import org.totschnig.myexpenses.compose.transactions.TransactionEventHandler
 import org.totschnig.myexpenses.compose.transactions.TransactionListContent
 import org.totschnig.myexpenses.compose.transactions.transactionMenu
 import org.totschnig.myexpenses.compose.transactions.voidMarker
+import org.totschnig.myexpenses.designsystem.GroupPosition
+import org.totschnig.myexpenses.designsystem.Shapes
 import org.totschnig.myexpenses.model.Grouping
 import org.totschnig.myexpenses.model.Money
 import org.totschnig.myexpenses.model.sort.SortDirection
@@ -287,12 +288,7 @@ private fun TransactionItem(
 
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(
-            topStart = if (isFirst) 16.dp else 0.dp,
-            topEnd = if (isFirst) 16.dp else 0.dp,
-            bottomStart = if (isLast) 16.dp else 0.dp,
-            bottomEnd = if (isLast) 16.dp else 0.dp,
-        ),
+        shape = Shapes.groupItem(GroupPosition(isFirst, isLast)),
         color = if (isSelected) MaterialTheme.colorScheme.secondaryContainer
         else MaterialTheme.colorScheme.surfaceContainerLowest
     ) {

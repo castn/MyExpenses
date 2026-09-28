@@ -41,9 +41,9 @@ import java.time.format.FormatStyle
 import kotlin.math.absoluteValue
 import org.totschnig.myexpenses.compose.LocalColors
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
+import org.totschnig.myexpenses.designsystem.Dot
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.next.R
-import org.totschnig.myexpenses.next.contracts.NewsDot
 import org.totschnig.myexpenses.util.convAmount
 
 /**
@@ -214,7 +214,7 @@ private fun BalanceRow(
         Column(Modifier.weight(1f)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(label, style = MaterialTheme.typography.bodyLarge)
-                if (hasNews) NewsDot(Modifier.padding(start = 6.dp))
+                if (hasNews) Dot(Modifier.padding(start = 6.dp))
             }
             hint?.let {
                 Text(
