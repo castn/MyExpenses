@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- New setups and the import of default categories use the German tree of values/cat_tree_de.xml -->
+    <bool name="german_category_tree">true</bool>
+</resources>

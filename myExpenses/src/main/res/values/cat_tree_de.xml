@@ -1,0 +1,935 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The default categories for German, chosen by german_category_tree in values-de. Not translated:
+     the tree itself is German. Categories that correspond to ones of the former German tree (Lohn,
+     Nettogehalt, Prämien, Zuschläge, Steuer, Einkommenssteuer, Grundsteuer) have their uuids, see
+     values-de/category_uuids.xml, so that importing the default categories finds them. -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="InconsistentArrays,Typos">
+    <string-array name="Cat_DE_Income_Work" translatable="false">
+        <item>Gehalt &amp; Arbeit</item>
+        <item>Gehalt/Lohn</item>
+        <item>Bonus &amp; Prämien</item>
+        <item>Zuschläge</item>
+        <item>Urlaubs- &amp; Weihnachtsgeld</item>
+        <item>Nebenjob/Minijob</item>
+        <item>Ausbildungsvergütung</item>
+        <item>Trinkgeld</item>
+        <item>Abfindung</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_Work_Icons" translatable="false">
+        <item>briefcase</item>
+        <item>envelope</item>
+        <item>award</item>
+        <item>business-time</item>
+        <item>calendar-days</item>
+        <item>clock</item>
+        <item>graduation-cap</item>
+        <item>coins</item>
+        <item>handshake</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_Work_Uuids" translatable="false">
+        <item>6ce93bae-319c-4ca7-bb50-341dc49cc1ab</item>
+        <item>1bd555da-a087-4ffb-9692-82225f9da91b</item>
+        <item>3a6d8141-f24c-44b6-9a7e-c5adeeb66d02</item>
+        <item>e867f0a7-2196-452d-8668-c52fd5261b84</item>
+        <item>3308bf47-f2ad-40a6-8800-c77577227789</item>
+        <item>9524142a-7bf2-4e21-a5ea-d570e5e8dd79</item>
+        <item>3cc8db43-355d-4558-a616-165cecb828aa</item>
+        <item>63666210-ff7a-4b84-8f1a-5ce2300ec95b</item>
+        <item>98c902d5-c413-42a3-9945-165d20ce9e0d</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_SelfEmployment" translatable="false">
+        <item>Selbstständigkeit</item>
+        <item>Honorare</item>
+        <item>Umsätze</item>
+        <item>Provisionen</item>
+        <item>Nebengewerbe</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_SelfEmployment_Icons" translatable="false">
+        <item>laptop</item>
+        <item>file-invoice-dollar</item>
+        <item>cash-register</item>
+        <item>percent</item>
+        <item>store</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_SelfEmployment_Uuids" translatable="false">
+        <item>bbc9cfe9-cb90-434e-80df-f13fcf6370ec</item>
+        <item>9cfea4ec-3003-4ef7-9495-6536dba3f584</item>
+        <item>214b2106-ba64-49bf-8f05-d40c744ffdb1</item>
+        <item>da02d4e1-1089-4bae-b7ca-8921ec64c9e2</item>
+        <item>f020e7db-e3d5-4c03-978a-ef4e78a5346f</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_Benefits" translatable="false">
+        <item>Staatliche Leistungen</item>
+        <item>Kindergeld</item>
+        <item>Elterngeld</item>
+        <item>BAföG</item>
+        <item>Arbeitslosengeld</item>
+        <item>Bürgergeld/Sozialhilfe</item>
+        <item>Wohngeld</item>
+        <item>Krankengeld</item>
+        <item>Mutterschaftsgeld</item>
+        <item>Pflegegeld</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_Benefits_Icons" translatable="false">
+        <item>landmark</item>
+        <item>child</item>
+        <item>baby</item>
+        <item>graduation-cap</item>
+        <item>unemployment</item>
+        <item>hand-holding-heart</item>
+        <item>house-user</item>
+        <item>notes-medical</item>
+        <item>person-breastfeeding</item>
+        <item>hand-holding-medical</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_Benefits_Uuids" translatable="false">
+        <item>d9566e44-5063-4ae5-97a9-82457dbeef0e</item>
+        <item>7dec3e3e-9071-4a03-84a4-30a646c25257</item>
+        <item>98e2d6f8-7903-48ad-b494-a731256edb79</item>
+        <item>8438e7b1-4d45-4058-afa7-2904251b0201</item>
+        <item>3f84bf84-1189-44dd-a956-60f60ffe34b3</item>
+        <item>af170b87-538c-40ba-b5e3-b9ce86ec4b7d</item>
+        <item>d1edc793-6dde-4738-836f-4bc26500ec35</item>
+        <item>6140931e-8539-4453-b340-86bf52c00bc5</item>
+        <item>fd917d35-0c21-4172-8e91-74d479477dc1</item>
+        <item>7451df91-0990-49c6-b4a3-3961c01b24fe</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_Pension" translatable="false">
+        <item>Rente &amp; Pension</item>
+        <item>Gesetzliche Rente</item>
+        <item>Beamtenpension</item>
+        <item>Betriebsrente</item>
+        <item>Private Rente</item>
+        <item>Erwerbsminderungsrente</item>
+        <item>Witwen-/Waisenrente</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_Pension_Icons" translatable="false">
+        <item>person-cane</item>
+        <item>building-columns</item>
+        <item>landmark</item>
+        <item>building</item>
+        <item>piggy-bank</item>
+        <item>wheelchair</item>
+        <item>user-group</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_Pension_Uuids" translatable="false">
+        <item>3c265da8-797f-487d-afc6-8c91da6ff4ed</item>
+        <item>9a4c81d1-9bd6-48b2-b0e8-b5303109730e</item>
+        <item>898ce53e-3a88-4ddc-b55d-51ac43e2ae98</item>
+        <item>9493539d-4481-405b-94b6-283d4df3cd3a</item>
+        <item>616eb442-a3f5-4713-8aa7-9210c3f4eca6</item>
+        <item>f013b104-bfab-449e-92b4-ad838bd8a81d</item>
+        <item>415739bc-4a3c-455d-9670-bb087b65bef2</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_CapitalIncome" translatable="false">
+        <item>Kapitalerträge</item>
+        <item>Zinsen</item>
+        <item>Dividenden</item>
+        <item>Fondsausschüttungen</item>
+        <item>Kursgewinne</item>
+        <item>Krypto-Gewinne</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_CapitalIncome_Icons" translatable="false">
+        <item>chart-line</item>
+        <item>percent</item>
+        <item>divide</item>
+        <item>chart-pie</item>
+        <item>arrow-trend-up</item>
+        <item>bitcoin</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_CapitalIncome_Uuids" translatable="false">
+        <item>274ca563-dc33-4f83-885c-a1de978c6537</item>
+        <item>53038dfe-1446-444c-9706-9744ce1157c4</item>
+        <item>ecb90910-b314-4516-bf00-3b2a8ee5b62d</item>
+        <item>cc3b4b9e-da96-4e61-b812-fb3f0e3a9781</item>
+        <item>f8d94a16-eed5-4e56-9a78-3f99244cbc60</item>
+        <item>76c9247b-b514-441f-950b-8e5b66664271</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_Rental" translatable="false">
+        <item>Vermietung</item>
+        <item>Mieteinnahmen</item>
+        <item>Untervermietung</item>
+        <item>Ferienwohnung</item>
+        <item>Nebenkostenzahlungen von Mietern</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_Rental_Icons" translatable="false">
+        <item>key</item>
+        <item>house</item>
+        <item>door-open</item>
+        <item>umbrella-beach</item>
+        <item>file-invoice</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_Rental_Uuids" translatable="false">
+        <item>376282c3-7f9a-4acb-9442-7dff7d484c21</item>
+        <item>d0f07373-e2a0-4c68-8c72-074a73a3e04b</item>
+        <item>b10aa6b1-983d-4af2-a03c-2f1762b80e58</item>
+        <item>21b4331b-8f01-4b5a-8b76-622310d3bb3e</item>
+        <item>66c2e345-fcac-4dfd-9e74-950b399006ad</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_Refunds" translatable="false">
+        <item>Erstattungen</item>
+        <item>Steuererstattung</item>
+        <item>Nebenkostenguthaben</item>
+        <item>Pfand</item>
+        <item>Cashback &amp; Bonusprogramme</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_Refunds_Icons" translatable="false">
+        <item>rotate-left</item>
+        <item>hand-holding-dollar</item>
+        <item>file-invoice-dollar</item>
+        <item>bottle-water</item>
+        <item>credit-card</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_Refunds_Uuids" translatable="false">
+        <item>81dcbfdb-46e3-468c-98a6-c3e86510567f</item>
+        <item>6cfe1e9a-11c5-49e7-9ad4-d168be5f81f2</item>
+        <item>41f6ceb1-8552-4ac0-aa85-b5364b0426ff</item>
+        <item>53ec5a12-e952-4b17-9a2f-9c1770593754</item>
+        <item>04fa0fa7-c3d5-4503-af6f-49aefdc98afa</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_PrivateGifts" translatable="false">
+        <item>Private Zuwendungen</item>
+        <item>Geschenke</item>
+        <item>Taschengeld</item>
+        <item>Unterhalt/Alimente</item>
+        <item>Unterstützung von Familie</item>
+        <item>Erbschaft</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_PrivateGifts_Icons" translatable="false">
+        <item>gift</item>
+        <item>gift</item>
+        <item>coins</item>
+        <item>people-arrows</item>
+        <item>people-roof</item>
+        <item>scroll</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_PrivateGifts_Uuids" translatable="false">
+        <item>d8b6416f-69c8-40af-8967-f9263539851c</item>
+        <item>9080cb81-0c5c-4e63-824a-a11c659fe8ce</item>
+        <item>3e0c99ad-1179-46f8-b5a4-bef6d48e8ce1</item>
+        <item>0280ef2e-47b8-4cbf-8c04-feffc0f9bf86</item>
+        <item>94c9dcba-b6c8-4d34-9088-69eb092e1e8e</item>
+        <item>8be9a2cf-769d-4c60-8967-140c78259fa9</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_SalesOther" translatable="false">
+        <item>Verkäufe &amp; Sonstiges</item>
+        <item>Privatverkäufe</item>
+        <item>Gewinnspiele &amp; Lotto</item>
+        <item>Sonstige Einnahmen</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_SalesOther_Icons" translatable="false">
+        <item>right-to-bracket</item>
+        <item>recycle</item>
+        <item>dice</item>
+        <item>circle-plus</item>
+    </string-array>
+    <string-array name="Cat_DE_Income_SalesOther_Uuids" translatable="false">
+        <item>bf66c6ff-6480-4852-87d3-04ca6112eb28</item>
+        <item>e4607815-9819-465c-ba1b-a0e4c1683e13</item>
+        <item>d6e6a581-ac6d-45ad-aa59-5592f6f8cf37</item>
+        <item>b6297614-0406-4ce4-9a7c-e3f1a12098fa</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Housing" translatable="false">
+        <item>Wohnen</item>
+        <item>Miete</item>
+        <item>Nebenkosten</item>
+        <item>Hausgeld</item>
+        <item>Strom</item>
+        <item>Heizung/Gas</item>
+        <item>Wasser</item>
+        <item>Müll &amp; Gemeindeabgaben</item>
+        <item>Grundsteuer</item>
+        <item>Rundfunkbeitrag</item>
+        <item>Hausrat- &amp; Gebäudeversicherung</item>
+        <item>Reparaturen &amp; Instandhaltung</item>
+        <item>Möbel &amp; Einrichtung</item>
+        <item>Garten</item>
+        <item>Haushaltshilfe/Reinigung</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Housing_Icons" translatable="false">
+        <item>house</item>
+        <item>key</item>
+        <item>file-invoice</item>
+        <item>building</item>
+        <item>bolt</item>
+        <item>fire-flame-simple</item>
+        <item>faucet</item>
+        <item>trash</item>
+        <item>fence</item>
+        <item>tv</item>
+        <item>house-chimney-crack</item>
+        <item>screwdriver-wrench</item>
+        <item>couch</item>
+        <item>garden</item>
+        <item>broom</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Housing_Uuids" translatable="false">
+        <item>d40ab9eb-2a2c-43a5-8bf7-8a1068d575e6</item>
+        <item>911535ac-050a-48b7-8659-c246e7972bdb</item>
+        <item>7aa10b77-083c-48fd-9438-5ae93e850035</item>
+        <item>5a049569-418d-4972-bebc-db14e16e19dc</item>
+        <item>79e4f4e2-b244-47dc-b466-895119d0e66d</item>
+        <item>fb879c6e-9df4-446b-a9e5-06ba385f1dc5</item>
+        <item>70b76a76-b2a1-4447-abe0-e4961e086ff2</item>
+        <item>5fe8d8b9-cc92-443f-8ade-f191e5b6a6bb</item>
+        <item>2a903b82-b153-4485-8393-3a7d945b2962</item>
+        <item>2b795236-e24e-4c36-a2ca-66d722d88e06</item>
+        <item>6fd5dd4c-12e9-4aaf-ae0f-369885d78282</item>
+        <item>cfa769a2-7384-4df0-8102-00a5e483ab25</item>
+        <item>3dbebddc-c487-45ff-afd6-9be6b91e2917</item>
+        <item>d500735a-0dbf-43cb-847d-6a93e15aa4db</item>
+        <item>e2add5b8-afe8-46b9-b8e6-3a545ea826c6</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Groceries" translatable="false">
+        <item>Lebensmittel</item>
+        <item>Supermarkt</item>
+        <item>Bäcker &amp; Metzger</item>
+        <item>Wochenmarkt</item>
+        <item>Getränke</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Groceries_Icons" translatable="false">
+        <item>basket-shopping</item>
+        <item>cart-shopping</item>
+        <item>bread-slice</item>
+        <item>carrot</item>
+        <item>wine-bottle</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Groceries_Uuids" translatable="false">
+        <item>399ef656-688b-4a2b-b8b4-00d5ebf7763e</item>
+        <item>2860d227-0ae6-4bb3-823e-d78f0dc09f78</item>
+        <item>b67c83aa-97b9-447e-aa47-084a9afa25eb</item>
+        <item>88be43cf-3c6e-4836-adff-547d625fa118</item>
+        <item>e001ce01-a0dd-4a86-b551-41b29cae8b0d</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_EatingOut" translatable="false">
+        <item>Essen gehen</item>
+        <item>Restaurant</item>
+        <item>Café</item>
+        <item>Imbiss &amp; Takeaway</item>
+        <item>Lieferdienst</item>
+        <item>Kantine/Mensa</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_EatingOut_Icons" translatable="false">
+        <item>utensils</item>
+        <item>utensils</item>
+        <item>mug-hot</item>
+        <item>burger</item>
+        <item>truck-fast</item>
+        <item>tray</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_EatingOut_Uuids" translatable="false">
+        <item>10499aea-3ddd-4008-a3bf-71a693b3c1fe</item>
+        <item>9fc28bae-9434-421c-8cef-f229e1906657</item>
+        <item>9b527d78-091e-4687-b601-49f277cd827f</item>
+        <item>c8d1bf5d-2343-45a7-91d4-a64e52bf6c4b</item>
+        <item>66e7ceed-5f0e-454e-958c-272cfa545054</item>
+        <item>951c7c46-1ffb-4c58-a164-4cef9a6b510e</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Household" translatable="false">
+        <item>Haushalt</item>
+        <item>Drogerie &amp; Reinigungsmittel</item>
+        <item>Haushaltswaren</item>
+        <item>Haushaltsgeräte</item>
+        <item>Werkzeug</item>
+        <item>Gartengeräte</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Household_Icons" translatable="false">
+        <item>soap</item>
+        <item>pump-soap</item>
+        <item>kitchen-set</item>
+        <item>appliance</item>
+        <item>hammer</item>
+        <item>seedling</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Household_Uuids" translatable="false">
+        <item>3c554fdc-3e13-4608-b90e-d632045a4f2e</item>
+        <item>8864aa50-7e0a-434e-9e0b-d2ffe65edb89</item>
+        <item>8b1c82af-735a-4794-9ab5-cf97347867bf</item>
+        <item>ed98bae4-4f3d-4ac4-ae82-3627a9e67586</item>
+        <item>e447d332-4f7a-4864-b813-6f7208e4bf32</item>
+        <item>50852a1e-b3ad-4421-843b-21311e35edbc</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_PersonalCare" translatable="false">
+        <item>Körperpflege</item>
+        <item>Friseur</item>
+        <item>Pflegeprodukte &amp; Kosmetik</item>
+        <item>Kosmetik- &amp; Nagelstudio</item>
+        <item>Wellness &amp; Massage</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_PersonalCare_Icons" translatable="false">
+        <item>spa</item>
+        <item>scissors</item>
+        <item>spray-can-sparkles</item>
+        <item>hand-sparkles</item>
+        <item>hot-tub-person</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_PersonalCare_Uuids" translatable="false">
+        <item>d5a224c7-a0e6-4dfa-9f90-e067c11a438c</item>
+        <item>0860978e-5381-417a-ab30-f329449645f5</item>
+        <item>ca7b6dab-d8f9-4393-afbc-98dba8fd0ce7</item>
+        <item>3644c825-99ad-44c3-9fb7-59bc02b85ac6</item>
+        <item>b9d6d92c-2d64-4ef6-8ad2-905a60e8c91b</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Clothing" translatable="false">
+        <item>Kleidung</item>
+        <item>Kleidung</item>
+        <item>Schuhe</item>
+        <item>Accessoires &amp; Schmuck</item>
+        <item>Arbeitskleidung</item>
+        <item>Reinigung &amp; Schneiderei</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Clothing_Icons" translatable="false">
+        <item>shirt</item>
+        <item>shirt</item>
+        <item>shoe-prints</item>
+        <item>gem</item>
+        <item>helmet-safety</item>
+        <item>scissors</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Clothing_Uuids" translatable="false">
+        <item>7b43c288-10fe-48cd-8c6e-59dd8df4aeb8</item>
+        <item>7fa24f09-fcd5-43d2-b6d0-84828d2319ea</item>
+        <item>ad1e1ba0-1336-4047-acb6-d6994791633e</item>
+        <item>085f40b7-f241-42ea-8241-2b7b96f0e3ec</item>
+        <item>860a451c-0b8c-40c9-b5f6-faa7e1d17232</item>
+        <item>e2cf2bcf-537c-4022-8878-e19e4f39f74b</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Mobility" translatable="false">
+        <item>Mobilität</item>
+        <item>Kraftstoff</item>
+        <item>Laden (E-Auto)</item>
+        <item>ÖPNV &amp; Deutschlandticket</item>
+        <item>Bahn (Fernverkehr)</item>
+        <item>Taxi &amp; Fahrdienste</item>
+        <item>Carsharing/E-Scooter/Leihrad</item>
+        <item>Fahrrad</item>
+        <item>Kfz-Versicherung</item>
+        <item>Kfz-Steuer</item>
+        <item>Werkstatt &amp; Wartung</item>
+        <item>TÜV</item>
+        <item>Parken</item>
+        <item>Maut &amp; Vignette</item>
+        <item>Autokauf &amp; Leasing</item>
+        <item>Führerschein</item>
+        <item>Bußgelder</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Mobility_Icons" translatable="false">
+        <item>car</item>
+        <item>gas-pump</item>
+        <item>charging-station</item>
+        <item>bus</item>
+        <item>train</item>
+        <item>taxi</item>
+        <item>car-side</item>
+        <item>bicycle</item>
+        <item>car-burst</item>
+        <item>file-invoice-dollar</item>
+        <item>screwdriver-wrench</item>
+        <item>clipboard-check</item>
+        <item>square-parking</item>
+        <item>road</item>
+        <item>car</item>
+        <item>id-card</item>
+        <item>gavel</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Mobility_Uuids" translatable="false">
+        <item>5c612615-1bac-4d15-8def-dcb1b1d53749</item>
+        <item>34394e9f-677f-424f-84ac-8c86f8fea7f0</item>
+        <item>b547fdde-f975-4c0e-8d06-329c1d86688f</item>
+        <item>0240565a-cc77-4698-a4a3-209d2f058836</item>
+        <item>636f5b7d-990f-4676-b832-d7b32aea18f7</item>
+        <item>b3d76060-1ca4-4d3c-90e1-458c7b09d75d</item>
+        <item>b5242999-31c4-4a7b-bc31-101e4c90e36e</item>
+        <item>6a446ddb-d82b-4bfb-81f5-be1762f417b0</item>
+        <item>ff09008e-3e9c-4c0a-b072-69f1a50f45e1</item>
+        <item>49b9a655-462a-4fa0-aa2b-03a9285e081d</item>
+        <item>cb1b84d4-caca-4875-b216-3be0ef635783</item>
+        <item>6baf53ad-9657-427a-b9f5-698878304056</item>
+        <item>e85aa8b9-7c02-47ea-801b-38bacce6542d</item>
+        <item>58e88cef-7bb7-45cd-a8c6-0ea296a1e3e6</item>
+        <item>add91de3-9a20-4384-9227-bade715ec2c8</item>
+        <item>50c64afd-ae97-4762-af65-f133565464a9</item>
+        <item>28b90e7f-baf4-4bf1-8ffc-7e1aebc06140</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_PhoneDigital" translatable="false">
+        <item>Telefon &amp; Digitales</item>
+        <item>Handyvertrag</item>
+        <item>Internet &amp; Festnetz</item>
+        <item>Streaming (Video &amp; Musik)</item>
+        <item>Software &amp; Apps</item>
+        <item>Cloud-Speicher</item>
+        <item>Elektronik &amp; Geräte</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_PhoneDigital_Icons" translatable="false">
+        <item>mobile</item>
+        <item>sim-card</item>
+        <item>wifi</item>
+        <item>tv</item>
+        <item>laptop-code</item>
+        <item>cloud</item>
+        <item>plug</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_PhoneDigital_Uuids" translatable="false">
+        <item>88a77785-0523-45a7-8eac-6e679eed7ee1</item>
+        <item>378cf486-20c0-4984-85bb-8350a5559b02</item>
+        <item>fc1c3553-c19e-4dd9-bb4d-7dd396f89a5e</item>
+        <item>fb04ecda-d4ce-403c-b00d-00c6664fa6cf</item>
+        <item>9ee0ba73-02ff-48eb-bba3-4da31339b09f</item>
+        <item>97e9bb4a-537a-4860-97d4-64044cb8d1e0</item>
+        <item>c05fb29d-e812-4e72-912d-bed912fa4ec8</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Health" translatable="false">
+        <item>Gesundheit &amp; Pflege</item>
+        <item>Arzt &amp; Zuzahlungen</item>
+        <item>Zahnarzt</item>
+        <item>Apotheke &amp; Medikamente</item>
+        <item>Brille &amp; Kontaktlinsen</item>
+        <item>Hörgeräte</item>
+        <item>Physio- &amp; Psychotherapie</item>
+        <item>Krankenhaus</item>
+        <item>Krankenversicherung &amp; Zusatzversicherungen</item>
+        <item>Pflegedienst</item>
+        <item>Pflegeheim</item>
+        <item>Hausnotruf</item>
+        <item>Hilfsmittel</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Health_Icons" translatable="false">
+        <item>suitcase-medical</item>
+        <item>user-doctor</item>
+        <item>tooth</item>
+        <item>prescription-bottle-medical</item>
+        <item>glasses</item>
+        <item>ear-listen</item>
+        <item>person-walking</item>
+        <item>hospital</item>
+        <item>notes-medical</item>
+        <item>user-nurse</item>
+        <item>house-medical</item>
+        <item>bell</item>
+        <item>wheelchair</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Health_Uuids" translatable="false">
+        <item>cd46ee0f-d5f3-44a3-9123-0d4fab62450b</item>
+        <item>f89eb582-7c23-40f6-a7d5-5eccd4dd80cb</item>
+        <item>88e9d323-3fea-4b9d-b56b-385ed185a35f</item>
+        <item>b29344a7-4b33-4335-95a1-92f01d2d36ca</item>
+        <item>ef171b97-67ed-41f5-aeef-cf6f111e98a4</item>
+        <item>9114635a-ea24-4710-89c0-1ceddebc8162</item>
+        <item>8b46c67d-77e0-4699-b317-6e32e114ae74</item>
+        <item>4598e573-aa28-4a25-a49a-055f9cfe9c78</item>
+        <item>47bac35e-9eb8-4a5b-8e6d-c414517bf6ec</item>
+        <item>9eaa2e0d-6a25-42ee-8a06-2c8227a9ace8</item>
+        <item>3f5b77f8-7d84-4749-8112-5db8ffa0fc7d</item>
+        <item>793e8293-ea6d-47f1-9cdc-39b60a3c9f7d</item>
+        <item>3b59341d-2e02-4eed-954c-e4592f3dfe38</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Insurance" translatable="false">
+        <item>Versicherungen</item>
+        <item>Haftpflicht</item>
+        <item>Rechtsschutz</item>
+        <item>Berufsunfähigkeit</item>
+        <item>Unfall</item>
+        <item>Lebens- &amp; Risikolebensversicherung</item>
+        <item>Reiseversicherung</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Insurance_Icons" translatable="false">
+        <item>shield-halved</item>
+        <item>heart-crack</item>
+        <item>scale-balanced</item>
+        <item>briefcase-medical</item>
+        <item>person-falling</item>
+        <item>user-shield</item>
+        <item>suitcase</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Insurance_Uuids" translatable="false">
+        <item>850781ca-bead-4f51-824c-5a2faf7bae13</item>
+        <item>354987d3-ee42-48ed-8ed4-d4382c6e05c0</item>
+        <item>cfd5ebd4-8ce8-4b6e-8c59-8e548e3b8aee</item>
+        <item>64b5a421-8500-4764-86d2-f86e0a708406</item>
+        <item>c4ec5678-3345-417a-adeb-d45a7883ed11</item>
+        <item>84b6d6a2-4054-491b-b99b-853f1b58c52e</item>
+        <item>7a602e4e-0a74-4c90-b3d8-a8a2d36124d5</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Leisure" translatable="false">
+        <item>Freizeit &amp; Hobbys</item>
+        <item>Fitnessstudio &amp; Sport</item>
+        <item>Sportausrüstung</item>
+        <item>Vereinsbeiträge</item>
+        <item>Hobby- &amp; Bastelbedarf</item>
+        <item>Kino</item>
+        <item>Konzerte &amp; Theater</item>
+        <item>Museen &amp; Ausflüge</item>
+        <item>Bücher &amp; Zeitschriften</item>
+        <item>Gaming</item>
+        <item>Musik &amp; Instrumente</item>
+        <item>Ausgehen (Bar, Club)</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Leisure_Icons" translatable="false">
+        <item>chess-board</item>
+        <item>dumbbell</item>
+        <item>futbol</item>
+        <item>users</item>
+        <item>palette</item>
+        <item>film</item>
+        <item>masks-theater</item>
+        <item>monument</item>
+        <item>book-open</item>
+        <item>gamepad</item>
+        <item>music</item>
+        <item>martini-glass-citrus</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Leisure_Uuids" translatable="false">
+        <item>93d1e4fa-136d-43af-bcf3-7595881b0e3d</item>
+        <item>62b4c66c-5261-4b0d-8c55-477813190c14</item>
+        <item>ff114b6b-2a35-419a-9c86-e425e11415b6</item>
+        <item>0302f4a0-498b-41aa-8c70-a4e54e21025a</item>
+        <item>7e6c8a6c-c437-473e-99fb-6ca2a9a7e02c</item>
+        <item>f68d5b92-092c-49b2-952a-63a472f33dfe</item>
+        <item>f6c41a9c-4f7c-4fa8-86bf-3011c18803b6</item>
+        <item>295b0024-8831-4856-acf0-2b872c4d439e</item>
+        <item>fa2a7f1e-b2d3-40c0-b5c3-00cf2ae21371</item>
+        <item>99171ccf-c749-4a7a-b30e-1e93e7f6d403</item>
+        <item>53eef2a8-0a4d-4692-a2d0-eeb465505247</item>
+        <item>ff075e6c-f0fb-46cb-9487-0b6e4308313d</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Travel" translatable="false">
+        <item>Urlaub &amp; Reisen</item>
+        <item>Unterkunft</item>
+        <item>Flüge</item>
+        <item>Mietwagen</item>
+        <item>Pauschalreise</item>
+        <item>Visa &amp; Reisedokumente</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Travel_Icons" translatable="false">
+        <item>plane-departure</item>
+        <item>hotel</item>
+        <item>plane</item>
+        <item>car-side</item>
+        <item>umbrella-beach</item>
+        <item>passport</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Travel_Uuids" translatable="false">
+        <item>4b5ab0b0-6794-44fa-9d7d-bf74489348f6</item>
+        <item>065a93c5-cd90-44a7-85f9-4b87cf7539ec</item>
+        <item>932ed4fb-796b-409f-af78-a176ba210b38</item>
+        <item>557a7d1c-ff65-4d32-a11b-5786f81e0902</item>
+        <item>22781ba8-e1b1-4cbf-9245-805feaeafb0b</item>
+        <item>a898ba3d-f4b0-4498-b2d2-51b72c40e8fc</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Education" translatable="false">
+        <item>Bildung &amp; Beruf</item>
+        <item>Studiengebühren &amp; Semesterbeitrag</item>
+        <item>Kurse &amp; Weiterbildung</item>
+        <item>Sprachkurse</item>
+        <item>Fachliteratur</item>
+        <item>Arbeitsmittel</item>
+        <item>Gewerkschaft &amp; Berufsverband</item>
+        <item>Bewerbungskosten</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Education_Icons" translatable="false">
+        <item>graduation-cap</item>
+        <item>building-columns</item>
+        <item>chalkboard-user</item>
+        <item>language</item>
+        <item>book</item>
+        <item>toolbox</item>
+        <item>people-group</item>
+        <item>file-signature</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Education_Uuids" translatable="false">
+        <item>e482e132-195f-4784-837c-034fddb0a99e</item>
+        <item>9aa6544b-384e-4765-ba46-ac0590db6f98</item>
+        <item>21d78e5c-2c56-4066-acdb-6eac43a7f8d3</item>
+        <item>736f12ca-e35b-48ad-993e-eb9d8aca95ed</item>
+        <item>b45eab29-eb27-4c95-9b51-3a502f6c3454</item>
+        <item>f99621e7-4f53-4168-9d79-85bdc05545a4</item>
+        <item>64d32ce8-4953-436e-8f68-18778362d72d</item>
+        <item>79c6bb06-80a0-4b2b-9872-890ae30cfc6b</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Children" translatable="false">
+        <item>Kinder</item>
+        <item>Kita &amp; Kinderbetreuung</item>
+        <item>Babysitter</item>
+        <item>Babyausstattung</item>
+        <item>Kinderkleidung</item>
+        <item>Spielzeug</item>
+        <item>Schulbedarf</item>
+        <item>Schulausflüge</item>
+        <item>Nachhilfe</item>
+        <item>Kurse &amp; Vereine</item>
+        <item>Taschengeld</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Children_Icons" translatable="false">
+        <item>child</item>
+        <item>school</item>
+        <item>child-reaching</item>
+        <item>baby-carriage</item>
+        <item>shirt</item>
+        <item>puzzle-piece</item>
+        <item>pencil</item>
+        <item>bus-simple</item>
+        <item>chalkboard-user</item>
+        <item>futbol</item>
+        <item>coins</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Children_Uuids" translatable="false">
+        <item>9be16b96-fa4d-4886-b734-795f3bf31cc7</item>
+        <item>1434aebd-03a7-414a-9d5f-bc5e0a3f7980</item>
+        <item>9d3fcb48-f51f-45ab-9be0-8dfcb5a0c4fa</item>
+        <item>d904fd30-d89e-40ee-8c6f-f0387c36b817</item>
+        <item>ba6b13b4-bee9-4190-a5cb-c07cba0b7118</item>
+        <item>dfc59731-5833-4068-afe7-90c500d91ac5</item>
+        <item>1dbd353b-e3e1-4f8f-bc8d-e97252974ce8</item>
+        <item>706fd23f-0515-4b52-9ed2-0cdabb0577ce</item>
+        <item>57322da1-d778-4396-8d71-f3d6ce0789ce</item>
+        <item>36974e50-a9a6-4eb3-a88e-4b2ececada7f</item>
+        <item>dfb17f4a-14a2-4e5b-b126-b64d669f47e8</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Pets" translatable="false">
+        <item>Haustiere</item>
+        <item>Futter</item>
+        <item>Tierarzt</item>
+        <item>Zubehör</item>
+        <item>Pflege &amp; Hundesalon</item>
+        <item>Tierbetreuung &amp; Tierpension</item>
+        <item>Tierversicherung</item>
+        <item>Hundesteuer</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Pets_Icons" translatable="false">
+        <item>paw</item>
+        <item>bone</item>
+        <item>syringe</item>
+        <item>box</item>
+        <item>comb</item>
+        <item>shield-dog</item>
+        <item>shield-halved</item>
+        <item>dog</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Pets_Uuids" translatable="false">
+        <item>6e558055-e589-448e-8813-7ef4fb7e337d</item>
+        <item>f9de61b1-38b9-48d5-8ff7-78e1a715b4ac</item>
+        <item>a5005842-6141-4d2d-a083-50faf405470c</item>
+        <item>5460afff-d740-458f-8f4c-14e59f77b784</item>
+        <item>bf99ca19-1e6e-4ad5-9c88-f8f9fb923755</item>
+        <item>2dcecec9-f85c-4f5c-b890-6a8e3cb37983</item>
+        <item>8176bcbd-d1ad-474b-b398-e97c11ada57c</item>
+        <item>7959b4a5-a928-4653-b56f-ad671d15da9b</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_GiftsDonations" translatable="false">
+        <item>Geschenke &amp; Spenden</item>
+        <item>Geschenke</item>
+        <item>Spenden</item>
+        <item>Feiern &amp; Anlässe</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_GiftsDonations_Icons" translatable="false">
+        <item>gift</item>
+        <item>gift</item>
+        <item>hand-holding-heart</item>
+        <item>cake-candles</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_GiftsDonations_Uuids" translatable="false">
+        <item>2eee785a-0807-470d-846e-89fbfe85afda</item>
+        <item>7dffc8cb-ac2b-4358-918e-d3149a85df96</item>
+        <item>84025e09-6eb4-41db-a3a3-c703649336d4</item>
+        <item>2e378c39-1294-4087-846f-3d8f42cd5177</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_FamilyObligations" translatable="false">
+        <item>Familie &amp; Verpflichtungen</item>
+        <item>Unterhalt/Alimente</item>
+        <item>Unterstützung von Angehörigen</item>
+        <item>Kirchensteuer/Kirchenbeitrag</item>
+        <item>Bestattung &amp; Trauerfall</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_FamilyObligations_Icons" translatable="false">
+        <item>people-roof</item>
+        <item>people-arrows</item>
+        <item>hand-holding-hand</item>
+        <item>church</item>
+        <item>dove</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_FamilyObligations_Uuids" translatable="false">
+        <item>690b7f15-9d95-43b0-b407-f0e1185a2e1c</item>
+        <item>ff51f0c8-b466-4605-b16c-53fef33c4b66</item>
+        <item>576983a6-36a6-40e5-a5df-9f34e4b72c19</item>
+        <item>74d9a750-41ea-4165-aaaa-872295493fce</item>
+        <item>aac79f63-5daf-44a4-b168-b4ac8cc65d8e</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Finance" translatable="false">
+        <item>Finanzen &amp; Gebühren</item>
+        <item>Kontoführung</item>
+        <item>Kreditkartengebühren</item>
+        <item>Depotgebühren</item>
+        <item>Dispozinsen</item>
+        <item>Kreditraten</item>
+        <item>Kreditzinsen</item>
+        <item>Ratenkauf/„Später bezahlen“</item>
+        <item>Mahn- &amp; Inkassokosten</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Finance_Icons" translatable="false">
+        <item>building-columns</item>
+        <item>piggy-bank</item>
+        <item>credit-card</item>
+        <item>chart-line</item>
+        <item>percent</item>
+        <item>money-bill-transfer</item>
+        <item>percent</item>
+        <item>calendar-days</item>
+        <item>envelope-open-text</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Finance_Uuids" translatable="false">
+        <item>e7f62163-971e-46bd-a3e2-fea690b1d9a5</item>
+        <item>2cc20fd9-6a48-43cf-b61e-1bde868afcb9</item>
+        <item>8a27d713-6a8b-478f-bd56-dca4cd10bf42</item>
+        <item>31b0cf24-6674-44f7-8ca8-1266332bf43b</item>
+        <item>ac19d869-77f7-4013-81c9-c42cbc52aa4a</item>
+        <item>d3937dcc-4d7e-400a-ace9-2b636165e4b1</item>
+        <item>46adb755-d174-46f4-8554-c3caf0df6f14</item>
+        <item>daca788e-d937-4dfd-a395-a4e3a9159e96</item>
+        <item>0f6c9c28-734a-4ac1-95d9-734342571fd7</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_TaxesOther" translatable="false">
+        <item>Steuern &amp; Sonstiges</item>
+        <item>Steuernachzahlung</item>
+        <item>Steuerberatung</item>
+        <item>Behördengebühren</item>
+        <item>Sonstige Ausgaben</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_TaxesOther_Icons" translatable="false">
+        <item>percent</item>
+        <item>file-invoice-dollar</item>
+        <item>calculator</item>
+        <item>stamp</item>
+        <item>circle-minus</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_TaxesOther_Uuids" translatable="false">
+        <item>7975f282-223d-4865-a41d-be41be25aa33</item>
+        <item>de57ef4e-f3a3-4214-a615-e0ed88620fcf</item>
+        <item>cb830f2a-fb17-43c0-b0c8-ed5951ee8a3d</item>
+        <item>50877a29-646f-4350-8de5-8cfb122229eb</item>
+        <item>ac6ccf5b-231d-4fcc-965d-0a27748183de</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Savings" translatable="false">
+        <item>Sparen &amp; Vorsorge</item>
+        <item>Tagesgeld/Sparkonto</item>
+        <item>ETF- &amp; Fondssparplan</item>
+        <item>Altersvorsorge</item>
+        <item>Bausparvertrag</item>
+        <item>Sondertilgung</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Savings_Icons" translatable="false">
+        <item>piggy-bank</item>
+        <item>vault</item>
+        <item>chart-line</item>
+        <item>person-cane</item>
+        <item>house-chimney</item>
+        <item>money-bill-wave</item>
+    </string-array>
+    <string-array name="Cat_DE_Expense_Savings_Uuids" translatable="false">
+        <item>0c44b0f5-7dea-4078-83f3-6a750f7a40f7</item>
+        <item>1d8bda66-7805-41ee-968a-e91a65b90ff7</item>
+        <item>243536ff-0ac2-4ff1-8637-7ef1b381865b</item>
+        <item>6859f4b0-87d8-41ba-b4ea-c7e2d7d398e7</item>
+        <item>bbcce9a8-d263-4f75-9ca7-d481f6e32eb4</item>
+        <item>7d4a9bd9-2741-49ba-bdd0-ccb2d23e2b3e</item>
+    </string-array>
+    <!-- The main categories of the German tree, see Cat_Classic_Income in cat_tree.xml -->
+    <array name="Cat_DE_Income">
+        <item>@array/Cat_DE_Income_Work</item>
+        <item>@array/Cat_DE_Income_SelfEmployment</item>
+        <item>@array/Cat_DE_Income_Benefits</item>
+        <item>@array/Cat_DE_Income_Pension</item>
+        <item>@array/Cat_DE_Income_CapitalIncome</item>
+        <item>@array/Cat_DE_Income_Rental</item>
+        <item>@array/Cat_DE_Income_Refunds</item>
+        <item>@array/Cat_DE_Income_PrivateGifts</item>
+        <item>@array/Cat_DE_Income_SalesOther</item>
+    </array>
+    <array name="Cat_DE_Income_Icons">
+        <item>@array/Cat_DE_Income_Work_Icons</item>
+        <item>@array/Cat_DE_Income_SelfEmployment_Icons</item>
+        <item>@array/Cat_DE_Income_Benefits_Icons</item>
+        <item>@array/Cat_DE_Income_Pension_Icons</item>
+        <item>@array/Cat_DE_Income_CapitalIncome_Icons</item>
+        <item>@array/Cat_DE_Income_Rental_Icons</item>
+        <item>@array/Cat_DE_Income_Refunds_Icons</item>
+        <item>@array/Cat_DE_Income_PrivateGifts_Icons</item>
+        <item>@array/Cat_DE_Income_SalesOther_Icons</item>
+    </array>
+    <array name="Cat_DE_Income_Uuids">
+        <item>@array/Cat_DE_Income_Work_Uuids</item>
+        <item>@array/Cat_DE_Income_SelfEmployment_Uuids</item>
+        <item>@array/Cat_DE_Income_Benefits_Uuids</item>
+        <item>@array/Cat_DE_Income_Pension_Uuids</item>
+        <item>@array/Cat_DE_Income_CapitalIncome_Uuids</item>
+        <item>@array/Cat_DE_Income_Rental_Uuids</item>
+        <item>@array/Cat_DE_Income_Refunds_Uuids</item>
+        <item>@array/Cat_DE_Income_PrivateGifts_Uuids</item>
+        <item>@array/Cat_DE_Income_SalesOther_Uuids</item>
+    </array>
+    <array name="Cat_DE_Expense">
+        <item>@array/Cat_DE_Expense_Housing</item>
+        <item>@array/Cat_DE_Expense_Groceries</item>
+        <item>@array/Cat_DE_Expense_EatingOut</item>
+        <item>@array/Cat_DE_Expense_Household</item>
+        <item>@array/Cat_DE_Expense_PersonalCare</item>
+        <item>@array/Cat_DE_Expense_Clothing</item>
+        <item>@array/Cat_DE_Expense_Mobility</item>
+        <item>@array/Cat_DE_Expense_PhoneDigital</item>
+        <item>@array/Cat_DE_Expense_Health</item>
+        <item>@array/Cat_DE_Expense_Insurance</item>
+        <item>@array/Cat_DE_Expense_Leisure</item>
+        <item>@array/Cat_DE_Expense_Travel</item>
+        <item>@array/Cat_DE_Expense_Education</item>
+        <item>@array/Cat_DE_Expense_Children</item>
+        <item>@array/Cat_DE_Expense_Pets</item>
+        <item>@array/Cat_DE_Expense_GiftsDonations</item>
+        <item>@array/Cat_DE_Expense_FamilyObligations</item>
+        <item>@array/Cat_DE_Expense_Finance</item>
+        <item>@array/Cat_DE_Expense_TaxesOther</item>
+        <item>@array/Cat_DE_Expense_Savings</item>
+    </array>
+    <array name="Cat_DE_Expense_Icons">
+        <item>@array/Cat_DE_Expense_Housing_Icons</item>
+        <item>@array/Cat_DE_Expense_Groceries_Icons</item>
+        <item>@array/Cat_DE_Expense_EatingOut_Icons</item>
+        <item>@array/Cat_DE_Expense_Household_Icons</item>
+        <item>@array/Cat_DE_Expense_PersonalCare_Icons</item>
+        <item>@array/Cat_DE_Expense_Clothing_Icons</item>
+        <item>@array/Cat_DE_Expense_Mobility_Icons</item>
+        <item>@array/Cat_DE_Expense_PhoneDigital_Icons</item>
+        <item>@array/Cat_DE_Expense_Health_Icons</item>
+        <item>@array/Cat_DE_Expense_Insurance_Icons</item>
+        <item>@array/Cat_DE_Expense_Leisure_Icons</item>
+        <item>@array/Cat_DE_Expense_Travel_Icons</item>
+        <item>@array/Cat_DE_Expense_Education_Icons</item>
+        <item>@array/Cat_DE_Expense_Children_Icons</item>
+        <item>@array/Cat_DE_Expense_Pets_Icons</item>
+        <item>@array/Cat_DE_Expense_GiftsDonations_Icons</item>
+        <item>@array/Cat_DE_Expense_FamilyObligations_Icons</item>
+        <item>@array/Cat_DE_Expense_Finance_Icons</item>
+        <item>@array/Cat_DE_Expense_TaxesOther_Icons</item>
+        <item>@array/Cat_DE_Expense_Savings_Icons</item>
+    </array>
+    <array name="Cat_DE_Expense_Uuids">
+        <item>@array/Cat_DE_Expense_Housing_Uuids</item>
+        <item>@array/Cat_DE_Expense_Groceries_Uuids</item>
+        <item>@array/Cat_DE_Expense_EatingOut_Uuids</item>
+        <item>@array/Cat_DE_Expense_Household_Uuids</item>
+        <item>@array/Cat_DE_Expense_PersonalCare_Uuids</item>
+        <item>@array/Cat_DE_Expense_Clothing_Uuids</item>
+        <item>@array/Cat_DE_Expense_Mobility_Uuids</item>
+        <item>@array/Cat_DE_Expense_PhoneDigital_Uuids</item>
+        <item>@array/Cat_DE_Expense_Health_Uuids</item>
+        <item>@array/Cat_DE_Expense_Insurance_Uuids</item>
+        <item>@array/Cat_DE_Expense_Leisure_Uuids</item>
+        <item>@array/Cat_DE_Expense_Travel_Uuids</item>
+        <item>@array/Cat_DE_Expense_Education_Uuids</item>
+        <item>@array/Cat_DE_Expense_Children_Uuids</item>
+        <item>@array/Cat_DE_Expense_Pets_Uuids</item>
+        <item>@array/Cat_DE_Expense_GiftsDonations_Uuids</item>
+        <item>@array/Cat_DE_Expense_FamilyObligations_Uuids</item>
+        <item>@array/Cat_DE_Expense_Finance_Uuids</item>
+        <item>@array/Cat_DE_Expense_TaxesOther_Uuids</item>
+        <item>@array/Cat_DE_Expense_Savings_Uuids</item>
+    </array>
+</resources>

@@ -289,39 +289,61 @@ fun SupportSQLiteDatabase.findCategoryByUuid(uuid: String) = findCategory(
 )
 
 
-val incomeCategories = arrayOf(
-    Triple(R.array.Cat_I_1, R.array.Cat_I_1_Icons, R.array.Cat_I_1_Uuids),
-    Triple(R.array.Cat_I_2, R.array.Cat_I_2_Icons, R.array.Cat_I_2_Uuids),
-    Triple(R.array.Cat_I_3, R.array.Cat_I_3_Icons, R.array.Cat_I_3_Uuids),
-    Triple(R.array.Cat_I_4, R.array.Cat_I_4_Icons, R.array.Cat_I_4_Uuids),
-    Triple(R.array.Cat_I_5, R.array.Cat_I_5_Icons, R.array.Cat_I_5_Uuids)
+/**
+ * A tree of default categories as resource ids of three arrays for each direction: the main
+ * categories, their icons and their uuids. Each item of these is the array of a main category
+ * followed by its subcategories.
+ */
+private class CategoryTree(val income: Triple<Int, Int, Int>, val expense: Triple<Int, Int, Int>)
+
+/** The same structure in all languages. Installations were set up with it before a language had a tree of its own. */
+private val classicTree = CategoryTree(
+    Triple(R.array.Cat_Classic_Income, R.array.Cat_Classic_Income_Icons, R.array.Cat_Classic_Income_Uuids),
+    Triple(R.array.Cat_Classic_Expense, R.array.Cat_Classic_Expense_Icons, R.array.Cat_Classic_Expense_Uuids)
 )
 
-val expenseCategories = arrayOf(
-    Triple(R.array.Cat_E_1, R.array.Cat_E_1_Icons, R.array.Cat_E_1_Uuids),
-    Triple(R.array.Cat_E_2, R.array.Cat_E_2_Icons, R.array.Cat_E_2_Uuids),
-    Triple(R.array.Cat_E_3, R.array.Cat_E_3_Icons, R.array.Cat_E_3_Uuids),
-    Triple(R.array.Cat_E_4, R.array.Cat_E_4_Icons, R.array.Cat_E_4_Uuids),
-    Triple(R.array.Cat_E_5, R.array.Cat_E_5_Icons, R.array.Cat_E_5_Uuids),
-    Triple(R.array.Cat_E_6, R.array.Cat_E_6_Icons, R.array.Cat_E_6_Uuids),
-    Triple(R.array.Cat_E_7, R.array.Cat_E_7_Icons, R.array.Cat_E_7_Uuids),
-    Triple(R.array.Cat_E_8, R.array.Cat_E_8_Icons, R.array.Cat_E_8_Uuids),
-    Triple(R.array.Cat_E_9, R.array.Cat_E_9_Icons, R.array.Cat_E_9_Uuids),
-    Triple(R.array.Cat_E_10, R.array.Cat_E_10_Icons, R.array.Cat_E_10_Uuids),
-    Triple(R.array.Cat_E_11, R.array.Cat_E_11_Icons, R.array.Cat_E_11_Uuids),
-    Triple(R.array.Cat_E_12, R.array.Cat_E_12_Icons, R.array.Cat_E_12_Uuids),
-    Triple(R.array.Cat_E_13, R.array.Cat_E_13_Icons, R.array.Cat_E_13_Uuids),
-    Triple(R.array.Cat_E_14, R.array.Cat_E_14_Icons, R.array.Cat_E_14_Uuids),
-    Triple(R.array.Cat_E_15, R.array.Cat_E_15_Icons, R.array.Cat_E_15_Uuids),
-    Triple(R.array.Cat_E_16, R.array.Cat_E_16_Icons, R.array.Cat_E_16_Uuids),
-    Triple(R.array.Cat_E_17, R.array.Cat_E_17_Icons, R.array.Cat_E_17_Uuids)
+/** For German, see cat_tree_de.xml */
+private val germanTree = CategoryTree(
+    Triple(R.array.Cat_DE_Income, R.array.Cat_DE_Income_Icons, R.array.Cat_DE_Income_Uuids),
+    Triple(R.array.Cat_DE_Expense, R.array.Cat_DE_Expense_Icons, R.array.Cat_DE_Expense_Uuids)
 )
+
+/** The tree of new setups and of the import of default categories */
+private fun defaultTree(resources: Resources) =
+    if (resources.getBoolean(R.bool.german_category_tree)) germanTree else classicTree
+
+/** The main categories of a direction of a tree, see [CategoryTree] */
+private fun categoryDefinitions(resources: Resources, arrays: Triple<Int, Int, Int>): Array<Triple<Int, Int, Int>> {
+    fun ids(arrayResId: Int) = resources.obtainTypedArray(arrayResId).let { array ->
+        try {
+            IntArray(array.length()) { array.getResourceId(it, 0) }
+        } finally {
+            array.recycle()
+        }
+    }
+    val labelIds = ids(arrays.first)
+    val iconIds = ids(arrays.second)
+    val uuidIds = ids(arrays.third)
+    if (labelIds.size != iconIds.size || labelIds.size != uuidIds.size) {
+        CrashHandler.report(Exception("Inconsistent category definitions"))
+        return emptyArray()
+    }
+    return Array(labelIds.size) { Triple(labelIds[it], iconIds[it], uuidIds[it]) }
+}
+
+fun incomeCategories(resources: Resources) = categoryDefinitions(resources, defaultTree(resources).income)
+
+fun expenseCategories(resources: Resources) = categoryDefinitions(resources, defaultTree(resources).expense)
+
+/** Categories created before uuids existed are those of the classic tree */
+private fun classicCategories(resources: Resources) =
+    categoryDefinitions(resources, classicTree.expense) + categoryDefinitions(resources, classicTree.income)
 
 fun getImportableCategories(
     database: SupportSQLiteDatabase,
     resources: Resources,
 ) = Category(
-    children = (incomeCategories + expenseCategories)
+    children = (incomeCategories(resources) + expenseCategories(resources))
         .mapIndexedNotNull { indexMain, (categoriesResId, _, uuidResId) ->
             val categories = resources.getStringArray(categoriesResId)
             val uuids = resources.getStringArray(uuidResId)
@@ -452,8 +474,8 @@ private fun setupCategoriesInternal(
 }
 
 fun setupDefaultCategories(database: SupportSQLiteDatabase, resources: Resources): Pair<Int, Int> {
-    val expense = setupCategoriesInternal(database, resources, expenseCategories, FLAG_EXPENSE)
-    val income = setupCategoriesInternal(database, resources, incomeCategories, FLAG_INCOME)
+    val expense = setupCategoriesInternal(database, resources, expenseCategories(resources), FLAG_EXPENSE)
+    val income = setupCategoriesInternal(database, resources, incomeCategories(resources), FLAG_INCOME)
     return expense.first + income.first to expense.second + income.second
 }
 
@@ -462,7 +484,7 @@ fun insertUuidsForDefaultCategories(database: SupportSQLiteDatabase, resources: 
         "UPDATE $TABLE_CATEGORIES SET $KEY_UUID = ? WHERE $KEY_UUID IS NULL AND $KEY_ROWID = ?"
     ).use { statement ->
         var catIdMain: Long?
-        for ((categoriesResId, _, uuidResId) in expenseCategories + incomeCategories) {
+        for ((categoriesResId, _, uuidResId) in classicCategories(resources)) {
             val categories = resources.getStringArray(categoriesResId)
             val uuids = resources.getStringArray(uuidResId)
             if (categories.size != uuids.size) {

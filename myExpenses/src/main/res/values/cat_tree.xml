@@ -173,4 +173,88 @@
         <item>@string/Sub_22_2</item>
         <item>@string/Sub_22_3</item>
     </string-array>
+    <!-- The classic tree, the same structure in all languages, translated through Main_n and Sub_n_m.
+         Each item is the array of a main label followed by its subcategories. The upgrade that gave
+         categories their uuids (database version 135) finds the categories of this tree. -->
+    <array name="Cat_Classic_Income">
+        <item>@array/Cat_I_1</item>
+        <item>@array/Cat_I_2</item>
+        <item>@array/Cat_I_3</item>
+        <item>@array/Cat_I_4</item>
+        <item>@array/Cat_I_5</item>
+    </array>
+    <array name="Cat_Classic_Income_Icons">
+        <item>@array/Cat_I_1_Icons</item>
+        <item>@array/Cat_I_2_Icons</item>
+        <item>@array/Cat_I_3_Icons</item>
+        <item>@array/Cat_I_4_Icons</item>
+        <item>@array/Cat_I_5_Icons</item>
+    </array>
+    <array name="Cat_Classic_Income_Uuids">
+        <item>@array/Cat_I_1_Uuids</item>
+        <item>@array/Cat_I_2_Uuids</item>
+        <item>@array/Cat_I_3_Uuids</item>
+        <item>@array/Cat_I_4_Uuids</item>
+        <item>@array/Cat_I_5_Uuids</item>
+    </array>
+    <array name="Cat_Classic_Expense">
+        <item>@array/Cat_E_1</item>
+        <item>@array/Cat_E_2</item>
+        <item>@array/Cat_E_3</item>
+        <item>@array/Cat_E_4</item>
+        <item>@array/Cat_E_5</item>
+        <item>@array/Cat_E_6</item>
+        <item>@array/Cat_E_7</item>
+        <item>@array/Cat_E_8</item>
+        <item>@array/Cat_E_9</item>
+        <item>@array/Cat_E_10</item>
+        <item>@array/Cat_E_11</item>
+        <item>@array/Cat_E_12</item>
+        <item>@array/Cat_E_13</item>
+        <item>@array/Cat_E_14</item>
+        <item>@array/Cat_E_15</item>
+        <item>@array/Cat_E_16</item>
+        <item>@array/Cat_E_17</item>
+    </array>
+    <array name="Cat_Classic_Expense_Icons">
+        <item>@array/Cat_E_1_Icons</item>
+        <item>@array/Cat_E_2_Icons</item>
+        <item>@array/Cat_E_3_Icons</item>
+        <item>@array/Cat_E_4_Icons</item>
+        <item>@array/Cat_E_5_Icons</item>
+        <item>@array/Cat_E_6_Icons</item>
+        <item>@array/Cat_E_7_Icons</item>
+        <item>@array/Cat_E_8_Icons</item>
+        <item>@array/Cat_E_9_Icons</item>
+        <item>@array/Cat_E_10_Icons</item>
+        <item>@array/Cat_E_11_Icons</item>
+        <item>@array/Cat_E_12_Icons</item>
+        <item>@array/Cat_E_13_Icons</item>
+        <item>@array/Cat_E_14_Icons</item>
+        <item>@array/Cat_E_15_Icons</item>
+        <item>@array/Cat_E_16_Icons</item>
+        <item>@array/Cat_E_17_Icons</item>
+    </array>
+    <array name="Cat_Classic_Expense_Uuids">
+        <item>@array/Cat_E_1_Uuids</item>
+        <item>@array/Cat_E_2_Uuids</item>
+        <item>@array/Cat_E_3_Uuids</item>
+        <item>@array/Cat_E_4_Uuids</item>
+        <item>@array/Cat_E_5_Uuids</item>
+        <item>@array/Cat_E_6_Uuids</item>
+        <item>@array/Cat_E_7_Uuids</item>
+        <item>@array/Cat_E_8_Uuids</item>
+        <item>@array/Cat_E_9_Uuids</item>
+        <item>@array/Cat_E_10_Uuids</item>
+        <item>@array/Cat_E_11_Uuids</item>
+        <item>@array/Cat_E_12_Uuids</item>
+        <item>@array/Cat_E_13_Uuids</item>
+        <item>@array/Cat_E_14_Uuids</item>
+        <item>@array/Cat_E_15_Uuids</item>
+        <item>@array/Cat_E_16_Uuids</item>
+        <item>@array/Cat_E_17_Uuids</item>
+    </array>
+    <!-- Whether new setups and the import of default categories use the German tree of
+         cat_tree_de.xml instead of the classic one, see values-de -->
+    <bool name="german_category_tree">false</bool>
 </resources>
