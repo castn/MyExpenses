@@ -3,13 +3,15 @@
 ' Dependencies between the modules of the new UI, rule `mod-diagram` of ARCHITECTURE.md.
 ' An edge that follows from a longer path is left out.
 skinparam componentStyle rectangle
+skinparam linetype ortho
+skinparam ranksep 80
 top to bottom direction
 
 [:designsystem] as mDesignsystem
 [:myExpenses\n(app)] as mMyExpenses
 [:ui_next\n(dynamic feature)] as mUiNext
 
-package "next/core" {
+package "next/core" as pNextCore {
     [:common] as mNextCoreCommon
     [:model\n(Kotlin JVM)] as mNextCoreModel
     [:ui] as mNextCoreUi

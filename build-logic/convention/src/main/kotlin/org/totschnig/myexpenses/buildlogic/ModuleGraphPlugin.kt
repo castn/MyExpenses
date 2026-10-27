@@ -26,6 +26,31 @@ import org.gradle.kotlin.dsl.register
  *
  * The graph starts at [ModuleGraphExtension.roots] and follows the modules that apply one of the
  * `next.*` convention plugins. Other modules, e.g. `:myExpenses`, are shown but not followed.
+ *
+ * Why: a diagram drawn by hand is out of date after the next new module. Generated, it always shows
+ * the real dependencies, and since the file is committed, a new edge shows up in the diff of a
+ * commit and can be reviewed (`mod-diagram` asks for a reason in the commit message). No published plugin does
+ * the same: they write Graphviz or Mermaid, or show every edge, or have no check that fails.
+ *
+ * How it works, in the order it runs:
+ *
+ * 1. [apply] registers the extension `moduleGraph { roots; output }` and the two tasks.
+ * 2. After all projects are evaluated, i.e. once every `build.gradle` has declared its
+ *    dependencies, [moduleGraph] walks from the roots over the project dependencies,
+ *    [transitiveReduction] drops the edges that follow from longer paths, and [renderPlantUml]
+ *    turns the result into text. The text goes into a [Property], so that the tasks only see a
+ *    string and no [Project]; that keeps them compatible with the configuration cache.
+ * 3. [WriteModuleGraph] writes that text to the file, [CheckModuleGraph] compares it with the file
+ *    character by character. So any change of the output, even of a comment, needs `moduleGraph`
+ *    to be run once, otherwise `check` fails.
+ *
+ * Where to change what:
+ *
+ * - a new convention plugin whose modules should be followed: [conventionPlugins],
+ * - which dependencies count, e.g. to show test dependencies: [projectDependencies],
+ * - the label in brackets under a module name: [kind],
+ * - the look of the diagram (packages, direction, aliases): [renderPlantUml],
+ * - another start module or file: the `moduleGraph { }` block in `ui_next/build.gradle`.
  */
 class ModuleGraphPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
@@ -35,6 +60,7 @@ class ModuleGraphPlugin : Plugin<Project> {
 
         val writeTaskPath = "${path.removeSuffix(":")}:moduleGraph"
         val diagram = objects.property(String::class.java)
+        // Only now the dependencies of the other modules are declared; earlier they would be missing.
         gradle.projectsEvaluated {
             diagram.set(renderPlantUml(moduleGraph(rootProject, extension.roots.get())))
         }
@@ -64,6 +90,7 @@ interface ModuleGraphExtension {
     val output: RegularFileProperty
 }
 
+/** Writes the diagram; `./gradlew :ui_next:moduleGraph` after a dependency between modules changed. */
 abstract class WriteModuleGraph : DefaultTask() {
     @get:Input
     abstract val diagram: Property<String>
@@ -75,6 +102,11 @@ abstract class WriteModuleGraph : DefaultTask() {
     fun write() = output.get().asFile.writeText(diagram.get())
 }
 
+/**
+ * Fails when the committed file differs from what [WriteModuleGraph] would write, so that a new or
+ * removed dependency between modules cannot go unnoticed. It does not write the file itself, a
+ * changed edge should be looked at before it is committed.
+ */
 abstract class CheckModuleGraph : DefaultTask() {
     @get:Input
     abstract val diagram: Property<String>
@@ -83,6 +115,7 @@ abstract class CheckModuleGraph : DefaultTask() {
     @get:PathSensitive(PathSensitivity.RELATIVE)
     abstract val file: RegularFileProperty
 
+    /** Path of the write task, only for the message, e.g. `:ui_next:moduleGraph`. */
     @get:Input
     abstract val taskPath: Property<String>
 
@@ -90,21 +123,30 @@ abstract class CheckModuleGraph : DefaultTask() {
     fun check() {
         if (file.get().asFile.readText() != diagram.get()) {
             throw GradleException(
-                "${file.get().asFile.name} does not match the dependencies of the modules (`mod-diagram`). " +
+                "${file.get().asFile.name} does not match the dependencies of the modules (mod-diagram). " +
                     "Run ./gradlew ${taskPath.get()} and review the changed edges."
             )
         }
     }
 }
 
+/** A module in the diagram: its Gradle path, e.g. `:next:feature:budgets`, and [kind]. */
 internal data class Module(val path: String, val kind: String?)
 
+/** Modules sorted by path, edges as (module, module it depends on), both as Gradle paths. */
 internal data class ModuleGraph(val modules: List<Module>, val edges: Set<Pair<String, String>>)
 
+/**
+ * A module with one of these plugins belongs to the new UI, so its dependencies are followed. The
+ * others, above all `:myExpenses`, are shown as a box, but their own dependencies are not: they
+ * would fill the diagram with upstream modules that `mod-diagram` is not about. `next.data` and
+ * `next.android.compose` are missing on purpose, they always come with `next.android.library`.
+ */
 private val conventionPlugins = listOf(
     "next.android.library", "next.android.feature", "next.feature", "next.jvm",
 )
 
+/** Label under the module name for what is not a plain Android library; null for a library. */
 private fun Project.kind(): String? = when {
     pluginManager.hasPlugin("com.android.application") -> "app"
     pluginManager.hasPlugin("com.android.dynamic-feature") -> "dynamic feature"
@@ -112,7 +154,12 @@ private fun Project.kind(): String? = when {
     else -> null
 }
 
-/** Dependencies of the production code: no tests, test fixtures, annotation processors or desugaring. */
+/**
+ * Dependencies of the production code: no tests, test fixtures, annotation processors or desugaring.
+ * Matches `api`, `implementation`, `compileOnly`, `runtimeOnly` and their variants such as
+ * `debugImplementation` or `internApi`; any name with "test" in it, e.g. `testImplementation` or
+ * `androidTestImplementation`, is left out.
+ */
 private fun Project.projectDependencies(): Set<String> = configurations
     .filter { configuration ->
         val name = configuration.name
@@ -125,6 +172,10 @@ private fun Project.projectDependencies(): Set<String> = configurations
     .filter { it != path }
     .toSet()
 
+/**
+ * Breadth-first walk from [roots]: every module reached becomes a box; the dependencies of a root or
+ * of a module with one of the [conventionPlugins] become edges and are walked in turn.
+ */
 internal fun moduleGraph(root: Project, roots: List<String>): ModuleGraph {
     val modules = linkedMapOf<String, Module>()
     val edges = mutableSetOf<Pair<String, String>>()
@@ -144,7 +195,17 @@ internal fun moduleGraph(root: Project, roots: List<String>): ModuleGraph {
     return ModuleGraph(modules.values.sortedBy { it.path }, transitiveReduction(edges))
 }
 
-/** Leaves out an edge a → c when a reaches c over other edges, so that the diagram stays readable. */
+/**
+ * Leaves out an edge a → c when a reaches c over other edges, so that the diagram stays readable.
+ * Example: when a feature declares `:next:core:ui` and `:next:core:common`, and `:next:core:ui`
+ * depends on `:next:core:common` too, the arrow from the feature to `:next:core:common` is
+ * dropped, because it follows from feature → `:next:core:ui` → `:next:core:common`. Without this,
+ * almost every module would have an arrow to the core modules. Which modules depend on which stays
+ * the same, only the direct arrows are fewer; the build files still declare all of them.
+ *
+ * For each edge it searches depth-first for another way from its start to its end, with this edge
+ * itself skipped. The result is sorted, so that the file does not change from run to run.
+ */
 internal fun transitiveReduction(edges: Set<Pair<String, String>>): Set<Pair<String, String>> {
     val targets = edges.groupBy({ it.first }, { it.second })
     fun reaches(from: String, to: String, skip: Pair<String, String>): Boolean {
@@ -160,30 +221,125 @@ internal fun transitiveReduction(edges: Set<Pair<String, String>>): Set<Pair<Str
     return edges.filterTo(sortedSetOf(compareBy({ it.first }, { it.second }))) { !reaches(it.first, it.second, it) }
 }
 
+/**
+ * PlantUML component diagram. Modules on the top level, e.g. `:designsystem`, are single boxes;
+ * nested ones, e.g. `:next:core:ui`, go into a package named after their parent (`next/core`) and
+ * show only their last name (`:ui`). An arrow points from a module to the module it depends on.
+ *
+ * When every module in a package has an edge to the same outside module X (or X has one to every
+ * member), the individual arrows are replaced by a single arrow from (or to) the package alias.
+ * A hidden edge from the deepest module in a package to the next package keeps the layers stacked
+ * top to bottom without adding visible arrows.
+ */
 internal fun renderPlantUml(graph: ModuleGraph): String = buildString {
+    // PlantUML needs an identifier without ':' or '-' for the arrows, e.g. :next:core:ui → mNextCoreUi.
     fun alias(path: String) = "m" + path.split(':', '-', '_').filter { it.isNotEmpty() }
+        .joinToString("") { it.replaceFirstChar(Char::uppercase) }
+    // Package alias, e.g. ":next:core" → "pNextCore".
+    fun pkgAlias(parent: String) = "p" + parent.removePrefix(":")
+        .split(':', '/', '-', '_').filter { it.isNotEmpty() }
         .joinToString("") { it.replaceFirstChar(Char::uppercase) }
     fun component(module: Module, name: String, indent: String) {
         val label = listOfNotNull(name, module.kind?.let { "($it)" }).joinToString("\\n")
         appendLine("$indent[$label] as ${alias(module.path)}")
     }
 
+    val (grouped, single) = graph.modules.partition { it.path.count { c -> c == ':' } > 1 }
+    // packageMembers: parent path → sorted list of module paths in that package.
+    val packageMembers: Map<String, List<String>> = grouped
+        .groupBy { it.path.substringBeforeLast(':') }
+        .mapValues { (_, ms) -> ms.map { it.path }.sorted() }
+    val allPaths = graph.modules.map { it.path }.toSet()
+
+    // Step 2: replace fan-out / fan-in edges with package edges.
+    // When ALL modules in a package have an edge to X (or from X), replace them with one package edge.
+    val remainingEdges = graph.edges.toMutableSet()
+    val pkgEdgeList = mutableListOf<Pair<String, String>>()
+    for ((parent, members) in packageMembers.entries.sortedBy { it.key }) {
+        if (members.size < 2) continue
+        val membersSet = members.toSet()
+        for (x in (allPaths - membersSet).sorted()) {
+            if (membersSet.all { (it to x) in remainingEdges }) {      // P --> X
+                membersSet.forEach { remainingEdges.remove(it to x) }
+                pkgEdgeList += pkgAlias(parent) to alias(x)
+            }
+            if (membersSet.all { (x to it) in remainingEdges }) {      // X --> P
+                membersSet.forEach { remainingEdges.remove(x to it) }
+                pkgEdgeList += alias(x) to pkgAlias(parent)
+            }
+        }
+    }
+    val sortedPkgEdges = pkgEdgeList.sortedWith(compareBy({ it.first }, { it.second }))
+
+    // Step 3: one hidden edge per package dependency to keep layers stacked without visible arrows.
+    // depthWithin: longest path from the roots of the package to this module, over internal edges only.
+    fun depthWithin(modulePath: String, members: Set<String>): Int {
+        val internal = graph.edges.filter { (a, b) -> a in members && b in members }
+        val dist = members.associateWith { 0 }.toMutableMap()
+        val inDeg = members.associateWith { m -> internal.count { it.second == m } }.toMutableMap()
+        val queue = ArrayDeque(members.filter { (inDeg[it] ?: 0) == 0 }.sorted())
+        while (queue.isNotEmpty()) {
+            val cur = queue.removeFirst()
+            internal.filter { it.first == cur }.sortedBy { it.second }.forEach { (_, next) ->
+                dist[next] = maxOf(dist[next] ?: 0, (dist[cur] ?: 0) + 1)
+                inDeg[next] = (inDeg[next] ?: 0) - 1
+                if ((inDeg[next] ?: 0) == 0) queue.addLast(next)
+            }
+        }
+        return dist[modulePath] ?: 0
+    }
+    // Package dependency graph: P → Q if any module in P has an edge to any module in Q.
+    val pkgDeps: Set<Pair<String, String>> = graph.edges.mapNotNull { (a, b) ->
+        val pa = if (a.count { it == ':' } > 1) a.substringBeforeLast(':') else null
+        val pb = if (b.count { it == ':' } > 1) b.substringBeforeLast(':') else null
+        if (pa != null && pb != null && pa != pb) pa to pb else null
+    }.toSet()
+    // Skip a pair when a package edge already connects P to a module inside Q.
+    val coveredPkgPairs: Set<Pair<String, String>> = sortedPkgEdges.mapNotNull { (from, to) ->
+        val fromPkg = packageMembers.keys.find { pkgAlias(it) == from } ?: return@mapNotNull null
+        val toMod = graph.modules.find { alias(it.path) == to } ?: return@mapNotNull null
+        val toPkg = if (toMod.path.count { it == ':' } > 1) toMod.path.substringBeforeLast(':') else null
+            ?: return@mapNotNull null
+        fromPkg to toPkg
+    }.toSet()
+    val hiddenEdges: List<String> = pkgDeps
+        .filter { it !in coveredPkgPairs }
+        .sortedWith(compareBy({ it.first }, { it.second }))
+        .map { (p, q) ->
+            val members = packageMembers.getValue(p).toSet()
+            // Bottom = module with the longest path from package roots; alphabetical on ties.
+            val bottom = members.maxWith(compareBy<String> { depthWithin(it, members) }.thenBy { it })
+            "${alias(bottom)} -[hidden]--> ${pkgAlias(q)}"
+        }
+
+    // --- Output ---
     appendLine("@startuml modules")
     appendLine("' Generated by the task moduleGraph of build-logic (ModuleGraphPlugin), do not edit.")
     appendLine("' Dependencies between the modules of the new UI, rule `mod-diagram` of ARCHITECTURE.md.")
     appendLine("' An edge that follows from a longer path is left out.")
+    if (sortedPkgEdges.isNotEmpty()) {
+        appendLine("' An edge from or to a package stands for an edge from or to every module in it.")
+    }
     appendLine("skinparam componentStyle rectangle")
+    appendLine("skinparam linetype ortho")
+    appendLine("skinparam ranksep 80")
     appendLine("top to bottom direction")
     appendLine()
-    val (grouped, single) = graph.modules.partition { it.path.count { c -> c == ':' } > 1 }
     single.forEach { component(it, it.path, "") }
-    grouped.groupBy { it.path.substringBeforeLast(':') }.forEach { (parent, members) ->
+    packageMembers.entries.sortedBy { it.key }.forEach { (parent, _) ->
         appendLine()
-        appendLine("package \"${parent.removePrefix(":").replace(':', '/')}\" {")
-        members.forEach { component(it, ":" + it.path.substringAfterLast(':'), "    ") }
+        appendLine("package \"${parent.removePrefix(":").replace(':', '/')}\" as ${pkgAlias(parent)} {")
+        grouped.filter { it.path.substringBeforeLast(':') == parent }
+            .forEach { component(it, ":" + it.path.substringAfterLast(':'), "    ") }
         appendLine("}")
     }
+    if (hiddenEdges.isNotEmpty()) {
+        appendLine()
+        appendLine("' Layout only")
+        hiddenEdges.forEach { appendLine(it) }
+    }
     appendLine()
-    graph.edges.forEach { (from, to) -> appendLine("${alias(from)} --> ${alias(to)}") }
+    sortedPkgEdges.forEach { (from, to) -> appendLine("$from --> $to") }
+    remainingEdges.forEach { (from, to) -> appendLine("${alias(from)} --> ${alias(to)}") }
     appendLine("@enduml")
 }
