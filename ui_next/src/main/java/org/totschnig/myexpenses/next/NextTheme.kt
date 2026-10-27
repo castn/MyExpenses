@@ -32,6 +32,7 @@ fun NextTheme(
             LocalColors provides semanticColors.toColors(),
             LocalAmountFormatter provides LocalCurrencyFormatter.current.toAmountFormatter(),
             LocalFontIcons provides AppFontIcons,
+            *NextFeatures.locals,
             content = content
         )
     }
