@@ -1,4 +1,6 @@
 pluginManagement {
+    // Convention plugins of the new UI (next.*), see build-logic/README.md
+    includeBuild "build-logic"
     repositories {
         google()
         mavenCentral()
