@@ -3,4 +3,9 @@
     <string name="ds_back">Zurück</string>
     <string name="ds_apply">Übernehmen</string>
     <string name="ds_show_hint">Erklärung zeigen</string>
+    <string name="ds_choose_several">Mehrere auswählen</string>
+    <string name="ds_icon_search_clear">Suche leeren</string>
+    <string name="ds_close">Schließen</string>
+    <string name="ds_search">Suchen</string>
+    <string name="ds_none_found">Nichts gefunden</string>
 </resources>
