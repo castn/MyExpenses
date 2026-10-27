@@ -11,6 +11,21 @@
     </queries>
 
     <application tools:ignore="MissingApplicationIcon">
+        <!-- Own task affinity, so that the old (V2) and the new UI live in separate tasks
+             and switching launcher icons does not stack one UI on top of the other. -->
+        <activity
+            android:name="org.totschnig.myexpenses.next.MyExpensesNext"
+            android:exported="true"
+            android:label="MyExpenses Next"
+            tools:ignore="HardcodedText"
+            android:launchMode="singleTop"
+            android:taskAffinity="org.totschnig.myexpenses.next">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="org.totschnig.myexpenses.next.settings.NextSettings"
             android:label="@string/settings_label" />
