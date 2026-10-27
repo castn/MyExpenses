@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:dist="http://schemas.android.com/apk/distribution">
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution">
+
+    <!-- The apps that can take a photo, which the settings offer as camera app -->
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+
+    <application tools:ignore="MissingApplicationIcon">
+        <activity
+            android:name="org.totschnig.myexpenses.next.settings.NextSettings"
+            android:label="@string/settings_label" />
+    </application>
 
     <dist:module dist:instant="false">
         <dist:delivery>
