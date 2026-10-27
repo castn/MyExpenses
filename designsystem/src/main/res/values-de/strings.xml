@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ds_back">Zurück</string>
     <string name="ds_show_hint">Erklärung zeigen</string>
 </resources>
