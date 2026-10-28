@@ -1,0 +1,13 @@
+plugins {
+    id 'next.feature'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.feature.guidance'
+}
+
+// The screens of hints and of the readiness of the data, and the tips that still lack data.
+dependencies {
+    implementation project(':next:data:guidance')
+    implementation project(':next:data:tips')
+}

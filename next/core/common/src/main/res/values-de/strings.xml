@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="next_tab_contracts">Verträge</string>
+    <string name="next_tab_analysis">Analyse</string>
     <string name="next_tab_saving_tips">Spartipps</string>
     <string name="next_tab_overview">Übersicht</string>
     <string name="next_tab_menu">Menü</string>
@@ -223,6 +224,15 @@
     <string name="next_tips_consent_text">Für Spartipps werden deine Buchungen nach Verträgen und regelmäßigen Ausgaben durchsucht. Die Auswertung passiert nur auf deinem Gerät.</string>
     <string name="next_tips_empty">Gerade keine Spartipps</string>
     <string name="next_tips_empty_hint">Hier erscheinen Hinweise, sobald dir deine Buchungen etwas verraten, zum Beispiel wenn Verträge teurer werden. Je genauer deine Kategorien und je mehr Kassenzettel du scannst, desto mehr lässt sich sagen.</string>
+    <string name="next_pending_tips_title">Dafür fehlen noch Daten</string>
+    <string name="next_pending_item_groups">Mehr Süßes, Alkohol oder Tabak?</string>
+    <string name="next_pending_item_groups_text">Ob du davon mehr kaufst als sonst, zeigt sich, sobald du über einige Monate Kassenzettel scannst.</string>
+    <string name="next_pending_drugstore">Drogerieartikel im Supermarkt?</string>
+    <string name="next_pending_drugstore_text">Ob du Drogerieartikel im Supermarkt kaufst, wo sie oft teurer sind, zeigen gescannte Kassenzettel aus dem Supermarkt.</string>
+    <string name="next_pending_deposit">Pfand liegen gelassen?</string>
+    <string name="next_pending_deposit_text">Ob du mehr Pfand bezahlst als zurückbekommst, zeigen gescannte Kassenzettel.</string>
+    <string name="next_pending_outliers">Mehr ausgegeben als sonst?</string>
+    <string name="next_pending_outliers_text">Für welche Kategorien du mehr ausgibst als sonst, lässt sich nur sagen, wenn deine Ausgaben eine genaue Kategorie haben. Der Tab „%s“ zeigt, welche fehlen.</string>
     <string name="next_tips_card_title">Spartipp</string>
     <string name="next_tips_per_year">%1$s im Jahr</string>
     <string name="next_tips_dismiss">Nicht relevant</string>
@@ -433,6 +443,22 @@
         <item quantity="one">%d Buchung</item>
         <item quantity="other">%d Buchungen</item>
     </plurals>
+    <string name="next_hint_saved_category">Ohne Kategorie gespeichert: Die Buchung fehlt in der Auswertung und in den Spartipps.</string>
+    <string name="next_hint_saved_receipt">Tipp: Scanne den Kassenzettel in den Details der Buchung, dann siehst du, was du im Supermarkt kaufst.</string>
+    <string name="next_hint_never">Nicht mehr zeigen</string>
+    <string name="next_hint_details_receipt">Mit dem Kassenzettel siehst du, wofür du im Supermarkt Geld ausgibst, etwa für Süßes oder Drogerieartikel.</string>
+    <string name="next_hint_overview_uncategorized_title">Ausgaben ohne Kategorie</string>
+    <plurals name="next_hint_overview_uncategorized_text">
+        <item quantity="one">%d Ausgabe fehlt in deiner Auswertung</item>
+        <item quantity="other">%d Ausgaben fehlen in deiner Auswertung</item>
+    </plurals>
+    <string name="next_hint_overview_vague_title">Ausgaben unter „Sonstiges“</string>
+    <plurals name="next_hint_overview_vague_text">
+        <item quantity="one">%d Ausgabe steht unter einer Sammelkategorie</item>
+        <item quantity="other">%d Ausgaben stehen unter einer Sammelkategorie</item>
+    </plurals>
+    <string name="next_hint_overview_receipts_title">Kassenzettel scannen lohnt sich</string>
+    <string name="next_hint_overview_receipts_text">So siehst du, was du im Supermarkt kaufst</string>
     <string name="next_settings_open">Einstellungen</string>
     <string name="next_settings_search">Suchen…</string>
     <string name="next_settings_clear_search">Leeren</string>

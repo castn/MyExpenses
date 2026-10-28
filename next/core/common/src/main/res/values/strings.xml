@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="next_tab_contracts">Contracts</string>
+    <string name="next_tab_analysis">Analysis</string>
     <string name="next_tab_saving_tips">Saving tips</string>
     <string name="next_tab_overview">Overview</string>
     <string name="next_tab_menu">Menu</string>
@@ -223,6 +224,15 @@
     <string name="next_tips_consent_text">For saving tips, your transactions are searched for contracts and regular expenses. The analysis runs only on your device.</string>
     <string name="next_tips_empty">No saving tips right now</string>
     <string name="next_tips_empty_hint">Hints show up here as soon as your transactions reveal something, for example when contracts become more expensive. The more precise your categories and the more receipts you scan, the more there is to tell.</string>
+    <string name="next_pending_tips_title">Still lacking data</string>
+    <string name="next_pending_item_groups">More sweets, alcohol or tobacco?</string>
+    <string name="next_pending_item_groups_text">Whether you buy more of them than usual shows once you scan receipts over a few months.</string>
+    <string name="next_pending_drugstore">Drugstore goods at the supermarket?</string>
+    <string name="next_pending_drugstore_text">Whether you buy drugstore goods at the supermarket, where they are often more expensive, shows on scanned supermarket receipts.</string>
+    <string name="next_pending_deposit">Deposit left behind?</string>
+    <string name="next_pending_deposit_text">Whether you pay more deposit than you get back shows on scanned receipts.</string>
+    <string name="next_pending_outliers">Spent more than usual?</string>
+    <string name="next_pending_outliers_text">On which categories you spend more than usual can only be told when your expenses have a precise category. The tab \"%s\" shows which are missing.</string>
     <string name="next_tips_card_title">Saving tip</string>
     <string name="next_tips_per_year">%1$s a year</string>
     <string name="next_tips_dismiss">Not relevant</string>
@@ -433,6 +443,22 @@
         <item quantity="one">%d transaction</item>
         <item quantity="other">%d transactions</item>
     </plurals>
+    <string name="next_hint_saved_category">Saved without category: the transaction is missing from the analysis and the saving tips.</string>
+    <string name="next_hint_saved_receipt">Tip: scan the receipt in the details of the transaction to see what you buy at the supermarket.</string>
+    <string name="next_hint_never">Don\'t show again</string>
+    <string name="next_hint_details_receipt">With the receipt you see what you spend on at the supermarket, e.g. sweets or drugstore goods.</string>
+    <string name="next_hint_overview_uncategorized_title">Expenses without category</string>
+    <plurals name="next_hint_overview_uncategorized_text">
+        <item quantity="one">%d expense is missing from your analysis</item>
+        <item quantity="other">%d expenses are missing from your analysis</item>
+    </plurals>
+    <string name="next_hint_overview_vague_title">Expenses under \"Other\"</string>
+    <plurals name="next_hint_overview_vague_text">
+        <item quantity="one">%d expense is in a catch-all category</item>
+        <item quantity="other">%d expenses are in a catch-all category</item>
+    </plurals>
+    <string name="next_hint_overview_receipts_title">Scanning receipts pays off</string>
+    <string name="next_hint_overview_receipts_text">You see what you buy at the supermarket</string>
     <string name="next_settings_open">Settings</string>
     <string name="next_settings_search">Search…</string>
     <string name="next_settings_clear_search">Clear</string>
