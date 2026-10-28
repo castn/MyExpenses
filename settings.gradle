@@ -30,6 +30,7 @@ dependencyResolutionManagement {
 include ':myExpenses'
 include ':webui'
 include ':ocr'
+include ':ocr-model'
 include ':PlayLicensingOrig', ':transactionscontract'
 include ':setupwizard'
 //include ':ChangeLog'

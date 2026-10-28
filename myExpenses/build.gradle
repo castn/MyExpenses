@@ -217,6 +217,7 @@ dependencies {
 
     implementation libs.androidx.gridlayout
     api project(':preferences')
+    api project(':ocr-model')
     implementation libs.androidx.constraintlayout
 
     implementation libs.flexbox

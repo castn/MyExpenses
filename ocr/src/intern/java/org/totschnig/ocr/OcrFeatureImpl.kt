@@ -1,6 +1,7 @@
 package org.totschnig.ocr
 
 import android.content.Context
+import android.net.Uri
 import androidx.annotation.Keep
 import androidx.preference.ListPreference
 import org.totschnig.myexpenses.activity.BaseActivity
@@ -45,6 +46,11 @@ class OcrFeatureImpl(val prefHandler: PrefHandler) : OcrFeature() {
             mlkit.isVisible = false
         }
     }
+
+    override suspend fun recognize(context: Context, uri: Uri) =
+        (getEngine(context, prefHandler) ?: throw IllegalStateException("No engine loaded"))
+            .run(uri, context, prefHandler)
+            .toRecognizedText()
 
     override fun shouldShowEngineSelection() =
         if (DistributionHelper.distribution.hasDynamicFeatureDelivery)
