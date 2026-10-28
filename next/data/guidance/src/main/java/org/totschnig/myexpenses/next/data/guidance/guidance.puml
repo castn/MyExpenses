@@ -1,0 +1,51 @@
+@startuml guidance
+skinparam componentStyle rectangle
+skinparam shadowing false
+left to right direction
+
+package "ledger" {
+  artifact Ledger
+}
+package "receipts" {
+  artifact ReceiptFacts
+}
+package "tips" {
+  [ItemGroupRising, supermarketOf] as tipRules
+  [SavingTipsViewModel] as tipsVM
+}
+
+package "guidance" {
+  [dataReadiness()] as readinessFn
+  artifact "DataReadiness\n(gaps)" as readiness
+  [DataReadinessViewModel] as readinessVM
+  [pendingTips()] as pendingFn
+  [HintsViewModel] as hintsVM
+  database "HintStore\n(data store)" as store
+}
+
+package "screens" {
+  [Analysis tab:\nReadinessBox, gap lists] as analysis
+  [Saving tips:\nPendingTipsSection] as pending
+  [Overview:\nOverviewHint] as overview
+  [Transaction details:\nReceiptHint] as details
+  [After saving:\nsnackbar] as saved
+  [Settings:\nshow hints again] as settings
+}
+
+Ledger --> readinessFn
+ReceiptFacts --> readinessFn
+tipRules --> readinessFn : same windows\nand shops
+readinessFn --> readiness
+readinessVM --> readinessFn : Memo
+readiness --> analysis
+readiness --> pendingFn
+tipsVM --> pendingFn : tips that are there
+pendingFn --> pending
+readinessVM --> hintsVM
+store --> hintsVM : closed topics,\ncount after saving
+hintsVM --> overview
+hintsVM --> details
+hintsVM --> saved : waits for\nthe new ledger
+settings --> store : reset
+
+@enduml
