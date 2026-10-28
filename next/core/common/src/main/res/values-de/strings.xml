@@ -579,6 +579,7 @@
     <string name="next_budget_delete_text">Der Topf „%1$s“ wird gelöscht. Deine Buchungen bleiben unverändert.</string>
     <string name="next_budget_save">Speichern</string>
     <string name="next_budget_edit">Bearbeiten</string>
+    <string name="next_budget_free_summary">In diesem Zeitraum noch frei: %1$s</string>
     <plurals name="next_budget_legacy_title">
         <item quantity="one">Du hast %d Budget aus der klassischen Ansicht</item>
         <item quantity="other">Du hast %d Budgets aus der klassischen Ansicht</item>
@@ -603,6 +604,7 @@
     <string name="next_budget_max_share_label">Höchstens (Prozent)</string>
     <string name="next_budget_share_invalid">Gib eine Zahl von 1 bis 100 ein</string>
     <string name="next_budget_one_off_hint">Als einmalig markiert, zählt daher nicht im Topf</string>
+    <string name="next_budget_pace_warning">%1$s: bei diesem Tempo %2$s drüber</string>
     <string name="next_icons_food">Essen &amp; Trinken</string>
     <string name="next_icons_shopping">Einkaufen</string>
     <string name="next_icons_home">Wohnen &amp; Energie</string>

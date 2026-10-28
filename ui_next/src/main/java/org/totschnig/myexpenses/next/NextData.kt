@@ -26,6 +26,11 @@ import org.totschnig.myexpenses.next.data.contracts.ContractStore
 import org.totschnig.myexpenses.next.insights.ProviderLedgerSource
 import org.totschnig.myexpenses.next.insights.today
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
+import org.totschnig.myexpenses.next.data.budgets.BudgetRepository
+import org.totschnig.myexpenses.next.data.budgets.BudgetStore
 
 /**
  * The data of the new UI, once per process: the ledger and the facts of the areas, so that they
@@ -34,7 +39,9 @@ import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
  * flows run in [scope] while they are collected, see `shareWhileShown`.
  *
  * Each area has one repository here, in the order they build on each other, and a line in
- * [applyAutomaticDecisions] if it decides something by itself.
+ * [applyAutomaticDecisions] if it decides something by itself. An area that reads the facts of an
+ * area that may be left out reads them through one value here, e.g. [receiptFacts], which then is
+ * the empty value of those facts.
  */
 class NextData private constructor(context: Context) {
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
@@ -51,6 +58,13 @@ class NextData private constructor(context: Context) {
     val tags = TagRepository(ledgerSource, TagStore(dataStore), scope, RepositoryTagDatabase(context.injector.repository()))
 
     val categories = CategoryRepository(ledgerSource, CategoryStore(dataStore), ProviderCategoryWriting(context.contentResolver), scope)
+
+    /** What budgets, saving tips and hints know about receipts; [ReceiptFacts.None] without receipts */
+    val receiptFacts: Flow<ReceiptFacts> = flowOf(ReceiptFacts.None)
+
+    val budgets = BudgetRepository(
+        ledgerSource, contracts.facts, tags.facts, BudgetStore(dataStore), scope, receiptFacts
+    )
 
     val balance = BalanceRepository(ledgerSource, contracts.facts, scope)
 

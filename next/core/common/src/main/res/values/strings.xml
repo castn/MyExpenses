@@ -579,6 +579,7 @@
     <string name="next_budget_delete_text">The pot “%1$s” will be deleted. Your transactions stay as they are.</string>
     <string name="next_budget_save">Save</string>
     <string name="next_budget_edit">Edit</string>
+    <string name="next_budget_free_summary">Still free in this period: %1$s</string>
     <plurals name="next_budget_legacy_title">
         <item quantity="one">You have %d budget from the classic view</item>
         <item quantity="other">You have %d budgets from the classic view</item>
@@ -603,6 +604,7 @@
     <string name="next_budget_max_share_label">At most (percent)</string>
     <string name="next_budget_share_invalid">Enter a number from 1 to 100</string>
     <string name="next_budget_one_off_hint">Marked as one-off, so it does not count in the pot</string>
+    <string name="next_budget_pace_warning">%1$s: %2$s over at this pace</string>
     <string name="next_icons_food">Food &amp; drink</string>
     <string name="next_icons_shopping">Shopping</string>
     <string name="next_icons_home">Home &amp; energy</string>

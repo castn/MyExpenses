@@ -469,6 +469,13 @@ sealed interface NextKey : NavKey {
     @Serializable
     data class Contracts(val openContract: String? = null) : NextKey
 
+    /**
+     * @param openPot id of a pot shown from the start, e.g. tapped in the overview
+     * @param addPot whether to start with adding a pot
+     */
+    @Serializable
+    data class Budget(val openPot: String? = null, val addPot: Boolean = false) : NextKey
+
     /** The breakdown behind the balance card */
     @Serializable
     data object Balance : NextKey
