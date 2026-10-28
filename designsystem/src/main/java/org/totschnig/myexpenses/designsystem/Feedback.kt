@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -92,6 +93,59 @@ fun Banner(
                     verticalAlignment = Alignment.CenterVertically,
                     content = actions
                 )
+            }
+        }
+    }
+}
+
+/**
+ * One point of an [InfoBox]
+ *
+ * @param actionLabel of a button below the text that leads to what helps, none if null
+ */
+data class InfoPoint(val text: String, val actionLabel: String? = null, val onAction: () -> Unit = {})
+
+/**
+ * Calm card that tells what is missing and what helps, e.g. why an analysis cannot say much yet.
+ * Unlike a [Banner] it asks for no decision, and unlike an [InviteCard] it is not closed: it goes
+ * away by itself once nothing is missing.
+ *
+ * @param points one paragraph each, with an optional action
+ */
+@Composable
+fun InfoBox(
+    title: String,
+    points: List<InfoPoint>,
+    modifier: Modifier = Modifier,
+    icon: ImageVector = Icons.Outlined.Info,
+) {
+    Surface(
+        shape = Shapes.card,
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Column(Modifier.padding(start = Spacing.content, end = Spacing.content, top = Spacing.content, bottom = 4.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp))
+                Text(
+                    title,
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
+            points.forEach { point ->
+                Text(
+                    point.text,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 8.dp, bottom = if (point.actionLabel == null) 8.dp else 0.dp)
+                )
+                point.actionLabel?.let { label ->
+                    // The label starts where the text does
+                    TextButton(onClick = point.onAction, modifier = Modifier.offset(x = (-12).dp)) {
+                        Text(label)
+                    }
+                }
             }
         }
     }
