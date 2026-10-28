@@ -1,0 +1,36 @@
+@startuml layers
+' The layers of the receipt parser and what they use, see README.md in this package.
+' Arrows point to what a layer uses. ReceiptLayout gets the checks of RowKinds passed in,
+' so that it does not depend on it.
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam defaultFontName sans-serif
+skinparam linetype ortho
+top to bottom direction
+
+[ReceiptParser\n<size:11>flow, total, discounts after it,\n<size:11>number of articles, merchant] as parser
+[ReceiptAssembler\n<size:11>items from rows by named rules] as assembler
+[RowKinds\n<size:11>what a row is, from its tokens] as kinds
+[ReceiptLayout\n<size:11>rows from the positions of the lines,\n<size:11>tilt, price columns] as layout
+[ReceiptTokens\n<size:11>numbers, units, signs, words;\n<size:11>the only place with regular expressions] as tokens
+[ReceiptVocabulary.GERMAN\n<size:11>words of one language,\n<size:11>misread keywords] as vocabulary
+
+parser --> layout
+parser --> assembler
+parser --> kinds
+parser --> tokens
+parser --> vocabulary
+assembler --> kinds
+assembler --> vocabulary
+layout ..> kinds : passed in
+kinds --> tokens
+kinds --> vocabulary
+tokens --> vocabulary
+
+note right of layout
+  Knows neither language
+  nor recognition errors
+end note
+
+@enduml

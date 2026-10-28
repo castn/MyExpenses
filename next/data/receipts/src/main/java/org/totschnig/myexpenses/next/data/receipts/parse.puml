@@ -1,0 +1,27 @@
+@startuml parse
+' What ReceiptParser.parse() does with the text ML Kit recognized, see README.md in this package.
+
+skinparam shadowing false
+skinparam defaultFontName sans-serif
+
+start
+:recognized lines with their boxes;
+:clean each line\n(ReceiptTokens.clean);
+:drop lines without box, blank lines\nand lines with a currency only;
+:put lines into rows by their positions\n(ReceiptLayout.rows);
+if (row with a total word?) then (yes)
+  :total from that row, or from an amount only row\nabove it, or from the payment below it;
+elseif (row with a payment word?) then (yes)
+  :total from the payment; a row above with the\nsame amount is the total whose word was missed;
+else (no)
+  :no total, all rows can hold items;
+endif
+:items from the rows before the total\n(ReceiptAssembler.items);
+if (discounts and a second total after the total?) then (yes)
+  :add the discounts as items,\nthe second total is the final one;
+endif
+:merchant from the first row without amount,\nnumber of articles;
+:ParsedReceipt;
+stop
+
+@enduml
