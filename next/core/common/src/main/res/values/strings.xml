@@ -241,6 +241,59 @@
     </plurals>
     <string name="next_category_set">Category</string>
     <string name="next_details_category">What for</string>
+    <string name="next_tags_belongs_to">Belongs to</string>
+    <string name="next_tags">Groups</string>
+    <string name="next_tag_add">Group</string>
+    <string name="next_tag_new">New group</string>
+    <string name="next_tag_create">Create</string>
+    <string name="next_groups_intro">A group brings together what belongs together, also across categories: a trip, a project, an occasion. A transaction can be in several groups.</string>
+    <string name="next_group_name_is_category">“%1$s” is already a category. The category says what the money was spent on, a group is for trips, projects and occasions.</string>
+    <string name="next_group_name_is_marker">“%1$s” is a marker. Switch it on in the details under markers.</string>
+    <string name="next_group_create_anyway">Create anyway</string>
+    <string name="next_tag_remove">Remove from this transaction</string>
+    <string name="next_tag_meaning_intro">Is this group a trip, or a project or occasion? This applies to all transactions in it.</string>
+    <string name="next_tag_meaning_none">Project or occasion</string>
+    <string name="next_tag_meaning_one_off">One-off</string>
+    <string name="next_tag_meaning_reimbursed">Reimbursed</string>
+    <string name="next_tag_meaning_trip">Trip</string>
+    <string name="next_tag_meaning_business">Business</string>
+    <string name="next_markers">Markers</string>
+    <string name="next_markers_hint">One-off and reimbursed expenses do not count in averages and saving tips.</string>
+    <string name="next_marker_suggested">%1$s?</string>
+    <plurals name="next_marker_suggested_reason">
+        <item quantity="one">%2$d transaction with %1$s is marked as “%3$s”.</item>
+        <item quantity="other">%2$d transactions with %1$s are marked as “%3$s”.</item>
+    </plurals>
+    <string name="next_marker_taken">Marked as</string>
+    <string name="next_refund_question_debit">Was this paid back?</string>
+    <string name="next_refund_question_credit">Is this a refund?</string>
+    <string name="next_refund_debit_text">On %2$s, %1$s came back from %3$s.</string>
+    <string name="next_refund_credit_text">Matches the expense of %1$s on %2$s at %3$s.</string>
+    <string name="next_refund_effect">Both transactions are then marked as reimbursed and do not count in saving tips.</string>
+    <string name="next_refund_reject">No</string>
+    <string name="next_refund_accept">Yes, reimbursed</string>
+    <string name="next_trip_question">Were you travelling?</string>
+    <plurals name="next_trip_text">
+        <item quantity="one">From %1$s to %2$s: %3$d expense, e.g. in a foreign currency or for hotels and flights.</item>
+        <item quantity="other">From %1$s to %2$s: %3$d expenses, e.g. in a foreign currency or for hotels and flights.</item>
+    </plurals>
+    <string name="next_trip_examples">Among them: %1$s</string>
+    <string name="next_trip_reject">No</string>
+    <string name="next_trip_accept">Mark as trip</string>
+    <string name="next_trip_default_name">Trip %1$s</string>
+    <string name="next_trip_name">Name of the trip</string>
+    <string name="next_trip_choose">These expenses go into the group. Leave out what does not belong to the trip.</string>
+    <string name="next_tag_suggested">Group “%1$s”?</string>
+    <plurals name="next_tag_suggested_reason">
+        <item quantity="one">%2$d transaction with %1$s is in this group.</item>
+        <item quantity="other">%2$d transactions with %1$s are in this group.</item>
+    </plurals>
+    <string name="next_tag_accept">Accept</string>
+    <string name="next_tag_taken">Group taken</string>
+    <plurals name="next_tag_apply_others">
+        <item quantity="one">Also add the other transaction with %2$s</item>
+        <item quantity="other">Also add the %1$d others with %2$s</item>
+    </plurals>
     <string name="next_settings_search">Search…</string>
     <string name="next_settings_clear_search">Clear</string>
     <string name="next_settings_no_results">No settings found</string>

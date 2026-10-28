@@ -241,6 +241,59 @@
     </plurals>
     <string name="next_category_set">Kategorie</string>
     <string name="next_details_category">Wofür</string>
+    <string name="next_tags_belongs_to">Gehört zu</string>
+    <string name="next_tags">Gruppen</string>
+    <string name="next_tag_add">Gruppe</string>
+    <string name="next_tag_new">Neue Gruppe</string>
+    <string name="next_tag_create">Anlegen</string>
+    <string name="next_groups_intro">Eine Gruppe fasst zusammen, was zusammengehört, auch über Kategorien hinweg: eine Reise, ein Projekt, ein Anlass. Eine Buchung kann in mehreren Gruppen sein.</string>
+    <string name="next_group_name_is_category">„%1$s“ ist schon eine Kategorie. Wofür Geld ausgegeben wird, sagt die Kategorie, eine Gruppe ist für Reisen, Projekte und Anlässe.</string>
+    <string name="next_group_name_is_marker">„%1$s“ ist ein Merkmal. Du schaltest es in den Details unter Merkmale ein.</string>
+    <string name="next_group_create_anyway">Trotzdem anlegen</string>
+    <string name="next_tag_remove">Von dieser Buchung entfernen</string>
+    <string name="next_tag_meaning_intro">Ist diese Gruppe eine Reise oder ein Projekt bzw. Anlass? Das gilt für alle Buchungen darin.</string>
+    <string name="next_tag_meaning_none">Projekt oder Anlass</string>
+    <string name="next_tag_meaning_one_off">Einmalig</string>
+    <string name="next_tag_meaning_reimbursed">Erstattet</string>
+    <string name="next_tag_meaning_trip">Reise</string>
+    <string name="next_tag_meaning_business">Beruflich</string>
+    <string name="next_markers">Merkmale</string>
+    <string name="next_markers_hint">Einmalige und erstattete Ausgaben zählen nicht in Durchschnitte und Spartipps.</string>
+    <string name="next_marker_suggested">%1$s?</string>
+    <plurals name="next_marker_suggested_reason">
+        <item quantity="one">Bei %1$s ist %2$d Buchung als „%3$s“ markiert.</item>
+        <item quantity="other">Bei %1$s sind %2$d Buchungen als „%3$s“ markiert.</item>
+    </plurals>
+    <string name="next_marker_taken">Markiert als</string>
+    <string name="next_refund_question_debit">Wurde das erstattet?</string>
+    <string name="next_refund_question_credit">Ist das eine Erstattung?</string>
+    <string name="next_refund_debit_text">Am %2$s kamen %1$s von %3$s zurück.</string>
+    <string name="next_refund_credit_text">Passt zur Ausgabe über %1$s am %2$s bei %3$s.</string>
+    <string name="next_refund_effect">Dann werden beide Buchungen als erstattet markiert und zählen nicht in Spartipps.</string>
+    <string name="next_refund_reject">Nein</string>
+    <string name="next_refund_accept">Ja, erstattet</string>
+    <string name="next_trip_question">Warst du verreist?</string>
+    <plurals name="next_trip_text">
+        <item quantity="one">Vom %1$s bis %2$s: %3$d Ausgabe, z. B. in Fremdwährung oder für Hotels und Flüge.</item>
+        <item quantity="other">Vom %1$s bis %2$s: %3$d Ausgaben, z. B. in Fremdwährung oder für Hotels und Flüge.</item>
+    </plurals>
+    <string name="next_trip_examples">Darunter: %1$s</string>
+    <string name="next_trip_reject">Nein</string>
+    <string name="next_trip_accept">Als Reise markieren</string>
+    <string name="next_trip_default_name">Reise %1$s</string>
+    <string name="next_trip_name">Name der Reise</string>
+    <string name="next_trip_choose">Diese Ausgaben kommen in die Gruppe. Nimm heraus, was nicht zur Reise gehört.</string>
+    <string name="next_tag_suggested">Gruppe „%1$s“?</string>
+    <plurals name="next_tag_suggested_reason">
+        <item quantity="one">Bei %1$s ist %2$d Buchung in dieser Gruppe.</item>
+        <item quantity="other">Bei %1$s sind %2$d Buchungen in dieser Gruppe.</item>
+    </plurals>
+    <string name="next_tag_accept">Übernehmen</string>
+    <string name="next_tag_taken">Gruppe übernommen</string>
+    <plurals name="next_tag_apply_others">
+        <item quantity="one">Auch die andere Buchung bei %2$s hinzufügen</item>
+        <item quantity="other">Auch die %1$d anderen bei %2$s hinzufügen</item>
+    </plurals>
     <string name="next_settings_search">Suchen…</string>
     <string name="next_settings_clear_search">Leeren</string>
     <string name="next_settings_no_results">Keine Einstellungen gefunden</string>
