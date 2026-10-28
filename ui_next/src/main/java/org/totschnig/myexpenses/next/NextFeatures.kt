@@ -7,6 +7,8 @@ import org.totschnig.myexpenses.next.budgets.BudgetsFeature
 import org.totschnig.myexpenses.next.categories.CategoriesFeature
 import org.totschnig.myexpenses.next.categories.CategorySettings
 import org.totschnig.myexpenses.next.contracts.ContractsFeature
+import org.totschnig.myexpenses.next.guidance.GuidanceFeature
+import org.totschnig.myexpenses.next.guidance.HintSettings
 import org.totschnig.myexpenses.next.merchants.MerchantSettings
 import org.totschnig.myexpenses.next.merchants.MerchantsFeature
 import org.totschnig.myexpenses.next.tags.TagsFeature
@@ -27,10 +29,11 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
     val categories = CategoriesFeature(activity, data)
     val tags = TagsFeature(activity, data)
     val budgets = BudgetsFeature(activity, data)
-    val savingTips = SavingTipsFeature(activity, data, contracts, tags)
+    val guidance = GuidanceFeature(activity, data, { categories.isAsking() })
+    val savingTips = SavingTipsFeature(activity, data, contracts, tags) { guidance.PendingTips(it) }
 
     val all: List<NextFeature> = listOf(
-        categories, tags, contracts, budgets, merchants, balance, savingTips
+        categories, tags, contracts, budgets, guidance, merchants, balance, savingTips
     )
 
     companion object {
@@ -38,6 +41,6 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
         val locals: Array<ProvidedValue<*>> get() = arrayOf(CategoriesFeature.picker)
 
         /** The settings of the areas, in the order they are listed in their groups, see [NextSettings] */
-        val settings: List<AreaSettings.Factory> get() = listOf(CategorySettings, TagSettings, MerchantSettings)
+        val settings: List<AreaSettings.Factory> get() = listOf(CategorySettings, TagSettings, HintSettings, MerchantSettings)
     }
 }

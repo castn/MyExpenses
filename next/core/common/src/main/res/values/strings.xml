@@ -587,6 +587,11 @@
     <string name="next_settings_tag_rules">Tag rules</string>
     <string name="next_settings_consent_summary">Finds contracts, regular income, suggestions and saving tips. Only on your device.</string>
     <string name="next_settings_rejected_suggestions">Rejected suggestions</string>
+    <string name="next_settings_closed_hints">Show hints again</string>
+    <plurals name="next_settings_closed_hints_count">
+        <item quantity="one">%d kind of hint closed</item>
+        <item quantity="other">%d kinds of hints closed</item>
+    </plurals>
     <string name="next_settings_merchant_logos">Logos of shops</string>
     <string name="next_settings_merchant_logos_summary">Shows the logos of well-known shops and companies in the transaction list. Their web addresses, e.g. rewe.de, are sent to the icon service of DuckDuckGo, never amounts or transactions.</string>
     <string name="next_payee_logo_title">Logo of %s</string>

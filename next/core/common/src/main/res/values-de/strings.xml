@@ -587,6 +587,11 @@
     <string name="next_settings_tag_rules">Tag-Regeln</string>
     <string name="next_settings_consent_summary">Findet Verträge, regelmäßige Einnahmen, Vorschläge und Spartipps. Nur auf deinem Gerät.</string>
     <string name="next_settings_rejected_suggestions">Abgelehnte Vorschläge</string>
+    <string name="next_settings_closed_hints">Hinweise wieder anzeigen</string>
+    <plurals name="next_settings_closed_hints_count">
+        <item quantity="one">%d Art von Hinweisen geschlossen</item>
+        <item quantity="other">%d Arten von Hinweisen geschlossen</item>
+    </plurals>
     <string name="next_settings_merchant_logos">Logos von Geschäften</string>
     <string name="next_settings_merchant_logos_summary">Zeigt in der Buchungsliste die Logos bekannter Geschäfte und Firmen. Dafür werden deren Webadressen, z. B. rewe.de, an den Icon-Dienst von DuckDuckGo gesendet, nie Beträge oder Buchungen.</string>
     <string name="next_payee_logo_title">Logo von %s</string>

@@ -33,6 +33,7 @@ import org.totschnig.myexpenses.next.data.budgets.BudgetRepository
 import org.totschnig.myexpenses.next.data.budgets.BudgetStore
 import org.totschnig.myexpenses.next.data.tips.SavingTipsRepository
 import org.totschnig.myexpenses.next.data.tips.TipStore
+import org.totschnig.myexpenses.next.data.guidance.DataReadinessRepository
 
 /**
  * The data of the new UI, once per process: the ledger and the facts of the areas, so that they
@@ -73,6 +74,8 @@ class NextData private constructor(context: Context) {
     val savingTips = SavingTipsRepository(
         ledgerSource, TipStore(dataStore), contracts.facts, tags.facts, receiptFacts, scope, budgets.facts
     )
+
+    val readiness = DataReadinessRepository(ledgerSource, receiptFacts, scope)
 
     /**
      * Makes the automatic decisions of the areas while it runs: contracts, the rules of tags and
