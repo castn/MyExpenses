@@ -1,6 +1,9 @@
 package org.totschnig.ocr
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.IntentSender
 import android.net.Uri
 import org.totschnig.myexpenses.activity.BaseActivity
 import org.totschnig.myexpenses.preference.PrefHandler
@@ -20,4 +23,6 @@ interface TesseractEngine : Engine  {
 
 interface MlkitEngine: Engine {
     fun getScriptArray(context: Context): Array<String>
+    suspend fun documentScanIntent(activity: Activity): IntentSender
+    fun documentScanResult(data: Intent?): Uri?
 }

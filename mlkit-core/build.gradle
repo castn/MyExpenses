@@ -1,0 +1,18 @@
+plugins {
+    id 'next.android.library'
+}
+
+android {
+    namespace 'org.totschnig.mlkit_core'
+}
+
+// Call of ML Kit text recognition and document scanner, kept apart from the mlkit feature, so that
+// other tools of the project, e.g. one that collects receipts for tests, recognize them the same way.
+// The recognizer of a script (e.g. text-recognition for Latin) is added by the user of this module.
+dependencies {
+    api project(':ocr-model')
+    api libs.play.services.mlkit.text.recognition.common
+    api libs.text.recognition.bundled.common
+    api libs.play.services.mlkit.document.scanner
+    implementation libs.kotlinx.coroutines.android
+}

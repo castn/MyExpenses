@@ -1,10 +1,13 @@
 package org.totschnig.ocr
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import androidx.annotation.Keep
 import androidx.preference.ListPreference
 import org.totschnig.myexpenses.activity.BaseActivity
+import org.totschnig.myexpenses.feature.Feature
 import org.totschnig.myexpenses.preference.PrefHandler
 import org.totschnig.myexpenses.util.distrib.DistributionHelper
 import org.totschnig.ocr.OcrHandlerImpl.Companion.availableEngines
@@ -51,6 +54,14 @@ class OcrFeatureImpl(val prefHandler: PrefHandler) : OcrFeature() {
         (getEngine(context, prefHandler) ?: throw IllegalStateException("No engine loaded"))
             .run(uri, context, prefHandler)
             .toRecognizedText()
+
+    /** The scanner of ML Kit also serves users of Tesseract, if ML Kit is installed */
+    private val mlkit
+        get() = getEngine(Feature.MLKIT) as? MlkitEngine
+
+    override suspend fun documentScanIntent(activity: Activity) = mlkit?.documentScanIntent(activity)
+
+    override fun documentScanResult(data: Intent?) = mlkit?.documentScanResult(data)
 
     override fun shouldShowEngineSelection() =
         if (DistributionHelper.distribution.hasDynamicFeatureDelivery)
