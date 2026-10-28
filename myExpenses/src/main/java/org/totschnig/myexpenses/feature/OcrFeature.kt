@@ -29,6 +29,12 @@ interface OcrFeature {
         mlkit.isVisible = false
     }
     fun shouldShowEngineSelection() = true
+
+    /**
+     * Runs the configured engine and returns the recognized text with positions,
+     * or null if recognition happens in an external app.
+     */
+    suspend fun recognize(context: Context, uri: Uri): RecognizedText? = null
 }
 
 @Parcelize

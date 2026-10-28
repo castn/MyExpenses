@@ -1,0 +1,13 @@
+plugins {
+    id 'next.jvm'
+    alias libs.plugins.kotlin.serialization
+}
+
+// Result of text recognition with the positions of lines and words, and what tests of receipts
+// expect from it, with the anonymization of their fixtures. Plain Kotlin, so that parsers can be
+// tested on the JVM.
+dependencies {
+    api libs.kotlinx.serialization.json
+    testImplementation libs.junit
+    testImplementation libs.truth
+}
