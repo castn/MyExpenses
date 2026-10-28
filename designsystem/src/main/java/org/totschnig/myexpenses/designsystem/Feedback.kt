@@ -8,6 +8,7 @@ import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -91,6 +92,45 @@ fun Banner(
                     verticalAlignment = Alignment.CenterVertically,
                     content = actions
                 )
+            }
+        }
+    }
+}
+
+/**
+ * A short hint the user can close for good, e.g. what a receipt is good for, in the details of a
+ * purchase. Smaller than an [InfoBox], with no action of its own: what it tells about is next to it.
+ *
+ * @param onDismiss closes the hint, the caller remembers that
+ */
+@Composable
+fun HintCard(
+    text: String,
+    dismissLabel: String,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier,
+    icon: ImageVector = Icons.Outlined.Info,
+) {
+    Surface(
+        shape = Shapes.card,
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier.padding(start = Spacing.content, top = 4.dp, bottom = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp))
+            Text(
+                text,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = Spacing.content, top = 8.dp, bottom = 8.dp)
+            )
+            IconButton(onClick = onDismiss) {
+                Icon(Icons.Default.Close, contentDescription = dismissLabel)
             }
         }
     }
@@ -227,7 +267,7 @@ fun ActionCard(
  * A small card within a page that invites to start something optional, e.g. a first budget.
  * Unlike an [ActionCard] it takes only one line, and the user can close it for good.
  *
- * @param onClick starts it
+ * @param onClick starts it, null if there is nothing to open and the card only tells
  * @param onDismiss closes the card, the caller remembers that
  */
 @Composable
@@ -235,17 +275,12 @@ fun InviteCard(
     icon: ImageVector,
     title: String,
     text: String,
-    onClick: () -> Unit,
+    onClick: (() -> Unit)?,
     onDismiss: () -> Unit,
     dismissLabel: String,
     modifier: Modifier = Modifier,
 ) {
-    Surface(
-        onClick = onClick,
-        shape = Shapes.card,
-        color = MaterialTheme.colorScheme.surfaceContainerLowest,
-        modifier = modifier.fillMaxWidth()
-    ) {
+    val content: @Composable () -> Unit = {
         Row(
             modifier = Modifier.padding(start = Spacing.content, top = 12.dp, bottom = 12.dp, end = 4.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -269,6 +304,13 @@ fun InviteCard(
                 Icon(Icons.Default.Close, contentDescription = dismissLabel, tint = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
+    }
+    val shape = Shapes.card
+    val color = MaterialTheme.colorScheme.surfaceContainerLowest
+    if (onClick != null) {
+        Surface(onClick = onClick, shape = shape, color = color, modifier = modifier.fillMaxWidth(), content = content)
+    } else {
+        Surface(shape = shape, color = color, modifier = modifier.fillMaxWidth(), content = content)
     }
 }
 

@@ -31,9 +31,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -44,7 +47,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
@@ -329,3 +336,37 @@ fun Dot(modifier: Modifier = Modifier, color: Color = MaterialTheme.colorScheme.
     )
 }
 
+/**
+ * The period a page shows, e.g. "October 2026", with arrows to the one before and after
+ *
+ * @param onPrevious null if there is no earlier period, the arrow is then disabled
+ * @param onNext null if there is no later period, e.g. for the current month
+ * @param previousDescription read out for the arrow back, e.g. "Earlier"
+ * @param nextDescription read out for the arrow forward, e.g. "Later"
+ */
+@Composable
+fun PeriodSwitcher(
+    label: String,
+    onPrevious: (() -> Unit)?,
+    onNext: (() -> Unit)?,
+    previousDescription: String,
+    nextDescription: String,
+    modifier: Modifier = Modifier,
+) {
+    Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        IconButton(onClick = { onPrevious?.invoke() }, enabled = onPrevious != null) {
+            Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = previousDescription)
+        }
+        Text(
+            label,
+            style = MaterialTheme.typography.titleMedium,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .weight(1f)
+                .semantics { liveRegion = LiveRegionMode.Polite }
+        )
+        IconButton(onClick = { onNext?.invoke() }, enabled = onNext != null) {
+            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = nextDescription)
+        }
+    }
+}
