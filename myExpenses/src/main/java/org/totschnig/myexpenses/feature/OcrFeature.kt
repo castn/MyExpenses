@@ -1,7 +1,9 @@
 package org.totschnig.myexpenses.feature
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.net.Uri
 import android.os.Parcelable
 import androidx.fragment.app.FragmentManager
@@ -35,6 +37,15 @@ interface OcrFeature {
      * or null if recognition happens in an external app.
      */
     suspend fun recognize(context: Context, uri: Uri): RecognizedText? = null
+
+    /**
+     * Intent of a document scanner that crops and straightens the photo of a document,
+     * null if there is none.
+     */
+    suspend fun documentScanIntent(activity: Activity): IntentSender? = null
+
+    /** Photo returned by the scanner of [documentScanIntent] */
+    fun documentScanResult(data: Intent?): Uri? = null
 }
 
 @Parcelize

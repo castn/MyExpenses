@@ -1,15 +1,20 @@
 package org.totschnig.mlkit
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.IntentSender
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.annotation.Keep
 import com.google.mlkit.common.MlKit
+import com.google.mlkit.vision.documentscanner.GmsDocumentScanning
 import com.google.mlkit.vision.common.InputImage
-import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizerOptionsInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.totschnig.mlkit_core.TextRecognizer
+import org.totschnig.mlkit_core.documentScannerOptions
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.feature.Script
 import org.totschnig.myexpenses.feature.getUserConfiguredMlkitScript
@@ -64,18 +69,18 @@ object Engine : org.totschnig.ocr.MlkitEngine {
                         0
                     )
                 else InputImage.fromFilePath(context, uri)
-            TextRecognition.getClient(options(context, prefHandler)).use { recognizer ->
-                suspendCoroutine { cont ->
-                    recognizer.process(image)
-                        .addOnSuccessListener { texts ->
-                            cont.resume(texts.wrap())
-                        }
-                        .addOnFailureListener { e ->
-                            cont.resumeWithException(e as Throwable)
-                        }
-                }
-            }
+            TextRecognizer.process(image, options(context, prefHandler)).wrap()
         }
+
+    override suspend fun documentScanIntent(activity: Activity): IntentSender =
+        suspendCoroutine { cont ->
+            initialize(activity.applicationContext)
+            GmsDocumentScanning.getClient(documentScannerOptions()).getStartScanIntent(activity)
+                .addOnSuccessListener { cont.resume(it) }
+                .addOnFailureListener { cont.resumeWithException(it) }
+        }
+
+    override fun documentScanResult(data: Intent?) = org.totschnig.mlkit_core.documentScanResult(data)
 
     override fun info(context: Context, prefHandler: PrefHandler) = "Ml Kit (" +
             getDisplayNameForScript(
