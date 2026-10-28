@@ -1,0 +1,15 @@
+plugins {
+    id 'next.feature'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.feature.tags'
+}
+
+// The screens of groups (tags): chips, sections of trips, refunds and one-offs, suggestions and
+// what is learned about them.
+dependencies {
+    implementation project(':next:data:tags')
+    implementation project(':next:data:categories')
+    implementation project(':next:data:contracts')
+}
