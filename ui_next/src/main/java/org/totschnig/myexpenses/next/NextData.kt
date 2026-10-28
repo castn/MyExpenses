@@ -14,6 +14,9 @@ import org.totschnig.myexpenses.util.TransactionImports
 import org.totschnig.myexpenses.next.categories.ProviderCategoryWriting
 import org.totschnig.myexpenses.next.data.categories.CategoryRepository
 import org.totschnig.myexpenses.next.data.categories.CategoryStore
+import org.totschnig.myexpenses.next.tags.RepositoryTagDatabase
+import org.totschnig.myexpenses.next.data.tags.TagRepository
+import org.totschnig.myexpenses.next.data.tags.TagStore
 import kotlinx.coroutines.flow.StateFlow
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.injector
@@ -45,23 +48,26 @@ class NextData private constructor(context: Context) {
 
     val contracts = ContractRepository(ledgerSource, ContractStore(dataStore), scope)
 
+    val tags = TagRepository(ledgerSource, TagStore(dataStore), scope, RepositoryTagDatabase(context.injector.repository()))
+
     val categories = CategoryRepository(ledgerSource, CategoryStore(dataStore), ProviderCategoryWriting(context.contentResolver), scope)
 
     val balance = BalanceRepository(ledgerSource, contracts.facts, scope)
 
     /**
-     * Makes the automatic decisions of the areas while it runs: contracts and certain
-     * categories for new transactions. Called while the app is shown and after an import,
+     * Makes the automatic decisions of the areas while it runs: contracts, the rules of tags and
+     * certain categories for new transactions. Called while the app is shown and after an import,
      * so that nothing is analysed in the background otherwise.
      */
     suspend fun applyAutomaticDecisions(): Nothing = coroutineScope {
         launch { contracts.analysis.collect() }
+        launch { tags.appliedRules.collect() }
         launch { categories.appliedAutomatically.collect() }
         awaitCancellation()
     }
 
     init {
-        // Imported transactions get their categories right away, also when the app is not shown
+        // Imported transactions get their tags and categories right away, also when the app is not shown
         scope.launch {
             TransactionImports.imported.collectLatest {
                 withTimeoutOrNull(AFTER_IMPORT_MILLIS) { applyAutomaticDecisions() }
