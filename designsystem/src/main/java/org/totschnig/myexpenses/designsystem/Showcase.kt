@@ -163,6 +163,13 @@ private fun Showcase() {
             FormTextField("Long text", value = "", onValueChange = {}, singleLine = false)
             FormPickerField("Picked", value = "Tuesday, 3 November", onClick = {})
             SectionTitle("Settings")
+            AutocompleteField(
+                label = "Autocomplete",
+                selected = "Euro (EUR)",
+                options = listOf("Euro (EUR)", "US Dollar (USD)", "Swiss Franc (CHF)"),
+                optionLabel = { it },
+                onSelect = {}
+            )
             SearchField(query = "", onQueryChange = {}, placeholder = "Search", clearLabel = "Clear")
             IconNavigationRow(Icons.Outlined.Palette, "Icon navigation", onClick = {}, supportingText = "Lists what can be found there")
             IconNavigationRow(Icons.Outlined.Info, "Single line", onClick = {})
