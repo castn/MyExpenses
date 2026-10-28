@@ -10,9 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.totschnig.myexpenses.R
@@ -24,7 +22,7 @@ import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model2.Account
 import org.totschnig.myexpenses.next.MyExpensesNext
 import org.totschnig.myexpenses.next.NextTheme
-import org.totschnig.myexpenses.next.merchants.MerchantSettings
+import org.totschnig.myexpenses.next.NextFeatures
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.preference.TimePreference
 import org.totschnig.myexpenses.sync.BackendService
@@ -49,7 +47,13 @@ class NextOnboarding : OnboardingHostActivity() {
 
     override val snackBarContainerId = android.R.id.content
 
-    private val merchantLogoConsent by lazy { MerchantSettings.consent(this) }
+    /** The switches the areas ask on the first start, e.g. whether to load logos of payees */
+    private val areaSettings by lazy {
+        NextFeatures.settings.filter { it.onFirstStart.isNotEmpty() }.flatMap { factory ->
+            val area = factory.create(this)
+            factory.onFirstStart.map { FirstStartSetting(it, area) }
+        }
+    }
 
     private val currencyViewModel: CurrencyViewModel by viewModels()
     private val dataViewModel: OnBoardingDataViewModel by viewModels()
@@ -70,11 +74,7 @@ class NextOnboarding : OnboardingHostActivity() {
         if (isFinishing) return
         injector.inject(currencyViewModel)
         injector.inject(dataViewModel)
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                merchantLogoConsent.isGiven.collect { privacyChoices = readPrivacyChoices(it) }
-            }
-        }
+        privacyChoices = readPrivacyChoices()
         dataViewModel.accountSave.observe(this) { result ->
             result.onSuccess {
                 start()
@@ -118,17 +118,17 @@ class NextOnboarding : OnboardingHostActivity() {
         }
     }
 
-    private fun readPrivacyChoices(merchantLogos: Boolean) = PrivacyChoices(
+    private fun readPrivacyChoices() = PrivacyChoices(
         offersReporting = distribution.supportsTrackingAndCrashReporting,
         autoBackupTime = LocalTime.of(TimePreference.DEFAULT_VALUE / 100, TimePreference.DEFAULT_VALUE % 100)
             .format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)),
         checked = buildSet {
             if (prefHandler.getBoolean(PrefKey.CRASHREPORT_ENABLED, true)) add(PrivacySetting.CRASH_REPORTS)
             if (prefHandler.getBoolean(PrefKey.TRACKING, true)) add(PrivacySetting.TRACKING)
-            if (merchantLogos) add(PrivacySetting.MERCHANT_LOGOS)
             if (prefHandler.getBoolean(PrefKey.AUTO_BACKUP, false)) add(PrivacySetting.AUTO_BACKUP)
             if (prefHandler.encryptDatabase) add(PrivacySetting.ENCRYPTION)
-        }
+        },
+        areaSettings = areaSettings
     )
 
     private fun onPrivacyChange(setting: PrivacySetting, checked: Boolean) {
@@ -141,11 +141,6 @@ class NextOnboarding : OnboardingHostActivity() {
             PrivacySetting.TRACKING -> {
                 prefHandler.putBoolean(PrefKey.TRACKING, checked)
                 tracker.setEnabled(checked)
-            }
-
-            PrivacySetting.MERCHANT_LOGOS -> {
-                lifecycleScope.launch { merchantLogoConsent.set(checked) }
-                return // the flow of the consent updates the choices
             }
 
             PrivacySetting.AUTO_BACKUP -> {
