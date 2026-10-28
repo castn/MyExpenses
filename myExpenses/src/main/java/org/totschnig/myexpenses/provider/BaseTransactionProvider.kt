@@ -556,6 +556,8 @@ abstract class BaseTransactionProvider : ContentProvider() {
         protected const val ACCOUNT_FLAGS = 84
         protected const val ACCOUNT_FLAG_ID = 85
         protected const val LATEST_PRICES = 86
+        protected const val RECEIPTS = 87
+        protected const val RECEIPT_ITEMS = 88
 
         const val CTE_TABLE_NAME_FULL_ACCOUNTS = "full_accounts"
 
