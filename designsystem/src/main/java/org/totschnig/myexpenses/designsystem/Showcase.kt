@@ -41,6 +41,11 @@ import java.time.LocalDate
 import androidx.compose.ui.unit.sp
 import org.totschnig.myexpenses.designsystem.theme.DesignSystemTheme
 import org.totschnig.myexpenses.designsystem.theme.LocalSemanticColors
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Canvas
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.Paint
 
 /**
  * All building blocks on one page, to check how they look together. The charts have their own
@@ -131,6 +136,7 @@ private fun Showcase() {
                 ActionChip("Rare action", Icons.Outlined.Folder, onClick = {})
                 ActionChip("Another one", Icons.Outlined.Info, onClick = {})
             }
+            SelectionBar("2 rows chosen", actionLabel = "Combine", onAction = {}, onCancel = {})
             SectionTitle("Rows")
             DetailCard {
                 InfoRow("Info", "Value", isFirst = true)
@@ -141,7 +147,12 @@ private fun Showcase() {
                 SwitchRow("Switch", checked = true, onCheckedChange = {}, supportingText = "Explanation")
                 NavigationRow("Navigation", "Supporting text", onClick = {}, value = "12,00 €")
                 NavigationRow("Navigation with news", "Something new behind it", onClick = {}, hasNews = true)
+                RadioRow("Radio", selected = true, onClick = {}, supportingText = "Supporting text", note = "Note", value = "12,00 €")
+                RadioRow("Radio", selected = false, onClick = {}, supportingText = "Supporting text", value = "9,99 €")
+                SelectableTextRow("Selectable text", selected = null, onClick = {}, onLongClick = {})
+                SelectableTextRow("Selectable text, choosing several", selected = true, onClick = {}, onLongClick = {})
                 LinkRow("Link", onClick = {})
+                ProgressRow("Progress")
                 LoadingRow()
             }
             SectionTitle("Settings")
@@ -166,6 +177,46 @@ private fun Showcase() {
                 Highlighted(isHighlighted, onShown = { isHighlighted = false }) {
                     ValueRow("Highlighted", "Tap to light up again", onClick = { isHighlighted = true })
                 }
+            }
+            DetailCard {
+                val photo = remember {
+                    ImageBitmap(300, 900).also { bitmap ->
+                        Canvas(bitmap).drawRect(Rect(0f, 0f, 300f, 900f), Paint().apply { color = Color.LightGray })
+                    }
+                }
+                MarkedPhoto(
+                    bitmap = photo,
+                    marks = listOf(
+                        PhotoMark(Rect(20f, 400f, 280f, 440f), Color.Gray, 1.dp),
+                        PhotoMark(Rect(20f, 460f, 280f, 500f), MaterialTheme.colorScheme.primary.copy(alpha = 0.3f), filled = true)
+                    ),
+                    collapsedHeight = 120.dp,
+                    focus = Rect(20f, 460f, 280f, 500f)
+                )
+            }
+            DetailCard {
+                ReceiptTable(
+                    title = "Shop",
+                    itemHeader = "Item",
+                    amountHeader = "Price",
+                    lines = listOf(
+                        ReceiptLine("Item", "1,79 €"),
+                        ReceiptLine("Item with details", "1,78 €", details = "2 × 0,89 €")
+                    ),
+                    totalLabel = "Total",
+                    total = "3,57 €",
+                    collapsedLines = 1,
+                    showAllLabel = "Show all 2 items"
+                )
+            }
+            DetailCard {
+                EditableItemRow("Editable item", "2,29 €", removeLabel = "Remove", onClick = {}, onRemove = {}, isFirst = true)
+                EditableItemRow("Item with details", "1,77 €", removeLabel = "Remove", onClick = {}, onRemove = {}, supportingText = "3 × 0,59 €")
+                EditableItemRow("Item with badge", "0,99 €", removeLabel = "Remove", onClick = {}, onRemove = {}, badge = "Group")
+                EditableItemRow(
+                    "Item with missing badge", "0,59 €", removeLabel = "Remove", onClick = {}, onRemove = {},
+                    badge = "Missing", badgeStyle = BadgeStyle.Missing
+                )
             }
             DetailCard {
                 ShareRow("Share", "62,40 € · 58 %", share = 0.58f, isFirst = true)
@@ -354,6 +405,31 @@ private fun MultiChoiceSheetShowcase() {
                     supportingText = { if (it == "Holiday") "Trip" else null },
                     intro = "More than eight options can be searched"
                 )
+            }
+        }
+    }
+}
+
+@Preview(name = "Form sheet", showBackground = true)
+@Composable
+private fun FormSheetShowcase() {
+    DesignSystemTheme {
+        Column(Modifier.background(MaterialTheme.colorScheme.surfaceContainerLow)) {
+            SheetBody(
+                actions = {
+                    TextButton(onClick = {}) { Text("Done") }
+                    TextButton(onClick = {}) { Text("Skip") }
+                    Button(onClick = {}) { Text("Apply") }
+                },
+                scrollable = false
+            ) {
+                Column(
+                    Modifier.padding(horizontal = Spacing.screen, vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text("OATLY HAFER BARISTA", style = MaterialTheme.typography.titleMedium)
+                    ChoiceChips(options = listOf("Dairy", "Drinks", "Pantry"), selected = "Drinks", label = { it }, onSelect = {})
+                }
             }
         }
     }

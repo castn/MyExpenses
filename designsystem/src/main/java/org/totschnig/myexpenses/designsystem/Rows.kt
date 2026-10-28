@@ -42,6 +42,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.TextButton
+import androidx.compose.ui.res.stringResource
 
 /*
  * Rows of a card. Each row draws a divider above itself, except the first one of a card
@@ -157,6 +166,27 @@ fun PendingRow(title: String, text: String, isFirst: Boolean = false, icon: Imag
                 modifier = Modifier.padding(top = 2.dp)
             )
         }
+    }
+}
+
+/**
+ * Something that takes a moment, e.g. reading a photo
+ */
+@Composable
+fun ProgressRow(text: String, isFirst: Boolean = false) {
+    if (!isFirst) RowDivider()
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = Spacing.content, vertical = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+        Text(
+            text,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(start = Spacing.content)
+        )
     }
 }
 
@@ -690,6 +720,65 @@ fun IconNavigationRow(
 private const val DisabledAlpha = 0.38f
 
 /**
+ * Entry of a list the user corrects: tapping it edits the entry, the button removes it
+ *
+ * @param supportingText second line below the title, e.g. quantity and unit price
+ */
+@Composable
+fun EditableItemRow(
+    title: String,
+    value: String,
+    removeLabel: String,
+    onClick: () -> Unit,
+    onRemove: () -> Unit,
+    supportingText: String? = null,
+    isFirst: Boolean = false,
+    badge: String? = null,
+    badgeStyle: BadgeStyle = BadgeStyle.Outlined,
+) {
+    if (!isFirst) RowDivider()
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClickLabel = title, onClick = onClick)
+            .padding(start = Spacing.content, end = 4.dp, top = 8.dp, bottom = 8.dp)
+            .heightIn(min = 40.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text(
+                title,
+                style = MaterialTheme.typography.bodyLarge,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+            supportingText?.let {
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            badge?.let { TextBadge(it, Modifier.padding(top = 4.dp), style = badgeStyle) }
+        }
+        Text(
+            value,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.SemiBold,
+            maxLines = 1,
+            modifier = Modifier.padding(start = Spacing.content)
+        )
+        IconButton(onClick = onRemove) {
+            Icon(
+                Icons.Default.RemoveCircleOutline,
+                contentDescription = removeLabel,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
+/**
  * Like [InfoRow], with a button to remove the entry
  *
  * @param removeLabel describes the button, null if the entry cannot be removed
@@ -775,5 +864,124 @@ fun KeyFigures(figures: List<KeyFigure>, modifier: Modifier = Modifier) {
                 )
             }
         }
+    }
+}
+
+/**
+ * One of several options of which the user picks one, e.g. the transaction a receipt belongs to:
+ * title, lines below and a value on the right
+ *
+ * @param supportingText lines below the title, e.g. date and account
+ * @param note a further line in the accent colour, e.g. why the option is suggested
+ */
+@Composable
+fun RadioRow(
+    title: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    supportingText: String? = null,
+    note: String? = null,
+    value: String? = null,
+    valueColor: Color = Color.Unspecified,
+    isFirst: Boolean = false,
+) {
+    if (!isFirst) RowDivider()
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
+            .padding(start = 4.dp, end = Spacing.content, top = 8.dp, bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        RadioButton(selected = selected, onClick = null, modifier = Modifier.padding(horizontal = 12.dp))
+        Column(Modifier.weight(1f)) {
+            Text(
+                title,
+                style = MaterialTheme.typography.bodyLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            supportingText?.let {
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            note?.let {
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.tertiary
+                )
+            }
+        }
+        value?.let {
+            Text(
+                it,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+                color = valueColor,
+                maxLines = 1,
+                modifier = Modifier.padding(start = Spacing.content)
+            )
+        }
+    }
+}
+
+/**
+ * A line of text the user takes, e.g. a recognized row of a receipt: tapping takes it, a long
+ * press starts choosing several, which then show a checkbox and toggle on tap
+ *
+ * @param selected null while not choosing several
+ */
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun SelectableTextRow(
+    text: String,
+    selected: Boolean?,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit,
+    isFirst: Boolean = false,
+) {
+    if (!isFirst) RowDivider()
+    val chooseSeveralLabel = stringResource(R.string.ds_choose_several)
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .then(
+                if (selected != null) Modifier.toggleable(value = selected, role = Role.Checkbox, onValueChange = { onClick() })
+                else Modifier.combinedClickable(
+                    onClick = onClick,
+                    onLongClickLabel = chooseSeveralLabel,
+                    onLongClick = onLongClick
+                )
+            )
+            .padding(horizontal = Spacing.content, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (selected != null) {
+            Checkbox(checked = selected, onCheckedChange = null, modifier = Modifier.padding(end = 12.dp))
+        }
+        Text(text, style = MaterialTheme.typography.bodyMedium)
+    }
+}
+
+/**
+ * Shown while several entries are chosen: how many, cancel and what to do with them
+ *
+ * @param text e.g. "3 rows chosen"
+ */
+@Composable
+fun SelectionBar(text: String, actionLabel: String, onAction: () -> Unit, onCancel: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(text, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
+        TextButton(onClick = onCancel) { Text(stringResource(android.R.string.cancel)) }
+        Button(onClick = onAction) { Text(actionLabel) }
     }
 }

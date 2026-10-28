@@ -295,6 +295,54 @@ fun <T> MultiChoiceSheet(
 }
 
 /**
+ * Asks for several values at once while what they belong to stays visible above, e.g. an item
+ * of a receipt below its photo. The same as [FormDialog] otherwise.
+ *
+ * @param confirmLabel / [dismissLabel] instead of Apply / Cancel, e.g. "Skip" / "Done" when going
+ * through several entries one after the other
+ * @param intro shown above the fields, e.g. what the values mean
+ * @param secondaryLabel an action instead of dismissing next to confirm, shown if [onSecondary] is
+ * given, e.g. "Skip" when confirm takes over a proposed value; the sheet is then closed by a
+ * button next to the title labelled [dismissLabel], so that it keeps two actions at the bottom
+ * @param content the fields, scrolls if they do not fit
+ */
+@Composable
+fun FormSheet(
+    title: String,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit,
+    confirmEnabled: Boolean = true,
+    confirmLabel: String? = null,
+    dismissLabel: String? = null,
+    intro: String? = null,
+    secondaryLabel: String? = null,
+    onSecondary: (() -> Unit)? = null,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    val hasSecondary = onSecondary != null && secondaryLabel != null
+    val dismiss = dismissLabel ?: stringResource(android.R.string.cancel)
+    AdaptiveSheet(
+        onDismiss = onDismiss,
+        title = title,
+        closeLabel = dismiss.takeIf { hasSecondary },
+        actions = {
+            ConfirmActions(onConfirm, confirmEnabled, confirmLabel) {
+                if (onSecondary != null && secondaryLabel != null) TextButton(onClick = onSecondary) { Text(secondaryLabel) }
+                else TextButton(onClick = onDismiss) { Text(dismiss) }
+            }
+        }
+    ) {
+        Column(
+            Modifier.padding(horizontal = Spacing.screen, vertical = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            intro?.let { DialogIntro(it) }
+            content()
+        }
+    }
+}
+
+/**
  * Two actions at the bottom of a sheet, Apply and before it [dismiss], e.g. Cancel or Skip
  */
 @Composable
