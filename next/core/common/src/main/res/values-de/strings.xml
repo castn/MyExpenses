@@ -418,7 +418,9 @@
     <string name="next_settings_explain_remove_local_calendar">Löscht den Kalender, den die App auf diesem Gerät für geplante Buchungen angelegt hat.</string>
     <string name="next_settings_consent">Buchungen auswerten</string>
     <string name="next_settings_category_rules">Kategorieregeln</string>
+    <string name="next_settings_tag_rules">Tag-Regeln</string>
     <string name="next_settings_consent_summary">Findet Verträge, regelmäßige Einnahmen, Vorschläge und Spartipps. Nur auf deinem Gerät.</string>
+    <string name="next_settings_rejected_suggestions">Abgelehnte Vorschläge</string>
     <string name="next_settings_merchant_logos">Logos von Geschäften</string>
     <string name="next_settings_merchant_logos_summary">Zeigt in der Buchungsliste die Logos bekannter Geschäfte und Firmen. Dafür werden deren Webadressen, z. B. rewe.de, an den Icon-Dienst von DuckDuckGo gesendet, nie Beträge oder Buchungen.</string>
     <string name="next_payee_logo_title">Logo von %s</string>
@@ -428,12 +430,19 @@
     <string name="next_payee_logo_not_found">Kein Symbol für %s gefunden</string>
     <string name="next_payee_logo_invalid">Keine Webadresse</string>
     <string name="next_payee_logo_remove">Webadresse entfernen</string>
+    <string name="next_settings_rejected_suggestions_confirm">Vorschläge für Kategorien und Tags, Reisen und Erstattungen, die du abgelehnt hast, werden wieder angezeigt.</string>
+    <string name="next_settings_reset">Zurücksetzen</string>
     <string name="next_settings_no_rules">Noch keine Regeln</string>
     <string name="next_settings_category_rules_hint">Eine Regel entsteht, wenn du bei einem Kategorievorschlag „immer so machen“ wählst. Neue Buchungen des Empfängers bekommen dann diese Kategorie.</string>
+    <string name="next_settings_tag_rules_hint">Eine Regel entsteht, wenn du bei einem Tag-Vorschlag „immer so machen“ wählst. Neue Buchungen des Empfängers bekommen dann diesen Tag.</string>
     <string name="next_settings_remove_rule">Regel löschen</string>
     <plurals name="next_settings_rules">
         <item quantity="one">%d Regel</item>
         <item quantity="other">%d Regeln</item>
+    </plurals>
+    <plurals name="next_settings_rejected">
+        <item quantity="one">%d abgelehnt</item>
+        <item quantity="other">%d abgelehnt</item>
     </plurals>
     <string name="next_amount_invalid">Kein Betrag, z. B. 12,34</string>
     <string name="next_change">Ändern</string>

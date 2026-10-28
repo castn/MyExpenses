@@ -8,6 +8,8 @@ import org.totschnig.myexpenses.next.categories.CategorySettings
 import org.totschnig.myexpenses.next.contracts.ContractsFeature
 import org.totschnig.myexpenses.next.merchants.MerchantSettings
 import org.totschnig.myexpenses.next.merchants.MerchantsFeature
+import org.totschnig.myexpenses.next.tags.TagsFeature
+import org.totschnig.myexpenses.next.tags.TagSettings
 import org.totschnig.myexpenses.next.settings.AreaSettings
 import org.totschnig.myexpenses.next.settings.NextSettings
 
@@ -21,14 +23,15 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
     val contracts = ContractsFeature(activity, data)
     val balance = BalanceFeature(activity, data, contracts)
     val categories = CategoriesFeature(activity, data)
+    val tags = TagsFeature(activity, data)
 
-    val all: List<NextFeature> = listOf(categories, contracts, merchants, balance)
+    val all: List<NextFeature> = listOf(categories, tags, contracts, merchants, balance)
 
     companion object {
         /** What the areas provide to all screens of the new UI, also outside of the main screen, see [NextTheme] */
         val locals: Array<ProvidedValue<*>> get() = arrayOf(CategoriesFeature.picker)
 
         /** The settings of the areas, in the order they are listed in their groups, see [NextSettings] */
-        val settings: List<AreaSettings.Factory> get() = listOf(CategorySettings, MerchantSettings)
+        val settings: List<AreaSettings.Factory> get() = listOf(CategorySettings, TagSettings, MerchantSettings)
     }
 }
