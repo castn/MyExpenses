@@ -1,11 +1,13 @@
 package org.totschnig.myexpenses.designsystem
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -14,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.RemoveCircleOutline
+import androidx.compose.material.icons.outlined.HourglassEmpty
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
@@ -125,6 +129,195 @@ fun EditableRow(label: String, onClick: () -> Unit, isFirst: Boolean = false, va
 }
 
 /**
+ * Something that is not possible yet, and what it still needs, e.g. a saving tip that needs scanned
+ * receipts. Muted, since it tells nothing yet.
+ */
+@Composable
+fun PendingRow(title: String, text: String, isFirst: Boolean = false, icon: ImageVector = Icons.Outlined.HourglassEmpty) {
+    if (!isFirst) RowDivider()
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = Spacing.content, vertical = 12.dp)
+    ) {
+        Icon(
+            icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier
+                .padding(top = 2.dp)
+                .size(20.dp)
+        )
+        Column(Modifier.padding(start = Spacing.content)) {
+            Text(title, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(
+                text,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 2.dp)
+            )
+        }
+    }
+}
+
+/**
+ * How much of a limit is used, e.g. of a pot of the budget: a meter whose track is a light step of
+ * the fill, so that the whole bar reads as one state. Overspent, fill and track turn to the error
+ * colours and a warning icon is shown; the [value] says it in words, so colour is never the only
+ * sign.
+ *
+ * @param used share of the limit used, 1f = all of it, above 1f overspent
+ * @param committed share that is not used yet but will be, e.g. contracts still to be paid, drawn
+ * lighter after [used]
+ * @param projected share expected at the end, e.g. at the pace so far, a mark on the bar, null for none
+ * @param supportingText below the label, e.g. "of 300 €"
+ * @param leadingIcon in place of [icon], for icons that are no vector, e.g. of a font, 24dp
+ * @param onClick opens the details, null if the row is not tappable
+ */
+@Composable
+fun MeterRow(
+    label: String,
+    value: String,
+    used: Float,
+    isFirst: Boolean = false,
+    committed: Float = 0f,
+    projected: Float? = null,
+    supportingText: String? = null,
+    icon: ImageVector? = null,
+    leadingIcon: (@Composable () -> Unit)? = null,
+    onClick: (() -> Unit)? = null,
+) {
+    if (!isFirst) RowDivider()
+    val isOver = used + committed > 1f
+    val fill = if (isOver) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
+    val track = if (isOver) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.primaryContainer
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
+            .padding(horizontal = Spacing.content, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (icon != null) {
+            Icon(
+                icon,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .padding(end = Spacing.content)
+                    .size(24.dp)
+            )
+        } else if (leadingIcon != null) {
+            Box(
+                Modifier
+                    .padding(end = Spacing.content)
+                    .size(24.dp),
+                contentAlignment = Alignment.Center
+            ) { leadingIcon() }
+        }
+        Column(Modifier.weight(1f)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    label,
+                    style = MaterialTheme.typography.bodyLarge,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f)
+                )
+                if (isOver) {
+                    Icon(
+                        Icons.Outlined.Info,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.error,
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                            .size(16.dp)
+                    )
+                }
+                Text(
+                    value,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
+                    modifier = Modifier.padding(start = 4.dp)
+                )
+            }
+            Box(
+                Modifier
+                    .padding(vertical = 8.dp)
+                    .fillMaxWidth()
+                    .height(MeterMarkHeight),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(MeterHeight)
+                        .clip(MeterShape)
+                        .background(track)
+                ) {
+                    val usedWidth = used.coerceIn(0f, 1f)
+                    val committedWidth = committed.coerceIn(0f, 1f - usedWidth)
+                    if (usedWidth > 0f) {
+                        Box(
+                            Modifier
+                                .weight(usedWidth)
+                                .height(MeterHeight)
+                                .clip(MeterShape)
+                                .background(fill)
+                        )
+                    }
+                    if (committedWidth > 0f) {
+                        // A gap of the surface between the two fills
+                        Box(
+                            Modifier
+                                .padding(start = if (usedWidth > 0f) 2.dp else 0.dp)
+                                .weight(committedWidth)
+                                .height(MeterHeight)
+                                .clip(MeterShape)
+                                .background(fill.copy(alpha = 0.45f))
+                        )
+                    }
+                    val rest = 1f - usedWidth - committedWidth
+                    if (rest > 0f) Box(Modifier.weight(rest))
+                }
+                if (projected != null) {
+                    val position = projected.coerceIn(0f, 1f)
+                    Row(Modifier.fillMaxWidth()) {
+                        if (position > 0f) Box(Modifier.weight(position))
+                        Box(
+                            Modifier
+                                .size(width = 2.dp, height = MeterMarkHeight)
+                                .background(MaterialTheme.colorScheme.onSurface)
+                        )
+                        if (position < 1f) Box(Modifier.weight(1f - position))
+                    }
+                }
+            }
+            if (supportingText != null) {
+                Text(
+                    supportingText,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+        if (onClick != null) {
+            Icon(
+                Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(start = 4.dp)
+            )
+        }
+    }
+}
+
+private val MeterHeight = 8.dp
+private val MeterMarkHeight = 16.dp
+private val MeterShape = Shapes.badge
+
+/**
  * Leads to another page, like "show all"
  */
 @Composable
@@ -148,6 +341,62 @@ fun LinkRow(text: String, onClick: () -> Unit, isFirst: Boolean = false) {
             Icons.AutoMirrored.Filled.KeyboardArrowRight,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.tertiary
+        )
+    }
+}
+
+/**
+ * An item that opens its details: title with a line below, optionally a value on the right
+ *
+ * @param valueColor e.g. for amounts, see [org.totschnig.myexpenses.designsystem.theme.SemanticColors.amountColor]
+ * @param hasNews marks with a [Dot] that there is something new behind it
+ */
+@Composable
+fun NavigationRow(
+    title: String,
+    supportingText: String,
+    onClick: () -> Unit,
+    isFirst: Boolean = false,
+    value: String? = null,
+    valueColor: Color = Color.Unspecified,
+    hasNews: Boolean = false,
+) {
+    if (!isFirst) RowDivider()
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(start = Spacing.content, end = 8.dp, top = 12.dp, bottom = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text(
+                title,
+                style = MaterialTheme.typography.bodyLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                supportingText,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        value?.let {
+            Text(
+                it,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+                color = valueColor,
+                modifier = Modifier.padding(start = Spacing.content)
+            )
+        }
+        if (hasNews) Dot(Modifier.padding(start = Spacing.content))
+        Icon(
+            Icons.AutoMirrored.Filled.KeyboardArrowRight,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(start = 4.dp)
         )
     }
 }

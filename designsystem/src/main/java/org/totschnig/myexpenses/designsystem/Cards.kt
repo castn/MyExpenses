@@ -1,6 +1,8 @@
 package org.totschnig.myexpenses.designsystem
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,9 +30,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
@@ -239,6 +246,49 @@ fun HighlightCard(modifier: Modifier = Modifier, content: @Composable ColumnScop
         modifier = modifier.fillMaxWidth()
     ) {
         Column(Modifier.padding(20.dp), content = content)
+    }
+}
+
+/**
+ * A card that shows only a summary until it is tapped, e.g. a saving tip whose advice and items
+ * are only needed when the user looks into it. A chevron at the end of the summary shows the state.
+ *
+ * @param summary always shown, padded like the content of a card
+ * @param details shown below when expanded, not padded, so that rows reach the edges
+ */
+@Composable
+fun ExpandableCard(
+    expanded: Boolean,
+    onExpandedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+    summary: @Composable ColumnScope.() -> Unit,
+    details: @Composable ColumnScope.() -> Unit,
+) {
+    val rotation by animateFloatAsState(if (expanded) 180f else 0f)
+    val toggleLabel = stringResource(if (expanded) R.string.ds_show_less else R.string.ds_show_more)
+    val state = stringResource(if (expanded) R.string.ds_expanded else R.string.ds_collapsed)
+    DetailCard(modifier) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClickLabel = toggleLabel) { onExpandedChange(!expanded) }
+                .semantics { stateDescription = state }
+                .padding(start = Spacing.content, end = 8.dp, top = Spacing.content, bottom = Spacing.content),
+            verticalAlignment = Alignment.Top
+        ) {
+            Column(Modifier.weight(1f), content = summary)
+            Icon(
+                Icons.Default.ExpandMore,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .padding(start = 4.dp)
+                    .rotate(rotation)
+            )
+        }
+        AnimatedVisibility(expanded) {
+            Column(content = details)
+        }
     }
 }
 

@@ -96,6 +96,13 @@ private fun Showcase() {
                     )
                 }
             }
+            var isExpanded by remember { mutableStateOf(false) }
+            ExpandableCard(isExpanded, { isExpanded = it }, summary = {
+                Text("Expandable card", style = MaterialTheme.typography.titleMedium)
+                Text("Summary, tap for the details", style = MaterialTheme.typography.bodyMedium)
+            }) {
+                InfoRow("Detail", "Value", isFirst = true)
+            }
             MenuFab(
                 label = "Create", icon = Icons.Outlined.Folder, menuLabel = "Choose", closeLabel = "Close",
                 items = listOf(FabMenuItem("Kind", Icons.Outlined.Info) {}),
@@ -105,6 +112,11 @@ private fun Showcase() {
                 icon = Icons.Outlined.Info, title = "Invite", text = "Something optional to start, can be closed",
                 onClick = {}, onDismiss = {}, dismissLabel = "Close"
             )
+            InviteCard(
+                icon = Icons.Outlined.Info, title = "Information", text = "Only tells, nothing to open",
+                onClick = null, onDismiss = {}, dismissLabel = "Close"
+            )
+            HintCard("Short hint the user can close for good", dismissLabel = "Close", onDismiss = {})
             GroupTitle("Group with menu", action = {
                 MenuButton(listOf(MenuEntry("Entry", Icons.Outlined.Folder) {}), contentDescription = "More")
             })
@@ -117,8 +129,11 @@ private fun Showcase() {
                 InfoRow("Info", "Value", isFirst = true)
                 EditableRow("Editable", "Value", onClick = {})
                 EditableRow("Editable icon", onClick = {}) { IconTile { Icon(Icons.Outlined.Palette, contentDescription = null) } }
+                MeterRow("Meter with own icon", "120 €", used = 0.4f, leadingIcon = { Icon(Icons.Outlined.Folder, contentDescription = null) })
                 RemovableRow("Removable", "Value", removeLabel = "Remove", onRemove = {})
                 SwitchRow("Switch", checked = true, onCheckedChange = {}, supportingText = "Explanation")
+                NavigationRow("Navigation", "Supporting text", onClick = {}, value = "12,00 €")
+                NavigationRow("Navigation with news", "Something new behind it", onClick = {}, hasNews = true)
                 LinkRow("Link", onClick = {})
                 LoadingRow()
             }
@@ -139,10 +154,19 @@ private fun Showcase() {
                     preview = { Text("Sample text", fontSize = 16.sp * (1 + it / 10)) }
                 )
                 HintRow("Hint explaining something within a card")
+                PendingRow("Pending", "Not possible yet, and what it still needs")
                 var isHighlighted by remember { mutableStateOf(true) }
                 Highlighted(isHighlighted, onShown = { isHighlighted = false }) {
                     ValueRow("Highlighted", "Tap to light up again", onClick = { isHighlighted = true })
                 }
+            }
+            DetailCard {
+                MeterRow("Meter", "80 € left", used = 0.6f, isFirst = true, supportingText = "of 200 €", onClick = {})
+                MeterRow(
+                    "Committed and projected", "15 € left", used = 0.4f, committed = 0.5f, projected = 0.95f,
+                    supportingText = "of 150 € · 35 € still due"
+                )
+                MeterRow("Overspent", "20 € over", used = 1.2f, supportingText = "of 100 €")
             }
             SectionHeader("Group", count = 3, trailing = "123,45 €")
             (0 until 3).forEach {
@@ -156,6 +180,10 @@ private fun Showcase() {
                 InfoRow("Income", "+12,00 €", isFirst = true, valueColor = colors.income)
                 InfoRow("Expense", "−12,00 €", valueColor = colors.expense)
                 InfoRow("Transfer", "12,00 €", valueColor = colors.transfer)
+            }
+            SectionTitle("Period switcher")
+            DetailCard {
+                PeriodSwitcher("October 2026", onPrevious = {}, onNext = null, "Earlier", "Later")
             }
             SectionTitle("Overview")
             OverviewCard("Overview card", onClick = {}) {
