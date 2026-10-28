@@ -22,6 +22,8 @@ offer; a view model shows the flows of its repository and changes its store.
 | --- | --- | --- |
 | `ProviderLedgerSource` (shell) | transactions with their tags and split parts, own accounts with their IBANs, categories, tags, consent | `LedgerSource`: consent, `Ledger`, `Catalog`, today |
 | `ContractRepository` | ledger, its rules | `ContractFacts`: contracts, incomes, ids of their payments; to `ContractsViewModel` the analysis and the overviews |
+| `TagRepository` | ledger, meanings and rules of tags | `TagFacts`: debits excluded from spending, meanings; to the tag view models the tag rows, to `TagLearningViewModel` the learning inputs; applies the rules of tags |
+| `CategoryRepository` | ledger, catalog, its rules and decisions | to `CategorySuggestionsViewModel` the suggestions; applies certain categories to new transactions |
 | `BalanceRepository` | ledger, `ContractFacts` | the balance from salary to salary |
 
 The view models without a repository offer nothing to others and read what they show
@@ -29,6 +31,7 @@ themselves:
 
 | View model | Reads |
 | --- | --- |
+| `TagDetectionsViewModel` | tag rows, ledger, catalog, `ContractFacts` |
 | `FixedTransactionsViewModel` (package `transactions`) | the transactions it is asked to show |
 
 The view models live as long as `MyExpensesNext`. The entry of each area in the shell (`…Feature`,
@@ -50,7 +53,7 @@ on data and core modules but never on another feature. A screen of another area,
 in the balance, is handed in by the shell as a composable parameter. Nothing of this knows
 `:myExpenses`. The shell `:ui_next` knows the app: `ProviderLedgerSource` reads the ledger,
 the entries of the areas (`…Feature`) create the view models, and small adapters implement what features need of the
-app, e.g. `AppFixedTransactions`. The
+app, e.g. `ProviderCategoryWriting`, `RepositoryTagDatabase`, `AppFixedTransactions`. The
 dependencies between the modules are in [`modules.puml`](../../../../../../../../../../../../../ui_next/modules.puml).
 
 ## Computing only when something changed
@@ -67,7 +70,7 @@ is shown again, e.g. after editing a transaction or when the app comes back from
   the process, also when the activity is recreated. `mapMemo` also passes over an input
   equal to the previous one, null stays null.
 - The input holds only what the analysis reads. The contracts do not read the tags of the
-  transactions, so tagging a transaction does not analyse the contracts again.
+  transactions, so tagging a transaction does not analyse the contracts again, only what reads tags.
 - `Ledger`, `LedgerTransaction`, `OwnAccounts`, inputs and facts are data classes, so that equal
   data compares equal. A class compared by identity is never wrong, it is only computed more often.
 - `ProviderLedgerSource` reads the transactions again on each change of the database. Changes closer

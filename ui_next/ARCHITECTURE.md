@@ -472,6 +472,21 @@ independently.
 
 ---
 
+### `vm-writes-via-repo` — Writes to the database go through a function or repository
+
+Writing to the database goes through a function of the feature (`CategoryWriting`, `TagWriting`) or
+the repository, not from a composable.
+
+**Why:** A composable that writes to the database makes it impossible to test the write without a
+UI test. A composable should only show state and call actions; the actions live in a view model or
+repository that can be tested in isolation.
+
+**Check:** review
+
+---
+
+---
+
 ### `vm-entry-points` — View models are imported only by entry points
 
 View models are imported only by `MyExpensesNext`, `NextSettings`, the entries of the areas in the
@@ -709,6 +724,22 @@ or the calendar, and contracts never create transactions.
 **Why:** The import-first model simplifies the transaction flow. Plans and calendar entries are a
 separate mental model; porting them would add complexity without serving the core use case that the
 new UI is designed around.
+
+**Check:** review
+
+---
+
+---
+
+### `data-category-tag` — Category answers "Wofür?", tag answers "Was gehört zusammen?"
+
+A category answers "Wofür?" (one per transaction, a tree); a tag answers "Was gehört zusammen?"
+(none or several, e.g. a trip). Einmalig, erstattet and beruflich are only tags with a meaning,
+never categories.
+
+**Why:** Mixing the two concepts — e.g. making "trip" a category — forces a transaction to choose
+between what it is for and what context it belongs to. Keeping them separate means both questions
+can be answered independently.
 
 **Check:** review
 
