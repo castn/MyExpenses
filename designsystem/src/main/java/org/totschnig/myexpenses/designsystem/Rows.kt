@@ -161,6 +161,71 @@ fun PendingRow(title: String, text: String, isFirst: Boolean = false, icon: Imag
 }
 
 /**
+ * One part of a whole with a thin bar for its share, e.g. how much of a purchase went to one
+ * product type. Rows below each other are sorted by size, so the bars compare at a glance; the
+ * value carries the number, so the bar is never the only way to read it.
+ *
+ * @param share from 0 to 1
+ * @param isMuted for a rest that is not a real part, e.g. items without product type: grey bar
+ * @param onClick e.g. to assign the rest, null if the row is not tappable
+ */
+@Composable
+fun ShareRow(
+    label: String,
+    value: String,
+    share: Float,
+    isFirst: Boolean = false,
+    isMuted: Boolean = false,
+    onClick: (() -> Unit)? = null,
+) {
+    if (!isFirst) RowDivider()
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
+            .padding(horizontal = Spacing.content, vertical = 12.dp)
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                label,
+                style = MaterialTheme.typography.bodyLarge,
+                color = if (isMuted) MaterialTheme.colorScheme.onSurfaceVariant else Color.Unspecified,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f)
+            )
+            Text(
+                value,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold,
+                maxLines = 1,
+                modifier = Modifier.padding(start = Spacing.content)
+            )
+        }
+        // Recessive track, so that the length of the bar reads as part of the whole
+        Box(
+            Modifier
+                .padding(top = 8.dp)
+                .fillMaxWidth()
+                .height(ShareBarHeight)
+                .clip(ShareBarShape)
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+        ) {
+            Box(
+                Modifier
+                    .fillMaxWidth(share.coerceIn(0f, 1f))
+                    .height(ShareBarHeight)
+                    .clip(ShareBarShape)
+                    .background(if (isMuted) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.primary)
+            )
+        }
+    }
+}
+
+private val ShareBarHeight = 8.dp
+private val ShareBarShape = Shapes.badge
+
+/**
  * How much of a limit is used, e.g. of a pot of the budget: a meter whose track is a light step of
  * the fill, so that the whole bar reads as one state. Overspent, fill and track turn to the error
  * colours and a warning icon is shown; the [value] says it in words, so colour is never the only
@@ -673,3 +738,42 @@ fun RemovableRow(
     }
 }
 
+/** One number of [KeyFigures], e.g. "Spent" and "29.100 €" */
+data class KeyFigure(val label: String, val value: String)
+
+/**
+ * A few headline numbers side by side, e.g. earned, spent and left, each value above its label.
+ * Each value is read out together with its label.
+ */
+@Composable
+fun KeyFigures(figures: List<KeyFigure>, modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = Spacing.content, vertical = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.content)
+    ) {
+        figures.forEach { figure ->
+            Column(
+                Modifier
+                    .weight(1f)
+                    .semantics(mergeDescendants = true) {}
+            ) {
+                Text(
+                    figure.value,
+                    style = MaterialTheme.typography.titleMedium.copy(fontFeatureSettings = "tnum"),
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Text(
+                    figure.label,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+        }
+    }
+}

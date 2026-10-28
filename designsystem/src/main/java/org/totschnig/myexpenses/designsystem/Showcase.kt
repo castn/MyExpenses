@@ -116,6 +116,13 @@ private fun Showcase() {
                 icon = Icons.Outlined.Info, title = "Information", text = "Only tells, nothing to open",
                 onClick = null, onDismiss = {}, dismissLabel = "Close"
             )
+            InfoBox(
+                title = "Info box",
+                points = listOf(
+                    InfoPoint("Tells what is missing, goes away by itself", actionLabel = "What helps") {},
+                    InfoPoint("A point without action")
+                )
+            )
             HintCard("Short hint the user can close for good", dismissLabel = "Close", onDismiss = {})
             GroupTitle("Group with menu", action = {
                 MenuButton(listOf(MenuEntry("Entry", Icons.Outlined.Folder) {}), contentDescription = "More")
@@ -161,6 +168,11 @@ private fun Showcase() {
                 }
             }
             DetailCard {
+                ShareRow("Share", "62,40 € · 58 %", share = 0.58f, isFirst = true)
+                ShareRow("Smaller share", "31,20 € · 29 %", share = 0.29f)
+                ShareRow("Rest", "13,90 € · 13 %", share = 0.13f, isMuted = true, onClick = {})
+            }
+            DetailCard {
                 MeterRow("Meter", "80 € left", used = 0.6f, isFirst = true, supportingText = "of 200 €", onClick = {})
                 MeterRow(
                     "Committed and projected", "15 € left", used = 0.4f, committed = 0.5f, projected = 0.95f,
@@ -184,6 +196,10 @@ private fun Showcase() {
             SectionTitle("Period switcher")
             DetailCard {
                 PeriodSwitcher("October 2026", onPrevious = {}, onNext = null, "Earlier", "Later")
+            }
+            SectionTitle("Key figures")
+            DetailCard {
+                KeyFigures(listOf(KeyFigure("Earned", "32,400 €"), KeyFigure("Spent", "29,100 €"), KeyFigure("Left", "3,300 €")))
             }
             SectionTitle("Overview")
             OverviewCard("Overview card", onClick = {}) {
