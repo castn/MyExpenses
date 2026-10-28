@@ -8,6 +8,7 @@ skinparam linetype ortho
 skinparam ranksep 80
 top to bottom direction
 
+[:charts] as mCharts
 [:designsystem] as mDesignsystem
 [:myExpenses\n(app)] as mMyExpenses
 [:ui_next\n(dynamic feature)] as mUiNext
@@ -20,6 +21,7 @@ package "next/core" as pNextCore {
 
 package "next/data" as pNextData {
     [:balance] as mNextDataBalance
+    [:budgets] as mNextDataBudgets
     [:categories] as mNextDataCategories
     [:contracts] as mNextDataContracts
     [:merchants] as mNextDataMerchants
@@ -28,6 +30,7 @@ package "next/data" as pNextData {
 
 package "next/feature" as pNextFeature {
     [:balance] as mNextFeatureBalance
+    [:budgets] as mNextFeatureBudgets
     [:categories] as mNextFeatureCategories
     [:contracts] as mNextFeatureContracts
     [:merchants] as mNextFeatureMerchants
@@ -44,12 +47,16 @@ mNextCoreCommon --> mNextCoreModel
 mNextCoreUi --> mDesignsystem
 mNextCoreUi --> mNextCoreCommon
 mNextDataBalance --> mNextDataContracts
+mNextDataBudgets --> mNextDataBalance
+mNextDataBudgets --> mNextDataTags
 mNextDataCategories --> mNextDataMerchants
 mNextDataContracts --> mNextDataMerchants
 mNextDataMerchants --> mNextCoreCommon
 mNextDataTags --> mNextDataCategories
 mNextDataTags --> mNextDataContracts
 mNextFeatureBalance --> mNextDataBalance
+mNextFeatureBudgets --> mCharts
+mNextFeatureBudgets --> mNextDataBudgets
 mNextFeatureCategories --> mNextDataCategories
 mNextFeatureContracts --> mNextDataContracts
 mNextFeatureMerchants --> mNextDataMerchants
