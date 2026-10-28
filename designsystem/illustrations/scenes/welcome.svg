@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480">
+  <!-- ground -->
+  <ellipse cx="300" cy="466" rx="270" ry="12" fill="slot:neutral"/>
+  <!-- receipt -->
+  <g transform="translate(400, 70) rotate(6)">
+    <path d="M0,0 H140 V250 L128,260 L116,250 L104,260 L92,250 L80,260 L68,250 L56,260 L44,250 L32,260 L20,250 L8,260 L0,252 Z" fill="slot:paper"/>
+    <rect x="20" y="24" width="100" height="10" rx="5" fill="slot:ink"/>
+    <rect x="20" y="60" width="70" height="8" rx="4" fill="slot:line"/>
+    <rect x="100" y="60" width="20" height="8" rx="4" fill="slot:line"/>
+    <rect x="20" y="82" width="56" height="8" rx="4" fill="slot:line"/>
+    <rect x="100" y="82" width="20" height="8" rx="4" fill="slot:line"/>
+    <rect x="20" y="104" width="80" height="8" rx="4" fill="slot:line"/>
+    <rect x="104" y="104" width="16" height="8" rx="4" fill="slot:line"/>
+    <rect x="20" y="126" width="62" height="8" rx="4" fill="slot:line"/>
+    <rect x="100" y="126" width="20" height="8" rx="4" fill="slot:line"/>
+    <rect x="20" y="164" width="100" height="4" rx="2" fill="slot:line"/>
+    <rect x="20" y="186" width="50" height="12" rx="6" fill="slot:tertiary"/>
+    <rect x="88" y="186" width="32" height="12" rx="6" fill="slot:tertiary"/>
+  </g>
+  <!-- chart bubble -->
+  <g transform="translate(20, 40)">
+    <rect width="150" height="110" rx="20" fill="slot:paper"/>
+    <rect x="24" y="58" width="18" height="32" rx="4" fill="slot:primary"/>
+    <rect x="52" y="36" width="18" height="54" rx="4" fill="slot:primary"/>
+    <rect x="80" y="66" width="18" height="24" rx="4" fill="slot:tertiary"/>
+    <rect x="108" y="22" width="18" height="68" rx="4" fill="slot:primary"/>
+  </g>
+  <g transform="translate(70, 0)">
+    <use href="humaaans/standing-3.svg" top="primary" bottom="secondary"/>
+    <!-- phone between the hands -->
+    <g transform="translate(296, 140) rotate(-14)">
+      <rect x="-24" y="-44" width="48" height="88" rx="9" fill="slot:ink"/>
+      <rect x="-19" y="-36" width="38" height="72" rx="5" fill="slot:paper"/>
+      <rect x="-12" y="-26" width="24" height="6" rx="3" fill="slot:primary"/>
+      <rect x="-12" y="-12" width="24" height="5" rx="2.5" fill="slot:line"/>
+      <rect x="-12" y="-1" width="18" height="5" rx="2.5" fill="slot:line"/>
+      <rect x="-12" y="10" width="24" height="5" rx="2.5" fill="slot:line"/>
+    </g>
+  </g>
+</svg>

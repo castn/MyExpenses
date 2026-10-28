@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480">
+  <!-- ground -->
+  <ellipse cx="300" cy="466" rx="270" ry="12" fill="slot:neutral"/>
+  <!-- wallet -->
+  <g transform="translate(400, 230) rotate(-6)">
+    <rect x="0" y="0" width="170" height="120" rx="18" fill="slot:primaryShade"/>
+    <rect x="0" y="14" width="170" height="106" rx="18" fill="slot:primary"/>
+    <path d="M110,46 H170 V90 H110 A22,22 0 0 1 110,46 Z" fill="slot:primaryShade"/>
+    <circle cx="116" cy="68" r="9" fill="slot:paper"/>
+  </g>
+  <!-- coins on their way into it -->
+  <circle cx="400" cy="214" r="17" fill="slot:tertiaryShade"/>
+  <circle cx="400" cy="211" r="17" fill="slot:tertiary"/>
+  <circle cx="452" cy="176" r="15" fill="slot:tertiaryShade"/>
+  <circle cx="452" cy="173" r="15" fill="slot:tertiary"/>
+  <circle cx="500" cy="196" r="13" fill="slot:tertiaryShade"/>
+  <circle cx="500" cy="193" r="13" fill="slot:tertiary"/>
+  <g transform="translate(60, 0)">
+    <use href="humaaans/standing-5.svg" top="secondary" bottom="tertiary"/>
+  </g>
+</svg>

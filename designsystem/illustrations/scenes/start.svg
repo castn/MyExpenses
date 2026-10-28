@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480">
+  <!-- ground -->
+  <ellipse cx="300" cy="466" rx="270" ry="12" fill="slot:neutral"/>
+  <!-- signpost with a sign for each way to start -->
+  <rect x="462" y="50" width="16" height="416" rx="6" fill="slot:neutralShade"/>
+  <circle cx="470" cy="50" r="12" fill="slot:neutralShade"/>
+  <path d="M460,80 H570 L592,104 L570,128 H460 Z" fill="slot:primary"/>
+  <path d="M480,146 H370 L348,170 L370,194 H480 Z" fill="slot:secondary"/>
+  <path d="M460,212 H560 L582,236 L560,260 H460 Z" fill="slot:tertiary"/>
+  <path d="M480,278 H380 L358,302 L380,326 H480 Z" fill="slot:primaryShade"/>
+  <rect x="478" y="99" width="64" height="10" rx="5" fill="slot:paper"/>
+  <rect x="396" y="165" width="64" height="10" rx="5" fill="slot:paper"/>
+  <rect x="478" y="231" width="56" height="10" rx="5" fill="slot:paper"/>
+  <rect x="404" y="297" width="56" height="10" rx="5" fill="slot:paper"/>
+  <g transform="translate(20, 0)">
+    <use href="humaaans/standing-12.svg" top="primary" bottom="tertiary"/>
+  </g>
+</svg>

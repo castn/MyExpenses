@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480">
+  <!-- ground -->
+  <ellipse cx="300" cy="466" rx="270" ry="12" fill="slot:neutral"/>
+  <!-- shield with a lock -->
+  <path d="M170,96 L270,130 V230 C270,300 225,345 170,370 C115,345 70,300 70,230 V130 Z" fill="slot:primaryShade"/>
+  <path d="M170,96 L270,130 V230 C270,300 225,345 170,370 Z" fill="slot:primary"/>
+  <path d="M141,214 V194 A29,29 0 0 1 199,194 V214 H187 V194 A17,17 0 0 0 153,194 V214 Z" fill="slot:paper"/>
+  <rect x="132" y="210" width="76" height="62" rx="10" fill="slot:paper"/>
+  <circle cx="170" cy="236" r="9" fill="slot:primary"/>
+  <rect x="166" y="238" width="8" height="18" rx="4" fill="slot:primary"/>
+  <g transform="translate(250, 66)">
+    <use href="humaaans/sitting-1.svg" top="tertiary" bottom="secondary"/>
+  </g>
+</svg>

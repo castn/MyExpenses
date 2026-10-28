@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480">
+  <!-- ground -->
+  <ellipse cx="300" cy="466" rx="270" ry="12" fill="slot:neutral"/>
+  <!-- confetti -->
+  <rect x="380" y="20" width="10" height="22" rx="3" fill="slot:tertiary" transform="rotate(25 385 31)"/>
+  <rect x="540" y="60" width="10" height="22" rx="3" fill="slot:primary" transform="rotate(-30 545 71)"/>
+  <rect x="560" y="180" width="10" height="22" rx="3" fill="slot:secondary" transform="rotate(60 565 191)"/>
+  <rect x="470" y="250" width="10" height="22" rx="3" fill="slot:tertiary" transform="rotate(-50 475 261)"/>
+  <rect x="330" y="200" width="10" height="22" rx="3" fill="slot:primary" transform="rotate(35 335 211)"/>
+  <rect x="470" y="14" width="10" height="22" rx="3" fill="slot:secondary" transform="rotate(-15 475 25)"/>
+  <circle cx="520" cy="25" r="7" fill="slot:tertiary"/>
+  <circle cx="575" cy="125" r="6" fill="slot:primary"/>
+  <circle cx="400" cy="235" r="6" fill="slot:secondary"/>
+  <circle cx="530" cy="240" r="7" fill="slot:primary"/>
+  <circle cx="340" cy="45" r="5" fill="slot:primary"/>
+  <!-- badge with check -->
+  <circle cx="460" cy="130" r="72" fill="slot:primaryShade"/>
+  <circle cx="460" cy="124" r="72" fill="slot:primary"/>
+  <path d="M415.6,130.4 L424.4,121.6 L448,145.2 L495.6,97.6 L504.4,106.4 L448,162.8 Z" fill="slot:paper"/>
+  <g transform="translate(20, 0)">
+    <use href="humaaans/standing-20.svg" top="tertiary" bottom="secondary"/>
+  </g>
+</svg>
