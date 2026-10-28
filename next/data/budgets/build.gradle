@@ -1,0 +1,14 @@
+plugins {
+    id 'next.data'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.data.budgets'
+}
+
+// Pots of the budget: running, yearly, goals, projects and item groups, what they match, how they stand and the store of the pots.
+dependencies {
+    implementation project(':next:data:balance')
+    implementation project(':next:data:contracts')
+    implementation project(':next:data:tags')
+}

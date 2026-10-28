@@ -1,0 +1,58 @@
+@startuml budgets
+' Where the figures of the budget come from, see README.md in this package.
+' Arrows point from what reads to what is read; dashed arrows to what is offered.
+
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam defaultFontName sans-serif
+skinparam linetype ortho
+top to bottom direction
+
+package "ledger" {
+  interface LedgerSource
+}
+
+package "facts of other features" as factsOfOthers {
+  artifact ContractFacts
+  artifact TagFacts
+  artifact ReceiptFacts
+}
+
+package "budgets" {
+  database "BudgetStore\n(DataStore)" as store
+  [BudgetViewModel] as budgetVM
+  artifact BudgetInput
+  [PotMatcher] as matcher
+  [BudgetAnalyzer] as analyzer
+  artifact "BudgetOverview\n(frame, pots)" as overview
+  artifact BudgetFacts
+}
+
+package "balance" as balancePkg {
+  [MonthlyBalance.compute] as monthly
+}
+
+package "tips" as tipsPkg {
+  [SavingTipsViewModel] as tipsVM
+}
+
+note as legacy
+  **LegacyBudgets** takes over the budgets
+  of the classic screens once into the store
+end note
+
+budgetVM -up-> LedgerSource
+budgetVM -up-> ContractFacts
+budgetVM -up-> TagFacts
+budgetVM -up-> ReceiptFacts
+budgetVM -up-> store
+budgetVM --> BudgetInput
+BudgetInput --> analyzer
+analyzer --> matcher
+analyzer --> monthly
+analyzer ..> overview
+budgetVM ..> BudgetFacts
+tipsVM -up-> BudgetFacts
+
+@enduml
