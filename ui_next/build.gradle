@@ -46,6 +46,7 @@ dependencies {
     implementation project(':next:data:contracts')
     implementation project(':next:data:guidance')
     implementation project(':next:data:merchants')
+    implementation project(':next:data:receipts')
     implementation project(':next:data:tags')
     implementation project(':next:data:tips')
     implementation project(':next:feature:analysis')
@@ -55,6 +56,8 @@ dependencies {
     implementation project(':next:feature:contracts')
     implementation project(':next:feature:guidance')
     implementation project(':next:feature:merchants')
+    implementation project(':next:feature:receipts')
+    implementation project(':ocr-model')
     implementation project(':next:feature:tags')
     implementation project(':next:feature:tips')
     implementation libs.kotlinx.serialization.json
