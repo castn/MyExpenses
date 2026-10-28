@@ -1,0 +1,27 @@
+plugins {
+    id 'next.data'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.data.receipts'
+}
+
+// Tests on real receipts read their fixtures from a directory outside of the repository:
+// ./gradlew :next:data:receipts:testDebugUnitTest -PreceiptFixtures=/path/to/receipts
+// Without it these tests are skipped. A new snapshot of the parser's output: -PupdateReceiptSnapshot
+tasks.withType(Test).configureEach {
+    if (project.hasProperty("receiptFixtures")) {
+        systemProperty "receiptFixtures", file(project.property("receiptFixtures")).absolutePath
+    }
+    if (project.hasProperty("updateReceiptSnapshot")) {
+        systemProperty "updateReceiptSnapshot", "true"
+    }
+}
+
+// Receipts read by the parser from the recognized text, checked, their items in groups and the
+// transaction they belong to.
+dependencies {
+    implementation project(':next:data:categories')
+    api project(':ocr-model')
+    implementation libs.kotlinx.serialization.json
+}
