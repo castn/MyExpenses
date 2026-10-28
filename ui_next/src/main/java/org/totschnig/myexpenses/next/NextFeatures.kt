@@ -3,6 +3,8 @@ package org.totschnig.myexpenses.next
 import androidx.compose.runtime.ProvidedValue
 import org.totschnig.myexpenses.activity.BaseActivity
 import org.totschnig.myexpenses.next.balance.BalanceFeature
+import org.totschnig.myexpenses.next.categories.CategoriesFeature
+import org.totschnig.myexpenses.next.categories.CategorySettings
 import org.totschnig.myexpenses.next.contracts.ContractsFeature
 import org.totschnig.myexpenses.next.merchants.MerchantSettings
 import org.totschnig.myexpenses.next.merchants.MerchantsFeature
@@ -18,14 +20,15 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
     val merchants = MerchantsFeature(activity, data)
     val contracts = ContractsFeature(activity, data)
     val balance = BalanceFeature(activity, data, contracts)
+    val categories = CategoriesFeature(activity, data)
 
-    val all: List<NextFeature> = listOf(contracts, merchants, balance)
+    val all: List<NextFeature> = listOf(categories, contracts, merchants, balance)
 
     companion object {
         /** What the areas provide to all screens of the new UI, also outside of the main screen, see [NextTheme] */
-        val locals: Array<ProvidedValue<*>> get() = arrayOf()
+        val locals: Array<ProvidedValue<*>> get() = arrayOf(CategoriesFeature.picker)
 
         /** The settings of the areas, in the order they are listed in their groups, see [NextSettings] */
-        val settings: List<AreaSettings.Factory> get() = listOf(MerchantSettings)
+        val settings: List<AreaSettings.Factory> get() = listOf(CategorySettings, MerchantSettings)
     }
 }

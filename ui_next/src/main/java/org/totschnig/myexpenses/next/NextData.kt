@@ -11,6 +11,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import org.totschnig.myexpenses.util.TransactionImports
+import org.totschnig.myexpenses.next.categories.ProviderCategoryWriting
+import org.totschnig.myexpenses.next.data.categories.CategoryRepository
+import org.totschnig.myexpenses.next.data.categories.CategoryStore
 import kotlinx.coroutines.flow.StateFlow
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.injector
@@ -42,20 +45,23 @@ class NextData private constructor(context: Context) {
 
     val contracts = ContractRepository(ledgerSource, ContractStore(dataStore), scope)
 
+    val categories = CategoryRepository(ledgerSource, CategoryStore(dataStore), ProviderCategoryWriting(context.contentResolver), scope)
+
     val balance = BalanceRepository(ledgerSource, contracts.facts, scope)
 
     /**
-     * Makes the automatic decisions of the areas while it runs, e.g. which transactions are
-     * contracts. Called while the app is shown and after an import, so that nothing is analysed in
-     * the background otherwise.
+     * Makes the automatic decisions of the areas while it runs: contracts and certain
+     * categories for new transactions. Called while the app is shown and after an import,
+     * so that nothing is analysed in the background otherwise.
      */
     suspend fun applyAutomaticDecisions(): Nothing = coroutineScope {
         launch { contracts.analysis.collect() }
+        launch { categories.appliedAutomatically.collect() }
         awaitCancellation()
     }
 
     init {
-        // Imported transactions are analysed right away, also when the app is not shown
+        // Imported transactions get their categories right away, also when the app is not shown
         scope.launch {
             TransactionImports.imported.collectLatest {
                 withTimeoutOrNull(AFTER_IMPORT_MILLIS) { applyAutomaticDecisions() }

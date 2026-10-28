@@ -364,6 +364,7 @@
     <string name="next_settings_explain_repair_987">Zeigt Buchungen, die ein bekannter Fehler (#987) beschädigt hat.</string>
     <string name="next_settings_explain_remove_local_calendar">Löscht den Kalender, den die App auf diesem Gerät für geplante Buchungen angelegt hat.</string>
     <string name="next_settings_consent">Buchungen auswerten</string>
+    <string name="next_settings_category_rules">Kategorieregeln</string>
     <string name="next_settings_consent_summary">Findet Verträge, regelmäßige Einnahmen, Vorschläge und Spartipps. Nur auf deinem Gerät.</string>
     <string name="next_settings_merchant_logos">Logos von Geschäften</string>
     <string name="next_settings_merchant_logos_summary">Zeigt in der Buchungsliste die Logos bekannter Geschäfte und Firmen. Dafür werden deren Webadressen, z. B. rewe.de, an den Icon-Dienst von DuckDuckGo gesendet, nie Beträge oder Buchungen.</string>
@@ -374,6 +375,13 @@
     <string name="next_payee_logo_not_found">Kein Symbol für %s gefunden</string>
     <string name="next_payee_logo_invalid">Keine Webadresse</string>
     <string name="next_payee_logo_remove">Webadresse entfernen</string>
+    <string name="next_settings_no_rules">Noch keine Regeln</string>
+    <string name="next_settings_category_rules_hint">Eine Regel entsteht, wenn du bei einem Kategorievorschlag „immer so machen“ wählst. Neue Buchungen des Empfängers bekommen dann diese Kategorie.</string>
+    <string name="next_settings_remove_rule">Regel löschen</string>
+    <plurals name="next_settings_rules">
+        <item quantity="one">%d Regel</item>
+        <item quantity="other">%d Regeln</item>
+    </plurals>
     <string name="next_amount_invalid">Kein Betrag, z. B. 12,34</string>
     <string name="next_change">Ändern</string>
     <string name="next_icons_food">Essen &amp; Trinken</string>

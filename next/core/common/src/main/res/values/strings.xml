@@ -364,6 +364,7 @@
     <string name="next_settings_explain_repair_987">Shows transactions damaged by a known error (#987).</string>
     <string name="next_settings_explain_remove_local_calendar">Deletes the calendar the app created on this device for planned transactions.</string>
     <string name="next_settings_consent">Analyse transactions</string>
+    <string name="next_settings_category_rules">Category rules</string>
     <string name="next_settings_consent_summary">Finds contracts, regular income, suggestions and saving tips. Only on your device.</string>
     <string name="next_settings_merchant_logos">Logos of shops</string>
     <string name="next_settings_merchant_logos_summary">Shows the logos of well-known shops and companies in the transaction list. Their web addresses, e.g. rewe.de, are sent to the icon service of DuckDuckGo, never amounts or transactions.</string>
@@ -374,6 +375,13 @@
     <string name="next_payee_logo_not_found">No icon found for %s</string>
     <string name="next_payee_logo_invalid">Not a web address</string>
     <string name="next_payee_logo_remove">Remove web address</string>
+    <string name="next_settings_no_rules">No rules yet</string>
+    <string name="next_settings_category_rules_hint">A rule is made when you choose to always do so for a category suggestion. New transactions of the payee then get this category.</string>
+    <string name="next_settings_remove_rule">Delete rule</string>
+    <plurals name="next_settings_rules">
+        <item quantity="one">%d rule</item>
+        <item quantity="other">%d rules</item>
+    </plurals>
     <string name="next_amount_invalid">Not an amount, e.g. 12.34</string>
     <string name="next_change">Change</string>
     <string name="next_icons_food">Food &amp; drink</string>
