@@ -26,6 +26,7 @@ import org.totschnig.myexpenses.next.RowDecorations
 import org.totschnig.myexpenses.next.transactions.toShown
 import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
 import org.totschnig.myexpenses.next.data.tags.TagStore
+import org.totschnig.myexpenses.next.feature.tags.OneOffSection
 import org.totschnig.myexpenses.next.feature.tags.RefundSection
 import org.totschnig.myexpenses.next.feature.tags.TagDetectionsViewModel
 import org.totschnig.myexpenses.next.feature.tags.TagLearningViewModel
@@ -55,6 +56,12 @@ class TagsFeature(private val activity: ComponentActivity, private val data: Nex
     override fun OverviewBanner(navigation: NextNavigation) {
         val homeCurrency by data.homeCurrency.collectAsStateWithLifecycle()
         TripBanner(detections, homeCurrency)
+    }
+
+    /** Whether a payment is one-off, asked e.g. in the details of an outlier of the saving tips */
+    @Composable
+    fun OneOff(transaction: ShownTransaction) {
+        OneOffSection(viewModel, transaction)
     }
 
     @Composable

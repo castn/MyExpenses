@@ -34,6 +34,10 @@ import org.totschnig.myexpenses.next.viewModelsOf
 class CategoriesFeature(activity: ComponentActivity, data: NextData) : NextFeature {
     val viewModel by activity.viewModelsOf { CategorySuggestionsViewModel(data.categories) }
 
+    /** Whether the overview asks whether to categorize transactions automatically */
+    @Composable
+    fun isAsking(): Boolean = viewModel.backlog.collectAsStateWithLifecycle().value != null
+
     @Composable
     override fun TransactionSections(transaction: ShownTransaction) {
         CategorySuggestionSection(viewModel, transaction)
