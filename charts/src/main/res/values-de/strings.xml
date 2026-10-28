@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chart_zoom_in">Vergrößern</string>
+    <string name="chart_zoom_out">Verkleinern</string>
+</resources>
