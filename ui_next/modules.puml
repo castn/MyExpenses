@@ -24,6 +24,7 @@ package "next/data" as pNextData {
     [:budgets] as mNextDataBudgets
     [:categories] as mNextDataCategories
     [:contracts] as mNextDataContracts
+    [:guidance] as mNextDataGuidance
     [:merchants] as mNextDataMerchants
     [:tags] as mNextDataTags
     [:tips] as mNextDataTips
@@ -34,6 +35,7 @@ package "next/feature" as pNextFeature {
     [:budgets] as mNextFeatureBudgets
     [:categories] as mNextFeatureCategories
     [:contracts] as mNextFeatureContracts
+    [:guidance] as mNextFeatureGuidance
     [:merchants] as mNextFeatureMerchants
     [:tags] as mNextFeatureTags
     [:tips] as mNextFeatureTips
@@ -53,6 +55,7 @@ mNextDataBudgets --> mNextDataBalance
 mNextDataBudgets --> mNextDataTags
 mNextDataCategories --> mNextDataMerchants
 mNextDataContracts --> mNextDataMerchants
+mNextDataGuidance --> mNextDataTips
 mNextDataMerchants --> mNextCoreCommon
 mNextDataTags --> mNextDataCategories
 mNextDataTags --> mNextDataContracts
@@ -62,6 +65,7 @@ mNextFeatureBudgets --> mCharts
 mNextFeatureBudgets --> mNextDataBudgets
 mNextFeatureCategories --> mNextDataCategories
 mNextFeatureContracts --> mNextDataContracts
+mNextFeatureGuidance --> mNextDataGuidance
 mNextFeatureMerchants --> mNextDataMerchants
 mNextFeatureTags --> mNextDataTags
 mNextFeatureTips --> mNextDataTips
