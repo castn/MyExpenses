@@ -218,6 +218,28 @@
     <string name="next_news_reserve_missing">The deposit expected on %1$s (%2$s) has not happened yet.</string>
     <string name="next_news_reserve_stopped">No deposit since %1$s. Were the savings stopped?</string>
     <string name="next_news_reserve_cancel_again">Mark as stopped again</string>
+    <string name="next_category_suggested">Suggestion: %1$s</string>
+    <string name="next_category_accept">Apply</string>
+    <string name="next_category_reason_rule">According to your rule for this payee.</string>
+    <string name="next_category_reason_payee">This is how you categorized the transactions at %1$s so far.</string>
+    <string name="next_category_reason_words">Similar transactions had this category.</string>
+    <string name="next_category_reason_merchant">Well-known merchant, matching one of your categories.</string>
+    <string name="next_category_automatic">Categorized automatically</string>
+    <string name="next_category_undo">Undo</string>
+    <string name="next_category_taken">Applied</string>
+    <plurals name="next_category_apply_others">
+        <item quantity="one">Also the other transaction at %2$s</item>
+        <item quantity="other">Also the %1$d other transactions at %2$s</item>
+    </plurals>
+    <string name="next_category_applied_others">Further transactions at %1$s</string>
+    <string name="next_category_always">Always do this for %1$s</string>
+    <string name="next_category_rule_added">Rule for %1$s</string>
+    <string name="next_category_backlog_title">Categorize automatically?</string>
+    <plurals name="next_category_backlog_text">
+        <item quantity="one">%1$d of %2$d transaction without category can be categorized for sure, because you almost always chose the same category for the same payee. The others get suggestions in their details.</item>
+        <item quantity="other">%1$d of %2$d transactions without category can be categorized for sure, because you almost always chose the same category for the same payee. The others get suggestions in their details.</item>
+    </plurals>
+    <string name="next_category_set">Category</string>
     <string name="next_details_category">What for</string>
     <string name="next_settings_search">Search…</string>
     <string name="next_settings_clear_search">Clear</string>

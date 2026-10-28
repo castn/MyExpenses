@@ -218,6 +218,28 @@
     <string name="next_news_reserve_missing">Die für den %1$s erwartete Einzahlung (%2$s) ist noch nicht erfolgt.</string>
     <string name="next_news_reserve_stopped" tools:ignore="Typos">Seit dem %1$s keine Einzahlung mehr. Wurde die Rücklage beendet?</string>
     <string name="next_news_reserve_cancel_again">Erneut als beendet markieren</string>
+    <string name="next_category_suggested">Vorschlag: %1$s</string>
+    <string name="next_category_accept">Übernehmen</string>
+    <string name="next_category_reason_rule">Nach deiner Regel für diesen Empfänger.</string>
+    <string name="next_category_reason_payee">So hast du bisher die Buchungen bei %1$s eingeordnet.</string>
+    <string name="next_category_reason_words">Ähnliche Buchungen hatten diese Kategorie.</string>
+    <string name="next_category_reason_merchant">Bekannter Händler, passend zu einer deiner Kategorien.</string>
+    <string name="next_category_automatic">Automatisch zugeordnet</string>
+    <string name="next_category_undo">Rückgängig</string>
+    <string name="next_category_taken">Übernommen</string>
+    <plurals name="next_category_apply_others">
+        <item quantity="one">Auch die andere Buchung bei %2$s</item>
+        <item quantity="other">Auch die %1$d anderen Buchungen bei %2$s</item>
+    </plurals>
+    <string name="next_category_applied_others">Weitere Buchungen bei %1$s</string>
+    <string name="next_category_always">Bei %1$s immer so machen</string>
+    <string name="next_category_rule_added">Regel für %1$s</string>
+    <string name="next_category_backlog_title">Kategorien automatisch zuordnen?</string>
+    <plurals name="next_category_backlog_text">
+        <item quantity="one">%1$d von %2$d Buchung ohne Kategorie lässt sich sicher zuordnen, weil du beim selben Empfänger bisher fast immer dieselbe Kategorie gewählt hast. Die übrigen bekommen Vorschläge in ihren Details.</item>
+        <item quantity="other">%1$d von %2$d Buchungen ohne Kategorie lassen sich sicher zuordnen, weil du beim selben Empfänger bisher fast immer dieselbe Kategorie gewählt hast. Die übrigen bekommen Vorschläge in ihren Details.</item>
+    </plurals>
+    <string name="next_category_set">Kategorie</string>
     <string name="next_details_category">Wofür</string>
     <string name="next_settings_search">Suchen…</string>
     <string name="next_settings_clear_search">Leeren</string>
