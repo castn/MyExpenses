@@ -2,6 +2,7 @@ package org.totschnig.myexpenses.next.core.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -30,3 +31,13 @@ fun rememberAmountFormat(currency: CurrencyInfo): (Long) -> String {
     return remember(formatter, currency) { { amount -> formatter.format(amount, currency) } }
 }
 
+/**
+ * Amounts in minor units of [currency] as short labels of a chart axis, in major units without
+ * currency symbol and without trailing zeros, e.g. "150" or "2,5"
+ */
+@Composable
+fun rememberAxisAmountFormat(currency: CurrencyInfo): (Double) -> String = remember(currency) {
+    val format = NumberFormat.getNumberInstance().apply { maximumFractionDigits = currency.fractionDigits }
+    val divisor = Math.pow(10.0, currency.fractionDigits.toDouble())
+    return@remember { amount: Double -> format.format(amount / divisor) }
+}
