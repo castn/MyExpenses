@@ -5,7 +5,7 @@ import com.lemonappdev.konsist.api.verify.assertFalse
 import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.Test
 
-/** Rules mod-charts-pure, mod-ds-pure, mod-own-packages and mod-shell-boundary of ui_next/ARCHITECTURE.md. */
+/** Rules mod-charts-pure, mod-ds-pure, mod-ocr-jvm, mod-own-packages and mod-shell-boundary of ui_next/ARCHITECTURE.md. */
 class ModuleRulesTest {
 
     @Test
@@ -24,6 +24,15 @@ class ModuleRulesTest {
             .assertFalse(additionalMessage = "mod-ds-pure: :designsystem knows only strings, numbers, icons and lambdas") {
                 it.name.startsWith(APP) &&
                     !it.name.startsWith("$APP.myexpenses.designsystem.")
+            }
+    }
+
+    @Test
+    fun `mod-ocr-jvm ocr-model is plain Kotlin JVM`() {
+        Konsist.scopeFromProduction(moduleName = "ocr-model")
+            .imports
+            .assertFalse(additionalMessage = "mod-ocr-jvm: :ocr-model is a Kotlin JVM module without Android") {
+                it.name.startsWith("android.") || it.name.startsWith("androidx.")
             }
     }
 
