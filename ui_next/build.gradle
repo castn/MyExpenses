@@ -39,6 +39,7 @@ dependencies {
     implementation libs.copper.flow
     implementation project(':designsystem')
     implementation project(':next:core:ui')
+    implementation project(':next:data:analysis')
     implementation project(':next:data:balance')
     implementation project(':next:data:budgets')
     implementation project(':next:data:categories')
@@ -47,6 +48,7 @@ dependencies {
     implementation project(':next:data:merchants')
     implementation project(':next:data:tags')
     implementation project(':next:data:tips')
+    implementation project(':next:feature:analysis')
     implementation project(':next:feature:balance')
     implementation project(':next:feature:budgets')
     implementation project(':next:feature:categories')

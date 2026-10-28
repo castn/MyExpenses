@@ -20,6 +20,7 @@ package "next/core" as pNextCore {
 }
 
 package "next/data" as pNextData {
+    [:analysis] as mNextDataAnalysis
     [:balance] as mNextDataBalance
     [:budgets] as mNextDataBudgets
     [:categories] as mNextDataCategories
@@ -31,6 +32,7 @@ package "next/data" as pNextData {
 }
 
 package "next/feature" as pNextFeature {
+    [:analysis] as mNextFeatureAnalysis
     [:balance] as mNextFeatureBalance
     [:budgets] as mNextFeatureBudgets
     [:categories] as mNextFeatureCategories
@@ -50,6 +52,7 @@ pNextFeature --> mNextCoreUi
 mNextCoreCommon --> mNextCoreModel
 mNextCoreUi --> mDesignsystem
 mNextCoreUi --> mNextCoreCommon
+mNextDataAnalysis --> mNextDataTags
 mNextDataBalance --> mNextDataContracts
 mNextDataBudgets --> mNextDataBalance
 mNextDataBudgets --> mNextDataTags
@@ -60,6 +63,9 @@ mNextDataMerchants --> mNextCoreCommon
 mNextDataTags --> mNextDataCategories
 mNextDataTags --> mNextDataContracts
 mNextDataTips --> mNextDataBudgets
+mNextFeatureAnalysis --> mCharts
+mNextFeatureAnalysis --> mNextDataAnalysis
+mNextFeatureAnalysis --> mNextDataGuidance
 mNextFeatureBalance --> mNextDataBalance
 mNextFeatureBudgets --> mCharts
 mNextFeatureBudgets --> mNextDataBudgets

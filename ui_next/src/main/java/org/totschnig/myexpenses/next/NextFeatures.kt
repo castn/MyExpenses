@@ -2,6 +2,7 @@ package org.totschnig.myexpenses.next
 
 import androidx.compose.runtime.ProvidedValue
 import org.totschnig.myexpenses.activity.BaseActivity
+import org.totschnig.myexpenses.next.analysis.AnalysisFeature
 import org.totschnig.myexpenses.next.balance.BalanceFeature
 import org.totschnig.myexpenses.next.budgets.BudgetsFeature
 import org.totschnig.myexpenses.next.categories.CategoriesFeature
@@ -29,11 +30,12 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
     val categories = CategoriesFeature(activity, data)
     val tags = TagsFeature(activity, data)
     val budgets = BudgetsFeature(activity, data)
-    val guidance = GuidanceFeature(activity, data, { categories.isAsking() })
+    val guidance = GuidanceFeature(activity, data, { categories.isAsking() }, explained = NextKey.Analysis)
     val savingTips = SavingTipsFeature(activity, data, contracts, tags) { guidance.PendingTips(it) }
+    val analysis = AnalysisFeature(activity, data, guidance)
 
     val all: List<NextFeature> = listOf(
-        categories, tags, contracts, budgets, guidance, merchants, balance, savingTips
+        categories, tags, contracts, budgets, guidance, merchants, balance, analysis, savingTips
     )
 
     companion object {
