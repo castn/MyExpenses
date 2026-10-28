@@ -240,6 +240,23 @@
         <item quantity="other">%1$d von %2$d Buchungen ohne Kategorie lassen sich sicher zuordnen, weil du beim selben Empfänger bisher fast immer dieselbe Kategorie gewählt hast. Die übrigen bekommen Vorschläge in ihren Details.</item>
     </plurals>
     <string name="next_category_set">Kategorie</string>
+    <string name="next_item_group_produce">Obst &amp; Gemüse</string>
+    <string name="next_item_group_bakery">Brot &amp; Backwaren</string>
+    <string name="next_item_group_dairy">Milchprodukte &amp; Eier</string>
+    <string name="next_item_group_meat_fish">Fleisch, Wurst &amp; Fisch</string>
+    <string name="next_item_group_pantry">Vorrat</string>
+    <string name="next_item_group_ready_meals">Fertiggerichte &amp; Feinkost</string>
+    <string name="next_item_group_sweets_snacks">Süßes &amp; Snacks</string>
+    <string name="next_item_group_drinks">Getränke</string>
+    <string name="next_item_group_alcohol">Alkohol</string>
+    <string name="next_item_group_tobacco">Tabak</string>
+    <string name="next_item_group_drugstore">Drogerie &amp; Hygiene</string>
+    <string name="next_item_group_household">Haushalt &amp; Putzen</string>
+    <string name="next_item_group_pet">Tierbedarf</string>
+    <string name="next_item_group_baby">Baby &amp; Kind</string>
+    <string name="next_item_group_non_food">Non-Food</string>
+    <string name="next_item_group_deposit">Pfand</string>
+    <string name="next_item_group_other">Sonstiges</string>
     <string name="next_details_category">Wofür</string>
     <string name="next_tags_belongs_to">Gehört zu</string>
     <string name="next_tags">Gruppen</string>

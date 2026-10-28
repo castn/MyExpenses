@@ -240,6 +240,23 @@
         <item quantity="other">%1$d of %2$d transactions without category can be categorized for sure, because you almost always chose the same category for the same payee. The others get suggestions in their details.</item>
     </plurals>
     <string name="next_category_set">Category</string>
+    <string name="next_item_group_produce">Fruit &amp; vegetables</string>
+    <string name="next_item_group_bakery">Bread &amp; bakery</string>
+    <string name="next_item_group_dairy">Dairy &amp; eggs</string>
+    <string name="next_item_group_meat_fish">Meat, sausage &amp; fish</string>
+    <string name="next_item_group_pantry">Pantry</string>
+    <string name="next_item_group_ready_meals">Ready meals &amp; deli</string>
+    <string name="next_item_group_sweets_snacks">Sweets &amp; snacks</string>
+    <string name="next_item_group_drinks">Drinks</string>
+    <string name="next_item_group_alcohol">Alcohol</string>
+    <string name="next_item_group_tobacco">Tobacco</string>
+    <string name="next_item_group_drugstore">Drugstore &amp; hygiene</string>
+    <string name="next_item_group_household">Household &amp; cleaning</string>
+    <string name="next_item_group_pet">Pet supplies</string>
+    <string name="next_item_group_baby">Baby &amp; child</string>
+    <string name="next_item_group_non_food">Non-food</string>
+    <string name="next_item_group_deposit">Deposit</string>
+    <string name="next_item_group_other">Other</string>
     <string name="next_details_category">What for</string>
     <string name="next_tags_belongs_to">Belongs to</string>
     <string name="next_tags">Groups</string>
