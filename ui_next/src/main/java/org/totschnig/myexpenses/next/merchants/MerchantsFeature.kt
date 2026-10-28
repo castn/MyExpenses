@@ -84,9 +84,11 @@ class MerchantSettings(private val activity: ComponentActivity) : AreaSettings {
 
         override val settings = listOf(LOGOS)
 
+        override val onFirstStart = listOf(LOGOS)
+
         override fun create(activity: ComponentActivity) = MerchantSettings(activity)
 
-        /** Whether the user agreed to load logos of payees, also asked when the app is started first */
+        /** Whether the user agreed to load logos of payees */
         fun consent(context: Context) = MerchantLogoConsent(context.injector.preferencesDataStore())
     }
 }

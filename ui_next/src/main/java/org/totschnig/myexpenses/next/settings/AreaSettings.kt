@@ -27,6 +27,9 @@ interface AreaSettings {
         /** The settings of the area, also without an activity, e.g. for the search */
         val settings: List<InsightSetting>
 
+        /** Switches of [settings] also asked on the first start, e.g. a consent, see `NextOnboarding` */
+        val onFirstStart: List<InsightSetting> get() = emptyList()
+
         fun create(activity: ComponentActivity): AreaSettings
     }
 }

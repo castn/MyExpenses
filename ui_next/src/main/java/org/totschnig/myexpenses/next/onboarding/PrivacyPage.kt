@@ -11,23 +11,31 @@ import org.totschnig.myexpenses.designsystem.IntroPage
 import org.totschnig.myexpenses.designsystem.SectionTitle
 import org.totschnig.myexpenses.designsystem.SwitchRow
 import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
+import org.totschnig.myexpenses.next.settings.AreaSettings
+import org.totschnig.myexpenses.next.settings.InsightSetting
+import org.totschnig.myexpenses.next.settings.SettingControl
 import org.totschnig.myexpenses.next.core.common.R as NextR
 
 /** What the user decides about their data on the first start */
-enum class PrivacySetting { CRASH_REPORTS, TRACKING, MERCHANT_LOGOS, AUTO_BACKUP, ENCRYPTION }
+enum class PrivacySetting { CRASH_REPORTS, TRACKING, AUTO_BACKUP, ENCRYPTION }
 
 /**
  * The choices on the page about privacy, as stored
  *
  * @param offersReporting false in distributions that never send crash reports or usage data
  * @param autoBackupTime when the automatic backup runs, e.g. "03:00"
+ * @param areaSettings what the areas ask on the first start, after the data sent by the app
  */
 @Immutable
 data class PrivacyChoices(
     val offersReporting: Boolean,
     val autoBackupTime: String,
     val checked: Set<PrivacySetting>,
+    val areaSettings: List<FirstStartSetting> = emptyList(),
 )
+
+/** A switch of an area on the page about privacy, see [AreaSettings.Factory.onFirstStart] */
+data class FirstStartSetting(val setting: InsightSetting, val area: AreaSettings)
 
 @Composable
 internal fun PrivacyPage(choices: PrivacyChoices, onChange: (PrivacySetting, Boolean) -> Unit) {
@@ -46,27 +54,33 @@ internal fun PrivacyPage(choices: PrivacyChoices, onChange: (PrivacySetting, Boo
                 isFirst = isFirst
             )
 
-        SectionTitle(stringResource(NextR.string.next_onboarding_privacy_sent))
-        DetailCard {
-            if (choices.offersReporting) {
-                Switch(
-                    PrivacySetting.CRASH_REPORTS,
-                    stringResource(NextR.string.next_onboarding_crash_reports),
-                    stringResource(NextR.string.next_onboarding_crash_reports_text),
-                    isFirst = true
-                )
-                Switch(
-                    PrivacySetting.TRACKING,
-                    stringResource(NextR.string.next_onboarding_tracking),
-                    stringResource(NextR.string.next_onboarding_tracking_text)
-                )
+        if (choices.offersReporting || choices.areaSettings.isNotEmpty()) {
+            SectionTitle(stringResource(NextR.string.next_onboarding_privacy_sent))
+            DetailCard {
+                if (choices.offersReporting) {
+                    Switch(
+                        PrivacySetting.CRASH_REPORTS,
+                        stringResource(NextR.string.next_onboarding_crash_reports),
+                        stringResource(NextR.string.next_onboarding_crash_reports_text),
+                        isFirst = true
+                    )
+                    Switch(
+                        PrivacySetting.TRACKING,
+                        stringResource(NextR.string.next_onboarding_tracking),
+                        stringResource(NextR.string.next_onboarding_tracking_text)
+                    )
+                }
+                choices.areaSettings.forEachIndexed { index, (setting, area) ->
+                    val control = area.control(setting) as? SettingControl.Switch ?: return@forEachIndexed
+                    SwitchRow(
+                        stringResource(setting.title),
+                        checked = control.checked,
+                        onCheckedChange = control.onChange,
+                        supportingText = control.summary,
+                        isFirst = !choices.offersReporting && index == 0
+                    )
+                }
             }
-            Switch(
-                PrivacySetting.MERCHANT_LOGOS,
-                stringResource(NextR.string.next_settings_merchant_logos),
-                stringResource(NextR.string.next_settings_merchant_logos_summary),
-                isFirst = !choices.offersReporting
-            )
         }
         SectionTitle(stringResource(NextR.string.next_onboarding_privacy_protection))
         DetailCard {
