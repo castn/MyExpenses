@@ -18,7 +18,7 @@ import androidx.core.os.BundleCompat
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import org.totschnig.myexpenses.R
-import org.totschnig.myexpenses.activity.OnboardingActivity
+import org.totschnig.myexpenses.activity.OnboardingHostActivity
 import org.totschnig.myexpenses.databinding.RestoreFromCloudBinding
 import org.totschnig.myexpenses.sync.json.AccountMetaData
 
@@ -136,7 +136,7 @@ class RestoreFromCloudDialogFragment : DialogViewBinding<RestoreFromCloudBinding
         val backups = backups
         val syncAccounts = syncAccounts
         if (which == AlertDialog.BUTTON_POSITIVE) {
-            val activity = requireActivity() as OnboardingActivity
+            val activity = requireActivity() as OnboardingHostActivity
             val contentForTab = activeContent
             val id = contentForTab.id
             if (id == R.id.backup_list_container) {

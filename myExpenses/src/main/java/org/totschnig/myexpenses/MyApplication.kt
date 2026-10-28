@@ -41,7 +41,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.acra.util.StreamReader
-import org.totschnig.myexpenses.activity.OnboardingActivity
+import org.totschnig.myexpenses.activity.OnboardingHostActivity
 import org.totschnig.myexpenses.compose.transactions.TL_TAG
 import org.totschnig.myexpenses.di.AppComponent
 import org.totschnig.myexpenses.di.DaggerAppComponent
@@ -289,7 +289,7 @@ open class MyApplication : Application(), SharedPreferences.OnSharedPreferenceCh
     }
 
     fun setLastPause(ctx: Activity) {
-        if (ctx is OnboardingActivity) return
+        if (ctx is OnboardingHostActivity) return
         if (!isLocked) {
             // if we are dealing with an activity called from widget that allows to
             // bypass password protection, we do not reset last pause
@@ -324,7 +324,7 @@ open class MyApplication : Application(), SharedPreferences.OnSharedPreferenceCh
      * data entry from widget is allowed sets isLocked as a side effect
      */
     fun shouldLock(ctx: Activity?): Boolean {
-        if (ctx is OnboardingActivity) return false
+        if (ctx is OnboardingHostActivity) return false
         if (!isProtected) return false
         val isStartFromWidget = (ctx == null
                 || ctx.intent.getBooleanExtra(

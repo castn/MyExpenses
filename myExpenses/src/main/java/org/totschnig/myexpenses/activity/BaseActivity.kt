@@ -1476,8 +1476,10 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
 
     protected val calledFromOnboarding: Boolean
         get() = callingActivity?.let {
-            Utils.getSimpleClassNameFromComponentName(it)
-        } == OnboardingActivity::class.java.simpleName
+            runCatching {
+                OnboardingHostActivity::class.java.isAssignableFrom(Class.forName(it.className))
+            }.getOrNull()
+        } == true
 
     val bankingFeature: BankingFeature
         get() = requireApplication().appComponent.bankingFeature() ?: BankingFeature
