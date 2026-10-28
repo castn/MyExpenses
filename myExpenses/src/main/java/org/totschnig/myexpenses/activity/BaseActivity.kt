@@ -122,6 +122,7 @@ import org.totschnig.myexpenses.preference.PrefHandler
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.provider.DatabaseConstants
 import org.totschnig.myexpenses.provider.KEY_AMOUNT
+import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.provider.KEY_COLOR
 import org.totschnig.myexpenses.provider.KEY_DATE
 import org.totschnig.myexpenses.provider.KEY_PATH
@@ -1465,7 +1466,13 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
 
     private val editLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         onEditTransactionResult(result.resultCode == RESULT_OK)
+        if (result.resultCode == RESULT_OK) {
+            result.data?.getLongExtra(KEY_ROWID, 0L)?.takeIf { it > 0L }?.let(::onTransactionSaved)
+        }
     }
+
+    /** A transaction was saved in the editor started by [startEdit], e.g. to give a hint about it */
+    open fun onTransactionSaved(transactionId: Long) {}
 
     protected val calledFromOnboarding: Boolean
         get() = callingActivity?.let {

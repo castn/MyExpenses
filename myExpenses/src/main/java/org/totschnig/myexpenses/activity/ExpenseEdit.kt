@@ -1184,6 +1184,9 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
             }
         }
 
+    /** The last transaction saved, told to the calling screen, e.g. for a hint about it */
+    private var savedTransactionId: Long? = null
+
     override fun dispatchCommand(command: Int, tag: Any?): Boolean {
         if (super.dispatchCommand(command, tag)) {
             return true
@@ -1434,7 +1437,9 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
     }
 
     private fun doFinish() {
-        setResult(RESULT_OK, backwardCanceledTagsIntent())
+        setResult(RESULT_OK, (backwardCanceledTagsIntent() ?: Intent()).apply {
+            savedTransactionId?.let { putExtra(KEY_ROWID, it) }
+        })
         finish()
     }
 
@@ -1442,6 +1447,9 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
         result.onSuccess { transaction ->
             if (isSplitParent) {
                 recordUsage(ContribFeature.SPLIT_TRANSACTION)
+            }
+            if (!isSplitPartOrTemplate) {
+                savedTransactionId = transaction.id
             }
             if (!isSplitPartOrTemplate) {
                 val criterionInfos = listOfNotNull(
