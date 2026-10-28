@@ -1,0 +1,13 @@
+plugins {
+    id 'next.feature'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.feature.receipts'
+}
+
+// The screens of receipts: scanning with the camera, reviewing and assigning to a transaction.
+dependencies {
+    implementation project(':next:data:receipts')
+    implementation project(':ocr-model')
+}
