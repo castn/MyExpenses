@@ -33,7 +33,7 @@ import timber.log.Timber
 import java.util.Currency
 import kotlin.math.pow
 
-const val DATABASE_VERSION = 191
+const val DATABASE_VERSION = 192
 
 private const val RAISE_UPDATE_SEALED_DEBT = "SELECT RAISE (FAIL, 'attempt to update sealed debt');"
 private const val RAISE_INCONSISTENT_CATEGORY_HIERARCHY =

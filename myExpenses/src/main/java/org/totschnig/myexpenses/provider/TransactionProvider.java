@@ -138,6 +138,10 @@ import static org.totschnig.myexpenses.provider.ConstantsKt.TABLE_METHODS;
 import static org.totschnig.myexpenses.provider.ConstantsKt.TABLE_PAYEES;
 import static org.totschnig.myexpenses.provider.ConstantsKt.TABLE_PLAN_INSTANCE_STATUS;
 import static org.totschnig.myexpenses.provider.ConstantsKt.TABLE_PRICES;
+import static org.totschnig.myexpenses.provider.ReceiptsKt.METHOD_ASSIGN_RECEIPT;
+import static org.totschnig.myexpenses.provider.ReceiptsKt.METHOD_SAVE_RECEIPT;
+import static org.totschnig.myexpenses.provider.ReceiptsKt.RECEIPT_ITEMS_JOIN;
+import static org.totschnig.myexpenses.provider.ReceiptsKt.TABLE_RECEIPTS;
 import static org.totschnig.myexpenses.provider.ConstantsKt.TABLE_SETTINGS;
 import static org.totschnig.myexpenses.provider.ConstantsKt.TABLE_SYNC_STATE;
 import static org.totschnig.myexpenses.provider.ConstantsKt.TABLE_TAGS;
@@ -988,6 +992,14 @@ public class TransactionProvider extends BaseTransactionProvider {
         qb = SupportSQLiteQueryBuilder.builder(TABLE_TRANSACTION_ATTACHMENTS + " LEFT JOIN " + TABLE_ATTACHMENTS + " ON (" + KEY_ATTACHMENT_ID + " = " + KEY_ROWID + ")");
         break;
       }
+      case RECEIPTS: {
+        qb = SupportSQLiteQueryBuilder.builder(TABLE_RECEIPTS);
+        break;
+      }
+      case RECEIPT_ITEMS: {
+        qb = SupportSQLiteQueryBuilder.builder(RECEIPT_ITEMS_JOIN);
+        break;
+      }
       case BUDGET_ALLOCATIONS: {
         qb = SupportSQLiteQueryBuilder.builder(TABLE_BUDGET_ALLOCATIONS);
         break;
@@ -1756,6 +1768,17 @@ public class TransactionProvider extends BaseTransactionProvider {
         notifyChange(TRANSACTIONS_URI, false);
         return bundle;
       }
+      case METHOD_SAVE_RECEIPT -> {
+        Bundle result = ReceiptsKt.saveReceipt(getHelper().getWritableDatabase(), Objects.requireNonNull(extras));
+        notifyChange(ReceiptsKt.getRECEIPTS_URI(), false);
+        notifyChange(ReceiptsKt.getRECEIPT_ITEMS_URI(), false);
+        return result;
+      }
+      case METHOD_ASSIGN_RECEIPT -> {
+        ReceiptsKt.assignReceipt(getHelper().getWritableDatabase(), Objects.requireNonNull(extras));
+        notifyChange(ReceiptsKt.getRECEIPTS_URI(), false);
+        notifyChange(ReceiptsKt.getRECEIPT_ITEMS_URI(), false);
+      }
       case METHOD_SAVE_TRANSACTION_TAGS ->  {
         saveTransactionTags(getHelper().getWritableDatabase(), Objects.requireNonNull(extras));
         notifyChange(TRANSACTIONS_URI, true);
@@ -1908,6 +1931,8 @@ public class TransactionProvider extends BaseTransactionProvider {
     URI_MATCHER.addURI(AUTHORITY, "accounts/attributes", ACCOUNT_ATTRIBUTES);
     URI_MATCHER.addURI(AUTHORITY, "transactions/attachments", TRANSACTION_ATTACHMENTS);
     URI_MATCHER.addURI(AUTHORITY, "attachments", ATTACHMENTS);
+    URI_MATCHER.addURI(AUTHORITY, "receipts", RECEIPTS);
+    URI_MATCHER.addURI(AUTHORITY, "receipts/items", RECEIPT_ITEMS);
     URI_MATCHER.addURI(AUTHORITY, "transactions/attachments/#/#", TRANSACTION_ID_ATTACHMENT_ID);
     URI_MATCHER.addURI(AUTHORITY, "transactions/" + URI_SEGMENT_UNARCHIVE, UNARCHIVE);
     URI_MATCHER.addURI(AUTHORITY, "transactions/#/" + URI_SEGMENT_SUMS_FOR_ARCHIVE, ARCHIVE_SUMS);
