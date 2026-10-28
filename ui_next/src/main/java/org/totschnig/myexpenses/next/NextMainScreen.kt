@@ -467,4 +467,8 @@ sealed interface NextKey : NavKey {
     /** @param openContract signature of a contract shown from the start */
     @Serializable
     data class Contracts(val openContract: String? = null) : NextKey
+
+    /** The breakdown behind the balance card */
+    @Serializable
+    data object Balance : NextKey
 }
