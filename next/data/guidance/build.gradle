@@ -1,0 +1,13 @@
+plugins {
+    id 'next.data'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.data.guidance'
+}
+
+// Hints after saving and on the overview, the readiness of the data for the analyses and the tips still waiting for data.
+dependencies {
+    implementation project(':next:data:merchants')
+    implementation project(':next:data:tips')
+}
