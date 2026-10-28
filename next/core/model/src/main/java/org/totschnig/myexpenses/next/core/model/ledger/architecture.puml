@@ -48,6 +48,9 @@ package "view models (…Feature of the shell)" as viewModels {
   [CategorySuggestionsViewModel] as categoriesVM
   [TagLearningViewModel] as tagLearningVM
   [TagDetectionsViewModel] as tagDetectionsVM
+  [TagAnalysisViewModel] as analysisVM
+  [CategorySpendingViewModel] as spendingVM
+  [MoneyFlowViewModel] as moneyFlowVM
   [FixedTransactionsViewModel] as fixedVM
 }
 
@@ -110,6 +113,9 @@ tagLearningVM -up-> tagsRepo
 ' View models that offer nothing read what they show themselves
 tagDetectionsVM -up-> tagRows
 tagDetectionsVM -up-> ContractFacts
+analysisVM -up-> TagFacts
+spendingVM -up-> TagFacts
+moneyFlowVM -up-> TagFacts
 fixedVM -up-> db : paged transactions
 
 @enduml

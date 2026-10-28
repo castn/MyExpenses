@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 /**
  * The transactions of the last [HISTORY_MONTHS] months, read once for all analyses of the new UI
- * (e.g. contracts and the balance). Each analysis derives the facts it needs from them,
+ * (contracts, categories, tags, saving tips). Each analysis derives the facts it needs from them,
  * see the README of this package. Equal transactions give an equal ledger, so that the analyses
  * are not computed again when the transactions are read again unchanged.
  */
