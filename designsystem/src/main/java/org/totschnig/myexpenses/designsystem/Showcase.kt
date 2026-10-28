@@ -5,12 +5,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
@@ -593,3 +595,48 @@ private fun SearchShowcase() {
     }
 }
 
+@Preview(name = "Intro page", showBackground = true, heightDp = 800)
+@Preview(name = "Intro page, dark", showBackground = true, heightDp = 800, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(name = "Intro page, wide", showBackground = true, widthDp = 840, heightDp = 480)
+@Composable
+private fun IntroPageShowcase() {
+    DesignSystemTheme {
+        Column {
+            StepIndicator(count = 4, current = 1, description = "Step 2 of 4", modifier = Modifier.padding(Spacing.screen))
+            IntroPage(
+                title = "Intro page",
+                text = "Introduces something, e.g. a step of the first start",
+                modifier = Modifier.weight(1f),
+                hero = { HeroIllustration(R.drawable.illustration_welcome) }
+            ) {
+                FeatureRow(Icons.Outlined.Info, "Feature row", "One thing that is offered")
+                ChoiceCard(Icons.Outlined.Folder, "Choice card", "One way to go on", selected = true, onClick = {}) {
+                    Text("Details while picked")
+                    Column(Modifier.padding(top = 8.dp).selectableGroup(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        ChoiceOption(Icons.Outlined.Info, "Choice option", "Picked inside the card", selected = true, onClick = {})
+                        ChoiceOption(Icons.Outlined.Workspaces, "Other option", "Also inside", selected = false, onClick = {})
+                    }
+                }
+                ChoiceCard(Icons.Outlined.Palette, "Other choice", "Another way", selected = false, onClick = {}, modifier = Modifier.padding(top = 8.dp))
+                DetailCard {
+                    SwitchRow("Consent", checked = false, onCheckedChange = {}, supportingText = "Off until agreed", isFirst = true)
+                }
+            }
+            IntroBottomBar(nextLabel = "Next", onNext = {}, skipLabel = "Skip")
+        }
+    }
+}
+
+@Preview(name = "Illustrations", showBackground = true, widthDp = 480)
+@Preview(name = "Illustrations, dark", showBackground = true, widthDp = 480, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun IllustrationShowcase() {
+    DesignSystemTheme {
+        FlowRow(Modifier.padding(Spacing.screen), horizontalArrangement = Arrangement.spacedBy(Spacing.content)) {
+            listOf(
+                R.drawable.illustration_welcome, R.drawable.illustration_privacy, R.drawable.illustration_start,
+                R.drawable.illustration_account, R.drawable.illustration_done
+            ).forEach { HeroIllustration(it, maxHeight = 120.dp) }
+        }
+    }
+}
