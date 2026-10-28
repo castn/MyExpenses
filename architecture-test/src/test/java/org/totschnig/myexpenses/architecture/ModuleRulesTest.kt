@@ -5,8 +5,17 @@ import com.lemonappdev.konsist.api.verify.assertFalse
 import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.Test
 
-/** Rules mod-ds-pure, mod-own-packages and mod-shell-boundary of ui_next/ARCHITECTURE.md. */
+/** Rules mod-charts-pure, mod-ds-pure, mod-own-packages and mod-shell-boundary of ui_next/ARCHITECTURE.md. */
 class ModuleRulesTest {
+
+    @Test
+    fun `mod-charts-pure charts knows no type of the app`() {
+        Konsist.scopeFromProduction(moduleName = "charts")
+            .imports
+            .assertFalse(additionalMessage = "mod-charts-pure: :charts knows only numbers and labels") {
+                it.name.startsWith(APP) && !it.name.startsWith("$APP.myexpenses.charts.")
+            }
+    }
 
     @Test
     fun `mod-ds-pure designsystem knows no type of the app`() {
