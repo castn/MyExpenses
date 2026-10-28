@@ -10,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
@@ -32,6 +33,7 @@ import org.totschnig.myexpenses.model.CommodityType
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model.Grouping
+import org.totschnig.myexpenses.next.onboarding.NextOnboarding
 import org.totschnig.myexpenses.next.settings.NextSettings
 import org.totschnig.myexpenses.next.settings.SettingsGroup
 import org.totschnig.myexpenses.next.search.SearchResult
@@ -41,6 +43,7 @@ import org.totschnig.myexpenses.next.transactions.FixedTransactionsViewModel
 import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
 import org.totschnig.myexpenses.next.transactions.toShown
 import org.totschnig.myexpenses.next.transactions.TransactionActions
+import org.totschnig.myexpenses.preference.isOnboardingCompleted
 import org.totschnig.myexpenses.provider.KEY_DATE
 import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
@@ -85,6 +88,11 @@ class MyExpensesNext : MyExpensesV2() {
         // Automatic decisions for new transactions, while the app is shown, see NextData
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) { nextData.applyAutomaticDecisions() }
+        }
+        if (!prefHandler.isOnboardingCompleted) {
+            // Fresh install: the first start of the new UI, which opens this screen again once done
+            startActivity(Intent(this, NextOnboarding::class.java))
+            finish()
         }
     }
 
