@@ -45,8 +45,8 @@ class DefaultCategoriesTest : BaseTestWithRepository() {
     fun setsUpGermanTree() {
         val (inserted, _) = setUp()
         val main = mainCategories()
-        assertThat(main).hasSize(30)
-        assertThat(inserted).isEqualTo(30 + 50 + 143)
+        assertThat(main).hasSize(31)
+        assertThat(inserted).isEqualTo(31 + 55 + 181)
         assertThat(main["Wohnen"]).isEqualTo(FLAG_EXPENSE)
         assertThat(main["Sparen & Vorsorge"]).isEqualTo(FLAG_EXPENSE)
         assertThat(main["Gehalt & Arbeit"]).isEqualTo(FLAG_INCOME)
@@ -66,6 +66,6 @@ class DefaultCategoriesTest : BaseTestWithRepository() {
         assertThat(main).containsKey("Lohn")
         assertThat(main).doesNotContainKey("Gehalt & Arbeit")
         assertThat(subCategories(lohn)).containsAtLeast("Nettogehalt", "Trinkgeld", "Abfindung")
-        assertThat(subCategories(lohn)).doesNotContain("Gehalt/Lohn")
+        assertThat(subCategories(lohn)).doesNotContain("Gehalt")
     }
 }
