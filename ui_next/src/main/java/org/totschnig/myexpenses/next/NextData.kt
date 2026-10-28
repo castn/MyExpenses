@@ -27,7 +27,9 @@ import org.totschnig.myexpenses.next.insights.ProviderLedgerSource
 import org.totschnig.myexpenses.next.insights.today
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import org.totschnig.myexpenses.myApplication
+import org.totschnig.myexpenses.next.receipts.ProviderReceiptDatabase
+import org.totschnig.myexpenses.next.data.receipts.ReceiptRepository
 import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
 import org.totschnig.myexpenses.next.data.budgets.BudgetRepository
 import org.totschnig.myexpenses.next.data.budgets.BudgetStore
@@ -62,8 +64,13 @@ class NextData private constructor(context: Context) {
 
     val categories = CategoryRepository(ledgerSource, CategoryStore(dataStore), ProviderCategoryWriting(context.contentResolver), scope)
 
+    val receipts = ReceiptRepository(
+        ProviderReceiptDatabase(context.myApplication, context.injector.repository(), context.injector.currencyContext()),
+        scope
+    )
+
     /** What budgets, saving tips and hints know about receipts; [ReceiptFacts.None] without receipts */
-    val receiptFacts: Flow<ReceiptFacts> = flowOf(ReceiptFacts.None)
+    val receiptFacts: Flow<ReceiptFacts> = receipts.facts
 
     val budgets = BudgetRepository(
         ledgerSource, contracts.facts, tags.facts, BudgetStore(dataStore), scope, receiptFacts

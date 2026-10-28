@@ -11,6 +11,7 @@ top to bottom direction
 [:charts] as mCharts
 [:designsystem] as mDesignsystem
 [:myExpenses\n(app)] as mMyExpenses
+[:ocr-model\n(Kotlin JVM)] as mOcrModel
 [:ui_next\n(dynamic feature)] as mUiNext
 
 package "next/core" as pNextCore {
@@ -27,6 +28,7 @@ package "next/data" as pNextData {
     [:contracts] as mNextDataContracts
     [:guidance] as mNextDataGuidance
     [:merchants] as mNextDataMerchants
+    [:receipts] as mNextDataReceipts
     [:tags] as mNextDataTags
     [:tips] as mNextDataTips
 }
@@ -39,6 +41,7 @@ package "next/feature" as pNextFeature {
     [:contracts] as mNextFeatureContracts
     [:guidance] as mNextFeatureGuidance
     [:merchants] as mNextFeatureMerchants
+    [:receipts] as mNextFeatureReceipts
     [:tags] as mNextFeatureTags
     [:tips] as mNextFeatureTips
 }
@@ -60,6 +63,8 @@ mNextDataCategories --> mNextDataMerchants
 mNextDataContracts --> mNextDataMerchants
 mNextDataGuidance --> mNextDataTips
 mNextDataMerchants --> mNextCoreCommon
+mNextDataReceipts --> mNextDataCategories
+mNextDataReceipts --> mOcrModel
 mNextDataTags --> mNextDataCategories
 mNextDataTags --> mNextDataContracts
 mNextDataTips --> mNextDataBudgets
@@ -73,6 +78,7 @@ mNextFeatureCategories --> mNextDataCategories
 mNextFeatureContracts --> mNextDataContracts
 mNextFeatureGuidance --> mNextDataGuidance
 mNextFeatureMerchants --> mNextDataMerchants
+mNextFeatureReceipts --> mNextDataReceipts
 mNextFeatureTags --> mNextDataTags
 mNextFeatureTips --> mNextDataTips
 mUiNext --> mMyExpenses

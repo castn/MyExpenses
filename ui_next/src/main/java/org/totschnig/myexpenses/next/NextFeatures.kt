@@ -12,6 +12,7 @@ import org.totschnig.myexpenses.next.guidance.GuidanceFeature
 import org.totschnig.myexpenses.next.guidance.HintSettings
 import org.totschnig.myexpenses.next.merchants.MerchantSettings
 import org.totschnig.myexpenses.next.merchants.MerchantsFeature
+import org.totschnig.myexpenses.next.receipts.ReceiptsFeature
 import org.totschnig.myexpenses.next.tags.TagsFeature
 import org.totschnig.myexpenses.next.tags.TagSettings
 import org.totschnig.myexpenses.next.settings.AreaSettings
@@ -33,14 +34,15 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
     val guidance = GuidanceFeature(activity, data, { categories.isAsking() }, explained = NextKey.Analysis)
     val savingTips = SavingTipsFeature(activity, data, contracts, tags) { guidance.PendingTips(it) }
     val analysis = AnalysisFeature(activity, data, guidance)
+    val receipts = ReceiptsFeature(activity, data) { contracts.isContractPayment(it) }
 
     val all: List<NextFeature> = listOf(
-        categories, tags, contracts, budgets, guidance, merchants, balance, analysis, savingTips
+        categories, tags, contracts, budgets, receipts, guidance, merchants, balance, analysis, savingTips
     )
 
     companion object {
         /** What the areas provide to all screens of the new UI, also outside of the main screen, see [NextTheme] */
-        val locals: Array<ProvidedValue<*>> get() = arrayOf(CategoriesFeature.picker)
+        val locals: Array<ProvidedValue<*>> get() = arrayOf(CategoriesFeature.picker, ReceiptsFeature.editor)
 
         /** The settings of the areas, in the order they are listed in their groups, see [NextSettings] */
         val settings: List<AreaSettings.Factory> get() = listOf(CategorySettings, TagSettings, HintSettings, MerchantSettings)

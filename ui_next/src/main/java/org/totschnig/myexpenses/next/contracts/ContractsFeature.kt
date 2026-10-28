@@ -20,11 +20,16 @@ import org.totschnig.myexpenses.next.feature.contracts.ContractsFlow
 import org.totschnig.myexpenses.next.feature.contracts.ContractsViewModel
 import org.totschnig.myexpenses.next.feature.contracts.PaymentContractChip
 import org.totschnig.myexpenses.next.feature.contracts.PaymentContractSection
+import org.totschnig.myexpenses.next.feature.contracts.rememberIsContractPayment
 import org.totschnig.myexpenses.next.viewModelsOf
 
 /** Contracts and incomes detected in the ledger */
 class ContractsFeature(activity: ComponentActivity, data: NextData) : NextFeature {
     val viewModel by activity.viewModelsOf { ContractsViewModel(data.contracts, data.homeCurrency) }
+
+    /** Whether [transaction] pays a contract, null while that is not known yet */
+    @Composable
+    fun isContractPayment(transaction: ShownTransaction): Boolean? = rememberIsContractPayment(viewModel, transaction)
 
     @Composable
     override fun TransactionSections(transaction: ShownTransaction) {

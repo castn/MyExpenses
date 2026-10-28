@@ -31,6 +31,18 @@ private fun rememberPaymentInfo(viewModel: ContractsViewModel, transaction: Show
 }
 
 /**
+ * Whether [transaction] is a payment of a contract, also a suggested one, so that a receipt would
+ * be pointless. Null while it is not known yet.
+ */
+@Composable
+fun rememberIsContractPayment(viewModel: ContractsViewModel, transaction: ShownTransaction): Boolean? =
+    when (rememberPaymentInfo(viewModel, transaction)) {
+        PaymentContractInfo.Loading -> null
+        is PaymentContractInfo.Confirmed, is PaymentContractInfo.Suggested -> true
+        else -> false
+    }
+
+/**
  * Part of the details of a transaction: the contract (or regular income) it belongs to, if there
  * is one or one is suggested. Declaring it as one is offered by [PaymentContractChip].
  */
