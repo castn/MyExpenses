@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="next_tab_contracts">Verträge</string>
+    <string name="next_tab_saving_tips">Spartipps</string>
     <string name="next_tab_overview">Übersicht</string>
     <string name="next_tab_menu">Menü</string>
     <string name="next_coming_soon">Kommt bald</string>
@@ -218,6 +219,115 @@
     <string name="next_news_reserve_missing">Die für den %1$s erwartete Einzahlung (%2$s) ist noch nicht erfolgt.</string>
     <string name="next_news_reserve_stopped" tools:ignore="Typos">Seit dem %1$s keine Einzahlung mehr. Wurde die Rücklage beendet?</string>
     <string name="next_news_reserve_cancel_again">Erneut als beendet markieren</string>
+    <string name="next_tips_consent_title">Spartipps aus deinen Buchungen</string>
+    <string name="next_tips_consent_text">Für Spartipps werden deine Buchungen nach Verträgen und regelmäßigen Ausgaben durchsucht. Die Auswertung passiert nur auf deinem Gerät.</string>
+    <string name="next_tips_empty">Gerade keine Spartipps</string>
+    <string name="next_tips_empty_hint">Hier erscheinen Hinweise, sobald dir deine Buchungen etwas verraten, zum Beispiel wenn Verträge teurer werden. Je genauer deine Kategorien und je mehr Kassenzettel du scannst, desto mehr lässt sich sagen.</string>
+    <string name="next_tips_card_title">Spartipp</string>
+    <string name="next_tips_per_year">%1$s im Jahr</string>
+    <string name="next_tips_dismiss">Nicht relevant</string>
+    <string name="next_tips_restore">Wieder anzeigen</string>
+    <string name="next_tips_price_increases_title">Verträge teurer geworden</string>
+    <plurals name="next_tips_price_increases_text">
+        <item quantity="one">In den letzten 12 Monaten ist ein Vertrag teurer geworden, um %2$s im Monat.</item>
+        <item quantity="other">In den letzten 12 Monaten sind %1$d Verträge teurer geworden, zusammen um %2$s im Monat.</item>
+    </plurals>
+    <string name="next_tips_price_increases_hint">Prüfe, ob du kündigen oder zu einem günstigeren Anbieter wechseln kannst.</string>
+    <string name="next_tips_price_increase">%1$s → %2$s seit %3$s</string>
+    <string name="next_tips_bank_fees_title">Bankgebühren</string>
+    <string name="next_tips_bank_fees_text">In den letzten 12 Monaten hast du %1$s an Gebühren an deine Bank gezahlt.</string>
+    <string name="next_tips_bank_fees_hint">Viele Banken bieten Konten ohne Kontoführungsgebühr und Kreditkarten ohne Auslandseinsatzentgelt an.</string>
+    <string name="next_tips_fee_account">Kontoführung</string>
+    <string name="next_tips_fee_card">Karten</string>
+    <string name="next_tips_fee_foreign">Auslandseinsatz</string>
+    <string name="next_tips_fee_atm">Geldautomat</string>
+    <string name="next_tips_fee_overdraft">Dispozinsen</string>
+    <string name="next_tips_fee_other">Sonstige Gebühren</string>
+    <plurals name="next_tips_fee_count">
+        <item quantity="one">%d Buchung</item>
+        <item quantity="other">%d Buchungen</item>
+    </plurals>
+    <string name="next_tips_last_year">Letzte 12 Monate</string>
+    <string name="next_tips_duplicates_car">Mehrere Kfz-Versicherungen</string>
+    <string name="next_tips_duplicates_liability">Mehrere Haftpflichtversicherungen</string>
+    <string name="next_tips_duplicates_contents">Mehrere Hausratversicherungen</string>
+    <string name="next_tips_duplicates_legal">Mehrere Rechtsschutzversicherungen</string>
+    <string name="next_tips_duplicates_video">Mehrere Video-Streamingdienste</string>
+    <string name="next_tips_duplicates_music">Mehrere Musik-Streamingdienste</string>
+    <string name="next_tips_duplicates_cloud">Mehrere Cloud-Speicher</string>
+    <string name="next_tips_duplicates_mobile">Mehrere Handyverträge</string>
+    <string name="next_tips_duplicates_internet">Mehrere Internetanschlüsse</string>
+    <string name="next_tips_duplicates_electricity">Mehrere Stromverträge</string>
+    <string name="next_tips_duplicates_gas">Mehrere Gasverträge</string>
+    <string name="next_tips_duplicates_gym">Mehrere Fitnessstudios</string>
+    <plurals name="next_tips_duplicates_text">
+        <item quantity="one">Du zahlst für %1$d Vertrag dieser Art %2$s im Monat.</item>
+        <item quantity="other">Du zahlst für %1$d Verträge dieser Art zusammen %2$s im Monat.</item>
+    </plurals>
+    <string name="next_tips_duplicates_hint_insurance">Versicherungen gleicher Art decken oft dasselbe ab, zum Beispiel wenn du auch über deinen Partner versichert bist. Prüfe, ob du eine kündigen kannst.</string>
+    <string name="next_tips_duplicates_hint_subscription">Prüfe, ob du alle gleichzeitig nutzt. Viele lassen sich monatlich kündigen und bei Bedarf wieder abschließen.</string>
+    <string name="next_tips_duplicates_hint_utility">Prüfe, ob du alle noch brauchst. Nach einem Umzug oder Anbieterwechsel läuft der alte Vertrag manchmal weiter.</string>
+    <string name="next_tips_long_running_title">Lange beim selben Anbieter</string>
+    <plurals name="next_tips_long_running_text">
+        <item quantity="one">Einen Vertrag, bei dem sich ein Wechsel oft lohnt, zahlst du seit mindestens %1$d Jahren an denselben Anbieter.</item>
+        <item quantity="other">%2$d Verträge, bei denen sich ein Wechsel oft lohnt, zahlst du seit mindestens %1$d Jahren an denselben Anbieter.</item>
+    </plurals>
+    <string name="next_tips_long_running_hint">Neukunden bekommen oft bessere Preise. Vergleiche die Tarife und prüfe die Kündigungsfrist.</string>
+    <string name="next_tips_since">Seit spätestens %1$s</string>
+    <string name="next_tips_frequent_title">Monatlich statt jährlich</string>
+    <plurals name="next_tips_frequent_text">
+        <item quantity="one">Eine Versicherung oder ein Abo zahlst du öfter als einmal im Jahr, %2$s im Monat.</item>
+        <item quantity="other">%1$d Versicherungen und Abos zahlst du öfter als einmal im Jahr, zusammen %2$s im Monat.</item>
+    </plurals>
+    <string name="next_tips_frequent_hint">Versicherungen verlangen für monatliche Zahlung oft einen Aufschlag, Abos gibt es als Jahrespaket oft günstiger. Frag nach, was die jährliche Zahlung kostet.</string>
+    <string name="next_tips_small_title">Kleinvieh macht auch Mist</string>
+    <plurals name="next_tips_small_text">
+        <item quantity="one">In den letzten 12 Monaten %1$d Einkauf unter %2$s, zusammen %3$s, im Schnitt %4$s im Monat.</item>
+        <item quantity="other">In den letzten 12 Monaten %1$d Einkäufe unter %2$s, zusammen %3$s, im Schnitt %4$s im Monat.</item>
+    </plurals>
+    <string name="next_tips_small_hint">Oft stecken Gewohnheiten dahinter, zum Beispiel der Kaffee unterwegs. Hier hast du am meisten ausgegeben:</string>
+    <plurals name="next_tips_purchases">
+        <item quantity="one">%d Einkauf</item>
+        <item quantity="other">%d Einkäufe</item>
+    </plurals>
+    <string name="next_tips_purchases_average">%1$s · im Schnitt %2$s</string>
+    <string name="next_tips_eating_out_title">Mehr auswärts gegessen</string>
+    <string name="next_tips_eating_out_text">In den letzten 30 Tagen hast du %1$s für Restaurants und Lieferdienste ausgegeben, sonst sind es im Schnitt %2$s.</string>
+    <string name="next_tips_eating_out_hint">Prüfe, ob das eine Ausnahme war oder zur Gewohnheit wird.</string>
+    <plurals name="next_tips_last_days">
+        <item quantity="one">Letzter %1$d Tag</item>
+        <item quantity="other">Letzte %1$d Tage</item>
+    </plurals>
+    <string name="next_tips_supermarkets_title">Einkauf im Supermarkt</string>
+    <string name="next_tips_supermarkets_text">Ein Einkauf kostet dich im Schnitt zwischen %1$s bei %2$s und %3$s bei %4$s.</string>
+    <string name="next_tips_supermarkets_hint">Die Unterschiede liegen auch daran, was du wo kaufst. Vergleiche, wo dein Wocheneinkauf günstiger ist.</string>
+    <string name="next_tips_outliers_title">Ausreißer im %1$s</string>
+    <plurals name="next_tips_outliers_text">
+        <item quantity="one">Für eine Kategorie hast du deutlich mehr ausgegeben als sonst, %2$s mehr als im Schnitt.</item>
+        <item quantity="other">Für %1$d Kategorien hast du deutlich mehr ausgegeben als sonst, zusammen %2$s mehr als im Schnitt.</item>
+    </plurals>
+    <string name="next_tips_outliers_hint">Das kann eine einmalige Anschaffung sein. Wenn nicht, lohnt ein Blick auf die Buchungen.</string>
+    <string name="next_tips_usually">Sonst im Schnitt %1$s</string>
+    <string name="next_tips_item_group_rising_title">%1$s: mehr als sonst</string>
+    <plurals name="next_tips_item_group_rising_text">
+        <item quantity="one">%1$d %% deiner gescannten EinkÃ¤ufe im letzten %2$d Monat, im Jahr davor %3$d %%.</item>
+        <item quantity="other">%1$d %% deiner gescannten Einkäufe in den letzten %2$d Monaten, im Jahr davor %3$d %%.</item>
+    </plurals>
+    <string name="next_tips_scanned_hint">Gezählt werden nur Kassenzettel, die du gescannt hast.</string>
+    <string name="next_tips_scanned_purchases">Gescannte Einkäufe</string>
+    <plurals name="next_tips_last_months">
+        <item quantity="one">Letzter %1$d Monat</item>
+        <item quantity="other">Letzte %1$d Monate</item>
+    </plurals>
+    <string name="next_tips_deposit_title">Pfand nicht zurückgegeben</string>
+    <string name="next_tips_deposit_text">Auf deinen gescannten Kassenzetteln der letzten 12 Monate: %1$s Pfand bezahlt, %2$s zurückbekommen.</string>
+    <string name="next_tips_deposit_hint">Leergut, das ohne gescannten Kassenzettel zurückging, fehlt hier.</string>
+    <string name="next_tips_drugstore_title">Drogerie-Artikel im Supermarkt</string>
+    <plurals name="next_tips_drugstore_text">
+        <item quantity="one">%1$d Drogerie-Artikel für %2$s in den letzten 12 Monaten im Supermarkt gekauft, laut deinen gescannten Kassenzetteln.</item>
+        <item quantity="other">%1$d Drogerie-Artikel für %2$s in den letzten 12 Monaten im Supermarkt gekauft, laut deinen gescannten Kassenzetteln.</item>
+    </plurals>
+    <string name="next_tips_drugstore_hint">Drogeriemärkte haben solche Artikel oft günstiger, ein Preisvergleich kann sich lohnen.</string>
     <string name="next_category_suggested">Vorschlag: %1$s</string>
     <string name="next_category_accept">Übernehmen</string>
     <string name="next_category_reason_rule">Nach deiner Regel für diesen Empfänger.</string>
@@ -323,6 +433,7 @@
         <item quantity="one">%d Buchung</item>
         <item quantity="other">%d Buchungen</item>
     </plurals>
+    <string name="next_settings_open">Einstellungen</string>
     <string name="next_settings_search">Suchen…</string>
     <string name="next_settings_clear_search">Leeren</string>
     <string name="next_settings_no_results">Keine Einstellungen gefunden</string>
@@ -605,6 +716,16 @@
     <string name="next_budget_share_invalid">Gib eine Zahl von 1 bis 100 ein</string>
     <string name="next_budget_one_off_hint">Als einmalig markiert, zählt daher nicht im Topf</string>
     <string name="next_budget_pace_warning">%1$s: bei diesem Tempo %2$s drüber</string>
+    <plurals name="next_tips_pots_title">
+        <item quantity="one">Topf %1$s oft überzogen</item>
+        <item quantity="other">%1$s und %2$d weitere Töpfe oft überzogen</item>
+    </plurals>
+    <plurals name="next_tips_pots_text">
+        <item quantity="one">In mindestens %1$d des letzten %2$d Zeitraums wurde mehr ausgegeben als geplant.</item>
+        <item quantity="other">In mindestens %1$d der letzten %2$d Zeiträume wurde mehr ausgegeben als geplant.</item>
+    </plurals>
+    <string name="next_tips_pots_hint">Passt der Betrag nicht zu dem, was du wirklich brauchst, oder lässt sich hier weniger ausgeben?</string>
+    <string name="next_tips_pot_over">%1$d von %2$d · im Schnitt %3$s drüber</string>
     <string name="next_icons_food">Essen &amp; Trinken</string>
     <string name="next_icons_shopping">Einkaufen</string>
     <string name="next_icons_home">Wohnen &amp; Energie</string>
@@ -680,5 +801,6 @@
     <string name="next_pick_contract">Wähle einen Vertrag aus der Liste</string>
     <string name="next_pick_income">Wähle ein Einkommen aus der Liste</string>
     <string name="next_pick_pot">Wähle einen Topf aus der Liste</string>
+    <string name="next_pick_saving_tip">Wähle einen Spartipp, um seine Buchungen zu sehen</string>
     <string name="next_pick_settings">Wähle einen Bereich der Einstellungen</string>
 </resources>

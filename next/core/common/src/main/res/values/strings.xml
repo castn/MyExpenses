@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="next_tab_contracts">Contracts</string>
+    <string name="next_tab_saving_tips">Saving tips</string>
     <string name="next_tab_overview">Overview</string>
     <string name="next_tab_menu">Menu</string>
     <string name="next_coming_soon">Coming soon</string>
@@ -218,6 +219,115 @@
     <string name="next_news_reserve_missing">The deposit expected on %1$s (%2$s) has not happened yet.</string>
     <string name="next_news_reserve_stopped">No deposit since %1$s. Were the savings stopped?</string>
     <string name="next_news_reserve_cancel_again">Mark as stopped again</string>
+    <string name="next_tips_consent_title">Saving tips from your transactions</string>
+    <string name="next_tips_consent_text">For saving tips, your transactions are searched for contracts and regular expenses. The analysis runs only on your device.</string>
+    <string name="next_tips_empty">No saving tips right now</string>
+    <string name="next_tips_empty_hint">Hints show up here as soon as your transactions reveal something, for example when contracts become more expensive. The more precise your categories and the more receipts you scan, the more there is to tell.</string>
+    <string name="next_tips_card_title">Saving tip</string>
+    <string name="next_tips_per_year">%1$s a year</string>
+    <string name="next_tips_dismiss">Not relevant</string>
+    <string name="next_tips_restore">Show again</string>
+    <string name="next_tips_price_increases_title">Contracts became more expensive</string>
+    <plurals name="next_tips_price_increases_text">
+        <item quantity="one">In the last 12 months, one contract became more expensive, by %2$s a month.</item>
+        <item quantity="other">In the last 12 months, %1$d contracts became more expensive, by %2$s a month in total.</item>
+    </plurals>
+    <string name="next_tips_price_increases_hint">Check whether you can cancel or switch to a cheaper provider.</string>
+    <string name="next_tips_price_increase">%1$s → %2$s since %3$s</string>
+    <string name="next_tips_bank_fees_title">Bank fees</string>
+    <string name="next_tips_bank_fees_text">In the last 12 months, you paid %1$s in fees to your bank.</string>
+    <string name="next_tips_bank_fees_hint">Many banks offer accounts without account fees and credit cards without foreign transaction fees.</string>
+    <string name="next_tips_fee_account">Account fees</string>
+    <string name="next_tips_fee_card">Cards</string>
+    <string name="next_tips_fee_foreign">Foreign transactions</string>
+    <string name="next_tips_fee_atm">ATM</string>
+    <string name="next_tips_fee_overdraft">Overdraft interest</string>
+    <string name="next_tips_fee_other">Other fees</string>
+    <plurals name="next_tips_fee_count">
+        <item quantity="one">%d transaction</item>
+        <item quantity="other">%d transactions</item>
+    </plurals>
+    <string name="next_tips_last_year">Last 12 months</string>
+    <string name="next_tips_duplicates_car">Several car insurances</string>
+    <string name="next_tips_duplicates_liability">Several liability insurances</string>
+    <string name="next_tips_duplicates_contents">Several home contents insurances</string>
+    <string name="next_tips_duplicates_legal">Several legal expenses insurances</string>
+    <string name="next_tips_duplicates_video">Several video streaming services</string>
+    <string name="next_tips_duplicates_music">Several music streaming services</string>
+    <string name="next_tips_duplicates_cloud">Several cloud storage plans</string>
+    <string name="next_tips_duplicates_mobile">Several mobile contracts</string>
+    <string name="next_tips_duplicates_internet">Several internet connections</string>
+    <string name="next_tips_duplicates_electricity">Several electricity contracts</string>
+    <string name="next_tips_duplicates_gas">Several gas contracts</string>
+    <string name="next_tips_duplicates_gym">Several gym memberships</string>
+    <plurals name="next_tips_duplicates_text">
+        <item quantity="one">You pay %2$s a month for %1$d contract of this kind.</item>
+        <item quantity="other">You pay %2$s a month for %1$d contracts of this kind in total.</item>
+    </plurals>
+    <string name="next_tips_duplicates_hint_insurance">Insurances of the same kind often cover the same, for example when you are also insured through your partner. Check whether you can cancel one.</string>
+    <string name="next_tips_duplicates_hint_subscription">Check whether you use all of them at the same time. Many can be cancelled monthly and taken out again when needed.</string>
+    <string name="next_tips_duplicates_hint_utility">Check whether you still need all of them. After a move or a change of provider, the old contract sometimes keeps running.</string>
+    <string name="next_tips_long_running_title">Same provider for a long time</string>
+    <plurals name="next_tips_long_running_text">
+        <item quantity="one">You have paid one contract where switching often pays off to the same provider for at least %1$d years.</item>
+        <item quantity="other">You have paid %2$d contracts where switching often pays off to the same provider for at least %1$d years.</item>
+    </plurals>
+    <string name="next_tips_long_running_hint">New customers often get better prices. Compare the rates and check the notice period.</string>
+    <string name="next_tips_since">Since %1$s at the latest</string>
+    <string name="next_tips_frequent_title">Monthly instead of yearly</string>
+    <plurals name="next_tips_frequent_text">
+        <item quantity="one">You pay one insurance or subscription more often than once a year, %2$s a month.</item>
+        <item quantity="other">You pay %1$d insurances and subscriptions more often than once a year, %2$s a month in total.</item>
+    </plurals>
+    <string name="next_tips_frequent_hint">Insurers often charge extra for monthly payments, and subscriptions are often cheaper as a yearly plan. Ask what paying yearly costs.</string>
+    <string name="next_tips_small_title">Small purchases add up</string>
+    <plurals name="next_tips_small_text">
+        <item quantity="one">In the last 12 months, %1$d purchase below %2$s, %3$s in total, %4$s a month on average.</item>
+        <item quantity="other">In the last 12 months, %1$d purchases below %2$s, %3$s in total, %4$s a month on average.</item>
+    </plurals>
+    <string name="next_tips_small_hint">Often these are habits, for example coffee to go. This is where you spent most:</string>
+    <plurals name="next_tips_purchases">
+        <item quantity="one">%d purchase</item>
+        <item quantity="other">%d purchases</item>
+    </plurals>
+    <string name="next_tips_purchases_average">%1$s · %2$s on average</string>
+    <string name="next_tips_eating_out_title">Eating out more</string>
+    <string name="next_tips_eating_out_text">In the last 30 days, you spent %1$s on restaurants and delivery services, usually it is %2$s on average.</string>
+    <string name="next_tips_eating_out_hint">Check whether this was an exception or is becoming a habit.</string>
+    <plurals name="next_tips_last_days">
+        <item quantity="one">Last %1$d day</item>
+        <item quantity="other">Last %1$d days</item>
+    </plurals>
+    <string name="next_tips_supermarkets_title">Grocery shopping</string>
+    <string name="next_tips_supermarkets_text">A purchase costs you between %1$s at %2$s and %3$s at %4$s on average.</string>
+    <string name="next_tips_supermarkets_hint">The differences also depend on what you buy where. Compare where your weekly shopping is cheaper.</string>
+    <string name="next_tips_outliers_title">Outliers in %1$s</string>
+    <plurals name="next_tips_outliers_text">
+        <item quantity="one">You spent much more than usual in one category, %2$s more than on average.</item>
+        <item quantity="other">You spent much more than usual in %1$d categories, %2$s more than on average in total.</item>
+    </plurals>
+    <string name="next_tips_outliers_hint">This can be a one-off purchase. If not, have a look at the transactions.</string>
+    <string name="next_tips_usually">Usually %1$s on average</string>
+    <string name="next_tips_item_group_rising_title">%1$s: more than usual</string>
+    <plurals name="next_tips_item_group_rising_text">
+        <item quantity="one">%1$d %% of your scanned purchases in the last %2$d month, %3$d %% in the year before.</item>
+        <item quantity="other">%1$d %% of your scanned purchases in the last %2$d months, %3$d %% in the year before.</item>
+    </plurals>
+    <string name="next_tips_scanned_hint">Only receipts you scanned count.</string>
+    <string name="next_tips_scanned_purchases">Scanned purchases</string>
+    <plurals name="next_tips_last_months">
+        <item quantity="one">Last %1$d month</item>
+        <item quantity="other">Last %1$d months</item>
+    </plurals>
+    <string name="next_tips_deposit_title">Deposit not returned</string>
+    <string name="next_tips_deposit_text">Your scanned receipts of the last 12 months show %1$s deposit paid and %2$s returned.</string>
+    <string name="next_tips_deposit_hint">Bottles returned without a scanned receipt are missing here.</string>
+    <string name="next_tips_drugstore_title">Drugstore goods at the supermarket</string>
+    <plurals name="next_tips_drugstore_text">
+        <item quantity="one">%1$d drugstore item for %2$s bought at supermarkets in the last 12 months, according to your scanned receipts.</item>
+        <item quantity="other">%1$d drugstore items for %2$s bought at supermarkets in the last 12 months, according to your scanned receipts.</item>
+    </plurals>
+    <string name="next_tips_drugstore_hint">Drugstores often sell such goods for less, comparing prices can be worth it.</string>
     <string name="next_category_suggested">Suggestion: %1$s</string>
     <string name="next_category_accept">Apply</string>
     <string name="next_category_reason_rule">According to your rule for this payee.</string>
@@ -323,6 +433,7 @@
         <item quantity="one">%d transaction</item>
         <item quantity="other">%d transactions</item>
     </plurals>
+    <string name="next_settings_open">Settings</string>
     <string name="next_settings_search">Search…</string>
     <string name="next_settings_clear_search">Clear</string>
     <string name="next_settings_no_results">No settings found</string>
@@ -605,6 +716,16 @@
     <string name="next_budget_share_invalid">Enter a number from 1 to 100</string>
     <string name="next_budget_one_off_hint">Marked as one-off, so it does not count in the pot</string>
     <string name="next_budget_pace_warning">%1$s: %2$s over at this pace</string>
+    <plurals name="next_tips_pots_title">
+        <item quantity="one">Pot %1$s often overspent</item>
+        <item quantity="other">%1$s and %2$d more pots often overspent</item>
+    </plurals>
+    <plurals name="next_tips_pots_text">
+        <item quantity="one">In at least %1$d of the last %2$d period more was spent than planned.</item>
+        <item quantity="other">In at least %1$d of the last %2$d periods more was spent than planned.</item>
+    </plurals>
+    <string name="next_tips_pots_hint">Does the amount not fit what you really need, or could you spend less here?</string>
+    <string name="next_tips_pot_over">%1$d of %2$d · on average %3$s over</string>
     <string name="next_icons_food">Food &amp; drink</string>
     <string name="next_icons_shopping">Shopping</string>
     <string name="next_icons_home">Home &amp; energy</string>
@@ -680,5 +801,6 @@
     <string name="next_pick_contract">Choose a contract from the list</string>
     <string name="next_pick_income">Choose an income from the list</string>
     <string name="next_pick_pot">Choose a pot from the list</string>
+    <string name="next_pick_saving_tip">Choose a saving tip to see its transactions</string>
     <string name="next_pick_settings">Choose a section of the settings</string>
 </resources>
