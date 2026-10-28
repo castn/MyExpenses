@@ -436,13 +436,68 @@
         <item quantity="one">Auch die andere Buchung bei %2$s hinzufügen</item>
         <item quantity="other">Auch die %1$d anderen bei %2$s hinzufügen</item>
     </plurals>
+    <string name="next_analysis_consent_title">Wohin dein Geld geht</string>
+    <string name="next_analysis_consent_text">Um deine Ausgaben nach Kategorie, Reisen, Themen und berufliche Ausgaben auszuwerten, werden deine Buchungen gelesen. Die Auswertung passiert nur auf deinem Gerät.</string>
+    <string name="next_analysis_trips">Reisen</string>
+    <string name="next_analysis_themes">Themen, letzte 12 Monate</string>
+    <string name="next_analysis_business">Beruflich %d</string>
+    <string name="next_analysis_empty">Noch nichts auszuwerten</string>
+    <string name="next_analysis_empty_hint">Gib Buchungen unter „Wofür“ eine Kategorie, dann siehst du hier, wofür dein Geld ausgegeben wird. Mit „Gehört zu“ fasst du eine Reise oder ein Thema wie „Hund“ zusammen und siehst, was es gekostet hat.</string>
+    <string name="next_analysis_per_month">ø %s im Monat</string>
+    <string name="next_analysis_per_day">%s pro Tag</string>
+    <string name="next_analysis_total">Ausgegeben</string>
+    <string name="next_analysis_by_month">Nach Monat</string>
+    <string name="next_analysis_by_category">Nach Kategorie</string>
+    <string name="next_analysis_no_category">Ohne Kategorie</string>
+    <string name="next_analysis_spending">Ausgaben nach Kategorie</string>
+    <string name="next_analysis_all_categories">Alle Kategorien</string>
+    <string name="next_analysis_others">Sonstige</string>
+    <string name="next_analysis_subcategories">Unterkategorien</string>
+    <string name="next_analysis_month">Monat</string>
+    <string name="next_analysis_year">Jahr</string>
+    <string name="next_analysis_twelve_months">12 Monate</string>
+    <string name="next_flow_title">Geldfluss</string>
+    <string name="next_flow_open">Woher dein Geld kommt und wohin es geht</string>
+    <string name="next_flow_last_twelve_months">Letzte 12 Monate</string>
+    <string name="next_flow_earned">Eingenommen</string>
+    <string name="next_flow_spent">Ausgegeben</string>
+    <string name="next_flow_left">Übrig</string>
+    <string name="next_flow_accounts">Konten</string>
+    <string name="next_flow_savings">Aus Erspartem</string>
+    <string name="next_flow_no_payee">Ohne Empfänger</string>
+    <plurals name="next_flow_other_actors">
+        <item quantity="one">%d weiterer</item>
+        <item quantity="other">%d weitere</item>
+    </plurals>
+    <string name="next_flow_hint">Tippe auf einen Balken oder ein Band, um zu sehen, wofür es steht. Mit zwei Fingern vergrößern, doppelt tippen zeigt wieder alles.</string>
     <string name="next_analysis_earlier">Früher</string>
     <string name="next_analysis_later">Später</string>
+    <string name="next_analysis_change">Veränderung</string>
+    <string name="next_analysis_tags">Tags</string>
     <string name="next_analysis_transactions_title">Buchungen</string>
     <plurals name="next_analysis_transactions">
         <item quantity="one">%d Buchung</item>
         <item quantity="other">%d Buchungen</item>
     </plurals>
+    <string name="next_readiness_title">Was der Auswertung noch fehlt</string>
+    <plurals name="next_readiness_uncategorized">
+        <item quantity="one">%1$d von %2$d Ausgaben der letzten 3 Monate hat keine Kategorie. Sie fehlt in der Auswertung nach âWofÃ¼râ und in Spartipps wie ungewÃ¶hnlich hohen Ausgaben.</item>
+        <item quantity="other">%1$d von %2$d Ausgaben der letzten 3 Monate haben keine Kategorie. Sie fehlen in der Auswertung nach „Wofür“ und in Spartipps wie ungewöhnlich hohen Ausgaben.</item>
+    </plurals>
+    <string name="next_readiness_uncategorized_action">Kategorie vergeben</string>
+    <plurals name="next_readiness_vague">
+        <item quantity="one">%1$d von %2$d Ausgaben der letzten 3 Monate steht unter einer Sammelkategorie wie âSonstigesâ. Eine genaue Kategorie zeigt, wofÃ¼r das Geld wirklich ausgegeben wurde.</item>
+        <item quantity="other">%1$d von %2$d Ausgaben der letzten 3 Monate stehen unter einer Sammelkategorie wie „Sonstiges“. Eine genaue Kategorie zeigt, wofür das Geld wirklich ausgegeben wurde.</item>
+    </plurals>
+    <string name="next_readiness_vague_action">Genauer einordnen</string>
+    <string name="next_readiness_receipts_none">In den letzten 3 Monaten hast du keinen Kassenzettel gescannt.</string>
+    <plurals name="next_readiness_receipts_few">
+        <item quantity="one">In den letzten 3 Monaten hast du %d Kassenzettel gescannt.</item>
+        <item quantity="other">In den letzten 3 Monaten hast du %d Kassenzettel gescannt.</item>
+    </plurals>
+    <string name="next_readiness_receipts_why">Kassenzettel zeigen, was du kaufst, etwa wie viel im Supermarkt für Süßes oder Drogerieartikel draufgeht. Um zu sagen, ob es mehr wird, braucht es Einkäufe mit Kassenzettel, verteilt über das Jahr.</string>
+    <string name="next_readiness_receipts_action">Einkäufe ohne Kassenzettel</string>
+    <string name="next_readiness_no_tags">Im letzten Jahr gehört keine Ausgabe zu einer Reise oder einem Thema. Mit „Gehört zu“ fasst du eine Reise oder ein Thema wie „Hund“ zusammen und siehst hier, was es gekostet hat.</string>
     <string name="next_hint_saved_category">Ohne Kategorie gespeichert: Die Buchung fehlt in der Auswertung und in den Spartipps.</string>
     <string name="next_hint_saved_receipt">Tipp: Scanne den Kassenzettel in den Details der Buchung, dann siehst du, was du im Supermarkt kaufst.</string>
     <string name="next_hint_never">Nicht mehr zeigen</string>
@@ -459,6 +514,10 @@
     </plurals>
     <string name="next_hint_overview_receipts_title">Kassenzettel scannen lohnt sich</string>
     <string name="next_hint_overview_receipts_text">So siehst du, was du im Supermarkt kaufst</string>
+    <plurals name="next_analysis_days">
+        <item quantity="one">%d Tag</item>
+        <item quantity="other">%d Tage</item>
+    </plurals>
     <string name="next_settings_open">Einstellungen</string>
     <string name="next_settings_search">Suchen…</string>
     <string name="next_settings_clear_search">Leeren</string>

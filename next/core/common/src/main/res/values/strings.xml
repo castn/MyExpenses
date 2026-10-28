@@ -436,13 +436,68 @@
         <item quantity="one">Also add the other transaction with %2$s</item>
         <item quantity="other">Also add the %1$d others with %2$s</item>
     </plurals>
+    <string name="next_analysis_consent_title">Where your money goes</string>
+    <string name="next_analysis_consent_text">To evaluate your spending by category, trips, themes and business expenses, your transactions are read. The analysis runs only on your device.</string>
+    <string name="next_analysis_trips">Trips</string>
+    <string name="next_analysis_themes">Themes, last 12 months</string>
+    <string name="next_analysis_business">Business %d</string>
+    <string name="next_analysis_empty">Nothing to evaluate yet</string>
+    <string name="next_analysis_empty_hint">Give transactions a category under \"What for\" to see here where your money goes. With \"Belongs to\" you group a trip or a theme like \"Dog\" and see what it cost.</string>
+    <string name="next_analysis_per_month">avg %s per month</string>
+    <string name="next_analysis_per_day">%s per day</string>
+    <string name="next_analysis_total">Spent</string>
+    <string name="next_analysis_by_month">By month</string>
+    <string name="next_analysis_by_category">By category</string>
+    <string name="next_analysis_no_category">No category</string>
+    <string name="next_analysis_spending">Spending by category</string>
+    <string name="next_analysis_all_categories">All categories</string>
+    <string name="next_analysis_others">Others</string>
+    <string name="next_analysis_subcategories">Subcategories</string>
+    <string name="next_analysis_month">Month</string>
+    <string name="next_analysis_year">Year</string>
+    <string name="next_analysis_twelve_months">12 months</string>
+    <string name="next_flow_title">Money flow</string>
+    <string name="next_flow_open">Where your money comes from and goes to</string>
+    <string name="next_flow_last_twelve_months">Last 12 months</string>
+    <string name="next_flow_earned">Earned</string>
+    <string name="next_flow_spent">Spent</string>
+    <string name="next_flow_left">Left</string>
+    <string name="next_flow_accounts">Accounts</string>
+    <string name="next_flow_savings">From savings</string>
+    <string name="next_flow_no_payee">No payee</string>
+    <plurals name="next_flow_other_actors">
+        <item quantity="one">%d more</item>
+        <item quantity="other">%d more</item>
+    </plurals>
+    <string name="next_flow_hint">Tap a bar or band to see what it stands for. Zoom in with two fingers, a double tap shows everything again.</string>
     <string name="next_analysis_earlier">Earlier</string>
     <string name="next_analysis_later">Later</string>
+    <string name="next_analysis_change">Change</string>
+    <string name="next_analysis_tags">Tags</string>
     <string name="next_analysis_transactions_title">Transactions</string>
     <plurals name="next_analysis_transactions">
         <item quantity="one">%d transaction</item>
         <item quantity="other">%d transactions</item>
     </plurals>
+    <string name="next_readiness_title">What the analysis still lacks</string>
+    <plurals name="next_readiness_uncategorized">
+        <item quantity="one">%1$d of %2$d expenses of the last 3 months has no category. It is missing from the analysis by \"What for\" and from saving tips like unusually high spending.</item>
+        <item quantity="other">%1$d of %2$d expenses of the last 3 months have no category. They are missing from the analysis by \"What for\" and from saving tips like unusually high spending.</item>
+    </plurals>
+    <string name="next_readiness_uncategorized_action">Give them a category</string>
+    <plurals name="next_readiness_vague">
+        <item quantity="one">%1$d of %2$d expenses of the last 3 months is in a catch-all category like \"Other\". A precise category shows what the money really went on.</item>
+        <item quantity="other">%1$d of %2$d expenses of the last 3 months are in a catch-all category like \"Other\". A precise category shows what the money really went on.</item>
+    </plurals>
+    <string name="next_readiness_vague_action">Sort them precisely</string>
+    <string name="next_readiness_receipts_none">You have not scanned a receipt in the last 3 months.</string>
+    <plurals name="next_readiness_receipts_few">
+        <item quantity="one">You have scanned %d receipt in the last 3 months.</item>
+        <item quantity="other">You have scanned %d receipts in the last 3 months.</item>
+    </plurals>
+    <string name="next_readiness_receipts_why">Receipts show what you buy, e.g. how much goes on sweets or drugstore goods at the supermarket. To tell whether it becomes more, it takes purchases with a receipt spread over the year.</string>
+    <string name="next_readiness_receipts_action">Purchases without receipt</string>
+    <string name="next_readiness_no_tags">No expense of the last year belongs to a trip or theme. With \"Belongs to\" you group a trip or a theme like \"Dog\" and see here what it cost.</string>
     <string name="next_hint_saved_category">Saved without category: the transaction is missing from the analysis and the saving tips.</string>
     <string name="next_hint_saved_receipt">Tip: scan the receipt in the details of the transaction to see what you buy at the supermarket.</string>
     <string name="next_hint_never">Don\'t show again</string>
@@ -459,6 +514,10 @@
     </plurals>
     <string name="next_hint_overview_receipts_title">Scanning receipts pays off</string>
     <string name="next_hint_overview_receipts_text">You see what you buy at the supermarket</string>
+    <plurals name="next_analysis_days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
     <string name="next_settings_open">Settings</string>
     <string name="next_settings_search">Search…</string>
     <string name="next_settings_clear_search">Clear</string>
