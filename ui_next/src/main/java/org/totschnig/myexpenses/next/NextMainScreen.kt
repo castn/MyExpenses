@@ -124,6 +124,7 @@ fun NextMainScreen(
     fixedTransactions: FixedTransactions,
     /** What all areas add to the details of a transaction, for the pages of the areas */
     transactionDetails: @Composable (ShownTransaction) -> Unit,
+    onInsightSettings: () -> Unit,
     /** What the areas add to the overview, their tabs and their pages, see [NextFeature] */
     features: List<NextFeature> = emptyList(),
 ) {
@@ -261,7 +262,7 @@ fun NextMainScreen(
     val tabs = listOf(NextTab.Overview) + features.mapNotNull { it.tab } + NextTab.Menu
     val selectedTab = tabs.firstOrNull { it.selects(backStack.last()) } ?: NextTab.Overview
     val badges = features.filter { it.tab != null && it.hasNews() }.mapNotNull { it.tab }.toSet()
-    val shell = NextShell(navigation, fixedTransactions, transactionDetails)
+    val shell = NextShell(navigation, fixedTransactions, transactionDetails, onInsightSettings)
 
     /** The overview and the account page, side by side on wide screens */
     @Composable

@@ -65,6 +65,9 @@ interface NextFeature {
     /** The pages of the area on the back stack of the new UI, one entry per [NextKey] of the area */
     fun EntryProviderScope<NavKey>.pages(shell: NextShell) {}
 
+    /** After a transaction was saved, e.g. to show a hint */
+    fun onTransactionSaved(transactionId: Long) {}
+
     /**
      * The user may now use [feature] of the licence, which the area asked for with [tag], see
      * `contribFeatureRequested`. True if it was the request of the area.
@@ -88,6 +91,8 @@ class NextShell(
     val fixedTransactions: FixedTransactions,
     /** What all areas add to the details of a transaction */
     val transactionDetails: @Composable (ShownTransaction) -> Unit,
+    /** Opens the settings of the insights, e.g. from an analysis */
+    val openInsightSettings: () -> Unit,
 )
 
 /**

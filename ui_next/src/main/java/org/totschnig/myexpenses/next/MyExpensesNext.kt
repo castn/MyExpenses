@@ -32,6 +32,8 @@ import org.totschnig.myexpenses.model.CommodityType
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model.Grouping
+import org.totschnig.myexpenses.next.settings.NextSettings
+import org.totschnig.myexpenses.next.settings.SettingsGroup
 import org.totschnig.myexpenses.next.search.SearchResult
 import org.totschnig.myexpenses.viewmodel.data.HeaderData
 import org.totschnig.myexpenses.next.transactions.AppFixedTransactions
@@ -72,6 +74,10 @@ class MyExpensesNext : MyExpensesV2() {
 
     private val fixedTransactionsViewModel by viewModelsOf {
         FixedTransactionsViewModel(application, injector.currencyContext(), prefHandler)
+    }
+
+    private fun openInsightSettings() {
+        startActivity(NextSettings.intent(this, SettingsGroup.INSIGHTS))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -157,9 +163,14 @@ class MyExpensesNext : MyExpensesV2() {
                 },
                 fixedTransactions = fixedTransactions,
                 transactionDetails = transactionDetails,
+                onInsightSettings = ::openInsightSettings,
                 features = features.all
             )
         }
+    }
+
+    override fun onTransactionSaved(transactionId: Long) {
+        features.all.forEach { it.onTransactionSaved(transactionId) }
     }
 
     override fun contribFeatureCalled(feature: ContribFeature, tag: Serializable?) {

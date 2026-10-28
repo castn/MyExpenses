@@ -282,6 +282,11 @@
         <item quantity="other">Bei %1$s sind %2$d Buchungen als „%3$s“ markiert.</item>
     </plurals>
     <string name="next_marker_taken">Markiert als</string>
+    <string name="next_tag_one_off_question">War diese Ausgabe einmalig?</string>
+    <string name="next_tag_one_off_done">Als einmalig markiert</string>
+    <string name="next_tag_one_off_text">Einmalige Ausgaben zählen nicht in Durchschnitte und Spartipps.</string>
+    <string name="next_tag_one_off_action">War einmalig</string>
+    <string name="next_tag_one_off_undo">Rückgängig</string>
     <string name="next_refund_question_debit">Wurde das erstattet?</string>
     <string name="next_refund_question_credit">Ist das eine Erstattung?</string>
     <string name="next_refund_debit_text">Am %2$s kamen %1$s von %3$s zurück.</string>

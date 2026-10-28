@@ -282,6 +282,11 @@
         <item quantity="other">%2$d transactions with %1$s are marked as “%3$s”.</item>
     </plurals>
     <string name="next_marker_taken">Marked as</string>
+    <string name="next_tag_one_off_question">Was this expense one-off?</string>
+    <string name="next_tag_one_off_done">Marked as one-off</string>
+    <string name="next_tag_one_off_text">One-off expenses do not count in averages and saving tips.</string>
+    <string name="next_tag_one_off_action">Was one-off</string>
+    <string name="next_tag_one_off_undo">Undo</string>
     <string name="next_refund_question_debit">Was this paid back?</string>
     <string name="next_refund_question_credit">Is this a refund?</string>
     <string name="next_refund_debit_text">On %2$s, %1$s came back from %3$s.</string>
