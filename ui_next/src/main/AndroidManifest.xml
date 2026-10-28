@@ -29,6 +29,9 @@
         <activity
             android:name="org.totschnig.myexpenses.next.settings.NextSettings"
             android:label="@string/settings_label" />
+        <activity
+            android:name="org.totschnig.myexpenses.next.onboarding.NextOnboarding"
+            android:taskAffinity="org.totschnig.myexpenses.next" />
     </application>
 
     <dist:module dist:instant="false">
