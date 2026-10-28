@@ -1,0 +1,15 @@
+plugins {
+    id 'next.data'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.data.tips'
+}
+
+// Saving tips from contracts, spending, receipts and pots, and what the user decided about them.
+dependencies {
+    implementation project(':next:data:budgets')
+    implementation project(':next:data:contracts')
+    implementation project(':next:data:merchants')
+    implementation project(':next:data:tags')
+}
