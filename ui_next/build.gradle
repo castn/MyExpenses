@@ -45,12 +45,14 @@ dependencies {
     implementation project(':next:data:contracts')
     implementation project(':next:data:merchants')
     implementation project(':next:data:tags')
+    implementation project(':next:data:tips')
     implementation project(':next:feature:balance')
     implementation project(':next:feature:budgets')
     implementation project(':next:feature:categories')
     implementation project(':next:feature:contracts')
     implementation project(':next:feature:merchants')
     implementation project(':next:feature:tags')
+    implementation project(':next:feature:tips')
     implementation libs.kotlinx.serialization.json
 
     testImplementation libs.junit

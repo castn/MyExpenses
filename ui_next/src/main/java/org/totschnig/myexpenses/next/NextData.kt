@@ -31,6 +31,8 @@ import kotlinx.coroutines.flow.flowOf
 import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
 import org.totschnig.myexpenses.next.data.budgets.BudgetRepository
 import org.totschnig.myexpenses.next.data.budgets.BudgetStore
+import org.totschnig.myexpenses.next.data.tips.SavingTipsRepository
+import org.totschnig.myexpenses.next.data.tips.TipStore
 
 /**
  * The data of the new UI, once per process: the ledger and the facts of the areas, so that they
@@ -67,6 +69,10 @@ class NextData private constructor(context: Context) {
     )
 
     val balance = BalanceRepository(ledgerSource, contracts.facts, scope)
+
+    val savingTips = SavingTipsRepository(
+        ledgerSource, TipStore(dataStore), contracts.facts, tags.facts, receiptFacts, scope, budgets.facts
+    )
 
     /**
      * Makes the automatic decisions of the areas while it runs: contracts, the rules of tags and
