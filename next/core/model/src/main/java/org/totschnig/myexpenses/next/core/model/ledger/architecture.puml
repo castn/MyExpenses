@@ -18,7 +18,10 @@ package "shell: NextData (once per process)" as nextData {
   [ContractRepository] as contractsRepo
   [TagRepository] as tagsRepo
   [CategoryRepository] as categoriesRepo
+  [BudgetRepository] as budgetsRepo
   [BalanceRepository] as balanceRepo
+  [SavingTipsRepository] as tipsRepo
+  [DataReadinessRepository] as readinessRepo
 }
 
 package "ledger" {
@@ -31,12 +34,17 @@ package "facts" as factsPackage {
   artifact ContractFacts
   artifact TagFacts
   artifact "tag rows" as tagRows
+  artifact ReceiptFacts
+  artifact BudgetFacts
 }
 
 package "view models (…Feature of the shell)" as viewModels {
   [ContractsViewModel] as contractsVM
   [TagsViewModel] as tagsVM
+  [BudgetViewModel] as budgetVM
   [BalanceViewModel] as balanceVM
+  [SavingTipsViewModel] as tipsVM
+  [DataReadinessViewModel] as readinessVM
   [CategorySuggestionsViewModel] as categoriesVM
   [TagLearningViewModel] as tagLearningVM
   [TagDetectionsViewModel] as tagDetectionsVM
@@ -56,6 +64,11 @@ note as composition
   the view models with what they read (viewModelsOf).
 end note
 
+note right of ReceiptFacts
+  ReceiptFacts.None without
+  the area of receipts
+end note
+
 ' Level 0: read once for all
 db <-- ledgerSourceImpl : transactions with tags\nand split parts, accounts,\nIBANs, categories, tags
 ledgerSourceImpl -down- LedgerSource : provides
@@ -71,12 +84,26 @@ tagsRepo ..> tagRows
 categoriesRepo -up-> LedgerSource
 
 ' Level 2
+budgetsRepo -up-> ContractFacts
+budgetsRepo -up-> TagFacts
+budgetsRepo -up-> ReceiptFacts
+budgetsRepo ..> BudgetFacts
 balanceRepo -up-> ContractFacts
+readinessRepo -up-> ReceiptFacts
+
+' Level 3
+tipsRepo -up-> BudgetFacts
+tipsRepo -up-> ContractFacts
+tipsRepo -up-> TagFacts
+tipsRepo -up-> ReceiptFacts
 
 ' View models show their repository
 contractsVM -up-> contractsRepo
 tagsVM -up-> tagsRepo
+budgetVM -up-> budgetsRepo
 balanceVM -up-> balanceRepo
+tipsVM -up-> tipsRepo
+readinessVM -up-> readinessRepo
 categoriesVM -up-> categoriesRepo
 tagLearningVM -up-> tagsRepo
 

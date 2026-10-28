@@ -22,7 +22,7 @@ dependencies {
 
 tasks.named('test') {
     // The sources of the checked modules are the input, so that the tests run again when they change.
-    def modules = ['ui_next', 'designsystem'].collect { file("$rootDir/$it") } +
+    def modules = ['ui_next', 'designsystem', 'charts'].collect { file("$rootDir/$it") } +
         fileTree("$rootDir/next") { include '**/build.gradle' }.collect { it.parentFile }
     inputs.files(modules.collect { fileTree(new File(it, 'src/main')) { include '**/*.kt' } })
 }

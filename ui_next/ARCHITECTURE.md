@@ -37,6 +37,20 @@ trustworthy as documentation.
 
 ---
 
+### `mod-charts-pure` — `:charts` knows only numbers and labels
+
+No money, no currency, no type of the app. Scale, tick and bundling math is pure Kotlin with JVM
+tests.
+
+**Why:** Keeping `:charts` generic lets every screen use it without pulling in the domain model. It
+also means the chart math can be tested on the JVM, fast and without an emulator.
+
+**Check:** Konsist
+
+---
+
+---
+
 ### `mod-ds-pure` — `:designsystem` depends only on libraries
 
 It does not depend on `:charts`, so that screens without charts do not get them. It knows no type
@@ -272,6 +286,23 @@ them (router, main screen). Code of one area belongs into its modules.
 
 **Why:** The root package of a shared module is the most visible place in it. Putting area-specific
 code there hides its true home and makes the module harder to split later.
+
+**Check:** review
+
+---
+
+---
+
+### `feat-optional-area` — An area that may be left out is read through `NextData`
+
+An area that reads the facts of an area that may be left out reads them through one value of
+`NextData`, e.g. `receiptFacts`. Its empty value, e.g. `ReceiptFacts.None`, says that the area is
+missing, and what needs it is not offered then, e.g. pots of item groups or a hint to scan a
+receipt.
+
+**Why:** An area that imports directly from another area that may be absent would fail to build
+without it. Routing through `NextData` with an empty default keeps every area optional: drop it
+from `NextFeatures` and `NextData`, and nothing breaks.
 
 **Check:** review
 
