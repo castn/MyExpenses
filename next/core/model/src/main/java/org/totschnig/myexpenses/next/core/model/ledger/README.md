@@ -1,6 +1,6 @@
 # Ledger and facts
 
-The analyses of the new UI, e.g. the contracts and the balance,
+The analyses of the new UI (contracts, balance, saving tips, categories, tags, the analysis tab)
 all work on the same transactions. They are read once into a `Ledger`, with the tags of each
 transaction; the categories and tags of the user are read once into a `Catalog`. Each feature derives what it needs from the
 ledger and offers what others need to know as **facts**: plain, immutable data in its own package.
@@ -38,6 +38,9 @@ themselves:
 | View model | Reads |
 | --- | --- |
 | `TagDetectionsViewModel` | tag rows, ledger, catalog, `ContractFacts` |
+| `TagAnalysisViewModel` | ledger, catalog, `TagFacts` |
+| `CategorySpendingViewModel` | ledger, catalog, `TagFacts` |
+| `MoneyFlowViewModel` | ledger, catalog, `TagFacts` |
 | `HintsViewModel` (package `guidance`) | ledger, `ReceiptFacts`, the readiness, its closed hints |
 | `FixedTransactionsViewModel` (package `transactions`) | the transactions it is asked to show |
 
