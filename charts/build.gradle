@@ -8,7 +8,8 @@ android {
 }
 
 // Charts of the new UI in Material 3. They know only numbers and labels: no amounts, no data of
-// the app. The math of scales is plain Kotlin in the package scale, tested on the JVM.
+// the app. The math of scales and bundling is plain Kotlin in the package scale, the geometry of
+// layouts and zooming in the package layout, both tested on the JVM.
 dependencies {
     api libs.compose.ui
     api libs.androidx.compose.material3
