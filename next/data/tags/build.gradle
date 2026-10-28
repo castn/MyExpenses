@@ -1,0 +1,13 @@
+plugins {
+    id 'next.data'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.data.tags'
+}
+
+// Groups of transactions (tags): their meanings, trips, refunds, suggestions and what the user decided.
+dependencies {
+    implementation project(':next:data:categories')
+    implementation project(':next:data:contracts')
+}
