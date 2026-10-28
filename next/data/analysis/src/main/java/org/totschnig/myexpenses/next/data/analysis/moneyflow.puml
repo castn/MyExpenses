@@ -1,0 +1,67 @@
+@startuml moneyflow
+' How the money flow gets from the ledger to the Sankey diagram, see README.md in this package.
+' Pure functions are tested on the JVM; only MoneyFlowScreen and SankeyChart draw.
+
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam defaultFontName sans-serif
+skinparam linetype ortho
+top to bottom direction
+
+package "ledger" {
+  artifact Ledger
+  artifact Catalog
+}
+
+package "tags" {
+  artifact TagFacts
+}
+
+package "analysis (ui_next)" {
+  [countedParts] as counted
+  [MoneyFlowAnalyzer] as analyzer
+  artifact MoneyFlow
+  [MoneyFlowViewModel] as flowVM
+  [MoneyFlowChart] as flowChart
+  [MoneyFlowScreen] as screen
+}
+
+package "merchants" {
+  [Merchants] as merchantCatalog
+}
+
+package ":charts" {
+  [SankeyChart] as sankey
+  [SankeyLayout] as layout
+  [Viewport] as viewport
+  [ChartPalette] as palette
+}
+
+note right of counted
+  Shared with CategoryAnalyzer:
+  no own transfers, no excluded,
+  split parts by category
+end note
+
+note right of flowChart
+  Nodes and bands with texts
+  and colors, what a tap hits
+end note
+
+counted -up-> Ledger
+counted -up-> Catalog
+analyzer -up-> counted
+analyzer -up-> TagFacts
+analyzer -right-> merchantCatalog
+analyzer --> MoneyFlow
+flowVM -up-> analyzer
+flowChart -up-> MoneyFlow
+screen -up-> flowVM
+screen -up-> flowChart
+screen --> sankey
+sankey --> layout
+sankey --> viewport
+sankey --> palette
+
+@enduml

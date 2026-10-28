@@ -1,0 +1,13 @@
+plugins {
+    id 'next.data'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.data.analysis'
+}
+
+// The analyses of the Analyse tab: spending by category, money flow and the evaluation of groups.
+dependencies {
+    implementation project(':next:data:merchants')
+    implementation project(':next:data:tags')
+}
