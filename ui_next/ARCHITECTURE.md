@@ -66,6 +66,17 @@ harder to reuse or test.
 
 ---
 
+### `mod-ocr-jvm` — `:ocr-model` is a Kotlin JVM module without Android
+
+**Why:** The OCR logic is pure parsing — no reason to tie it to Android. A JVM module runs its
+tests without an emulator and could be reused on other platforms.
+
+**Check:** Konsist
+
+---
+
+---
+
 ### `mod-upstream-hooks` — `:myExpenses` gets only small, additive hooks for the new UI
 
 An optional parameter with a default, a member made public, a callback. No logic of the new UI
@@ -73,6 +84,19 @@ goes there, and no code of the main module is copied into `:ui_next` to avoid su
 
 **Why:** The new UI is a fork-in-progress alongside the existing UI. Keeping changes to the main
 module minimal makes it easier to track upstream and to submit some changes upstream later.
+
+**Check:** review
+
+---
+
+---
+
+### `mod-db-version` — A feature raises `DATABASE_VERSION` by exactly one
+
+Later schema changes of the same feature go into that version.
+
+**Why:** One version per feature keeps the migration chain simple and avoids extra versions that
+serve no purpose on already-migrated devices.
 
 **Check:** review
 

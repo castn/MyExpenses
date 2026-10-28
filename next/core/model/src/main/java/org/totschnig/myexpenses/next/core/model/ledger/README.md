@@ -24,13 +24,14 @@ offer; a view model shows the flows of its repository and changes its store.
 | `ContractRepository` | ledger, its rules | `ContractFacts`: contracts, incomes, ids of their payments; to `ContractsViewModel` the analysis and the overviews |
 | `TagRepository` | ledger, meanings and rules of tags | `TagFacts`: debits excluded from spending, meanings; to the tag view models the tag rows, to `TagLearningViewModel` the learning inputs; applies the rules of tags |
 | `CategoryRepository` | ledger, catalog, its rules and decisions | to `CategorySuggestionsViewModel` the suggestions; applies certain categories to new transactions |
+| `ReceiptRepository` | scanned receipts | `ReceiptFacts`: items by transaction |
 | `BudgetRepository` | ledger, catalog, `ContractFacts`, `TagFacts`, `ReceiptFacts`, its pots | `BudgetFacts`: the pots of the current period with their earlier periods |
 | `BalanceRepository` | ledger, `ContractFacts` | the balance from salary to salary |
 | `SavingTipsRepository` | consent, `ContractFacts`, `TagFacts`, `ReceiptFacts`, `BudgetFacts`, its decisions | the saving tips |
 | `DataReadinessRepository` | ledger, `ReceiptFacts` | how well the transactions are described |
 
-`ReceiptFacts` come from `NextData.receiptFacts`; without the area of receipts they are
-`ReceiptFacts.None`, and what needs scanned receipts is not offered (rule `feat-optional-area`).
+`ReceiptFacts` come from `NextData.receiptFacts`, the facts of `ReceiptRepository`; without the area of
+receipts they are `ReceiptFacts.None`, and what needs scanned receipts is not offered (rule `feat-optional-area`).
 
 The view models without a repository offer nothing to others and read what they show
 themselves:
@@ -128,5 +129,6 @@ replacement for the provider. These read the database themselves:
 - the transaction lists of accounts with paging, search and filter, and `FixedTransactionsViewModel`
 - the budgets of the classic screens, from `BudgetListViewModel` of the main module; the new UI
   has its own pots (package `budgets`) and only reads the classic budgets once to take them over
+- scanned receipts while they are added or corrected, `ReceiptViewModel` only offers their items
 - the accounts of the overview, from `MyExpensesV2ViewModel`; `ProviderLedgerSource` reads the
   own accounts itself, with their labels and types
