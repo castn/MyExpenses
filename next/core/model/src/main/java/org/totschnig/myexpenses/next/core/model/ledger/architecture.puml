@@ -16,6 +16,8 @@ database "Database\n(TransactionProvider)" as db
 package "shell: NextData (once per process)" as nextData {
   [ProviderLedgerSource] as ledgerSourceImpl
   [ContractRepository] as contractsRepo
+  [TagRepository] as tagsRepo
+  [CategoryRepository] as categoriesRepo
   [BalanceRepository] as balanceRepo
 }
 
@@ -27,11 +29,17 @@ package "ledger" {
 
 package "facts" as factsPackage {
   artifact ContractFacts
+  artifact TagFacts
+  artifact "tag rows" as tagRows
 }
 
 package "view models (…Feature of the shell)" as viewModels {
   [ContractsViewModel] as contractsVM
+  [TagsViewModel] as tagsVM
   [BalanceViewModel] as balanceVM
+  [CategorySuggestionsViewModel] as categoriesVM
+  [TagLearningViewModel] as tagLearningVM
+  [TagDetectionsViewModel] as tagDetectionsVM
   [FixedTransactionsViewModel] as fixedVM
 }
 
@@ -57,15 +65,24 @@ LedgerSource --> Catalog
 ' Level 1
 contractsRepo -up-> LedgerSource
 contractsRepo ..> ContractFacts
+tagsRepo -up-> LedgerSource
+tagsRepo ..> TagFacts
+tagsRepo ..> tagRows
+categoriesRepo -up-> LedgerSource
 
 ' Level 2
 balanceRepo -up-> ContractFacts
 
 ' View models show their repository
 contractsVM -up-> contractsRepo
+tagsVM -up-> tagsRepo
 balanceVM -up-> balanceRepo
+categoriesVM -up-> categoriesRepo
+tagLearningVM -up-> tagsRepo
 
 ' View models that offer nothing read what they show themselves
+tagDetectionsVM -up-> tagRows
+tagDetectionsVM -up-> ContractFacts
 fixedVM -up-> db : paged transactions
 
 @enduml
