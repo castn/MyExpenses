@@ -1,0 +1,12 @@
+plugins {
+    id 'next.feature'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.feature.categories'
+}
+
+// The suggestions of categories on the screens and the picker of a category.
+dependencies {
+    implementation project(':next:data:categories')
+}
