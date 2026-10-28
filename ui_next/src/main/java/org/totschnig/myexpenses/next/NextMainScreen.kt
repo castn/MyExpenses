@@ -472,6 +472,9 @@ sealed interface NextKey : NavKey {
     @Serializable
     data object SavingTips : NextKey
 
+    @Serializable
+    data object Analysis : NextKey
+
     /**
      * @param openPot id of a pot shown from the start, e.g. tapped in the overview
      * @param addPot whether to start with adding a pot
