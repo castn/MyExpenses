@@ -51,7 +51,7 @@ fun BaseActivity.changeHomeCurrency(
         )
         val updatedTransactions =
             priceCalculationViewModel.reCalculateEquivalentAmounts(currencyCode)
-        progressViewModel.appendToMessage(updatedTransactions.let { (it.first + it.second) }
+        progressViewModel.appendToMessage(updatedTransactions.let { it.first + it.second }
             .toString())
         store()
         requireApplication().invalidateHomeCurrency()

@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -97,119 +98,179 @@ fun MenuFab(
     contentColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
 ) {
     var isOpen by rememberSaveable { mutableStateOf(false) }
-    val haptic = LocalHapticFeedback.current
     // The box is the anchor of the popup with the items
     // Where the button is, to place the items and a button for closing above the dimmed page
     val hostView = LocalView.current
     var anchorOnScreen by remember { mutableStateOf(Rect.Zero) }
     Box(modifier.onGloballyPositioned { anchorOnScreen = it.boundsOnScreen(hostView) }) {
-        Surface(
-            shape = FloatingActionButtonDefaults.extendedFabShape,
-            color = containerColor,
-            contentColor = contentColor,
-            shadowElevation = 6.dp
-        ) {
-            Row(
-                modifier = Modifier
-                    .combinedClickable(
-                        role = Role.Button,
-                        onClickLabel = if (isOpen) closeLabel else if (onClick == null) menuLabel else null,
-                        onLongClickLabel = menuLabel.takeIf { onClick != null && !isOpen },
-                        onLongClick = if (onClick != null) {
-                            {
-                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                isOpen = !isOpen
-                            }
-                        } else null,
-                        onClick = {
-                            when {
-                                isOpen -> isOpen = false
-                                onClick != null -> onClick()
-                                else -> isOpen = true
-                            }
+        MenuFabButton(
+            label = label,
+            icon = icon,
+            isOpen = isOpen,
+            onOpenChange = { isOpen = it },
+            menuLabel = menuLabel,
+            closeLabel = closeLabel,
+            onClick = onClick,
+            isExtended = isExtended,
+            containerColor = containerColor,
+            contentColor = contentColor
+        )
+        if (isOpen) {
+            MenuFabPopup(
+                items = items,
+                anchorOnScreen = anchorOnScreen,
+                closeLabel = closeLabel,
+                onClose = { isOpen = false },
+                containerColor = containerColor,
+                contentColor = contentColor
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun MenuFabButton(
+    label: String,
+    icon: ImageVector,
+    isOpen: Boolean,
+    onOpenChange: (Boolean) -> Unit,
+    menuLabel: String,
+    closeLabel: String,
+    onClick: (() -> Unit)?,
+    isExtended: Boolean,
+    containerColor: Color,
+    contentColor: Color,
+) {
+    val haptic = LocalHapticFeedback.current
+    Surface(
+        shape = FloatingActionButtonDefaults.extendedFabShape,
+        color = containerColor,
+        contentColor = contentColor,
+        shadowElevation = 6.dp
+    ) {
+        Row(
+            modifier = Modifier
+                .combinedClickable(
+                    role = Role.Button,
+                    onClickLabel = if (isOpen) closeLabel else if (onClick == null) menuLabel else null,
+                    onLongClickLabel = menuLabel.takeIf { onClick != null && !isOpen },
+                    onLongClick = if (onClick != null) {
+                        {
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                            onOpenChange(!isOpen)
                         }
-                    )
-                    .semantics { contentDescription = if (isOpen) closeLabel else label }
-                    .defaultMinSize(minWidth = 56.dp, minHeight = 56.dp)
-                    .padding(horizontal = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Icon(if (isOpen) Icons.Default.Close else icon, contentDescription = null)
-                AnimatedVisibility(
-                    visible = isExtended && !isOpen,
-                    enter = expandHorizontally(),
-                    exit = shrinkHorizontally()
-                ) {
-                    Row {
-                        Spacer(Modifier.width(12.dp))
-                        Text(label, style = MaterialTheme.typography.labelLarge)
+                    } else null,
+                    onClick = {
+                        when {
+                            isOpen -> onOpenChange(false)
+                            onClick != null -> onClick()
+                            else -> onOpenChange(true)
+                        }
                     }
+                )
+                .semantics { contentDescription = if (isOpen) closeLabel else label }
+                .defaultMinSize(minWidth = 56.dp, minHeight = 56.dp)
+                .padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(if (isOpen) Icons.Default.Close else icon, contentDescription = null)
+            AnimatedVisibility(
+                visible = isExtended && !isOpen,
+                enter = expandHorizontally(),
+                exit = shrinkHorizontally()
+            ) {
+                Row {
+                    Spacer(Modifier.width(12.dp))
+                    Text(label, style = MaterialTheme.typography.labelLarge)
                 }
             }
         }
-        if (isOpen) {
-            Popup(
-                popupPositionProvider = WholeWindow,
-                onDismissRequest = { isOpen = false },
-                properties = PopupProperties(focusable = true)
-            ) {
-                // The page is dimmed, a tap on it closes the menu like the button below the items.
-                // The popup need not start where the page starts, e.g. below the status bar.
-                val popupView = LocalView.current
-                var popupOnScreen by remember { mutableStateOf<Rect?>(null) }
-                Box(
+    }
+}
+
+@Composable
+private fun MenuFabPopup(
+    items: List<FabMenuItem>,
+    anchorOnScreen: Rect,
+    closeLabel: String,
+    onClose: () -> Unit,
+    containerColor: Color,
+    contentColor: Color,
+) {
+    Popup(
+        popupPositionProvider = WholeWindow,
+        onDismissRequest = onClose,
+        properties = PopupProperties(focusable = true)
+    ) {
+        // The page is dimmed, a tap on it closes the menu like the button below the items.
+        // The popup need not start where the page starts, e.g. below the status bar.
+        val popupView = LocalView.current
+        var popupOnScreen by remember { mutableStateOf<Rect?>(null) }
+        Box(
+            Modifier
+                .fillMaxSize()
+                .onGloballyPositioned { popupOnScreen = it.boundsOnScreen(popupView) }
+                .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.5f))
+                .clickable(
+                    interactionSource = null,
+                    indication = null,
+                    onClickLabel = closeLabel,
+                    onClick = onClose
+                )
+        ) {
+            val popup = popupOnScreen ?: return@Box
+            val anchor = anchorOnScreen.translate(-popup.topLeft).roundToIntRect()
+            MenuFabItems(items, popup, anchor, onClose)
+            // The button stays visible above the dimmed page, to close the menu
+            Surface(
+                onClick = onClose,
+                shape = FloatingActionButtonDefaults.extendedFabShape,
+                color = containerColor,
+                contentColor = contentColor,
+                shadowElevation = 6.dp,
+                modifier = with(LocalDensity.current) {
                     Modifier
-                        .fillMaxSize()
-                        .onGloballyPositioned { popupOnScreen = it.boundsOnScreen(popupView) }
-                        .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.5f))
-                        .clickable(
-                            interactionSource = null,
-                            indication = null,
-                            onClickLabel = closeLabel
-                        ) { isOpen = false }
-                ) {
-                    val popup = popupOnScreen ?: return@Box
-                    val anchor = anchorOnScreen.translate(-popup.topLeft).roundToIntRect()
-                    val density = LocalDensity.current
-                    val isLtr = LocalLayoutDirection.current == LayoutDirection.Ltr
-                    with(density) {
-                        Column(
-                            horizontalAlignment = if (isLtr) Alignment.End else Alignment.Start,
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
-                            modifier = Modifier
-                                .align(if (isLtr) Alignment.BottomEnd else Alignment.BottomStart)
-                                .padding(
-                                    end = if (isLtr) (popup.width.roundToInt() - anchor.right).toDp() else 0.dp,
-                                    start = if (isLtr) 0.dp else anchor.left.toDp(),
-                                    bottom = (popup.height.roundToInt() - anchor.top).toDp() + 16.dp
-                                )
-                        ) {
-                            // The first item is the most used, so it is the lowest, nearest to the button
-                            items.reversed().forEach { item ->
-                                FabMenuItemPill(item) {
-                                    isOpen = false
-                                    item.onClick()
-                                }
-                            }
-                        }
-                        // The button stays visible above the dimmed page, to close the menu
-                        Surface(
-                            onClick = { isOpen = false },
-                            shape = FloatingActionButtonDefaults.extendedFabShape,
-                            color = containerColor,
-                            contentColor = contentColor,
-                            shadowElevation = 6.dp,
-                            modifier = Modifier
-                                .offset { anchor.topLeft }
-                                .size(anchor.width.toDp(), anchor.height.toDp())
-                                .semantics { contentDescription = closeLabel }
-                        ) {
-                            Box(contentAlignment = Alignment.Center) {
-                                Icon(Icons.Default.Close, contentDescription = null)
-                            }
-                        }
-                    }
+                        .offset { anchor.topLeft }
+                        .size(anchor.width.toDp(), anchor.height.toDp())
+                        .semantics { contentDescription = closeLabel }
+                }
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(Icons.Default.Close, contentDescription = null)
+                }
+            }
+        }
+    }
+}
+
+/** The items above the button, [popup] and [anchor] are relative to the popup */
+@Composable
+private fun BoxScope.MenuFabItems(
+    items: List<FabMenuItem>,
+    popup: Rect,
+    anchor: IntRect,
+    onClose: () -> Unit,
+) {
+    val isLtr = LocalLayoutDirection.current == LayoutDirection.Ltr
+    with(LocalDensity.current) {
+        Column(
+            horizontalAlignment = if (isLtr) Alignment.End else Alignment.Start,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .align(if (isLtr) Alignment.BottomEnd else Alignment.BottomStart)
+                .padding(
+                    end = if (isLtr) (popup.width.roundToInt() - anchor.right).toDp() else 0.dp,
+                    start = if (isLtr) 0.dp else anchor.left.toDp(),
+                    bottom = (popup.height.roundToInt() - anchor.top).toDp() + 16.dp
+                )
+        ) {
+            // The first item is the most used, so it is the lowest, nearest to the button
+            for (item in items.asReversed()) {
+                FabMenuItemPill(item) {
+                    onClose()
+                    item.onClick()
                 }
             }
         }

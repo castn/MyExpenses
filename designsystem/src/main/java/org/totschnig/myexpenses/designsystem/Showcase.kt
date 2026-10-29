@@ -119,9 +119,9 @@ private fun Showcase() {
                 }
             }
             SectionTitle("Group")
-            (0 until 3).forEach {
-                GroupItem(GroupPosition.of(it, 3)) {
-                    Text("Item ${it + 1}", Modifier.padding(Spacing.content))
+            for (index in 0 until 3) {
+                GroupItem(GroupPosition.of(index, 3)) {
+                    Text("Item ${index + 1}", Modifier.padding(Spacing.content))
                 }
             }
             SectionTitle("Semantic colors")
