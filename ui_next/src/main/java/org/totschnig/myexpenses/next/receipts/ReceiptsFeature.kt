@@ -7,6 +7,8 @@ import org.totschnig.myexpenses.next.NextData
 import org.totschnig.myexpenses.next.NextFeature
 import org.totschnig.myexpenses.next.NextNavigation
 import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
+import org.totschnig.myexpenses.next.data.receipts.ItemGroupModelSetupStore
+import org.totschnig.myexpenses.next.data.receipts.ItemGroupModelStore
 import org.totschnig.myexpenses.next.feature.receipts.ReceiptChip
 import org.totschnig.myexpenses.next.feature.receipts.ReceiptPhotoLoader
 import org.totschnig.myexpenses.next.feature.receipts.ReceiptScanAction
@@ -32,6 +34,8 @@ class ReceiptsFeature(
         ReceiptViewModel(
             savedState,
             data.receipts.database,
+            ItemGroupModelStore.of(application),
+            ItemGroupModelSetupStore(data.dataStore),
             data.homeCurrency,
             ReceiptPhotoLoader(activity.contentResolver)::load
         ) { activity.injector.ocrFeature()?.let { OcrTextRecognition(application, it) } }

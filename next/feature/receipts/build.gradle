@@ -6,8 +6,10 @@ android {
     namespace 'org.totschnig.myexpenses.next.feature.receipts'
 }
 
-// The screens of receipts: scanning with the camera, reviewing and assigning to a transaction.
+// The screens of receipts: scanning with the camera, reviewing, assigning to a transaction and
+// setting up the model of the item groups.
 dependencies {
     implementation project(':next:data:receipts')
     implementation project(':ocr-model')
+    implementation project(':item-group-model')
 }

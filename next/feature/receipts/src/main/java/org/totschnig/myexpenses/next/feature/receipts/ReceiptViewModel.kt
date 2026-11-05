@@ -9,6 +9,7 @@ import android.content.IntentSender
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import org.totschnig.itemgroupmodel.ProductGroupModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
@@ -26,6 +27,8 @@ import timber.log.Timber
 import java.time.LocalDate
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
 import org.totschnig.myexpenses.next.data.receipts.ItemGroupClassifier
+import org.totschnig.myexpenses.next.data.receipts.ItemGroupModels
+import org.totschnig.myexpenses.next.data.receipts.ItemGroupModelSetupStore
 import org.totschnig.myexpenses.next.data.receipts.LearnedItemGroup
 import org.totschnig.myexpenses.next.data.receipts.ParsedReceipt
 import org.totschnig.myexpenses.next.data.receipts.Receipt
@@ -75,11 +78,13 @@ class ReceiptPhoto(val uri: Uri, val bitmap: Bitmap, val scale: Float)
 class ReceiptViewModel(
     private val savedState: SavedStateHandle,
     private val database: ReceiptDatabase,
+    private val modelStore: ItemGroupModels,
+    private val modelSetupStore: ItemGroupModelSetupStore,
     /** The home currency, which the user can change */
     val homeCurrency: StateFlow<CurrencyInfo>,
     /** See [ReceiptPhotoLoader] */
     private val loadPhoto: (Uri) -> ReceiptPhoto?,
-    /** Where the database and the files are read */
+    /** Where the database, the files and the network are read */
     private val io: CoroutineDispatcher = Dispatchers.IO,
     /** The text recognition, null while its module is not installed */
     private val textRecognitionProvider: () -> TextRecognition?,
@@ -118,6 +123,11 @@ class ReceiptViewModel(
 
     /** Payee of the transaction of [draft], kept with it when Android ends the process */
     private var draftPayee: String? = null
+
+    /** The items of the open receipt are classified again with a new model */
+    val modelInstaller = ItemGroupModelInstaller(modelStore, modelSetupStore, viewModelScope, io) {
+        _draft.update { it?.classified(draftPayee) }
+    }
 
     /** Receipts scanned on their own or waiting, whose transaction the user chooses */
     val assignments = ReceiptAssignments(
@@ -176,17 +186,18 @@ class ReceiptViewModel(
     /** The photo of a saved receipt as an uri other apps can open */
     fun viewableUri(photo: Uri) = database.viewableUri(photo)
 
-    /** The classifier of the last learned groups, kept as long as they do not change */
+    /** The classifier of the last learned groups and model, kept as long as neither changes */
     @Volatile
-    private var classifierCache: Pair<List<LearnedItemGroup>, ItemGroupClassifier>? = null
+    private var classifierCache: Triple<List<LearnedItemGroup>, ProductGroupModel?, ItemGroupClassifier>? = null
 
-    /** Learns from all groups the user chose so far */
+    /** Learns from all groups the user chose so far, uses the model if there is one */
     private fun classifier(): ItemGroupClassifier {
         val learned = database.loadLearnedItemGroups().mapNotNull { (name, id) ->
             ItemGroup.ofId(id)?.let { LearnedItemGroup(name, it) }
         }
-        classifierCache?.takeIf { it.first == learned }?.let { return it.second }
-        return ItemGroupClassifier(learned).also { classifierCache = learned to it }
+        val model = modelStore.model()
+        classifierCache?.takeIf { it.first == learned && it.second === model }?.let { return it.third }
+        return ItemGroupClassifier(learned, model).also { classifierCache = Triple(learned, model, it) }
     }
 
 
@@ -259,6 +270,7 @@ class ReceiptViewModel(
 
     private fun open(draft: ReceiptDraft) {
         _draft.value = draft
+        modelInstaller.updateOccasionally()
         if (_photo.value?.uri != draft.photo) {
             _photo.value = null
             draft.photo?.let { uri ->

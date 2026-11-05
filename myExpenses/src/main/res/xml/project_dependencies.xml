@@ -204,4 +204,10 @@
         <url>https://github.com/Calvin-LL/Reorderable</url>
         <licence>Apache License, Version 2.0</licence>
     </project>
+    <project>
+        <name>Open Food Facts</name>
+        <extra_info>training data of the model for product types of receipt items</extra_info>
+        <url>https://world.openfoodfacts.org</url>
+        <licence>Open Database License (ODbL) v1.0</licence>
+    </project>
 </credits>

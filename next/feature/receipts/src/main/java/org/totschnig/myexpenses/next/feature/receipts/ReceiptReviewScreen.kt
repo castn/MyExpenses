@@ -131,6 +131,9 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
     var walkThrough by rememberSaveable { mutableStateOf<List<Int>?>(null) }
     var walkPosition by rememberSaveable { mutableIntStateOf(0) }
     var confirmDiscard by rememberSaveable { mutableStateOf(false) }
+    val offerModel by viewModel.modelInstaller.offer.collectAsStateWithLifecycle(false)
+    val modelSetup by viewModel.modelInstaller.setup.collectAsStateWithLifecycle()
+    var settingUpModel by rememberSaveable { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val close = {
@@ -190,6 +193,9 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
                             MissingGroupsBanner(draft.itemsWithoutGroup.size) {
                                 walkThrough = draft.itemsWithoutGroup
                                 walkPosition = 0
+                            }
+                            if (offerModel && draft.itemsWithoutGroup.isNotEmpty()) {
+                                ModelOfferBanner(onSetUp = { settingUpModel = true }, onDecline = viewModel.modelInstaller::decline)
                             }
                         }
                     }
@@ -304,6 +310,7 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
                     val next = { walkPosition = queue.indexOf(current) + 1 }
                     ItemGroupStepSheet(
                         item = draft.items[current],
+                        proposal = draft.proposal(current),
                         step = queue.indexOf(current) + 1,
                         steps = queue.size,
                         photo = photo,
@@ -341,6 +348,18 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
                     },
                     onDismiss = { confirmRecognizeAgain = false }
                 )
+            }
+            LaunchedEffect(modelSetup) {
+                if (modelSetup == ModelSetup.Done) {
+                    settingUpModel = false
+                    viewModel.modelInstaller.dismiss()
+                }
+            }
+            if (settingUpModel) {
+                ModelSetupDialog(viewModel, modelSetup) {
+                    settingUpModel = false
+                    viewModel.modelInstaller.dismiss()
+                }
             }
             if (confirmDiscard) {
                 ConfirmDialog(
@@ -520,10 +539,14 @@ private fun MissingGroupsBanner(count: Int, onAssign: () -> Unit) {
     )
 }
 
-/** One item without group after the other: choosing a group goes on to the next */
+/**
+ * One item without group after the other: choosing a group goes on to the next. A group the
+ * model was not sure of is selected and needs one tap on "Apply".
+ */
 @Composable
 private fun ItemGroupStepSheet(
     item: ReceiptItem,
+    proposal: ItemGroup?,
     step: Int,
     steps: Int,
     photo: ReceiptPhoto?,
@@ -532,12 +555,15 @@ private fun ItemGroupStepSheet(
     onSkip: () -> Unit,
     onDone: () -> Unit,
 ) {
+    val skip = stringResource(R.string.next_item_group_skip)
     FormSheet(
         title = stringResource(R.string.next_item_group_step, step, steps),
-        onConfirm = onSkip,
+        onConfirm = if (proposal != null) ({ onSelect(proposal) }) else onSkip,
         onDismiss = onDone,
-        confirmLabel = stringResource(R.string.next_item_group_skip),
-        dismissLabel = stringResource(R.string.next_item_group_done)
+        confirmLabel = if (proposal != null) stringResource(R.string.next_item_group_apply) else skip,
+        dismissLabel = stringResource(R.string.next_item_group_done),
+        secondaryLabel = skip,
+        onSecondary = onSkip.takeIf { proposal != null }
     ) {
         val box = item.box
         if (photo != null && box != null) PhotoExcerpt(photo, box)
@@ -545,7 +571,14 @@ private fun ItemGroupStepSheet(
             Text(item.name, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             Text(format(item.amount), style = MaterialTheme.typography.titleMedium)
         }
-        ItemGroupChoice(selected = null, onSelect = onSelect)
+        if (proposal != null) {
+            Text(
+                stringResource(R.string.next_item_group_proposal, stringResource(proposal.labelRes)),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        ItemGroupChoice(selected = proposal, onSelect = onSelect)
     }
 }
 
