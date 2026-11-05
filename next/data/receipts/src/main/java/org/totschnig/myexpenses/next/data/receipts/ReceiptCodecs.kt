@@ -26,6 +26,7 @@ fun ReceiptDraft.toJson(): String = JSONObject().apply {
     put("changed", isChanged)
     put("standalone", isStandalone)
     put("leftoverRows", leftoverRows.toJson())
+    put("proposals", JSONObject().apply { proposals.forEach { (key, group) -> put(key, group.id) } })
 }.toString()
 
 /** null if [json] cannot be read */
@@ -40,7 +41,12 @@ fun receiptDraftOf(json: String): ReceiptDraft? = readOrNull {
             leftoverRows = leftoverRowsOf(getJSONArray("leftoverRows"))
         ).copy(
             isChanged = getBoolean("changed"),
-            isStandalone = getBoolean("standalone")
+            isStandalone = getBoolean("standalone"),
+            proposals = getJSONObject("proposals").let { proposals ->
+                proposals.keys().asSequence().mapNotNull { key ->
+                    ItemGroup.ofId(proposals.getString(key))?.let { key to it }
+                }.toMap()
+            }
         )
     }
 }

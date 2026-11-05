@@ -27,6 +27,8 @@ sealed interface ReceiptTarget {
  * @param photo where the items were read from, null if the attachment was removed
  * @param isNewPhoto the photo still is in the cache of the scanner and needs to be kept on saving
  * @param itemCount number of articles printed on the receipt, only known right after reading it
+ * @param proposals groups the model is not sure of, by product key; they are offered when the
+ * user assigns groups and never saved without confirmation
  */
 data class ReceiptDraft(
     val target: ReceiptTarget,
@@ -44,6 +46,7 @@ data class ReceiptDraft(
     val isStandalone: Boolean = false,
     /** Rows among the items no item was read from, only known right after reading the receipt */
     val leftoverRows: List<LeftoverRow> = emptyList(),
+    val proposals: Map<String, ItemGroup> = emptyMap(),
 ) {
     /** [leftoverRows] not yet taken as an item by the user */
     val openLeftoverRows: List<LeftoverRow>
@@ -79,6 +82,10 @@ data class ReceiptDraft(
     val itemsWithoutGroup: List<Int>
         get() = items.indices.filter { items[it].group == null && items[it].amount > 0 }
 
+    /** Group to offer for the item at [index] if it has none */
+    fun proposal(index: Int): ItemGroup? =
+        items[index].takeIf { it.group == null }?.let { proposals[productKey(it.name)] }
+
     /**
      * The user chose [group] for the item at [index]; the same product elsewhere on the receipt
      * follows, unless the user chose a group for it, too
@@ -98,10 +105,18 @@ data class ReceiptDraft(
     }
 
     /**
-     * Groups found by [ItemGroupClassifier] for items that have none, one per item. Does not count
-     * as change, as nothing was decided by the user.
+     * Groups found by [ItemGroupClassifier] for items that have none, one per item; those it is
+     * not sure of become [proposals]. Does not count as change, as nothing was decided by the user.
      */
-    fun withSuggestedGroups(suggestions: List<ItemGroupSuggestion?>) = copy(items = items.withSuggestedGroups(suggestions))
+    fun withSuggestedGroups(suggestions: List<ItemGroupSuggestion?>) = copy(
+        items = items.withSuggestedGroups(suggestions),
+        proposals = proposals + items.indices.mapNotNull { i ->
+            val item = items[i]
+            suggestions.getOrNull(i)
+                ?.takeIf { !it.confident && item.group == null && !item.groupByUser }
+                ?.let { productKey(item.name) to it.group }
+        }
+    )
 
     companion object {
         fun recognized(target: ReceiptTarget, transactionAmount: Long, receipt: ParsedReceipt, photo: Uri) =
@@ -128,9 +143,12 @@ data class ReceiptDraft(
     }
 }
 
-/** Groups found by [ItemGroupClassifier], one per item, for the items that have none */
+/**
+ * Groups found by [ItemGroupClassifier], one per item, for the items that have none; suggestions
+ * it is not sure of are left out
+ */
 fun List<ReceiptItem>.withSuggestedGroups(suggestions: List<ItemGroupSuggestion?>) = mapIndexed { i, item ->
-    val suggestion = suggestions.getOrNull(i)
+    val suggestion = suggestions.getOrNull(i)?.takeIf { it.confident }
     if (item.group == null && !item.groupByUser && suggestion != null) item.copy(group = suggestion.group.id) else item
 }
 

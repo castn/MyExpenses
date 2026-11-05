@@ -3,7 +3,9 @@ package org.totschnig.myexpenses.next.data.receipts
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
+import org.junit.Assume.assumeTrue
 import org.junit.Test
+import org.totschnig.itemgroupmodel.ProductGroupModel
 import org.totschnig.myexpenses.feature.recognizedTextFromJson
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup.BAKERY
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup.DAIRY
@@ -17,6 +19,7 @@ import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup.PRODUCE
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup.READY_MEALS
 import org.totschnig.myexpenses.next.data.receipts.ItemGroupSource.DICTIONARY
 import org.totschnig.myexpenses.next.data.receipts.ItemGroupSource.MERCHANT
+import org.totschnig.myexpenses.next.data.receipts.ItemGroupSource.MODEL
 import org.totschnig.myexpenses.next.data.receipts.ItemGroupSource.PRODUCT
 import org.totschnig.myexpenses.next.data.receipts.ItemGroupSource.RULE
 import org.totschnig.myexpenses.next.data.receipts.ItemGroupSource.WORDS
@@ -118,6 +121,46 @@ class ItemGroupClassifierTest {
         assertEquals(ItemGroupSuggestion(ItemGroup.SWEETS_SNACKS, WORDS), twice.groupOf("Sportness NatEnergy"))
     }
 
+    @Test
+    fun modelBeforeDictionary() {
+        val model = ItemGroupClassifier(emptyList(), TestModels.constant(0.95f, "drinks", "dairy", "produce"))
+        assertEquals(ItemGroupSuggestion(DRINKS, MODEL), model.groupOf("GAZI H.GRILLKAESE"))
+    }
+
+    @Test
+    fun modelBelowSureThresholdIsNotConfident() {
+        val model = ItemGroupClassifier(emptyList(), TestModels.constant(0.7f, "drinks", "dairy", "produce"))
+        assertEquals(ItemGroupSuggestion(DRINKS, MODEL, confident = false), model.groupOf("GAZI H.GRILLKAESE"))
+        val unsure = ItemGroupClassifier(emptyList(), TestModels.constant(0.4f, "drinks", "dairy", "produce"))
+        assertEquals(ItemGroupSuggestion(DAIRY, DICTIONARY), unsure.groupOf("GAZI H.GRILLKAESE"))
+    }
+
+    @Test
+    fun learnedAndRulesBeforeModel() {
+        val model = ItemGroupClassifier(
+            listOf(LearnedItemGroup("Meggle Baguet", BAKERY)),
+            TestModels.constant(0.95f, "drinks", "dairy", "produce")
+        )
+        assertEquals(ItemGroupSuggestion(BAKERY, PRODUCT), model.groupOf("Meggle Baguet"))
+        assertEquals(
+            listOf(ItemGroupSuggestion(DRINKS, MODEL), ItemGroupSuggestion(DRINKS, RULE), ItemGroupSuggestion(DEPOSIT, RULE)),
+            model.classify(listOf(item("Saft"), item("Rabatt", -20), item("PFAND 0,25", 25)), merchant = null)
+        )
+    }
+
+    @Test
+    fun modelGetsMerchant() {
+        val model = ItemGroupClassifier(emptyList(), TestModels.byChain("REWE", "drinks", "dairy", "produce"))
+        assertEquals(ItemGroupSuggestion(DRINKS, MODEL), model.groupOf("Haarspange Glitzer", "REWE Markt GmbH"))
+        assertNull(model.groupOf("Haarspange Glitzer"))
+    }
+
+    @Test
+    fun groupsUnknownToTheAppAreSkipped() {
+        val model = ItemGroupClassifier(emptyList(), TestModels.constant(0.95f, "future_group", "dairy", "produce"))
+        assertEquals(ItemGroupSuggestion(DAIRY, DICTIONARY), model.groupOf("GAZI H.GRILLKAESE"))
+    }
+
     private class Labelled(val receipt: String, val item: ReceiptItem, val expected: ItemGroup)
 
     /** Merchants of the fixtures whose photos were cut to the items */
@@ -187,6 +230,18 @@ class ItemGroupClassifierTest {
             )
         }
         result.report("Learned from the other receipts")
+        assertTrue(result.correct >= result.total * 0.85)
+    }
+
+    /** Only with -PitemGroupModel, compares with [labelledReceiptsWithoutLearning] */
+    @Test
+    fun labelledReceiptsWithModel() {
+        val path = System.getProperty("itemGroupModel")
+        assumeTrue("No model given", path != null)
+        val model = ProductGroupModel.load(File(path!!).readBytes())
+        assertTrue(model.groups.toString(), model.groups.all { ItemGroup.ofId(it) != null })
+        val result = evaluate { ItemGroupClassifier(emptyList(), model) }
+        result.report("With model ${model.version}")
         assertTrue(result.correct >= result.total * 0.85)
     }
 }

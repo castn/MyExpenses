@@ -9,6 +9,7 @@ android {
 // Tests on real receipts read their fixtures from a directory outside of the repository:
 // ./gradlew :next:data:receipts:testDebugUnitTest -PreceiptFixtures=/path/to/receipts
 // Without it these tests are skipped. A new snapshot of the parser's output: -PupdateReceiptSnapshot
+// An exported model of product-group-modell to evaluate on these receipts: -PitemGroupModel=/path/to/pgm-<version>.bin
 tasks.withType(Test).configureEach {
     if (project.hasProperty("receiptFixtures")) {
         systemProperty "receiptFixtures", file(project.property("receiptFixtures")).absolutePath
@@ -16,12 +17,16 @@ tasks.withType(Test).configureEach {
     if (project.hasProperty("updateReceiptSnapshot")) {
         systemProperty "updateReceiptSnapshot", "true"
     }
+    if (project.hasProperty("itemGroupModel")) {
+        systemProperty "itemGroupModel", project.property("itemGroupModel")
+    }
 }
 
-// Receipts read by the parser from the recognized text, checked, their items in groups and the
-// transaction they belong to.
+// Receipts read by the parser from the recognized text, checked, their items in groups, the
+// transaction they belong to and the model of the item groups.
 dependencies {
     implementation project(':next:data:categories')
     api project(':ocr-model')
+    implementation project(':item-group-model')
     implementation libs.kotlinx.serialization.json
 }

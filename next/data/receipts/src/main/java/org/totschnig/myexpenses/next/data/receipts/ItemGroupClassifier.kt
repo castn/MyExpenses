@@ -1,5 +1,7 @@
 package org.totschnig.myexpenses.next.data.receipts
 
+import org.totschnig.itemgroupmodel.Level
+import org.totschnig.itemgroupmodel.ProductGroupModel
 import org.totschnig.myexpenses.feature.productKey
 import java.text.Normalizer
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
@@ -15,6 +17,9 @@ enum class ItemGroupSource {
     /** Words of products the user chose groups for */
     WORDS,
 
+    /** [ProductGroupModel] trained on Open Food Facts, from its suggestion threshold on */
+    MODEL,
+
     /** [ItemDictionary] */
     DICTIONARY,
 
@@ -22,7 +27,11 @@ enum class ItemGroupSource {
     MERCHANT
 }
 
-data class ItemGroupSuggestion(val group: ItemGroup, val source: ItemGroupSource)
+/**
+ * @param confident false for a suggestion of the model below its threshold for sure predictions,
+ * which the review can mark
+ */
+data class ItemGroupSuggestion(val group: ItemGroup, val source: ItemGroupSource, val confident: Boolean = true)
 
 /** A group the user chose for an item, to learn from */
 data class LearnedItemGroup(val name: String, val group: ItemGroup)
@@ -32,8 +41,9 @@ data class LearnedItemGroup(val name: String, val group: ItemGroup)
  * group, the user can set them in the review.
  *
  * @param learned choices of the user, oldest first, so that the latest choice for a product wins
+ * @param model null while it is not loaded or if there is none
  */
-class ItemGroupClassifier(learned: List<LearnedItemGroup>) {
+class ItemGroupClassifier(learned: List<LearnedItemGroup>, private val model: ProductGroupModel? = null) {
 
     private val products: Map<String, ItemGroup> = learned.associate { productKey(it.name) to it.group }
 
@@ -69,6 +79,7 @@ class ItemGroupClassifier(learned: List<LearnedItemGroup>) {
         }
         products[productKey(item.name)]?.let { return ItemGroupSuggestion(it, ItemGroupSource.PRODUCT) }
         byWords(words)?.let { return ItemGroupSuggestion(it, ItemGroupSource.WORDS) }
+        byModel(item.name, merchant)?.let { return it }
         byDictionary(words)?.let { return ItemGroupSuggestion(it, ItemGroupSource.DICTIONARY) }
         return merchantGroup?.let { ItemGroupSuggestion(it, ItemGroupSource.MERCHANT) }
     }
@@ -96,6 +107,13 @@ class ItemGroupClassifier(learned: List<LearnedItemGroup>) {
                 .takeIf { it.value >= groups.size * MIN_WORD_SHARE }
                 ?.let { it.key to it.value }
         }.maxByOrNull { it.second }?.first
+
+    /** The model recognizes the chain from the merchant itself; groups this version does not know are skipped */
+    private fun byModel(name: String, merchant: String?): ItemGroupSuggestion? {
+        val prediction = model?.classify(name, merchant) ?: return null
+        val group = ItemGroup.ofId(prediction.groupId) ?: return null
+        return ItemGroupSuggestion(group, ItemGroupSource.MODEL, prediction.level == Level.SICHER)
+    }
 
     /**
      * The best keyword match of all words: strong keywords before weak ones, then the closer kind

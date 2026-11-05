@@ -45,6 +45,24 @@ class ReceiptDraftTest {
         assertFalse(withGroups.isChanged)
     }
 
+    @Test
+    fun unsureSuggestionsAreOnlyProposed() {
+        val unsure = ItemGroupSuggestion(ItemGroup.DAIRY, ItemGroupSource.MODEL, confident = false)
+        val proposed = draft.copy(items = draft.items + ReceiptItem("Milch.", 119))
+            .withSuggestedGroups(listOf(ItemGroupSuggestion(ItemGroup.BAKERY, ItemGroupSource.MODEL), unsure, null, unsure))
+        assertEquals(listOf("bakery", null, null, null), proposed.items.map { it.group })
+        assertEquals(listOf(1, 2, 3), proposed.itemsWithoutGroup)
+        assertEquals(listOf(null, ItemGroup.DAIRY, null, ItemGroup.DAIRY), proposed.items.indices.map(proposed::proposal))
+        assertFalse(proposed.isChanged)
+        // confirmed for one, the same product follows and nothing is proposed any more
+        val confirmed = proposed.setGroup(1, ItemGroup.DAIRY)
+        assertEquals(listOf("bakery", "dairy", null, "dairy"), confirmed.items.map { it.group })
+        assertNull(confirmed.proposal(3))
+        // saved receipts only get sure groups
+        assertEquals(listOf("bakery", null, null), draft.items.withSuggestedGroups(listOf(
+            ItemGroupSuggestion(ItemGroup.BAKERY, ItemGroupSource.MODEL), unsure, null
+        )).map { it.group })
+    }
 
     @Test
     fun chosenGroupAppliesToSameProduct() {

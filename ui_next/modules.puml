@@ -10,6 +10,7 @@ top to bottom direction
 
 [:charts] as mCharts
 [:designsystem] as mDesignsystem
+[:item-group-model\n(Kotlin JVM)] as mItemGroupModel
 [:myExpenses\n(app)] as mMyExpenses
 [:ocr-model\n(Kotlin JVM)] as mOcrModel
 [:ui_next\n(dynamic feature)] as mUiNext
@@ -63,6 +64,7 @@ mNextDataCategories --> mNextDataMerchants
 mNextDataContracts --> mNextDataMerchants
 mNextDataGuidance --> mNextDataTips
 mNextDataMerchants --> mNextCoreCommon
+mNextDataReceipts --> mItemGroupModel
 mNextDataReceipts --> mNextDataCategories
 mNextDataReceipts --> mOcrModel
 mNextDataTags --> mNextDataCategories

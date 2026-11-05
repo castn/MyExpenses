@@ -29,7 +29,8 @@ class ReceiptCodecsTest {
         date = LocalDate.of(2026, 10, 26),
         cardAmount = 1234,
         isStandalone = true,
-        leftoverRows = listOf(LeftoverRow("Pfand 0,25", Box(5, 6, 7, 8)))
+        leftoverRows = listOf(LeftoverRow("Pfand 0,25", Box(5, 6, 7, 8))),
+        proposals = mapOf("milch" to ItemGroup.DAIRY)
     )
 
     @Test
