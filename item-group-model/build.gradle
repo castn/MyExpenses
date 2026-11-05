@@ -1,0 +1,11 @@
+plugins {
+    id 'next.jvm'
+}
+
+// Model that assigns item groups to receipt items, trained in the project product-group-modell
+// (docs/interface.md there). Sources and test resources are copied from there unchanged except
+// for the package (kotlin/reference, tests/golden at 04ab987): change them there, with new
+// golden values, and copy them again. The weights are not part of the repository.
+dependencies {
+    testImplementation libs.kotlin.test.junit
+}
