@@ -2,13 +2,23 @@ package org.totschnig.myexpenses.next.receipts
 
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.next.NextData
 import org.totschnig.myexpenses.next.NextFeature
 import org.totschnig.myexpenses.next.NextNavigation
+import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
 import org.totschnig.myexpenses.next.data.receipts.ItemGroupModelSetupStore
 import org.totschnig.myexpenses.next.data.receipts.ItemGroupModelStore
+import org.totschnig.myexpenses.next.feature.receipts.ItemGroupModelPage
+import org.totschnig.myexpenses.next.feature.receipts.ItemGroupModelSettingsViewModel
+import org.totschnig.myexpenses.next.feature.receipts.itemGroupModelValue
+import org.totschnig.myexpenses.next.settings.AreaSettings
+import org.totschnig.myexpenses.next.settings.InsightSetting
+import org.totschnig.myexpenses.next.settings.SettingControl
+import org.totschnig.myexpenses.next.settings.SettingKind
+import org.totschnig.myexpenses.next.settings.SettingsGroup
 import org.totschnig.myexpenses.next.feature.receipts.ReceiptChip
 import org.totschnig.myexpenses.next.feature.receipts.ReceiptPhotoLoader
 import org.totschnig.myexpenses.next.feature.receipts.ReceiptScanAction
@@ -66,5 +76,34 @@ class ReceiptsFeature(
     companion object {
         /** Lets the receipt screens open the editor for a new transaction, also outside of the main screen */
         val editor = LocalNewTransactionEditor provides ExpenseEditForReceipt
+    }
+}
+
+/** The model for item groups in the settings */
+class ReceiptSettings(activity: ComponentActivity) : AreaSettings {
+    private val viewModel by activity.viewModelsOf {
+        ItemGroupModelSettingsViewModel(
+            ItemGroupModelStore.of(activity.application),
+            ItemGroupModelSetupStore(activity.injector.preferencesDataStore())
+        )
+    }
+
+    @Composable
+    override fun control(setting: InsightSetting): SettingControl? {
+        if (setting != MODEL) return null
+        return SettingControl.Page(value = itemGroupModelValue(viewModel), isEnabled = true, setting = setting)
+    }
+
+    @Composable
+    override fun Page(setting: InsightSetting, onBack: () -> Unit) {
+        ItemGroupModelPage(viewModel, stringResource(setting.title), onBack)
+    }
+
+    companion object : AreaSettings.Factory {
+        val MODEL = InsightSetting("ITEM_GROUP_MODEL", SettingsGroup.ENTRY, SettingKind.ACTION, R.string.next_settings_item_group_model)
+
+        override val settings = listOf(MODEL)
+
+        override fun create(activity: ComponentActivity) = ReceiptSettings(activity)
     }
 }

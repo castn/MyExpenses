@@ -1,7 +1,9 @@
 package org.totschnig.myexpenses.next.data.receipts
 
 import kotlinx.coroutines.flow.first
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.totschnig.myexpenses.next.core.common.withTestDataStore
@@ -16,6 +18,16 @@ class ItemGroupModelSetupStoreTest {
         assertFalse(store.declined.first())
         store.decline()
         assertTrue(ItemGroupModelSetupStore(dataStore).declined.first())
+    }
+
+    @Test
+    fun keepsSourceOfLastInstall() = withTestDataStore { dataStore ->
+        val store = ItemGroupModelSetupStore(dataStore)
+        assertNull(store.source.first())
+        store.installed(Source.FILE, 1000)
+        assertEquals(Source.FILE, store.source.first())
+        store.installed(Source.DOWNLOAD, 2000)
+        assertEquals(Source.DOWNLOAD, ItemGroupModelSetupStore(dataStore).source.first())
     }
 
     @Test

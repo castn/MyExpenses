@@ -22,6 +22,9 @@ interface ItemGroupModels {
     /** null if there is none or it cannot be read any more, e.g. after an update of the app */
     fun model(): ProductGroupModel?
 
+    /** Version of [model] */
+    fun version(): String? = model()?.version
+
     /** A model file the user picked, see [ItemGroupModelStore.install] */
     fun install(uri: Uri)
 

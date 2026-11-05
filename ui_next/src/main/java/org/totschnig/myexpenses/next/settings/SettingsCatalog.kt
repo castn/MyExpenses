@@ -213,6 +213,9 @@ object SettingsCatalog {
                     choice(TESSERACT_LANGUAGE)
                     choice(MLKIT_SCRIPT)
                 }
+                on(null) {
+                    next(SettingsGroup.ENTRY)
+                }
             }
         }
         group(SettingsGroup.DATA) {

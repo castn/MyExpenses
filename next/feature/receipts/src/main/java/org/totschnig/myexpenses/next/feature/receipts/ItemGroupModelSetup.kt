@@ -49,18 +49,17 @@ fun ModelSetupDialog(viewModel: ReceiptViewModel, state: ModelSetup?, onDismiss:
         Text(stringResource(R.string.next_item_group_model_source_text))
         when (state) {
             ModelSetup.Working -> ProgressRow(stringResource(R.string.next_item_group_model_working), isFirst = true)
-            is ModelSetup.Failed -> Text(
-                stringResource(
-                    when (state.reason) {
-                        ModelSetup.Reason.Network -> R.string.next_item_group_model_error_network
-                        ModelSetup.Reason.NoRelease -> R.string.next_item_group_model_error_no_release
-                        ModelSetup.Reason.Invalid -> R.string.next_item_group_model_error_invalid
-                        ModelSetup.Reason.Incompatible -> R.string.next_item_group_model_error_incompatible
-                    }
-                ),
-                color = MaterialTheme.colorScheme.error
-            )
-            ModelSetup.Done, null -> {}
+            is ModelSetup.Failed -> Text(stringResource(state.reason.text), color = MaterialTheme.colorScheme.error)
+            else -> {}
         }
     }
 }
+
+/** What to tell the user */
+internal val ModelSetup.Reason.text: Int
+    get() = when (this) {
+        ModelSetup.Reason.Network -> R.string.next_item_group_model_error_network
+        ModelSetup.Reason.NoRelease -> R.string.next_item_group_model_error_no_release
+        ModelSetup.Reason.Invalid -> R.string.next_item_group_model_error_invalid
+        ModelSetup.Reason.Incompatible -> R.string.next_item_group_model_error_incompatible
+    }

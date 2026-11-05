@@ -27,6 +27,11 @@ class ItemGroupModelSetupStore(private val dataStore: DataStore<Preferences>) {
     /** The user said no to setting up a model, it is not offered again */
     val declined: Flow<Boolean> = dataStore.data.map { it[KEY_DECLINED] == true }.distinctUntilChanged()
 
+    /** Where the installed model came from, null if none was installed */
+    val source: Flow<Source?> = dataStore.data
+        .map { preferences -> Source.entries.firstOrNull { it.value == preferences[KEY_SOURCE] } }
+        .distinctUntilChanged()
+
     suspend fun decline() {
         dataStore.edit { it[KEY_DECLINED] = true }
     }

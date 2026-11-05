@@ -12,6 +12,7 @@ import org.totschnig.myexpenses.next.guidance.GuidanceFeature
 import org.totschnig.myexpenses.next.guidance.HintSettings
 import org.totschnig.myexpenses.next.merchants.MerchantSettings
 import org.totschnig.myexpenses.next.merchants.MerchantsFeature
+import org.totschnig.myexpenses.next.receipts.ReceiptSettings
 import org.totschnig.myexpenses.next.receipts.ReceiptsFeature
 import org.totschnig.myexpenses.next.tags.TagsFeature
 import org.totschnig.myexpenses.next.tags.TagSettings
@@ -45,6 +46,6 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
         val locals: Array<ProvidedValue<*>> get() = arrayOf(CategoriesFeature.picker, ReceiptsFeature.editor)
 
         /** The settings of the areas, in the order they are listed in their groups, see [NextSettings] */
-        val settings: List<AreaSettings.Factory> get() = listOf(CategorySettings, TagSettings, HintSettings, MerchantSettings)
+        val settings: List<AreaSettings.Factory> get() = listOf(CategorySettings, TagSettings, HintSettings, MerchantSettings, ReceiptSettings)
     }
 }

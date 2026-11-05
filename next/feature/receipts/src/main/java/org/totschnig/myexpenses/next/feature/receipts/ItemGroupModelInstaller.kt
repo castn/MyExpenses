@@ -22,6 +22,15 @@ sealed interface ModelSetup {
     /** Installed, the items of the open receipt are classified again */
     data object Done : ModelSetup
 
+    /** Looking for a newer model, see [ItemGroupModelInstaller.checkForUpdate] */
+    data object Checking : ModelSetup
+
+    /** The installed model is the one offered */
+    data object UpToDate : ModelSetup
+
+    /** Another model than the installed one is offered, not yet downloaded */
+    data class UpdateAvailable(val version: String) : ModelSetup
+
     data class Failed(val reason: Reason) : ModelSetup
 
     enum class Reason {
@@ -37,8 +46,9 @@ sealed interface ModelSetup {
 }
 
 /**
- * Sets up the model for item groups for [ReceiptViewModel]: downloads it or installs a file the
- * user picked, keeps a downloaded one up to date and offers it until the user declines.
+ * Sets up the model for item groups for [ReceiptViewModel] and the settings: downloads it or
+ * installs a file the user picked, keeps a downloaded one up to date and offers it until the user
+ * declines.
  *
  * @param scope of the view model
  * @param onInstalled called on [io] once a new model is installed, e.g. to classify the open
@@ -74,6 +84,27 @@ class ItemGroupModelInstaller(
     /** A model file the user downloaded before, e.g. into the download folder; not updated */
     fun install(uri: Uri) = setUp(ItemGroupModelSetupStore.Source.FILE, ModelSetup.Reason.Invalid) {
         models.install(uri)
+    }
+
+    /**
+     * Looks for another model than the installed one when the user asks for it; [download] gets it.
+     * Nothing is replaced on its own, as a file the user picked may be newer than the release.
+     */
+    fun checkForUpdate() {
+        _setup.value = ModelSetup.Checking
+        scope.launch(io) {
+            _setup.value = try {
+                val release = models.latestRelease()
+                when (release?.version) {
+                    null -> ModelSetup.Failed(ModelSetup.Reason.NoRelease)
+                    models.version() -> ModelSetup.UpToDate
+                    else -> ModelSetup.UpdateAvailable(release.version)
+                }
+            } catch (e: Exception) {
+                Timber.w(e, "Looking for item group model failed")
+                ModelSetup.Failed(ModelSetup.Reason.Network)
+            }
+        }
     }
 
     /**
@@ -117,11 +148,13 @@ class ItemGroupModelInstaller(
     }
 
     /**
-     * A downloaded model is replaced by a newer release, looked for at most once a week when
-     * receipts are used. A model the app cannot read any more after an update is replaced, too.
+     * Notices a model set up in the settings meanwhile. A downloaded model is replaced by a newer
+     * release, looked for at most once a week when receipts are used. A model the app cannot read
+     * any more after an update is replaced, too.
      */
     fun updateOccasionally() {
         scope.launch(io) {
+            hasModel.value = models.model() != null
             if (!setupStore.claimUpdateCheck(System.currentTimeMillis())) return@launch
             try {
                 val release = models.latestRelease() ?: return@launch
