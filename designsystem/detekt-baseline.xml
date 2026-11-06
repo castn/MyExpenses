@@ -2,39 +2,15 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>CyclomaticComplexMethod:Rows.kt:@Composable fun MeterRow</ID>
-    <ID>LongMethod:IconPicker.kt:@Composable fun IconPicker</ID>
-    <ID>LongMethod:Onboarding.kt:@Composable fun IntroPage</ID>
-    <ID>LongMethod:Rows.kt:@Composable fun MeterRow</ID>
-    <ID>LongMethod:Showcase.kt:@Preview(name = "Light", showBackground = true, heightDp = 2600) @Preview(name = "Dark", showBackground = true, heightDp = 2600, uiMode = Configuration.UI_MODE_NIGHT_YES) @Composable private fun Showcase</ID>
-    <ID>LongMethod:Tables.kt:@Composable fun ReceiptTable</ID>
     <ID>MagicNumber:Contrast.kt:Contrast.Companion$0.5f</ID>
     <ID>MagicNumber:Feedback.kt:600</ID>
     <ID>MagicNumber:Placeholders.kt:0.6f</ID>
     <ID>MagicNumber:Scaffolds.kt:99</ID>
-    <ID>MagicNumber:Showcase.kt:0.7f</ID>
-    <ID>MagicNumber:Showcase.kt:12</ID>
-    <ID>MagicNumber:Showcase.kt:2026</ID>
-    <ID>MagicNumber:Showcase.kt:20f</ID>
-    <ID>MagicNumber:Showcase.kt:24</ID>
-    <ID>MagicNumber:Showcase.kt:280f</ID>
-    <ID>MagicNumber:Showcase.kt:3</ID>
-    <ID>MagicNumber:Showcase.kt:400f</ID>
-    <ID>MagicNumber:Showcase.kt:440f</ID>
-    <ID>MagicNumber:Showcase.kt:460f</ID>
-    <ID>MagicNumber:Showcase.kt:5</ID>
-    <ID>MagicNumber:Showcase.kt:500f</ID>
-    <ID>MagicNumber:Showcase.kt:80f</ID>
     <ID>MatchingDeclarationName:Fab.kt:FabMenuItem</ID>
     <ID>MatchingDeclarationName:IconPicker.kt:IconSection</ID>
     <ID>MatchingDeclarationName:Illustration.kt:IllustrationSlot</ID>
     <ID>MatchingDeclarationName:Labels.kt:BadgeStyle</ID>
     <ID>MatchingDeclarationName:Photos.kt:PhotoMark</ID>
     <ID>MatchingDeclarationName:Tables.kt:ReceiptLine</ID>
-    <ID>TooManyFunctions:Cards.kt:org.totschnig.myexpenses.designsystem.Cards.kt</ID>
-    <ID>TooManyFunctions:Rows.kt:org.totschnig.myexpenses.designsystem.Rows.kt</ID>
-    <ID>TooManyFunctions:Sheets.kt:org.totschnig.myexpenses.designsystem.Sheets.kt</ID>
-    <ID>TooManyFunctions:Showcase.kt:org.totschnig.myexpenses.designsystem.Showcase.kt</ID>
-    <ID>TopLevelPropertyNaming:Rows.kt:/** Of rows that another setting turns off */ private const val DisabledAlpha = 0.38f</ID>
   </CurrentIssues>
 </SmellBaseline>

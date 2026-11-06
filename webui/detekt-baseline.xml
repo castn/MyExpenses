@@ -3,7 +3,6 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>CyclomaticComplexMethod:WebInputService.kt:WebInputService$override fun onStartCommand: Int</ID>
-    <ID>CyclomaticComplexMethod:WebInputService.kt:WebInputService$private fun Route.serve</ID>
     <ID>LongMethod:WebInputService.kt:WebInputService$override fun onStartCommand: Int</ID>
     <ID>LongMethod:WebInputService.kt:WebInputService$private fun Route.serve</ID>
     <ID>MagicNumber:Certificates.kt:0x0500</ID>

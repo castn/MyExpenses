@@ -5,6 +5,5 @@
     <ID>CyclomaticComplexMethod:ReceiptAnonymizer.kt:ReceiptAnonymizer$fun anonymize: Result</ID>
     <ID>LongMethod:ReceiptAnonymizer.kt:ReceiptAnonymizer$fun anonymize: Result</ID>
     <ID>MagicNumber:ReceiptAnonymizer.kt:ReceiptAnonymizer$3</ID>
-    <ID>ReturnCount:ReceiptAnonymizer.kt:ReceiptAnonymizer$private fun withoutOwner: RecognizedLine?</ID>
   </CurrentIssues>
 </SmellBaseline>

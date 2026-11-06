@@ -2,11 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>CyclomaticComplexMethod:PotEditor.kt:@Composable fun PotEditorScreen</ID>
-    <ID>LongMethod:PotEditor.kt:@Composable fun PotEditorScreen</ID>
     <ID>MagicNumber:PotEditor.kt:100</ID>
     <ID>MatchingDeclarationName:BudgetFlow.kt:BudgetKey : NavKey</ID>
-    <ID>TooManyFunctions:BudgetScreen.kt:org.totschnig.myexpenses.next.feature.budgets.BudgetScreen.kt</ID>
-    <ID>TooManyFunctions:BudgetViewModel.kt:BudgetViewModel : ViewModelBudgetActions</ID>
   </CurrentIssues>
 </SmellBaseline>

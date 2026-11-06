@@ -1,9 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues/>
-  <CurrentIssues>
-    <ID>CyclomaticComplexMethod:PayeeLogoDialog.kt:@Composable fun PayeeLogoDialog</ID>
-    <ID>LongMethod:PayeeLogoDialog.kt:@Composable fun PayeeLogoDialog</ID>
-    <ID>ReturnCount:MerchantLogos.kt:MerchantLogos$private suspend fun loadEntered: Lookup</ID>
-  </CurrentIssues>
+  <CurrentIssues/>
 </SmellBaseline>

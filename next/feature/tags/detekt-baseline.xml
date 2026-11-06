@@ -2,9 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>CyclomaticComplexMethod:TagChips.kt:@Composable private fun GroupPickerSheet</ID>
-    <ID>LongMethod:TagChips.kt:@Composable fun TagChips</ID>
-    <ID>LongMethod:TagChips.kt:@Composable private fun GroupPickerSheet</ID>
     <ID>ReturnCount:TagSuggestionSection.kt:@Composable fun TagSuggestionSection</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -3,16 +3,6 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>ComplexCondition:ContractList.kt:state.isEmpty || !isEditing &amp;&amp; state.active.isEmpty() &amp;&amp; state.ended.isEmpty() &amp;&amp; state.suggestions.isEmpty() &amp;&amp; state.cancelled.isEmpty()</ID>
-    <ID>CyclomaticComplexMethod:ContractItem.kt:@Composable internal fun ContractItem</ID>
-    <ID>CyclomaticComplexMethod:ContractList.kt:@Composable internal fun ContractList</ID>
-    <ID>CyclomaticComplexMethod:ContractNewsViews.kt:@Composable internal fun ContractNews.text: String</ID>
-    <ID>CyclomaticComplexMethod:ContractRuleSettings.kt:@Composable internal fun ContractRuleSettings</ID>
-    <ID>CyclomaticComplexMethod:ContractRuleSettings.kt:@Composable private fun AmountRangeDialog</ID>
-    <ID>LongMethod:ContractItem.kt:@Composable internal fun ContractItem</ID>
-    <ID>LongMethod:ContractList.kt:@Composable internal fun ContractList</ID>
-    <ID>LongMethod:ContractNewsViews.kt:@Composable internal fun NewsHistoryScreen</ID>
-    <ID>LongMethod:ContractRuleSettings.kt:@Composable internal fun ContractRuleSettings</ID>
-    <ID>LongMethod:NextContractsScreen.kt:@Composable private fun ContractsHome</ID>
     <ID>MagicNumber:ContractItem.kt:0.6f</ID>
     <ID>MagicNumber:NextContractsScreen.kt:12050</ID>
     <ID>MagicNumber:NextContractsScreen.kt:1299</ID>
@@ -26,7 +16,5 @@
     <ID>MagicNumber:NextContractsScreen.kt:9400</ID>
     <ID>MatchingDeclarationName:NextContractsScreen.kt:ContractsKey : NavKey</ID>
     <ID>TooManyFunctions:ContractActions.kt:ContractActions</ID>
-    <ID>TooManyFunctions:ContractsViewModel.kt:ContractsViewModel : ViewModelContractActions</ID>
-    <ID>TooManyFunctions:NextContractsScreen.kt:org.totschnig.myexpenses.next.feature.contracts.NextContractsScreen.kt</ID>
   </CurrentIssues>
 </SmellBaseline>

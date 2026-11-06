@@ -2,21 +2,11 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>CyclomaticComplexMethod:ItemGroupModelSettings.kt:@Composable fun ItemGroupModelPage</ID>
-    <ID>CyclomaticComplexMethod:ReceiptAssignmentScreen.kt:@Composable fun ReceiptAssignmentDialog</ID>
-    <ID>CyclomaticComplexMethod:ReceiptPhotoLoader.kt:ReceiptPhotoLoader$fun load: ReceiptPhoto?</ID>
-    <ID>CyclomaticComplexMethod:ReceiptReviewScreen.kt:@Composable fun ReceiptReviewDialog</ID>
-    <ID>CyclomaticComplexMethod:ReceiptReviewScreen.kt:@Composable private fun ReceiptItemSheet</ID>
-    <ID>LongMethod:ReceiptAssignmentScreen.kt:@Composable fun ReceiptAssignmentDialog</ID>
-    <ID>LongMethod:ReceiptReviewScreen.kt:@Composable fun ReceiptReviewDialog</ID>
-    <ID>LongMethod:ReceiptReviewScreen.kt:@Composable private fun ReceiptItemSheet</ID>
-    <ID>ReturnCount:ReceiptViewModel.kt:ReceiptViewModel$private fun classifiedOnce: Receipt</ID>
     <ID>SwallowedException:ItemGroupModelInstaller.kt:ItemGroupModelInstaller$e: NoModelRelease</ID>
     <ID>TooGenericExceptionCaught:ItemGroupModelInstaller.kt:ItemGroupModelInstaller$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ReceiptAssignments.kt:ReceiptAssignments$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ReceiptPhotoLoader.kt:ReceiptPhotoLoader$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ReceiptViewModel.kt:ReceiptViewModel$e: Exception</ID>
-    <ID>TooManyFunctions:ReceiptReviewScreen.kt:org.totschnig.myexpenses.next.feature.receipts.ReceiptReviewScreen.kt</ID>
     <ID>TooManyFunctions:ReceiptViewModel.kt:ReceiptViewModel : ViewModel</ID>
   </CurrentIssues>
 </SmellBaseline>

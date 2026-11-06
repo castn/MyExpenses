@@ -2,10 +2,8 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>DestructuringDeclarationWithTooManyEntries:SavingTipsRepository.kt:SavingTipsRepository$(contracts, tags, receipts, today, budget)</ID>
     <ID>MagicNumber:SavingTip.kt:100</ID>
     <ID>MagicNumber:SavingTip.kt:63</ID>
     <ID>ReturnCount:SpendingTips.kt:internal fun eatingOut: EatingOut?</ID>
-    <ID>ReturnCount:SpendingTips.kt:internal fun outliers: Outliers?</ID>
   </CurrentIssues>
 </SmellBaseline>

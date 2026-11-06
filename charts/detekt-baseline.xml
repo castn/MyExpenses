@@ -2,24 +2,11 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>CyclomaticComplexMethod:SankeyChart.kt:@Composable fun SankeyChart</ID>
-    <ID>LongMethod:BarChart.kt:@Composable fun BarChart</ID>
-    <ID>LongMethod:ColumnChart.kt:@Composable fun ColumnChart</ID>
-    <ID>LongMethod:SankeyChart.kt:@Composable fun SankeyChart</ID>
-    <ID>MagicNumber:BarChart.kt:180f</ID>
-    <ID>MagicNumber:BarChart.kt:420f</ID>
-    <ID>MagicNumber:BarChart.kt:75f</ID>
-    <ID>MagicNumber:BarChart.kt:950f</ID>
-    <ID>MagicNumber:ColumnChart.kt:120f</ID>
-    <ID>MagicNumber:ColumnChart.kt:210f</ID>
-    <ID>MagicNumber:ColumnChart.kt:340f</ID>
     <ID>MagicNumber:SankeyChart.kt:0.8f</ID>
     <ID>MagicNumber:SankeyLayout.kt:LinkBand$24</ID>
     <ID>MagicNumber:SankeyLayout.kt:LinkBand$3</ID>
     <ID>MagicNumber:ValueAxis.kt:ValueAxis.Companion$10</ID>
     <ID>MatchingDeclarationName:BarChart.kt:ChartBar</ID>
     <ID>MatchingDeclarationName:ColumnChart.kt:ChartColumn</ID>
-    <ID>TopLevelPropertyNaming:BarChart.kt:/** Of the width, for the labels before the bars */ private const val LabelShare = 0.35f</ID>
-    <ID>TopLevelPropertyNaming:SankeyChart.kt:/** How much a tap on a zoom button zooms in or out */ private const val ZoomStep = 2f</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -6,9 +6,54 @@ naming:
     # Composables are named like types (PascalCase).
     ignoreAnnotated:
       - Composable
+  TopLevelPropertyNaming:
+    # Compose names constants in PascalCase.
+    constantPattern: '[A-Z][_A-Za-z0-9]*'
 
 complexity:
   LongParameterList:
     # Composables take state and callbacks as parameters.
     ignoreAnnotated:
       - Composable
+  LongMethod:
+    # The length of a Composable mirrors the layout it describes.
+    ignoreAnnotated:
+      - Composable
+  CyclomaticComplexMethod:
+    # A `when` that only dispatches is easier to read than anything it could be split into.
+    ignoreSingleWhenExpression: true
+    ignoreSimpleWhenEntries: true
+    ignoreAnnotated:
+      - Composable
+  TooManyFunctions:
+    # Framework overrides and small Composables do not say anything about the size of a class or file.
+    ignoreOverridden: true
+    ignoreAnnotatedFunctions:
+      - Composable
+      - Preview
+
+empty-blocks:
+  EmptyFunctionBlock:
+    # Listeners and callback interfaces force implementing methods that have nothing to do.
+    ignoreOverridden: true
+
+style:
+  ForbiddenComment:
+    # A TODO is a note about later work, only markers that block a release are forbidden.
+    comments:
+      - reason: 'Forbidden FIXME todo marker in comment, please fix the problem.'
+        value: 'FIXME:'
+      - reason: 'Forbidden STOPSHIP todo marker in comment, please address the problem before shipping the code.'
+        value: 'STOPSHIP:'
+  MagicNumber:
+    # Previews only hold sample data.
+    ignoreAnnotated:
+      - Preview
+  ReturnCount:
+    # Guard clauses at the start of a function keep the rest of it flat.
+    excludeGuardClauses: true
+  ThrowsCount:
+    excludeGuardClauses: true
+  DestructuringDeclarationWithTooManyEntries:
+    # Flows combine up to five inputs into a tuple that is taken apart again right away.
+    maxDestructuringEntries: 5

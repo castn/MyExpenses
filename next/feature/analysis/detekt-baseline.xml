@@ -4,9 +4,6 @@
   <CurrentIssues>
     <ID>ComplexCondition:AnalysisScreen.kt:analysis.isEmpty &amp;&amp; !hasSpending &amp;&amp; !hasMoneyFlow &amp;&amp; gaps.isEmpty()</ID>
     <ID>CyclomaticComplexMethod:MoneyFlowChart.kt:MoneyFlowChart.Companion$fun of: MoneyFlowChart</ID>
-    <ID>LongMethod:CategorySpendingScreen.kt:@Composable fun CategorySpendingScreen</ID>
-    <ID>LongMethod:MoneyFlowScreen.kt:@Composable fun MoneyFlowScreen</ID>
-    <ID>LongMethod:TagEvaluationScreen.kt:@Composable fun TagEvaluationScreen</ID>
     <ID>MagicNumber:AnalysisScreen.kt:10</ID>
     <ID>MagicNumber:AnalysisScreen.kt:11</ID>
     <ID>MagicNumber:AnalysisScreen.kt:12</ID>
@@ -22,7 +19,6 @@
     <ID>MagicNumber:AnalysisScreen.kt:500</ID>
     <ID>MagicNumber:AnalysisScreen.kt:6</ID>
     <ID>MagicNumber:AnalysisScreen.kt:8</ID>
-    <ID>MagicNumber:AnalysisScreen.kt:96</ID>
     <ID>MagicNumber:AnalysisScreen.kt:96000</ID>
     <ID>MagicNumber:CategorySpendingScreen.kt:10</ID>
     <ID>MagicNumber:CategorySpendingScreen.kt:100</ID>
@@ -61,9 +57,6 @@
     <ID>MagicNumber:MoneyFlowScreen.kt:9</ID>
     <ID>MagicNumber:MoneyFlowScreen.kt:90_000</ID>
     <ID>MagicNumber:MoneyFlowScreen.kt:94_000</ID>
-    <ID>MagicNumber:ReadinessBox.kt:180</ID>
-    <ID>MagicNumber:ReadinessBox.kt:41</ID>
     <ID>MatchingDeclarationName:AnalysisFlow.kt:AnalysisKey : NavKey</ID>
-    <ID>TooManyFunctions:CategorySpendingScreen.kt:org.totschnig.myexpenses.next.feature.analysis.CategorySpendingScreen.kt</ID>
   </CurrentIssues>
 </SmellBaseline>

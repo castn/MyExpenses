@@ -2,9 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>CyclomaticComplexMethod:SavingTipsScreen.kt:@Composable private fun TipCard</ID>
-    <ID>LongMethod:SavingTipTexts.kt:@Composable internal fun SavingTip.text: TipText</ID>
-    <ID>LongMethod:SavingTipsScreen.kt:@Composable private fun TipCard</ID>
     <ID>MagicNumber:SavingTipTexts.kt:100</ID>
     <ID>MagicNumber:SavingTipsScreen.kt:0.6f</ID>
     <ID>MagicNumber:SavingTipsScreen.kt:0.8f</ID>
@@ -24,7 +21,5 @@
     <ID>MatchingDeclarationName:SavingTipTexts.kt:TipText</ID>
     <ID>MatchingDeclarationName:SavingTipsFlow.kt:SavingTipsKey : NavKey</ID>
     <ID>MatchingDeclarationName:SavingTipsScreen.kt:TipNavigation</ID>
-    <ID>ReturnCount:SavingTipsScreen.kt:@Composable fun SavingTipCard</ID>
-    <ID>TooManyFunctions:SavingTipsScreen.kt:org.totschnig.myexpenses.next.feature.tips.SavingTipsScreen.kt</ID>
   </CurrentIssues>
 </SmellBaseline>

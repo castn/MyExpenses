@@ -32,11 +32,6 @@
     <ID>MagicNumber:ContractNews.kt:3</ID>
     <ID>MatchingDeclarationName:Salary.kt:SalaryChoice</ID>
     <ID>ReturnCount:ContractAnalysis.kt:fun ContractAnalysis.infoFor: PaymentContractInfo</ID>
-    <ID>ReturnCount:ContractDetector.kt:ContractDetector$private fun List&lt;ContractTransaction&gt;.isContinuedBy: Boolean</ID>
-    <ID>ReturnCount:ContractDetector.kt:ContractDetector$private fun List&lt;ContractTransaction&gt;.isLikelyRareIncome: Boolean</ID>
-    <ID>ReturnCount:ContractDetector.kt:ContractDetector$private fun detectSeries: Series?</ID>
-    <ID>ReturnCount:ContractDetector.kt:ContractDetector$private fun regularInterval: ContractInterval?</ID>
-    <ID>ReturnCount:ContractsState.kt:ContractSettings$fun areaChoiceOf: AreaChoice</ID>
     <ID>TooManyFunctions:ContractDetector.kt:ContractDetector</ID>
   </CurrentIssues>
 </SmellBaseline>

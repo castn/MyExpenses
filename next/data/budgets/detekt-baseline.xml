@@ -2,7 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>CyclomaticComplexMethod:LegacyBudgets.kt:LegacyBudgets$fun pots: List&lt;Pot&gt;</ID>
     <ID>DestructuringDeclarationWithTooManyEntries:BudgetAnalyzer.kt:BudgetAnalyzer$val (ledger, pots, categories, contracts, salaries, meanings, today, offset, receipts) = input</ID>
     <ID>LongMethod:BudgetAnalyzer.kt:BudgetAnalyzer$fun analyse: BudgetOverview</ID>
     <ID>MagicNumber:LegacyBudgets.kt:LegacyBudgets$12</ID>

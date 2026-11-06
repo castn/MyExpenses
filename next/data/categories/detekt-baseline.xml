@@ -3,7 +3,5 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>ReturnCount:CategorySuggestion.kt:CategorySuggester$fun suggest: CategorySuggestion?</ID>
-    <ID>ReturnCount:CategorySuggestion.kt:CategorySuggester$private fun byMerchant: Long?</ID>
-    <ID>ReturnCount:Counterpart.kt:fun CategoryInput.counterpart: Counterpart?</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -6,34 +6,8 @@
     <ID>ComplexCondition:NextSettings.kt:NextSettings$autoBackup &amp;&amp; (prefHandler.getBoolean(PrefKey.PROTECTION_LEGACY, false) || prefHandler.getBoolean(PrefKey.PROTECTION_DEVICE_LOCK_SCREEN, false)) &amp;&amp; prefHandler.getString(PrefKey.EXPORT_PASSWORD, null) == null</ID>
     <ID>ComplexCondition:TransactionEditing.kt:trimmed.isEmpty() || trimmed.any { !it.isDigit() &amp;&amp; it != ',' &amp;&amp; it != '.' }</ID>
     <ID>ComplexCondition:TransactionStore.kt:RepositoryTransactionStore$data.isSplit || data.transferPeerId != null || data.parentId != null || data.crStatus == CrStatus.VOID || data.status == STATUS_ARCHIVE || data.sealed</ID>
-    <ID>CyclomaticComplexMethod:NextAccountScreen.kt:@OptIn(ExperimentalMaterial3Api::class) @Composable fun NextAccountScreen</ID>
-    <ID>CyclomaticComplexMethod:NextMainScreen.kt:@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class) @Composable fun NextMainScreen</ID>
-    <ID>CyclomaticComplexMethod:NextOverviewScreen.kt:@Composable fun NextOverviewScreen</ID>
-    <ID>CyclomaticComplexMethod:NextSettings.kt:NextSettings$override fun onSharedPreferenceChanged</ID>
-    <ID>CyclomaticComplexMethod:NextSettingsScreen.kt:@Composable private fun SettingRow</ID>
-    <ID>CyclomaticComplexMethod:NextSettingsScreen.kt:@Composable private fun SettingsGroupPage</ID>
-    <ID>CyclomaticComplexMethod:NextTransactionDetails.kt:@Composable private fun DetailRows</ID>
-    <ID>CyclomaticComplexMethod:NextTransactionList.kt:@Composable private fun OpenedTransaction</ID>
-    <ID>CyclomaticComplexMethod:NextTransactionList.kt:@OptIn(ExperimentalFoundationApi::class) @Composable private fun TransactionItem</ID>
     <ID>CyclomaticComplexMethod:NextTransactionList.kt:private fun LazyListScope.transactionItems</ID>
-    <ID>DestructuringDeclarationWithTooManyEntries:ProviderLedgerSource.kt:ProviderLedgerSource$(rows, ibans, accounts, tagLinks, splitParts)</ID>
-    <ID>EmptyFunctionBlock:FixedTransactionList.kt:&lt;no name provided&gt;${}</ID>
-    <ID>LongMethod:MyExpensesNext.kt:MyExpensesNext$@Composable override fun MainScreen</ID>
-    <ID>LongMethod:NextAccountScreen.kt:@Composable private fun BalanceHeader</ID>
-    <ID>LongMethod:NextAccountScreen.kt:@OptIn(ExperimentalMaterial3Api::class) @Composable fun NextAccountScreen</ID>
-    <ID>LongMethod:NextMainScreen.kt:@OptIn(ExperimentalMaterial3AdaptiveApi::class) @Composable private fun AccountPanes</ID>
-    <ID>LongMethod:NextMainScreen.kt:@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class) @Composable fun NextMainScreen</ID>
-    <ID>LongMethod:NextOverviewScreen.kt:@Composable fun NextOverviewScreen</ID>
     <ID>LongMethod:NextSettings.kt:NextSettings$override fun onCreate</ID>
-    <ID>LongMethod:NextSettings.kt:NextSettings.&lt;no name provided&gt;$@Composable override fun control: SettingControl?</ID>
-    <ID>LongMethod:NextSettingsScreen.kt:@Composable private fun SettingsGroupPage</ID>
-    <ID>LongMethod:NextTransactionDetails.kt:@Composable private fun DetailRows</ID>
-    <ID>LongMethod:NextTransactionList.kt:@Composable fun NextTransactionList</ID>
-    <ID>LongMethod:NextTransactionList.kt:@OptIn(ExperimentalFoundationApi::class) @Composable private fun TransactionItem</ID>
-    <ID>LongMethod:OnboardingScreen.kt:@Composable internal fun OnboardingScreen</ID>
-    <ID>LongMethod:SearchSheets.kt:@Composable private fun PeriodSheet</ID>
-    <ID>LongMethod:TransactionEditForm.kt:@Composable internal fun TransactionEditForm</ID>
-    <ID>LongMethod:TransactionSearch.kt:@Composable fun SearchFilterChips</ID>
     <ID>LoopWithTooManyJumpStatements:LegacySpecs.kt:LegacySpecs$while</ID>
     <ID>MagicNumber:NextLayout.kt:1.1f</ID>
     <ID>MagicNumber:NextLayout.kt:1.5f</ID>
@@ -55,25 +29,11 @@
     <ID>MatchingDeclarationName:OnboardingScreen.kt:OnboardingStep</ID>
     <ID>MatchingDeclarationName:SearchOptions.kt:SearchOption</ID>
     <ID>MatchingDeclarationName:StartPage.kt:StartChoice</ID>
-    <ID>ReturnCount:AccountDraft.kt:internal fun parseAmount: BigDecimal?</ID>
-    <ID>ReturnCount:ManageCategoriesPicker.kt:ManageCategoriesPicker$override fun parseResult: Pair&lt;Long, String&gt;?</ID>
-    <ID>ReturnCount:NextOverviewScreen.kt:private fun moveAccount: List&lt;OverviewSection&gt;?</ID>
     <ID>ReturnCount:NextSettings.kt:NextSettings.&lt;no name provided&gt;$@Composable override fun control: SettingControl?</ID>
     <ID>ReturnCount:NextSettings.kt:NextSettings.&lt;no name provided&gt;$override fun isVisible: Boolean</ID>
-    <ID>ReturnCount:SearchFilter.kt:SearchFilter.Companion$fun of: SearchFilter</ID>
-    <ID>ReturnCount:SearchValues.kt:fun parseAmount: Long?</ID>
-    <ID>ReturnCount:TransactionEditViewModel.kt:TransactionEditViewModel$override fun saveDraft</ID>
-    <ID>ReturnCount:TransactionEditing.kt:fun parseAmountText: Long?</ID>
-    <ID>ReturnCount:TransactionStore.kt:RepositoryTransactionStore$override suspend fun load: EditableTransaction?</ID>
     <ID>SerialVersionUIDInSerializableClass:TransactionEditing.kt:EditDraft : Serializable</ID>
     <ID>SerialVersionUIDInSerializableClass:TransactionEditing.kt:EditValues : Serializable</ID>
-    <ID>TooManyFunctions:NextFeature.kt:NextFeature</ID>
-    <ID>TooManyFunctions:NextOverviewScreen.kt:org.totschnig.myexpenses.next.NextOverviewScreen.kt</ID>
-    <ID>TooManyFunctions:NextSettings.kt:NextSettings : ProtectedFragmentActivity</ID>
-    <ID>TooManyFunctions:NextTransactionList.kt:org.totschnig.myexpenses.next.NextTransactionList.kt</ID>
-    <ID>TooManyFunctions:ProviderReceiptDatabase.kt:ProviderReceiptDatabase : ReceiptDatabase</ID>
     <ID>TooManyFunctions:SettingsCatalog.kt:ScreenScope</ID>
-    <ID>TooManyFunctions:TransactionEditViewModel.kt:TransactionEditViewModel : ViewModelTransactionEditActions</ID>
     <ID>WildcardImport:NativeSettings.kt:import org.totschnig.myexpenses.preference.PrefKey.*</ID>
     <ID>WildcardImport:SettingTexts.kt:import org.totschnig.myexpenses.preference.PrefKey.*</ID>
     <ID>WildcardImport:SettingsCatalog.kt:import org.totschnig.myexpenses.preference.PrefKey.*</ID>

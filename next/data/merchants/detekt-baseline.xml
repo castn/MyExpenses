@@ -4,6 +4,5 @@
   <CurrentIssues>
     <ID>MagicNumber:MerchantLogoStore.kt:100</ID>
     <ID>MagicNumber:MerchantLogoStore.kt:10_000</ID>
-    <ID>ReturnCount:MerchantLogoStore.kt:private fun preparePng: MerchantLogoStore.Lookup</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -2,7 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>LongMethod:MonthlyBalanceScreen.kt:@Composable fun MonthlyBalanceScreen</ID>
     <ID>MagicNumber:MonthlyBalanceCard.kt:0.05f</ID>
     <ID>MagicNumber:MonthlyBalanceCard.kt:0.4f</ID>
     <ID>MagicNumber:MonthlyBalanceCard.kt:0.5f</ID>

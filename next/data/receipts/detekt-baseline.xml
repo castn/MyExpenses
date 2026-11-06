@@ -20,20 +20,11 @@
     <ID>MagicNumber:RowKinds.kt:RowKinds$4</ID>
     <ID>MagicNumber:RowKinds.kt:RowKinds$5</ID>
     <ID>MatchingDeclarationName:ItemGroupShares.kt:ItemGroupShare</ID>
-    <ID>ReturnCount:ItemGroupClassifier.kt:ItemGroupClassifier$private fun byModel: ItemGroupSuggestion?</ID>
     <ID>ReturnCount:ItemGroupClassifier.kt:ItemGroupClassifier$private fun classify: ItemGroupSuggestion?</ID>
-    <ID>ReturnCount:ReceiptAssembler.kt:ReceiptAssembler$fun readItem: ReceiptItem?</ID>
-    <ID>ReturnCount:ReceiptAssembler.kt:ReceiptAssembler$private fun readSecondRow: ReceiptItem?</ID>
-    <ID>ReturnCount:ReceiptAssembler.kt:ReceiptAssembler$private fun readUnitPriceTimesCount: ReceiptItem?</ID>
-    <ID>ReturnCount:ReceiptAssembler.kt:ReceiptAssembler.Assembly$fun nameBelowArticleNumber: Boolean</ID>
-    <ID>ReturnCount:ReceiptDates.kt:ReceiptDates$private fun date: LocalDate?</ID>
-    <ID>ReturnCount:ReceiptLayout.kt:ReceiptLayout$private fun slopeOf: Double?</ID>
     <ID>ReturnCount:ReceiptParser.kt:ReceiptParser$private fun total: Total</ID>
     <ID>ReturnCount:ReceiptTokens.kt:ReceiptTokens.Splitter$fun split: List&lt;Token&gt;</ID>
-    <ID>ReturnCount:ReceiptTokens.kt:ReceiptTokens.Splitter$private fun perUnit: List&lt;Token&gt;?</ID>
     <ID>ReturnCount:RowKinds.kt:RowKinds$fun detail: Detail?</ID>
     <ID>ReturnCount:RowKinds.kt:RowKinds$fun itemCount: Int?</ID>
-    <ID>ReturnCount:RowKinds.kt:RowKinds$fun price: Price?</ID>
     <ID>ReturnCount:RowKinds.kt:RowKinds$fun quantity: Quantity?</ID>
     <ID>ReturnCount:RowKinds.kt:RowKinds$private fun countTimesUnitPrice: Pair&lt;BigDecimal, Long&gt;?</ID>
     <ID>ReturnCount:RowKinds.kt:RowKinds$private fun unitPriceTimesCount: Pair&lt;BigDecimal, Long&gt;?</ID>
