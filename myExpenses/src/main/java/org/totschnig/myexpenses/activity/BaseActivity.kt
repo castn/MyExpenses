@@ -1490,11 +1490,14 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
     val bankingFeature: BankingFeature
         get() = requireApplication().appComponent.bankingFeature() ?: BankingFeature
 
+    /** The main screen opened once the app is set up and after a restore */
+    protected open val mainScreenClass: Class<*> = MyExpensesV2::class.java
+
     protected open fun restartAfterRestore() {
         (application as MyApplication).invalidateHomeCurrency()
         if (!isFinishing) {
             finishAffinity()
-            startActivity(Intent(this, MyExpensesV2::class.java).apply {
+            startActivity(Intent(this, mainScreenClass).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             })
         }

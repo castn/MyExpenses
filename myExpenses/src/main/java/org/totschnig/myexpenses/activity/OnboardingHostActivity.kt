@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import com.evernote.android.state.State
-import org.totschnig.myexpenses.MyApplication
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.dialog.ConfirmationDialogFragment
 import org.totschnig.myexpenses.dialog.RestoreFromCloudDialogFragment
@@ -38,9 +37,6 @@ abstract class OnboardingHostActivity : SyncBackendSetupActivity() {
     @State
     var accountName: String? = null
 
-    /** The main screen opened once the app is set up */
-    protected open val mainScreenClass: Class<*> = MyExpensesV2::class.java
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (prefHandler.isOnboardingCompleted) {
@@ -69,16 +65,6 @@ abstract class OnboardingHostActivity : SyncBackendSetupActivity() {
         val intent = Intent(this, mainScreenClass)
         startActivity(intent)
         finish()
-    }
-
-    override fun restartAfterRestore() {
-        (application as MyApplication).invalidateHomeCurrency()
-        if (!isFinishing) {
-            finishAffinity()
-            startActivity(Intent(this, mainScreenClass).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            })
-        }
     }
 
     override val createAccountTaskShouldReturnBackups = true

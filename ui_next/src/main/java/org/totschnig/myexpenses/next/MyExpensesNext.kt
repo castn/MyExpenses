@@ -66,6 +66,8 @@ import org.totschnig.myexpenses.viewmodel.data.Transaction2
  */
 class MyExpensesNext : MyExpensesV2() {
 
+    override val mainScreenClass: Class<*> = MyExpensesNext::class.java
+
     /** Actions on transactions shown outside of the list of an account, e.g. those of a contract */
     private val transactionEvents = object : TransactionEventHandler {
         override fun invoke(event: TransactionEvent, transaction: Transaction2) {
