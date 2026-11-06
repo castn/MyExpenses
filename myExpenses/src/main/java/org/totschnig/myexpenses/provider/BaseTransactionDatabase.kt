@@ -33,7 +33,8 @@ import timber.log.Timber
 import java.util.Currency
 import kotlin.math.pow
 
-const val DATABASE_VERSION = 192
+/** Versions below [FIRST_OWN_DATABASE_VERSION] are of upstream or old ones of this fork */
+const val DATABASE_VERSION = 1000
 
 private const val RAISE_UPDATE_SEALED_DEBT = "SELECT RAISE (FAIL, 'attempt to update sealed debt');"
 private const val RAISE_INCONSISTENT_CATEGORY_HIERARCHY =

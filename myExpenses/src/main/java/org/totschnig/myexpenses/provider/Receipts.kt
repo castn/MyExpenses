@@ -86,6 +86,41 @@ fun createReceiptTables(db: SupportSQLiteDatabase) {
     db.execSQL("CREATE INDEX receipt_items_product ON $TABLE_RECEIPT_ITEMS($KEY_PRODUCT_KEY)")
 }
 
+/**
+ * Brings the receipt tables up to date from any version below the own numbers. Only the schema
+ * tells them apart: 191 and 192 are versions of upstream without receipts as well as old ones of
+ * this fork with fewer columns. Foreign keys are off during upgrades, so that the items keep
+ * pointing to the receipts by id while the table is rebuilt.
+ */
+fun upgradeReceiptTables(db: SupportSQLiteDatabase) {
+    val receiptColumns = db.columnsOf(TABLE_RECEIPTS)
+    if (receiptColumns.isEmpty()) {
+        createReceiptTables(db)
+        return
+    }
+    val itemColumns = db.columnsOf(TABLE_RECEIPT_ITEMS)
+    val addItemColumn = "ALTER TABLE $TABLE_RECEIPT_ITEMS ADD COLUMN"
+    if (KEY_ITEM_GROUP !in itemColumns) {
+        db.execSQL("$addItemColumn $KEY_ITEM_GROUP text")
+    }
+    if (KEY_ITEM_GROUP_BY_USER !in itemColumns) {
+        db.execSQL("$addItemColumn $KEY_ITEM_GROUP_BY_USER integer not null default 0")
+    }
+    if (KEY_CARD_AMOUNT !in receiptColumns) {
+        val kept = listOf(KEY_ROWID, KEY_TRANSACTIONID, KEY_MERCHANT, KEY_TOTAL, KEY_ATTACHMENT_ID)
+            .joinToString()
+        db.execSQL(RECEIPTS_CREATE.replace("TABLE $TABLE_RECEIPTS ", "TABLE receipts_new "))
+        db.execSQL("INSERT INTO receipts_new ($kept) SELECT $kept FROM $TABLE_RECEIPTS")
+        db.execSQL("DROP TABLE $TABLE_RECEIPTS")
+        db.execSQL("ALTER TABLE receipts_new RENAME TO $TABLE_RECEIPTS")
+    }
+}
+
+private fun SupportSQLiteDatabase.columnsOf(table: String) =
+    query("PRAGMA table_info($table)").use { cursor ->
+        buildSet { while (cursor.moveToNext()) add(cursor.getString(1)) }
+    }
+
 /** Items joined with their receipt, so that they can be selected by transaction */
 const val RECEIPT_ITEMS_JOIN =
     "$TABLE_RECEIPT_ITEMS JOIN $TABLE_RECEIPTS ON $TABLE_RECEIPT_ITEMS.$KEY_RECEIPT_ID = $TABLE_RECEIPTS.$KEY_ROWID"

@@ -23,6 +23,8 @@ import org.totschnig.myexpenses.preference.PrefHandlerImpl
 import org.totschnig.myexpenses.preference.SecurePreferenceDataStore
 import org.totschnig.myexpenses.provider.DATABASE_VERSION
 import org.totschnig.myexpenses.provider.DatabaseVersionPeekHelper
+import org.totschnig.myexpenses.provider.TABLE_RECEIPTS
+import org.totschnig.myexpenses.provider.isFromNewerUpstream
 import org.totschnig.myexpenses.provider.TransactionDatabase
 import org.totschnig.myexpenses.retrofit.ExchangeRateService
 import org.totschnig.myexpenses.util.ExchangeRateHandler
@@ -129,6 +131,15 @@ open class DataModule {
                                     R.string.restore_cannot_downgrade, it, DATABASE_VERSION
                                 )
                             )
+                        val hasReceipts = database.rawQuery(
+                            "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = '$TABLE_RECEIPTS'",
+                            null
+                        ).use { cursor -> cursor.moveToFirst() }
+                        if (isFromNewerUpstream(it, hasReceipts)) {
+                            throw IllegalStateException(
+                                context.getString(R.string.restore_newer_upstream, it)
+                            )
+                        }
                     }
                 }
                 if ((version == 132 || version == 133) && Build.VERSION.SDK_INT == 30) {

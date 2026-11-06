@@ -2131,12 +2131,10 @@ public class TransactionDatabase extends BaseTransactionDatabase {
         upgradeTo190(db);
       }
 
-      if (oldVersion < 191) {
+      if (oldVersion < DatabaseVersionPeekHelperKt.FIRST_OWN_DATABASE_VERSION) {
+        // Also for old versions 191 to 193 of this fork, which did not have it: only fills in what is missing
         upgradeTo191(db);
-      }
-
-      if (oldVersion < 192) {
-        ReceiptsKt.createReceiptTables(db);
+        ReceiptsKt.upgradeReceiptTables(db);
       }
 
       TransactionProvider.resumeChangeTrigger(db);
