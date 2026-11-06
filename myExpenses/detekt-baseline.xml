@@ -80,7 +80,7 @@
     <ID>CyclomaticComplexMethod:TransactionDelegate.kt:TransactionDelegate$open fun bind</ID>
     <ID>CyclomaticComplexMethod:TransactionDelegate.kt:TransactionDelegate$open fun syncStateAndValidate: TransactionEditData?</ID>
     <ID>CyclomaticComplexMethod:TransactionDelegate.kt:TransactionDelegate$override fun onItemSelected</ID>
-    <ID>CyclomaticComplexMethod:TransactionEditViewModel.kt:TransactionEditViewModel$@SuppressLint("MissingPermission") suspend fun save: Result&lt;TransactionEditResult&gt;</ID>
+    <ID>CyclomaticComplexMethod:TransactionEditViewModel.kt:TransactionEditViewModel$@SuppressLint("MissingPermission") private suspend fun save: Result&lt;TransactionEditResult&gt;</ID>
     <ID>CyclomaticComplexMethod:TransactionEditViewModel.kt:TransactionEditViewModel$fun startAutoFill</ID>
     <ID>CyclomaticComplexMethod:TransactionList.kt:fun transactionMenu</ID>
     <ID>CyclomaticComplexMethod:TransactionPagingSource.kt:TransactionPagingSource$@SuppressLint("InlinedApi") override suspend fun load: LoadResult&lt;Int, Transaction2&gt;</ID>
@@ -218,7 +218,7 @@
     <ID>LongMethod:TransactionDelegate.kt:TransactionDelegate$open fun bind</ID>
     <ID>LongMethod:TransactionDelegate.kt:TransactionDelegate$open fun syncStateAndValidate: TransactionEditData?</ID>
     <ID>LongMethod:TransactionDelegate.kt:TransactionDelegate$override fun onItemSelected</ID>
-    <ID>LongMethod:TransactionEditViewModel.kt:TransactionEditViewModel$@SuppressLint("MissingPermission") suspend fun save: Result&lt;TransactionEditResult&gt;</ID>
+    <ID>LongMethod:TransactionEditViewModel.kt:TransactionEditViewModel$@SuppressLint("MissingPermission") private suspend fun save: Result&lt;TransactionEditResult&gt;</ID>
     <ID>LongMethod:TransactionList.kt:fun transactionMenu</ID>
     <ID>LongMethod:TransactionPagingSource.kt:TransactionPagingSource$@SuppressLint("InlinedApi") override suspend fun load: LoadResult&lt;Int, Transaction2&gt;</ID>
     <ID>LongMethod:TransactionTest.kt:BaseTransactionTest$@Test fun testUpdateSplitAddTransferPart</ID>
