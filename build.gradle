@@ -83,6 +83,24 @@ subprojects {
     }
 }
 
+// Everything a branch has to pass before it goes into develop.
+// Run: ./gradlew --continue fullCheck
+tasks.register('fullCheck') {
+    group = 'verification'
+    description = 'Builds the app, runs all unit and architecture tests, detekt, ktlint and lint.'
+    dependsOn ':ui_next:assembleDebug', ':ui_next:checkModuleGraph', ':myExpenses:lintExternDebug'
+    // Only names: creating every task would fail on the Compose preview tasks of ui_next
+    dependsOn provider {
+        subprojects.collectMany { module ->
+            module.tasks.names.findAll {
+                it in [
+                    'assembleInternDebug', 'testDebugUnitTest', 'testExternDebugUnitTest', 'detekt', 'ktlintCheck'
+                ] || (it == 'test' && module.pluginManager.hasPlugin('org.jetbrains.kotlin.jvm'))
+            }.collect { "${module.path}:$it" }
+        }
+    }
+}
+
 // Git hooks in config/git-hooks: ktlint on staged files before commit, detekt before push.
 // Every Gradle run (including the Android Studio sync) points git at them, unless a hooks path is
 // already configured (repository or global) or the build runs on CI. Skip once with --no-verify.
