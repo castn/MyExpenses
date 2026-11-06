@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>MaxLineLength:CategorySuggestionSection.kt:fun</ID>
+    <ID>MaxLineLength:CategorySuggestionSection.kt:messages = listOf(pluralStringResource(R.plurals.next_category_backlog_text, current.uncategorized, current.certain, current.uncategorized))</ID>
+    <ID>MaxLineLength:CategorySuggestionsViewModel.kt:CategorySuggestionsViewModel$?.</ID>
+    <ID>MaxLineLength:CategorySuggestionsViewModel.kt:CategorySuggestionsViewModel$analysis?.plan?.suggestions?.mapNotNull { (id, suggestion) -&gt; analysis.paths[suggestion.categoryId]?.let { id to it } }</ID>
+    <ID>MaxLineLength:CategorySuggestionsViewModel.kt:CategorySuggestionsViewModel$if</ID>
+    <ID>MaxLineLength:CategorySuggestionsViewModelTest.kt:CategorySuggestionsViewModelTest$assertEquals(CategorySuggestionsViewModel.Backlog(certain = 2, uncategorized = 2), viewModel.backlog.first { it != null })</ID>
+    <ID>MaxLineLength:CategorySuggestionsViewModelTest.kt:CategorySuggestionsViewModelTest$listOf(1L, 2L).map { LedgerTransaction(it, today, amount = -2000, accountId = 1, payeeId = 5, payeeName = "REWE") }</ID>
+    <ID>MaxLineLength:CategorySuggestionsViewModelTest.kt:CategorySuggestionsViewModelTest$val repository = CategoryRepository(FakeLedgerSource(ledger = ledger, catalog = catalog), store, writing, backgroundScope)</ID>
+    <ID>TooManyFunctions:CategorySuggestionsViewModel.kt:CategorySuggestionsViewModel : ViewModel</ID>
+  </CurrentIssues>
+</SmellBaseline>

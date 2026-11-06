@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CyclomaticComplexMethod:LegacyBudgets.kt:LegacyBudgets$fun pots: List&lt;Pot&gt;</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:BudgetAnalyzer.kt:BudgetAnalyzer$val (ledger, pots, categories, contracts, salaries, meanings, today, offset, receipts) = input</ID>
+    <ID>MagicNumber:LegacyBudgets.kt:LegacyBudgets$12</ID>
+    <ID>MagicNumber:LegacyBudgets.kt:LegacyBudgets$365</ID>
+    <ID>MagicNumber:LegacyBudgets.kt:LegacyBudgets$52</ID>
+    <ID>MagicNumber:PotSuggestions.kt:PotSuggestions$20</ID>
+    <ID>MatchingDeclarationName:PotTemplates.kt:PotTemplate</ID>
+    <ID>MaxLineLength:BudgetAnalyzer.kt:BudgetAnalyzer$CountedPart(transaction, -part.homeAmount, pot, hasMeaning(transaction, TagMeaning.ONE_OFF), transaction.id in paymentRules)</ID>
+    <ID>MaxLineLength:BudgetAnalyzer.kt:BudgetAnalyzer$PotKind.GOAL</ID>
+    <ID>MaxLineLength:BudgetAnalyzer.kt:BudgetAnalyzer$PotKind.GOAL -&gt; goal(pot, parts, period, ledger, contractRules.filter { (_, ruleId) -&gt; ruleId in pot.reserveRuleIds }.map { it.first })</ID>
+    <ID>MaxLineLength:BudgetAnalyzer.kt:BudgetAnalyzer$PotKind.ITEM_GROUP -&gt; itemGroup(pot, ledger, receipts, periods, index) { hasMeaning(it, TagMeaning.REIMBURSED) }</ID>
+    <ID>MaxLineLength:BudgetAnalyzer.kt:BudgetAnalyzer$PotKind.RUNNING -&gt; running(pot, parts, period, periods.subList(0, index), upcoming, today.takeIf { isCurrent })</ID>
+    <ID>MaxLineLength:BudgetAnalyzer.kt:BudgetAnalyzer$contractRules.filter { (contract, ruleId) -&gt; ruleId in pot.contractRuleIds &amp;&amp; contract.isActive &amp;&amp; !contract.isCancelled }</ID>
+    <ID>MaxLineLength:BudgetAnalyzer.kt:BudgetAnalyzer$free = balance.available - statuses.zip(planned).sumOf { (status, plannedInPeriod) -&gt; reserved(status, plannedInPeriod) }</ID>
+    <ID>MaxLineLength:BudgetAnalyzer.kt:BudgetAnalyzer$val months = max(0L, ChronoUnit.MONTHS.between(start.withDayOfMonth(1), period.end.minusDays(1).withDayOfMonth(1)) + 1)</ID>
+    <ID>MaxLineLength:BudgetAnalyzer.kt:BudgetAnalyzer$val months = max(1L, ChronoUnit.MONTHS.between(period.start.withDayOfMonth(1), pot.end.withDayOfMonth(1)) + 1)</ID>
+    <ID>MaxLineLength:BudgetAnalyzer.kt:BudgetAnalyzer$val paymentRules = contractRules.flatMap { (contract, ruleId) -&gt; contract.transactions.map { it.id to ruleId } }.toMap()</ID>
+    <ID>MaxLineLength:BudgetAnalyzer.kt:BudgetAnalyzer$val reservePayments = reserves.flatMap { it.transactions }.filter { inRange(it.date) }.associate { it.id to it.amount }</ID>
+    <ID>MaxLineLength:BudgetAnalyzerTest.kt:BudgetAnalyzerTest$ContractTransaction(id = firstId + i, date = date, amount = amount, accountId = giro, categoryPath = category?.path)</ID>
+    <ID>MaxLineLength:BudgetAnalyzerTest.kt:BudgetAnalyzerTest$private val meanings = mapOf(oneOffTag to TagMeaning.ONE_OFF, reimbursedTag to TagMeaning.REIMBURSED, tripTag to TagMeaning.TRIP)</ID>
+    <ID>MaxLineLength:BudgetAnalyzerTest.kt:BudgetAnalyzerTest$start = LocalDate.of(2026, 9, 15)</ID>
+    <ID>MaxLineLength:BudgetAnalyzerTest.kt:BudgetAnalyzerTest$val bauspar = contract("bauspar", -5000, LocalDate.of(2026, 9, 1), LocalDate.of(2026, 10, 1), firstId = 70, reserve = true)</ID>
+    <ID>MaxLineLength:BudgetAnalyzerTest.kt:BudgetAnalyzerTest$val pot = Pot(name = "Süßes", kind = PotKind.ITEM_GROUP, itemGroups = setOf("sweets_snacks"), maxSharePercent = 10)</ID>
+    <ID>MaxLineLength:BudgetAnalyzerTest.kt:BudgetAnalyzerTest$val rent = contract("rent", -100000, LocalDate.of(2026, 9, 3), LocalDate.of(2026, 10, 3), firstId = 10, category = null)</ID>
+    <ID>MaxLineLength:BudgetRepository.kt:BudgetRepository$combine</ID>
+    <ID>MaxLineLength:BudgetRepository.kt:BudgetRepository$else</ID>
+    <ID>MaxLineLength:LegacyBudgets.kt:LegacyBudgets$fun</ID>
+    <ID>MaxLineLength:LegacyBudgetsTest.kt:LegacyBudgetsTest$LegacyBudget("Italien", "EUR", LegacyPeriod.NONE, start, end, total = 150000, categoryIds = setOf(leisure.id))</ID>
+    <ID>MaxLineLength:LegacyBudgetsTest.kt:LegacyBudgetsTest$val filtered = pots(LegacyBudget("Hund", "EUR", LegacyPeriod.YEAR, null, null, total = 60000, tagIds = setOf(7))).single()</ID>
+    <ID>MaxLineLength:Pot.kt:Pot$(categoryIds.isNotEmpty() || tagIds.isNotEmpty() || payeeIds.isNotEmpty() || contractRuleIds.isNotEmpty())</ID>
+    <ID>MaxLineLength:PotMatcherTest.kt:PotMatcherTest$val sweets = Pot(name = "Süßes", kind = PotKind.ITEM_GROUP, categoryIds = setOf(food.id), itemGroups = setOf("sweets_snacks"))</ID>
+    <ID>MaxLineLength:PotSuggestionsTest.kt:PotSuggestionsTest$private</ID>
+    <ID>MaxLineLength:PotSuggestionsTest.kt:PotSuggestionsTest$private val bars = CategoryInfo(7, "Ausgehen (Bar, Club)", "Freizeit &amp; Hobbys &gt; Ausgehen (Bar, Club)", mainId = 5, parentId = 5)</ID>
+    <ID>MaxLineLength:PotSuggestionsTest.kt:PotSuggestionsTest$private val gym = CategoryInfo(6, "Fitnessstudio &amp; Sport", "Freizeit &amp; Hobbys &gt; Fitnessstudio &amp; Sport", mainId = 5, parentId = 5)</ID>
+    <ID>MaxLineLength:PotSuggestionsTest.kt:PotSuggestionsTest$rule = ContractRule(ruleId, ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, interval = ContractInterval.MONTHLY)</ID>
+    <ID>MaxLineLength:PotSuggestionsTest.kt:PotSuggestionsTest$transactions = listOf(ContractTransaction(100, LocalDate.of(2026, 10, 1), -3500, 1, categoryPath = category.path))</ID>
+    <ID>MaxLineLength:PotSuggestionsTest.kt:PotSuggestionsTest$val restaurants = Pot(id = "r", name = "Restaurants", kind = PotKind.RUNNING, categoryIds = setOf(restaurant.id))</ID>
+    <ID>MaxLineLength:PotTemplates.kt:PotTemplate$DAILY : PotTemplate</ID>
+    <ID>MaxLineLength:PotTemplates.kt:PotTemplate$EDUCATION : PotTemplate</ID>
+    <ID>MaxLineLength:PotTemplates.kt:PotTemplate$GOING_OUT : PotTemplate</ID>
+    <ID>MaxLineLength:PotTemplates.kt:PotTemplate$HEALTH : PotTemplate</ID>
+    <ID>MaxLineLength:PotTemplates.kt:PotTemplate$HOME : PotTemplate</ID>
+    <ID>MaxLineLength:PotTemplates.kt:PotTemplate$LEISURE : PotTemplate</ID>
+    <ID>MaxLineLength:PotTemplates.kt:PotTemplate$MOBILITY : PotTemplate</ID>
+    <ID>MaxLineLength:PotTemplates.kt:PotTemplate$RESTAURANTS : PotTemplate</ID>
+    <ID>MaxLineLength:PotTemplates.kt:PotTemplate$SHOPPING : PotTemplate</ID>
+    <ID>MaxLineLength:PotTemplates.kt:PotTemplate$generateSequence(category.parentId?.let(byId::get)) { it.parentId?.let(byId::get) }.any { it.id in matching }</ID>
+  </CurrentIssues>
+</SmellBaseline>

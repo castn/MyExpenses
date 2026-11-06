@@ -1,0 +1,94 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CyclomaticComplexMethod:Rows.kt:@Composable fun MeterRow</ID>
+    <ID>LongMethod:Onboarding.kt:@Composable fun IntroPage</ID>
+    <ID>LongMethod:Rows.kt:@Composable fun MeterRow</ID>
+    <ID>LongMethod:Showcase.kt:@Preview(name = "Light", showBackground = true, heightDp = 2600) @Preview(name = "Dark", showBackground = true, heightDp = 2600, uiMode = Configuration.UI_MODE_NIGHT_YES) @Composable private fun Showcase</ID>
+    <ID>LongMethod:Tables.kt:@Composable fun ReceiptTable</ID>
+    <ID>MagicNumber:Contrast.kt:Contrast.Companion$0.5f</ID>
+    <ID>MagicNumber:Feedback.kt:600</ID>
+    <ID>MagicNumber:Placeholders.kt:0.6f</ID>
+    <ID>MagicNumber:Scaffolds.kt:99</ID>
+    <ID>MagicNumber:Showcase.kt:0.7f</ID>
+    <ID>MagicNumber:Showcase.kt:12</ID>
+    <ID>MagicNumber:Showcase.kt:2026</ID>
+    <ID>MagicNumber:Showcase.kt:20f</ID>
+    <ID>MagicNumber:Showcase.kt:24</ID>
+    <ID>MagicNumber:Showcase.kt:280f</ID>
+    <ID>MagicNumber:Showcase.kt:3</ID>
+    <ID>MagicNumber:Showcase.kt:400f</ID>
+    <ID>MagicNumber:Showcase.kt:440f</ID>
+    <ID>MagicNumber:Showcase.kt:460f</ID>
+    <ID>MagicNumber:Showcase.kt:5</ID>
+    <ID>MagicNumber:Showcase.kt:500f</ID>
+    <ID>MagicNumber:Showcase.kt:80f</ID>
+    <ID>MatchingDeclarationName:Fab.kt:FabMenuItem</ID>
+    <ID>MatchingDeclarationName:IconPicker.kt:IconSection</ID>
+    <ID>MatchingDeclarationName:Illustration.kt:IllustrationSlot</ID>
+    <ID>MatchingDeclarationName:Labels.kt:BadgeStyle</ID>
+    <ID>MatchingDeclarationName:Photos.kt:PhotoMark</ID>
+    <ID>MatchingDeclarationName:Tables.kt:ReceiptLine</ID>
+    <ID>MaxLineLength:Cards.kt:Surface(onClick = onClick, modifier = modifier.fillMaxWidth(), shape = Shapes.card, color = color, content = body)</ID>
+    <ID>MaxLineLength:Dialogs.kt:Icon(Icons.Default.Close, contentDescription = dismissLabel ?: stringResource(android.R.string.cancel))</ID>
+    <ID>MaxLineLength:Dialogs.kt:Text(it, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(start = 8.dp))</ID>
+    <ID>MaxLineLength:Dialogs.kt:TextButton</ID>
+    <ID>MaxLineLength:Feedback.kt:BannerStyle.Question -&gt; MaterialTheme.colorScheme.tertiaryContainer to MaterialTheme.colorScheme.onTertiaryContainer</ID>
+    <ID>MaxLineLength:Feedback.kt:Icon(Icons.Default.Close, contentDescription = dismissLabel, tint = MaterialTheme.colorScheme.onSurfaceVariant)</ID>
+    <ID>MaxLineLength:Feedback.kt:contentPadding = if (confirmIcon != null) ButtonDefaults.ButtonWithIconContentPadding else ButtonDefaults.ContentPadding</ID>
+    <ID>MaxLineLength:Fields.kt:capitalization = if (keyboardType == KeyboardType.Text) KeyboardCapitalization.Sentences else KeyboardCapitalization.None</ID>
+    <ID>MaxLineLength:IconPicker.kt:IconChoice(isSelected = key == selected, label = label(key), onClick = { onSelect(key) }) { icon(key) }</ID>
+    <ID>MaxLineLength:IconPicker.kt:color = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh</ID>
+    <ID>MaxLineLength:IconPicker.kt:modifier = if (isSelected) Modifier.border(2.dp, MaterialTheme.colorScheme.primary, CircleShape) else Modifier</ID>
+    <ID>MaxLineLength:Labels.kt:{ Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }</ID>
+    <ID>MaxLineLength:Onboarding.kt:IconTile</ID>
+    <ID>MaxLineLength:Onboarding.kt:Text(text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)</ID>
+    <ID>MaxLineLength:Onboarding.kt:Text(text, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)</ID>
+    <ID>MaxLineLength:Onboarding.kt:color = if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerLow</ID>
+    <ID>MaxLineLength:Onboarding.kt:tint = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondaryContainer</ID>
+    <ID>MaxLineLength:Photos.kt:val shift = if (windowPx == null) 0f else focus?.let { (it.center.y * scale - windowPx / 2).coerceIn(0f, photoHeightPx - windowPx) } ?: 0f</ID>
+    <ID>MaxLineLength:Rows.kt:fun</ID>
+    <ID>MaxLineLength:Rows.kt:if</ID>
+    <ID>MaxLineLength:Scaffolds.kt:Icon(Icons.Default.MoreVert, contentDescription = contentDescription, tint = MaterialTheme.colorScheme.onSurfaceVariant)</ID>
+    <ID>MaxLineLength:Search.kt:Icon(Icons.Default.ArrowDropDown, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize))</ID>
+    <ID>MaxLineLength:Search.kt:if</ID>
+    <ID>MaxLineLength:Sheets.kt:.</ID>
+    <ID>MaxLineLength:Sheets.kt:Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)</ID>
+    <ID>MaxLineLength:Sheets.kt:Icon(icon(), contentDescription = null, tint = tint ?: MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))</ID>
+    <ID>MaxLineLength:Sheets.kt:actions = { ConfirmActions(onConfirm, confirmEnabled) { TextButton(onClick = onDismiss) { Text(stringResource(android.R.string.cancel)) } } }</ID>
+    <ID>MaxLineLength:Sheets.kt:if</ID>
+    <ID>MaxLineLength:Showcase.kt:@Preview(name = "Multi choice sheet, dark", showBackground = true, heightDp = 720, uiMode = Configuration.UI_MODE_NIGHT_YES)</ID>
+    <ID>MaxLineLength:Showcase.kt:@Preview(name = "Side sheet, wide, dark", showBackground = true, widthDp = 840, heightDp = 480, uiMode = Configuration.UI_MODE_NIGHT_YES)</ID>
+    <ID>MaxLineLength:Showcase.kt:BadgedTopBarAction(Icons.Default.Search, contentDescription = "Calm", count = 12, onClick = {}, isAlert = false)</ID>
+    <ID>MaxLineLength:Showcase.kt:ChoiceCard(Icons.Outlined.Palette, "Other choice", "Another way", selected = false, onClick = {}, modifier = Modifier.padding(top = 8.dp))</ID>
+    <ID>MaxLineLength:Showcase.kt:ChoiceChips(options = listOf("Dairy", "Drinks", "Pantry"), selected = "Drinks", label = { it }, onSelect = {})</ID>
+    <ID>MaxLineLength:Showcase.kt:ChoiceOption(Icons.Outlined.Info, "Choice option", "Picked inside the card", selected = true, onClick = {})</ID>
+    <ID>MaxLineLength:Showcase.kt:ChoiceOption(Icons.Outlined.Workspaces, "Other option", "Also inside", selected = false, onClick = {})</ID>
+    <ID>MaxLineLength:Showcase.kt:Column</ID>
+    <ID>MaxLineLength:Showcase.kt:DateDialog(initial = LocalDate.of(2026, 12, 24), onConfirm = {}, onDismiss = {}, onClear = {}, clearLabel = "No date")</ID>
+    <ID>MaxLineLength:Showcase.kt:EditableItemRow("Editable item", "2,29 €", removeLabel = "Remove", onClick = {}, onRemove = {}, isFirst = true)</ID>
+    <ID>MaxLineLength:Showcase.kt:EditableItemRow("Item with badge", "0,99 €", removeLabel = "Remove", onClick = {}, onRemove = {}, badge = "Group")</ID>
+    <ID>MaxLineLength:Showcase.kt:EditableItemRow("Item with details", "1,77 €", removeLabel = "Remove", onClick = {}, onRemove = {}, supportingText = "3 × 0,59 €")</ID>
+    <ID>MaxLineLength:Showcase.kt:EditableRow("Editable icon", onClick = {}) { IconTile { Icon(Icons.Outlined.Palette, contentDescription = null) } }</ID>
+    <ID>MaxLineLength:Showcase.kt:EmptyState("Nothing here", hint = "Shown instead of an empty list", modifier = Modifier.size(320.dp, 160.dp))</ID>
+    <ID>MaxLineLength:Showcase.kt:FormTextField("Amount", value = "4x", onValueChange = {}, isError = true, supportingText = "Not an amount", trailing = { Text("€") })</ID>
+    <ID>MaxLineLength:Showcase.kt:IconNavigationRow(Icons.Outlined.Palette, "Icon navigation", onClick = {}, supportingText = "Lists what can be found there")</ID>
+    <ID>MaxLineLength:Showcase.kt:IconTile(Modifier.padding(start = 8.dp), isLarge = true) { Icon(Icons.Default.Search, contentDescription = null) }</ID>
+    <ID>MaxLineLength:Showcase.kt:KeyFigures(listOf(KeyFigure("Earned", "32,400 €"), KeyFigure("Spent", "29,100 €"), KeyFigure("Left", "3,300 €")))</ID>
+    <ID>MaxLineLength:Showcase.kt:LabelChip(text = null, placeholder = "Category", onClick = {}, modifier = Modifier.padding(start = 8.dp))</ID>
+    <ID>MaxLineLength:Showcase.kt:MeterRow("Meter with own icon", "120 €", used = 0.4f, leadingIcon = { Icon(Icons.Outlined.Folder, contentDescription = null) })</ID>
+    <ID>MaxLineLength:Showcase.kt:OptionRow("This month", selected = true, onClick = {}, isMultiple = false, supportingText = "1 – 31 October")</ID>
+    <ID>MaxLineLength:Showcase.kt:PhotoMark(Rect(20f, 460f, 280f, 500f), MaterialTheme.colorScheme.primary.copy(alpha = 0.3f), filled = true)</ID>
+    <ID>MaxLineLength:Showcase.kt:RadioRow("Radio", selected = true, onClick = {}, supportingText = "Supporting text", note = "Note", value = "12,00 €")</ID>
+    <ID>MaxLineLength:Showcase.kt:StepIndicator(count = 4, current = 1, description = "Step 2 of 4", modifier = Modifier.padding(Spacing.screen))</ID>
+    <ID>MaxLineLength:Showcase.kt:SwitchRow("Consent", checked = false, onCheckedChange = {}, supportingText = "Off until agreed", isFirst = true)</ID>
+    <ID>MaxLineLength:Showcase.kt:TextBadge("With icon", Modifier.padding(start = 8.dp), style = BadgeStyle.Outlined, icon = Icons.Outlined.Workspaces)</ID>
+    <ID>MaxLineLength:Showcase.kt:trailing = { if (it == "Own category") IconButton(onClick = {}) { Icon(Icons.Default.Edit, contentDescription = null) } }</ID>
+    <ID>TooManyFunctions:Cards.kt:org.totschnig.myexpenses.designsystem.Cards.kt</ID>
+    <ID>TooManyFunctions:Rows.kt:org.totschnig.myexpenses.designsystem.Rows.kt</ID>
+    <ID>TooManyFunctions:Sheets.kt:org.totschnig.myexpenses.designsystem.Sheets.kt</ID>
+    <ID>TooManyFunctions:Showcase.kt:org.totschnig.myexpenses.designsystem.Showcase.kt</ID>
+    <ID>TopLevelPropertyNaming:Rows.kt:/** Of rows that another setting turns off */ private const val DisabledAlpha = 0.38f</ID>
+  </CurrentIssues>
+</SmellBaseline>

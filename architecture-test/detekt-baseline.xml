@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>MaxLineLength:ModuleRulesTest.kt:ModuleRulesTest$.</ID>
+    <ID>MaxLineLength:ModuleRulesTest.kt:ModuleRulesTest$/** Rules mod-charts-pure, mod-ds-pure, mod-ocr-jvm, mod-own-packages and mod-shell-boundary of ui_next/ARCHITECTURE.md. */</ID>
+    <ID>MaxLineLength:UiNextRulesTest.kt:UiNextRulesTest$.</ID>
+    <ID>MaxLineLength:UiNextRulesTest.kt:UiNextRulesTest$/** Rules analysis-data-class, screen-no-alert-dialog, vm-constructor, vm-entry-points and vm-io-param of ui_next/ARCHITECTURE.md. */</ID>
+  </CurrentIssues>
+</SmellBaseline>

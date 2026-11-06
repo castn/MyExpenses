@@ -1,0 +1,87 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComplexCondition:AnalysisScreen.kt:analysis.isEmpty &amp;&amp; !hasSpending &amp;&amp; !hasMoneyFlow &amp;&amp; gaps.isEmpty()</ID>
+    <ID>CyclomaticComplexMethod:MoneyFlowChart.kt:MoneyFlowChart.Companion$fun of: MoneyFlowChart</ID>
+    <ID>LongMethod:CategorySpendingScreen.kt:@Composable fun CategorySpendingScreen</ID>
+    <ID>LongMethod:MoneyFlowScreen.kt:@Composable fun MoneyFlowScreen</ID>
+    <ID>LongMethod:TagEvaluationScreen.kt:@Composable fun TagEvaluationScreen</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:10</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:11</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:12</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:14</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:184000</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:2025</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:2026</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:3</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:31200</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:4</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:42050</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:5</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:500</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:6</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:8</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:96</ID>
+    <ID>MagicNumber:AnalysisScreen.kt:96000</ID>
+    <ID>MagicNumber:CategorySpendingScreen.kt:10</ID>
+    <ID>MagicNumber:CategorySpendingScreen.kt:100</ID>
+    <ID>MagicNumber:CategorySpendingScreen.kt:12</ID>
+    <ID>MagicNumber:CategorySpendingScreen.kt:2026</ID>
+    <ID>MagicNumber:CategorySpendingScreen.kt:3</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:10</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:11</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:12</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:120_000</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:12L</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:13</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:140_000</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:150_000</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:186_000</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:18_600</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:1_080_000</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:1_140_000</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:20</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:2026</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:210_000</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:24</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:240_000</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:260_000</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:3</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:360</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:3_000_000</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:47_400</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:5</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:504_000</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:6</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:60_000</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:70_000</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:720</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:8</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:9</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:90_000</ID>
+    <ID>MagicNumber:MoneyFlowScreen.kt:94_000</ID>
+    <ID>MagicNumber:ReadinessBox.kt:180</ID>
+    <ID>MagicNumber:ReadinessBox.kt:41</ID>
+    <ID>MatchingDeclarationName:AnalysisFlow.kt:AnalysisKey : NavKey</ID>
+    <ID>MaxLineLength:AnalysisFlow.kt:Transactions</ID>
+    <ID>MaxLineLength:AnalysisFlow.kt:private</ID>
+    <ID>MaxLineLength:AnalysisFlow.kt:val moneyFlow = shownOrLeave(content.moneyFlow, isLoaded = content.moneyFlowState.isLoaded, onGone = leave) ?: return</ID>
+    <ID>MaxLineLength:CategorySpendingScreen.kt:CategoryDetailScreen(analysis, analysis.categories[1], CurrencyInfo.Preview, onBack = {}, onShowTransactions = {})</ID>
+    <ID>MaxLineLength:CategorySpendingViewModel.kt:CategorySpendingViewModel$combine</ID>
+    <ID>MaxLineLength:CategorySpendingViewModel.kt:CategorySpendingViewModel$it</ID>
+    <ID>MaxLineLength:MoneyFlowChart.kt:MoneyFlowChart.Companion$.</ID>
+    <ID>MaxLineLength:MoneyFlowChart.kt:MoneyFlowChart.Companion$val node = node(labels.left, left, 2, ChartColor.Neutral, FlowItem(labels.left, left, null, emptyList()))</ID>
+    <ID>MaxLineLength:MoneyFlowScreen.kt:group(11, "Lebensmittel", 504_000, listOf(actor("REWE", 260_000), actor("Aldi", 150_000), actor(null, 94_000, 9, 5)))</ID>
+    <ID>MaxLineLength:MoneyFlowScreen.kt:group(12, "Essen gehen", 186_000, listOf(actor("McDonald's", 18_600, 20), actor("Pizzeria", 120_000), actor(null, 47_400, 6, 3)))</ID>
+    <ID>MaxLineLength:MoneyFlowScreen.kt:item.count == null || item.transactionIds.isEmpty() -&gt; InfoRow(item.title, amount(item.amount), isFirst = true)</ID>
+    <ID>MaxLineLength:ReadinessBox.kt:DataGap.FewReceipts(scanned = 2, supermarketPurchases = 14, unscanned = listOf(1, 2), missingRecent = 2, missingUsual = 6)</ID>
+    <ID>MaxLineLength:ReadinessBox.kt:is DataGap.Uncategorized -&gt; pluralStringResource(R.plurals.next_readiness_uncategorized, gap.count, gap.count, gap.total)</ID>
+    <ID>MaxLineLength:ReadinessBox.kt:is DataGap.VagueCategories -&gt; pluralStringResource(R.plurals.next_readiness_vague, gap.count, gap.count, gap.total)</ID>
+    <ID>MaxLineLength:TagAnalysisViewModel.kt:TagAnalysisViewModel$combine</ID>
+    <ID>MaxLineLength:TagEvaluationScreen.kt:TagEvaluationScreen(previewAnalysis().themes.first(), CurrencyInfo.Preview, onBack = {}, onShowTransactions = {})</ID>
+    <ID>MaxLineLength:TagEvaluationScreen.kt:description = "${month.month.getDisplayName(TextStyle.FULL_STANDALONE, locale)} ${month.year}"</ID>
+    <ID>MaxLineLength:TagEvaluationScreen.kt:pluralStringResource(R.plurals.next_analysis_days, evaluation.days.toInt(), evaluation.days.toInt())</ID>
+    <ID>TooManyFunctions:CategorySpendingScreen.kt:org.totschnig.myexpenses.next.feature.analysis.CategorySpendingScreen.kt</ID>
+  </CurrentIssues>
+</SmellBaseline>

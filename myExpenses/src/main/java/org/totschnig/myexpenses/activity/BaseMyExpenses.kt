@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -78,6 +79,7 @@ import org.totschnig.myexpenses.feature.Feature
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.model.AccountGrouping
 import org.totschnig.myexpenses.model.ContribFeature
+import org.totschnig.myexpenses.model.ContribPayload
 import org.totschnig.myexpenses.model.CrStatus
 import org.totschnig.myexpenses.model.ExportFormat
 import org.totschnig.myexpenses.model.KEY_ACCOUNT_GROUPING
@@ -150,7 +152,6 @@ import org.totschnig.myexpenses.viewmodel.data.HeaderRow
 import org.totschnig.myexpenses.viewmodel.data.PageAccount
 import org.totschnig.myexpenses.viewmodel.data.Transaction2
 import timber.log.Timber
-import java.io.Serializable
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -432,7 +433,7 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
 
     private fun toggleWebUI(enabled: Boolean) {
         if (enabled) {
-            contribFeatureRequested(ContribFeature.WEB_UI, false)
+            contribFeatureRequested(ContribFeature.WEB_UI)
         } else {
             baseViewModel.toggleWebUi(false)
         }
@@ -545,7 +546,7 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
                 ?.let {
                     contribFeatureRequested(
                         ContribFeature.BANKING,
-                        Triple(it.bankId, it.id, it.type.id)
+                        ContribPayload.Banking(it.bankId!!, it.id, it.type.id)
                     )
                 }
 
@@ -586,7 +587,7 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
                 .onSuccess {
                     contribFeatureRequested(
                         ContribFeature.PRINT,
-                        ExportViewModel.PRINT_TRANSACTION_LIST
+                        ContribPayload.Print(ExportViewModel.PRINT_TRANSACTION_LIST)
                     )
                 }.onFailure {
                     showDismissibleSnackBar(it.safeMessage)
@@ -848,7 +849,7 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
             .onSuccess {
                 contribFeatureRequested(
                     ContribFeature.PRINT,
-                    ExportViewModel.PRINT_BALANCE_SHEET
+                    ContribPayload.Print(ExportViewModel.PRINT_BALANCE_SHEET)
                 )
             }.onFailure {
                 showDismissibleSnackBar(it.safeMessage)
@@ -884,14 +885,15 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
         }
     }
 
-    override fun contribFeatureCalled(feature: ContribFeature, tag: Serializable?) {
+    override fun contribFeatureCalled(feature: ContribFeature, tag: ContribPayload?) {
         when (feature) {
             ContribFeature.DISTRIBUTION -> {
                 currentAccount?.let {
                     recordUsage(feature)
                     startActivity(Intent(this, DistributionActivity::class.java).apply {
                         forwardCurrentConfiguration(it)
-                        putExtra(DistributionViewModelBase.KEY_GROUPING_INFO, tag)
+                        val groupingInfo = (tag as? ContribPayload.Distribution)?.groupingInfo
+                        putExtra(DistributionViewModelBase.KEY_GROUPING_INFO, groupingInfo as Parcelable?)
                     })
                 }
             }
@@ -906,14 +908,15 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
             }
 
             ContribFeature.SPLIT_TRANSACTION -> {
-                if (tag != null) {
+                val rowIds = (tag as? ContribPayload.GroupToSplit)?.rowIds
+                if (rowIds != null) {
                     showConfirmationDialog(
                         tag = "SPLIT_TRANSACTION",
                         message = getString(R.string.warning_split_transactions),
                         commandPositive = R.id.SPLIT_TRANSACTION_COMMAND,
                         commandPositiveLabel = R.string.menu_split_transaction
                     ) {
-                        putLongArray(KEY_ROW_IDS, tag as LongArray?)
+                        putLongArray(KEY_ROW_IDS, rowIds)
                     }
                 } else {
                     createRowDo(TYPE_SPLIT, false)
@@ -925,23 +928,24 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
                     showProgressSnackBar(
                         getString(R.string.progress_dialog_printing, "PDF")
                     )
-                    if (tag == ExportViewModel.PRINT_TRANSACTION_LIST) {
+                    val printType = (tag as? ContribPayload.Print)?.printType
+                    if (printType == ExportViewModel.PRINT_TRANSACTION_LIST) {
                         viewModel.print(
                             it.toPageAccount(this),
                             currentFilter.whereFilter.value
                         )
-                    } else if (tag == ExportViewModel.PRINT_BALANCE_SHEET) {
+                    } else if (printType == ExportViewModel.PRINT_BALANCE_SHEET) {
                         viewModel.printBalanceSheet()
                     }
                 }
             }
 
             ContribFeature.BUDGET -> {
-                if (tag != null) {
-                    val (budgetId, headerId) = tag as Pair<Long, Int>
+                val budgetPayload = tag as? ContribPayload.Budget
+                if (budgetPayload != null) {
                     startActivity(Intent(this, BudgetActivity::class.java).apply {
-                        putExtra(KEY_ROWID, budgetId)
-                        fillIntentForGroupingFromTag(headerId)
+                        putExtra(KEY_ROWID, budgetPayload.budgetId)
+                        fillIntentForGroupingFromTag(budgetPayload.headerId)
                     })
                 } else {
                     recordUsage(feature)
@@ -951,13 +955,14 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
             }
 
             ContribFeature.BANKING -> {
-                val (bankId, accountId, accountTypeId) = tag as Triple<Long, Long, Long>
-                bankingFeature.startSyncFragment(
-                    bankId,
-                    accountId,
-                    accountTypeId,
-                    supportFragmentManager
-                )
+                (tag as? ContribPayload.Banking)?.let { (bankId, accountId, accountTypeId) ->
+                    bankingFeature.startSyncFragment(
+                        bankId,
+                        accountId,
+                        accountTypeId,
+                        supportFragmentManager
+                    )
+                }
             }
 
             ContribFeature.OCR -> if (featureViewModel.isFeatureAvailable(this, Feature.OCR)) {
@@ -1212,7 +1217,7 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
             if (checkSealed(itemIds)) {
                 contribFeatureRequested(
                     ContribFeature.SPLIT_TRANSACTION,
-                    itemIds.toLongArray()
+                    ContribPayload.GroupToSplit(itemIds.toLongArray())
                 )
             }
         }
@@ -1709,7 +1714,7 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
                         futureCriterion = futureCriterion,
                         expansionHandler = viewModel.expansionHandlerForTransactionGroups(account),
                         onBudgetClick = { budgetId, headerId ->
-                            contribFeatureRequested(ContribFeature.BUDGET, budgetId to headerId)
+                            contribFeatureRequested(ContribFeature.BUDGET, ContribPayload.Budget(budgetId, headerId))
                         },
                         showSumDetails = viewModel.showSumDetails.collectAsState(initial = true).value,
                         scrollToCurrentDate = viewModel.scrollToCurrentDate.getValue(account.id),
@@ -1804,7 +1809,7 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
                 if (row.mappedCategories) {
                     contribFeatureRequested(
                         ContribFeature.DISTRIBUTION,
-                        GroupingInfo(account.grouping, row.year, row.second)
+                        ContribPayload.Distribution(GroupingInfo(account.grouping, row.year, row.second))
                     )
                 } else {
                     showSnackBar(R.string.no_mapped_transactions)

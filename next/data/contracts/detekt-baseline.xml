@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CyclomaticComplexMethod:ContractNews.kt:fun ContractAnalysis.detectNews: NewsDetection</ID>
+    <ID>MagicNumber:Contract.kt:10</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.BIMONTHLY$3</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.BIMONTHLY$55</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.BIMONTHLY$6</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.BIMONTHLY$67</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.BIWEEKLY$13</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.BIWEEKLY$16</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.BIWEEKLY$26</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.BIWEEKLY$3</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.HALF_YEARLY$170</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.HALF_YEARLY$195</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.HALF_YEARLY$6</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.MONTHLY$12</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.MONTHLY$26</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.MONTHLY$3</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.MONTHLY$35</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.QUARTERLY$100</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.QUARTERLY$3</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.QUARTERLY$4</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.QUARTERLY$82</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.WEEKLY$4</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.WEEKLY$52</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.WEEKLY$6</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.WEEKLY$8</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.YEARLY$345</ID>
+    <ID>MagicNumber:Contract.kt:ContractInterval.YEARLY$385</ID>
+    <ID>MagicNumber:ContractNews.kt:3</ID>
+    <ID>MatchingDeclarationName:Salary.kt:SalaryChoice</ID>
+    <ID>MaxLineLength:AutomaticDecisionsTest.kt:AutomaticDecisionsTest$val first = automaticDecisions(ContractSettings(rulesMigrated = true), emptyList(), analysis(emptyList()), today)</ID>
+    <ID>MaxLineLength:ContractAnalysisTest.kt:ContractAnalysisTest$ContractTransaction(id = 900, date = today.minusDays(40), amount = -23000, accountId = 1, payeeId = 8, payeeName = "HUK")</ID>
+    <ID>MaxLineLength:ContractAnalysisTest.kt:ContractAnalysisTest$private</ID>
+    <ID>MaxLineLength:ContractAnalysisTest.kt:ContractAnalysisTest$val</ID>
+    <ID>MaxLineLength:ContractAnalysisTest.kt:ContractAnalysisTest$val a = ContractRule("a", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, setOf(1), amountRange = 700L..1100L, interval = ContractInterval.MONTHLY)</ID>
+    <ID>MaxLineLength:ContractAnalysisTest.kt:ContractAnalysisTest$val b = ContractRule("b", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, setOf(2), amountRange = 1000L..1500L, interval = ContractInterval.MONTHLY)</ID>
+    <ID>MaxLineLength:ContractAnalysisTest.kt:ContractAnalysisTest$val c = ContractRule("c", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, setOf(3), interval = ContractInterval.MONTHLY)</ID>
+    <ID>MaxLineLength:ContractAnalysisTest.kt:ContractAnalysisTest$val insurance = ContractTransaction(id = 900, date = today.minusDays(40), amount = -23000, accountId = 1, payeeId = 8, payeeName = "HUK")</ID>
+    <ID>MaxLineLength:ContractAreaTest.kt:ContractAreaTest$"Wohnen &gt; Hausrat- &amp; Gebäudeversicherung"</ID>
+    <ID>MaxLineLength:ContractAreaTest.kt:ContractAreaTest$"Wohnen"</ID>
+    <ID>MaxLineLength:ContractAreaTest.kt:ContractAreaTest$assertSuggests(BuiltInArea.SOFTWARE, "Telefon &amp; Digitales &gt; Software &amp; Apps", "Telefon &amp; Digitales &gt; Cloud-Speicher")</ID>
+    <ID>MaxLineLength:ContractAreaTest.kt:ContractAreaTest$assertSuggests(BuiltInArea.TELECOM, "Telefon &amp; Digitales &gt; Handyvertrag", "Telefon &amp; Digitales &gt; Internet &amp; Festnetz")</ID>
+    <ID>MaxLineLength:ContractDetector.kt:ContractDetector$if (ChronoUnit.DAYS.between(previous.date, next.date) &gt; interval.maxDays) runs += mutableListOf&lt;ContractTransaction&gt;()</ID>
+    <ID>MaxLineLength:ContractDetector.kt:ContractDetector$private</ID>
+    <ID>MaxLineLength:ContractInputTest.kt:ContractInputTest$private val payment = LedgerTransaction(1, day, amount = -1299, accountId = giro, payeeId = 7, payeeName = "Netflix")</ID>
+    <ID>MaxLineLength:ContractNews.kt:val endedOn = lastPayment.date.plusDays((contract.interval.maxDays + contract.interval.graceDays()).toLong())</ID>
+    <ID>MaxLineLength:ContractNewsTest.kt:ContractNewsTest$assertTrue(detect(listOf(rule()), monthly(listOf(-3000, -3000, -3000), last = today.minusDays(120))).news.isEmpty())</ID>
+    <ID>MaxLineLength:ContractNewsTest.kt:ContractNewsTest$assertTrue(detect(listOf(rule()), monthly(listOf(-4000, -4000, -4000), last = today.minusDays(33))).news.isEmpty())</ID>
+    <ID>MaxLineLength:ContractNewsTest.kt:ContractNewsTest$detect(listOf(rule(cancelledOn = today.minusDays(60))), monthly(listOf(-3000, -3000, -3000), last = today.minusDays(70)))</ID>
+    <ID>MaxLineLength:ContractNewsTest.kt:ContractNewsTest$private</ID>
+    <ID>MaxLineLength:ContractNewsTest.kt:ContractNewsTest$val late = detect(listOf(rule()), monthly(listOf(-4000, -4000, -4000), last = today.minusDays(36))).news.single()</ID>
+    <ID>MaxLineLength:ContractNewsTest.kt:ContractNewsTest$val many = (1..ContractNews.MAX_COUNT + 5).map { template.copy(id = "n$it", createdAt = today.minusDays(it.toLong())) }</ID>
+    <ID>MaxLineLength:ContractNewsTest.kt:ContractNewsTest$val news = detect(listOf(rule().copy(reserve = true)), monthly(listOf(-10000, -10000, -10000, -15000))).news.single()</ID>
+    <ID>MaxLineLength:ContractNewsTest.kt:ContractNewsTest$val stopped = detect(listOf(rule()), monthly(listOf(-3000, -3000, -3000), last = today.minusDays(50))).news.single()</ID>
+    <ID>MaxLineLength:ContractRepository.kt:ContractRepository$combine</ID>
+    <ID>MaxLineLength:ContractRepository.kt:ContractRepository$paymentIds = analysis.contracts.flatMapTo(HashSet()) { contract -&gt; contract.transactions.map { it.id } }</ID>
+    <ID>MaxLineLength:ContractRepository.kt:ContractRepository$private</ID>
+    <ID>MaxLineLength:ContractStoreTest.kt:ContractStoreTest$private val rule = ContractRule("r", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, setOf(1), interval = ContractInterval.MONTHLY)</ID>
+    <ID>MaxLineLength:ContractsStateTest.kt:ContractsStateTest$assertEquals(listOf("rent", "phone", "deletedArea"), state.forArea(BuiltInArea.HOUSING).active.map { it.signature })</ID>
+    <ID>MaxLineLength:OwnTransferTest.kt:OwnTransferTest$LedgerTransaction(2, today, amount = -5000, accountId = giro, payeeName = "Ich", targetAccountId = savings)</ID>
+    <ID>MaxLineLength:OwnTransferTest.kt:OwnTransferTest$val byAccount = ContractRule("a", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, targetAccountIds = setOf(savings), interval = ContractInterval.MONTHLY)</ID>
+    <ID>MaxLineLength:OwnTransferTest.kt:OwnTransferTest$val byPayee = ContractRule("p", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, setOf(9), interval = ContractInterval.MONTHLY)</ID>
+    <ID>ReturnCount:ContractAnalysis.kt:fun ContractAnalysis.infoFor: PaymentContractInfo</ID>
+    <ID>ReturnCount:ContractDetector.kt:ContractDetector$private fun List&lt;ContractTransaction&gt;.isContinuedBy: Boolean</ID>
+    <ID>ReturnCount:ContractDetector.kt:ContractDetector$private fun List&lt;ContractTransaction&gt;.isLikelyRareIncome: Boolean</ID>
+    <ID>ReturnCount:ContractDetector.kt:ContractDetector$private fun detectSeries: Series?</ID>
+    <ID>ReturnCount:ContractDetector.kt:ContractDetector$private fun regularInterval: ContractInterval?</ID>
+    <ID>ReturnCount:ContractsState.kt:ContractSettings$fun areaChoiceOf: AreaChoice</ID>
+    <ID>TooManyFunctions:ContractDetector.kt:ContractDetector</ID>
+  </CurrentIssues>
+</SmellBaseline>

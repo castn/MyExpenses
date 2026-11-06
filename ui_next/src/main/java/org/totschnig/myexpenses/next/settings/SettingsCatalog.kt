@@ -431,7 +431,9 @@ object SettingsCatalog {
         GROUP_HEADER to "sums in the headers of the old transaction list",
         OCR_TOTAL_INDICATORS to "only the old scan, receipts have their own parser",
         OCR_DATE_FORMATS to "only the old scan, receipts have their own parser",
-        OCR_TIME_FORMATS to "only the old scan, receipts have their own parser"
+        OCR_TIME_FORMATS to "only the old scan, receipts have their own parser",
+        SHARE_TARGET_USERNAME to "needs a field that stores in the secure data store, the upload URL can hold the login",
+        SHARE_TARGET_PASSWORD to "needs a field that stores in the secure data store, the upload URL can hold the login"
     )
 
     fun of(group: SettingsGroup) = entries.filter { it.group == group }

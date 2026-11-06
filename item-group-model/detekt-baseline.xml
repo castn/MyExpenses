@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>DestructuringDeclarationWithTooManyEntries:GoldenTest.kt:GoldenTest$(config, name, store, ids)</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:ModelGoldenTest.kt:ModelGoldenTest$val (rawName, rawStore, chain, margin, top) = line.split('\t')</ID>
+    <ID>MagicNumber:Features.kt:FeatureConfig$16</ID>
+    <ID>MagicNumber:Features.kt:Features$0xFFu</ID>
+    <ID>MagicNumber:ProductGroupModel.kt:ProductGroupModel.Companion$0xFF</ID>
+    <ID>MagicNumber:ProductGroupModel.kt:ProductGroupModel.Companion$0xFFFF</ID>
+    <ID>MagicNumber:ProductGroupModel.kt:ProductGroupModel.Companion$4</ID>
+    <ID>MagicNumber:ProductGroupModel.kt:ProductGroupModel.Companion$8</ID>
+    <ID>ReturnCount:ProductGroupModel.kt:ProductGroupModel$fun chainOf: String?</ID>
+    <ID>ReturnCount:ProductGroupModel.kt:ProductGroupModel$fun classify: GroupPrediction?</ID>
+  </CurrentIssues>
+</SmellBaseline>

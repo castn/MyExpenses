@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<baseline version="1.0">
+    <file name="src/test/java/org/totschnig/myexpenses/architecture/ModuleRulesTest.kt">
+        <error line="15" column="26" source="standard:argument-list-wrapping" />
+        <error line="15" column="101" source="standard:max-line-length" />
+        <error line="15" column="102" source="standard:argument-list-wrapping" />
+        <error line="24" column="26" source="standard:argument-list-wrapping" />
+        <error line="24" column="101" source="standard:max-line-length" />
+        <error line="24" column="121" source="standard:argument-list-wrapping" />
+        <error line="34" column="26" source="standard:argument-list-wrapping" />
+        <error line="34" column="101" source="standard:max-line-length" />
+        <error line="34" column="110" source="standard:argument-list-wrapping" />
+        <error line="43" column="25" source="standard:argument-list-wrapping" />
+        <error line="43" column="101" source="standard:max-line-length" />
+        <error line="43" column="114" source="standard:argument-list-wrapping" />
+        <error line="43" column="118" source="standard:function-literal" />
+        <error line="43" column="123" source="standard:function-literal" />
+        <error line="46" column="49" source="standard:argument-list-wrapping" />
+        <error line="46" column="92" source="standard:argument-list-wrapping" />
+        <error line="46" column="97" source="standard:argument-list-wrapping" />
+        <error line="46" column="100" source="standard:argument-list-wrapping" />
+        <error line="46" column="101" source="standard:max-line-length" />
+        <error line="46" column="103" source="standard:argument-list-wrapping" />
+        <error line="46" column="107" source="standard:binary-expression-wrapping" />
+        <error line="59" column="32" source="standard:function-literal" />
+        <error line="59" column="68" source="standard:argument-list-wrapping" />
+        <error line="59" column="91" source="standard:argument-list-wrapping" />
+        <error line="59" column="101" source="standard:max-line-length" />
+        <error line="59" column="110" source="standard:argument-list-wrapping" />
+        <error line="59" column="113" source="standard:argument-list-wrapping" />
+        <error line="59" column="117" source="standard:binary-expression-wrapping" />
+        <error line="59" column="124" source="standard:function-literal" />
+        <error line="61" column="26" source="standard:argument-list-wrapping" />
+        <error line="61" column="101" source="standard:max-line-length" />
+        <error line="61" column="141" source="standard:argument-list-wrapping" />
+        <error line="62" column="36" source="standard:argument-list-wrapping" />
+        <error line="62" column="67" source="standard:argument-list-wrapping" />
+        <error line="62" column="71" source="standard:binary-expression-wrapping" />
+        <error line="62" column="91" source="standard:argument-list-wrapping" />
+        <error line="62" column="101" source="standard:max-line-length" />
+        <error line="62" column="119" source="standard:argument-list-wrapping" />
+    </file>
+    <file name="src/test/java/org/totschnig/myexpenses/architecture/UiNextRulesTest.kt">
+        <error line="19" column="25" source="standard:argument-list-wrapping" />
+        <error line="19" column="101" source="standard:max-line-length" />
+        <error line="19" column="136" source="standard:argument-list-wrapping" />
+        <error line="27" column="26" source="standard:argument-list-wrapping" />
+        <error line="27" column="101" source="standard:max-line-length" />
+        <error line="27" column="122" source="standard:argument-list-wrapping" />
+        <error line="36" column="25" source="standard:argument-list-wrapping" />
+        <error line="36" column="101" source="standard:max-line-length" />
+        <error line="36" column="105" source="standard:argument-list-wrapping" />
+        <error line="36" column="109" source="standard:function-literal" />
+        <error line="36" column="119" source="standard:function-literal" />
+        <error line="37" column="45" source="standard:function-literal" />
+        <error line="37" column="72" source="standard:argument-list-wrapping" />
+        <error line="37" column="80" source="standard:argument-list-wrapping" />
+        <error line="37" column="84" source="standard:binary-expression-wrapping" />
+        <error line="37" column="100" source="standard:argument-list-wrapping" />
+        <error line="37" column="101" source="standard:max-line-length" />
+        <error line="37" column="106" source="standard:argument-list-wrapping" />
+        <error line="37" column="108" source="standard:function-literal" />
+        <error line="47" column="26" source="standard:argument-list-wrapping" />
+        <error line="47" column="101" source="standard:max-line-length" />
+        <error line="47" column="179" source="standard:argument-list-wrapping" />
+        <error line="56" column="26" source="standard:argument-list-wrapping" />
+        <error line="56" column="101" source="standard:max-line-length" />
+        <error line="56" column="161" source="standard:argument-list-wrapping" />
+        <error line="56" column="165" source="standard:function-literal" />
+        <error line="56" column="175" source="standard:function-literal" />
+        <error line="74" column="26" source="standard:trailing-comma-on-call-site" />
+    </file>
+</baseline>

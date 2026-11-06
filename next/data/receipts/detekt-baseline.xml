@@ -1,0 +1,90 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComplexCondition:ReceiptAssembler.kt:ReceiptAssembler.Assembly$subtotal(row) || quantityRow(row) || secondRow(row) || itemRow(row)</ID>
+    <ID>CyclomaticComplexMethod:ReceiptTokens.kt:ReceiptTokens.Splitter$fun split: List&lt;Token&gt;</ID>
+    <ID>CyclomaticComplexMethod:RowKinds.kt:RowKinds$fun quantity: Quantity?</ID>
+    <ID>CyclomaticComplexMethod:TestModels.kt:TestModels$private fun write: ByteArray</ID>
+    <ID>LoopWithTooManyJumpStatements:ReceiptParser.kt:ReceiptParser$for</ID>
+    <ID>MagicNumber:ItemGroupClassifier.kt:ItemGroupClassifier$5</ID>
+    <ID>MagicNumber:ItemGroupClassifier.kt:ItemWords$3</ID>
+    <ID>MagicNumber:ItemGroupClassifier.kt:ItemWords$4</ID>
+    <ID>MagicNumber:ItemGroupClassifier.kt:ItemWords$5</ID>
+    <ID>MagicNumber:ReceiptCodecs.kt:3</ID>
+    <ID>MagicNumber:ReceiptDates.kt:ReceiptDates$2000</ID>
+    <ID>MagicNumber:ReceiptDates.kt:ReceiptDates$2099</ID>
+    <ID>MagicNumber:ReceiptMatcher.kt:ReceiptMatcher$3</ID>
+    <ID>MagicNumber:ReceiptVocabulary.kt:ReceiptVocabulary$3</ID>
+    <ID>MagicNumber:RowKinds.kt:RowKinds$3</ID>
+    <ID>MagicNumber:RowKinds.kt:RowKinds$4</ID>
+    <ID>MagicNumber:RowKinds.kt:RowKinds$5</ID>
+    <ID>MatchingDeclarationName:ItemGroupShares.kt:ItemGroupShare</ID>
+    <ID>MaxLineLength:ItemGroupClassifierTest.kt:ItemGroupClassifierTest$.</ID>
+    <ID>MaxLineLength:ItemGroupClassifierTest.kt:ItemGroupClassifierTest$assertEquals(ItemGroupSuggestion(DRUGSTORE, MERCHANT), classifier.groupOf("Haarspange Glitzer", "dm-drogerie markt"))</ID>
+    <ID>MaxLineLength:ItemGroupClassifierTest.kt:ItemGroupClassifierTest$assertEquals(ItemGroupSuggestion(PANTRY, DICTIONARY), classifier.groupOf("dmBio Leinsamen", "dm-drogerie markt"))</ID>
+    <ID>MaxLineLength:ItemGroupClassifierTest.kt:ItemGroupClassifierTest$else</ID>
+    <ID>MaxLineLength:ItemGroupClassifierTest.kt:ItemGroupClassifierTest$listOf(ItemGroupSuggestion(DRINKS, MODEL), ItemGroupSuggestion(DRINKS, RULE), ItemGroupSuggestion(DEPOSIT, RULE))</ID>
+    <ID>MaxLineLength:ItemGroupClassifierTest.kt:ItemGroupClassifierTest$println("$title: $correct of $total correct (${correct * 100 / total} %), $assigned assigned (${assigned * 100 / total} %)")</ID>
+    <ID>MaxLineLength:ItemGroupModelReleaseTest.kt:ItemGroupModelReleaseTest$"""{"models": [${release("de", "de-1")}, ${release("de", "de-2")}, ${release("fr", "fr-1")}, ${release("it", "it-9", format = 3)}]}"""</ID>
+    <ID>MaxLineLength:ItemGroupModelReleaseTest.kt:ItemGroupModelReleaseTest$assertRejected(InvalidItemGroupModel.Reason.Incompatible, TestModels.constantFile(0.95f, "drinks", "future_group"))</ID>
+    <ID>MaxLineLength:ItemGroupModelReleaseTest.kt:ItemGroupModelReleaseTest$listOf(ItemGroupModelRelease("de", "2026.10-de-1", 2, "https://example.org/2026.10-de-1.bin", "ab12", 1929216))</ID>
+    <ID>MaxLineLength:ReceiptAssembler.kt:ReceiptAssembler$fun</ID>
+    <ID>MaxLineLength:ReceiptAssembler.kt:ReceiptAssembler$val item = ReceiptItem(name = name, amount = price.cents, taxClass = price.taxClass?.let(::taxClass), box = row.box)</ID>
+    <ID>MaxLineLength:ReceiptAssembler.kt:ReceiptAssembler.Assembly$items[index] = item.copy(name = "${item.name} ${row.text}".trim(), box = item.box?.let { union(it, row.box) })</ID>
+    <ID>MaxLineLength:ReceiptCodecsTest.kt:ReceiptCodecsTest$"Bananen"</ID>
+    <ID>MaxLineLength:ReceiptDraftTest.kt:ReceiptDraftTest$.</ID>
+    <ID>MaxLineLength:ReceiptDraftTest.kt:ReceiptDraftTest$assertEquals(listOf(null, ItemGroup.DAIRY, null, ItemGroup.DAIRY), proposed.items.indices.map(proposed::proposal))</ID>
+    <ID>MaxLineLength:ReceiptDraftTest.kt:ReceiptDraftTest$val</ID>
+    <ID>MaxLineLength:ReceiptDraftTest.kt:ReceiptDraftTest$val corrected = draft.withDetails(merchant = "REWE Markt", date = java.time.LocalDate.of(2026, 10, 9), total = 398)</ID>
+    <ID>MaxLineLength:ReceiptFixturesTest.kt:ReceiptFixturesTest$check(name, "items", receipt.items.map { it.name to it.amount }, expected.items.map { it.name to it.amount })</ID>
+    <ID>MaxLineLength:ReceiptFixturesTest.kt:ReceiptFixturesTest$check(name, "quantity of ${wanted.name}", item.quantity.stripTrailingZeros(), wanted.quantity.toBigDecimal().stripTrailingZeros())</ID>
+    <ID>MaxLineLength:ReceiptMatcher.kt:ReceiptHeader.Companion$fun of</ID>
+    <ID>MaxLineLength:ReceiptMatcher.kt:ReceiptMatcher$PaymentService.isPaymentService(transaction.payeeName) -&gt; listOfNotNull(PaymentService.merchantOf(transaction.comment))</ID>
+    <ID>MaxLineLength:ReceiptMatcher.kt:ReceiptMatcher$fun</ID>
+    <ID>MaxLineLength:ReceiptMatcher.kt:ReceiptMatcher$private</ID>
+    <ID>MaxLineLength:ReceiptMatcher.kt:ReceiptMatcher$receiptWords.any { r -&gt; words.any { w -&gt; r == w || (r.length &gt;= 3 &amp;&amp; w.startsWith(r)) || (w.length &gt;= 3 &amp;&amp; r.startsWith(w)) } }</ID>
+    <ID>MaxLineLength:ReceiptParser.kt:ReceiptParser$*</ID>
+    <ID>MaxLineLength:ReceiptParser.kt:ReceiptParser$.</ID>
+    <ID>MaxLineLength:ReceiptParser.kt:ReceiptParser$item.copy(quantity = it.quantity, unit = "kg".takeIf { _ -&gt; it.unit == ReceiptUnit.KG }, unitPrice = it.unitPrice)</ID>
+    <ID>MaxLineLength:ReceiptParser.kt:ReceiptParser$val below = rows.getOrNull(index + 1)?.takeIf { kinds.isAmountOnly(it.text) || vocabulary.isPayment(it.text) }</ID>
+    <ID>MaxLineLength:ReceiptParser.kt:ReceiptParser$val counted = quantity?.let { (it.quantity * BigDecimal(it.unitPrice)).setScale(0, RoundingMode.HALF_UP).toLong() }</ID>
+    <ID>MaxLineLength:ReceiptRepository.kt:ReceiptRepository$.</ID>
+    <ID>MaxLineLength:ReceiptTokens.kt:ReceiptTokens.Splitter$vocabulary.currencies.any { tail == it || it.length &gt; 1 &amp;&amp; tail.startsWith(it) } || tail.startsWith("€")</ID>
+    <ID>MaxLineLength:ReceiptTokens.kt:Token.Number$data</ID>
+    <ID>MaxLineLength:ReceiptTokens.kt:Token.PerUnit$data</ID>
+    <ID>MaxLineLength:ReceiptTokens.kt:Token.Unit$data</ID>
+    <ID>MaxLineLength:ReceiptTokensTest.kt:ReceiptTokensTest$ReceiptFixtures.dir().listFiles { file -&gt; file.name.endsWith(".json") &amp;&amp; !file.name.endsWith(".expected.json") }!!</ID>
+    <ID>MaxLineLength:ReceiptTokensTest.kt:ReceiptTokensTest$assertEquals(line.text, token.text.replace(" ", ""), line.text.substring(token.start, token.end).replace(" ", ""))</ID>
+    <ID>MaxLineLength:ReceiptVocabularyTest.kt:ReceiptVocabularyTest$listOf("Balea Med Ultra Sen.Haut Bar.C", "BARILLA 1,99").forEach { assertFalse(it, german.isCash(it) || german.isCard(it)) }</ID>
+    <ID>MaxLineLength:ReceiptVocabularyTest.kt:ReceiptVocabularyTest$listOf("Geg. EC-Cash EUR 12,15", "Geg. FC-Cash", "Gegeben EC Karte:", "ARTENZAHLUNG EUR", "girocard kontaktlos", "Visa")</ID>
+    <ID>MaxLineLength:ReceiptVocabularyTest.kt:ReceiptVocabularyTest$listOf("SUMME EUR 12,15", "Zu zahlen 3,48", "2 Artikel TOTAL 7,50 €", "GesamtsUmMe: 10,25", "SUNME [7] 8,91", "SUMAE 8,91", "Sunne €6, 12")</ID>
+    <ID>MaxLineLength:ReceiptVocabularyTest.kt:ReceiptVocabularyTest$listOf("Zw.Summe 43,10", "SAHNE 1,09", "SUPPE 2,49", "KARTOFFELN 2,22").forEach { assertFalse(it, german.isTotal(it)) }</ID>
+    <ID>MaxLineLength:RowKinds.kt:RowKinds$if (tokens.getOrNull(i - 1)?.let { it is Token.Times &amp;&amp; it.end == number.start } == true) return@forEachIndexed</ID>
+    <ID>MaxLineLength:RowKinds.kt:RowKinds$token is Token.Word &amp;&amp; token.text.length &gt;= 2 &amp;&amp; token.text[0].isLetter() &amp;&amp; token.text.drop(1).all { it in "xX×*" }</ID>
+    <ID>MaxLineLength:RowKinds.kt:RowKinds$val next = tokens.getOrNull(i + 1)?.takeUnless { it is Token.Word &amp;&amp; it.text == ":" } ?: tokens.getOrNull(i + 2)</ID>
+    <ID>MaxLineLength:RowKindsTest.kt:RowKindsTest$private fun price</ID>
+    <ID>ReturnCount:ItemGroupClassifier.kt:ItemGroupClassifier$private fun byModel: ItemGroupSuggestion?</ID>
+    <ID>ReturnCount:ItemGroupClassifier.kt:ItemGroupClassifier$private fun classify: ItemGroupSuggestion?</ID>
+    <ID>ReturnCount:ReceiptAssembler.kt:ReceiptAssembler$fun readItem: ReceiptItem?</ID>
+    <ID>ReturnCount:ReceiptAssembler.kt:ReceiptAssembler$private fun readSecondRow: ReceiptItem?</ID>
+    <ID>ReturnCount:ReceiptAssembler.kt:ReceiptAssembler$private fun readUnitPriceTimesCount: ReceiptItem?</ID>
+    <ID>ReturnCount:ReceiptAssembler.kt:ReceiptAssembler.Assembly$fun nameBelowArticleNumber: Boolean</ID>
+    <ID>ReturnCount:ReceiptDates.kt:ReceiptDates$private fun date: LocalDate?</ID>
+    <ID>ReturnCount:ReceiptLayout.kt:ReceiptLayout$private fun slopeOf: Double?</ID>
+    <ID>ReturnCount:ReceiptParser.kt:ReceiptParser$private fun total: Total</ID>
+    <ID>ReturnCount:ReceiptTokens.kt:ReceiptTokens.Splitter$fun split: List&lt;Token&gt;</ID>
+    <ID>ReturnCount:ReceiptTokens.kt:ReceiptTokens.Splitter$private fun perUnit: List&lt;Token&gt;?</ID>
+    <ID>ReturnCount:RowKinds.kt:RowKinds$fun detail: Detail?</ID>
+    <ID>ReturnCount:RowKinds.kt:RowKinds$fun itemCount: Int?</ID>
+    <ID>ReturnCount:RowKinds.kt:RowKinds$fun price: Price?</ID>
+    <ID>ReturnCount:RowKinds.kt:RowKinds$fun quantity: Quantity?</ID>
+    <ID>ReturnCount:RowKinds.kt:RowKinds$private fun countTimesUnitPrice: Pair&lt;BigDecimal, Long&gt;?</ID>
+    <ID>ReturnCount:RowKinds.kt:RowKinds$private fun unitPriceTimesCount: Pair&lt;BigDecimal, Long&gt;?</ID>
+    <ID>TooGenericExceptionCaught:ItemGroupModelRelease.kt:e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ItemGroupModelStore.kt:ItemGroupModelStore$e: Exception</ID>
+    <ID>TooManyFunctions:ReceiptCodecs.kt:org.totschnig.myexpenses.next.data.receipts.ReceiptCodecs.kt</ID>
+    <ID>TooManyFunctions:ReceiptDatabase.kt:ReceiptDatabase</ID>
+    <ID>TooManyFunctions:RowKinds.kt:RowKinds</ID>
+  </CurrentIssues>
+</SmellBaseline>

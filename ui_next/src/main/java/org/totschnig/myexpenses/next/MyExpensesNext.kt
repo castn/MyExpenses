@@ -24,7 +24,6 @@ import org.totschnig.myexpenses.next.transactions.RepositoryTransactionStore
 import org.totschnig.myexpenses.next.transactions.TransactionEditViewModel
 import java.text.DecimalFormatSymbols
 import androidx.compose.ui.Modifier
-import java.io.Serializable
 import org.totschnig.myexpenses.activity.MyExpensesV2
 import org.totschnig.myexpenses.compose.accounts.AccountEventHandler
 import org.totschnig.myexpenses.compose.main.AppEventHandler
@@ -36,6 +35,7 @@ import org.totschnig.myexpenses.model.AccountFlag
 import org.totschnig.myexpenses.model.AccountGroupingKey
 import org.totschnig.myexpenses.model.CommodityType
 import org.totschnig.myexpenses.model.ContribFeature
+import org.totschnig.myexpenses.model.ContribPayload
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model.Grouping
 import org.totschnig.myexpenses.next.onboarding.NextOnboarding
@@ -198,7 +198,7 @@ class MyExpensesNext : MyExpensesV2() {
         features.all.forEach { it.onTransactionSaved(transactionId) }
     }
 
-    override fun contribFeatureCalled(feature: ContribFeature, tag: Serializable?) {
+    override fun contribFeatureCalled(feature: ContribFeature, tag: ContribPayload?) {
         if (features.all.none { it.onContribFeatureCalled(feature, tag) }) super.contribFeatureCalled(feature, tag)
     }
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>EmptyFunctionBlock:FontIcons.kt:NoFontIcons${}</ID>
+    <ID>FunctionNaming:ListDetailPages.kt:@OptIn(ExperimentalMaterial3AdaptiveApi::class) fun DetailPage: Map&lt;String, Any&gt;</ID>
+    <ID>FunctionNaming:ListDetailPages.kt:@OptIn(ExperimentalMaterial3AdaptiveApi::class) fun ExtraPage: Map&lt;String, Any&gt;</ID>
+    <ID>FunctionNaming:ListDetailPages.kt:@OptIn(ExperimentalMaterial3AdaptiveApi::class) fun ListPage: Map&lt;String, Any&gt;</ID>
+    <ID>MaxLineLength:CatalogIconPicker.kt:LocalFontIcons.current.Icon(name, modifier, if (isLarge) 28.sp else 20.sp, MaterialTheme.colorScheme.onSurfaceVariant)</ID>
+  </CurrentIssues>
+</SmellBaseline>

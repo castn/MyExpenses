@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CyclomaticComplexMethod:TagChips.kt:@Composable private fun GroupPickerSheet</ID>
+    <ID>LongMethod:TagChips.kt:@Composable fun TagChips</ID>
+    <ID>LongMethod:TagChips.kt:@Composable private fun GroupPickerSheet</ID>
+    <ID>MaxLineLength:RefundSection.kt:TextButton(onClick = { viewModel.acceptRefund(refund, label) }) { Text(stringResource(R.string.next_refund_accept)) }</ID>
+    <ID>MaxLineLength:RefundSection.kt:title = stringResource(if (isDebit) R.string.next_refund_question_debit else R.string.next_refund_question_credit)</ID>
+    <ID>MaxLineLength:TagChips.kt:if (current is NameWarning.Category) R.string.next_group_create_anyway else R.string.next_tag_create</ID>
+    <ID>MaxLineLength:TagDetectionsViewModel.kt:TagDetectionsViewModel$combine</ID>
+    <ID>MaxLineLength:TagDetectionsViewModel.kt:TagDetectionsViewModel$private</ID>
+    <ID>MaxLineLength:TagDetectionsViewModel.kt:TagDetectionsViewModel$tagDatabase.addMeaningTag(store, tagIds, listOf(refund.debit.id, refund.credit.id), TagMeaning.REIMBURSED, label)</ID>
+    <ID>MaxLineLength:TagLearningViewModel.kt:TagLearningViewModel$LearningInput</ID>
+    <ID>MaxLineLength:TagLearningViewModel.kt:TagLearningViewModel$combine</ID>
+    <ID>MaxLineLength:TagLearningViewModel.kt:TagLearningViewModel$private</ID>
+    <ID>MaxLineLength:TagSuggestionSection.kt:InfoRow(stringResource(if (isMarker) R.string.next_marker_taken else R.string.next_tag_taken), tagLabel, isFirst = true)</ID>
+    <ID>MaxLineLength:TagSuggestionSection.kt:R.plurals.next_marker_suggested_reason</ID>
+    <ID>MaxLineLength:TagSuggestionSection.kt:TextButton(onClick = { viewModel.acceptSuggestion(suggestion) }) { Text(stringResource(R.string.next_tag_accept)) }</ID>
+    <ID>MaxLineLength:TagsViewModelTest.kt:TagsViewModelTest$val repository = TagRepository(FakeLedgerSource(catalog = catalog), TagStore(dataStore), backgroundScope, database)</ID>
+    <ID>ReturnCount:TagSuggestionSection.kt:@Composable fun TagSuggestionSection</ID>
+  </CurrentIssues>
+</SmellBaseline>

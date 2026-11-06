@@ -5,6 +5,7 @@ import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import org.totschnig.myexpenses.activity.BaseActivity
 import org.totschnig.myexpenses.model.ContribFeature
+import org.totschnig.myexpenses.model.ContribPayload
 import org.totschnig.myexpenses.next.BehindStatusBar
 import org.totschnig.myexpenses.next.NextShell
 import org.totschnig.myexpenses.next.feature.budgets.BudgetFlow
@@ -15,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import java.io.Serializable
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.next.NextData
 import org.totschnig.myexpenses.next.NextFeature
@@ -94,22 +94,17 @@ class BudgetsFeature(private val activity: BaseActivity, private val data: NextD
                     addPot = key.addPot,
                     requestNewPot = {
                         // Pots are part of the budget feature, so the same licence applies
-                        activity.contribFeatureRequested(ContribFeature.BUDGET, TAG_ADD_POT)
+                        activity.contribFeatureRequested(ContribFeature.BUDGET, ContribPayload.NewPot)
                     }
                 )
             }
         }
     }
 
-    override fun onContribFeatureCalled(feature: ContribFeature, tag: Serializable?): Boolean {
-        if (feature != ContribFeature.BUDGET || tag != TAG_ADD_POT) return false
+    override fun onContribFeatureCalled(feature: ContribFeature, tag: ContribPayload?): Boolean {
+        if (feature != ContribFeature.BUDGET || tag != ContribPayload.NewPot) return false
         activity.recordUsage(feature)
         viewModel.grantNewPot()
         return true
-    }
-
-    companion object {
-        /** Tag for the budget feature request, to create a pot of the budget of the new UI */
-        const val TAG_ADD_POT = "ADD_POT"
     }
 }

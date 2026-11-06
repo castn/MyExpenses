@@ -1,0 +1,175 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ComplexCondition:NextMainScreen.kt:forcedAccountPanelLoadingState !is PreferenceState.Loaded || preferredNavModeLoadingState !is PreferenceState.Loaded || accountGroupingLoadingState !is PreferenceState.Loaded || mainMenuLoadingState !is PreferenceState.Loaded</ID>
+    <ID>ComplexCondition:NextSettings.kt:NextSettings$autoBackup &amp;&amp; (prefHandler.getBoolean(PrefKey.PROTECTION_LEGACY, false) || prefHandler.getBoolean(PrefKey.PROTECTION_DEVICE_LOCK_SCREEN, false)) &amp;&amp; prefHandler.getString(PrefKey.EXPORT_PASSWORD, null) == null</ID>
+    <ID>ComplexCondition:TransactionEditing.kt:trimmed.isEmpty() || trimmed.any { !it.isDigit() &amp;&amp; it != ',' &amp;&amp; it != '.' }</ID>
+    <ID>ComplexCondition:TransactionStore.kt:RepositoryTransactionStore$data.isSplit || data.transferPeerId != null || data.parentId != null || data.crStatus == CrStatus.VOID || data.status == STATUS_ARCHIVE || data.sealed</ID>
+    <ID>CyclomaticComplexMethod:NextAccountScreen.kt:@OptIn(ExperimentalMaterial3Api::class) @Composable fun NextAccountScreen</ID>
+    <ID>CyclomaticComplexMethod:NextMainScreen.kt:@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class) @Composable fun NextMainScreen</ID>
+    <ID>CyclomaticComplexMethod:NextOverviewScreen.kt:@Composable fun NextOverviewScreen</ID>
+    <ID>CyclomaticComplexMethod:NextSettings.kt:NextSettings$override fun onSharedPreferenceChanged</ID>
+    <ID>CyclomaticComplexMethod:NextSettingsScreen.kt:@Composable private fun SettingRow</ID>
+    <ID>CyclomaticComplexMethod:NextSettingsScreen.kt:@Composable private fun SettingsGroupPage</ID>
+    <ID>CyclomaticComplexMethod:NextTransactionDetails.kt:@Composable private fun DetailRows</ID>
+    <ID>CyclomaticComplexMethod:NextTransactionList.kt:@Composable private fun OpenedTransaction</ID>
+    <ID>CyclomaticComplexMethod:NextTransactionList.kt:@OptIn(ExperimentalFoundationApi::class) @Composable private fun TransactionItem</ID>
+    <ID>CyclomaticComplexMethod:NextTransactionList.kt:private fun LazyListScope.transactionItems</ID>
+    <ID>DestructuringDeclarationWithTooManyEntries:ProviderLedgerSource.kt:ProviderLedgerSource$(rows, ibans, accounts, tagLinks, splitParts)</ID>
+    <ID>EmptyFunctionBlock:FixedTransactionList.kt:&lt;no name provided&gt;${}</ID>
+    <ID>LongMethod:NextAccountScreen.kt:@Composable private fun BalanceHeader</ID>
+    <ID>LongMethod:NextAccountScreen.kt:@OptIn(ExperimentalMaterial3Api::class) @Composable fun NextAccountScreen</ID>
+    <ID>LongMethod:NextMainScreen.kt:@OptIn(ExperimentalMaterial3AdaptiveApi::class) @Composable private fun AccountPanes</ID>
+    <ID>LongMethod:NextMainScreen.kt:@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class) @Composable fun NextMainScreen</ID>
+    <ID>LongMethod:NextOverviewScreen.kt:@Composable fun NextOverviewScreen</ID>
+    <ID>LongMethod:NextSettings.kt:NextSettings$override fun onCreate</ID>
+    <ID>LongMethod:NextSettings.kt:NextSettings.&lt;no name provided&gt;$@Composable override fun control: SettingControl?</ID>
+    <ID>LongMethod:NextSettingsScreen.kt:@Composable private fun SettingsGroupPage</ID>
+    <ID>LongMethod:NextTransactionDetails.kt:@Composable private fun DetailRows</ID>
+    <ID>LongMethod:NextTransactionList.kt:@Composable fun NextTransactionList</ID>
+    <ID>LongMethod:NextTransactionList.kt:@OptIn(ExperimentalFoundationApi::class) @Composable private fun TransactionItem</ID>
+    <ID>LongMethod:OnboardingScreen.kt:@Composable internal fun OnboardingScreen</ID>
+    <ID>LongMethod:TransactionEditForm.kt:@Composable internal fun TransactionEditForm</ID>
+    <ID>LongMethod:TransactionSearch.kt:@Composable fun SearchFilterChips</ID>
+    <ID>LoopWithTooManyJumpStatements:LegacySpecs.kt:LegacySpecs$while</ID>
+    <ID>MagicNumber:NextLayout.kt:1.1f</ID>
+    <ID>MagicNumber:NextLayout.kt:1.5f</ID>
+    <ID>MagicNumber:NextLayout.kt:4</ID>
+    <ID>MagicNumber:NextLayout.kt:6</ID>
+    <ID>MagicNumber:NextOnboarding.kt:NextOnboarding$100</ID>
+    <ID>MagicNumber:NextOverviewScreen.kt:360f</ID>
+    <ID>MagicNumber:NextOverviewScreen.kt:90f</ID>
+    <ID>MagicNumber:NextTransactionList.kt:0.6f</ID>
+    <ID>MagicNumber:ProviderCategoryWriting.kt:ProviderCategoryWriting$500</ID>
+    <ID>MagicNumber:SearchValues.kt:63</ID>
+    <ID>MagicNumber:SearchValues.kt:PeriodPreset$29</ID>
+    <ID>MagicNumber:TransactionSearch.kt:300</ID>
+    <ID>MatchingDeclarationName:AccountPage.kt:AccountChoices</ID>
+    <ID>MatchingDeclarationName:CategoryInfos.kt:RawCategory</ID>
+    <ID>MatchingDeclarationName:InsightSettingsPages.kt:RuleItem</ID>
+    <ID>MatchingDeclarationName:NextBottomBar.kt:NextTab</ID>
+    <ID>MatchingDeclarationName:NextTransactionDetails.kt:DetailsEditing</ID>
+    <ID>MatchingDeclarationName:OnboardingScreen.kt:OnboardingStep</ID>
+    <ID>MatchingDeclarationName:SearchOptions.kt:SearchOption</ID>
+    <ID>MatchingDeclarationName:StartPage.kt:StartChoice</ID>
+    <ID>MaxLineLength:AccountPage.kt:keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences, imeAction = ImeAction.Next)</ID>
+    <ID>MaxLineLength:CategoriesFeature.kt:CategorySettings.Companion$val RULES = InsightSetting("CATEGORY_RULES", SettingsGroup.INSIGHTS, SettingKind.ACTION, R.string.next_settings_category_rules)</ID>
+    <ID>MaxLineLength:CategoryInfosTest.kt:CategoryInfosTest$CategoryInfo(2, "Supermarkt", "Essen &gt; Supermarkt", isExpense = true, isIncome = false, mainId = 1, parentId = 1)</ID>
+    <ID>MaxLineLength:CategoryRulesViewModel.kt:CategoryRulesViewModel$target = repository.getCategoryInfoList(categoryId)?.joinToString(DEFAULT_CATEGORY_PATH_SEPARATOR) { it.label }.orEmpty()</ID>
+    <ID>MaxLineLength:FixedTransactionList.kt:AppFixedTransactions$detailsContent?.let { content -&gt; @Composable { transaction: Transaction2 -&gt; content(transaction.toShown()) } }</ID>
+    <ID>MaxLineLength:FixedTransactionsViewModel.kt:FixedTransactionsViewModel$private val tags: StateFlow&lt;Map&lt;String, Pair&lt;String, Int?&gt;&gt;&gt; = contentResolver.tagMapFlow.stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())</ID>
+    <ID>MaxLineLength:FormatExamples.kt:/** Date patterns to pick from, as an example each, see [validateDateFormat][org.totschnig.myexpenses.util.validateDateFormat] */</ID>
+    <ID>MaxLineLength:GuidanceFeature.kt:HintSettings$private val viewModel by activity.viewModelsOf { HintSettingsViewModel(HintStore(activity.injector.preferencesDataStore())) }</ID>
+    <ID>MaxLineLength:GuidanceFeature.kt:HintSettings.Companion$val CLOSED = InsightSetting("CLOSED_HINTS", SettingsGroup.INSIGHTS, SettingKind.ACTION, R.string.next_settings_closed_hints)</ID>
+    <ID>MaxLineLength:LegacyBudgetReading.kt:LegacyBudgetReading$categoryAllocations = categoryAllocations(repository, budget.id, progress.groupInfo.year, progress.groupInfo.second)</ID>
+    <ID>MaxLineLength:MerchantIconsTest.kt:MerchantIconsTest$Merchants.all.filter { MerchantIcons.of(it)?.let { icon -&gt; icon in FontAwesomeIcons } != true }.map { it.name }</ID>
+    <ID>MaxLineLength:MerchantsFeature.kt:MerchantsFeature$PayeeImageDialog(logos, Payee(payee.id, payee.displayName), transaction?.categoryPath, transaction?.icon, onDismiss)</ID>
+    <ID>MaxLineLength:MyExpensesNext.kt:MyExpensesNext$Page</ID>
+    <ID>MaxLineLength:MyExpensesNext.kt:MyExpensesNext$onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -&gt; CurrencyUnit?</ID>
+    <ID>MaxLineLength:MyExpensesNext.kt:MyExpensesNext$val fixedTransactions = remember(transactionActions) { AppFixedTransactions(fixedTransactionsViewModel, transactionActions) }</ID>
+    <ID>MaxLineLength:NativeSettings.kt:NativeSettings$PURGE_BACKUP_REQUIRE_CONFIRMATION</ID>
+    <ID>MaxLineLength:NativeSettings.kt:NativeSettings$default = { (NumberFormat.getCurrencyInstance(Utils.localeFromContext(this)) as DecimalFormat).toLocalizedPattern() }</ID>
+    <ID>MaxLineLength:NativeSettings.kt:NativeSettings$formatOptions(default(), patterns(), { example(it) }) { getString(NextR.string.next_settings_format_region, it) }</ID>
+    <ID>MaxLineLength:NativeSettings.kt:NativeSettings$if</ID>
+    <ID>MaxLineLength:NativeSettings.kt:NativeSettings$kinds + stored.filter { type -&gt; type.isNotEmpty() &amp;&amp; kinds.none { it.first == type } }.map { it to it }</ID>
+    <ID>MaxLineLength:NativeSettings.kt:NativeSettings$listOf(UNMAPPED_TRANSACTION_AS_TRANSFER, EQUIVALENT_AMOUNTS_AUTOMATIC_UPDATE, PLANNER_EXECUTION_TIME, PLANNER_MANUAL_TIME)</ID>
+    <ID>MaxLineLength:NativeSettings.kt:NativeSettings$listOfNotNull((stored to stored).takeIf { stored.isNotEmpty() &amp;&amp; apps.none { it.first == stored } })</ID>
+    <ID>MaxLineLength:NativeSettings.kt:NativeSettings$summary = { getString(R.string.warning_unencrypted_backup, getString(R.string.pref_security_export_passphrase_title)) }</ID>
+    <ID>MaxLineLength:NativeSettings.kt:NativeSettings$val sign = listOf(R.string.pm_type_debit, R.string.pm_type_credit).joinToString(" / ", transform = ::getString)</ID>
+    <ID>MaxLineLength:NativeSettings.kt:NativeSettings$val type = listOf(R.string.expense, R.string.income, R.string.transfer).joinToString(" / ", transform = ::getString)</ID>
+    <ID>MaxLineLength:NativeSettings.kt:NativeSettings$val whenProtected = NativeSetting(isEnabled = { it.boolean(PROTECTION_LEGACY) || it.boolean(PROTECTION_DEVICE_LOCK_SCREEN) })</ID>
+    <ID>MaxLineLength:NextAccountScreen.kt:&lt;no name provided&gt;$if</ID>
+    <ID>MaxLineLength:NextAccountScreen.kt:onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -&gt; CurrencyUnit?</ID>
+    <ID>MaxLineLength:NextBottomBar.kt:NextNavigationRail(previewTabs, selectedTab = selectedTab, onTabClick = { selectedTab = it }, badges = setOf(NextTab.Menu))</ID>
+    <ID>MaxLineLength:NextData.kt:NextData$ProviderReceiptDatabase(context.myApplication, context.injector.repository(), context.injector.currencyContext())</ID>
+    <ID>MaxLineLength:NextData.kt:NextData$val categories = CategoryRepository(ledgerSource, CategoryStore(dataStore), ProviderCategoryWriting(context.contentResolver), scope)</ID>
+    <ID>MaxLineLength:NextData.kt:NextData$val tags = TagRepository(ledgerSource, TagStore(dataStore), scope, RepositoryTagDatabase(context.injector.repository()))</ID>
+    <ID>MaxLineLength:NextFeature.kt:RowDecorations$val payeeImageDialog: (@Composable (payee: DisplayParty, transaction: Transaction2?, onDismiss: () -&gt; Unit) -&gt; Unit)? = null</ID>
+    <ID>MaxLineLength:NextFeatures.kt:NextFeatures.Companion$val</ID>
+    <ID>MaxLineLength:NextLayout.kt:MenuItem.NavigationMode.FIXED_BOTTOM -&gt; calculated</ID>
+    <ID>MaxLineLength:NextLayout.kt:MenuItem.NavigationMode.TOGGLEABLE_RAIL -&gt; if (isNavigationVisible) NavigationSuiteType.NavigationRail else NavigationSuiteType.None</ID>
+    <ID>MaxLineLength:NextLayout.kt:if (isLandscape) NavigationSuiteType.WideNavigationRailCollapsed else NavigationSuiteType.ShortNavigationBarMedium</ID>
+    <ID>MaxLineLength:NextLayoutTest.kt:NextLayoutTest$navigationSuiteType(MenuItem.NavigationMode.ADAPTIVE, calculated, isNavigationVisible = true, isLandscape = false)</ID>
+    <ID>MaxLineLength:NextLayoutTest.kt:NextLayoutTest$navigationSuiteType(MenuItem.NavigationMode.ADAPTIVE, calculated, isNavigationVisible = true, isLandscape = true)</ID>
+    <ID>MaxLineLength:NextLayoutTest.kt:NextLayoutTest$navigationSuiteType(MenuItem.NavigationMode.TOGGLEABLE_RAIL, calculated, isNavigationVisible = false, isLandscape = false)</ID>
+    <ID>MaxLineLength:NextMainScreen.kt:NextKey$/** The pages of the new design, the overview with the accounts at the bottom of the back stack; each area adds the keys of its pages here */</ID>
+    <ID>MaxLineLength:NextMainScreen.kt:if</ID>
+    <ID>MaxLineLength:NextMainScreen.kt:onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -&gt; CurrencyUnit?</ID>
+    <ID>MaxLineLength:NextMainScreen.kt:onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -&gt; CurrencyUnit? = { _, _, _, _, _ -&gt; null }</ID>
+    <ID>MaxLineLength:NextOnboarding.kt:NextOnboarding$stringResource(if (it.isSetUp) NextR.string.next_onboarding_sync_existing else NextR.string.next_onboarding_sync_new)</ID>
+    <ID>MaxLineLength:NextOverviewScreen.kt:labelColor = if (progress != null &amp;&amp; progress &gt; 1f) colors.expense else MaterialTheme.colorScheme.onSurfaceVariant</ID>
+    <ID>MaxLineLength:NextOverviewScreen.kt:onAddBudget</ID>
+    <ID>MaxLineLength:NextSettings.kt:NextSettings$appDir.documentFile.findFile(name)?.uri?.let { AppDirHelper.ensureContentUri(it, this@NextSettings) }</ID>
+    <ID>MaxLineLength:NextSettings.kt:NextSettings$pickedAppFiles = if (file.name in pickedAppFiles) pickedAppFiles - file.name else pickedAppFiles + file.name</ID>
+    <ID>MaxLineLength:NextSettings.kt:NextSettings$prefHandler.getKey(PrefKey.CRASHREPORT_USEREMAIL) -&gt; crashHandler.setUserEmail(sharedPreferences.getString(key, null))</ID>
+    <ID>MaxLineLength:NextSettings.kt:NextSettings$text = pluralStringResource(R.plurals.delete_files_confirmation_message, pickedAppFiles.size, pickedAppFiles.size)</ID>
+    <ID>MaxLineLength:NextSettings.kt:NextSettings.&lt;no name provided&gt;$PrefKey.FEATURE_UNINSTALL_FEATURES, PrefKey.FEATURE_UNINSTALL_LANGUAGES -&gt; featureManager.allowsUninstall()</ID>
+    <ID>MaxLineLength:NextSettings.kt:NextSettings.&lt;no name provided&gt;$if</ID>
+    <ID>MaxLineLength:NextSettings.kt:NextSettings.&lt;no name provided&gt;$prefKey == PrefKey.TELL_A_FRIEND</ID>
+    <ID>MaxLineLength:NextSettings.kt:NextSettings.&lt;no name provided&gt;$text.toIntOrNull()?.let { settings.edit().putInt(key, it.coerceAtLeast(spec.min ?: it)).apply() }</ID>
+    <ID>MaxLineLength:NextSettingsScreen.kt:DetailCard(Modifier.padding(top = 8.dp)) { SettingRows(entries, actions, onEdit, highlighted, onHighlightShown) }</ID>
+    <ID>MaxLineLength:NextSettingsScreen.kt:SettingsStart(actions, onBack) { group, highlighted -&gt; backStack.add(SettingsKey.Group(group, highlighted)) }</ID>
+    <ID>MaxLineLength:NextSettingsScreen.kt:listOfNotNull(groupTitles.getValue(entry.group), entry.section?.let(sectionTitles::getValue)).joinToString(" › ")</ID>
+    <ID>MaxLineLength:NextSettingsScreen.kt:private</ID>
+    <ID>MaxLineLength:NextSettingsScreen.kt:title</ID>
+    <ID>MaxLineLength:NextTransactionDetails.kt:MethodDialog(methods, editable.values.methodId, onSelect = change::changeMethod, onDismiss = { showMethod = false })</ID>
+    <ID>MaxLineLength:NextTransactionList.kt:details = listOfNotNull(transferLabel, commentLabel).filter { it != title }.takeIf { it.isNotEmpty() }?.joinToString(" · ")</ID>
+    <ID>MaxLineLength:NextTransactionList.kt:payeeImageDialog</ID>
+    <ID>MaxLineLength:PayeeReading.kt:it.getLong(KEY_ROWID)</ID>
+    <ID>MaxLineLength:ProviderCategoryWriting.kt:ProviderCategoryWriting$"$KEY_ROWID = ? AND ($KEY_CATID IS NULL" + (fromCategoryId?.let { " OR $KEY_CATID = $it" } ?: "") + ") AND $NOT_SEALED"</ID>
+    <ID>MaxLineLength:ProviderLedgerSource.kt:ProviderLedgerSource$)</ID>
+    <ID>MaxLineLength:ProviderLedgerSource.kt:ProviderLedgerSource$RawCategory(it.getLong(KEY_ROWID), it.getLongOrNull(KEY_PARENTID), it.getString(KEY_LABEL), it.getInt(KEY_TYPE))</ID>
+    <ID>MaxLineLength:ProviderLedgerSource.kt:ProviderLedgerSource$private</ID>
+    <ID>MaxLineLength:ProviderReceiptDatabase.kt:ProviderReceiptDatabase$arrayOf(KEY_ROWID, KEY_DATE, KEY_AMOUNT, KEY_PAYEEID, KEY_PAYEE_NAME, KEY_COMMENT, KEY_TRANSFER_ACCOUNT, KEY_CURRENCY, KEY_ACCOUNT_LABEL)</ID>
+    <ID>MaxLineLength:ProviderReceiptDatabase.kt:ProviderReceiptDatabase$override fun loadWaiting</ID>
+    <ID>MaxLineLength:ReceiptsFeature.kt:ReceiptSettings.Companion$val MODEL = InsightSetting("ITEM_GROUP_MODEL", SettingsGroup.ENTRY, SettingKind.ACTION, R.string.next_settings_item_group_model)</ID>
+    <ID>MaxLineLength:RepositoryTagDatabase.kt:RepositoryTagDatabase$override fun setTags</ID>
+    <ID>MaxLineLength:SavingTipsFeature.kt:SavingTipsFeature$override</ID>
+    <ID>MaxLineLength:SearchSheets.kt:ValueRow(stringResource(R.string.next_search_from), start?.let(dateFormatter::format) ?: open, { editing = true }, isFirst = true)</ID>
+    <ID>MaxLineLength:SearchSheets.kt:ValueRow(stringResource(R.string.next_search_until), end?.let(dateFormatter::format) ?: open, { editing = false })</ID>
+    <ID>MaxLineLength:SearchSheets.kt:if (PeriodPreset.of(criterion, today) == PeriodPreset.Last30Days) return stringResource(R.string.next_search_last_30_days)</ID>
+    <ID>MaxLineLength:SearchSheets.kt:is IdCriterion -&gt; if (criterion.values.isEmpty()) stringResource(R.string.next_search_none) else criterion.prettyPrint(context)</ID>
+    <ID>MaxLineLength:SearchSheets.kt:private</ID>
+    <ID>MaxLineLength:SearchSheets.kt:val</ID>
+    <ID>MaxLineLength:SearchSheets.kt:val criterion = selected.takeIf { it.isNotEmpty() }?.let { CrStatusCriterion(CrStatus.entries.filter { it in selected }) }</ID>
+    <ID>MaxLineLength:SearchSheets.kt:var preset by rememberSaveable { mutableStateOf(initialPreset ?: PeriodPreset.ThisMonth.takeIf { initial == null }) }</ID>
+    <ID>MaxLineLength:SettingsCatalog.kt:SettingsCatalog$SHARE_TARGET_USERNAME to "needs a field that stores in the secure data store, the upload URL can hold the login"</ID>
+    <ID>MaxLineLength:SettingsCatalogTest.kt:SettingsCatalogTest$.</ID>
+    <ID>MaxLineLength:SettingsSearchTest.kt:SettingsSearchTest$private val pngSize = entry(PrefKey.OPTIMIZE_PICTURE_MAX_SIZE, SettingsGroup.ENTRY, SettingsSection.ENTRY_ATTACHMENTS)</ID>
+    <ID>MaxLineLength:SettingsSearchTest.kt:SettingsSearchTest$searchSettings(query, listOf(theme, language, about, format, pngSize), titles::getValue, places::getValue, details::getValue)</ID>
+    <ID>MaxLineLength:StartPage.kt:fun</ID>
+    <ID>MaxLineLength:TagsFeature.kt:TagSettings.Companion$"REJECTED_SUGGESTIONS"</ID>
+    <ID>MaxLineLength:TagsFeature.kt:TagSettings.Companion$val RULES = InsightSetting("TAG_RULES", SettingsGroup.INSIGHTS, SettingKind.ACTION, R.string.next_settings_tag_rules)</ID>
+    <ID>MaxLineLength:TagsFeature.kt:TagsFeature$TagDetectionsViewModel(data.ledgerSource, data.tags.rows, data.contracts.facts, TagStore(data.dataStore), database)</ID>
+    <ID>MaxLineLength:TransactionEditForm.kt:MethodDialog(methods, draft.methodId, onSelect = { onChange(draft.copy(methodId = it)) }, onDismiss = { showMethod = false })</ID>
+    <ID>MaxLineLength:TransactionEditForm.kt:label = { stringResource(if (it) R.string.next_transaction_income else R.string.next_transaction_expense) }</ID>
+    <ID>MaxLineLength:TransactionEditViewModelTest.kt:TransactionEditViewModelTest$assertEquals(EditValues(-5000, transaction().values.date, transaction().values.valueDate, "Lidl", 1, null), store.saved.single())</ID>
+    <ID>MaxLineLength:TransactionEditingTest.kt:TransactionEditingTest$val draft = transaction.toDraft(',', zone).copy(amountText = "50", isIncome = true, payee = " ", comment = " Pizza ")</ID>
+    <ID>MaxLineLength:TransactionEditingTest.kt:TransactionEditingTest$val values = EditValues(amount = -100, date = date, valueDate = date, payee = null, methodId = null, comment = null)</ID>
+    <ID>MaxLineLength:TransactionEditingTest.kt:TransactionEditingTest$val values = EditValues(amount = -100, date = date, valueDate = valueDate, payee = null, methodId = null, comment = null)</ID>
+    <ID>MaxLineLength:TransactionStore.kt:RepositoryTransactionStore$)</ID>
+    <ID>ReturnCount:AccountDraft.kt:internal fun parseAmount: BigDecimal?</ID>
+    <ID>ReturnCount:ManageCategoriesPicker.kt:ManageCategoriesPicker$override fun parseResult: Pair&lt;Long, String&gt;?</ID>
+    <ID>ReturnCount:NextOverviewScreen.kt:private fun moveAccount: List&lt;OverviewSection&gt;?</ID>
+    <ID>ReturnCount:NextSettings.kt:NextSettings.&lt;no name provided&gt;$@Composable override fun control: SettingControl?</ID>
+    <ID>ReturnCount:NextSettings.kt:NextSettings.&lt;no name provided&gt;$override fun isVisible: Boolean</ID>
+    <ID>ReturnCount:SearchFilter.kt:SearchFilter.Companion$fun of: SearchFilter</ID>
+    <ID>ReturnCount:SearchValues.kt:fun parseAmount: Long?</ID>
+    <ID>ReturnCount:TransactionEditViewModel.kt:TransactionEditViewModel$override fun saveDraft</ID>
+    <ID>ReturnCount:TransactionEditing.kt:fun parseAmountText: Long?</ID>
+    <ID>ReturnCount:TransactionStore.kt:RepositoryTransactionStore$override suspend fun load: EditableTransaction?</ID>
+    <ID>SerialVersionUIDInSerializableClass:TransactionEditing.kt:EditDraft : Serializable</ID>
+    <ID>SerialVersionUIDInSerializableClass:TransactionEditing.kt:EditValues : Serializable</ID>
+    <ID>TooManyFunctions:NextFeature.kt:NextFeature</ID>
+    <ID>TooManyFunctions:NextOverviewScreen.kt:org.totschnig.myexpenses.next.NextOverviewScreen.kt</ID>
+    <ID>TooManyFunctions:NextSettings.kt:NextSettings : ProtectedFragmentActivity</ID>
+    <ID>TooManyFunctions:NextTransactionList.kt:org.totschnig.myexpenses.next.NextTransactionList.kt</ID>
+    <ID>TooManyFunctions:ProviderReceiptDatabase.kt:ProviderReceiptDatabase : ReceiptDatabase</ID>
+    <ID>TooManyFunctions:SettingsCatalog.kt:ScreenScope</ID>
+    <ID>TooManyFunctions:TransactionEditViewModel.kt:TransactionEditViewModel : ViewModelTransactionEditActions</ID>
+    <ID>WildcardImport:NativeSettings.kt:import org.totschnig.myexpenses.preference.PrefKey.*</ID>
+    <ID>WildcardImport:SettingTexts.kt:import org.totschnig.myexpenses.preference.PrefKey.*</ID>
+    <ID>WildcardImport:SettingsCatalog.kt:import org.totschnig.myexpenses.preference.PrefKey.*</ID>
+  </CurrentIssues>
+</SmellBaseline>

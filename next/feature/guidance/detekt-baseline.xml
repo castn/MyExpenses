@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>MaxLineLength:HintsViewModelTest.kt:HintsViewModelTest$listOf(LedgerTransaction(7, LocalDate.now(), -2500, accountId = 1, payeeName = "REWE", categoryId = categoryId))</ID>
+    <ID>MaxLineLength:PendingTipsSection.kt:stringResource(R.string.next_pending_deposit) to stringResource(R.string.next_pending_deposit_text)</ID>
+    <ID>MaxLineLength:PendingTipsSection.kt:stringResource(R.string.next_pending_drugstore) to stringResource(R.string.next_pending_drugstore_text)</ID>
+    <ID>MaxLineLength:PendingTipsSection.kt:stringResource(R.string.next_pending_item_groups) to stringResource(R.string.next_pending_item_groups_text)</ID>
+    <ID>MaxLineLength:PendingTipsSection.kt:stringResource(R.string.next_pending_outliers_text, stringResource(R.string.next_tab_analysis))</ID>
+    <ID>ReturnCount:HintViews.kt:@Composable fun OverviewHint</ID>
+  </CurrentIssues>
+</SmellBaseline>

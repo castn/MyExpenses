@@ -39,6 +39,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.totschnig.myexpenses.R
+import org.totschnig.myexpenses.model.ContribPayload
 import org.totschnig.myexpenses.adapter.SortableItem
 import org.totschnig.myexpenses.compose.AppTheme
 import org.totschnig.myexpenses.compose.accounts.AccountEvent
@@ -368,8 +369,7 @@ open class MyExpensesV2 : BaseMyExpenses<MyExpensesV2ViewModel>(),
                                             if (preCreateRowCheckForSealed()) {
                                                 when (event.action) {
                                                     Action.Scan -> contribFeatureRequested(
-                                                        ContribFeature.OCR,
-                                                        true
+                                                        ContribFeature.OCR
                                                     )
 
                                                     else -> createRow(
@@ -415,8 +415,7 @@ open class MyExpensesV2 : BaseMyExpenses<MyExpensesV2ViewModel>(),
                                         }
 
                                         is AppEvent.ShowUpgrade -> contribFeatureRequested(
-                                            event.feature,
-                                            true
+                                            event.feature
                                         )
                                     }
                                 }

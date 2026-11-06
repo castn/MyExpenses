@@ -48,6 +48,7 @@ import org.totschnig.myexpenses.dialog.SelectDefaultTransferCategoryDialogFragme
 import org.totschnig.myexpenses.dialog.SelectDefaultTransferCategoryDialogFragment.Companion.SELECT_CATEGORY_REQUEST
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.model.ContribFeature
+import org.totschnig.myexpenses.model.ContribPayload
 import org.totschnig.myexpenses.next.NextData
 import org.totschnig.myexpenses.next.NextFeatures
 import org.totschnig.myexpenses.next.NextTheme
@@ -75,7 +76,6 @@ import org.totschnig.myexpenses.widget.BudgetWidget
 import org.totschnig.myexpenses.widget.TemplateWidget
 import org.totschnig.myexpenses.widget.WIDGET_CONTEXT_CHANGED
 import org.totschnig.myexpenses.widget.updateWidgets
-import java.io.Serializable
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -456,7 +456,7 @@ class NextSettings : ProtectedFragmentActivity() {
         settingsViewModel.loadAppData()
     }
 
-    override fun contribFeatureCalled(feature: ContribFeature, tag: Serializable?) {
+    override fun contribFeatureCalled(feature: ContribFeature, tag: ContribPayload?) {
         if (feature == ContribFeature.CSV_IMPORT) {
             startActivity(Intent(this, CsvImportActivity::class.java))
         } else super.contribFeatureCalled(feature, tag)

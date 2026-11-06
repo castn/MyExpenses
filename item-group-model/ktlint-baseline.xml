@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<baseline version="1.0">
+    <file name="src/main/java/org/totschnig/itemgroupmodel/Features.kt">
+        <error line="12" column="30" source="standard:trailing-comma-on-declaration-site" />
+        <error line="33" column="30" source="standard:property-wrapping" />
+        <error line="33" column="101" source="standard:max-line-length" />
+        <error line="37" column="45" source="standard:function-signature" />
+        <error line="64" column="74" source="standard:function-signature" />
+    </file>
+    <file name="src/main/java/org/totschnig/itemgroupmodel/Normalize.kt">
+        <error line="21" column="31" source="standard:trailing-comma-on-call-site" />
+    </file>
+    <file name="src/main/java/org/totschnig/itemgroupmodel/ProductGroupModel.kt">
+        <error line="18" column="21" source="standard:trailing-comma-on-declaration-site" />
+        <error line="40" column="33" source="standard:trailing-comma-on-declaration-site" />
+        <error line="117" column="24" source="standard:parameter-list-wrapping" />
+        <error line="117" column="35" source="standard:parameter-list-wrapping" />
+        <error line="117" column="39" source="standard:function-signature" />
+        <error line="117" column="49" source="standard:argument-list-wrapping" />
+        <error line="117" column="55" source="standard:argument-list-wrapping" />
+        <error line="117" column="62" source="standard:function-literal" />
+        <error line="117" column="75" source="standard:argument-list-wrapping" />
+        <error line="117" column="77" source="standard:argument-list-wrapping" />
+        <error line="117" column="79" source="standard:function-literal" />
+        <error line="117" column="90" source="standard:argument-list-wrapping" />
+        <error line="117" column="101" source="standard:max-line-length" />
+        <error line="117" column="104" source="standard:argument-list-wrapping" />
+        <error line="151" column="36" source="standard:argument-list-wrapping" />
+        <error line="151" column="49" source="standard:argument-list-wrapping" />
+        <error line="152" column="45" source="standard:argument-list-wrapping" />
+        <error line="152" column="69" source="standard:trailing-comma-on-call-site" />
+        <error line="156" column="65" source="standard:trailing-comma-on-call-site" />
+    </file>
+    <file name="src/test/java/org/totschnig/itemgroupmodel/GoldenTest.kt">
+        <error line="10" column="38" source="standard:function-signature" />
+        <error line="10" column="68" source="standard:argument-list-wrapping" />
+        <error line="10" column="88" source="standard:argument-list-wrapping" />
+        <error line="10" column="100" source="standard:max-line-length" />
+        <error line="53" column="23" source="standard:binary-expression-wrapping" />
+        <error line="53" column="38" source="standard:argument-list-wrapping" />
+        <error line="53" column="54" source="standard:argument-list-wrapping" />
+        <error line="53" column="64" source="standard:argument-list-wrapping" />
+        <error line="53" column="74" source="standard:argument-list-wrapping" />
+        <error line="53" column="91" source="standard:argument-list-wrapping" />
+        <error line="53" column="101" source="standard:max-line-length" />
+        <error line="53" column="104" source="standard:argument-list-wrapping" />
+        <error line="53" column="105" source="standard:trailing-comma-on-call-site" />
+        <error line="59" column="39" source="standard:argument-list-wrapping" />
+        <error line="59" column="45" source="standard:argument-list-wrapping" />
+        <error line="59" column="59" source="standard:function-literal" />
+        <error line="59" column="66" source="standard:function-literal" />
+        <error line="59" column="69" source="standard:argument-list-wrapping" />
+        <error line="59" column="86" source="standard:argument-list-wrapping" />
+        <error line="59" column="92" source="standard:argument-list-wrapping" />
+        <error line="59" column="93" source="standard:argument-list-wrapping" />
+        <error line="59" column="101" source="standard:max-line-length" />
+    </file>
+    <file name="src/test/java/org/totschnig/itemgroupmodel/ModelGoldenTest.kt">
+        <error line="16" column="42" source="standard:function-signature" />
+        <error line="16" column="72" source="standard:argument-list-wrapping" />
+        <error line="16" column="92" source="standard:argument-list-wrapping" />
+        <error line="16" column="100" source="standard:max-line-length" />
+        <error line="18" column="39" source="standard:function-signature" />
+        <error line="18" column="49" source="standard:argument-list-wrapping" />
+        <error line="18" column="56" source="standard:argument-list-wrapping" />
+        <error line="18" column="60" source="standard:argument-list-wrapping" />
+        <error line="18" column="70" source="standard:argument-list-wrapping" />
+        <error line="18" column="77" source="standard:argument-list-wrapping" />
+        <error line="18" column="81" source="standard:argument-list-wrapping" />
+        <error line="18" column="91" source="standard:argument-list-wrapping" />
+        <error line="18" column="99" source="standard:argument-list-wrapping" />
+        <error line="18" column="100" source="standard:max-line-length" />
+        <error line="18" column="103" source="standard:argument-list-wrapping" />
+        <error line="21" column="29" source="standard:argument-list-wrapping" />
+        <error line="21" column="32" source="standard:argument-list-wrapping" />
+        <error line="21" column="66" source="standard:function-literal" />
+        <error line="21" column="86" source="standard:binary-expression-wrapping" />
+        <error line="21" column="101" source="standard:max-line-length" />
+        <error line="21" column="102" source="standard:argument-list-wrapping" />
+        <error line="21" column="105" source="standard:argument-list-wrapping" />
+        <error line="21" column="107" source="standard:function-literal" />
+        <error line="39" column="30" source="standard:argument-list-wrapping" />
+        <error line="39" column="43" source="standard:function-literal" />
+        <error line="39" column="44" source="standard:wrapping" />
+        <error line="39" column="54" source="standard:function-literal" />
+        <error line="39" column="57" source="standard:argument-list-wrapping" />
+        <error line="39" column="68" source="standard:argument-list-wrapping" />
+        <error line="39" column="74" source="standard:argument-list-wrapping" />
+        <error line="39" column="81" source="standard:argument-list-wrapping" />
+        <error line="39" column="94" source="standard:argument-list-wrapping" />
+        <error line="39" column="100" source="standard:function-literal" />
+        <error line="39" column="101" source="standard:wrapping" />
+        <error line="39" column="101" source="standard:max-line-length" />
+        <error line="39" column="111" source="standard:function-literal" />
+        <error line="39" column="114" source="standard:argument-list-wrapping" />
+        <error line="39" column="118" source="standard:argument-list-wrapping" />
+        <error line="48" column="22" source="standard:argument-list-wrapping" />
+        <error line="48" column="29" source="standard:argument-list-wrapping" />
+        <error line="48" column="40" source="standard:argument-list-wrapping" />
+        <error line="48" column="51" source="standard:argument-list-wrapping" />
+        <error line="48" column="60" source="standard:argument-list-wrapping" />
+        <error line="48" column="69" source="standard:argument-list-wrapping" />
+        <error line="48" column="82" source="standard:argument-list-wrapping" />
+        <error line="48" column="91" source="standard:argument-list-wrapping" />
+        <error line="48" column="94" source="standard:argument-list-wrapping" />
+        <error line="48" column="101" source="standard:max-line-length" />
+        <error line="48" column="106" source="standard:argument-list-wrapping" />
+    </file>
+</baseline>

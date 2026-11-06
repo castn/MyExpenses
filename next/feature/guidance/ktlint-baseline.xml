@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<baseline version="1.0">
+    <file name="src/main/java/org/totschnig/myexpenses/next/feature/guidance/DataReadinessViewModel.kt">
+        <error line="16" column="85" source="standard:argument-list-wrapping" />
+        <error line="16" column="101" source="standard:argument-list-wrapping" />
+        <error line="16" column="101" source="standard:max-line-length" />
+        <error line="16" column="105" source="standard:argument-list-wrapping" />
+    </file>
+    <file name="src/main/java/org/totschnig/myexpenses/next/feature/guidance/HintViews.kt">
+        <error line="41" column="52" source="standard:argument-list-wrapping" />
+        <error line="41" column="99" source="standard:argument-list-wrapping" />
+        <error line="41" column="101" source="standard:max-line-length" />
+        <error line="42" column="1" source="standard:indent" />
+        <error line="42" column="38" source="standard:argument-list-wrapping" />
+        <error line="42" column="87" source="standard:argument-list-wrapping" />
+        <error line="42" column="101" source="standard:max-line-length" />
+        <error line="42" column="102" source="standard:argument-list-wrapping" />
+        <error line="42" column="115" source="standard:argument-list-wrapping" />
+        <error line="45" column="1" source="standard:indent" />
+        <error line="45" column="38" source="standard:argument-list-wrapping" />
+        <error line="45" column="79" source="standard:argument-list-wrapping" />
+        <error line="45" column="94" source="standard:argument-list-wrapping" />
+        <error line="45" column="101" source="standard:max-line-length" />
+        <error line="45" column="107" source="standard:argument-list-wrapping" />
+        <error line="48" column="1" source="standard:indent" />
+        <error line="53" column="28" source="standard:binary-expression-wrapping" />
+        <error line="53" column="101" source="standard:max-line-length" />
+        <error line="68" column="17" source="standard:parameter-list-wrapping" />
+        <error line="68" column="17" source="standard:function-signature" />
+        <error line="68" column="44" source="standard:parameter-list-wrapping" />
+        <error line="68" column="44" source="standard:function-signature" />
+        <error line="68" column="75" source="standard:parameter-list-wrapping" />
+        <error line="68" column="75" source="standard:function-signature" />
+        <error line="68" column="101" source="standard:max-line-length" />
+        <error line="68" column="104" source="standard:parameter-list-wrapping" />
+        <error line="68" column="104" source="standard:function-signature" />
+        <error line="73" column="29" source="standard:argument-list-wrapping" />
+        <error line="73" column="46" source="standard:argument-list-wrapping" />
+        <error line="73" column="59" source="standard:binary-expression-wrapping" />
+        <error line="73" column="78" source="standard:argument-list-wrapping" />
+        <error line="73" column="92" source="standard:argument-list-wrapping" />
+        <error line="73" column="96" source="standard:binary-expression-wrapping" />
+        <error line="73" column="101" source="standard:max-line-length" />
+    </file>
+    <file name="src/main/java/org/totschnig/myexpenses/next/feature/guidance/HintsViewModel.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="34" column="33" source="standard:trailing-comma-on-declaration-site" />
+        <error line="38" column="81" source="standard:argument-list-wrapping" />
+        <error line="38" column="97" source="standard:argument-list-wrapping" />
+        <error line="38" column="101" source="standard:argument-list-wrapping" />
+        <error line="38" column="101" source="standard:max-line-length" />
+        <error line="45" column="68" source="standard:function-literal" />
+        <error line="45" column="94" source="standard:function-literal" />
+        <error line="45" column="95" source="standard:wrapping" />
+        <error line="45" column="101" source="standard:max-line-length" />
+        <error line="45" column="110" source="standard:function-literal" />
+        <error line="45" column="112" source="standard:function-literal" />
+        <error line="64" column="25" source="standard:binary-expression-wrapping" />
+        <error line="64" column="39" source="standard:argument-list-wrapping" />
+        <error line="64" column="52" source="standard:argument-list-wrapping" />
+        <error line="64" column="64" source="standard:argument-list-wrapping" />
+        <error line="64" column="95" source="standard:argument-list-wrapping" />
+        <error line="64" column="101" source="standard:max-line-length" />
+        <error line="64" column="111" source="standard:argument-list-wrapping" />
+    </file>
+    <file name="src/main/java/org/totschnig/myexpenses/next/feature/guidance/PendingTipsSection.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="43" column="40" source="standard:argument-list-wrapping" />
+        <error line="43" column="73" source="standard:argument-list-wrapping" />
+        <error line="43" column="77" source="standard:binary-expression-wrapping" />
+        <error line="43" column="93" source="standard:argument-list-wrapping" />
+        <error line="43" column="101" source="standard:max-line-length" />
+        <error line="43" column="131" source="standard:argument-list-wrapping" />
+        <error line="46" column="40" source="standard:argument-list-wrapping" />
+        <error line="46" column="71" source="standard:argument-list-wrapping" />
+        <error line="46" column="75" source="standard:binary-expression-wrapping" />
+        <error line="46" column="91" source="standard:argument-list-wrapping" />
+        <error line="46" column="101" source="standard:max-line-length" />
+        <error line="46" column="127" source="standard:argument-list-wrapping" />
+        <error line="49" column="40" source="standard:argument-list-wrapping" />
+        <error line="49" column="69" source="standard:argument-list-wrapping" />
+        <error line="49" column="73" source="standard:binary-expression-wrapping" />
+        <error line="49" column="89" source="standard:argument-list-wrapping" />
+        <error line="49" column="101" source="standard:max-line-length" />
+        <error line="49" column="123" source="standard:argument-list-wrapping" />
+        <error line="52" column="1" source="standard:indent" />
+        <error line="52" column="44" source="standard:argument-list-wrapping" />
+        <error line="52" column="81" source="standard:argument-list-wrapping" />
+        <error line="52" column="96" source="standard:argument-list-wrapping" />
+        <error line="52" column="101" source="standard:max-line-length" />
+        <error line="52" column="122" source="standard:argument-list-wrapping" />
+        <error line="52" column="123" source="standard:argument-list-wrapping" />
+    </file>
+    <file name="src/test/java/org/totschnig/myexpenses/next/feature/guidance/HintsViewModelTest.kt">
+        <error line="3" column="1" source="standard:import-ordering" />
+        <error line="39" column="16" source="standard:argument-list-wrapping" />
+        <error line="39" column="34" source="standard:argument-list-wrapping" />
+        <error line="39" column="37" source="standard:argument-list-wrapping" />
+        <error line="39" column="54" source="standard:argument-list-wrapping" />
+        <error line="39" column="61" source="standard:argument-list-wrapping" />
+        <error line="39" column="76" source="standard:argument-list-wrapping" />
+        <error line="39" column="96" source="standard:argument-list-wrapping" />
+        <error line="39" column="101" source="standard:max-line-length" />
+        <error line="39" column="119" source="standard:argument-list-wrapping" />
+        <error line="39" column="120" source="standard:argument-list-wrapping" />
+        <error line="48" column="21" source="standard:argument-list-wrapping" />
+        <error line="48" column="38" source="standard:argument-list-wrapping" />
+        <error line="48" column="51" source="standard:argument-list-wrapping" />
+        <error line="48" column="61" source="standard:argument-list-wrapping" />
+        <error line="48" column="62" source="standard:argument-list-wrapping" />
+        <error line="48" column="65" source="standard:argument-list-wrapping" />
+        <error line="48" column="82" source="standard:argument-list-wrapping" />
+        <error line="48" column="86" source="standard:argument-list-wrapping" />
+        <error line="48" column="89" source="standard:argument-list-wrapping" />
+        <error line="48" column="99" source="standard:argument-list-wrapping" />
+        <error line="48" column="101" source="standard:max-line-length" />
+        <error line="48" column="108" source="standard:argument-list-wrapping" />
+    </file>
+</baseline>

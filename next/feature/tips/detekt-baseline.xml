@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CyclomaticComplexMethod:SavingTipsScreen.kt:@Composable private fun TipCard</ID>
+    <ID>LongMethod:SavingTipTexts.kt:@Composable internal fun SavingTip.text: TipText</ID>
+    <ID>LongMethod:SavingTipsScreen.kt:@Composable private fun TipCard</ID>
+    <ID>MagicNumber:SavingTipTexts.kt:100</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:0.6f</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:0.8f</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:10L</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:12</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:1399</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:175</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:1799</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:27</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:299</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:3</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:30</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:4</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:5</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:9200</ID>
+    <ID>MagicNumber:SavingTipsScreen.kt:9800</ID>
+    <ID>MatchingDeclarationName:SavingTipTexts.kt:TipText</ID>
+    <ID>MatchingDeclarationName:SavingTipsFlow.kt:SavingTipsKey : NavKey</ID>
+    <ID>MatchingDeclarationName:SavingTipsScreen.kt:TipNavigation</ID>
+    <ID>MaxLineLength:SavingTipTexts.kt:R.plurals.next_tips_small_text</ID>
+    <ID>MaxLineLength:SavingTipTexts.kt:message = pluralStringResource(R.plurals.next_tips_drugstore_text, itemCount, itemCount, amount(yearlyAmount))</ID>
+    <ID>MaxLineLength:SavingTipTexts.kt:message = pluralStringResource(R.plurals.next_tips_outliers_text, categories.size, categories.size, amount(yearlyAmount))</ID>
+    <ID>MaxLineLength:SavingTipTexts.kt:message = pluralStringResource(R.plurals.next_tips_pots_text, PotsOverspent.PERIODS, PotsOverspent.MIN_OVERSPENT, PotsOverspent.PERIODS)</ID>
+    <ID>MaxLineLength:SavingTipsFlow.kt:SavingTipsContent(tipsViewModel, fixedTransactions, currency, state, onOpenContract, onInsightSettings, transactionDetails, footer)</ID>
+    <ID>MaxLineLength:SavingTipsFlow.kt:content.state.valueOrNull?.let { it.tips + it.dismissed }?.firstNotNullOfOrNull { it.transactionGroups[key.key] }</ID>
+    <ID>MaxLineLength:SavingTipsFlow.kt:entry&lt;SavingTipsKey.Home&gt;(metadata = ListPage(R.string.next_pick_saving_tip)) { SavingTipsHome(current, backStack) }</ID>
+    <ID>MaxLineLength:SavingTipsFlow.kt:entry&lt;SavingTipsKey.Transactions&gt;(metadata = DetailPage()) { key -&gt; TransactionsEntry(current, backStack, key) }</ID>
+    <ID>MaxLineLength:SavingTipsFlow.kt:onShowTransactions = { key, title, subtitle -&gt; backStack.add(SavingTipsKey.Transactions(key, title, subtitle)) }</ID>
+    <ID>MaxLineLength:SavingTipsFlow.kt:private</ID>
+    <ID>MaxLineLength:SavingTipsScreen.kt:BankFeeGroup(BankFeeKind.ACCOUNT, List(12) { ContractTransaction(10L + it, today.minusMonths(it.toLong()), -299, 1) })</ID>
+    <ID>MaxLineLength:SavingTipsScreen.kt:ItemGroupRising.RECENT_MONTHS.toInt().let { pluralStringResource(R.plurals.next_tips_last_months, it, it) }</ID>
+    <ID>MaxLineLength:SavingTipsScreen.kt:SavingTipCard(AnalysisState.Ready(previewTips()), CurrencyInfo.Preview, onOpen = {}, modifier = Modifier.padding(16.dp))</ID>
+    <ID>MaxLineLength:SavingTipsScreen.kt:SpendingRow(it, currency, navigation, pluralStringResource(R.plurals.next_tips_purchases, it.count, it.count))</ID>
+    <ID>MaxLineLength:SavingTipsScreen.kt:stringResource(R.string.next_tips_pot_over, pot.overspent, PotsOverspent.PERIODS, amount(pot.averageOver))</ID>
+    <ID>MaxLineLength:SavingTipsScreen.kt:stringResource(R.string.next_tips_usually, formatter.format(tip.averages.getValue(it.key), currency))</ID>
+    <ID>MaxLineLength:SavingTipsScreen.kt:supportingText = pluralStringResource(R.plurals.next_tips_fee_count, group.transactions.size, group.transactions.size)</ID>
+    <ID>MaxLineLength:SavingTipsScreen.kt:supportingText = pluralStringResource(R.plurals.next_tips_fee_count, tip.transactions.size, tip.transactions.size)</ID>
+    <ID>ReturnCount:SavingTipsScreen.kt:@Composable fun SavingTipCard</ID>
+    <ID>TooManyFunctions:SavingTipsScreen.kt:org.totschnig.myexpenses.next.feature.tips.SavingTipsScreen.kt</ID>
+  </CurrentIssues>
+</SmellBaseline>

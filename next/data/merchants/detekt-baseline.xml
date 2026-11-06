@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>MagicNumber:MerchantLogoStore.kt:100</ID>
+    <ID>MagicNumber:MerchantLogoStore.kt:10_000</ID>
+    <ID>MaxLineLength:MerchantIcons.kt:MerchantIcons$"Netto" to "cart-shopping"</ID>
+    <ID>MaxLineLength:MerchantLogoStore.kt:HttpURLConnection.HTTP_OK -&gt; MerchantLogoStore.Fetched.Icon(connection.inputStream.use { it.readBytes() })</ID>
+    <ID>MaxLineLength:PayeeDomains.kt:payeeLooks(payees, entered, emptyMap(), withCatalog).mapNotNull { (id, look) -&gt; (look as? PayeeLook.Domain)?.let { id to it.domain } }.toMap()</ID>
+    <ID>ReturnCount:MerchantLogoStore.kt:private fun preparePng: MerchantLogoStore.Lookup</ID>
+  </CurrentIssues>
+</SmellBaseline>

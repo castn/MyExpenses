@@ -10,7 +10,7 @@ import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactions
 import org.totschnig.myexpenses.next.core.ui.merchants.PayeeImage
 import org.totschnig.myexpenses.ui.DisplayParty
 import org.totschnig.myexpenses.model.ContribFeature
-import java.io.Serializable
+import org.totschnig.myexpenses.model.ContribPayload
 import org.totschnig.myexpenses.viewmodel.data.Transaction2
 
 /**
@@ -72,7 +72,7 @@ interface NextFeature {
      * The user may now use [feature] of the licence, which the area asked for with [tag], see
      * `contribFeatureRequested`. True if it was the request of the area.
      */
-    fun onContribFeatureCalled(feature: ContribFeature, tag: Serializable?): Boolean = false
+    fun onContribFeatureCalled(feature: ContribFeature, tag: ContribPayload?): Boolean = false
 }
 
 /** What features may do with the pages of the new UI */

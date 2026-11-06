@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>DestructuringDeclarationWithTooManyEntries:SavingTipsRepository.kt:SavingTipsRepository$(contracts, tags, receipts, today, budget)</ID>
+    <ID>MagicNumber:SavingTip.kt:100</ID>
+    <ID>MagicNumber:SavingTip.kt:63</ID>
+    <ID>MaxLineLength:BankFees.kt:BankFee$BankFeeKind.OTHER to listOf("bankgebühr", "bankentgelt", "bank charge", "bank fee", "depotgebühr", "depotentgelt")</ID>
+    <ID>MaxLineLength:BankFees.kt:BankFee$BankFeeKind.OVERDRAFT to listOf("dispozins", "überziehungszins", "überziehungsentgelt", "sollzins", "overdraft")</ID>
+    <ID>MaxLineLength:BankFeesTest.kt:BankFeesTest$assertFalse(decisions.isDismissed(bankFees(fees + transaction(-175, comment = "Auslandseinsatzentgelt"), today)!!))</ID>
+    <ID>MaxLineLength:BankFeesTest.kt:BankFeesTest$transaction(-299, payee = "Sparkasse", comment = "Entgeltabrechnung Kontoführung", date = today.minusMonths(it.toLong()).minusDays(1))</ID>
+    <ID>MaxLineLength:ContractHabitsTest.kt:ContractHabitsTest$contract("ARAG", comment = "Beitrag", area = BuiltInArea.INSURANCE, interval = ContractInterval.QUARTERLY)</ID>
+    <ID>MaxLineLength:ContractHabitsTest.kt:ContractHabitsTest$contract("Allianz", "Hausratversicherung", interval = ContractInterval.YEARLY, since = today.minusMonths(13))</ID>
+    <ID>MaxLineLength:ContractKind.kt:ContractKind$GYM : ContractKind</ID>
+    <ID>MaxLineLength:ContractKind.kt:ContractKind$MUSIC_STREAMING : ContractKind</ID>
+    <ID>MaxLineLength:ContractKind.kt:ContractKind.Companion$fun</ID>
+    <ID>MaxLineLength:DuplicateContractsTest.kt:DuplicateContractsTest$ContractTransaction(nextId++, today.minusDays(3), -amount, 1, payeeName = payee, comment = comment, categoryPath = category)</ID>
+    <ID>MaxLineLength:DuplicateContractsTest.kt:DuplicateContractsTest$assertTrue(duplicateContracts(listOf(contract("Netflix"), contract("Disney+").copy(isActive = false))).isEmpty())</ID>
+    <ID>MaxLineLength:ReceiptTips.kt:ItemGroupRising.Companion$fun</ID>
+    <ID>MaxLineLength:ReceiptTips.kt:if</ID>
+    <ID>MaxLineLength:ReceiptTips.kt:private fun List&lt;ScannedPurchase&gt;.lastYear</ID>
+    <ID>MaxLineLength:ReceiptTipsTest.kt:ReceiptTipsTest$val</ID>
+    <ID>MaxLineLength:ReceiptTipsTest.kt:ReceiptTipsTest$val partlyReturned = purchase(20, item(ItemGroup.DRINKS, 2000), item(ItemGroup.DEPOSIT, 600), item(ItemGroup.DEPOSIT, -100))</ID>
+    <ID>MaxLineLength:ReceiptTipsTest.kt:ReceiptTipsTest$val purchases = scannedPurchases(listOf(withReceipt, without), mapOf(withReceipt.id to listOf(item(ItemGroup.DAIRY, 300))))</ID>
+    <ID>MaxLineLength:ReceiptTipsTest.kt:ReceiptTipsTest$val tip = depositNotReturned(listOf(paid, partlyReturned, purchase(400, item(ItemGroup.DEPOSIT, 5000))), today)!!</ID>
+    <ID>MaxLineLength:SavingTip.kt:ContractKind.CAR_INSURANCE</ID>
+    <ID>MaxLineLength:SavingTip.kt:SavingTip.PriceIncreases$override val facts: Set&lt;String&gt; get() = increases.mapTo(HashSet()) { "${it.contract.signature}:${it.sinceTransactionId}" }</ID>
+    <ID>MaxLineLength:SavingTip.kt:contracts.active</ID>
+    <ID>MaxLineLength:SavingTip.kt:fun</ID>
+    <ID>MaxLineLength:SavingTip.kt:val reference = payments.lastOrNull { !it.date.isAfter(start) } ?: payments.firstOrNull() ?: return@mapNotNull null</ID>
+    <ID>MaxLineLength:SavingTipTest.kt:SavingTipTest$assertNull(increases(contract(List(10) { 200000L } + List(4) { 210000L }, direction = ContractDirection.INCOME)))</ID>
+    <ID>MaxLineLength:SavingTipTest.kt:SavingTipTest$val increase = increases(contract(List(6) { 1000L } + List(4) { 1100L } + List(4) { 1200L }))!!.increases.single()</ID>
+    <ID>MaxLineLength:SavingTipTest.kt:SavingTipTest$val increase = increases(contract(listOf(30000L, 36000L), interval = ContractInterval.YEARLY))!!.increases.single()</ID>
+    <ID>MaxLineLength:SavingTipsRepository.kt:SavingTipsRepository$private</ID>
+    <ID>MaxLineLength:SpendingTips.kt:Outliers$data</ID>
+    <ID>MaxLineLength:SpendingTips.kt:SmallPurchases$data</ID>
+    <ID>MaxLineLength:SpendingTips.kt:private</ID>
+    <ID>MaxLineLength:SpendingTipsTest.kt:SpendingTipsTest$val leisure = months.map { debit(if (it == months.first()) 42000 else 18000, it.atDay(10), "Kino", "Freizeit &gt; Kino") }</ID>
+    <ID>MaxLineLength:TipStore.kt:TipStore$private suspend</ID>
+    <ID>ReturnCount:SpendingTips.kt:internal fun eatingOut: EatingOut?</ID>
+    <ID>ReturnCount:SpendingTips.kt:internal fun outliers: Outliers?</ID>
+  </CurrentIssues>
+</SmellBaseline>
