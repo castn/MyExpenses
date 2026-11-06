@@ -22,6 +22,19 @@ ext {
     targetSdkVersion = 36
 }
 
+// Local debug builds only: e.g. myexpenses.abiFilters=arm64-v8a,x86_64 in ~/.gradle/gradle.properties
+// packages native libraries (mlkit, sqlcrypt, …) only for these ABIs, which makes the APKs much smaller.
+def debugAbiFilters = providers.gradleProperty('myexpenses.abiFilters').orNull
+if (debugAbiFilters) {
+    subprojects {
+        ['com.android.application', 'com.android.dynamic-feature'].each { pluginId ->
+            plugins.withId(pluginId) {
+                android.buildTypes.debug.ndk.abiFilters.addAll(debugAbiFilters.split(',')*.trim())
+            }
+        }
+    }
+}
+
 allprojects { // Or subprojects {
     configurations {
         all { Configuration configuration ->
