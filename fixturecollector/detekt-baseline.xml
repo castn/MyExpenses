@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CyclomaticComplexMethod:Suggestion.kt:Suggestion$fun combine: ExpectedItem</ID>
+    <ID>LoopWithTooManyJumpStatements:Suggestion.kt:Suggestion$for</ID>
+    <ID>MagicNumber:Amounts.kt:100</ID>
+    <ID>MagicNumber:PhotoRedaction.kt:90</ID>
+    <ID>MagicNumber:Suggestion.kt:Suggestion$3</ID>
+    <ID>ReturnCount:Suggestion.kt:Suggestion$fun inline: String</ID>
+    <ID>TooGenericExceptionCaught:CollectorViewModel.kt:CollectorViewModel$e: Exception</ID>
+    <ID>TooManyFunctions:CollectorViewModel.kt:CollectorViewModel : AndroidViewModel</ID>
+    <ID>TooManyFunctions:FixtureStore.kt:FixtureStore</ID>
+  </CurrentIssues>
+</SmellBaseline>
