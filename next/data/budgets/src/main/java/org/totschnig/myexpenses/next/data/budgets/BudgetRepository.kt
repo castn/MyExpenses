@@ -37,9 +37,23 @@ class BudgetRepository(
 
     /** Everything but the period, null while loading or without consent */
     val input: SharedFlow<BudgetInput?> = combine(
-        combine(ledgerSource.ledger, ledgerSource.catalog, contractFacts, tagFacts, store.pots) { ledger, catalog, contracts, tags, pots ->
+        combine(
+            ledgerSource.ledger,
+            ledgerSource.catalog,
+            contractFacts,
+            tagFacts,
+            store.pots
+        ) { ledger, catalog, contracts, tags, pots ->
             if (ledger == null || contracts == null) null
-            else BudgetInput(ledger, pots, catalog.categoriesById, contracts.confirmed, contracts.salaries, tags.meanings, LocalDate.MIN)
+            else BudgetInput(
+                ledger,
+                pots,
+                catalog.categoriesById,
+                contracts.confirmed,
+                contracts.salaries,
+                tags.meanings,
+                LocalDate.MIN
+            )
         },
         ledgerSource.today,
         // Receipts are only needed for pots of item groups, the others need not wait for them

@@ -15,7 +15,15 @@ class CategoryInputsTest {
     fun leavesOutTransfersSplitsAndSealedTransactions() {
         val ledger = Ledger(
             listOf(
-                LedgerTransaction(1, today, amount = -1000, homeAmount = -1100, accountId = 1, payeeId = 7, categoryId = 3),
+                LedgerTransaction(
+                    1,
+                    today,
+                    amount = -1000,
+                    homeAmount = -1100,
+                    accountId = 1,
+                    payeeId = 7,
+                    categoryId = 3
+                ),
                 LedgerTransaction(2, today, amount = -2000, accountId = 1, transferAccountId = 2),
                 LedgerTransaction(3, today, amount = -3000, accountId = 1, isSplit = true),
                 LedgerTransaction(4, today, amount = -4000, accountId = 1, isSealed = true),

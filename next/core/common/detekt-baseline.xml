@@ -3,7 +3,5 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>MagicNumber:Perf.kt:1_000_000</ID>
-    <ID>MaxLineLength:IconCatalog.kt:IconCatalog$themes.flatMap { it.icons }.groupBy({ it.name }, { it.words }).mapValues { (_, words) -&gt; words.flatten().distinct() }</ID>
-    <ID>MaxLineLength:Perf.kt:val cpu = if (Thread.currentThread() === thread &amp;&amp; cpuStart &gt;= 0) "${(threadCpuNanos() - cpuStart) / 1_000_000} ms cpu" else "cpu ?"</ID>
   </CurrentIssues>
 </SmellBaseline>

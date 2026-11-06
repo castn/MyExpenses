@@ -72,8 +72,12 @@ data class Budget(
 
     init {
         when (grouping) {
-            Grouping.NONE -> if (start == null || end == null) throw IllegalArgumentException("start and date are required with Grouping.NONE")
-            else -> if (start != null || end != null) throw IllegalArgumentException("start and date are only allowed with Grouping.NONE")
+            Grouping.NONE -> if (start == null || end == null) throw IllegalArgumentException(
+                "start and date are required with Grouping.NONE"
+            )
+            else -> if (start != null || end != null) throw IllegalArgumentException(
+                "start and date are only allowed with Grouping.NONE"
+            )
         }
     }
 

@@ -5,9 +5,6 @@
     <ID>CyclomaticComplexMethod:AbstractOcrHandlerImpl.kt:AbstractOcrHandlerImpl$fun processTextRecognitionResult: OcrResult</ID>
     <ID>LongMethod:AbstractOcrHandlerImpl.kt:AbstractOcrHandlerImpl$fun processTextRecognitionResult: OcrResult</ID>
     <ID>LongMethod:OcrHandlerImplTest.kt:OcrHandlerImplTest.Companion$@JvmStatic @Parameterized.Parameters(name="locale_for_{0}_should_be_{1}") fun data</ID>
-    <ID>MaxLineLength:AbstractOcrHandlerImpl.kt:AbstractOcrHandlerImpl$(line.bOr0() - totalBlock.bOr0()).absoluteValue.coerceAtMost((line.tOr0() - totalBlock.tOr0()).absoluteValue)</ID>
-    <ID>MaxLineLength:AbstractOcrHandlerImpl.kt:AbstractOcrHandlerImpl$// We might receive data or time values split into adjacent elements, which prevents us from finding them, if we work on elements alone</ID>
-    <ID>MaxLineLength:AbstractOcrHandlerImpl.kt:AbstractOcrHandlerImpl$// if we do not find any data by working on individual elements, we iterate again over pairs, then triples of elements</ID>
     <ID>TooGenericExceptionThrown:ScanPreviewViewModel.kt:ScanPreviewViewModel$throw Exception("Received null intent")</ID>
     <ID>TooManyFunctions:AbstractOcrHandlerImpl.kt:AbstractOcrHandlerImpl : OcrHandler</ID>
   </CurrentIssues>

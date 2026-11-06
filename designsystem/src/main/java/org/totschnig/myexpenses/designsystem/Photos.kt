@@ -63,7 +63,9 @@ fun MarkedPhoto(
         val scale = widthPx / bitmap.width
         val photoHeightPx = bitmap.height * scale
         val windowPx = collapsedHeight?.let { with(density) { it.toPx() } }?.coerceAtMost(photoHeightPx)
-        val shift = if (windowPx == null) 0f else focus?.let { (it.center.y * scale - windowPx / 2).coerceIn(0f, photoHeightPx - windowPx) } ?: 0f
+        val shift = if (windowPx == null) 0f else focus
+            ?.let { (it.center.y * scale - windowPx / 2).coerceIn(0f, photoHeightPx - windowPx) } ?:
+            0f
         val frame = if (windowPx == null) Modifier else Modifier.height(with(density) { windowPx.toDp() })
         Box(frame.clipToBounds()) {
             Image(

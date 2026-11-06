@@ -234,7 +234,12 @@ private fun TipCard(
 
             is SmallPurchases -> Column(Modifier.padding(top = 8.dp)) {
                 tip.payees.forEach {
-                    SpendingRow(it, currency, navigation, pluralStringResource(R.plurals.next_tips_purchases, it.count, it.count))
+                    SpendingRow(
+                        it,
+                        currency,
+                        navigation,
+                        pluralStringResource(R.plurals.next_tips_purchases, it.count, it.count)
+                    )
                 }
             }
 
@@ -242,7 +247,11 @@ private fun TipCard(
                 val title = EatingOut.DAYS.toInt().let { pluralStringResource(R.plurals.next_tips_last_days, it, it) }
                 NavigationRow(
                     title = title,
-                    supportingText = pluralStringResource(R.plurals.next_tips_fee_count, tip.transactions.size, tip.transactions.size),
+                    supportingText = pluralStringResource(
+                        R.plurals.next_tips_fee_count,
+                        tip.transactions.size,
+                        tip.transactions.size
+                    ),
                     onClick = { navigation.onShowTransactions(EatingOut.ID, text.title, title) },
                     value = LocalAmountFormatter.current.format(tip.recent, currency),
                     valueColor = LocalSemanticColors.current.expense
@@ -268,7 +277,10 @@ private fun TipCard(
                 tip.categories.forEach {
                     SpendingRow(
                         it, currency, navigation,
-                        stringResource(R.string.next_tips_usually, formatter.format(tip.averages.getValue(it.key), currency)),
+                        stringResource(
+                            R.string.next_tips_usually,
+                            formatter.format(tip.averages.getValue(it.key), currency)
+                        ),
                         subtitle = rememberMonthFormatter().format(tip.month)
                     )
                 }
@@ -294,7 +306,9 @@ private fun TipCard(
 
             is ItemGroupRising -> ScannedPurchasesRow(
                 tip.id, tip.transactions.size, text.title,
-                ItemGroupRising.RECENT_MONTHS.toInt().let { pluralStringResource(R.plurals.next_tips_last_months, it, it) }, navigation
+                ItemGroupRising.RECENT_MONTHS.toInt().let {
+                    pluralStringResource(R.plurals.next_tips_last_months, it, it)
+                }, navigation
             )
 
             is DepositNotReturned -> ScannedPurchasesRow(
@@ -310,7 +324,12 @@ private fun TipCard(
                 tip.pots.forEachIndexed { index, pot ->
                     InfoRow(
                         pot.name,
-                        stringResource(R.string.next_tips_pot_over, pot.overspent, PotsOverspent.PERIODS, amount(pot.averageOver)),
+                        stringResource(
+                            R.string.next_tips_pot_over,
+                            pot.overspent,
+                            PotsOverspent.PERIODS,
+                            amount(pot.averageOver)
+                        ),
                         isFirst = index == 0
                     )
                 }
@@ -384,7 +403,8 @@ private fun BankFeeRow(group: BankFeeGroup, currency: CurrencyInfo, navigation: 
     val subtitle = stringResource(R.string.next_tips_last_year)
     NavigationRow(
         title = title,
-        supportingText = pluralStringResource(R.plurals.next_tips_fee_count, group.transactions.size, group.transactions.size),
+        supportingText =
+            pluralStringResource(R.plurals.next_tips_fee_count, group.transactions.size, group.transactions.size),
         onClick = { navigation.onShowTransactions(SavingTip.BankFees.keyOf(group.kind), title, subtitle) },
         value = LocalAmountFormatter.current.format(group.amount, currency),
         valueColor = LocalSemanticColors.current.expense
@@ -474,7 +494,10 @@ private fun previewTips(): SavingTipsOverview {
         dismissed = listOf(
             SavingTip.BankFees(
                 listOf(
-                    BankFeeGroup(BankFeeKind.ACCOUNT, List(12) { ContractTransaction(10L + it, today.minusMonths(it.toLong()), -299, 1) }),
+                    BankFeeGroup(
+                        BankFeeKind.ACCOUNT,
+                        List(12) { ContractTransaction(10L + it, today.minusMonths(it.toLong()), -299, 1) }
+                    ),
                     BankFeeGroup(BankFeeKind.FOREIGN, listOf(ContractTransaction(30, today.minusMonths(4), -175, 1)))
                 )
             )
@@ -509,7 +532,12 @@ private fun SavingTipsEmptyPreview() {
 private fun SavingTipCardPreview() {
     NextPreviewTheme {
         Surface(color = MaterialTheme.colorScheme.surfaceContainer) {
-            SavingTipCard(AnalysisState.Ready(previewTips()), CurrencyInfo.Preview, onOpen = {}, modifier = Modifier.padding(16.dp))
+            SavingTipCard(
+                AnalysisState.Ready(previewTips()),
+                CurrencyInfo.Preview,
+                onOpen = {},
+                modifier = Modifier.padding(16.dp)
+            )
         }
     }
 }

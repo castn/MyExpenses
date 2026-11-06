@@ -89,7 +89,10 @@ class CategorySuggester(
 
     /** Categories of the earlier transactions by word, see [wordsOf] */
     private val wordCategories: Map<String, List<Long>> =
-        categorized.flatMap { input -> input.wordsOf().map { it to input.categoryId!! } }.groupBy({ it.first }, { it.second })
+        categorized.flatMap { input -> input.wordsOf().map { it to input.categoryId!! } }.groupBy(
+            { it.first },
+            { it.second }
+        )
 
     private val categoriesById = categories.associateBy { it.id }
 
@@ -162,7 +165,9 @@ class CategorySuggester(
         val direction = if (amount < 0) "-" else "+"
         return Words.normalize(listOfNotNull(payeeName, comment).joinToString(" "))
             .split(" ")
-            .filterTo(HashSet()) { word -> word.length >= MIN_WORD_LENGTH && word.all { it.isLetter() } && word !in STOP_WORDS }
+            .filterTo(HashSet()) { word ->
+                word.length >= MIN_WORD_LENGTH && word.all { it.isLetter() } && word !in STOP_WORDS
+            }
             .mapTo(HashSet()) { "$direction$it" }
     }
 
@@ -185,13 +190,55 @@ class CategorySuggester(
         /** Words of payment methods, legal forms and filler words, which tell nothing about the purchase */
         private val STOP_WORDS = setOf(
             "sepa", "lastschrift", "basislastschrift", "kartenzahlung", "karte", "kartennr", "girocard", "debitkarte",
-            "visa", "mastercard", "maestro", "apple", "google", "pay", "zahlung", "überweisung", "dauerauftrag", "gutschrift",
-            "einzug", "mandat", "mandatsref", "gläubiger", "glaeubiger", "end", "ref", "kundenref", "referenz", "datum", "uhr",
+            "visa",
+            "mastercard",
+            "maestro",
+            "apple",
+            "google",
+            "pay",
+            "zahlung",
+            "überweisung",
+            "dauerauftrag",
+            "gutschrift",
+            "einzug",
+            "mandat",
+            "mandatsref",
+            "gläubiger",
+            "glaeubiger",
+            "end",
+            "ref",
+            "kundenref",
+            "referenz",
+            "datum",
+            "uhr",
             "folgenr", "verfalld", "gmbh", "und", "der", "die", "das", "den", "dem", "des", "vom", "fuer", "für", "mit",
-            "bei", "nach", "ohne", "the", "and", "for", "from", "card", "payment", "purchase", "debit", "credit", "transfer",
+            "bei",
+            "nach",
+            "ohne",
+            "the",
+            "and",
+            "for",
+            "from",
+            "card",
+            "payment",
+            "purchase",
+            "debit",
+            "credit",
+            "transfer",
             "ltd", "inc", "llc", "markt", "filiale", "sagt", "danke", "deutschland", "germany", "gmbhco", "kgaa",
             // Payment services and their purposes, see [PaymentService]
-            "paypal", "klarna", "europe", "sarl", "cie", "sca", "ihr", "ihre", "einkauf", "bestellung", "amazon", "amzn",
+            "paypal",
+            "klarna",
+            "europe",
+            "sarl",
+            "cie",
+            "sca",
+            "ihr",
+            "ihre",
+            "einkauf",
+            "bestellung",
+            "amazon",
+            "amzn",
             "payments", "mktp"
         )
 
@@ -201,23 +248,86 @@ class CategorySuggester(
          * e.g. "Haustiere > Essen". The default tree comes first, then names users often choose.
          */
         private val MERCHANTS: List<Pair<List<String>, List<String>>> = listOf(
-            SUPERMARKETS.flatMap { it.second } to listOf("Supermarkt", "Supermarket", "Lebensmittel", "Grocery", "Groceries", "Einkauf"),
+            SUPERMARKETS.flatMap { it.second } to listOf(
+                "Supermarkt",
+                "Supermarket",
+                "Lebensmittel",
+                "Grocery",
+                "Groceries",
+                "Einkauf"
+            ),
             EATING_OUT to listOf("Restaurant", "Restaurants", "Essen gehen", "Eating out", "Lieferdienst"),
-            listOf("bäckerei", "baeckerei", "backwerk", "backshop", "kamps", "ditsch") to listOf("Bäcker & Metzger", "Bäcker", "Baker", "Bäckerei", "Bakery"),
-            listOf("aral", "shell", "esso", "jet tankstelle", "avia", "agip", "tankstelle", "totalenergies", "star tankstelle") to
+            listOf(
+                "bäckerei",
+                "baeckerei",
+                "backwerk",
+                "backshop",
+                "kamps",
+                "ditsch"
+            ) to listOf("Bäcker & Metzger", "Bäcker", "Baker", "Bäckerei", "Bakery"),
+            listOf(
+                "aral",
+                "shell",
+                "esso",
+                "jet tankstelle",
+                "avia",
+                "agip",
+                "tankstelle",
+                "totalenergies",
+                "star tankstelle"
+            ) to
                     listOf("Kraftstoff", "Fuel", "Tanken", "Benzin", "Sprit"),
-            listOf("apotheke", "docmorris", "shop apotheke", "pharmacy") to listOf("Apotheker", "Chemist", "Apotheke", "Medikamente", "Pharmacy"),
+            listOf("apotheke", "docmorris", "shop apotheke", "pharmacy") to listOf(
+                "Apotheker",
+                "Chemist",
+                "Apotheke",
+                "Medikamente",
+                "Pharmacy"
+            ),
             listOf("rossmann", "dm drogerie", "dm fil", "drogerie", "müller drogerie", "budnikowsky") to
                     listOf("Drogerie & Reinigungsmittel", "Drogerie", "Drugstore", "Körperpflege", "Hygiene"),
-            listOf("deutsche bahn", "db vertrieb", "db fernverkehr", "flixbus", "flixtrain") to listOf("Zug", "Bahn (Fernverkehr)", "Train", "Bahn"),
+            listOf(
+                "deutsche bahn",
+                "db vertrieb",
+                "db fernverkehr",
+                "flixbus",
+                "flixtrain"
+            ) to listOf("Zug", "Bahn (Fernverkehr)", "Train", "Bahn"),
             listOf("bvg", "mvg", "hvv", "rmv", "vrr", "kvb", "üstra", "vvs", "vgn", "deutschlandticket") to
-                    listOf("U-Bahn", "ÖPNV & Deutschlandticket", "Metro", "Bus", "ÖPNV", "Nahverkehr", "Public transport"),
-            listOf("lufthansa", "eurowings", "ryanair", "easyjet", "condor", "tuifly") to listOf("Flugzeug", "Airplane", "Flug", "Flüge"),
+                    listOf(
+                        "U-Bahn",
+                        "ÖPNV & Deutschlandticket",
+                        "Metro",
+                        "Bus",
+                        "ÖPNV",
+                        "Nahverkehr",
+                        "Public transport"
+                    ),
+            listOf(
+                "lufthansa",
+                "eurowings",
+                "ryanair",
+                "easyjet",
+                "condor",
+                "tuifly"
+            ) to listOf("Flugzeug", "Airplane", "Flug", "Flüge"),
             listOf("zara", "primark", "zalando", "about you", "peek cloppenburg", "tk maxx", "uniqlo", "deichmann") to
                     listOf("Kleidung", "Clothing", "Bekleidung", "Schuhe"),
-            listOf("obi", "bauhaus", "hornbach", "toom", "hagebau") to listOf("Baumarkt", "Heimwerken", "Ausrüstung", "Werkzeug", "Equipment"),
+            listOf("obi", "bauhaus", "hornbach", "toom", "hagebau") to listOf(
+                "Baumarkt",
+                "Heimwerken",
+                "Ausrüstung",
+                "Werkzeug",
+                "Equipment"
+            ),
             listOf("ikea", "höffner", "xxxlutz", "poco") to listOf("Möbel", "Furniture", "Einrichtung"),
-            listOf("mediamarkt", "media markt", "saturn", "cyberport", "notebooksbilliger") to listOf("Technik", "Elektronik & Geräte", "IT", "Elektronik", "Electronics"),
+            listOf(
+                "mediamarkt",
+                "media markt",
+                "saturn",
+                "cyberport",
+                "notebooksbilliger"
+            ) to listOf("Technik", "Elektronik & Geräte", "IT", "Elektronik", "Electronics"),
             listOf("cinemaxx", "cineplex", "uci kinowelt", "kino") to listOf("Kino", "Movies", "Cinema"),
             listOf("fressnapf", "zooplus", "das futterhaus") to
                     listOf("Haustiere > Essen", "Haustiere > Futter", "Pets > Food", "Tierbedarf", "Haustiere", "Pets"),

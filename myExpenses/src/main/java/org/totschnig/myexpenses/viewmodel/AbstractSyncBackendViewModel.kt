@@ -38,7 +38,10 @@ abstract class AbstractSyncBackendViewModel(application: Application) :
 
     abstract fun getAccounts(context: Context): List<Pair<String, Boolean>>
 
-    abstract fun accountMetadata(accountName: String, isFeatureAvailable: Boolean): LiveData<Result<List<Result<AccountMetaData>>>>?
+    abstract fun accountMetadata(
+        accountName: String,
+        isFeatureAvailable: Boolean
+    ): LiveData<Result<List<Result<AccountMetaData>>>>?
 
     fun syncUnlink(uuid: String) = liveData(context = coroutineContext()) {
         emit(if (repository.findAccountByUuidWithExtraColumn(uuid, KEY_SYNC_ACCOUNT_NAME)?.let { account ->

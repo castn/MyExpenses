@@ -3,10 +3,5 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>DestructuringDeclarationWithTooManyEntries:BalanceRepository.kt:BalanceRepository$(ledger, confirmed, salaries, today)</ID>
-    <ID>MaxLineLength:BalanceRepository.kt:BalanceRepository$MonthlyBalance.compute(period, balanceTransactions(ledger, period), ledger.ownAccounts.dailyIds, confirmed, salaries)</ID>
-    <ID>MaxLineLength:BalanceRepository.kt:BalanceRepository$combine</ID>
-    <ID>MaxLineLength:BalanceTransactionsTest.kt:BalanceTransactionsTest$LedgerTransaction(3, LocalDate.of(2026, 9, 15), amount = -5000, accountId = giro, targetAccountId = savings)</ID>
-    <ID>MaxLineLength:MonthlyBalance.kt:MonthlyBalance.Companion$val contractTransactionIds = expenseContracts.flatMapTo(HashSet()) { contract -&gt; contract.transactions.map { it.id } }</ID>
-    <ID>MaxLineLength:MonthlyBalance.kt:MonthlyBalance.Companion$val reserveTransactionIds = reserveContracts.flatMapTo(HashSet()) { contract -&gt; contract.transactions.map { it.id } }</ID>
   </CurrentIssues>
 </SmellBaseline>

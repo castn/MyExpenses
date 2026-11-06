@@ -240,7 +240,12 @@ class PriceCalculationViewModelTest: BaseTestWithRepository() {
     fun recalculateAccountExchangeRateWithTransaction() = runTest {
         val viewModel = buildViewModel()
         val accountId = insertAccount("Test account", currency = "EUR", dynamic = true)
-        val transactionId = repository.insertTransaction(accountId, 100, date = LocalDateTime.now().minusDays(1), equivalentAmount = 190).id
+        val transactionId = repository.insertTransaction(
+            accountId,
+            100,
+            date = LocalDateTime.now().minusDays(1),
+            equivalentAmount = 190
+        ).id
         repository.savePrice("USD", "EUR", LocalDate.now(),
             ExchangeRateApi.Frankfurter, 1.5)
         repository.savePrice("USD", "EUR", LocalDate.now().minusDays(1),
@@ -296,7 +301,9 @@ class PriceCalculationViewModelTest: BaseTestWithRepository() {
         }
     }
 
-    private suspend fun PriceCalculationViewModel.recalculateAndLoad(newHomeCurrency: String): Map<String, List<Pair<String, Double>>> {
+    private suspend fun PriceCalculationViewModel.recalculateAndLoad(
+        newHomeCurrency: String
+    ): Map<String, List<Pair<String, Double>>> {
         reCalculatePrices(newHomeCurrency)
         return contentResolver.query(
             PRICES_URI,

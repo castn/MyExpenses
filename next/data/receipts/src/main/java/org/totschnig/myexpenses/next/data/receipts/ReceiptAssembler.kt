@@ -28,7 +28,8 @@ internal class ReceiptAssembler(private val kinds: RowKinds, private val vocabul
     fun items(rows: List<Row>): List<ReceiptItem> = assemble(rows).items
 
     /** The items and the rows they were read from, subtotals included, as they need no attention */
-    fun assemble(rows: List<Row>): Assembled = Assembly().apply { rows.forEach(::add) }.let { Assembled(it.items, it.used) }
+    fun assemble(rows: List<Row>): Assembled =
+        Assembly().apply { rows.forEach(::add) }.let { Assembled(it.items, it.used) }
 
     class Assembled(val items: List<ReceiptItem>, val used: Set<Row>)
 
@@ -68,7 +69,8 @@ internal class ReceiptAssembler(private val kinds: RowKinds, private val vocabul
             val index = nameBelow ?: return false
             if (readItem(row) != null || quantity(row.text) != null || row.text.none { it.isLetter() }) return false
             val item = items[index]
-            items[index] = item.copy(name = "${item.name} ${row.text}".trim(), box = item.box?.let { union(it, row.box) })
+            items[index] =
+                item.copy(name = "${item.name} ${row.text}".trim(), box = item.box?.let { union(it, row.box) })
             used += row
             return true
         }
@@ -139,7 +141,8 @@ internal class ReceiptAssembler(private val kinds: RowKinds, private val vocabul
         val price = priceOf(text) ?: return readUnitPriceTimesCount(row)
         val name = kinds.withoutArticleNumber(text.substring(0, price.start).trim())
             .takeUnless { kinds.isArticleNumberOnly(it) }.orEmpty()
-        val item = ReceiptItem(name = name, amount = price.cents, taxClass = price.taxClass?.let(::taxClass), box = row.box)
+        val item =
+            ReceiptItem(name = name, amount = price.cents, taxClass = price.taxClass?.let(::taxClass), box = row.box)
         val inline = kinds.inlineQuantity(kinds.tokens(name)) ?: return item
         return Quantity(inline.count, null, inline.unitPrice)
             .takeIf { it.fits(item) }

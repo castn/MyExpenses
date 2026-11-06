@@ -97,9 +97,12 @@ internal fun ContractRuleSettings(
             onClick = { showIntervalDialog = true },
             isFirst = true
         )
-        val payeeLabel = stringResource(if (contract.isIncome) R.string.next_income_payers else R.string.next_contracts_payees)
+        val payeeLabel =
+            stringResource(if (contract.isIncome) R.string.next_income_payers else R.string.next_contracts_payees)
         val removePayeeLabel =
-            stringResource(if (contract.isIncome) R.string.next_income_remove_payer else R.string.next_contracts_remove_payee)
+            stringResource(
+                if (contract.isIncome) R.string.next_income_remove_payer else R.string.next_contracts_remove_payee
+            )
         val accountLabel = stringResource(R.string.next_contracts_target_account)
         val removeAccountLabel = stringResource(R.string.next_contracts_remove_target_account)
         // At least one payee, account or the template has to remain, or the rule would match nothing
@@ -107,7 +110,8 @@ internal fun ContractRuleSettings(
         rule.payeeIds.sortedBy { it }.forEach { payeeId ->
             RemovableRow(
                 label = payeeLabel,
-                value = contract.transactions.firstOrNull { it.payeeId == payeeId && it.targetAccountId == null }?.payeeName
+                value =
+                    contract.transactions.firstOrNull { it.payeeId == payeeId && it.targetAccountId == null }?.payeeName
                     ?: NO_NAME,
                 removeLabel = removePayeeLabel.takeIf { canRemove },
                 onRemove = { onRemovePayee(payeeId) }
@@ -230,7 +234,10 @@ private fun AmountRangeDialog(
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
         )
-        DestructiveTextButton(stringResource(R.string.next_contracts_amount_range_remove), onClick = { onConfirm(null) })
+        DestructiveTextButton(
+            stringResource(R.string.next_contracts_amount_range_remove),
+            onClick = { onConfirm(null) }
+        )
     }
 }
 

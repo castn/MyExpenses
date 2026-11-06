@@ -10,13 +10,13 @@
     <ID>ComplexCondition:CategoryDelegate.kt:CategoryDelegate$withAutoFill &amp;&amp; !isTemplate &amp;&amp; !isSplitPart &amp;&amp; shouldStartAutoFillWithFocus(prefHandler)</ID>
     <ID>ComplexCondition:DeepLinkActivity.kt:DeepLinkActivity$existingKey == "" || existingKey == key &amp;&amp; existingEmail == email || !licenceHandler.isContribEnabled</ID>
     <ID>ComplexCondition:ExchangeRateEdit.kt:ExchangeRateEdit$amount1 != null &amp;&amp; amount2 != null &amp;&amp; amount1.compareTo(nullValue) != 0 &amp;&amp; amount2.compareTo( nullValue ) != 0</ID>
-    <ID>ComplexCondition:FormAccentUtil.kt:view is ViewGroup &amp;&amp; view !is Spinner &amp;&amp; (!view.isFocusable || view.descendantFocusability == ViewGroup.FOCUS_AFTER_DESCENDANTS)</ID>
+    <ID>ComplexCondition:FormAccentUtil.kt:view is ViewGroup &amp;&amp; view !is Spinner &amp;&amp; ( !view.isFocusable || view.descendantFocusability == ViewGroup.FOCUS_AFTER_DESCENDANTS )</ID>
     <ID>ComplexCondition:MainScreen.kt:forcedAccountPanelLoadingState !is PreferenceState.Loaded || preferredNavModeLoadingState !is PreferenceState.Loaded || accountGroupingLoadingState !is PreferenceState.Loaded || mainMenuLoadingState !is PreferenceState.Loaded</ID>
     <ID>ComplexCondition:RestoreViewModel.kt:RestoreViewModel$key != prefHandler.getKey(PrefKey.NEW_LICENCE) &amp;&amp; key != prefHandler.getKey( PrefKey.LICENCE_EMAIL ) &amp;&amp; !key.startsWith("acra") &amp;&amp; key != prefHandler.getKey(PrefKey.FIRST_INSTALL_VERSION)</ID>
-    <ID>ComplexCondition:SyncDelegate.kt:SyncDelegate$(label != null || categoryInfo != null) &amp;&amp; (merged.label != null || merged.categoryInfo != null) &amp;&amp; (merged.label != label || merged.categoryInfo != categoryInfo)</ID>
-    <ID>ComplexCondition:SyncDelegate.kt:SyncDelegate$(pictureUri != null || attachments != null) &amp;&amp; (merged.pictureUri != null || merged.attachments != null) &amp;&amp; (merged.pictureUri != pictureUri || merged.attachments != attachments)</ID>
-    <ID>ComplexCondition:SyncDelegate.kt:SyncDelegate$(tags != null || tagsV2 != null) &amp;&amp; (merged.tags != null || merged.tagsV2 != null) &amp;&amp; (merged.tags != tags || merged.tagsV2 != tagsV2)</ID>
-    <ID>ComplexCondition:TransactionList.kt:(sortDirection == SortDirection.ASC &amp;&amp; comparisonResult &gt; 0) || sortDirection == SortDirection.DESC &amp;&amp; comparisonResult &lt; 0</ID>
+    <ID>ComplexCondition:SyncDelegate.kt:SyncDelegate$(label != null || categoryInfo != null) &amp;&amp; (merged.label != null || merged.categoryInfo != null) &amp;&amp; ( merged.label != label || merged.categoryInfo != categoryInfo )</ID>
+    <ID>ComplexCondition:SyncDelegate.kt:SyncDelegate$(pictureUri != null || attachments != null) &amp;&amp; ( merged.pictureUri != null || merged.attachments != null ) &amp;&amp; ( merged.pictureUri != pictureUri || merged.attachments != attachments )</ID>
+    <ID>ComplexCondition:SyncDelegate.kt:SyncDelegate$(tags != null || tagsV2 != null) &amp;&amp; (merged.tags != null || merged.tagsV2 != null) &amp;&amp; ( merged.tags != tags || merged.tagsV2 != tagsV2 )</ID>
+    <ID>ComplexCondition:TransactionList.kt:( sortDirection == SortDirection.ASC &amp;&amp; comparisonResult &gt; 0 ) || sortDirection == SortDirection.DESC &amp;&amp; comparisonResult &lt; 0</ID>
     <ID>ConstructorParameterNaming:CoinApi.kt:CoinApi.ExchangeRateResult$val asset_id_quote: String</ID>
     <ID>ConstructorParameterNaming:CoinApi.kt:CoinApi.HistoryResult$val rate_close: Double</ID>
     <ID>ConstructorParameterNaming:CoinApi.kt:CoinApi.HistoryResult$val time_period_start: ZonedDateTime</ID>
@@ -219,6 +219,7 @@
     <ID>LargeClass:ExportTest.kt:ExportTest : BaseTestWithRepository</ID>
     <ID>LargeClass:ManageCategories.kt:ManageCategories : ProtectedFragmentActivityContribIFace</ID>
     <ID>LargeClass:MyExpensesV2ViewModel.kt:MyExpensesV2ViewModel : MyExpensesViewModel</ID>
+    <ID>LargeClass:MyExpensesViewModel.kt:MyExpensesViewModel : PrintViewModel</ID>
     <ID>LargeClass:PdfPrinter.kt:PdfPrinter</ID>
     <ID>LargeClass:QifParserTest.kt:QifParserTest</ID>
     <ID>LargeClass:SyncAdapter.kt:SyncAdapter : AbstractThreadedSyncAdapter</ID>
@@ -250,6 +251,7 @@
     <ID>LongMethod:BaseMyExpenses.kt:BaseMyExpenses$override fun onPositive</ID>
     <ID>LongMethod:BaseMyExpenses.kt:BaseMyExpenses$protected fun handleTransactionEvent</ID>
     <ID>LongMethod:BaseTransactionDatabase.kt:BaseTransactionDatabase$fun SupportSQLiteDatabase.upgradeTo148</ID>
+    <ID>LongMethod:BaseTransactionDatabase.kt:BaseTransactionDatabase$fun SupportSQLiteDatabase.upgradeTo173</ID>
     <ID>LongMethod:BaseTransactionProvider.kt:BaseTransactionProvider$fun SupportSQLiteDatabase.updateCurrency: Bundle</ID>
     <ID>LongMethod:BaseTransactionProvider.kt:BaseTransactionProvider$fun budgetCategoryUpsert: Int</ID>
     <ID>LongMethod:BaseTransactionProvider.kt:BaseTransactionProvider$fun buildAccountQuery: String</ID>
@@ -261,6 +263,7 @@
     <ID>LongMethod:Budget.kt:@Composable private fun RowScope.BudgetNumbers</ID>
     <ID>LongMethod:BudgetActivity.kt:BudgetActivity$override fun dispatchCommand</ID>
     <ID>LongMethod:BudgetActivity.kt:BudgetActivity$override fun onCreate</ID>
+    <ID>LongMethod:BudgetActivity.kt:BudgetActivity$private fun showEditBudgetDialog</ID>
     <ID>LongMethod:BudgetEdit.kt:BudgetEdit$override fun onCreate</ID>
     <ID>LongMethod:BudgetViewModel2.kt:BudgetViewModel2$fun exportBudget</ID>
     <ID>LongMethod:BudgetWidget.kt:BudgetWidget$override suspend fun updateWidgetDo</ID>
@@ -377,6 +380,7 @@
     <ID>LongMethod:SyncAdapter.kt:SyncAdapter$@SuppressLint("MissingPermission") override fun onPerformSync</ID>
     <ID>LongMethod:SyncAdapter.kt:SyncAdapter$@Throws(RemoteException::class) private fun getLocalChanges: List&lt;TransactionChange&gt;</ID>
     <ID>LongMethod:SyncBackendList.kt:SyncBackendList$override fun onContextItemSelected: Boolean</ID>
+    <ID>LongMethod:SyncDelegate.kt:SyncDelegate$private fun TransactionChange.nullifyIfNeeded: TransactionChange</ID>
     <ID>LongMethod:SyncHandler.kt:SyncHandler$fun collectOperations: ArrayList&lt;ContentProviderOperation&gt;</ID>
     <ID>LongMethod:SyncHandler.kt:SyncHandler$private fun TransactionChange.toContentValues: ContentValues</ID>
     <ID>LongMethod:TemplateWidgetService.kt:TemplateRemoteViewsFactory$override fun RemoteViews.populate</ID>
@@ -679,478 +683,6 @@
     <ID>MatchingDeclarationName:TradeScreen.kt:CostLegUiState : Parcelable</ID>
     <ID>MatchingDeclarationName:TransactionScreen.kt:FabStyle</ID>
     <ID>MatchingDeclarationName:prefHandler.kt:MyAbstractClass : PrefHandler</ID>
-    <ID>MaxLineLength:AbstractSyncBackendProvider.kt:AbstractSyncBackendProvider$?:</ID>
-    <ID>MaxLineLength:AbstractSyncBackendProvider.kt:AbstractSyncBackendProvider$protected</ID>
-    <ID>MaxLineLength:AbstractSyncBackendProvider.kt:AbstractSyncBackendProvider$val attachment = childrenForCollection(attachmentDir).find { nameForResource(it)?.startsWith(uuid) == true } ?: throw FileNotFoundException()</ID>
-    <ID>MaxLineLength:AbstractSyncBackendViewModel.kt:AbstractSyncBackendViewModel$abstract fun accountMetadata: LiveData&lt;Result&lt;List&lt;Result&lt;AccountMetaData&gt;&gt;&gt;&gt;?</ID>
-    <ID>MaxLineLength:AccountList.kt:"1 $accountCurrencyIsolated = ${fXFormat.format(realRate)} $homeCurrencyIsolated ($dateFormatted)"</ID>
-    <ID>MaxLineLength:AccountList.kt:if</ID>
-    <ID>MaxLineLength:AccountList.kt:if (grouping == AccountGrouping.CURRENCY) it.effectiveBalance else it.equivalentEffectiveBalance</ID>
-    <ID>MaxLineLength:AccountMetaData.kt:AccountMetaData.Companion$exchangeRate = if (homeCurrency != null &amp;&amp; homeCurrency != accountCurrency) account.exchangeRate else null</ID>
-    <ID>MaxLineLength:AccountMetaData.kt:AccountMetaData.Companion$exchangeRateOtherCurrency = if (homeCurrency != null &amp;&amp; homeCurrency != accountCurrency) homeCurrency else null</ID>
-    <ID>MaxLineLength:AccountSumTest.kt:AccountSumTest$hasLong(KEY_CURRENT_BALANCE, openingBalance + income1 + income2 - expense1 - expense2 + transferP - transferN)</ID>
-    <ID>MaxLineLength:AccountType.kt:AccountType.Companion$val ASSET = AccountType(name = PREDEFINED_NAME_ASSET, isAsset = true, supportsReconciliation = true, sortKey = -1)</ID>
-    <ID>MaxLineLength:AccountType.kt:AccountType.Companion$val CCARD = AccountType(name = PREDEFINED_NAME_CCARD, isAsset = false, supportsReconciliation = true, sortKey = 0)</ID>
-    <ID>MaxLineLength:AccountWidgetConfigurationFragment.kt:AccountWidgetConfigurationFragment$(list.map { it.label } + getString(R.string.budget_filter_all_accounts)).toTypedArray()</ID>
-    <ID>MaxLineLength:AccountsScreen.kt:viewModel.accountsForBalanceSheet.collectAsState(LocalDate.now() to emptyList()).value.second</ID>
-    <ID>MaxLineLength:Action.kt:Action$@param:TransactionsContract.Transactions.TransactionType val type: Int = TransactionsContract.Transactions.TYPE_TRANSACTION</ID>
-    <ID>MaxLineLength:AmountInput.kt:AmountInput$throw IllegalArgumentException("alternateLayout cannot be used together with typeSwitch and currencySelection")</ID>
-    <ID>MaxLineLength:AmountInputHostDialog.kt:AmountInputHostDialog$Toast.makeText(context, "CALCULATOR_REQUEST launched with incorrect EXTRA_KEY_INPUT_ID", Toast.LENGTH_LONG).show()</ID>
-    <ID>MaxLineLength:AppComponent.kt:AppComponent$modules = [AppModule::class, UiModule::class, NetworkModule::class, LicenceModule::class, DataModule::class, CoroutineModule::class, ViewModelModule::class, FeatureModule::class, CrashHandlerModule::class, SyncModule::class, ConfigurationModule::class]</ID>
-    <ID>MaxLineLength:Archive.kt: | WHERE </ID>
-    <ID>MaxLineLength:Archive.kt:"UPDATE $TABLE_TRANSACTIONS SET $KEY_PARENTID = null, $KEY_STATUS = $STATUS_NONE WHERE $KEY_PARENTID = $rowIdSubSelect "</ID>
-    <ID>MaxLineLength:Archive.kt://If we archive a cash account, where we find multiple states (which can happen when user updates account type),</ID>
-    <ID>MaxLineLength:Archive.kt:query(TABLE_ACCOUNT_TYPES, null, "$KEY_ROWID = (SELECT $KEY_TYPE FROM $TABLE_ACCOUNTS WHERE $KEY_ROWID = ?)", arrayOf(accountId))</ID>
-    <ID>MaxLineLength:BackupUtils.kt:it.name?.matches("""${prefHandler.backupFilePrefix}-\d\d\d\d\d\d\d\d-\d\d\d\d\d\d\..+""".toRegex()) == true</ID>
-    <ID>MaxLineLength:BaseActivity.kt:BaseActivity$//This should be an exceptional case, for example user has installed Dropbox # Jackson, then uninstalls Jackson.</ID>
-    <ID>MaxLineLength:BaseActivity.kt:BaseActivity$//after the dynamic feature module has been installed, we need to check if data needed by the module (e.g. Tesseract) has been downloaded</ID>
-    <ID>MaxLineLength:BaseActivity.kt:BaseActivity$//when later we need to install Jackson again, we no longer know for which feature to call onFeatureAvailable</ID>
-    <ID>MaxLineLength:BaseActivity.kt:BaseActivity$if</ID>
-    <ID>MaxLineLength:BaseMyExpenses.kt:BaseMyExpenses$AccountGrouping.FLAG -&gt; it.flag.let { it.title(this@BaseMyExpenses) to it.id }</ID>
-    <ID>MaxLineLength:BaseMyExpenses.kt:BaseMyExpenses$AccountGrouping.TYPE -&gt; it.type.let { it.title(this@BaseMyExpenses) to it.id }</ID>
-    <ID>MaxLineLength:BaseMyExpenses.kt:BaseMyExpenses$is SQLiteDowngradeFailedException -&gt; "Database cannot be downgraded from a newer version. Please either uninstall MyExpenses, before reinstalling, or upgrade to a new version." to true</ID>
-    <ID>MaxLineLength:BaseMyExpenses.kt:BaseMyExpenses$message = getString(R.string.warning_link_transfer) + " " + getString(R.string.continue_confirmation)</ID>
-    <ID>MaxLineLength:BaseMyExpenses.kt:BaseMyExpenses$val futureCriterion = viewModel.futureCriterion.collectAsState(initial = FutureCriterion.EndOfDay).value</ID>
-    <ID>MaxLineLength:BasePreferenceIOBRFragmentTest.kt:BasePreferenceIOBRFragmentTest$assertThat(BasePreferenceIOBRFragment.isHttpUrlWithoutCredentials("http://user:pass@example.com/upload")).isFalse()</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"ALTER TABLE currency add column sort_direction text not null check (sort_direction in ('ASC','DESC')) default 'DESC'"</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"CREATE TABLE account_attributes (account_id integer references accounts(_id) ON DELETE CASCADE,attribute_id integer references attributes(_id) ON DELETE CASCADE,value text not null,primary key (account_id, attribute_id))"</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"CREATE TABLE account_flags (_id integer primary key autoincrement, flag_label text unique not null, flag_sort_key integer not null default 0, flag_icon text, visible boolean not null)"</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"CREATE TABLE categories (_id integer primary key autoincrement, label text not null, label_normalized text, parent_id integer references categories(_id) ON DELETE CASCADE, usages integer default 0, last_used datetime, color integer, icon string, UNIQUE (label,parent_id));"</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"CREATE TABLE changes (account_id integer not null references accounts(_id) ON DELETE CASCADE,type text not null check (type in ('created','updated','deleted','unsplit','metadata','link','tags','attachments')), sync_sequence_local integer, uuid text not null, timestamp datetime DEFAULT (strftime('%s','now')), parent_uuid text, comment text, date datetime, value_date datetime, amount integer, original_amount integer, original_currency text, equivalent_amount integer, cat_id integer references categories(_id) ON DELETE SET NULL, payee_id integer references payee(_id) ON DELETE SET NULL, transfer_account integer references accounts(_id) ON DELETE SET NULL,method_id integer references paymentmethods(_id) ON DELETE SET NULL,cr_status text check (cr_status in ('UNRECONCILED','CLEARED','RECONCILED','VOID')),number text)"</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"CREATE TABLE changes (account_id integer not null references accounts(_id) ON DELETE CASCADE,type text not null check (type in ('created','updated','deleted','unsplit','metadata','link','tags','attachments','unarchive')), sync_sequence_local integer, uuid text not null, timestamp datetime DEFAULT (strftime('%s','now')), parent_uuid text, comment text, date datetime, value_date datetime, amount integer, original_amount integer, original_currency text, equivalent_amount integer, cat_id integer references categories(_id) ON DELETE SET NULL, payee_id integer references payee(_id) ON DELETE SET NULL, transfer_account integer references accounts(_id) ON DELETE SET NULL,method_id integer references paymentmethods(_id) ON DELETE SET NULL,cr_status text check (cr_status in ('UNRECONCILED','CLEARED','RECONCILED','VOID')), status integer default 0, number text)"</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"CREATE TABLE debts (_id integer primary key autoincrement, payee_id integer references payee(_id) ON DELETE CASCADE, date datetime not null, label text not null, amount integer, currency text not null, description text, sealed boolean default 0);"</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"CREATE TABLE payee (_id integer primary key autoincrement, name text not null, iban text, bic text, name_normalized text, unique(name, iban))"</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"CREATE TABLE transaction_attributes (transaction_id integer references transactions(_id) ON DELETE CASCADE,attribute_id integer references attributes(_id) ON DELETE CASCADE,value text not null,primary key (transaction_id, attribute_id))"</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"CREATE TABLE transactions(_id integer primary key autoincrement, comment text, date datetime not null, value_date datetime not null, amount integer not null, cat_id integer references categories(_id), account_id integer not null references accounts(_id) ON DELETE CASCADE, payee_id integer references payee(_id), transfer_peer integer references transactions(_id), transfer_account integer references accounts(_id),method_id integer references paymentmethods(_id),parent_id integer references transactions(_id) ON DELETE CASCADE, status integer default 0, cr_status text not null check (cr_status in ('UNRECONCILED','CLEARED','RECONCILED','VOID')) default 'RECONCILED', number text, uuid text, original_amount integer, original_currency text, debt_id integer references debts(_id) ON DELETE SET NULL);\n"</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"INSERT INTO equivalent_amounts (transaction_id, currency, equivalent_amount) SELECT _id, '${context.injector.currencyContext().homeCurrencyString}', equivalent_amount FROM transactions WHERE equivalent_amount IS NOT NULL;"</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"_id,comment,date,value_date,amount,cat_id,account_id,payee_id,transfer_peer,transfer_account,method_id,parent_id,status,cr_status,number,uuid,original_amount,original_currency,debt_id) "</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"_id,comment,date,value_date,amount,cat_id,account_id,payee_id,transfer_peer,transfer_account,method_id,parent_id,status,cr_status,number,uuid,original_amount,original_currency,equivalent_amount,debt_id) "</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"account_id,type,sync_sequence_local,uuid,timestamp,parent_uuid,comment,date,value_date,amount,original_amount,original_currency,equivalent_amount,cat_id,payee_id,transfer_account,method_id,cr_status,number) "</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"account_id,type,sync_sequence_local,uuid,timestamp,parent_uuid,comment,date,value_date,amount,original_amount,original_currency,equivalent_amount,cat_id,payee_id,transfer_account,method_id,cr_status,status,number) "</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"cr_status text not null check (cr_status in ('UNRECONCILED','CLEARED','RECONCILED','VOID')) default 'RECONCILED', "</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"type text not null check (type in ('created','updated','deleted','unsplit','metadata','link')), "</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$"update transactions set transfer_account = (select account_id from transactions peer where _id = transactions.transfer_peer);"</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$CrashHandler.report(IllegalArgumentException("Default transfer category $transfer was stale and has been set to null."))</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$append(" LEFT JOIN $TABLE_PLAN_INSTANCE_STATUS ON $tableName.$KEY_ROWID = $TABLE_PLAN_INSTANCE_STATUS.$KEY_TRANSACTIONID")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$append(", Tree.$KEY_PATH, Tree.$KEY_ICON, Tree.$KEY_TYPE, $KEY_COLOR, $KEY_CURRENCY, $KEY_SEALED, $KEY_EXCLUDE_FROM_TOTALS, $KEY_DYNAMIC, $KEY_IS_PORTFOLIO")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("ALTER TABLE $TABLE_ACCOUNTS ADD COLUMN $KEY_PARENTID integer references $TABLE_ACCOUNTS($KEY_ROWID) ON DELETE CASCADE")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("ALTER TABLE accounts ADD COLUMN balance_type text not null check (balance_type in ('CURRENT','TOTAL','CLEARED','RECONCILED','DELTA')) default 'CURRENT'")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("CREATE TABLE account_types (_id integer primary key autoincrement, label text not null, isAsset boolean not null, supportsReconciliation boolean not null)")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("CREATE TABLE accounts (_id integer primary key autoincrement, label text not null, opening_balance integer, description text, currency text not null references currency(code), type integer references account_types(_id), color integer default -3355444, grouping text not null check (grouping in ('NONE','DAY','WEEK','MONTH','YEAR')) default 'NONE', usages integer default 0,last_used datetime, sort_key integer, sync_account_name text, sync_sequence_local integer default 0,exclude_from_totals boolean default 0, uuid text, sort_by text default 'date', sort_direction text not null check (sort_direction in ('ASC','DESC')) default 'DESC',criterion integer,flag integer references account_flags(_id) NOT NULL default 0,sealed boolean default 0,dynamic boolean default 0,bank_id integer references banks(_id) ON DELETE SET NULL)")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("CREATE TABLE accounts (_id integer primary key autoincrement, label text not null, opening_balance integer, description text, currency text not null references currency(code), type integer references account_types(_id), color integer default -3355444, grouping text not null check (grouping in ('NONE','DAY','WEEK','MONTH','YEAR')) default 'NONE', usages integer default 0,last_used datetime, sort_key integer, sync_account_name text, sync_sequence_local integer default 0,exclude_from_totals boolean default 0, uuid text, sort_by text default 'date', sort_direction text not null check (sort_direction in ('ASC','DESC')) default 'DESC',criterion integer,hidden boolean default 0,sealed boolean default 0,dynamic boolean default 0,bank_id integer references banks(_id) ON DELETE SET NULL)")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("CREATE TABLE accounttype_paymentmethod (type integer references account_types(_id), method_id integer references paymentmethods(_id), primary key (type,method_id))")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("CREATE TABLE attachments (_id integer primary key autoincrement, uri text not null unique, uuid text not null unique)")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("CREATE TABLE attributes (_id integer primary key autoincrement,attribute_name text not null,context text not null, unique (attribute_name, context))")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("CREATE TABLE banks (_id integer primary key autoincrement, blz text not null, bic text not null, name text not null, user_id text not null, unique(blz, user_id))")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("CREATE TABLE budget_allocations (budget_id integer not null references budgets(_id) ON DELETE CASCADE, cat_id integer not null references categories(_id) ON DELETE CASCADE, year integer, second integer, budget integer, rollOverPrevious integer, rollOverNext integer, oneTime boolean default 0, primary key (budget_id,cat_id,year,second))")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("CREATE TABLE budgets_neu (_id integer primary key autoincrement, title text not null default '', description text not null, grouping text not null check (grouping in ('NONE','DAY','WEEK','MONTH','YEAR')), account_id integer references accounts(_id) ON DELETE CASCADE, currency text, start datetime, `end` datetime)")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("CREATE TABLE equivalent_amounts (transaction_id integer not null references transactions(_id) ON DELETE CASCADE, currency text not null references currency (code) ON DELETE CASCADE, equivalent_amount integer not null, primary key (transaction_id, currency));")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("CREATE TABLE prices (commodity text NOT NULL, currency text NOT NULL references currency(code) ON DELETE CASCADE, date datetime NOT NULL, source text NOT NULL, type text default 'unknown', value real not NULL, primary key(commodity, currency, date, source, type));")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("CREATE TABLE transaction_attachments (transaction_id integer references transactions(_id) ON DELETE CASCADE, attachment_id integer references attachments(_id), primary key (transaction_id, attachment_id))")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("INSERT INTO budget_allocations (budget_id, cat_id, budget) SELECT budget_id, cat_id, budget FROM budget_categories")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("INSERT INTO budgets_neu (_id, title, description, grouping, account_id, currency, start, `end`) SELECT _id, title, coalesce(description,''), grouping, account_id, currency, start, `end` FROM budgets")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("INSERT INTO categories (_id, label, label_normalized, parent_id, usages, last_used, color, icon) SELECT _id, label, label_normalized, parent_id, usages, last_used, color, icon FROM categories_old")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("UPDATE account_types set type_sort_key = ? WHERE label = ?", arrayOf(it.sortKey.toString(), it.name))</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("UPDATE accounts set dynamic = 1 where exists (SELECT 1 from transactions where account_id = accounts._id and equivalent_amount is not null)")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("update prices set value = value * $coefficient where commodity = '$commodity' and currency = '$currency'")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$execSQL("update transactions set payee_id = null where parent_id in (select _id from transactions where cat_id = 0 and status != 4)")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$query("select _id,account_id from transactions where cat_id = 0 and exists(select 1 from transactions parts where parts.parent_id = transactions._id and parts.account_id != transactions.account_id)")</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:BaseTransactionDatabase$val migrateTypeCaseStatement = "CASE type WHEN 'CASH' THEN $cash WHEN 'BANK' THEN $bank WHEN 'CCARD' THEN $ccard WHEN 'ASSET' THEN $asset WHEN 'LIABILITY' THEN $liability ELSE $cash END"</ID>
-    <ID>MaxLineLength:BaseTransactionDatabase.kt:TABLE_TRANSACTIONS_TAGS, TABLE_TRANSACTION_ATTACHMENTS, TABLE_EQUIVALENT_AMOUNTS -&gt; "(SELECT $column FROM $TABLE_TRANSACTIONS WHERE $KEY_ROWID = $reference.$KEY_TRANSACTIONID)"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$ SELECT '</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$ | WHERE </ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"$KEY_ACCOUNTID IN (SELECT $KEY_ROWID FROM $TABLE_ACCOUNTS WHERE $KEY_CURRENCY = ? AND $dynamicExchangeRatesDefault)"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"(" + KEY_UUID + " IS NULL OR (" + KEY_TRANSFER_PEER + " IS NOT NULL AND (SELECT " + KEY_UUID + " from " + TABLE_TRANSACTIONS + " peer where " + KEY_TRANSFER_PEER + " = " + TABLE_TRANSACTIONS + "." + KEY_ROWID + ") is null )) AND ("</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"0 AS $KEY_CLEARED_TOTAL"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"INSERT INTO $TABLE_ATTRIBUTES ($KEY_ATTRIBUTE_NAME, $KEY_CONTEXT) SELECT ?,? WHERE NOT EXISTS (SELECT 1 FROM $TABLE_ATTRIBUTES WHERE $KEY_ATTRIBUTE_NAME=? AND $KEY_CONTEXT = ? )"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"INSERT or REPLACE INTO $table SELECT DISTINCT ?, _id, ? FROM $TABLE_ATTRIBUTES WHERE $KEY_ATTRIBUTE_NAME = ? AND $KEY_CONTEXT = ?;"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"SELECT $KEY_ROWID, (SELECT $KEY_ROWID FROM $TABLE_CATEGORIES target WHERE target.$KEY_PARENTID = ? AND target.$KEY_LABEL = $TABLE_CATEGORIES.$KEY_LABEL) AS peer FROM $TABLE_CATEGORIES WHERE $KEY_PARENTID = ? AND peer IS NOT NULL"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"UPDATE $TABLE_ACCOUNTS SET $KEY_OPENING_BALANCE=$KEY_OPENING_BALANCE$operation$factor WHERE $KEY_CURRENCY=?"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"UPDATE $TABLE_ACCOUNT_EXCHANGE_RATES SET $KEY_EXCHANGE_RATE=$KEY_EXCHANGE_RATE$inverseOperation$factor WHERE $KEY_CURRENCY_SELF=?"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"UPDATE $TABLE_ACCOUNT_EXCHANGE_RATES SET $KEY_EXCHANGE_RATE=$KEY_EXCHANGE_RATE$operation$factor WHERE $KEY_CURRENCY_OTHER=?"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"UPDATE $TABLE_EQUIVALENT_AMOUNTS SET $KEY_EQUIVALENT_AMOUNT=$KEY_EQUIVALENT_AMOUNT$operation$factor WHERE $KEY_CURRENCY=?"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"UPDATE $TABLE_TEMPLATES SET $KEY_AMOUNT=$KEY_AMOUNT$operation$factor WHERE $KEY_ACCOUNTID IN (SELECT $KEY_ROWID FROM $TABLE_ACCOUNTS WHERE $KEY_CURRENCY=?)"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"UPDATE $TABLE_TRANSACTIONS SET $KEY_AMOUNT=$KEY_AMOUNT$operation$factor WHERE $KEY_ACCOUNTID IN (SELECT $KEY_ROWID FROM $TABLE_ACCOUNTS WHERE $KEY_CURRENCY=?)"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"UPDATE $TABLE_TRANSACTIONS SET $KEY_UUID = ? WHERE $KEY_ROWID = ? OR $KEY_TRANSFER_PEER = ?"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"coalesce($KEY_ACCOUNTID, -(select $KEY_ROWID from $TABLE_CURRENCIES where $KEY_CODE = $TABLE_BUDGETS.$KEY_CURRENCY), ${HOME_AGGREGATE_ID}) AS $KEY_ACCOUNTID"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$"select distinct transactions.parent_id from transactions left join transactions parent on transactions.parent_id = parent._id where transactions.parent_id is not null and parent.account_id != transactions.account_id"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$*</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$* @param transactionId When we edit a transaction, we want it to not be included into the debt sum, since it can be changed in the UI, and the variable amount will be calculated by the UI</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$.</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$KEY_COMMENT -&gt; if (shortenComment) "case when instr($KEY_COMMENT, X'0A') &gt; 0 THEN substr($KEY_COMMENT, 1, instr($KEY_COMMENT, X'0A')-1) else $KEY_COMMENT end AS $it" else it</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$KEY_TRANSFER_AMOUNT -&gt; "CASE WHEN $KEY_TRANSFER_PEER THEN (SELECT $KEY_AMOUNT FROM $TABLE_TRANSACTIONS WHERE $KEY_ROWID = $table.$KEY_TRANSFER_PEER) ELSE null END AS $it"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$KEY_TRANSFER_PEER_IS_ARCHIVED -&gt; "(SELECT $KEY_STATUS FROM $TABLE_TRANSACTIONS peer WHERE peer.$KEY_ROWID = $table.$KEY_TRANSFER_PEER ) = $STATUS_ARCHIVED AS $it"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$KEY_TRANSFER_PEER_IS_PORTFOLIO -&gt; "(SELECT $KEY_IS_PORTFOLIO FROM $TABLE_ACCOUNTS WHERE $KEY_ROWID = (SELECT $KEY_ACCOUNTID FROM $TABLE_TRANSACTIONS peer WHERE peer.$KEY_ROWID = $table.$KEY_TRANSFER_PEER)) != $PORTFOLIO_NONE AS $it"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$KEY_TRANSFER_PEER_PARENT -&gt; "(SELECT $KEY_PARENTID FROM $TABLE_TRANSACTIONS peer WHERE peer.$KEY_ROWID = $table.$KEY_TRANSFER_PEER ) AS $it"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$SupportSQLiteQueryBuilder.builder(if (breakdownByAccount) "with_market_rate" else CTE_TRANSACTION_GROUPS)</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$add("$aggregateFunction(CASE WHEN $KEY_TYPE = $FLAG_TRANSFER THEN $KEY_DISPLAY_AMOUNT ELSE 0 END) AS $KEY_SUM_TRANSFERS")</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$add("CASE WHEN $KEY_DYNAMIC THEN coalesce(market_rate, $KEY_EXCHANGE_RATE) ELSE $KEY_EXCHANGE_RATE END AS $KEY_EXCHANGE_RATE")</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$compileStatement("UPDATE $TABLE_TRANSACTIONS SET $KEY_PARENTID = null, $KEY_CR_STATUS = $crStatusSubSelect, $KEY_PAYEEID = $payeeIdSubSelect WHERE $KEY_PARENTID = ?")</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$dataStore.data.first()[prefHandler.getBooleanPreferencesKey(PrefKey.INVISIBLE_ACCOUNTS_ARE_AGGREGATED)] != false</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$dataStore.data.first()[prefHandler.getBooleanPreferencesKey(PrefKey.SORT_ACCOUNT_LIST_BY_FLAG_FIRST)] != false</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$get() = "CASE WHEN $TABLE_DEBTS.$KEY_CURRENCY == '$homeCurrency' AND $KEY_CURRENCY != '$homeCurrency' THEN $KEY_EQUIVALENT_AMOUNT ELSE $KEY_AMOUNT END"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$if</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$if (uri.getQueryParameter(KEY_ACCOUNTID) == null &amp;&amp; uri.getQueryParameter(KEY_CURRENCY) == null) homeCurrency else null</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$if (withSum) "coalesce((SELECT sum(${debtEquivalentSumExpression}) FROM $CTE_TRANSACTION_AMOUNTS WHERE $KEY_DEBT_ID = $TABLE_DEBTS.$KEY_ROWID $exclusionClause),0) AS $KEY_EQUIVALENT_SUM" else null</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$if (withSum) "coalesce((SELECT sum(${debtSumExpression}) FROM $CTE_TRANSACTION_AMOUNTS WHERE $KEY_DEBT_ID = $TABLE_DEBTS.$KEY_ROWID $exclusionClause),0) AS $KEY_SUM" else null</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$projection.any { it.contains(KEY_EQUIVALENT_AMOUNT) }</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$statementBuilder.append("(select $KEY_BUDGET from $TABLE_BUDGET_ALLOCATIONS where $KEY_BUDGETID = ? AND $KEY_CATID = ? AND $KEY_YEAR = ? AND $KEY_SECOND_GROUP = ?),")</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$statementBuilder.append("(select $KEY_BUDGET_ROLLOVER_NEXT from $TABLE_BUDGET_ALLOCATIONS where $KEY_BUDGETID = ? AND $KEY_CATID = ? AND $KEY_YEAR = ? AND $KEY_SECOND_GROUP = ?),")</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$statementBuilder.append("(select $KEY_BUDGET_ROLLOVER_PREVIOUS from $TABLE_BUDGET_ALLOCATIONS where $KEY_BUDGETID = ? AND $KEY_CATID = ? AND $KEY_YEAR = ? AND $KEY_SECOND_GROUP = ?),")</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$statementBuilder.append("(select $KEY_ONE_TIME from $TABLE_BUDGET_ALLOCATIONS where $KEY_BUDGETID = ? AND $KEY_CATID = ? AND $KEY_YEAR = ? AND $KEY_SECOND_GROUP = ?))")</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider$statementBuilder.append("INSERT OR REPLACE INTO $TABLE_BUDGET_ALLOCATIONS ($KEY_BUDGETID, $KEY_CATID, $KEY_YEAR, $KEY_SECOND_GROUP, $KEY_BUDGET_ROLLOVER_PREVIOUS, $KEY_BUDGET_ROLLOVER_NEXT, $KEY_BUDGET, $KEY_ONE_TIME) ")</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider.Companion$"exists (SELECT 1 FROM $TABLE_TRANSACTIONS WHERE $KEY_PAYEEID=$tableName.$KEY_ROWID) AS $KEY_MAPPED_TRANSACTIONS"</ID>
-    <ID>MaxLineLength:BaseTransactionProvider.kt:BaseTransactionProvider.Companion$(if (withUUIDSelection) " AND $KEY_TRANSACTIONID = (SELECT $KEY_ROWID FROM $TABLE_TRANSACTIONS WHERE $KEY_UUID = ?)" else "")</ID>
-    <ID>MaxLineLength:BaseViewModel.kt:BaseViewModel$val SharingStarted.Companion.WhileSubscribedWithTimeout: SharingStarted get() = WhileSubscribed(stopTimeoutMillis = 5000)</ID>
-    <ID>MaxLineLength:Budget.kt:Budget$Grouping.NONE -&gt; if (start == null || end == null) throw IllegalArgumentException("start and date are required with Grouping.NONE")</ID>
-    <ID>MaxLineLength:Budget.kt:Budget$else -&gt; if (start != null || end != null) throw IllegalArgumentException("start and date are only allowed with Grouping.NONE")</ID>
-    <ID>MaxLineLength:Budget.kt:breakPoint * (labelFraction + numberOfColumns * numberFraction) + DividerDefaults.Thickness * numberOfColumns</ID>
-    <ID>MaxLineLength:BudgetActivity.kt:BudgetActivity$if (category.level == 1) R.string.budget_exceeded_error_1_2 else R.string.sub_budget_exceeded_error_1_2</ID>
-    <ID>MaxLineLength:BudgetActivity.kt:BudgetActivity$if (category.level == 1) R.string.budget_exceeded_error_2 else R.string.sub_budget_exceeded_error_2</ID>
-    <ID>MaxLineLength:BudgetLegacy.kt:context.getString(if (level &gt; 1) R.string.sub_budget_exceeded_error_2 else R.string.budget_exceeded_error_2)</ID>
-    <ID>MaxLineLength:BudgetViewModel2.kt:BudgetViewModel2$keepCriterion = if (allocatedOnly) { { !(it.budget == BudgetAllocation.EMPTY &amp;&amp; it.sum == 0L) } } else null</ID>
-    <ID>MaxLineLength:BudgetWidget.kt:BudgetWidget$if (daysRemain &amp;&amp; withinBudget) amountFormatted(budgetInfo.remainingBudget / budgetInfo.remainingDays) else "-"</ID>
-    <ID>MaxLineLength:ButtonWithDialog.kt:ButtonWithDialog$context: Context</ID>
-    <ID>MaxLineLength:CalculatorInputTest.kt:CalculatorInputTest$testHelper("10", R.id.b1, R.id.b0, R.id.b0, R.id.bMultiply, R.id.b1, R.id.b0, R.id.bPercent)</ID>
-    <ID>MaxLineLength:CalculatorInputTest.kt:CalculatorInputTest$testHelper("1000", R.id.b1, R.id.b0, R.id.b0, R.id.bDivide, R.id.b1, R.id.b0, R.id.bPercent)</ID>
-    <ID>MaxLineLength:CalculatorInputTest.kt:CalculatorInputTest$testHelper("110", R.id.b1, R.id.b0, R.id.b0, R.id.bAdd, R.id.b1, R.id.b0, R.id.bPercent)</ID>
-    <ID>MaxLineLength:CalculatorInputTest.kt:CalculatorInputTest$testHelper("90", R.id.b1, R.id.b0, R.id.b0, R.id.bSubtract, R.id.b1, R.id.b0, R.id.bPercent)</ID>
-    <ID>MaxLineLength:CalendarListPreferenceDialogFragmentCompat.kt:CalendarListPreferenceDialogFragmentCompat$CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL + " &gt;= " + CalendarContract.Calendars.CAL_ACCESS_CONTRIBUTOR</ID>
-    <ID>MaxLineLength:CalendarListPreferenceDialogFragmentCompat.kt:CalendarListPreferenceDialogFragmentCompat$if (success) R.string.planner_create_calendar_success else R.string.planner_create_calendar_failure</ID>
-    <ID>MaxLineLength:CategoryDelegate.kt:CategoryDelegate$if</ID>
-    <ID>MaxLineLength:CategoryTree.kt:HorizontalDivider(thickness = if (index2 == category1.children.lastIndex &amp;&amp; index1 != filteredChildren.lastIndex) 2.dp else 1.dp)</ID>
-    <ID>MaxLineLength:ChangeLogTriggers.kt:*</ID>
-    <ID>MaxLineLength:ClearingLastPagingSourceFactory.kt:ClearingPagingSource$abstract</ID>
-    <ID>MaxLineLength:ContentResolvingAndroidViewModel.kt:ContentResolvingAndroidViewModel$listOfNotNull(query, "$KEY_PARENTID IS NULL", if (withPortfolios) null else "$KEY_IS_PORTFOLIO = $PORTFOLIO_NONE").joinToString(" AND ")</ID>
-    <ID>MaxLineLength:ContextualActionBarFragment.kt:ContextualActionBarFragment.&lt;no name provided&gt;$expandableListSelectionType = if (lv is ExpandableListView) PACKED_POSITION_TYPE_GROUP else PACKED_POSITION_TYPE_NULL</ID>
-    <ID>MaxLineLength:ContextualActionBarFragment.kt:ContextualActionBarFragment.&lt;no name provided&gt;$lv</ID>
-    <ID>MaxLineLength:CriterionReachedDialogFragment.kt:CriterionInfo$* returns true if we are above the criterion, but if [onlyWhenChanged] is true only if startBalance was still below criterion</ID>
-    <ID>MaxLineLength:CsvExporter.kt:CsvExporter$add(context.getString(R.string.menu_original_amount) + " (" + context.getString(R.string.currency) + ")")</ID>
-    <ID>MaxLineLength:CsvImportActivity.kt:CsvImportActivity$resources.getQuantityString(R.plurals.import_transactions_result, it.successCount,it.successCount, it.label)</ID>
-    <ID>MaxLineLength:CurrencyFormatterTest.kt:CurrencyFormatterTest$assertThat(currencyFormatter.formatMoney(Money(eur, 150))).isEqualTo(if (javaVersion &gt;= 10) "1,50 €" else "1,50 €")</ID>
-    <ID>MaxLineLength:CustomizeMenuDialogFragment.kt:CustomizeMenuDialogFragment$(if (isTablet) MenuItem.NavigationMode.forTablet else MenuItem.NavigationMode.forPhone)</ID>
-    <ID>MaxLineLength:DailyExchangeRateDownloadService.kt:DailyExchangeRateDownloadService$"${datastore.dynamicExchangeRates.first()} AND $KEY_CURRENCY != ? AND NOT EXISTS(SELECT 1 from $TABLE_PRICES where $KEY_COMMODITY = $TABLE_ACCOUNTS.$KEY_CURRENCY and $KEY_DATE = date('now'))"</ID>
-    <ID>MaxLineLength:DataModule.kt:DataModule$throw Throwable("Updating from database schema version 132 or 133 is no longer supported. Please contact support@myexpenses.mobi for assistance.")</ID>
-    <ID>MaxLineLength:DatabaseConstants.kt:DatabaseConstants$"CAST((strftime('%j',date,'unixepoch','localtime','weekday $nextWeekEndSqlite', '-6 day') - 1) / 7 + 1 AS integer)"</ID>
-    <ID>MaxLineLength:DatabaseConstants.kt:DatabaseConstants$//in sqlite julian days are calculated from noon, in order to make sure that the returned julian day matches the day we need, we set the time to noon.</ID>
-    <ID>MaxLineLength:DatabaseConstants.kt:DatabaseConstants$const val WHERE_DEPENDENT: String = ("$KEY_PARENTID = ? OR $KEY_ROWID IN (SELECT $KEY_TRANSFER_PEER FROM $TABLE_TRANSACTIONS WHERE $KEY_PARENTID= ?)")</ID>
-    <ID>MaxLineLength:DateCriterion.kt:LocalDateSerializer$// Serial names of descriptors should be unique, so choose app-specific name in case some library also would declare a serializer for Date.</ID>
-    <ID>MaxLineLength:DateCriterion.kt:LocalDateSerializer$override</ID>
-    <ID>MaxLineLength:DateFormatPreference.kt:DateFormatPreference$override fun getDefaultValue: String?</ID>
-    <ID>MaxLineLength:DateInfo.kt:DateInfoExtra.Companion$if (groupingInfo.second &lt;= groupingInfo.grouping.minValue) groupingInfo.year - 1 else groupingInfo.year</ID>
-    <ID>MaxLineLength:DbConstants.kt: coalesce((SELECT </ID>
-    <ID>MaxLineLength:DbConstants.kt:"($KEY_OPENING_BALANCE + coalesce($KEY_CURRENT,0)) * CASE WHEN $KEY_CURRENCY = '$homeCurrency' THEN 1 WHEN $dynamicExpression THEN coalesce($CTE_LATEST_RATES.$KEY_VALUE,$KEY_EXCHANGE_RATE) ELSE $KEY_EXCHANGE_RATE END AS $KEY_EQUIVALENT_CURRENT_BALANCE"</ID>
-    <ID>MaxLineLength:DbConstants.kt:"($KEY_OPENING_BALANCE + coalesce($KEY_TOTAL,0)) * CASE WHEN $KEY_CURRENCY = '$homeCurrency' THEN 1 WHEN $dynamicExpression THEN coalesce($CTE_LATEST_RATES.$KEY_VALUE,$KEY_EXCHANGE_RATE) ELSE $KEY_EXCHANGE_RATE END AS $KEY_EQUIVALENT_TOTAL"</ID>
-    <ID>MaxLineLength:DbConstants.kt:"(SELECT $KEY_BUDGET from Allocations WHERE $KEY_ONE_TIME = 0 AND (coalesce($KEY_YEAR,0) &lt; $year ${second?.let { " OR (coalesce($KEY_YEAR,0) = $year AND coalesce($KEY_SECOND_GROUP,0) &lt; $it)" } ?: ""}) ORDER BY $KEY_YEAR DESC ${if (second == null) "" else ", $KEY_SECOND_GROUP DESC"} LIMIT 1))"</ID>
-    <ID>MaxLineLength:DbConstants.kt:"(SELECT max($KEY_SEALED) FROM $TABLE_ACCOUNTS WHERE $KEY_ROWID = $baseTable.$KEY_ACCOUNTID OR $KEY_ROWID = $KEY_TRANSFER_ACCOUNT OR $KEY_ROWID in (SELECT $KEY_TRANSFER_ACCOUNT FROM $innerTable WHERE $KEY_PARENTID = $baseTable.$KEY_ROWID))"</ID>
-    <ID>MaxLineLength:DbConstants.kt:"CASE $KEY_TYPE WHEN $type THEN $KEY_DISPLAY_AMOUNT ELSE ${if (incomeType) "max" else "min"}($KEY_DISPLAY_AMOUNT, 0) END"</ID>
-    <ID>MaxLineLength:DbConstants.kt:"CASE WHEN $KEY_CURRENCY = '$homeCurrency' THEN $KEY_OPENING_BALANCE ELSE $KEY_OPENING_BALANCE * $KEY_EXCHANGE_RATE END AS $KEY_EQUIVALENT_OPENING_BALANCE"</ID>
-    <ID>MaxLineLength:DbConstants.kt:Grouping.MONTH -&gt; "date($dateCol, 'unixepoch', 'localtime', '-${DatabaseConstants.monthStartsOn - 1} day', 'start of month', '+1 month', '-1 day', '+${DatabaseConstants.monthStartsOn - 1} day')"</ID>
-    <ID>MaxLineLength:DbConstants.kt:KEY_SUM_EXPENSES -&gt; "(SELECT $sumExpression FROM $CTE_TRANSACTION_AMOUNTS WHERE $KEY_TYPE = $FLAG_EXPENSE) AS $KEY_SUM_EXPENSES"</ID>
-    <ID>MaxLineLength:DbConstants.kt:KEY_SUM_INCOME -&gt; "(SELECT $sumExpression FROM $CTE_TRANSACTION_AMOUNTS WHERE $KEY_TYPE = $FLAG_INCOME) AS $KEY_SUM_INCOME"</ID>
-    <ID>MaxLineLength:DbConstants.kt:append(" LEFT JOIN $TABLE_PLAN_INSTANCE_STATUS ON $tableName.$KEY_ROWID = $TABLE_PLAN_INSTANCE_STATUS.$KEY_TRANSACTIONID")</ID>
-    <ID>MaxLineLength:DbConstants.kt:append(" SELECT $tableName.*, Tree.$KEY_PATH, Tree.$KEY_ICON, Tree.$KEY_TYPE, $TABLE_PAYEES.$KEY_PAYEE_NAME, $TABLE_PAYEES.$KEY_SHORT_NAME, $TABLE_METHODS.$KEY_LABEL AS $KEY_METHOD_LABEL, $TABLE_METHODS.$KEY_ICON AS $KEY_METHOD_ICON")</ID>
-    <ID>MaxLineLength:DbConstants.kt:append(" WHERE $WHERE_NOT_SPLIT AND ${if (withFilter) WHERE_NOT_ARCHIVE else WHERE_NOT_ARCHIVED} AND $selection")</ID>
-    <ID>MaxLineLength:DbConstants.kt:append(" WHERE $WHERE_NOT_SPLIT AND ($KEY_PARENTID = $archiveId OR (SELECT $KEY_PARENTID FROM $TABLE_TRANSACTIONS parents WHERE $KEY_ROWID = $VIEW_WITH_ACCOUNT.$KEY_PARENTID) = $archiveId))")</ID>
-    <ID>MaxLineLength:DbConstants.kt:append("$aggregateFunction(CASE WHEN effective_type = $FLAG_TRANSFER THEN $KEY_DISPLAY_AMOUNT ELSE 0 END) AS $KEY_SUM_TRANSFERS,")</ID>
-    <ID>MaxLineLength:DbConstants.kt:append(",count(CASE WHEN $KEY_CATID &gt; 0 AND $WHERE_NOT_VOID AND effective_type != $FLAG_TRANSFER THEN 1 ELSE null END) as $KEY_MAPPED_CATEGORIES")</ID>
-    <ID>MaxLineLength:DbConstants.kt:else -&gt; if (breakdownByAccount) "$KEY_YEAR, $KEY_SECOND_GROUP, $KEY_ACCOUNTID" else "$KEY_YEAR, $KEY_SECOND_GROUP"</ID>
-    <ID>MaxLineLength:Debt.kt:amount = if (showEquivalentAmount.value) transaction.equivalentAmount else transaction.amount</ID>
-    <ID>MaxLineLength:DebtActivity.kt:DebtActivity$(supportFragmentManager.findFragmentByTag(PartiesList.DIALOG_DEBT_DETAILS) as? DebtDetailsDialogFragment)?.dismiss()</ID>
-    <ID>MaxLineLength:DebtViewModel.kt:DebtViewModel$CrashHandler.report(IllegalStateException("Currency mismatch in debt transactions, debt currency is not home currency"))</ID>
-    <ID>MaxLineLength:DeepLinkActivity.kt:DeepLinkActivity$if</ID>
-    <ID>MaxLineLength:DistributionBaseActivity.kt:DistributionBaseActivity$accountId = if (accountInfo.accountId == 0L &amp;&amp; accountInfo.accountGrouping == AccountGrouping.NONE) HOME_AGGREGATE_ID else accountInfo.accountId</ID>
-    <ID>MaxLineLength:DistributionTest.kt:DistributionTest$@Ignore("For unknown reason, testing for expense works, while testing for income fails. We run this test connected for the moment.")</ID>
-    <ID>MaxLineLength:DistributionTest.kt:DistributionTest$assertThat(it.supportFragmentManager.findFragmentByTag(ProtectedFragmentActivity.EDIT_COLOR_DIALOG)).isNotNull()</ID>
-    <ID>MaxLineLength:DistributionViewModelBase.kt:DistributionViewModelBase$}</ID>
-    <ID>MaxLineLength:DualSplitTransactionTest.kt:DualSplitTransactionTest$TransactionData(accountId = accountA, amount = 100L, transferAccount = accountB, transferPeer = peers1.second)</ID>
-    <ID>MaxLineLength:DualSplitTransactionTest.kt:DualSplitTransactionTest$TransactionData(accountId = accountA, amount = 200L, transferAccount = accountB, transferPeer = peers2.second)</ID>
-    <ID>MaxLineLength:DualSplitTransactionTest.kt:DualSplitTransactionTest$TransactionData(accountId = accountB, amount = -100L, transferAccount = accountA, transferPeer = peers1.first)</ID>
-    <ID>MaxLineLength:DualSplitTransactionTest.kt:DualSplitTransactionTest$TransactionData(accountId = accountB, amount = -100L, transferAccount = accountA, transferPeer = peers2.first)</ID>
-    <ID>MaxLineLength:DualSplitTransactionTest.kt:DualSplitTransactionTest$TransactionData(accountId = accountB, amount = -200L, transferAccount = accountA, transferPeer = peers2.first)</ID>
-    <ID>MaxLineLength:DualSplitTransactionTest.kt:DualSplitTransactionTest$assertThat(finalA.splitParts!!.any { it.data.transferPeerId != null }).isTrue()</ID>
-    <ID>MaxLineLength:EditActivity.kt:EditActivity$if (newInstance) getString(R.string.discard) + "?" else getString(R.string.dialog_confirm_discard_changes)</ID>
-    <ID>MaxLineLength:EditCurrencyDialog.kt:if (delta &gt; 0) R.string.warning_change_fraction_digits_2_multiplied else R.string.warning_change_fraction_digits_2_divided</ID>
-    <ID>MaxLineLength:Event.kt://https://medium.com/androiddevelopers/livedata-with-snackbar-navigation-and-other-events-the-singleliveevent-case-ac2622673150</ID>
-    <ID>MaxLineLength:Exceptions.kt:UnknownPictureSaveException : IllegalStateException</ID>
-    <ID>MaxLineLength:ExchangeRateServiceTest.kt:ExchangeRateServiceTest$val (rates, _) = service.getTimeSeries(ExchangeRateApi.CoinApi, BuildConfig.COIN_API_API_KEY, LocalDate.now().minusDays(10), LocalDate.now(), "EUR","AUD")</ID>
-    <ID>MaxLineLength:ExchangeRateServiceTest.kt:ExchangeRateServiceTest$val (rates, _) = service.getTimeSeries(ExchangeRateApi.Frankfurter, null, LocalDate.now().minusDays(10), LocalDate.now(), "EUR","AUD")</ID>
-    <ID>MaxLineLength:ExchangeRateServiceTest.kt:ExchangeRateServiceTest$val (rates, exception) = service.getTimeSeries(ExchangeRateApi.OpenExchangeRates, BuildConfig.OPEN_EXCHANGE_RATES_API_KEY, LocalDate.now().minusDays(10), LocalDate.now(), "EUR","AUD")</ID>
-    <ID>MaxLineLength:ExchangeRateServiceTest.kt:ExchangeRateServiceTest$val rates = service.getLatest(ExchangeRateApi.CoinApi, BuildConfig.COIN_API_API_KEY, "EUR", listOf("AUD", "GBP", "CHF"))</ID>
-    <ID>MaxLineLength:ExchangeRateServiceTest.kt:ExchangeRateServiceTest$val rates = service.getLatest(ExchangeRateApi.OpenExchangeRates, BuildConfig.OPEN_EXCHANGE_RATES_API_KEY, "EUR", listOf("AUD", "GBP", "CHF"))</ID>
-    <ID>MaxLineLength:ExpenseEdit.kt:ExpenseEdit$(delegate as? TransferDelegate)?.run { passedInTransferAmount?.takeIf { passedInTransferAccountId == id } }</ID>
-    <ID>MaxLineLength:ExpenseEdit.kt:ExpenseEdit$//if we are editing the transaction the difference between the new and the old value define the delta, as long as user did not select a different account</ID>
-    <ID>MaxLineLength:ExpenseEdit.kt:ExpenseEdit$get() = if (createNew &amp;&amp; delegate.createNewOverride) R.string.menu_save_and_new_content_description else super.fabDescription</ID>
-    <ID>MaxLineLength:ExpenseEdit.kt:ExpenseEdit$getString(if (areDatesLinked) R.string.content_description_dates_are_linked else R.string.content_description_dates_are_not_linked)</ID>
-    <ID>MaxLineLength:ExportDialogFragment.kt:ExportDialogFragment$getString(R.string.help_ExportDialog_date_format, "https://developer.android.com/reference/java/time/format/DateTimeFormatter")</ID>
-    <ID>MaxLineLength:ExportTest.kt:ExportTest$""""","$date","","0","0,10","","","${context.getString(R.string.pm_cheque)}","*","1","","Tag One, 'Tags, Tags, Tags'""""</ID>
-    <ID>MaxLineLength:ExportTest.kt:ExportTest$""""";"$date";"";"0";"0.10";"";"";"${context.getString(R.string.pm_cheque)}";"*";"1";"";"Tag One, 'Tags, Tags, Tags'""""</ID>
-    <ID>MaxLineLength:ExportTest.kt:ExportTest$"\"\",\"$date\",\"\",\"0,40\",\"0\",\"Main &gt; Sub\",\"Note for myself with \"\"quote\"\"\",\"\",\"\",\"\",\"\",\"\""</ID>
-    <ID>MaxLineLength:ExportTest.kt:ExportTest$"\"\";\"$date\";\"N.N.\";\"1.00\";\"0\";\"\";\"Income inserted after first export\";\"\";\"\";\"\";\"\";\"\""</ID>
-    <ID>MaxLineLength:ExportTest.kt:ExportTest$"\"\";\"$date\";\"\";\"0.40\";\"0\";\"Main &gt; Sub\";\"Note for myself with \"\"quote\"\"\";\"\";\"\";\"\";\"\";\"\""</ID>
-    <ID>MaxLineLength:ExportTest.kt:ExportTest$compare(arrayOf("!Type:Cat", "N${context.getString(R.string.transfer)}", "^", "NMain", "^", "NMain:Sub", "^"))</ID>
-    <ID>MaxLineLength:ExportViewModel.kt:ExportViewModel$val withEquivalentAmount = withOriginalAmountAndEquivalentAmount &amp;&amp; account.currency != homeCurrencyString</ID>
-    <ID>MaxLineLength:ExportViewModel.kt:ExportViewModel$||</ID>
-    <ID>MaxLineLength:ExtendProLicenceDialogFragment.kt:ExtendProLicenceDialogFragment$binding.actSelectLicence.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ -&gt; selectedIndex = position }</ID>
-    <ID>MaxLineLength:ExtendProLicenceDialogFragment.kt:ExtendProLicenceDialogFragment$dialog.setOnShowListener { dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener { onExtendClicked() } }</ID>
-    <ID>MaxLineLength:FeatureModule.kt:FeatureModule$(Class.forName("org.totschnig.fints.BankingFeatureImpl").getConstructor().newInstance() as BankingFeature)</ID>
-    <ID>MaxLineLength:FileUtils.kt:FileUtils$*</ID>
-    <ID>MaxLineLength:FilterDialog.kt:modifier = Modifier.align(if (isComplexSearch) Alignment.CenterStart else Alignment.CenterEnd)</ID>
-    <ID>MaxLineLength:FilterPersistence.kt:FilterPersistence$else -&gt; if (oldValue is AndCriterion) AndCriterion(filtered.toSet()) else OrCriterion(filtered.toSet())</ID>
-    <ID>MaxLineLength:FloatingActionButtonMenu.kt:contentDescription = stringResource(androidx.appcompat.R.string.abc_action_menu_overflow_description)</ID>
-    <ID>MaxLineLength:FontAwesomeIcons.kt:"house-flood-water-circle-arrow-right" to IconInfo('\ue50f', R.string.fa_house_flood_water_circle_arrow_right_label, false)</ID>
-    <ID>MaxLineLength:FontAwesomeIcons.kt:"person-walking-dashed-line-arrow-right" to IconInfo('\ue553', R.string.fa_person_walking_dashed_line_arrow_right_label, false)</ID>
-    <ID>MaxLineLength:FormAccentUtil.kt:if</ID>
-    <ID>MaxLineLength:FullAccount.kt:FullAccount.Companion$//in V2 this is only called for real accounts, in V1 we need to set isSingleCurrency to false for home aggregate</ID>
-    <ID>MaxLineLength:FullAccount.kt:FullAccount.Companion$balanceType = if (portfolioRole == PORTFOLIO_CONTAINER) BalanceType.VALUATION else getEnumIfExists(KEY_BALANCE_TYPE, BalanceType.CURRENT)</ID>
-    <ID>MaxLineLength:GroupQueryBreakdownTest.kt:GroupQueryBreakdownTest$// date(date, 'unixepoch', 'localtime', '-${monthDelta} day', 'start of month', '+1 month', '-1 day', '+${monthDelta} day')</ID>
-    <ID>MaxLineLength:GroupedSpinnerAdapter.kt:GroupedSpinnerAdapter$fun getFirstSelectable: IndexedValue&lt;SpinnerItem&gt;?</ID>
-    <ID>MaxLineLength:HistoryChart.kt:HistoryChart$Grouping.MONTH -&gt; DatabaseConstants.yearOfMonthStart + " = " + x / MONTH_GROUPING_YEAR_X + " AND " + DatabaseConstants.month + " = " + x % MONTH_GROUPING_YEAR_X</ID>
-    <ID>MaxLineLength:HistoryChart.kt:HistoryChart$val accountId = if (columnIndexAccountId &gt; -1) cursor.getLong(columnIndexAccountId) else accountInfo.accountId</ID>
-    <ID>MaxLineLength:HistoryChart.kt:HistoryChart$viewModel.accountInfo(requireActivity().intent.extras!!)</ID>
-    <ID>MaxLineLength:HistoryChart.kt:HistoryChart.&lt;no name provided&gt;$accountId = if (accountInfo.accountId == 0L &amp;&amp; accountInfo.accountGrouping == AccountGrouping.NONE) HOME_AGGREGATE_ID else accountInfo.accountId</ID>
-    <ID>MaxLineLength:HistoryChart.kt:HistoryChart.Companion$//for the x axis we need an Integer for proper rendering, for printing the week range, we add the offset from monday</ID>
-    <ID>MaxLineLength:HistoryChart.kt:HistoryChart.Companion$if (DatabaseConstants.weekStartsOn == Calendar.SUNDAY) 6 else DatabaseConstants.weekStartsOn - Calendar.MONDAY</ID>
-    <ID>MaxLineLength:HistoryViewModel.kt:HistoryViewModel$accountId == 0L &amp;&amp; extras.containsKey(KEY_ACCOUNT_GROUPING) &amp;&amp; extras.getString(KEY_ACCOUNT_GROUPING) != AccountGrouping.CURRENCY.name</ID>
-    <ID>MaxLineLength:IDiscoveryHelper.kt:IDiscoveryHelper.NO_OP$override fun discover</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$Buildings : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$Business : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$ChartsDiagrams : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$Childhood : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$ClothingFashion : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$DevicesHardware : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$FruitsVegetables : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$Gaming : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$Household : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$MediaPlayback : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$MedicalHealth : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$Money : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$Nature : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$Political : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$PunctuationSymbols : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$ScienceFiction : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$Security : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$Shopping : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$Social : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$SportsFitness : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$TextFormatting : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$Transportation : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$TravelHotel : IconCategory</ID>
-    <ID>MaxLineLength:IconCategory.kt:IconCategory$UsersPeople : IconCategory</ID>
-    <ID>MaxLineLength:IconSelector.kt:iconsForCategory: (Resources, IconCategory) -&gt; Map&lt;String, IIconInfo&gt; = IIconInfo.Companion::resolveIconsForCategory</ID>
-    <ID>MaxLineLength:IconSelector.kt:modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))</ID>
-    <ID>MaxLineLength:ImportTradesDialog.kt:finalPrincipal = Money.buildWithMajor(portfolio.currencyUnit, quantity.multiply(price), roundingMode).getOrThrow()</ID>
-    <ID>MaxLineLength:ImportTradesDialog.kt:finalPrincipal = Money.buildWithMajor(portfolio.currencyUnit, total, roundingMode).getOrThrow()</ID>
-    <ID>MaxLineLength:ImportTradesDialog.kt:finalQuantity = Money.buildWithMajor(asset, total.divide(price, 10, roundingMode), roundingMode).getOrThrow()</ID>
-    <ID>MaxLineLength:ImportTradesDialog.kt:parseResult?.takeIf { it.intents.isEmpty() &amp;&amp; it.parseFailures == 0 &amp;&amp; it.missingAssets.isEmpty() &amp;&amp; it.fatalError == null }</ID>
-    <ID>MaxLineLength:LazyFontSelector.kt:LazyFontSelector$//Log.d("MyExpenses","Character " + c + " was found in font " + currentFont.getBaseFont().getPostscriptFontName());</ID>
-    <ID>MaxLineLength:MainDelegate.kt:MainDelegate$debts.sortedWith(compareBy&lt;DisplayDebt&gt; { it.payeeId != payeeId }.thenBy { it.payeeId })</ID>
-    <ID>MaxLineLength:MainDelegate.kt:MainDelegate$withInputMethodNeeded = Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.Q &amp;&amp; configurator[AUTO_COMPLETE_DROPDOWN_SET_INPUT_METHOD_NEEDED, true]</ID>
-    <ID>MaxLineLength:MainScreen.kt:ListDetailPaneScaffoldRole.Detail -&gt; if ((viewModel.accountList.value.find { it.id == selectedAccountId } as? FullAccount)?.isPortfolio == true) HELP_VARIANT_PORTFOLIO else HELP_VARIANT_TRANSACTIONS</ID>
-    <ID>MaxLineLength:MainScreen.kt:ListDetailPaneScaffoldRole.List -&gt; if (viewModel.currentAccountsTab.value == AccountsScreenTab.BALANCE_SHEET) HELP_VARIANT_BALANCE_SHEET else HELP_VARIANT_ACCOUNTS</ID>
-    <ID>MaxLineLength:MainScreen.kt:MenuItem.NavigationMode.FIXED_BOTTOM -&gt; calculatedLayoutType</ID>
-    <ID>MaxLineLength:MainScreen.kt:MenuItem.NavigationMode.TOGGLEABLE_RAIL -&gt; if (isNavigationVisible) NavigationSuiteType.NavigationRail else NavigationSuiteType.None</ID>
-    <ID>MaxLineLength:MainScreen.kt:NavigationItem(stringResource(com.android.setupwizardlib.R.string.suw_more_button_label))</ID>
-    <ID>MaxLineLength:MainScreen.kt:onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -&gt; CurrencyUnit? = { _, _, _, _, _ -&gt; null }</ID>
-    <ID>MaxLineLength:ManageAccountFlags.kt:bottom = paddingValues.calculateBottomPadding() + dimensionResource(R.dimen.fab_related_bottom_padding)</ID>
-    <ID>MaxLineLength:ManageAccountFlags.kt:contentDescription = stringResource(id = androidx.appcompat.R.string.abc_action_bar_up_description)</ID>
-    <ID>MaxLineLength:ManageAccountTypes.kt:bottom = paddingValues.calculateBottomPadding() + dimensionResource(R.dimen.fab_related_bottom_padding)</ID>
-    <ID>MaxLineLength:ManageAccountTypes.kt:contentDescription = stringResource(id = androidx.appcompat.R.string.abc_action_bar_up_description)</ID>
-    <ID>MaxLineLength:ManageBudgets.kt:ManageBudgets$Text(stringResource(if (selectedBudgets.isNotEmpty()) R.string.menu_import else R.string.menu_close))</ID>
-    <ID>MaxLineLength:ManageCategories.kt:ManageCategories$.</ID>
-    <ID>MaxLineLength:ManageCategories.kt:ManageCategories$Text(text = stringResource(id = R.string.menu_categories_setup_default))</ID>
-    <ID>MaxLineLength:ManageCategories.kt:ManageCategories$if</ID>
-    <ID>MaxLineLength:ManageCategories.kt:ManageCategories$if (protectionInfo!!.isTemplate) R.plurals.not_deletable_mapped_templates else R.plurals.not_deletable_mapped_transactions</ID>
-    <ID>MaxLineLength:ManageCategories.kt:ManageCategories$saveParams = ContribPayload.SaveCategoryParams(label, icon, typeFlags, parentId)</ID>
-    <ID>MaxLineLength:ManageCategories.kt:ManageCategories$val categoryState = viewModel.categoryTreeForSelect.collectAsState(initial = LoadingState.Loading).value</ID>
-    <ID>MaxLineLength:Money.kt:Money$private</ID>
-    <ID>MaxLineLength:Money.kt:Money.Companion$fun</ID>
-    <ID>MaxLineLength:MoreDbUtils.kt:"""UPDATE $TABLE_TRANSACTIONS SET $KEY_TRANSFER_ACCOUNT = ?, $KEY_TRANSFER_PEER = ?, $KEY_METHODID = null, $KEY_CATID = coalesce($KEY_CATID, ?) WHERE $KEY_ROWID = ?"""</ID>
-    <ID>MaxLineLength:MoreDbUtils.kt:"INSERT INTO $TABLE_CATEGORIES ($KEY_LABEL, $KEY_LABEL_NORMALIZED, $KEY_PARENTID, $KEY_COLOR, $KEY_ICON, $KEY_UUID, $KEY_TYPE) VALUES (?, ?, ?, ?, ?, ?, ?)"</ID>
-    <ID>MaxLineLength:MoreDbUtils.kt:"INSERT INTO $TABLE_CHANGES ($KEY_TYPE, $KEY_ACCOUNTID, $KEY_SYNC_SEQUENCE_LOCAL, $KEY_UUID, $KEY_REFERENCE_NUMBER) "</ID>
-    <ID>MaxLineLength:MoreDbUtils.kt:"SELECT '${TransactionChange.Type.link.name}', $KEY_ROWID, $KEY_SYNC_SEQUENCE_LOCAL, ?, ? FROM "</ID>
-    <ID>MaxLineLength:MoreDbUtils.kt://we write identical changes for the two accounts, so that on the other end of the synchronization we know which part of the transfer keeps its uuid</ID>
-    <ID>MaxLineLength:MoreDbUtils.kt:?:</ID>
-    <ID>MaxLineLength:MoreDbUtils.kt:throw XmlPullParserException("&lt;subcategory&gt; tag must be inside &lt;category&gt; at line ${parser.lineNumber}")</ID>
-    <ID>MaxLineLength:MoreDbUtils.kt:throw XmlPullParserException("Invalid or missing 'type' attribute ($typeStr) on &lt;category&gt; at line ${parser.lineNumber}")</ID>
-    <ID>MaxLineLength:MoreDbUtils.kt:throw XmlPullParserException("Nested &lt;category&gt; tag is not supported at line ${parser.lineNumber}")</ID>
-    <ID>MaxLineLength:MoreInfoDialogFragment.kt:MoreInfoDialogFragment$Utils.makeBulletList(context, resources.getStringArray(R.array.additional_credits).toList(), R.drawable.ic_menu_forward)</ID>
-    <ID>MaxLineLength:MoreUiUtils.kt://without setting background drawable, popup does not close on back button or touch outside, on older API levels</ID>
-    <ID>MaxLineLength:MoreUiUtils.kt:private</ID>
-    <ID>MaxLineLength:MyExpensesV2.kt:MyExpensesV2$IllegalStateException("did not expect stayOpen to be true when editing trade")</ID>
-    <ID>MaxLineLength:MyExpensesV2.kt:MyExpensesV2$onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -&gt; CurrencyUnit?</ID>
-    <ID>MaxLineLength:MyExpensesV2.kt:MyExpensesV2$viewModel.activeFilter.collectAsState().value</ID>
-    <ID>MaxLineLength:MyExpensesV2ViewModel.kt:MyExpensesV2ViewModel$MutableStateFlow(if (startScreen == StartScreen.BalanceSheet) AccountsScreenTab.BALANCE_SHEET else AccountsScreenTab.LIST)</ID>
-    <ID>MaxLineLength:MyExpensesViewModel.kt:MyExpensesViewModel$dataStore.data.first()[prefHandler.getStringPreferencesKey(PrefKey.TRANSACTION_AMOUNT_COLOR_SOURCE)]</ID>
-    <ID>MaxLineLength:NetworkModule.kt:NetworkModule.Companion$fun</ID>
-    <ID>MaxLineLength:NewDialogUtils.kt:headerToString = { context.getString(if(it) R.string.balance_sheet_section_assets else R.string.balance_sheet_section_liabilities) }</ID>
-    <ID>MaxLineLength:NumberFormatPreference.kt:NumberFormatPreference$override fun getDefaultValue: String?</ID>
-    <ID>MaxLineLength:OcrFeature.kt:OcrResult$OcrResultFlat(amountCandidates.getOrNull(amountIndex), dateCandidates.getOrNull(dateIndex), payeeCandidates.getOrNull(payeeIndex))</ID>
-    <ID>MaxLineLength:OcrFeature.kt:OcrResult$data</ID>
-    <ID>MaxLineLength:OnBoardingPrivacyFragment.kt:OnBoardingPrivacyFragment$hostActivity.requestNotificationPermission(PermissionHelper.PERMISSIONS_REQUEST_NOTIFICATIONS_AUTO_BACKUP)</ID>
-    <ID>MaxLineLength:OnboardingDataFragment.kt:OnboardingDataFragment$if</ID>
-    <ID>MaxLineLength:OnboardingUiFragment.kt:OnboardingUiFragment$(Utils.ensureDateFormatWithShortYear(context) as SimpleDateFormat).asDateTimeFormatter</ID>
-    <ID>MaxLineLength:OnboardingUiFragment.kt:OnboardingUiFragment$(if (isChecked) ProtectedFragmentActivity.ThemeType.light else ProtectedFragmentActivity.ThemeType.dark).name</ID>
-    <ID>MaxLineLength:Package.kt:AddOnPackage.Companion$//https://youtrack.jetbrains.com/issue/KT-8970/Object-is-uninitialized-null-when-accessed-from-static-context-ex.-companion-object-with-initialization-loop</ID>
-    <ID>MaxLineLength:PartiesList.kt:PartiesList.ViewHolder$setImageResource(if (viewModel.expandedItem == party.id) R.drawable.ic_expand_less else R.drawable.ic_expand_more)</ID>
-    <ID>MaxLineLength:Party.kt:Party$get() = id != NULL_ITEM_ID &amp;&amp; !mappedTransactions &amp;&amp; !mappedTemplates &amp;&amp; !mappedDebts &amp;&amp; duplicates.all { it.isUnused }</ID>
-    <ID>MaxLineLength:PartyListViewModel.kt:PartyListViewModel$)</ID>
-    <ID>MaxLineLength:PdfHelper.kt:PdfHelper.&lt;no name provided&gt;$if (hasAnyRtl(text) || layoutDirectionFromLocaleIsRTL) PdfWriter.RUN_DIRECTION_RTL else PdfWriter.RUN_DIRECTION_LTR</ID>
-    <ID>MaxLineLength:PdfPrinter.kt:PdfPrinter$horizontalAlignment = if (helper.layoutDirectionFromLocaleIsRTL) Element.ALIGN_LEFT else Element.ALIGN_RIGHT</ID>
-    <ID>MaxLineLength:PdfPrinter.kt:PdfPrinter$horizontalAlignment = if (helper.layoutDirectionFromLocaleIsRTL) Element.ALIGN_RIGHT else Element.ALIGN_LEFT</ID>
-    <ID>MaxLineLength:PermissionHelper.kt:PermissionHelper$PERMISSIONS_REQUEST_NOTIFICATIONS_AUTO_BACKUP -&gt; context.getString(R.string.notifications_permission_required_auto_backup)</ID>
-    <ID>MaxLineLength:PermissionHelper.kt:PermissionHelper$PERMISSIONS_REQUEST_NOTIFICATIONS_PLANNER -&gt; Utils.getTextWithAppName(context, R.string.notifications_permission_required_planner).toString()</ID>
-    <ID>MaxLineLength:PermissionHelper.kt:PermissionHelper$PERMISSIONS_REQUEST_NOTIFICATIONS_WEBUI -&gt; context.getString(R.string.notifications_permission_required_webui)</ID>
-    <ID>MaxLineLength:PermissionHelper.kt:PermissionHelper$PERMISSIONS_REQUEST_STORAGE -&gt; "In order to save images to external storage you must grant Storage Permission"</ID>
-    <ID>MaxLineLength:Plan.kt:Plan$if (recurrence == Recurrence.LAST_DAY_OF_MONTH) localDate.withDayOfMonth(localDate.lengthOfMonth()) else localDate</ID>
-    <ID>MaxLineLength:PlanExecutor.kt:PlanExecutor$)</ID>
-    <ID>MaxLineLength:PlanExecutor.kt:PlanExecutor$currencyContext</ID>
-    <ID>MaxLineLength:PlanExecutor.kt:PlanExecutor$log(if (template == null) "Template.getInstanceForPlanIfInstanceIsOpen returned null, instance might already have been dealt with" else "Plan refers to a closed account or debt")</ID>
-    <ID>MaxLineLength:PlanExecutor.kt:PlanExecutor$resultIntent = prefHandler.createShowDetailsIntent(applicationContext, notificationId, transaction.data)</ID>
-    <ID>MaxLineLength:PlanInstance.kt:PlanInstance$constructor</ID>
-    <ID>MaxLineLength:PlanInstance.kt:PlanInstanceUpdate</ID>
-    <ID>MaxLineLength:PlanMonthFragment.kt:PlanMonthFragment.CaldroidCustomAdapter$if (brightColor) com.caldroid.R.color.cell_text_color else com.caldroid.R.color.cell_text_color_dark</ID>
-    <ID>MaxLineLength:PlannerFragment.kt:PlannerFragment.PlanInstanceViewHolder$if (planInstance.amount.amountMinor &lt; 0) R.color.colorExpenseOnCard else R.color.colorIncomeOnCard</ID>
-    <ID>MaxLineLength:PlannerFragment.kt:PlannerFragment.PlannerAdapter$data.indexOfFirst { planInstance -&gt; planInstance.templateId == update.templateId &amp;&amp; planInstance.instanceId == update.instanceId }</ID>
-    <ID>MaxLineLength:PortfolioSetupDialog.kt:onConfirm: (label: String, currency: String, color: Int, exchangeRate: Double, dynamicExchangeRates: Boolean, type: AccountType) -&gt; Unit</ID>
-    <ID>MaxLineLength:PreferenceDataFragment.kt:PreferenceDataFragment$getString(R.string.pref_home_currency_title) + ": " + viewModel.currencyContext[newHomeCurrency].description</ID>
-    <ID>MaxLineLength:PreferenceDataFragment.kt:PreferenceDataFragment$preferenceActivity.showSnackBar(getString(R.string.exchange_rate_not_supported, currency, homeCurrency))</ID>
-    <ID>MaxLineLength:PreferenceDataFragment.kt:PreferenceDataFragment$title = if (base.code == homeCurrency) commodity.description else "${commodity.description} (${base.code})"</ID>
-    <ID>MaxLineLength:PreferenceUiFragment.kt:PreferenceUiFragment$if</ID>
-    <ID>MaxLineLength:PreferencesProtectionFragment.kt:PreferencesProtectionFragment$if</ID>
-    <ID>MaxLineLength:PreferencesSyncFragment.kt:PreferencesSyncFragment$TextUtils.concatResStrings(requireContext(), R.string.pref_sync_frequency_summary, R.string.pref_sync_frequency_summary_0)</ID>
-    <ID>MaxLineLength:PreferencesWebUiFragment.kt:PreferencesWebUiFragment$TextUtils.concatResStrings(requireContext(), R.string.wifi_not_connected, R.string.continue_confirmation)</ID>
-    <ID>MaxLineLength:PriceCalculationViewModelTest.kt:PriceCalculationViewModelTest$private suspend</ID>
-    <ID>MaxLineLength:PriceCalculationViewModelTest.kt:PriceCalculationViewModelTest$val transactionId = repository.insertTransaction(accountId, 100, date = LocalDateTime.now().minusDays(1), equivalentAmount = 190).id</ID>
-    <ID>MaxLineLength:PriceHistory.kt:PriceHistory$showSnackBar(getString(R.string.exchange_rate_not_supported, viewModel.commodity, viewModel.homeCurrency))</ID>
-    <ID>MaxLineLength:PriceHistory.kt:imageVector = if (price?.source == ExchangeRateSource.User) Icons.Default.Edit else Icons.Default.Add</ID>
-    <ID>MaxLineLength:PriceHistoryViewModel.kt:PriceHistoryViewModel$appendLine(context.resources.getQuantityString(R.plurals.import_prices_failure_message, failedLines, failedLines))</ID>
-    <ID>MaxLineLength:PriceHistoryViewModel.kt:PriceHistoryViewModel$appendLine(context.resources.getQuantityString(R.plurals.import_prices_success_message, importedCount, importedCount))</ID>
-    <ID>MaxLineLength:QifParser.kt:QifParser$private</ID>
-    <ID>MaxLineLength:QifUtils.kt:QifUtils$*</ID>
-    <ID>MaxLineLength:QifUtils.kt:QifUtils$pickBestTransferPeer(fromAccount, fromTransaction, toAccount, toAccount.transactions) ?.let { it to false }</ID>
-    <ID>MaxLineLength:QifUtils.kt:QifUtils$val transferPeer = pickBestTransferPeer(fromAccount, split, toAccount, toAccount.transactions)</ID>
-    <ID>MaxLineLength:RecurrenceAdapter.kt:RecurrenceAdapter$arrayOf(Recurrence.NONE, Recurrence.ONETIME, Recurrence.DAILY, Recurrence.WEEKLY, Recurrence.MONTHLY, Recurrence.YEARLY, Recurrence.CUSTOM)</ID>
-    <ID>MaxLineLength:RemindRateDialogFragment.kt:RemindRateDialogFragment$binding.ratingHowMany.text = Utils.getTextWithAppName(requireContext(), R.string.dialog_remind_rate_how_many_stars)</ID>
-    <ID>MaxLineLength:RemindRateDialogFragment.kt:RemindRateDialogFragment$class</ID>
-    <ID>MaxLineLength:RemindRateDialogFragment.kt:RemindRateDialogFragment$if (binding.rating.rating &gt;= POSITIVE_RATING) R.id.RATE_COMMAND else R.id.FEEDBACK_COMMAND</ID>
-    <ID>MaxLineLength:RemindRateDialogFragment.kt:RemindRateDialogFragment$setText(if (rating &gt;= POSITIVE_RATING) R.string.dialog_remind_rate_yes else R.string.pref_send_feedback_title)</ID>
-    <ID>MaxLineLength:RemindRateDialogFragment.kt:RemindRateDialogFragment.Companion$val nextReminder = prefHandler.getLong(PrefKey.NEXT_REMINDER_RATE, Utils.getInstallTime(activity) + DateUtils.DAY_IN_MILLIS * 30)</ID>
-    <ID>MaxLineLength:RepositoryAccount.kt:AccountOpeningInfo</ID>
-    <ID>MaxLineLength:RepositoryAttributes.kt:private</ID>
-    <ID>MaxLineLength:RepositoryBudget.kt:Grouping.MONTH -&gt; "$yearOfMonthStart = $thisYearOfMonthStart AND $month = ${budget.grouping.queryArgumentForThisSecond}"</ID>
-    <ID>MaxLineLength:RepositoryBudget.kt:Grouping.WEEK -&gt; "$yearOfWeekStart = $thisYearOfWeekStart AND $week = ${budget.grouping.queryArgumentForThisSecond}"</ID>
-    <ID>MaxLineLength:RepositoryBudget.kt:listOfNotNull(budgetId.toString(), categoryId.toString(), period?.first?.toString(), period?.second?.toString()).toTypedArray()</ID>
-    <ID>MaxLineLength:RepositoryPaymentMethod.kt:"(select count(*) from $TABLE_TRANSACTIONS WHERE $KEY_METHODID=$TABLE_METHODS.$KEY_ROWID) AS $KEY_MAPPED_TRANSACTIONS"</ID>
-    <ID>MaxLineLength:RepositoryReceipts.kt:"coalesce($KEY_URI, (SELECT $KEY_URI FROM $TABLE_ATTACHMENTS WHERE $TABLE_ATTACHMENTS.$KEY_ROWID = $TABLE_RECEIPTS.$KEY_ATTACHMENT_ID)) AS $KEY_URI"</ID>
-    <ID>MaxLineLength:RepositoryReceiptsTest.kt:RepositoryReceiptsTest$repository.saveReceipt(second, Receipt("EDEKA", 300, listOf(ReceiptItem("MEGGLE BAGUET", 300, group = "bakery"))))</ID>
-    <ID>MaxLineLength:RepositoryTransaction.kt:*</ID>
-    <ID>MaxLineLength:RepositoryTransaction.kt:it.copy(transferPeer = it.transferPeer?.copy(parentId = it.transferPeer.parentId.takeIf { it != existingSiblingParentId }))</ID>
-    <ID>MaxLineLength:RepositoryTransaction.kt:require</ID>
-    <ID>MaxLineLength:RepositoryTransaction.kt:require(splitParts.all { it.data.accountId == parentTransaction.accountId }) { "All splits must be in the same account." }</ID>
-    <ID>MaxLineLength:RepositoryTransaction.kt:require(splitParts.all { it.first.accountId == parentTransaction.accountId }) { "All splits must be in the same account." }</ID>
-    <ID>MaxLineLength:RepositoryTransaction.kt:require(splitParts.sumOf { it.data.amount } == parentTransaction.amount) { "Sum of splits must equal parent amount." }</ID>
-    <ID>MaxLineLength:RepositoryTransaction.kt:require(splitParts.sumOf { it.first.amount } == parentTransaction.amount) { "Sum of splits must equal parent amount." }</ID>
-    <ID>MaxLineLength:RepositoryTransaction.kt:val costParts = untransferredParts.filter { it != fundingPart.first &amp;&amp; it.transferAccountId == null &amp;&amp; it.amount &lt; 0 }.sortedBy { it.id }</ID>
-    <ID>MaxLineLength:RepositoryTransaction.kt:val untransferredParts = parts.filter { it.transferPeerId == null &amp;&amp; it.transferAccountId == null }.sortedBy { it.id }</ID>
-    <ID>MaxLineLength:RestoreActivity.kt:RestoreActivity$message = "The module required for database encryption has not yet been downloaded from Play Store. Please try again!"</ID>
-    <ID>MaxLineLength:RestoreFromCloudDialogFragment.kt:RestoreFromCloudDialogFragment$if (binding.passwordLayout.passwordLayout.visibility == View.VISIBLE) binding.passwordLayout.passwordEdit.text.toString() else null</ID>
-    <ID>MaxLineLength:RestoreViewModel.kt:RestoreViewModel$CalendarContract.Events.CALENDAR_ID + " = ? AND " + CalendarContract.Events.DESCRIPTION</ID>
-    <ID>MaxLineLength:RoadmapViewModel.kt:RoadmapViewModel$it?.compareTo(VOTE_REMINDER_DAYS) == 1 &amp;&amp; TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - prefHandler.getLong(PrefKey.VOTE_REMINDER_LAST_CHECK, 0)) &gt; VOTE_REMINDER_DAYS</ID>
-    <ID>MaxLineLength:SealedAccountMarkExportedTest.kt:SealedAccountMarkExportedTest$val cursor = resolver.query(TransactionProvider.TRANSACTIONS_URI, arrayOf("count(*)"), "$KEY_STATUS = $STATUS_EXPORTED", null, null)!!</ID>
-    <ID>MaxLineLength:SearchTextCriterion.kt:SearchTextCriterion$append(" OR IFNULL($KEY_PAYEEID, 0) IN (SELECT $KEY_ROWID FROM $TABLE_PAYEES WHERE $KEY_PAYEE_NAME_NORMALIZED $like OR $KEY_SHORT_NAME $like")</ID>
-    <ID>MaxLineLength:SearchTextCriterionTest.kt:SearchTextCriterionTest$val selection = if (queryParts) criterion.getSelectionForParts("t") else criterion.getSelectionForParents("t")</ID>
-    <ID>MaxLineLength:SelectSingleMethodDialogFragment.kt:SelectSingleMethodDialogFragment.Companion$fun</ID>
-    <ID>MaxLineLength:SetupSyncDialogFragment.kt:SetupSyncDialogFragment$if (!it) CrashHandler.report(IllegalStateException("setupSynchronization returned false "))</ID>
-    <ID>MaxLineLength:SetupSyncDialogFragment.kt:painter = painterResource(id = if (linkState == SyncSource.LOCAL) R.drawable.ic_menu_delete else R.drawable.ic_menu_done)</ID>
-    <ID>MaxLineLength:SetupSyncViewModel.kt:SetupSyncViewModel$(remoteAccounts + syncRemoteList.map { it.second }).map { it.toAccount(currencyContext.homeCurrencyString, accountName) }</ID>
-    <ID>MaxLineLength:SimpleCriterion.kt:SimpleCriterion$add("($KEY_CATID = $SPLIT_CATID AND exists(select 1 from $tableName children WHERE $KEY_PARENTID = $tableName.$KEY_ROWID AND ($selection)))")</ID>
-    <ID>MaxLineLength:SimpleCriterion.kt:SimpleCriterion$add("($KEY_STATUS = $STATUS_ARCHIVE AND exists(select 1 from $tableName children WHERE $KEY_PARENTID in ($tableName.$KEY_ROWID, (select $KEY_ROWID from $TABLE_TRANSACTIONS grandchildren where $KEY_PARENTID = $tableName.$KEY_ROWID)) AND ($selection)))")</ID>
-    <ID>MaxLineLength:SimpleCriterion.kt:SimpleCriterion$return "($selection OR exists(select 1 from $TABLE_TRANSACTIONS parents WHERE $KEY_ROWID = $tableName.$KEY_PARENTID AND ($selection)))"</ID>
-    <ID>MaxLineLength:Sort.kt:Sort.Companion$//returns null if the preferred Sort has null toOrderBy, otherwise the preferred Sort (with defaultOrderBy as secondary sort), otherwise the defaultOrderBy</ID>
-    <ID>MaxLineLength:Sort.kt:Sort.Companion$val accountSortLabels = listOf(R.string.label, R.string.pref_sort_order_usages, R.string.pref_sort_order_last_used, R.string.pref_sort_order_custom)</ID>
-    <ID>MaxLineLength:SplitPartRVAdapter.kt:SplitPartRVAdapter.ViewHolder$transaction.icon?.let { binding.icon.setImageDrawable(IIconInfo.resolveIcon(it)?.asDrawable(binding.root.context)) }</ID>
-    <ID>MaxLineLength:SplitPartRVAdapter.kt:SplitPartRVAdapter.ViewHolder$transaction.isTransfer -&gt; getIndicatorPrefixForLabel(transaction.amount.amountMinor) + transaction.transferAccount</ID>
-    <ID>MaxLineLength:StorageAccessFrameworkBackendProvider.kt:StorageAccessFrameworkBackendProvider$(contentResolver.openOutputStream(file.uri, "wt") ?: throw IOException("Failed to open output stream"))</ID>
-    <ID>MaxLineLength:StorageAccessFrameworkBackendProvider.kt:StorageAccessFrameworkBackendProvider$contentResolver.openInputStream(documentFile.uri)?.use { StreamReader(maybeDecrypt(it, maybeDecrypt)).read() }</ID>
-    <ID>MaxLineLength:StorageAccessFrameworkBackendProvider.kt:StorageAccessFrameworkBackendProvider$override fun getInputStream</ID>
-    <ID>MaxLineLength:SyncAdapter.kt:SyncAdapter$"$KEY_TRANSACTIONID = (SELECT $KEY_ROWID FROM $TABLE_TRANSACTIONS WHERE $KEY_UUID = ?)"</ID>
-    <ID>MaxLineLength:SyncAdapter.kt:SyncAdapter$"The backend could not be instantiated. Reason: ${throwable.message}. Please try to delete and recreate it."</ID>
-    <ID>MaxLineLength:SyncAdapter.kt:SyncAdapter$//in case of failed syncs due to non-available backends, sequence number might already be higher than nextSequence</ID>
-    <ID>MaxLineLength:SyncBackendSetupActivity.kt:SyncBackendSetupActivity$showMessage("On some Xiaomi devices, synchronization does not work without AutoStart permission. Visit &lt;a href=\"https://faq.myexpenses.mobi/sync-xiaomi\"&gt;MyExpenses FAQ&lt;/a&gt; for more information.")</ID>
-    <ID>MaxLineLength:SyncDelegate.kt:SyncDelegate$attachments = if ((pictureUri != null || attachments != null) &amp;&amp; (merged.pictureUri != null || merged.attachments != null) &amp;&amp; (merged.pictureUri != pictureUri || merged.attachments != attachments)) null else attachments</ID>
-    <ID>MaxLineLength:SyncDelegate.kt:SyncDelegate$categoryInfo = if ((label != null || categoryInfo != null) &amp;&amp; (merged.label != null || merged.categoryInfo != null) &amp;&amp; (merged.label != label || merged.categoryInfo != categoryInfo)) null else categoryInfo</ID>
-    <ID>MaxLineLength:SyncDelegate.kt:SyncDelegate$crStatus = if (crStatus != null &amp;&amp; merged.crStatus != null &amp;&amp; merged.crStatus != crStatus) null else crStatus</ID>
-    <ID>MaxLineLength:SyncDelegate.kt:SyncDelegate$label = if ((label != null || categoryInfo != null) &amp;&amp; (merged.label != null || merged.categoryInfo != null) &amp;&amp; (merged.label != label || merged.categoryInfo != categoryInfo)) null else label</ID>
-    <ID>MaxLineLength:SyncDelegate.kt:SyncDelegate$methodLabel = if (methodLabel != null &amp;&amp; merged.methodLabel != null &amp;&amp; merged.methodLabel != methodLabel) null else methodLabel</ID>
-    <ID>MaxLineLength:SyncDelegate.kt:SyncDelegate$payeeName = if (payeeName != null &amp;&amp; merged.payeeName != null &amp;&amp; merged.payeeName != payeeName) null else payeeName</ID>
-    <ID>MaxLineLength:SyncDelegate.kt:SyncDelegate$pictureUri = if ((pictureUri != null || attachments != null) &amp;&amp; (merged.pictureUri != null || merged.attachments != null) &amp;&amp; (merged.pictureUri != pictureUri || merged.attachments != attachments)) null else pictureUri</ID>
-    <ID>MaxLineLength:SyncDelegate.kt:SyncDelegate$referenceNumber = if (referenceNumber != null &amp;&amp; merged.referenceNumber != null &amp;&amp; merged.referenceNumber != referenceNumber) null else referenceNumber</ID>
-    <ID>MaxLineLength:SyncDelegate.kt:SyncDelegate$tags = if ((tags != null || tagsV2 != null) &amp;&amp; (merged.tags != null || merged.tagsV2 != null) &amp;&amp; (merged.tags != tags || merged.tagsV2 != tagsV2)) null else tags</ID>
-    <ID>MaxLineLength:SyncDelegate.kt:SyncDelegate$tagsV2 = if ((tags != null || tagsV2 != null) &amp;&amp; (merged.tags != null || merged.tagsV2 != null) &amp;&amp; (merged.tags != tags || merged.tagsV2 != tagsV2)) null else tagsV2</ID>
-    <ID>MaxLineLength:SyncDelegate.kt:SyncDelegate$transferAccount = if (transferAccount != null &amp;&amp; merged.transferAccount != null &amp;&amp; merged.transferAccount != transferAccount) null else transferAccount</ID>
-    <ID>MaxLineLength:SyncDelegate.kt:SyncDelegate$valueDate = if (valueDate != null &amp;&amp; merged.valueDate != null &amp;&amp; merged.valueDate != valueDate) null else valueDate</ID>
-    <ID>MaxLineLength:SyncHandler.kt:SyncHandler$.</ID>
-    <ID>MaxLineLength:SyncViewModel.kt:SyncViewModel$.</ID>
-    <ID>MaxLineLength:TabbedActivity.kt:TabbedActivity$leftMargin = insets.getInsets(WindowInsetsCompat.Type.systemBars() + WindowInsetsCompat.Type.displayCutout()).left</ID>
-    <ID>MaxLineLength:TabbedActivity.kt:TabbedActivity$rightMargin = insets.getInsets(WindowInsetsCompat.Type.systemBars() + WindowInsetsCompat.Type.displayCutout()).right</ID>
-    <ID>MaxLineLength:TagStylePreference.kt:color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)</ID>
-    <ID>MaxLineLength:TagStylePreference.kt:color = if (isSelected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.25f) else MaterialTheme.colorScheme.surface</ID>
-    <ID>MaxLineLength:TemplatesList.kt:TemplatesList$)</ID>
-    <ID>MaxLineLength:TemplatesList.kt:TemplatesList.MyAdapter$if (isSealed) R.drawable.ic_lock else if (doesHavePlan) R.drawable.ic_event else R.drawable.ic_menu_template</ID>
-    <ID>MaxLineLength:TextUtilsTest.kt:TextUtilsTest$/* @Test fun getDisplayNameForScript() { arrayOf("CN", "HK", "TW").forEach { //arrayOf("ar", "bg", "ca", "cs", "da", "de", "el", "es", "eu", "fr", "hr", "hu", "it", "iw", "ja", "km", "kn", "ko", "ms", "pl", "pt", "ro", "ru", "si", "ta", "te", "tr", "uk", "vi").forEach { val locale= Locale("zh", it) //val locale = Locale(it) println() println(it) println() arrayOf("Latn", "Han", "Deva", "Jpan", "Kore").forEach { println( "&lt;string name=\"title_mlkit_${it.lowercase(Locale.ROOT)}\"&gt;ML Kit ${ getDisplayNameForScript( locale, it ) }&lt;/string&gt;" ) } } }*/</ID>
-    <ID>MaxLineLength:TimePreference.kt:TimePreference.Companion$val</ID>
-    <ID>MaxLineLength:TradeList.kt:style = if (renderType == RenderType.Legacy) MaterialTheme.typography.bodySmall else MaterialTheme.typography.bodyLarge</ID>
-    <ID>MaxLineLength:TradeScreen.kt:color = if (isOverLimit) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant</ID>
-    <ID>MaxLineLength:TradeScreen.kt:contentDescription = stringResource(R.string.content_description_clear_category)</ID>
-    <ID>MaxLineLength:TradeScreen.kt:fractionDigits</ID>
-    <ID>MaxLineLength:TradeScreen.kt:if</ID>
-    <ID>MaxLineLength:TradeScreen.kt:if (fundingAccounts.any { it.first == trade.peerAccount.first }) FundingSource.ACCOUNT else FundingSource.PORTFOLIO</ID>
-    <ID>MaxLineLength:TradeScreen.kt:if (type.isIncoming) Icons.AutoMirrored.Filled.ArrowBack else Icons.AutoMirrored.Filled.ArrowForward</ID>
-    <ID>MaxLineLength:TradeScreen.kt:if (type.isIncoming) R.string.transfer_from_account else R.string.transfer_to_account</ID>
-    <ID>MaxLineLength:TradeScreen.kt:label = stringResource(if (type.isIncoming) R.string.transfer_from_account else R.string.transfer_to_account)</ID>
-    <ID>MaxLineLength:TradeScreen.kt:onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -&gt; CurrencyUnit? = { _, _, _, _, _ -&gt; null }</ID>
-    <ID>MaxLineLength:TradeScreen.kt:onLookupMatchingTransactions: (accountId: Long, total: BigDecimal, date: LocalDateTime, isBuy: Boolean) -&gt; Flow&lt;List&lt;Transaction2&gt;&gt; = { _, _, _, _ -&gt; emptyFlow() }</ID>
-    <ID>MaxLineLength:TradeScreen.kt:portfolio.children.find { it.type.isCashAccount }?.currentBalance to reportingCurrency</ID>
-    <ID>MaxLineLength:TransactionDelegate.kt:TransactionDelegate$TYPE_TRANSACTION -&gt; if (isSplitPart) R.string.menu_create_split_part_category else if (isTemplate) R.string.menu_create_template_for_transaction else R.string.menu_create_transaction</ID>
-    <ID>MaxLineLength:TransactionDelegate.kt:TransactionDelegate$TYPE_TRANSFER -&gt; if (isSplitPart) R.string.menu_create_split_part_transfer else if (isTemplate) R.string.menu_create_template_for_transfer else R.string.menu_create_transfer</ID>
-    <ID>MaxLineLength:TransactionDelegate.kt:TransactionDelegate$host.showSnackBar(context.getString(R.string.plan_automatic_without_amount_hint))</ID>
-    <ID>MaxLineLength:TransactionDelegate.kt:TransactionDelegate$host.showSnackBar(context.getString(R.string.template_default_action_without_amount_hint))</ID>
-    <ID>MaxLineLength:TransactionDelegate.kt:TransactionDelegate$if</ID>
-    <ID>MaxLineLength:TransactionDelegate.kt:TransactionDelegate$initialPlan</ID>
-    <ID>MaxLineLength:TransactionDelegate.kt:TransactionDelegate$planEditData</ID>
-    <ID>MaxLineLength:TransactionDelegate.kt:TransactionDelegate$valueDate = if (dateEditBinding.Date2Button.isVisible) dateEditBinding.Date2Button.date else date.toLocalDate()</ID>
-    <ID>MaxLineLength:TransactionDelegate.kt:TransactionDelegate$}</ID>
-    <ID>MaxLineLength:TransactionDetailFragment.kt:TransactionDetailFragment$(requireActivity() as? MyExpensesV2)?.editTrade(transaction.transferPeerParent ?: transaction.id)</ID>
-    <ID>MaxLineLength:TransactionEditViewModel.kt:TransactionEditViewModel$InstantiationTask</ID>
-    <ID>MaxLineLength:TransactionImports.kt:TransactionImports$private val _imported = MutableSharedFlow&lt;Unit&gt;(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)</ID>
-    <ID>MaxLineLength:TransactionList.kt://paging library requires a stable number of items in order to keep up with refreshes in the middle of the list</ID>
-    <ID>MaxLineLength:TransactionList.kt:IllegalStateException("Category path is null for ${transaction.id} / ${transaction.catId}")</ID>
-    <ID>MaxLineLength:TransactionList.kt:if</ID>
-    <ID>MaxLineLength:TransactionListViewModel.kt:TransactionListViewModel$withTransfers -&gt; effectiveTypeExpressionIncludeTransfers(typeWithFallback) + " = " + type.asCategoryType</ID>
-    <ID>MaxLineLength:TransactionPagingSource.kt:TransactionPagingSource$if</ID>
-    <ID>MaxLineLength:TransactionRenderer.kt:ItemRenderer$is ResolvedExtraInfo.Trade -&gt; context.getString(resolvedExtraInfo.trade.type.label) + " " + resolvedExtraInfo.trade.assetSymbol</ID>
-    <ID>MaxLineLength:TransactionScreen.kt:onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -&gt; CurrencyUnit? = { _, _, _, _, _ -&gt; null }</ID>
-    <ID>MaxLineLength:TransferDelegate.kt:TransferDelegate$if</ID>
-    <ID>MaxLineLength:TransferTest.kt:TransferTest$TransactionProvider.TRANSACTIONS_URI.buildUpon().appendPath(TransactionProvider.URI_SEGMENT_UNLINK_TRANSFER)</ID>
-    <ID>MaxLineLength:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$"$KEY_CURRENCY = (SELECT $KEY_CODE FROM $TABLE_CURRENCIES WHERE -$KEY_ROWID = ?) AND $KEY_GROUPING = ?"</ID>
-    <ID>MaxLineLength:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$/* upgradeInfoList.add( getString( R.string.upgrade_info_557, getString(R.string.pref_category_title_ui), "${getString(R.string.help_MyExpenses_title)} -&gt; ${localizedContext.compactItemRendererTitle()}" ) )*/</ID>
-    <ID>MaxLineLength:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$//now unset means do Aggregate, on Distribution Screen true means show income, false means show Expenses</ID>
-    <ID>MaxLineLength:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$CrashHandler.report(Exception("Bug 987: $corruptedCount corrupted transactions detected"))</ID>
-    <ID>MaxLineLength:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$CrashHandler.report(IllegalStateException("Expected one budget for ${entry.key} to be updated, but updateCount is $updateCount"))</ID>
-    <ID>MaxLineLength:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$UpgradeError("upgrade from $fromVersion to $toVersion failed (${e.safeMessage}). Please contact ${getString(R.string.support_email)} .")</ID>
-    <ID>MaxLineLength:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$if</ID>
-    <ID>MaxLineLength:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$migrateFilterHelper(cursor, BudgetViewModel::prefNameForCriteriaLegacy, BudgetViewModel::prefNameForCriteria)</ID>
-    <ID>MaxLineLength:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$migrateFilterHelper(cursor,MyExpensesViewModel::prefNameForCriteriaLegacy, MyExpensesViewModel::prefNameForCriteria)</ID>
-    <ID>MaxLineLength:VersionDialogFragment.kt:VersionDialogFragment$colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.cardBackground))</ID>
-    <ID>MaxLineLength:VersionDialogFragment.kt:VersionDialogFragment$showMoreInfo("https://github.com/mtotschnig/MyExpenses/issues/$ticketNumber")</ID>
-    <ID>MaxLineLength:VersionInfo.kt:VersionInfo$"${t(R.string.contrib_feature_portfolio_tracking)} : ${t(R.string.menu_search)} (${t(R.string.trade_target_asset)}, ${t(R.string.amount)}, ${t(R.string.comment)}, ${t(R.string.date)})"</ID>
-    <ID>MaxLineLength:VersionInfo.kt:VersionInfo$"${t(R.string.menu_print)} : ${t(R.string.balance_sheet)}, ${t(R.string.title_activity_debt_overview)}."</ID>
-    <ID>MaxLineLength:VersionInfo.kt:VersionInfo$"${t(R.string.menu_print)}: ${t(R.string.configuration)} (${t(R.string.paper_format)}, ${t(R.string.header_footer)})"</ID>
-    <ID>MaxLineLength:VersionInfo.kt:VersionInfo$"${t(R.string.menu_print)}: ${t(R.string.configuration)} (${t(R.string.paper_format)}, ${t(R.string.orientation)}, ${t(R.string.title_font_size)})"</ID>
-    <ID>MaxLineLength:VersionInfo.kt:VersionInfo$"${t(R.string.price_history)} : ${t(R.string.pref_category_title_import)} / ${t(R.string.pref_category_title_export)}."</ID>
-    <ID>MaxLineLength:VersionInfo.kt:VersionInfo$(if (code &lt; 740) "https://github.com/mtotschnig/MyExpenses/projects/" else "https://github.com/users/mtotschnig/projects/") + it</ID>
-    <ID>MaxLineLength:ViewModelModule.kt:ViewModelModule$open</ID>
     <ID>NestedBlockDepth:AbstractExporter.kt:AbstractExporter$@Throws(IOException::class) open fun export: Result&lt;DocumentFile&gt;</ID>
     <ID>NestedBlockDepth:BaseTransactionProvider.kt:BaseTransactionProvider$fun SupportSQLiteDatabase.updateCurrency: Bundle</ID>
     <ID>NestedBlockDepth:BudgetActivity.kt:BudgetActivity$override fun onPrepareOptionsMenu: Boolean</ID>
@@ -1337,9 +869,9 @@
     <ID>TooGenericExceptionThrown:BaseTransactionProvider.kt:BaseTransactionProvider$throw Exception("Missing uuid")</ID>
     <ID>TooGenericExceptionThrown:BaseTransactionProvider.kt:BaseTransactionProvider$throw Throwable( "Unable to copy file from " + (if (copyPrefSuccess) preferencesDataStoreFile else sharedPrefFile).path + " to " + (if (copyPrefSuccess) backupDataStoreFile else backupPrefFile).path )</ID>
     <ID>TooGenericExceptionThrown:BaseTransactionProvider.kt:BaseTransactionProvider$throw Throwable(message)</ID>
+    <ID>TooGenericExceptionThrown:DataModule.kt:DataModule$throw Throwable( "Updating from database schema version 132 or 133 is no longer supported. Please contact " + "support@myexpenses.mobi for assistance." )</ID>
     <ID>TooGenericExceptionThrown:DataModule.kt:DataModule$throw Throwable( context.getString( R.string.restore_cannot_downgrade, it, DATABASE_VERSION ) )</ID>
     <ID>TooGenericExceptionThrown:DataModule.kt:DataModule$throw Throwable("Database integrity check failed")</ID>
-    <ID>TooGenericExceptionThrown:DataModule.kt:DataModule$throw Throwable("Updating from database schema version 132 or 133 is no longer supported. Please contact support@myexpenses.mobi for assistance.")</ID>
     <ID>TooGenericExceptionThrown:ImportDataViewModel.kt:ImportDataViewModel$throw Exception( "Exception during QIF import. Did not get instance from DB for id " + dbAccountId )</ID>
     <ID>TooGenericExceptionThrown:ImportFileResultHandler.kt:ImportFileResultHandler$throw Throwable(errorMsg)</ID>
     <ID>TooGenericExceptionThrown:PdfPrinter.kt:PdfPrinter$throw Exception("No data")</ID>

@@ -141,11 +141,17 @@ fun NextContractsScreen(
         modifier = modifier,
         sceneStrategies = listOf(rememberListDetailPages()),
         entryProvider = entryProvider {
-            entry<ContractsKey.Home>(metadata = ListPage(if (isIncome) R.string.next_pick_income else R.string.next_pick_contract)) { ContractsHome(current, backStack) }
+            entry<ContractsKey.Home>(
+                metadata = ListPage(if (isIncome) R.string.next_pick_income else R.string.next_pick_contract)
+            ) { ContractsHome(current, backStack) }
             entry<ContractsKey.Detail>(metadata = DetailPage()) { key -> ContractDetailEntry(current, backStack, key) }
-            entry<ContractsKey.Transactions>(metadata = ExtraPage()) { key -> ContractTransactionsEntry(current, backStack, key) }
+            entry<ContractsKey.Transactions>(metadata = ExtraPage()) { key ->
+                ContractTransactionsEntry(current, backStack, key)
+            }
             entry<ContractsKey.NewsHistory>(metadata = DetailPage()) { NewsHistoryEntry(current, backStack) }
-            entry<ContractsKey.Suggestions>(metadata = DetailPage()) { key -> SuggestionsEntry(current, backStack, key) }
+            entry<ContractsKey.Suggestions>(metadata = DetailPage()) { key ->
+                SuggestionsEntry(current, backStack, key)
+            }
         }
     )
 }
@@ -170,7 +176,13 @@ private class ContractsContent(
 
 /** The contract of the screen, the screen is left once it is gone, e.g. declared as no contract */
 @Composable
-private fun shownContract(content: ContractsContent, backStack: NavBackStack<NavKey>, key: ContractsKey, signature: String, payment: Long?) =
+private fun shownContract(
+    content: ContractsContent,
+    backStack: NavBackStack<NavKey>,
+    key: ContractsKey,
+    signature: String,
+    payment: Long?
+) =
     shownOrLeave(content.ready?.find(signature, payment), isLoaded = content.ready != null) { backStack.remove(key) }
 
 @Composable
@@ -220,7 +232,11 @@ private fun ContractDetailEntry(content: ContractsContent, backStack: NavBackSta
 }
 
 @Composable
-private fun ContractTransactionsEntry(content: ContractsContent, backStack: NavBackStack<NavKey>, key: ContractsKey.Transactions) {
+private fun ContractTransactionsEntry(
+    content: ContractsContent,
+    backStack: NavBackStack<NavKey>,
+    key: ContractsKey.Transactions
+) {
     val contract = shownContract(content, backStack, key, key.signature, key.payment) ?: return
     ContractTransactionsScreen(contract = contract, onBack = { backStack.remove(key) }) {
         content.contractTransactions(contract, it)
@@ -234,7 +250,9 @@ private fun NewsHistoryEntry(content: ContractsContent, backStack: NavBackStack<
         currency = content.currency,
         onBack = { backStack.remove(ContractsKey.NewsHistory) },
         onOpen = { item ->
-            val contract = content.ready?.let { (it.active + it.ended + it.cancelled).find { contract -> contract.signature == item.contractKey } }
+            val contract = content.ready?.let {
+                (it.active + it.ended + it.cancelled).find { contract -> contract.signature == item.contractKey }
+            }
             if (contract != null) {
                 backStack.add(contract.toDetail())
             } else {
@@ -247,7 +265,11 @@ private fun NewsHistoryEntry(content: ContractsContent, backStack: NavBackStack<
 }
 
 @Composable
-private fun SuggestionsEntry(content: ContractsContent, backStack: NavBackStack<NavKey>, key: ContractsKey.Suggestions) {
+private fun SuggestionsEntry(
+    content: ContractsContent,
+    backStack: NavBackStack<NavKey>,
+    key: ContractsKey.Suggestions
+) {
     val ready = content.ready ?: return
     val area = ready.areas.find { it.key == key.areaKey }
     ContractSuggestionsScreen(
@@ -432,7 +454,14 @@ private fun previewState(): ContractsOverview {
         listOf(
             contract("Netflix", ContractInterval.MONTHLY, 1299, 1299, 1799, category = "Freizeit > Streaming"),
             contract("Stadtwerke", ContractInterval.MONTHLY, 8500, 8500, 8500, category = "Wohnen > Strom"),
-            contract("Kfz-Versicherung", ContractInterval.QUARTERLY, 12050, 12050, 12050, category = "Auto > Kfz-Versicherung"),
+            contract(
+                "Kfz-Versicherung",
+                ContractInterval.QUARTERLY,
+                12050,
+                12050,
+                12050,
+                category = "Auto > Kfz-Versicherung"
+            ),
             contract("ADAC", ContractInterval.YEARLY, 9400, 9400, isConfirmed = false),
             contract(
                 "Fitnessstudio", ContractInterval.MONTHLY, 2990, 2990, 2990,

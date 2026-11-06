@@ -120,7 +120,8 @@ fun NextTransactionList(
      * Lets the user choose the icon of a payee or load its logo from its web address, opened from
      * the details of [transaction], whose category helps to suggest icons
      */
-    payeeImageDialog: (@Composable (payee: DisplayParty, transaction: Transaction2?, onDismiss: () -> Unit) -> Unit)? = null,
+    payeeImageDialog: (@Composable (payee: DisplayParty, transaction: Transaction2?, onDismiss: () -> Unit) -> Unit)? =
+        null,
     editState: TransactionEditState? = null,
     editActions: TransactionEditActions? = null,
 ) {
@@ -561,7 +562,10 @@ private fun Transaction2.itemTexts(): ItemTexts {
     val title = party?.name ?: transferLabel ?: categoryLabel ?: commentLabel
     return ItemTexts(
         title = title,
-        details = listOfNotNull(transferLabel, commentLabel).filter { it != title }.takeIf { it.isNotEmpty() }?.joinToString(" · "),
+        details = listOfNotNull(
+            transferLabel,
+            commentLabel
+        ).filter { it != title }.takeIf { it.isNotEmpty() }?.joinToString(" · "),
         category = categoryLabel?.takeIf { it != title }?.let { if (isSplit) it else it.lastCategoryPart() }
     )
 }

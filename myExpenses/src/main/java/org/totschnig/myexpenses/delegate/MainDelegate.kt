@@ -200,7 +200,8 @@ abstract class MainDelegate(
 
     override fun createAdapters(withTypeSpinner: Boolean, withAutoFill: Boolean) {
         viewBinding.Payee.createPayeeAdapter(
-            withInputMethodNeeded = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && configurator[AUTO_COMPLETE_DROPDOWN_SET_INPUT_METHOD_NEEDED, true]
+            withInputMethodNeeded = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+                configurator[AUTO_COMPLETE_DROPDOWN_SET_INPUT_METHOD_NEEDED, true]
         ) { partyId ->
             handleDebts()
             if (partyId != null) {
@@ -477,7 +478,9 @@ abstract class MainDelegate(
                                 setDebt(it)
                             } ?: run {
                                 val sortedDebts =
-                                    debts.sortedWith(compareBy<DisplayDebt> { it.payeeId != payeeId }.thenBy { it.payeeId })
+                                    debts.sortedWith(
+                                        compareBy<DisplayDebt> { it.payeeId != payeeId }.thenBy { it.payeeId }
+                                    )
                                 with(PopupMenu(context, viewBinding.DebtCheckBox)) {
                                     var currentMenu: Menu? = null
                                     var currentPayee: Long? = null

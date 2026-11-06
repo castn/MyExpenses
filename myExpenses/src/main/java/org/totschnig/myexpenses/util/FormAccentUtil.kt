@@ -33,7 +33,11 @@ fun readPrimaryTextColor(context: Context) = resolveThemeColor(context, android.
 fun readPrimaryColor(context: Context) = resolveThemeColor(context, android.R.attr.colorPrimary)
 
 private fun setOnFocusChangeListenerRecursive(view: View, listener: OnFocusChangeListener) {
-    if (view is ViewGroup && view !is Spinner && (!view.isFocusable || view.descendantFocusability == ViewGroup.FOCUS_AFTER_DESCENDANTS)) {
+    if (
+        view is ViewGroup && view !is Spinner && (
+            !view.isFocusable || view.descendantFocusability == ViewGroup.FOCUS_AFTER_DESCENDANTS
+        )
+    ) {
         for (i in 0 until view.childCount) {
             setOnFocusChangeListenerRecursive(view.getChildAt(i), listener)
         }

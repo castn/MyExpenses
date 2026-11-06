@@ -129,7 +129,8 @@ abstract class ItemRenderer(
         val trade = (resolvedExtraInfo as? ResolvedExtraInfo.Trade)?.trade
         val labels = when (resolvedExtraInfo) {
             is ResolvedExtraInfo.Split -> resolvedExtraInfo.items.joinToString { it.first }
-            is ResolvedExtraInfo.Trade -> context.getString(resolvedExtraInfo.trade.type.label) + " " + resolvedExtraInfo.trade.assetSymbol
+            is ResolvedExtraInfo.Trade ->
+                context.getString(resolvedExtraInfo.trade.type.label) + " " + resolvedExtraInfo.trade.assetSymbol
             null -> null
         }
         if (isSplit && labels == null) {

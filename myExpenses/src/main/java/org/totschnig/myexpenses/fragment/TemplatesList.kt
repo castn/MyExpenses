@@ -268,7 +268,11 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
     ) {
         viewModel.updateDefaultAction(itemIds, action).observe(
             viewLifecycleOwner
-        ) { result: Boolean -> showSnackbar(if (result) getString(resultFeedBack) else "Error while setting default action for template click") }
+        ) { result: Boolean ->
+            showSnackbar(
+                if (result) getString(resultFeedBack) else "Error while setting default action for template click"
+            )
+        }
     }
 
     override fun dispatchCommandMultiple(
@@ -751,7 +755,11 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
 
             val planImage = view.findViewById<ImageView>(R.id.Plan)
             planImage.setImageResource(
-                if (isSealed) R.drawable.ic_lock else if (doesHavePlan) R.drawable.ic_event else R.drawable.ic_menu_template
+                when {
+                    isSealed -> R.drawable.ic_lock
+                    doesHavePlan -> R.drawable.ic_event
+                    else -> R.drawable.ic_menu_template
+                }
             )
             planImage.contentDescription =
                 getString(if (doesHavePlan) R.string.plan else R.string.template)

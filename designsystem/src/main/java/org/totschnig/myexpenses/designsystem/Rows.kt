@@ -163,7 +163,12 @@ fun EditableRow(label: String, onClick: () -> Unit, isFirst: Boolean = false, va
  * receipts. Muted, since it tells nothing yet.
  */
 @Composable
-fun PendingRow(title: String, text: String, isFirst: Boolean = false, icon: ImageVector = Icons.Outlined.HourglassEmpty) {
+fun PendingRow(
+    title: String,
+    text: String,
+    isFirst: Boolean = false,
+    icon: ImageVector = Icons.Outlined.HourglassEmpty
+) {
     if (!isFirst) RowDivider()
     Row(
         modifier = Modifier
@@ -979,7 +984,11 @@ fun SelectableTextRow(
         modifier = Modifier
             .fillMaxWidth()
             .then(
-                if (selected != null) Modifier.toggleable(value = selected, role = Role.Checkbox, onValueChange = { onClick() })
+                if (selected != null) Modifier.toggleable(
+                    value = selected,
+                    role = Role.Checkbox,
+                    onValueChange = { onClick() }
+                )
                 else Modifier.combinedClickable(
                     onClick = onClick,
                     onLongClickLabel = chooseSeveralLabel,

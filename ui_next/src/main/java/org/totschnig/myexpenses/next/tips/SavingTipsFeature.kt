@@ -60,7 +60,8 @@ class SavingTipsFeature(
 
     /** Saving tips the user has not seen yet */
     @Composable
-    override fun hasNews() = viewModel.savingTips.collectAsStateWithLifecycle().value.valueOrNull?.newIds?.isNotEmpty() == true
+    override fun hasNews() =
+        viewModel.savingTips.collectAsStateWithLifecycle().value.valueOrNull?.newIds?.isNotEmpty() == true
 
     override fun EntryProviderScope<NavKey>.pages(shell: NextShell) {
         entry<NextKey.SavingTips> {

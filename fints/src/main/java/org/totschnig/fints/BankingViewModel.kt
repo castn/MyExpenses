@@ -375,7 +375,11 @@ class BankingViewModel(application: Application) : ContentResolvingAndroidViewMo
     fun addBank(bankingCredentials: BankingCredentials) {
         clearError()
 
-        if (bankingCredentials.isNew && banks.value.any { it.blz == bankingCredentials.blz && it.userId == bankingCredentials.user }) {
+        if (
+            bankingCredentials.isNew && banks.value.any {
+                it.blz == bankingCredentials.blz && it.userId == bankingCredentials.user
+            }
+        ) {
             error(getString(R.string.bank_already_added))
             return
         }
@@ -436,7 +440,9 @@ class BankingViewModel(application: Application) : ContentResolvingAndroidViewMo
                                     bank, supportedGvs,
                                     accounts.map { konto ->
                                         konto to accountInfoList.find {
-                                            it.iban == konto.iban || (it.number == konto.number && it.subnumber == konto.subnumber)
+                                            it.iban == konto.iban || (
+                                                it.number == konto.number && it.subnumber == konto.subnumber
+                                            )
                                         }
                                     })
                             }
@@ -595,7 +601,9 @@ class BankingViewModel(application: Application) : ContentResolvingAndroidViewMo
         return contentResolver.query(
             TransactionProvider.TRANSACTIONS_URI,
             arrayOf(KEY_AMOUNT, KEY_DATE),
-            "(select $KEY_VALUE from $TABLE_TRANSACTION_ATTRIBUTES left join $TABLE_ATTRIBUTES on $KEY_ATTRIBUTE_ID = $TABLE_ATTRIBUTES.$KEY_ROWID WHERE $KEY_ATTRIBUTE_NAME = ? and $KEY_TRANSACTIONID = $VIEW_EXTENDED.$KEY_ROWID) = ? ",
+            "(select $KEY_VALUE from $TABLE_TRANSACTION_ATTRIBUTES left join $TABLE_ATTRIBUTES on $KEY_ATTRIBUTE_ID " +
+                "= $TABLE_ATTRIBUTES.$KEY_ROWID WHERE $KEY_ATTRIBUTE_NAME = ? and $KEY_TRANSACTIONID = " +
+                    "$VIEW_EXTENDED.$KEY_ROWID) = ? ",
             arrayOf(FinTsAttribute.CHECKSUM.name, checkSum), null
         )?.useAndMapToList {
             it.getLong(0) == transaction.amount && it.getLong(1) == transaction.date
@@ -704,7 +712,11 @@ class BankingViewModel(application: Application) : ContentResolvingAndroidViewMo
                                 put(KEY_BANK_ID, bank.id)
                             }
                         }
-                        ?.let { config -> config.targetAccountId to this@BankingViewModel.accounts.value.first { it.id == config.targetAccountId }.type!! }
+                        ?.let { config ->
+                            config.targetAccountId to this@BankingViewModel.accounts.value.first {
+                                it.id == config.targetAccountId
+                            }.type!!
+                        }
                         ?: run {
                             val accountType =
                                 repository.findAccountType(
@@ -727,7 +739,11 @@ class BankingViewModel(application: Application) : ContentResolvingAndroidViewMo
 
                     for (umsLine in result.flatData) {
                         with(converter) {
-                            val (transaction, transactionAttributes: Map<out Attribute, String>) = umsLine.toTransaction(
+                            val (
+                                transaction,
+                                transactionAttributes: Map<out Attribute,
+                                String>
+                            ) = umsLine.toTransaction(
                                 currencyContext, accountId, accountType.id
                             )
                             val id = repository.createTransaction(transaction).id
@@ -889,7 +905,12 @@ class BankingViewModel(application: Application) : ContentResolvingAndroidViewMo
                 NEED_PT_TAN -> {
                     val flicker = retData.toString()
                     if (flicker.isNotEmpty()) {
-                        throwAndReport(HBCI_Exception("Flicker not yet implemented for ${bankingCredentials.blz} Please contact support@myexpenses.mobi !"))
+                        throwAndReport(
+                            HBCI_Exception(
+                                "Flicker not yet implemented for ${bankingCredentials.blz} Please contact " +
+                                    "support@myexpenses.mobi !"
+                            )
+                        )
                     } else {
                         val tan = runBlocking {
                             requestTan(msg, null).await()

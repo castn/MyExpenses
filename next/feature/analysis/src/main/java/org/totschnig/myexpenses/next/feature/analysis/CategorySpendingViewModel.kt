@@ -33,10 +33,21 @@ class CategorySpendingViewModel(
     private val selection = MutableStateFlow(Selection())
 
     private fun analyses(selection: Flow<Selection>): StateFlow<AnalysisState<CategoryAnalysis>> =
-        combine(ledgerSource.consent, ledgerSource.ledger, ledgerSource.catalog, tagFacts, selection) { consent, ledger, catalog, tags, selection ->
+        combine(
+            ledgerSource.consent,
+            ledgerSource.ledger,
+            ledgerSource.catalog,
+            tagFacts,
+            selection
+        ) { consent, ledger, catalog, tags, selection ->
             analysisState(consent, ledger?.let {
                 CategoryAnalyzer.analyse(
-                    it, tags.excludedFromSpending, catalog.categoriesById, selection.kind, selection.offset, LocalDate.now()
+                    it,
+                    tags.excludedFromSpending,
+                    catalog.categoriesById,
+                    selection.kind,
+                    selection.offset,
+                    LocalDate.now()
                 )
             })
         }

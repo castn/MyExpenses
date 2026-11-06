@@ -171,7 +171,12 @@ class CsvImportActivity : TabbedActivity(), ConfirmationDialogListener {
                         msg.append(" ${getString(R.string.csv_import_records_discarded, discardedRows)}")
                     }
                     msg.append(resultList.joinToString(" ") {
-                        resources.getQuantityString(R.plurals.import_transactions_result, it.successCount,it.successCount, it.label)
+                        resources.getQuantityString(
+                            R.plurals.import_transactions_result,
+                            it.successCount,
+                            it.successCount,
+                            it.label
+                        )
                     })
 
                     showMessage(

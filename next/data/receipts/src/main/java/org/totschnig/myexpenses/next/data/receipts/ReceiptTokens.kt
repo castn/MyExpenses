@@ -16,7 +16,12 @@ internal sealed interface Token {
     val end: Int
 
     /** "2", "1,79", "0, 750", "1.640", "-0,30" and "0,30-" */
-    data class Number(override val text: String, override val start: Int, override val end: Int, val value: BigDecimal) : Token {
+    data class Number(
+        override val text: String,
+        override val start: Int,
+        override val end: Int,
+        val value: BigDecimal
+    ) : Token {
         /** Two decimals, like a price */
         val isAmount: Boolean
             get() = value.scale() == 2
@@ -32,10 +37,20 @@ internal sealed interface Token {
     data class Times(override val text: String, override val start: Int, override val end: Int) : Token
 
     /** "kg", "Stk", "St", "Stück", and as recognition misreads them, "k9", "5tuck" */
-    data class Unit(override val text: String, override val start: Int, override val end: Int, val unit: ReceiptUnit) : Token
+    data class Unit(
+        override val text: String,
+        override val start: Int,
+        override val end: Int,
+        val unit: ReceiptUnit
+    ) : Token
 
     /** "/kg" after a unit price, "€/kg" and "EUR/kg" give a [Currency] before it */
-    data class PerUnit(override val text: String, override val start: Int, override val end: Int, val unit: ReceiptUnit) : Token
+    data class PerUnit(
+        override val text: String,
+        override val start: Int,
+        override val end: Int,
+        val unit: ReceiptUnit
+    ) : Token
 
     /** Anything else: words of names, tax classes, article numbers with letters */
     data class Word(override val text: String, override val start: Int, override val end: Int) : Token
@@ -134,7 +149,8 @@ internal object ReceiptTokens {
             return when {
                 tail.isEmpty() || tail.all { it in NOISE } -> listOf(token)
                 // "9,99€", "9,99e", "6x", "1,69€X2-A", "1,79€/kg"
-                vocabulary.currencies.any { tail == it || it.length > 1 && tail.startsWith(it) } || tail.startsWith("€") ||
+                vocabulary.currencies.any { tail == it || it.length > 1 && tail.startsWith(it) } ||
+                    tail.startsWith("€") ||
                         tail.first() in TIMES || tail.startsWith("/") ->
                     listOf(token) + rest(length)
                 // "3,79A", "2,98B", "2-A", "17.90.A"

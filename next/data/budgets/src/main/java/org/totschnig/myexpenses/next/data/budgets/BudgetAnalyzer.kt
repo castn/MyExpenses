@@ -162,7 +162,8 @@ object BudgetAnalyzer {
         val isCurrent = index == periods.size - 1
 
         val contractRules = contracts.mapNotNull { contract -> contract.rule?.id?.let { contract to it } }
-        val paymentRules = contractRules.flatMap { (contract, ruleId) -> contract.transactions.map { it.id to ruleId } }.toMap()
+        val paymentRules =
+            contractRules.flatMap { (contract, ruleId) -> contract.transactions.map { it.id to ruleId } }.toMap()
         val matcher = PotMatcher(pots, categories, paymentRules)
 
         fun hasMeaning(transaction: LedgerTransaction, meaning: TagMeaning) =
@@ -174,7 +175,13 @@ object BudgetAnalyzer {
             .sortedByDescending { it.date }
             .flatMap { transaction ->
                 matcher.potsOf(transaction).map { (part, pot) ->
-                    CountedPart(transaction, -part.homeAmount, pot, hasMeaning(transaction, TagMeaning.ONE_OFF), transaction.id in paymentRules)
+                    CountedPart(
+                        transaction,
+                        -part.homeAmount,
+                        pot,
+                        hasMeaning(transaction, TagMeaning.ONE_OFF),
+                        transaction.id in paymentRules
+                    )
                 }
             }
         val byPot = counted.filter { it.pot != null }.groupBy { it.pot!!.id }
@@ -186,11 +193,19 @@ object BudgetAnalyzer {
                 .filter { it.isActive && !it.isCancelled }
                 .sumOf { it.lastAmount * it.upcomingPayments(period) } else 0
             when (pot.kind) {
-                PotKind.RUNNING -> running(pot, parts, period, periods.subList(0, index), upcoming, today.takeIf { isCurrent })
+                PotKind.RUNNING ->
+                    running(pot, parts, period, periods.subList(0, index), upcoming, today.takeIf { isCurrent })
                 PotKind.YEARLY -> yearly(pot, parts, period, upcoming)
-                PotKind.GOAL -> goal(pot, parts, period, ledger, contractRules.filter { (_, ruleId) -> ruleId in pot.reserveRuleIds }.map { it.first })
+                PotKind.GOAL -> goal(
+                    pot,
+                    parts,
+                    period,
+                    ledger,
+                    contractRules.filter { (_, ruleId) -> ruleId in pot.reserveRuleIds }.map { it.first }
+                )
                 PotKind.PROJECT -> project(pot, parts, period, upcoming)
-                PotKind.ITEM_GROUP -> itemGroup(pot, ledger, receipts, periods, index) { hasMeaning(it, TagMeaning.REIMBURSED) }
+                PotKind.ITEM_GROUP ->
+                    itemGroup(pot, ledger, receipts, periods, index) { hasMeaning(it, TagMeaning.REIMBURSED) }
             }
         }
 
@@ -205,7 +220,8 @@ object BudgetAnalyzer {
             fixed = -(balance.contracts + balance.reserves),
             planned = planned.sum(),
             spentOutsidePots = inPeriod.filter { it.pot == null && it.transaction.id in otherIds }.sumOf { it.amount },
-            free = balance.available - statuses.zip(planned).sumOf { (status, plannedInPeriod) -> reserved(status, plannedInPeriod) }
+            free = balance.available - statuses.zip(planned)
+                .sumOf { (status, plannedInPeriod) -> reserved(status, plannedInPeriod) }
         )
         return BudgetOverview(period, periods.size - 1 - index, index > 0, frame, statuses)
     }
@@ -266,7 +282,8 @@ object BudgetAnalyzer {
         val counted = parts.within(pot.start, period.end)
         val start = pot.start ?: period.start.withDayOfYear(1)
         // A share is added at the start of each month, the first one in the month the pot starts
-        val months = max(0L, ChronoUnit.MONTHS.between(start.withDayOfMonth(1), period.end.minusDays(1).withDayOfMonth(1)) + 1)
+        val months =
+            max(0L, ChronoUnit.MONTHS.between(start.withDayOfMonth(1), period.end.minusDays(1).withDayOfMonth(1)) + 1)
         return PotStatus(
             pot = pot,
             planned = pot.amount * months / 12,
@@ -304,7 +321,8 @@ object BudgetAnalyzer {
     ): PotStatus {
         val counted = parts.within(pot.start, period.end)
         fun inRange(date: LocalDate) = (pot.start == null || !date.isBefore(pot.start)) && date.isBefore(period.end)
-        val reservePayments = reserves.flatMap { it.transactions }.filter { inRange(it.date) }.associate { it.id to it.amount }
+        val reservePayments =
+            reserves.flatMap { it.transactions }.filter { inRange(it.date) }.associate { it.id to it.amount }
         val movements = ledger.transactions.filter {
             inRange(it.date) && it.id !in reservePayments &&
                     it.accountId !in pot.savingAccountIds && it.targetAccountId in pot.savingAccountIds
@@ -366,7 +384,9 @@ object BudgetAnalyzer {
 
     /** Monthly amount of the contracts of [pot], which are part of the fixed costs */
     private fun potContractsMonthly(pot: Pot, contractRules: List<Pair<Contract, String>>) =
-        contractRules.filter { (contract, ruleId) -> ruleId in pot.contractRuleIds && contract.isActive && !contract.isCancelled }
+        contractRules.filter { (contract, ruleId) ->
+            ruleId in pot.contractRuleIds && contract.isActive && !contract.isCancelled
+        }
             .sumOf { it.first.monthlyAmount }
 
     /** What [status] takes from the income of [period], without its contracts */
@@ -375,10 +395,12 @@ object BudgetAnalyzer {
         val gross = when (pot.kind) {
             PotKind.RUNNING -> pot.amount
             PotKind.YEARLY -> pot.amount / 12
-            PotKind.GOAL -> if (pot.reserveRuleIds.isNotEmpty() || pot.savingAccountIds.isNotEmpty() || pot.end == null) 0
+            PotKind.GOAL ->
+                if (pot.reserveRuleIds.isNotEmpty() || pot.savingAccountIds.isNotEmpty() || pot.end == null) 0
             else {
                 // Months left including the current one
-                val months = max(1L, ChronoUnit.MONTHS.between(period.start.withDayOfMonth(1), pot.end.withDayOfMonth(1)) + 1)
+                val months =
+                    max(1L, ChronoUnit.MONTHS.between(period.start.withDayOfMonth(1), pot.end.withDayOfMonth(1)) + 1)
                 max(0L, pot.amount - status.saved) / months
             }
             PotKind.PROJECT, PotKind.ITEM_GROUP -> 0

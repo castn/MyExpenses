@@ -5,8 +5,5 @@
     <ID>MagicNumber:TagAnalysis.kt:TagAnalyzer$12</ID>
     <ID>MagicNumber:TagAnalysis.kt:TagAnalyzer$31</ID>
     <ID>MatchingDeclarationName:CountedParts.kt:CountedPart</ID>
-    <ID>MaxLineLength:MoneyFlowAnalyzerTest.kt:MoneyFlowAnalyzerTest$assertEquals(listOf(20L to 3000L, CategorySpending.NO_CATEGORY to 700L), flow.incomes.map { it.key to it.amount })</ID>
-    <ID>MaxLineLength:MoneyFlowAnalyzerTest.kt:MoneyFlowAnalyzerTest$assertEquals(listOf(30L to 1000L, CategorySpending.NO_CATEGORY to 400L), flow.expenses.map { it.key to it.amount })</ID>
-    <ID>MaxLineLength:MoneyFlowAnalyzerTest.kt:MoneyFlowAnalyzerTest$transaction(-3000, parts = listOf(LedgerPart(-1000, categoryId = 10), LedgerPart(-2000, transferAccountId = 2)))</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -198,7 +198,8 @@ class NextSettings : ProtectedFragmentActivity() {
                 PrefKey.REMOVE_LOCAL_CALENDAR -> offersCalendarRemoval
                 PrefKey.NO_ADS -> !adHandlerFactory.isAdDisabled
                 PrefKey.PERSONALIZED_AD_CONSENT -> !adHandlerFactory.isAdDisabled && isPrivacyOptionsRequired
-                PrefKey.FEATURE_UNINSTALL_FEATURES, PrefKey.FEATURE_UNINSTALL_LANGUAGES -> featureManager.allowsUninstall()
+                PrefKey.FEATURE_UNINSTALL_FEATURES, PrefKey.FEATURE_UNINSTALL_LANGUAGES ->
+                    featureManager.allowsUninstall()
                 else -> true
             }
         }
@@ -226,7 +227,8 @@ class NextSettings : ProtectedFragmentActivity() {
                     dispatchCommand(R.id.RATE_COMMAND, null)
                 }
                 prefKey == PrefKey.SEND_FEEDBACK -> dispatchCommand(R.id.FEEDBACK_COMMAND, null)
-                prefKey == PrefKey.TELL_A_FRIEND -> startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
+                prefKey == PrefKey.TELL_A_FRIEND -> startActivity(
+                    Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
                     putExtra(Intent.EXTRA_TEXT, Utils.getTellAFriendMessage(this@NextSettings).toString())
                     type = "text/plain"
                 }, getString(R.string.menu_share)))
@@ -274,7 +276,9 @@ class NextSettings : ProtectedFragmentActivity() {
                             ?: (if (checked) spec.summaryOn else spec.summaryOff) ?: spec.summary,
                         isEnabled = isEnabled,
                         onChange = { checked ->
-                            if (native.storage == Storage.DATA_STORE) editDataStore(prefKey) { it[booleanPreferencesKey(key)] = checked }
+                            if (
+                                native.storage == Storage.DATA_STORE
+                            ) editDataStore(prefKey) { it[booleanPreferencesKey(key)] = checked }
                             else settings.edit().putBoolean(key, checked).apply()
                         }
                     )
@@ -322,7 +326,9 @@ class NextSettings : ProtectedFragmentActivity() {
                     isNumber = true,
                     isEnabled = isEnabled,
                     onChange = { text ->
-                        text.toIntOrNull()?.let { settings.edit().putInt(key, it.coerceAtLeast(spec.min ?: it)).apply() }
+                        text.toIntOrNull()?.let {
+                            settings.edit().putInt(key, it.coerceAtLeast(spec.min ?: it)).apply()
+                        }
                     }
                 )
                 SettingKind.SLIDER -> SettingControl.Slider(
@@ -501,7 +507,9 @@ class NextSettings : ProtectedFragmentActivity() {
             prefHandler.getKey(PrefKey.PROTECTION_ENABLE_TEMPLATE_WIDGET) -> updateWidgets(TemplateWidget::class.java)
             prefHandler.getKey(PrefKey.PROTECTION_ENABLE_BUDGET_WIDGET) -> updateWidgets(BudgetWidget::class.java)
             prefHandler.getKey(PrefKey.TRACKING) -> tracker.setEnabled(sharedPreferences.getBoolean(key, false))
-            prefHandler.getKey(PrefKey.CRASHREPORT_USEREMAIL) -> crashHandler.setUserEmail(sharedPreferences.getString(key, null))
+            prefHandler.getKey(PrefKey.CRASHREPORT_USEREMAIL) -> crashHandler.setUserEmail(
+                sharedPreferences.getString(key, null)
+            )
             prefHandler.getKey(PrefKey.CRASHREPORT_ENABLED) -> {
                 crashHandler.setEnabled(sharedPreferences.getBoolean(key, false))
                 showSnackBar(R.string.app_restart_required)
@@ -554,7 +562,8 @@ class NextSettings : ProtectedFragmentActivity() {
             options = appFiles,
             selected = appFiles.filterTo(mutableSetOf()) { it.name in pickedAppFiles },
             onToggle = { file ->
-                pickedAppFiles = if (file.name in pickedAppFiles) pickedAppFiles - file.name else pickedAppFiles + file.name
+                pickedAppFiles =
+                    if (file.name in pickedAppFiles) pickedAppFiles - file.name else pickedAppFiles + file.name
             },
             label = { it.format(this) },
             onConfirm = { shareAppFiles(pickedAppFiles); close() },
@@ -571,7 +580,11 @@ class NextSettings : ProtectedFragmentActivity() {
         if (isDeleteConfirmationShown) {
             ConfirmDialog(
                 title = stringResource(R.string.files_label),
-                text = pluralStringResource(R.plurals.delete_files_confirmation_message, pickedAppFiles.size, pickedAppFiles.size),
+                text = pluralStringResource(
+                    R.plurals.delete_files_confirmation_message,
+                    pickedAppFiles.size,
+                    pickedAppFiles.size
+                ),
                 confirmLabel = stringResource(R.string.menu_delete),
                 onConfirm = {
                     isDeleteConfirmationShown = false
@@ -593,7 +606,9 @@ class NextSettings : ProtectedFragmentActivity() {
             putParcelableArrayListExtra(
                 Intent.EXTRA_STREAM,
                 ArrayList(names.mapNotNull { name ->
-                    appDir.documentFile.findFile(name)?.uri?.let { AppDirHelper.ensureContentUri(it, this@NextSettings) }
+                    appDir.documentFile.findFile(name)
+                        ?.uri
+                        ?.let { AppDirHelper.ensureContentUri(it, this@NextSettings) }
                 })
             )
             flags = Intent.FLAG_GRANT_READ_URI_PERMISSION

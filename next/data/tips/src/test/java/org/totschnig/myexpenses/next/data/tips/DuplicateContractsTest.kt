@@ -30,7 +30,15 @@ class DuplicateContractsTest {
         customName = customName,
         interval = interval,
         transactions = listOf(
-            ContractTransaction(nextId++, today.minusDays(3), -amount, 1, payeeName = payee, comment = comment, categoryPath = category)
+            ContractTransaction(
+                nextId++,
+                today.minusDays(3),
+                -amount,
+                1,
+                payeeName = payee,
+                comment = comment,
+                categoryPath = category
+            )
         ),
         nextExpectedDate = today.plusDays(27),
         isActive = true,
@@ -102,7 +110,9 @@ class DuplicateContractsTest {
     @Test
     fun cancelledReservesAndEndedContractsDoNotCount() {
         assertTrue(duplicateContracts(listOf(contract("Netflix"), contract("Disney+", cancelledOn = today))).isEmpty())
-        assertTrue(duplicateContracts(listOf(contract("Netflix"), contract("Disney+").copy(isActive = false))).isEmpty())
+        assertTrue(
+            duplicateContracts(listOf(contract("Netflix"), contract("Disney+").copy(isActive = false))).isEmpty()
+        )
         assertTrue(
             duplicateContracts(
                 listOf(contract("Depot", comment = "Sparplan Strom-ETF", reserve = true), contract("Vattenfall"))

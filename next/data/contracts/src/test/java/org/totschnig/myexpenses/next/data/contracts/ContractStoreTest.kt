@@ -9,7 +9,13 @@ import org.totschnig.myexpenses.next.core.common.withTestDataStore
 
 class ContractStoreTest {
 
-    private val rule = ContractRule("r", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, setOf(1), interval = ContractInterval.MONTHLY)
+    private val rule = ContractRule(
+        "r",
+        ContractRule.Kind.CONTRACT,
+        ContractDirection.EXPENSE,
+        setOf(1),
+        interval = ContractInterval.MONTHLY
+    )
 
     @Test
     fun keepsRulesSalaryAreasAndNewsOfOneEditTogether() = withTestDataStore { dataStore ->

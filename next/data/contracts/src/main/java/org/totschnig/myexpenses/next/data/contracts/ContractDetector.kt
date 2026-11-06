@@ -146,7 +146,9 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
     private fun List<ContractTransaction>.splitAtGaps(interval: ContractInterval): List<List<ContractTransaction>> {
         val runs = mutableListOf(mutableListOf(first()))
         zipWithNext().forEach { (previous, next) ->
-            if (ChronoUnit.DAYS.between(previous.date, next.date) > interval.maxDays) runs += mutableListOf<ContractTransaction>()
+            if (
+                ChronoUnit.DAYS.between(previous.date, next.date) > interval.maxDays
+            ) runs += mutableListOf<ContractTransaction>()
             runs.last() += next
         }
         return runs
@@ -159,7 +161,9 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
      *
      * @param this runs, each sorted by date
      */
-    private fun List<List<ContractTransaction>>.joinConsecutive(interval: ContractInterval): List<List<ContractTransaction>> {
+    private fun List<List<ContractTransaction>>.joinConsecutive(
+        interval: ContractInterval
+    ): List<List<ContractTransaction>> {
         val series = mutableListOf<List<ContractTransaction>>()
         sortedBy { it.first().date }.forEach { cluster ->
             val predecessor = series.indices
@@ -171,7 +175,10 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
         return series
     }
 
-    private fun List<ContractTransaction>.isContinuedBy(next: List<ContractTransaction>, interval: ContractInterval): Boolean {
+    private fun List<ContractTransaction>.isContinuedBy(
+        next: List<ContractTransaction>,
+        interval: ContractInterval
+    ): Boolean {
         if (!next.first().date.isAfter(last().date)) return false
         if (regularInterval(this + next) != interval) return false
         val gap = ChronoUnit.DAYS.between(last().date, next.first().date)

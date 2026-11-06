@@ -183,7 +183,9 @@ open class MyExpensesV2ViewModel(
     val activeFilter: StateFlow<AccountGroupingKey?> = _activeFilter.asStateFlow()
 
     private val _currentAccountsTab by lazy {
-        MutableStateFlow(if (startScreen == StartScreen.BalanceSheet) AccountsScreenTab.BALANCE_SHEET else AccountsScreenTab.LIST)
+        MutableStateFlow(
+            if (startScreen == StartScreen.BalanceSheet) AccountsScreenTab.BALANCE_SHEET else AccountsScreenTab.LIST
+        )
     }
 
     val currentAccountsTab by lazy { _currentAccountsTab.asStateFlow() }

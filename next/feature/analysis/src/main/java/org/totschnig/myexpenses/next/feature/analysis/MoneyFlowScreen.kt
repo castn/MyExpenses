@@ -124,7 +124,11 @@ fun MoneyFlowScreen(
             val item = selected?.let(chart::itemOf)
             when {
                 item == null -> HintRow(stringResource(R.string.next_flow_hint), isFirst = true)
-                item.count == null || item.transactionIds.isEmpty() -> InfoRow(item.title, amount(item.amount), isFirst = true)
+                item.count == null || item.transactionIds.isEmpty() -> InfoRow(
+                    item.title,
+                    amount(item.amount),
+                    isFirst = true
+                )
                 else -> NavigationRow(
                     title = item.title,
                     supportingText = pluralStringResource(R.plurals.next_analysis_transactions, item.count, item.count),
@@ -197,8 +201,18 @@ internal fun previewFlow(kind: PeriodKind = PeriodKind.TWELVE_MONTHS): MoneyFlow
         incomes = listOf(group(1, "Gehalt", 3_000_000), group(2, "Erstattungen", 240_000)),
         expenses = listOf(
             group(10, "Wohnen", 1_140_000, listOf(actor("Vermieter", 1_080_000, 12), actor("Stadtwerke", 60_000))),
-            group(11, "Lebensmittel", 504_000, listOf(actor("REWE", 260_000), actor("Aldi", 150_000), actor(null, 94_000, 9, 5))),
-            group(12, "Essen gehen", 186_000, listOf(actor("McDonald's", 18_600, 20), actor("Pizzeria", 120_000), actor(null, 47_400, 6, 3))),
+            group(
+                11,
+                "Lebensmittel",
+                504_000,
+                listOf(actor("REWE", 260_000), actor("Aldi", 150_000), actor(null, 94_000, 9, 5))
+            ),
+            group(
+                12,
+                "Essen gehen",
+                186_000,
+                listOf(actor("McDonald's", 18_600, 20), actor("Pizzeria", 120_000), actor(null, 47_400, 6, 3))
+            ),
             group(13, "Mobilität", 210_000, listOf(actor("Shell", 140_000), actor("Deutsche Bahn", 70_000))),
             group(MoneyFlow.REST, null, 90_000, listOf(actor(null, 90_000, 8, 6))),
         ),

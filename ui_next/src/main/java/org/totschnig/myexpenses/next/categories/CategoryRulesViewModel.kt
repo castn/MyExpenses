@@ -33,7 +33,9 @@ class CategoryRulesViewModel(
 
     private fun CategoryRule.toItem() = RuleItem(
         counterpart = (payeeIds.mapNotNull { repository.getPartyName(it) } + merchants).joinToString(", "),
-        target = repository.getCategoryInfoList(categoryId)?.joinToString(DEFAULT_CATEGORY_PATH_SEPARATOR) { it.label }.orEmpty(),
+        target = repository.getCategoryInfoList(categoryId)?.joinToString(
+            DEFAULT_CATEGORY_PATH_SEPARATOR
+        ) { it.label }.orEmpty(),
         remove = { viewModelScope.launch { categoryStore.update { it.copy(rules = it.rules - this@toItem) } } }
     )
 }

@@ -395,7 +395,8 @@ object PdfPrinter {
                                 )
                             }
                         ).apply {
-                            horizontalAlignment = if (helper.layoutDirectionFromLocaleIsRTL) Element.ALIGN_RIGHT else Element.ALIGN_LEFT
+                            horizontalAlignment =
+                                if (helper.layoutDirectionFromLocaleIsRTL) Element.ALIGN_RIGHT else Element.ALIGN_LEFT
                         }
                     )
                     groupSummary.addCell(helper.printToCell("Δ: $formattedDelta").apply {
@@ -413,7 +414,8 @@ object PdfPrinter {
                                 )
                             }
                         ).apply {
-                            horizontalAlignment = if (helper.layoutDirectionFromLocaleIsRTL) Element.ALIGN_LEFT else Element.ALIGN_RIGHT
+                            horizontalAlignment =
+                                if (helper.layoutDirectionFromLocaleIsRTL) Element.ALIGN_LEFT else Element.ALIGN_RIGHT
                         })
                 } else {
                     groupSummary.addCell(helper.printToCell("Δ: $formattedDelta").apply {

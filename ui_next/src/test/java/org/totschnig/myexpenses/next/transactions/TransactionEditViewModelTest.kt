@@ -105,7 +105,10 @@ class TransactionEditViewModelTest {
         assertTrue(store.saved.isEmpty())
 
         viewModel.saveDraft()
-        assertEquals(EditValues(-5000, transaction().values.date, transaction().values.valueDate, "Lidl", 1, null), store.saved.single())
+        assertEquals(
+            EditValues(-5000, transaction().values.date, transaction().values.valueDate, "Lidl", 1, null),
+            store.saved.single()
+        )
         assertNull(viewModel.state.value.draft)
         assertEquals(ChangedField.ALL, viewModel.state.value.undo!!.field)
     }

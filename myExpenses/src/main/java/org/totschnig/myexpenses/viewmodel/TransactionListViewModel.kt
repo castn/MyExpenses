@@ -146,7 +146,8 @@ class TransactionListViewModel(
             if (type != null) {
                 val typeExpression = when {
                     aggregateNeutral -> "$typeWithFallback IN (${type.asCategoryType}, $FLAG_NEUTRAL)"
-                    withTransfers -> effectiveTypeExpressionIncludeTransfers(typeWithFallback) + " = " + type.asCategoryType
+                    withTransfers ->
+                        effectiveTypeExpressionIncludeTransfers(typeWithFallback) + " = " + type.asCategoryType
                     else -> effectiveTypeExpression(typeWithFallback) + " = " + type.asCategoryType
                 }
                 selectionParts += typeExpression

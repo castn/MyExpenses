@@ -207,7 +207,8 @@ fun DebtRenderer(
 
                         TransactionRenderer(
                             date = transaction.date,
-                            amount = if (showEquivalentAmount.value) transaction.equivalentAmount else transaction.amount,
+                            amount =
+                                if (showEquivalentAmount.value) transaction.equivalentAmount else transaction.amount,
                             runningTotal = runningTotal,
                             currency,
                             index == count - 1,

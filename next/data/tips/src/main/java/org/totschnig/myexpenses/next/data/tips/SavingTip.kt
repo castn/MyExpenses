@@ -48,7 +48,8 @@ sealed interface SavingTip {
         override val id: String get() = ID
         override val yearlyAmount: Long get() = increases.sumOf { it.yearlyAmount }
         val monthlyAmount: Long get() = yearlyAmount / 12
-        override val facts: Set<String> get() = increases.mapTo(HashSet()) { "${it.contract.signature}:${it.sinceTransactionId}" }
+        override val facts: Set<String> get() =
+            increases.mapTo(HashSet()) { "${it.contract.signature}:${it.sinceTransactionId}" }
 
         companion object {
             const val ID = "PRICE_INCREASES"
@@ -161,8 +162,20 @@ data class PriceIncrease(
 /**
  * All tips from what the features know, highest amount first
  */
-fun savingTips(contracts: ContractFacts, tags: TagFacts, receipts: ReceiptFacts, today: LocalDate, budget: BudgetFacts? = null) = savingTips(
-    contracts.active, contracts.transactions, today, contracts.paymentIds, tags.excludedFromSpending, receipts.items, budget
+fun savingTips(
+    contracts: ContractFacts,
+    tags: TagFacts,
+    receipts: ReceiptFacts,
+    today: LocalDate,
+    budget: BudgetFacts? = null
+) = savingTips(
+    contracts.active,
+    contracts.transactions,
+    today,
+    contracts.paymentIds,
+    tags.excludedFromSpending,
+    receipts.items,
+    budget
 )
 
 /**
@@ -226,7 +239,8 @@ internal fun priceIncreases(contracts: List<Contract>, today: LocalDate): Saving
     fun differ(a: Long, b: Long) = (a - b).absoluteValue > b * ContractNews.PRICE_CHANGE_TOLERANCE
     val increases = contracts.filter { !it.isIncome && !it.isReserve && !it.isCancelled }.mapNotNull { contract ->
         val payments = contract.transactions.filter { it.id != SNAPSHOT_TRANSACTION_ID && !it.date.isAfter(today) }
-        val reference = payments.lastOrNull { !it.date.isAfter(start) } ?: payments.firstOrNull() ?: return@mapNotNull null
+        val reference =
+            payments.lastOrNull { !it.date.isAfter(start) } ?: payments.firstOrNull() ?: return@mapNotNull null
         val recent = payments.filter { it.date.isAfter(reference.date) }
         val before = reference.amount.absoluteValue
         val after = recent.lastOrNull()?.amount?.absoluteValue ?: return@mapNotNull null
@@ -310,5 +324,8 @@ internal fun frequentPayments(contracts: List<Contract>): SavingTip.FrequentPaym
         ?.let { SavingTip.FrequentPayments(it) }
 
 private val INSURANCE_KINDS = setOf(
-    ContractKind.CAR_INSURANCE, ContractKind.LIABILITY_INSURANCE, ContractKind.CONTENTS_INSURANCE, ContractKind.LEGAL_INSURANCE
+    ContractKind.CAR_INSURANCE,
+    ContractKind.LIABILITY_INSURANCE,
+    ContractKind.CONTENTS_INSURANCE,
+    ContractKind.LEGAL_INSURANCE
 )

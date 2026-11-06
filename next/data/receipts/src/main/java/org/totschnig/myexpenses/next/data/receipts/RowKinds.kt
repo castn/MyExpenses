@@ -40,7 +40,9 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
             val number = token as? Token.Number ?: return@forEachIndexed
             if (number.value.abs() >= MAX_AMOUNT) return@forEachIndexed
             // "x2,50" is no price
-            if (tokens.getOrNull(i - 1)?.let { it is Token.Times && it.end == number.start } == true) return@forEachIndexed
+            if (
+                tokens.getOrNull(i - 1)?.let { it is Token.Times && it.end == number.start } == true
+            ) return@forEachIndexed
             val start = tokens.getOrNull(i - 1)
                 ?.takeIf { it is Token.Currency && it.end == number.start }?.start ?: number.start
             val rest = tokens.subList(i + 1, tokens.size)
@@ -176,7 +178,8 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
                 (tokens.getOrNull(i + 1) as? Token.Word)?.let { word(it) in vocabulary.countAfterNumber } == true
             ) return token.value.toInt()
             if (token is Token.Word && word(token) in vocabulary.countBeforeNumber) {
-                val next = tokens.getOrNull(i + 1)?.takeUnless { it is Token.Word && it.text == ":" } ?: tokens.getOrNull(i + 2)
+                val next = tokens.getOrNull(i + 1)?.takeUnless { it is Token.Word && it.text == ":" } ?:
+                    tokens.getOrNull(i + 2)
                 if (next is Token.Number && isCount(next)) return next.value.toInt()
             }
         }
@@ -229,7 +232,10 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
 
     /** The sign, also with a letter recognition glued to it: "x", "Lx" */
     private fun isTimes(token: Token?) = token is Token.Times ||
-            token is Token.Word && token.text.length >= 2 && token.text[0].isLetter() && token.text.drop(1).all { it in "xX×*" }
+            token is Token.Word &&
+                token.text.length >= 2 &&
+                token.text[0].isLetter() &&
+                token.text.drop(1).all { it in "xX×*" }
 
     private class Tax(val taxClass: String?)
 

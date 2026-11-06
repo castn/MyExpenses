@@ -3,9 +3,5 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>MatchingDeclarationName:TagRows.kt:TagRow</ID>
-    <ID>MaxLineLength:Refunds.kt:RefundDetector$(hasRefundText || (credit.counterpart != null &amp;&amp; debit.counterpart == credit.counterpart))</ID>
-    <ID>MaxLineLength:TagLearnerTest.kt:TagLearnerTest$assertEquals(mapOf(new.id to setOf(dog)), TagLearner.applyRules(listOf(old, new, alreadyTagged, other), listOf(rule)))</ID>
-    <ID>MaxLineLength:TagRepository.kt:TagRepository$.</ID>
-    <ID>MaxLineLength:Trips.kt:TripDetector$.</ID>
   </CurrentIssues>
 </SmellBaseline>

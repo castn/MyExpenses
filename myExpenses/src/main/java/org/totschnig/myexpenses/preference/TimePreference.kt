@@ -67,7 +67,11 @@ class TimePreference(context: Context, attrs: AttributeSet) : Preference(context
             clock: Clock = Clock.systemDefaultZone()
         ): Long {
             val now = clock.instant()
-            val scheduledTime = ZonedDateTime.of(LocalDate.now(), LocalTime.of(hh, mm), ZoneId.systemDefault()).toInstant().let {
+            val scheduledTime = ZonedDateTime.of(
+                LocalDate.now(),
+                LocalTime.of(hh, mm),
+                ZoneId.systemDefault()
+            ).toInstant().let {
                 if (now > it) it.plus(1, ChronoUnit.DAYS) else it
             }
             return Duration.between(now, scheduledTime).toMillis()

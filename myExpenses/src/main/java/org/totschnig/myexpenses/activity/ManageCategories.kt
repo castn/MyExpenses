@@ -239,7 +239,8 @@ class ManageCategories : ProtectedFragmentActivity(),
 
                 when (viewModel.dialogState) {
                     is ManageCategoriesViewModel.Edit -> {
-                        val categoryState = viewModel.categoryTreeForSelect.collectAsState(initial = LoadingState.Loading).value
+                        val categoryState =
+                            viewModel.categoryTreeForSelect.collectAsState(initial = LoadingState.Loading).value
                         if (categoryState is LoadingState.Result) {
                             val categories = (categoryState as? LoadingState.Data)?.data?.flatten().orEmpty()
                             CategoryEdit(
@@ -255,7 +256,8 @@ class ManageCategories : ProtectedFragmentActivity(),
                                             ContribFeature.CATEGORY_TREE,
                                             ContribPayload.CategoryTree(
                                                 R.id.CREATE_SUB_COMMAND_DO,
-                                                saveParams = ContribPayload.SaveCategoryParams(label, icon, typeFlags, parentId)
+                                                saveParams =
+                                                    ContribPayload.SaveCategoryParams(label, icon, typeFlags, parentId)
                                             )
                                         )
                                     } else {
@@ -317,7 +319,10 @@ class ManageCategories : ProtectedFragmentActivity(),
                                                         imageVector = Icons.AutoMirrored.Filled.PlaylistAdd,
                                                         contentDescription = null
                                                     )
-                                                    Text(text = stringResource(id = R.string.menu_categories_setup_default))
+                                                    Text(
+                                                        text =
+                                                            stringResource(id = R.string.menu_categories_setup_default)
+                                                    )
                                                 }
                                             }
                                         }
@@ -360,7 +365,11 @@ class ManageCategories : ProtectedFragmentActivity(),
                                             { cat ->
                                                 if (action == Action.SELECT_FILTER) null else
                                                     listOfNotNull(
-                                                        if ((choiceMode as? ChoiceMode.SingleChoiceMode)?.selectParentOnClick == false) {
+                                                        if (
+                                                            (
+                                                                choiceMode as? ChoiceMode.SingleChoiceMode
+                                                            )?.selectParentOnClick == false
+                                                        ) {
                                                             select("SELECT_CATEGORY") {
                                                                 doSingleSelection(cat)
                                                             }
@@ -372,7 +381,12 @@ class ManageCategories : ProtectedFragmentActivity(),
                                                                     .contains(protectionInfo?.id) -> {
                                                                     showSnackBar(
                                                                         resources.getQuantityString(
-                                                                            if (protectionInfo!!.isTemplate) R.plurals.not_deletable_mapped_templates else R.plurals.not_deletable_mapped_transactions,
+                                                                            if (protectionInfo!!.isTemplate) {
+                                                                                R.plurals.not_deletable_mapped_templates
+                                                                            } else {
+                                                                                R.plurals
+                                                                                    .not_deletable_mapped_transactions
+                                                                            },
                                                                             1,
                                                                             1
                                                                         )
@@ -405,7 +419,11 @@ class ManageCategories : ProtectedFragmentActivity(),
                                         },
                                         choiceMode = choiceMode,
                                         contentPadding = WindowInsets.navigationBars
-                                            .add(WindowInsets(bottom = dimensionResource(R.dimen.fab_related_bottom_padding)))
+                                            .add(
+                                                WindowInsets(
+                                                    bottom = dimensionResource(R.dimen.fab_related_bottom_padding)
+                                                )
+                                            )
                                             .asPaddingValues()
                                     )
                                 }

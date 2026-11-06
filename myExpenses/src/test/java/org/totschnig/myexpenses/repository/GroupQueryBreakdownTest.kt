@@ -114,7 +114,8 @@ class GroupQueryBreakdownTest(private val grouping: Grouping) : BaseTestWithRepo
                     date.with(TemporalAdjusters.lastDayOfMonth()).toString()
                 } else {
                     // Logic for custom month start:
-                    // date(date, 'unixepoch', 'localtime', '-${monthDelta} day', 'start of month', '+1 month', '-1 day', '+${monthDelta} day')
+                    // date(date, 'unixepoch', 'localtime', '-${monthDelta} day', 'start of month', '+1 month', '-1
+                    // day', '+${monthDelta} day')
                     val monthDelta = monthStart - 1
                     date.minusDays(monthDelta.toLong())
                         .with(TemporalAdjusters.firstDayOfMonth())

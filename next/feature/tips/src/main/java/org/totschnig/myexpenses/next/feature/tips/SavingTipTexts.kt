@@ -93,7 +93,12 @@ internal fun SavingTip.text(currency: CurrencyInfo): TipText {
         is SmallPurchases -> TipText(
             title = stringResource(R.string.next_tips_small_title),
             message = pluralStringResource(
-                R.plurals.next_tips_small_text, count, count, amount(SmallPurchases.LIMIT), amount(yearlyAmount), amount(monthlyAmount)
+                R.plurals.next_tips_small_text,
+                count,
+                count,
+                amount(SmallPurchases.LIMIT),
+                amount(yearlyAmount),
+                amount(monthlyAmount)
             ),
             hint = stringResource(R.string.next_tips_small_hint),
             amount = perYear
@@ -119,7 +124,12 @@ internal fun SavingTip.text(currency: CurrencyInfo): TipText {
 
         is Outliers -> TipText(
             title = stringResource(R.string.next_tips_outliers_title, rememberMonthFormatter().format(month)),
-            message = pluralStringResource(R.plurals.next_tips_outliers_text, categories.size, categories.size, amount(yearlyAmount)),
+            message = pluralStringResource(
+                R.plurals.next_tips_outliers_text,
+                categories.size,
+                categories.size,
+                amount(yearlyAmount)
+            ),
             hint = stringResource(R.string.next_tips_outliers_hint),
             amount = "+" + amount(yearlyAmount)
         )
@@ -143,14 +153,20 @@ internal fun SavingTip.text(currency: CurrencyInfo): TipText {
 
         is PotsOverspent -> TipText(
             title = pluralStringResource(R.plurals.next_tips_pots_title, pots.size, pots.first().name, pots.size - 1),
-            message = pluralStringResource(R.plurals.next_tips_pots_text, PotsOverspent.PERIODS, PotsOverspent.MIN_OVERSPENT, PotsOverspent.PERIODS),
+            message = pluralStringResource(
+                R.plurals.next_tips_pots_text,
+                PotsOverspent.PERIODS,
+                PotsOverspent.MIN_OVERSPENT,
+                PotsOverspent.PERIODS
+            ),
             hint = stringResource(R.string.next_tips_pots_hint),
             amount = perYear
         )
 
         is DrugstoreInSupermarkets -> TipText(
             title = stringResource(R.string.next_tips_drugstore_title),
-            message = pluralStringResource(R.plurals.next_tips_drugstore_text, itemCount, itemCount, amount(yearlyAmount)),
+            message =
+                pluralStringResource(R.plurals.next_tips_drugstore_text, itemCount, itemCount, amount(yearlyAmount)),
             hint = stringResource(R.string.next_tips_drugstore_hint),
             amount = perYear
         )

@@ -135,7 +135,10 @@ sealed interface DataGap {
     }
 }
 
-/** Debits that can have a category: as [org.totschnig.myexpenses.next.categories.categoryInputs], without credits and own transfers */
+/**
+ * Debits that can have a category: as [org.totschnig.myexpenses.next.categories.categoryInputs], without credits and
+ * own transfers
+ */
 private fun LedgerTransaction.isCategorizableDebit() = amount < 0 && transferAccountId == null &&
         targetAccountId == null && !isSplit && !isSealed
 

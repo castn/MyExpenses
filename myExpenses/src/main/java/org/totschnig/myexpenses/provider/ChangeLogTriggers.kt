@@ -40,7 +40,8 @@ private val TRANSACTIONS_DELETE_TRIGGER_CREATE =
  * we ignore setting of exported flag
  * if account is changed, we need to delete transaction from one account, and add it to the other
  * if a new transfer is inserted, the first peer is updated, after second one is added, and we can skip this update here
- * during transfer update, uuid is temporarily set to null, we need to skip this change here, otherwise we run into SQLiteConstraintException
+ * during transfer update, uuid is temporarily set to null, we need to skip this change here, otherwise we run into
+ * SQLiteConstraintException
  */
 val TRANSACTIONS_UPDATE_TRIGGER_CREATE =
     """CREATE TRIGGER update_change_log AFTER UPDATE ON $TABLE_TRANSACTIONS WHEN 

@@ -55,7 +55,9 @@ class AccountWidgetConfigurationFragment : PreferenceFragmentCompat() {
                         .collect { list ->
                             with(accountPreference) {
                                 entries =
-                                    (list.map { it.label } + getString(R.string.budget_filter_all_accounts)).toTypedArray()
+                                    (
+                                        list.map { it.label } + getString(R.string.budget_filter_all_accounts)
+                                    ).toTypedArray()
                                 entryValues =
                                     (list.map { it.id.toString() } + Long.MAX_VALUE.toString()).toTypedArray()
                                 if (value == null || !list.any { it.id.toString() == value }) {

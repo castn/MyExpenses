@@ -235,7 +235,11 @@ fun Repository.updateTransaction(repositoryTransaction: RepositoryTransaction): 
                 ).build()
             )
             updateSplitTransaction(repositoryTransaction.copy(splitParts = repositoryTransaction.splitParts?.map {
-                it.copy(transferPeer = it.transferPeer?.copy(parentId = it.transferPeer.parentId.takeIf { it != existingSiblingParentId }))
+                it.copy(
+                    transferPeer = it.transferPeer?.copy(
+                        parentId = it.transferPeer.parentId.takeIf { it != existingSiblingParentId }
+                    )
+                )
             }), operations)
         }
 
@@ -386,11 +390,19 @@ fun Repository.createSplitTransaction(
 ): RepositoryTransaction {
     // --- Validation ---
     require(parentTransaction.isSplit) { "Parent transaction must be a split." }
-    require(splitParts.sumOf { it.first.amount } == parentTransaction.amount) { "Sum of splits must equal parent amount." }
-    require(splitParts.all { it.first.date == parentTransaction.date && (it.second == null || it.second!!.date == parentTransaction.date) }) {
+    require(
+        splitParts.sumOf { it.first.amount } == parentTransaction.amount
+    ) { "Sum of splits must equal parent amount." }
+    require(
+        splitParts.all {
+            it.first.date == parentTransaction.date && (it.second == null || it.second!!.date == parentTransaction.date)
+        }
+    ) {
         "Split transactions date must match parent date."
     }
-    require(splitParts.all { it.first.accountId == parentTransaction.accountId }) { "All splits must be in the same account." }
+    require(
+        splitParts.all { it.first.accountId == parentTransaction.accountId }
+    ) { "All splits must be in the same account." }
 
     requireNotNull(parentTransaction.uuid)
     require(splitParts.all { it.second == null || it.second?.uuid == it.first.uuid })
@@ -729,11 +741,15 @@ fun Repository.updateSplitTransaction(
     val parentTransaction = repositoryTransaction.data
     require(parentTransaction.isSplit) { "Parent transaction must be a split." }
     val splitParts = repositoryTransaction.splitParts!!
-    require(splitParts.sumOf { it.data.amount } == parentTransaction.amount) { "Sum of splits must equal parent amount." }
+    require(
+        splitParts.sumOf { it.data.amount } == parentTransaction.amount
+    ) { "Sum of splits must equal parent amount." }
     require(splitParts.all { it.data.date == parentTransaction.date }) {
         "Split transactions date must match parent date."
     }
-    require(splitParts.all { it.data.accountId == parentTransaction.accountId }) { "All splits must be in the same account." }
+    require(
+        splitParts.all { it.data.accountId == parentTransaction.accountId }
+    ) { "All splits must be in the same account." }
 
     val operations = operationsIn ?: ArrayList()
 
@@ -1064,7 +1080,8 @@ fun Repository.loadTrades(
         var cashPart: Pair<Transaction, Transaction>? = null
         var fundingPart: Pair<Transaction, Transaction?>
 
-        val untransferredParts = parts.filter { it.transferPeerId == null && it.transferAccountId == null }.sortedBy { it.id }
+        val untransferredParts =
+            parts.filter { it.transferPeerId == null && it.transferAccountId == null }.sortedBy { it.id }
 
         // Load all transfer peers once to identify roles
         val transferPeers = parts.filter { it.transferPeerId != null }
@@ -1081,7 +1098,9 @@ fun Repository.loadTrades(
         } ?: ((untransferredParts.firstOrNull()?: return@mapNotNull null) to null)
 
         // Identify additional cost parts (negative amount, no transfer account)
-        val costParts = untransferredParts.filter { it != fundingPart.first && it.transferAccountId == null && it.amount < 0 }.sortedBy { it.id }
+        val costParts = untransferredParts.filter {
+            it != fundingPart.first && it.transferAccountId == null && it.amount < 0
+        }.sortedBy { it.id }
         val additionalCosts = costParts.map { costPart ->
             CostLeg(
                 amount = Money(currencyContext[parentCurrency], costPart.amount).absolute(),
@@ -1247,9 +1266,11 @@ fun Repository.insertTransfer(
  * @param source The outgoing part of the transfer.
  * @param destination The incoming part of the transfer.
  * @param offset The starting index where these operations will be placed in the final batch list.
- * @param parentBackRefIndex If the transfer is part of a split, this is the back-reference index to the parent transaction.
+ * @param parentBackRefIndex If the transfer is part of a split, this is the back-reference index to the parent
+ *     transaction.
  * @param parentId The ID of the parent transaction, if already known.
- * @param peerParentBackRefIndex If the peer transaction is part of a split, this is the back-reference index to its parent.
+ * @param peerParentBackRefIndex If the peer transaction is part of a split, this is the back-reference index to its
+ *     parent.
  * @param peerParentId The ID of the peer's parent transaction, if already known.
  * @return A list of three operations for creating the transfer.
  */

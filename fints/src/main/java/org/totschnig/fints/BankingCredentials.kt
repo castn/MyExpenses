@@ -21,7 +21,10 @@ data class BankingCredentials(
     }
 
     val isComplete: Boolean
-        get() = bankLeitZahl.all { it.isDigit() } && bankLeitZahl.length == 8 && user.isNotEmpty() && !password.isNullOrEmpty()
+        get() = bankLeitZahl.all { it.isDigit() } &&
+            bankLeitZahl.length == 8 &&
+            user.isNotEmpty() &&
+            !password.isNullOrEmpty()
 
     val isNew: Boolean
         get() = bank == null

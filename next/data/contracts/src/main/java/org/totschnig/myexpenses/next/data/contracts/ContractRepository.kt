@@ -53,7 +53,9 @@ class ContractRepository(
         val today: LocalDate,
     )
 
-    private val analysisMemo = Memo<AnalysisInput, ContractAnalysis>("contracts: analysis") { (transactions, rules, today) ->
+    private val analysisMemo = Memo<AnalysisInput, ContractAnalysis>(
+        "contracts: analysis"
+    ) { (transactions, rules, today) ->
         ContractAnalysis.of(transactions, rules, today)
     }
 
@@ -71,7 +73,11 @@ class ContractRepository(
      * null while loading or without consent
      */
     val analysis: SharedFlow<ContractAnalysis?> =
-        combine(transactions, settings.map { it.rules }.distinctUntilChanged(), ledgerSource.today) { transactions, rules, today ->
+        combine(
+            transactions,
+            settings.map { it.rules }.distinctUntilChanged(),
+            ledgerSource.today
+        ) { transactions, rules, today ->
             transactions?.let { AnalysisInput(it, rules, today) }
         }
             .mapMemo(analysisMemo)
@@ -137,7 +143,8 @@ class ContractRepository(
                     // Payments of cancelled contracts, e.g. the last one, are still contract payments
                     confirmed = expenses.active + expenses.ended + expenses.cancelled,
                     salaries = incomes.salaries,
-                    paymentIds = analysis.contracts.flatMapTo(HashSet()) { contract -> contract.transactions.map { it.id } },
+                    paymentIds =
+                        analysis.contracts.flatMapTo(HashSet()) { contract -> contract.transactions.map { it.id } },
                     transactions = analysis.transactions
                 )
             } else null

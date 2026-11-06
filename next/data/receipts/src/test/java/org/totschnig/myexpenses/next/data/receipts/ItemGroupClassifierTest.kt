@@ -94,8 +94,14 @@ class ItemGroupClassifierTest {
 
     @Test
     fun merchantForUnknownItems() {
-        assertEquals(ItemGroupSuggestion(DRUGSTORE, MERCHANT), classifier.groupOf("Haarspange Glitzer", "dm-drogerie markt"))
-        assertEquals(ItemGroupSuggestion(PANTRY, DICTIONARY), classifier.groupOf("dmBio Leinsamen", "dm-drogerie markt"))
+        assertEquals(
+            ItemGroupSuggestion(DRUGSTORE, MERCHANT),
+            classifier.groupOf("Haarspange Glitzer", "dm-drogerie markt")
+        )
+        assertEquals(
+            ItemGroupSuggestion(PANTRY, DICTIONARY),
+            classifier.groupOf("dmBio Leinsamen", "dm-drogerie markt")
+        )
         assertNull(classifier.groupOf("Haarspange Glitzer", "REWE"))
     }
 
@@ -143,7 +149,11 @@ class ItemGroupClassifierTest {
         )
         assertEquals(ItemGroupSuggestion(BAKERY, PRODUCT), model.groupOf("Meggle Baguet"))
         assertEquals(
-            listOf(ItemGroupSuggestion(DRINKS, MODEL), ItemGroupSuggestion(DRINKS, RULE), ItemGroupSuggestion(DEPOSIT, RULE)),
+            listOf(
+                ItemGroupSuggestion(DRINKS, MODEL),
+                ItemGroupSuggestion(DRINKS, RULE),
+                ItemGroupSuggestion(DEPOSIT, RULE)
+            ),
             model.classify(listOf(item("Saft"), item("Rabatt", -20), item("PFAND 0,25", 25)), merchant = null)
         )
     }
@@ -171,7 +181,9 @@ class ItemGroupClassifierTest {
     private fun labelled(): Map<String, Pair<String?, List<Labelled>>> {
         val labels = File(ReceiptFixtures.dir(), "item-groups.csv").readText().lines().drop(1)
             .filter { it.isNotBlank() }
-            .map { line -> line.split(";").let { (receipt, name, group) -> Triple(receipt, name, ItemGroup.ofId(group)!!) } }
+            .map { line ->
+                line.split(";").let { (receipt, name, group) -> Triple(receipt, name, ItemGroup.ofId(group)!!) }
+            }
         return labels.groupBy { it.first }.mapValues { (receipt, rows) ->
             val parsed = ReceiptParser.parse(
                 recognizedTextFromJson(ReceiptFixtures.text(receipt))
@@ -197,14 +209,18 @@ class ItemGroupClassifierTest {
                 total++
                 if (suggestion != null) assigned++
                 if (suggestion?.group == labelled.expected) correct++
-                else errors += "$receipt: ${labelled.item.name} → ${suggestion?.group} (${suggestion?.source}), expected ${labelled.expected}"
+                else errors += "$receipt: ${labelled.item.name} → ${suggestion?.group} (${suggestion?.source}), " +
+                    "expected ${labelled.expected}"
             }
         }
         return Result(total, assigned, correct, errors)
     }
 
     private fun Result.report(title: String) {
-        println("$title: $correct of $total correct (${correct * 100 / total} %), $assigned assigned (${assigned * 100 / total} %)")
+        println(
+            "$title: $correct of $total correct (${correct * 100 / total} %), $assigned assigned " +
+                "(${assigned * 100 / total} %)"
+        )
         errors.forEach { println("  $it") }
     }
 

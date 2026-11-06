@@ -213,7 +213,9 @@ fun NextSettingsScreen(actions: SettingsActions, onBack: () -> Unit, initialGrou
         sceneStrategies = listOf(rememberListDetailPages()),
         entryProvider = entryProvider {
             entry<SettingsKey.Start>(metadata = ListPage(R.string.next_pick_settings)) {
-                SettingsStart(actions, onBack) { group, highlighted -> backStack.add(SettingsKey.Group(group, highlighted)) }
+                SettingsStart(actions, onBack) { group, highlighted ->
+                    backStack.add(SettingsKey.Group(group, highlighted))
+                }
             }
             entry<SettingsKey.Group>(metadata = DetailPage()) { key ->
                 var highlighted by rememberSaveable { mutableStateOf(key.highlighted) }
@@ -298,7 +300,10 @@ private fun SearchResults(query: String, actions: SettingsActions, onResult: (Se
     val groupTitles = SettingsGroup.entries.associateWith { stringResource(it.title) }
     val sectionTitles = SettingsSection.entries.associateWith { stringResource(it.title) }
     val place: (SettingEntry) -> String = { entry ->
-        listOfNotNull(groupTitles.getValue(entry.group), entry.section?.let(sectionTitles::getValue)).joinToString(" › ")
+        listOfNotNull(
+            groupTitles.getValue(entry.group),
+            entry.section?.let(sectionTitles::getValue)
+        ).joinToString(" › ")
     }
     val details = remember(actions) { SettingsCatalog.entries.associateWith(actions::details) }
     val results = searchSettings(query, SettingsCatalog.entries, actions::title, place, details::getValue)
@@ -343,7 +348,9 @@ private fun SettingsGroupPage(
     DetailScaffold(onBack = onBack, title = stringResource(group.title)) {
         SettingsCatalog.of(group).filter(actions::isVisible).groupBy { it.section }.forEach { (section, entries) ->
             if (section == null) {
-                DetailCard(Modifier.padding(top = 8.dp)) { SettingRows(entries, actions, onEdit, highlighted, onHighlightShown) }
+                DetailCard(
+                    Modifier.padding(top = 8.dp)
+                ) { SettingRows(entries, actions, onEdit, highlighted, onHighlightShown) }
             } else {
                 SectionTitle(stringResource(section.title))
                 DetailCard { SettingRows(entries, actions, onEdit, highlighted, onHighlightShown) }
@@ -435,7 +442,12 @@ private fun SettingRows(
 }
 
 @Composable
-private fun SettingRow(entry: SettingEntry, actions: SettingsActions, onEdit: (String, SettingControl) -> Unit, isFirst: Boolean) {
+private fun SettingRow(
+    entry: SettingEntry,
+    actions: SettingsActions,
+    onEdit: (String, SettingControl) -> Unit,
+    isFirst: Boolean
+) {
     val title = actions.title(entry)
     when (val control = actions.control(entry)) {
         is SettingControl.Switch -> SwitchRow(
@@ -471,7 +483,8 @@ private fun SettingRow(entry: SettingEntry, actions: SettingsActions, onEdit: (S
         )
         is SettingControl.Info -> HintRow(control.text ?: title, isFirst = isFirst)
         is SettingControl.Action -> ValueRow(
-            title, control.value ?: actions.explanation(entry), onClick = control.onClick, isFirst = isFirst, enabled = control.isEnabled
+            title, control.value ?: actions.explanation(entry), onClick = control.onClick, isFirst = isFirst, enabled =
+                control.isEnabled
         )
         is SettingControl.Page -> ValueRow(
             title, control.value ?: actions.explanation(entry), onClick = { onEdit(title, control) },

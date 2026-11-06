@@ -118,7 +118,9 @@ fun FormTextField(
         supportingText = supportingText?.let { { Text(it) } },
         keyboardOptions = KeyboardOptions(
             keyboardType = keyboardType,
-            capitalization = if (keyboardType == KeyboardType.Text) KeyboardCapitalization.Sentences else KeyboardCapitalization.None,
+            capitalization = if (
+                keyboardType == KeyboardType.Text
+            ) KeyboardCapitalization.Sentences else KeyboardCapitalization.None,
             imeAction = if (singleLine) ImeAction.Next else ImeAction.Default
         ),
     )

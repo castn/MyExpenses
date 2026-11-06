@@ -14,7 +14,9 @@ class BasePreferenceIOBRFragmentTest {
 
     @Test
     fun isHttpUrlWithoutCredentials_withUserInfo_returnsFalse() {
-        assertThat(BasePreferenceIOBRFragment.isHttpUrlWithoutCredentials("http://user:pass@example.com/upload")).isFalse()
+        assertThat(
+            BasePreferenceIOBRFragment.isHttpUrlWithoutCredentials("http://user:pass@example.com/upload")
+        ).isFalse()
         assertThat(BasePreferenceIOBRFragment.isHttpUrlWithoutCredentials("https://user@example.com/upload")).isFalse()
         assertThat(BasePreferenceIOBRFragment.isHttpUrlWithoutCredentials("http://:pass@example.com/upload")).isFalse()
     }

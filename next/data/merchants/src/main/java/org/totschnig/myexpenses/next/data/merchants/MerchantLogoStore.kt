@@ -123,7 +123,8 @@ private suspend fun fetchFromDuckDuckGo(domain: String): MerchantLogoStore.Fetch
             connection.connectTimeout = 10_000
             connection.readTimeout = 10_000
             when (connection.responseCode) {
-                HttpURLConnection.HTTP_OK -> MerchantLogoStore.Fetched.Icon(connection.inputStream.use { it.readBytes() })
+                HttpURLConnection.HTTP_OK ->
+                    MerchantLogoStore.Fetched.Icon(connection.inputStream.use { it.readBytes() })
                 HttpURLConnection.HTTP_NOT_FOUND -> MerchantLogoStore.Fetched.Missing
                 else -> MerchantLogoStore.Fetched.Failed
             }

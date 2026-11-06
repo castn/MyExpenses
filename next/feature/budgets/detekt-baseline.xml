@@ -6,44 +6,6 @@
     <ID>LongMethod:PotEditor.kt:@Composable fun PotEditorScreen</ID>
     <ID>MagicNumber:PotEditor.kt:100</ID>
     <ID>MatchingDeclarationName:BudgetFlow.kt:BudgetKey : NavKey</ID>
-    <ID>MaxLineLength:BudgetFlow.kt:BudgetContent(viewModel, fixedTransactions, currency, state, editorData, legacyCount, onBack, onConsent, requestNewPot)</ID>
-    <ID>MaxLineLength:BudgetFlow.kt:entry&lt;BudgetKey.Transactions&gt;(metadata = ExtraPage()) { key -&gt; PotTransactionsEntry(current, backStack, key) }</ID>
-    <ID>MaxLineLength:BudgetFlow.kt:private</ID>
-    <ID>MaxLineLength:BudgetFlow.kt:shownOrLeave(content.statusOf(potId), isLoaded = content.overview != null, awaitNew = isNew) { backStack.remove(key) }</ID>
-    <ID>MaxLineLength:BudgetFlow.kt:subtitle = if (key.oneOffs) status.pot.name else pluralStringResource(R.plurals.next_analysis_transactions, ids.size, ids.size)</ID>
-    <ID>MaxLineLength:BudgetFlow.kt:val title = if (key.oneOffs) pluralStringResource(R.plurals.next_budget_one_offs, ids.size, ids.size) else status.pot.name</ID>
-    <ID>MaxLineLength:BudgetScreen.kt:AnalysisState.Loading</ID>
-    <ID>MaxLineLength:BudgetScreen.kt:if</ID>
-    <ID>MaxLineLength:BudgetScreen.kt:if (status.fixedSpent != 0L) InfoRow(stringResource(R.string.next_budget_contracts), amount(status.fixedSpent))</ID>
-    <ID>MaxLineLength:BudgetScreen.kt:private</ID>
-    <ID>MaxLineLength:BudgetScreen.kt:stringResource(if (pot.kind == PotKind.YEARLY) R.string.next_budget_added else R.string.next_budget_planned_amount)</ID>
-    <ID>MaxLineLength:BudgetScreen.kt:value</ID>
-    <ID>MaxLineLength:BudgetViewModel.kt:BudgetViewModel$loadLegacy()</ID>
-    <ID>MaxLineLength:BudgetViewModel.kt:BudgetViewModel$val</ID>
-    <ID>MaxLineLength:BudgetViewModelTest.kt:BudgetViewModelTest$BudgetRepository(FakeLedgerSource(), MutableStateFlow(facts), MutableStateFlow(TagFacts()), BudgetStore(dataStore), backgroundScope)</ID>
-    <ID>MaxLineLength:BudgetViewModelTest.kt:BudgetViewModelTest$private val pot = Pot(id = "food", name = "Essen", kind = PotKind.RUNNING, amount = 40000, categoryIds = setOf(food.id))</ID>
-    <ID>MaxLineLength:BudgetViewModelTest.kt:BudgetViewModelTest$suspend fun offset</ID>
-    <ID>MaxLineLength:BudgetViewModelTest.kt:BudgetViewModelTest$val source = FakeLedgerSource(ledger = Ledger(listOf(transaction), accounts), catalog = Catalog(listOf(food)), today = today)</ID>
-    <ID>MaxLineLength:BudgetViewModelTest.kt:BudgetViewModelTest$val viewModel = BudgetViewModel(BudgetRepository(source, MutableStateFlow(facts), MutableStateFlow(TagFacts()), BudgetStore(dataStore), backgroundScope), savedState = SavedStateHandle())</ID>
-    <ID>MaxLineLength:BudgetViewModelTest.kt:BudgetViewModelTest$val viewModel = BudgetViewModel(BudgetRepository(source, MutableStateFlow(facts), MutableStateFlow(TagFacts()), store, backgroundScope), savedState = SavedStateHandle())</ID>
-    <ID>MaxLineLength:PotEditor.kt:DestructiveTextButton(stringResource(R.string.next_budget_delete), { dialog = EditorDialog.Delete }, icon = Icons.Outlined.Delete)</ID>
-    <ID>MaxLineLength:PotEditor.kt:EditableRow(stringResource(R.string.next_budget_categories), categoryNames.joinToString().ifEmpty { none }, { dialog = EditorDialog.Categories }, isFirst = true)</ID>
-    <ID>MaxLineLength:PotEditor.kt:EditableRow(stringResource(R.string.next_budget_contracts_label), contractNames.joinToString().ifEmpty { none }, { dialog = EditorDialog.Contracts })</ID>
-    <ID>MaxLineLength:PotEditor.kt:EditableRow(stringResource(R.string.next_budget_groups), tagNames.joinToString().ifEmpty { none }, { dialog = EditorDialog.Tags })</ID>
-    <ID>MaxLineLength:PotEditor.kt:EditableRow(stringResource(R.string.next_budget_item_groups), groups.joinToString().ifEmpty { none }, { dialog = EditorDialog.ItemGroups })</ID>
-    <ID>MaxLineLength:PotEditor.kt:EditableRow(stringResource(R.string.next_budget_kind), stringResource(pot.kind.labelRes), { dialog = EditorDialog.Kind })</ID>
-    <ID>MaxLineLength:PotEditor.kt:EditableRow(stringResource(R.string.next_budget_name), pot.name.ifBlank { none }, { dialog = EditorDialog.Name }, isFirst = true)</ID>
-    <ID>MaxLineLength:PotEditor.kt:EditableRow(stringResource(R.string.next_budget_saved_with), savedWith.joinToString().ifEmpty { none }, { dialog = EditorDialog.Savings })</ID>
-    <ID>MaxLineLength:PotEditor.kt:EditorDialog$private enum</ID>
-    <ID>MaxLineLength:PotEditor.kt:LinkRow(stringResource(R.string.next_budget_suggestion, amount(it)), onClick = { onChange(pot.copy(amount = it)) })</ID>
-    <ID>MaxLineLength:PotEditor.kt:else</ID>
-    <ID>MaxLineLength:PotEditor.kt:error = { text -&gt; invalid.takeIf { text.isNotBlank() &amp;&amp; text.trim().toIntOrNull()?.takeIf { it in 1..100 } == null } }</ID>
-    <ID>MaxLineLength:PotEditor.kt:initialText = if (pot.amount &gt; 0) BigDecimal.valueOf(pot.amount, currency.fractionDigits).toPlainString() else ""</ID>
-    <ID>MaxLineLength:PotEditor.kt:onConfirm = { text -&gt; text.trim().toIntOrNull()?.let { onChange(pot.copy(maxSharePercent = it)) }; close() }</ID>
-    <ID>MaxLineLength:PotEditor.kt:savingAccountIds = keys.filter { it.startsWith("a:") }.mapTo(HashSet()) { it.substring(2).toLong() }</ID>
-    <ID>MaxLineLength:PotEditor.kt:stringResource(R.string.next_budget_add_contract, contract.title, amount(contract.monthlyAmount))</ID>
-    <ID>MaxLineLength:PotEditor.kt:suggestion?.amount?.takeIf { it != pot.amount &amp;&amp; (pot.kind == PotKind.RUNNING || pot.kind == PotKind.YEARLY) }</ID>
-    <ID>MaxLineLength:PotEditor.kt:val</ID>
     <ID>TooManyFunctions:BudgetScreen.kt:org.totschnig.myexpenses.next.feature.budgets.BudgetScreen.kt</ID>
     <ID>TooManyFunctions:BudgetViewModel.kt:BudgetViewModel : ViewModelBudgetActions</ID>
   </CurrentIssues>

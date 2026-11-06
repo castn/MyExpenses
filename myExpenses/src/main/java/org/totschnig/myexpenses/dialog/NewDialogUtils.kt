@@ -87,7 +87,9 @@ fun Spinner.configureCurrencySpinner(listener: AdapterView.OnItemSelectedListene
 fun Spinner.configureTypeSpinner() = GroupedSpinnerAdapter<Boolean, AccountType>(
     context,
     itemToString = { it.title(context) },
-    headerToString = { context.getString(if(it) R.string.balance_sheet_section_assets else R.string.balance_sheet_section_liabilities) }
+    headerToString = {
+        context.getString(if(it) R.string.balance_sheet_section_assets else R.string.balance_sheet_section_liabilities)
+    }
 ).also {
     setAdapter(it)
 }

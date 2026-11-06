@@ -11,13 +11,23 @@ import java.time.LocalDate
 class HintsTest {
 
     private fun purchase(categoryId: Long? = 1, payee: String? = "REWE Markt", amount: Long = -2500) =
-        LedgerTransaction(1, LocalDate.of(2026, 10, 15), amount, accountId = 1, payeeName = payee, categoryId = categoryId)
+        LedgerTransaction(
+            1,
+            LocalDate.of(2026, 10, 15),
+            amount,
+            accountId = 1,
+            payeeName = payee,
+            categoryId = categoryId
+        )
 
     @Test
     fun afterSavingACategoryComesFirst() {
         assertEquals(HintTopic.CATEGORY, hintAfterSave(purchase(categoryId = null), hasReceipt = false, emptySet()))
         assertEquals(HintTopic.RECEIPT, hintAfterSave(purchase(), hasReceipt = false, emptySet()))
-        assertEquals(HintTopic.RECEIPT, hintAfterSave(purchase(categoryId = null), hasReceipt = false, setOf(HintTopic.CATEGORY)))
+        assertEquals(
+            HintTopic.RECEIPT,
+            hintAfterSave(purchase(categoryId = null), hasReceipt = false, setOf(HintTopic.CATEGORY))
+        )
     }
 
     @Test
@@ -25,7 +35,9 @@ class HintsTest {
         assertNull(hintAfterSave(purchase(), hasReceipt = true, emptySet()))
         assertNull(hintAfterSave(purchase(payee = "Bäckerei"), hasReceipt = false, emptySet()))
         assertNull(hintAfterSave(purchase(categoryId = null, amount = 2500), hasReceipt = false, emptySet()))
-        assertNull(hintAfterSave(purchase(categoryId = null).copy(transferAccountId = 2), hasReceipt = false, emptySet()))
+        assertNull(
+            hintAfterSave(purchase(categoryId = null).copy(transferAccountId = 2), hasReceipt = false, emptySet())
+        )
         assertNull(hintAfterSave(purchase(categoryId = null), hasReceipt = false, HintTopic.entries.toSet()))
         assertNull(hintAfterSave(purchase(), hasReceipt = false, emptySet(), canScanReceipts = false))
     }

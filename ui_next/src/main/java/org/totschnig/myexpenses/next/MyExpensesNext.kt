@@ -131,11 +131,18 @@ class MyExpensesNext : MyExpensesV2() {
         adView: @Composable (MutableState<Boolean>) -> Unit,
         isNavigationVisible: Boolean,
         isCurrencyUsed: suspend (String) -> Boolean,
-        onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -> CurrencyUnit?,
+        onCreateAsset: suspend (
+            code: String,
+            symbol: String,
+            fractionDigits: Int,
+            label: String?,
+            commodityType: CommodityType
+        ) -> CurrencyUnit?,
         pageContent: @Composable (pageAccount: PageAccount, isCurrent: Boolean) -> Unit,
     ) {
         val transactionActions = remember(accounts.size) { TransactionActions(transactionEvents, accounts.size) }
-        val fixedTransactions = remember(transactionActions) { AppFixedTransactions(fixedTransactionsViewModel, transactionActions) }
+        val fixedTransactions =
+            remember(transactionActions) { AppFixedTransactions(fixedTransactionsViewModel, transactionActions) }
         // What the new UI adds to the details of a transaction, in the accounts and in lists of other screens
         val transactionDetails: @Composable (ShownTransaction) -> Unit = { transaction ->
             features.all.forEach { it.TransactionSections(transaction) }
@@ -162,7 +169,10 @@ class MyExpensesNext : MyExpensesV2() {
                 transactionList = { pageAccount, search ->
                     // Day groups with the balance at the end of each day only make sense when sorted by date
                     val grouping = if (pageAccount.sortBy == KEY_DATE) Grouping.DAY else Grouping.NONE
-                    Page(pageAccount.copy(grouping = grouping), accounts.size, true, v2 = true, withFilterUi = false, transactionList = { content ->
+                    Page(
+                        pageAccount.copy(
+                            grouping = grouping
+                        ), accounts.size, true, v2 = true, withFilterUi = false, transactionList = { content ->
                         if (content.isFiltered) (content.headerData as? HeaderData)?.let { headerData ->
                             val items = content.lazyPagingItems
                             SearchResult(

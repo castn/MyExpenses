@@ -32,7 +32,9 @@ inline fun <T> measured(label: String, block: () -> T): T {
     try {
         return block()
     } finally {
-        val cpu = if (Thread.currentThread() === thread && cpuStart >= 0) "${(threadCpuNanos() - cpuStart) / 1_000_000} ms cpu" else "cpu ?"
+        val cpu = if (
+            Thread.currentThread() === thread && cpuStart >= 0
+        ) "${(threadCpuNanos() - cpuStart) / 1_000_000} ms cpu" else "cpu ?"
         Timber.tag(PERF_TAG).d("%s: %d ms, %s [%s]", label, millisSince(start), cpu, thread.name)
     }
 }

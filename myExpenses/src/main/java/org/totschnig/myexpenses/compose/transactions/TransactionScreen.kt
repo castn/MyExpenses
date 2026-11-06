@@ -162,7 +162,13 @@ fun TransactionScreen(
     navigationIcon: @Composable () -> Unit = {},
     allCurrencies: List<CurrencyUnit>,
     isCurrencyUsed: suspend (String) -> Boolean = { false },
-    onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -> CurrencyUnit? = { _, _, _, _, _ -> null },
+    onCreateAsset: suspend (
+        code: String,
+        symbol: String,
+        fractionDigits: Int,
+        label: String?,
+        commodityType: CommodityType
+    ) -> CurrencyUnit? = { _, _, _, _, _ -> null },
     onAccountEvent: AccountEventHandler,
 ) {
     LaunchedEffect(Unit) {

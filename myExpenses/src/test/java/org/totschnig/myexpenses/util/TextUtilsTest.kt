@@ -74,7 +74,8 @@ internal class TextUtilsTest {
 /*    @Test
     fun getDisplayNameForScript() {
         arrayOf("CN", "HK", "TW").forEach {
-        //arrayOf("ar", "bg", "ca", "cs", "da", "de", "el", "es", "eu", "fr", "hr", "hu", "it", "iw", "ja", "km", "kn", "ko", "ms", "pl", "pt", "ro", "ru", "si", "ta", "te", "tr", "uk", "vi").forEach {
+        //arrayOf("ar", "bg", "ca", "cs", "da", "de", "el", "es", "eu", "fr", "hr", "hu", "it", "iw", "ja", "km", "kn",
+        // "ko", "ms", "pl", "pt", "ro", "ru", "si", "ta", "te", "tr", "uk", "vi").forEach {
             val locale= Locale("zh", it)
             //val locale = Locale(it)
             println()

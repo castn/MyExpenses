@@ -108,9 +108,15 @@ internal fun ContractItem(
                                 )
 
                                 contract.isActive ->
-                                    stringResource(R.string.next_contracts_next, dateFormatter.format(contract.nextExpectedDate))
+                                    stringResource(
+                                        R.string.next_contracts_next,
+                                        dateFormatter.format(contract.nextExpectedDate)
+                                    )
 
-                                else -> stringResource(R.string.next_contracts_last, dateFormatter.format(contract.lastDate))
+                                else -> stringResource(
+                                    R.string.next_contracts_last,
+                                    dateFormatter.format(contract.lastDate)
+                                )
                             },
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -183,7 +189,9 @@ private fun PriceChangeIndicator(contract: Contract, currency: CurrencyInfo) {
             LocalAmountFormatter.current.format(previous, currency)
         ),
         // More money going out is bad, more coming in is good
-        tint = if (increased != contract.isIncome) LocalSemanticColors.current.expense else LocalSemanticColors.current.income,
+        tint = if (
+            increased != contract.isIncome
+        ) LocalSemanticColors.current.expense else LocalSemanticColors.current.income,
         modifier = Modifier.size(16.dp)
     )
 }

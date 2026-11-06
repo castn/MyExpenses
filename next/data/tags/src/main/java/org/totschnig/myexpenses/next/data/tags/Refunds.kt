@@ -79,7 +79,11 @@ object RefundDetector {
                                 debit.accountId == credit.accountId &&
                                 !debit.date.isAfter(credit.date) &&
                                 ChronoUnit.DAYS.between(debit.date, credit.date) <= MAX_DAYS &&
-                                (hasRefundText || (credit.counterpart != null && debit.counterpart == credit.counterpart)) &&
+                                (
+                                    hasRefundText || (
+                                        credit.counterpart != null && debit.counterpart == credit.counterpart
+                                    )
+                                ) &&
                                 "${debit.id}:${credit.id}" !in rejected
                     }
                     // The closest debit, from the same counterpart if there is one

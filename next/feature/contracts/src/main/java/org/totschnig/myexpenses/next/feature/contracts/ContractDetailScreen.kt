@@ -270,7 +270,9 @@ private fun AmountsCard(
         }
         if (contract.isActive) {
             InfoRow(
-                stringResource(if (contract.isIncome) R.string.next_income_next else R.string.next_contracts_next_debit),
+                stringResource(
+                    if (contract.isIncome) R.string.next_income_next else R.string.next_contracts_next_debit
+                ),
                 dateFormatter.format(contract.nextExpectedDate)
             )
         } else {
@@ -419,7 +421,8 @@ private fun AreaDialog(
         selected = contract.areaChoice,
         label = { choice ->
             when (choice) {
-                AreaChoice.Automatic -> stringResource(R.string.next_contracts_area_automatic, contract.suggestedArea.label())
+                AreaChoice.Automatic ->
+                    stringResource(R.string.next_contracts_area_automatic, contract.suggestedArea.label())
                 is AreaChoice.Fixed -> choice.area.label()
             }
         },

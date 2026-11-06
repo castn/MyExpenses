@@ -135,7 +135,8 @@ fun ContractAnalysis.detectNews(today: LocalDate): NewsDetection {
                 }
             }
         } else if (!contract.isCancelled) {
-            val endedOn = lastPayment.date.plusDays((contract.interval.maxDays + contract.interval.graceDays()).toLong())
+            val endedOn =
+                lastPayment.date.plusDays((contract.interval.maxDays + contract.interval.graceDays()).toLong())
             if (!endedOn.isAfter(today) && ChronoUnit.DAYS.between(endedOn, today) <= ContractNews.MAX_AGE_DAYS) {
                 news += newsOf(ContractNews.Type.CONTRACT_STOPPED, lastPayment)
             }

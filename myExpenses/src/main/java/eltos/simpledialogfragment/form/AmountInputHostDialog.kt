@@ -20,7 +20,11 @@ class AmountInputHostDialog: SimpleFormDialog() {
             dialog?.findViewById<AmountInput>(intent.getIntExtra(CalculatorInput.EXTRA_KEY_INPUT_ID, 0))?.also {
                 it.setAmount(BigDecimal(intent.getStringExtra(KEY_AMOUNT)), false)
             } ?: run {
-                Toast.makeText(context, "CALCULATOR_REQUEST launched with incorrect EXTRA_KEY_INPUT_ID", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    "CALCULATOR_REQUEST launched with incorrect EXTRA_KEY_INPUT_ID",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         } else {
             super.onActivityResult(requestCode, resultCode, intent)

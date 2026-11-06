@@ -9,7 +9,10 @@ object MerchantIcons {
     private val byName = mapOf(
         // Supermarkets and drugstores
         "REWE" to "cart-shopping", "EDEKA" to "cart-shopping", "ALDI" to "cart-shopping", "Lidl" to "cart-shopping",
-        "Netto" to "cart-shopping", "Penny" to "cart-shopping", "Kaufland" to "cart-shopping", "tegut" to "cart-shopping",
+        "Netto" to "cart-shopping",
+        "Penny" to "cart-shopping",
+        "Kaufland" to "cart-shopping",
+        "tegut" to "cart-shopping",
         "Norma" to "cart-shopping", "Globus" to "cart-shopping", "famila" to "cart-shopping", "Alnatura" to "carrot",
         "denn's" to "carrot", "Tesco" to "cart-shopping", "Sainsbury's" to "cart-shopping", "Asda" to "cart-shopping",
         "Waitrose" to "cart-shopping", "Walmart" to "cart-shopping", "Kroger" to "cart-shopping",

@@ -57,7 +57,8 @@ object ReceiptAnonymizer {
     /** Only an amount, e.g. the paid amount recognized a little below the payment row */
     private val amountOnly = Regex("""^[\s€]*(EUR)?[\s€]*-?[\d\s,.]+[\s€]*(EUR)?\s*$""")
     private val itemCount = Regex("""(?i)\d+\s+artikel|posten\s*:?\s*\d+|\d+\s*pos\b""")
-    private val paymentWords = listOf("ZAHLUNG", "ECCASH", "ECASH", "BARGELD", "GEGEBEN", "GIROCARD", "MAESTRO", "VISA", "MASTERCARD")
+    private val paymentWords =
+        listOf("ZAHLUNG", "ECCASH", "ECASH", "BARGELD", "GEGEBEN", "GIROCARD", "MAESTRO", "VISA", "MASTERCARD")
 
     private sealed interface Action
     private data object Keep : Action
@@ -115,7 +116,10 @@ object ReceiptAnonymizer {
             block.lines.mapNotNull { line ->
                 when (val action = actions[line] ?: Remove) {
                     Keep -> line
-                    Hide -> line.copy(text = hide(line.text), elements = line.elements.map { it.copy(text = hide(it.text)) })
+                    Hide -> line.copy(
+                        text = hide(line.text),
+                        elements = line.elements.map { it.copy(text = hide(it.text)) }
+                    )
                         .also { line.box?.let(redactions::add) }
                     Remove -> null.also { line.box?.let(redactions::add) }
                     Mask -> line.copy(text = mask(line.text), elements = line.elements.map { element ->
@@ -130,7 +134,10 @@ object ReceiptAnonymizer {
                             }
                         })
                     }
-                    is Replace -> line.copy(text = action.placeholder, elements = line.elements.map { it.copy(text = hide(it.text)) })
+                    is Replace -> line.copy(
+                        text = action.placeholder,
+                        elements = line.elements.map { it.copy(text = hide(it.text)) }
+                    )
                         .also { line.box?.let(redactions::add) }
                 }
             }.takeIf { it.isNotEmpty() }?.let(::RecognizedBlock)
@@ -192,7 +199,9 @@ object ReceiptAnonymizer {
             return null
         }
         return line.copy(text = text, elements = line.elements.map { element ->
-            if (isOwner(element.text, owner)) element.copy(text = hide(element.text)).also { element.box?.let(redactions::add) }
+            if (
+                isOwner(element.text, owner)
+            ) element.copy(text = hide(element.text)).also { element.box?.let(redactions::add) }
             else element
         })
     }

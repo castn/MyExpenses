@@ -62,7 +62,13 @@ private fun Showcase() {
             PageTopBar(onBack = null, title = "Page without back", actions = {
                 TopBarAction(Icons.Default.Search, contentDescription = "Action", onClick = {})
                 BadgedTopBarAction(Icons.Default.Search, contentDescription = "With news", count = 3, onClick = {})
-                BadgedTopBarAction(Icons.Default.Search, contentDescription = "Calm", count = 12, onClick = {}, isAlert = false)
+                BadgedTopBarAction(
+                    Icons.Default.Search,
+                    contentDescription = "Calm",
+                    count = 12,
+                    onClick = {},
+                    isAlert = false
+                )
             })
             Banner(
                 title = "Banner",
@@ -74,7 +80,12 @@ private fun Showcase() {
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
                 LabelChip(text = "Insurance", placeholder = "Category", onClick = {})
-                LabelChip(text = null, placeholder = "Category", onClick = {}, modifier = Modifier.padding(start = 8.dp))
+                LabelChip(
+                    text = null,
+                    placeholder = "Category",
+                    onClick = {},
+                    modifier = Modifier.padding(start = 8.dp)
+                )
                 TextBadge("Badge", Modifier.padding(start = 8.dp))
                 TextBadge("Suggestion", Modifier.padding(start = 8.dp), style = BadgeStyle.Suggestion)
                 TextBadge("Group", Modifier.padding(start = 8.dp), style = BadgeStyle.Outlined)
@@ -84,7 +95,12 @@ private fun Showcase() {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 ToggleChip(text = "On", selected = true, onClick = {})
                 ToggleChip(text = "Off", selected = false, onClick = {}, modifier = Modifier.padding(start = 8.dp))
-                TextBadge("With icon", Modifier.padding(start = 8.dp), style = BadgeStyle.Outlined, icon = Icons.Outlined.Workspaces)
+                TextBadge(
+                    "With icon",
+                    Modifier.padding(start = 8.dp),
+                    style = BadgeStyle.Outlined,
+                    icon = Icons.Outlined.Workspaces
+                )
             }
             DetailCard {
                 Column(Modifier.padding(Spacing.content), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -145,13 +161,28 @@ private fun Showcase() {
                 InfoRow("Changeable", "Tap to change", onClick = {})
                 HintRow("Warning about a consequence, e.g. no longer matching the bank", isWarning = true)
                 EditableRow("Editable", "Value", onClick = {})
-                EditableRow("Editable icon", onClick = {}) { IconTile { Icon(Icons.Outlined.Palette, contentDescription = null) } }
-                MeterRow("Meter with own icon", "120 €", used = 0.4f, leadingIcon = { Icon(Icons.Outlined.Folder, contentDescription = null) })
+                EditableRow(
+                    "Editable icon",
+                    onClick = {}
+                ) { IconTile { Icon(Icons.Outlined.Palette, contentDescription = null) } }
+                MeterRow(
+                    "Meter with own icon",
+                    "120 €",
+                    used = 0.4f,
+                    leadingIcon = { Icon(Icons.Outlined.Folder, contentDescription = null) }
+                )
                 RemovableRow("Removable", "Value", removeLabel = "Remove", onRemove = {})
                 SwitchRow("Switch", checked = true, onCheckedChange = {}, supportingText = "Explanation")
                 NavigationRow("Navigation", "Supporting text", onClick = {}, value = "12,00 €")
                 NavigationRow("Navigation with news", "Something new behind it", onClick = {}, hasNews = true)
-                RadioRow("Radio", selected = true, onClick = {}, supportingText = "Supporting text", note = "Note", value = "12,00 €")
+                RadioRow(
+                    "Radio",
+                    selected = true,
+                    onClick = {},
+                    supportingText = "Supporting text",
+                    note = "Note",
+                    value = "12,00 €"
+                )
                 RadioRow("Radio", selected = false, onClick = {}, supportingText = "Supporting text", value = "9,99 €")
                 SelectableTextRow("Selectable text", selected = null, onClick = {}, onLongClick = {})
                 SelectableTextRow("Selectable text, choosing several", selected = true, onClick = {}, onLongClick = {})
@@ -161,7 +192,14 @@ private fun Showcase() {
             }
             SectionTitle("Form")
             FormTextField("Text", value = "Typed", onValueChange = {})
-            FormTextField("Amount", value = "4x", onValueChange = {}, isError = true, supportingText = "Not an amount", trailing = { Text("€") })
+            FormTextField(
+                "Amount",
+                value = "4x",
+                onValueChange = {},
+                isError = true,
+                supportingText = "Not an amount",
+                trailing = { Text("€") }
+            )
             FormTextField("Long text", value = "", onValueChange = {}, singleLine = false)
             FormPickerField("Picked", value = "Tuesday, 3 November", onClick = {})
             SectionTitle("Settings")
@@ -173,7 +211,12 @@ private fun Showcase() {
                 onSelect = {}
             )
             SearchField(query = "", onQueryChange = {}, placeholder = "Search", clearLabel = "Clear")
-            IconNavigationRow(Icons.Outlined.Palette, "Icon navigation", onClick = {}, supportingText = "Lists what can be found there")
+            IconNavigationRow(
+                Icons.Outlined.Palette,
+                "Icon navigation",
+                onClick = {},
+                supportingText = "Lists what can be found there"
+            )
             IconNavigationRow(Icons.Outlined.Info, "Single line", onClick = {})
             DetailCard {
                 ValueRow("Value", "Current value", onClick = {}, isFirst = true)
@@ -204,7 +247,11 @@ private fun Showcase() {
                     bitmap = photo,
                     marks = listOf(
                         PhotoMark(Rect(20f, 400f, 280f, 440f), Color.Gray, 1.dp),
-                        PhotoMark(Rect(20f, 460f, 280f, 500f), MaterialTheme.colorScheme.primary.copy(alpha = 0.3f), filled = true)
+                        PhotoMark(
+                            Rect(20f, 460f, 280f, 500f),
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                            filled = true
+                        )
                     ),
                     collapsedHeight = 120.dp,
                     focus = Rect(20f, 460f, 280f, 500f)
@@ -226,9 +273,30 @@ private fun Showcase() {
                 )
             }
             DetailCard {
-                EditableItemRow("Editable item", "2,29 €", removeLabel = "Remove", onClick = {}, onRemove = {}, isFirst = true)
-                EditableItemRow("Item with details", "1,77 €", removeLabel = "Remove", onClick = {}, onRemove = {}, supportingText = "3 × 0,59 €")
-                EditableItemRow("Item with badge", "0,99 €", removeLabel = "Remove", onClick = {}, onRemove = {}, badge = "Group")
+                EditableItemRow(
+                    "Editable item",
+                    "2,29 €",
+                    removeLabel = "Remove",
+                    onClick = {},
+                    onRemove = {},
+                    isFirst = true
+                )
+                EditableItemRow(
+                    "Item with details",
+                    "1,77 €",
+                    removeLabel = "Remove",
+                    onClick = {},
+                    onRemove = {},
+                    supportingText = "3 × 0,59 €"
+                )
+                EditableItemRow(
+                    "Item with badge",
+                    "0,99 €",
+                    removeLabel = "Remove",
+                    onClick = {},
+                    onRemove = {},
+                    badge = "Group"
+                )
                 EditableItemRow(
                     "Item with missing badge", "0,59 €", removeLabel = "Remove", onClick = {}, onRemove = {},
                     badge = "Missing", badgeStyle = BadgeStyle.Missing
@@ -266,7 +334,13 @@ private fun Showcase() {
             }
             SectionTitle("Key figures")
             DetailCard {
-                KeyFigures(listOf(KeyFigure("Earned", "32,400 €"), KeyFigure("Spent", "29,100 €"), KeyFigure("Left", "3,300 €")))
+                KeyFigures(
+                    listOf(
+                        KeyFigure("Earned", "32,400 €"),
+                        KeyFigure("Spent", "29,100 €"),
+                        KeyFigure("Left", "3,300 €")
+                    )
+                )
             }
             SectionTitle("Overview")
             OverviewCard("Overview card", onClick = {}) {
@@ -285,7 +359,10 @@ private fun Showcase() {
             HighlightCard { Text("Highlight card") }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconTile { Icon(Icons.Default.Search, contentDescription = null) }
-                IconTile(Modifier.padding(start = 8.dp), isLarge = true) { Icon(Icons.Default.Search, contentDescription = null) }
+                IconTile(
+                    Modifier.padding(start = 8.dp),
+                    isLarge = true
+                ) { Icon(Icons.Default.Search, contentDescription = null) }
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 listOf("REWE", "Stadtwerke", "Netflix", "Bäckerei").forEach {
@@ -307,7 +384,11 @@ private fun Showcase() {
                 onConfirm = {},
                 confirmIcon = Icons.Default.Add
             )
-            EmptyState("Nothing here", hint = "Shown instead of an empty list", modifier = Modifier.size(320.dp, 160.dp))
+            EmptyState(
+                "Nothing here",
+                hint = "Shown instead of an empty list",
+                modifier = Modifier.size(320.dp, 160.dp)
+            )
             PromptCard(
                 icon = Icons.Default.Search,
                 title = "Prompt card",
@@ -375,7 +456,13 @@ private fun TimeDialogShowcase() {
 @Composable
 private fun DateDialogShowcase() {
     DesignSystemTheme {
-        DateDialog(initial = LocalDate.of(2026, 12, 24), onConfirm = {}, onDismiss = {}, onClear = {}, clearLabel = "No date")
+        DateDialog(
+            initial = LocalDate.of(2026, 12, 24),
+            onConfirm = {},
+            onDismiss = {},
+            onClear = {},
+            clearLabel = "No date"
+        )
     }
 }
 
@@ -393,7 +480,12 @@ private fun FormDialogProposalShowcase() {
             onSecondary = {}
         ) {
             Text("OATLY HAFER BARISTA", style = MaterialTheme.typography.titleMedium)
-            ChoiceChips(options = listOf("Dairy", "Drinks", "Pantry"), selected = "Drinks", label = { it }, onSelect = {})
+            ChoiceChips(
+                options = listOf("Dairy", "Drinks", "Pantry"),
+                selected = "Drinks",
+                label = { it },
+                onSelect = {}
+            )
         }
     }
 }
@@ -404,7 +496,12 @@ private val sheetOptions = listOf(
 
 /** The content of a [MultiChoiceSheet] as it comes up from the bottom, with a search for the long list */
 @Preview(name = "Multi choice sheet", showBackground = true, heightDp = 720)
-@Preview(name = "Multi choice sheet, dark", showBackground = true, heightDp = 720, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "Multi choice sheet, dark",
+    showBackground = true,
+    heightDp = 720,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun MultiChoiceSheetShowcase() {
     DesignSystemTheme {
@@ -447,7 +544,12 @@ private fun FormSheetShowcase() {
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text("OATLY HAFER BARISTA", style = MaterialTheme.typography.titleMedium)
-                    ChoiceChips(options = listOf("Dairy", "Drinks", "Pantry"), selected = "Drinks", label = { it }, onSelect = {})
+                    ChoiceChips(
+                        options = listOf("Dairy", "Drinks", "Pantry"),
+                        selected = "Drinks",
+                        label = { it },
+                        onSelect = {}
+                    )
                 }
             }
         }
@@ -456,7 +558,13 @@ private fun FormSheetShowcase() {
 
 /** A sheet from the end in a wide window, e.g. a tablet or a phone in landscape */
 @Preview(name = "Side sheet, wide", showBackground = true, widthDp = 840, heightDp = 480)
-@Preview(name = "Side sheet, wide, dark", showBackground = true, widthDp = 840, heightDp = 480, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "Side sheet, wide, dark",
+    showBackground = true,
+    widthDp = 840,
+    heightDp = 480,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun SideSheetShowcase() {
     DesignSystemTheme {
@@ -522,7 +630,11 @@ private fun SingleChoiceDialogShowcase() {
             onSelect = {},
             onDismiss = {},
             intro = "Picking one closes the dialog",
-            trailing = { if (it == "Own category") IconButton(onClick = {}) { Icon(Icons.Default.Edit, contentDescription = null) } },
+            trailing = {
+                if (it == "Own category") IconButton(onClick = {}) {
+                    Icon(Icons.Default.Edit, contentDescription = null)
+                }
+            },
             footer = { DialogActionRow(Icons.Default.Add, "New option", onClick = {}) }
         )
     }
@@ -599,7 +711,13 @@ private fun SearchShowcase() {
                 IconTile { Icon(Icons.Outlined.Folder, contentDescription = null) }
             })
             OptionRow("Bakery", selected = false, onClick = {}, depth = 1)
-            OptionRow("This month", selected = true, onClick = {}, isMultiple = false, supportingText = "1 – 31 October")
+            OptionRow(
+                "This month",
+                selected = true,
+                onClick = {},
+                isMultiple = false,
+                supportingText = "1 – 31 October"
+            )
             SwitchRow("Exclude these", checked = false, onCheckedChange = {}, isFirst = true)
         }
     }
@@ -612,7 +730,12 @@ private fun SearchShowcase() {
 private fun IntroPageShowcase() {
     DesignSystemTheme {
         Column {
-            StepIndicator(count = 4, current = 1, description = "Step 2 of 4", modifier = Modifier.padding(Spacing.screen))
+            StepIndicator(
+                count = 4,
+                current = 1,
+                description = "Step 2 of 4",
+                modifier = Modifier.padding(Spacing.screen)
+            )
             IntroPage(
                 title = "Intro page",
                 text = "Introduces something, e.g. a step of the first start",
@@ -622,14 +745,42 @@ private fun IntroPageShowcase() {
                 FeatureRow(Icons.Outlined.Info, "Feature row", "One thing that is offered")
                 ChoiceCard(Icons.Outlined.Folder, "Choice card", "One way to go on", selected = true, onClick = {}) {
                     Text("Details while picked")
-                    Column(Modifier.padding(top = 8.dp).selectableGroup(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        ChoiceOption(Icons.Outlined.Info, "Choice option", "Picked inside the card", selected = true, onClick = {})
-                        ChoiceOption(Icons.Outlined.Workspaces, "Other option", "Also inside", selected = false, onClick = {})
+                    Column(
+                        Modifier.padding(top = 8.dp).selectableGroup(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        ChoiceOption(
+                            Icons.Outlined.Info,
+                            "Choice option",
+                            "Picked inside the card",
+                            selected = true,
+                            onClick = {}
+                        )
+                        ChoiceOption(
+                            Icons.Outlined.Workspaces,
+                            "Other option",
+                            "Also inside",
+                            selected = false,
+                            onClick = {}
+                        )
                     }
                 }
-                ChoiceCard(Icons.Outlined.Palette, "Other choice", "Another way", selected = false, onClick = {}, modifier = Modifier.padding(top = 8.dp))
+                ChoiceCard(
+                    Icons.Outlined.Palette,
+                    "Other choice",
+                    "Another way",
+                    selected = false,
+                    onClick = {},
+                    modifier = Modifier.padding(top = 8.dp)
+                )
                 DetailCard {
-                    SwitchRow("Consent", checked = false, onCheckedChange = {}, supportingText = "Off until agreed", isFirst = true)
+                    SwitchRow(
+                        "Consent",
+                        checked = false,
+                        onCheckedChange = {},
+                        supportingText = "Off until agreed",
+                        isFirst = true
+                    )
                 }
             }
             IntroBottomBar(nextLabel = "Next", onNext = {}, skipLabel = "Skip")

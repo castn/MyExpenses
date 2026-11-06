@@ -56,7 +56,9 @@ class PreferenceDataFragment : BasePreferenceFragment() {
                 val newHomeCurrency = newValue as String
                 if (newHomeCurrency != prefHandler.getString(PrefKey.HOME_CURRENCY, null)) {
                     MessageDialogFragment.newInstance(
-                        getString(R.string.pref_home_currency_title) + ": " + viewModel.currencyContext[newHomeCurrency].description ,
+                        getString(
+                            R.string.pref_home_currency_title
+                        ) + ": " + viewModel.currencyContext[newHomeCurrency].description ,
                         TextUtils.concatResStrings(
                             requireContext(),
                             R.string.recalculate_equivalent_amounts_warning,
@@ -105,7 +107,9 @@ class PreferenceDataFragment : BasePreferenceFragment() {
                         pairs.forEach { (commodity, base) ->
                             Preference(requireContext()).apply {
                                 // Show "BTC (USD)" or similar if not home currency
-                                title = if (base.code == homeCurrency) commodity.description else "${commodity.description} (${base.code})"
+                                title = if (
+                                    base.code == homeCurrency
+                                ) commodity.description else "${commodity.description} (${base.code})"
                                 intent = Intent(requireContext(), PriceHistory::class.java).apply {
                                     putExtra(KEY_COMMODITY, commodity.code)
                                     putExtra(KEY_CURRENCY, base.code) // Explicitly pass the base currency
@@ -200,7 +204,9 @@ class PreferenceDataFragment : BasePreferenceFragment() {
                 currency
             ).also {
                 if (!it) {
-                    preferenceActivity.showSnackBar(getString(R.string.exchange_rate_not_supported, currency, homeCurrency))
+                    preferenceActivity.showSnackBar(
+                        getString(R.string.exchange_rate_not_supported, currency, homeCurrency)
+                    )
                 }
             }
         }

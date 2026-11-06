@@ -107,5 +107,7 @@ class RowDecorations(
     /** Whether a tag is a marker (one-off, reimbursed, business) rather than a group */
     val isMarker: ((tagId: Long) -> Boolean)? = null,
     val payeeImage: ((payeeId: Long) -> PayeeImage?)? = null,
-    val payeeImageDialog: (@Composable (payee: DisplayParty, transaction: Transaction2?, onDismiss: () -> Unit) -> Unit)? = null,
+    val payeeImageDialog: (
+        @Composable (payee: DisplayParty, transaction: Transaction2?, onDismiss: () -> Unit) -> Unit
+    )? = null,
 )

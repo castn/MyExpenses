@@ -19,23 +19,6 @@
     <ID>MagicNumber:ValueAxis.kt:ValueAxis.Companion$10</ID>
     <ID>MatchingDeclarationName:BarChart.kt:ChartBar</ID>
     <ID>MatchingDeclarationName:ColumnChart.kt:ChartColumn</ID>
-    <ID>MaxLineLength:SankeyChart.kt:.</ID>
-    <ID>MaxLineLength:SankeyChart.kt:Highlight(connected.flatMap { listOf(flows[it].source, flows[it].target) }.toSet() + selected.index, connected.toSet())</ID>
-    <ID>MaxLineLength:SankeyChart.kt:SankeyExample$SankeyFlow(3, 7, 1200f)</ID>
-    <ID>MaxLineLength:SankeyChart.kt:ZoomButton("+", stringResource(R.string.chart_zoom_in), enabled = viewport.scale &lt; Viewport.MAX_SCALE) { zoom(ZoomStep) }</ID>
-    <ID>MaxLineLength:SankeyChart.kt:color = (if (nodes[index].color == ChartColor.Neutral) neutral else colors[index]).copy(alpha = alpha)</ID>
-    <ID>MaxLineLength:SankeyChart.kt:currentOnSelect(currentLayout.hit(x, y, TapSlop.toPx() / viewport.scale, nodeWidth / viewport.scale))</ID>
-    <ID>MaxLineLength:SankeyChart.kt:is SankeyHit.Link -&gt; flows.getOrNull(selected.index)?.let { Highlight(setOf(it.source, it.target), setOf(selected.index)) }</ID>
-    <ID>MaxLineLength:SankeyChart.kt:private</ID>
-    <ID>MaxLineLength:SankeyChart.kt:topLeft = Offset(minOf(mirror(nodeStart(index)), mirror(nodeStart(index) + nodeWidth)), sy(box.top))</ID>
-    <ID>MaxLineLength:SankeyChart.kt:val connected = flows.indices.filter { flows[it].source == selected.index || flows[it].target == selected.index }</ID>
-    <ID>MaxLineLength:SankeyChart.kt:val space = ((layout.labelSpace(index, 0f) + box.width) * viewport.scale - nodeWidth - 2 * padding).roundToInt()</ID>
-    <ID>MaxLineLength:SankeyChart.kt:viewport = viewport.transformed(factor, viewSize.width / 2, viewSize.height / 2, 0f, 0f, viewSize.width, viewSize.height)</ID>
-    <ID>MaxLineLength:SankeyLayout.kt:SankeyLayout$.</ID>
-    <ID>MaxLineLength:SankeyLayout.kt:SankeyLayout$maxOf(links.filter { it.source == node }.sumOf { it.value }, links.filter { it.target == node }.sumOf { it.value })</ID>
-    <ID>MaxLineLength:SankeyLayoutTest.kt:SankeyLayoutTest$assertEquals(listOf(0f, 0f, 96.67f, 193.33f, 193.33f, 290f, 290f), layout.nodes.map { Math.round(it.x * 100) / 100f })</ID>
-    <ID>MaxLineLength:SankeyLayoutTest.kt:SankeyLayoutTest$private fun layout</ID>
-    <ID>MaxLineLength:SankeyLayoutTest.kt:SankeyLayoutTest$val many = SankeyLayout(listOf(0) + List(11) { 1 }, List(11) { FlowLink(0, it + 1, 1.0) }, 100f, 100f, 4f, nodeGap = 20f)</ID>
     <ID>TopLevelPropertyNaming:BarChart.kt:/** Of the width, for the labels before the bars */ private const val LabelShare = 0.35f</ID>
     <ID>TopLevelPropertyNaming:SankeyChart.kt:/** How much a tap on a zoom button zooms in or out */ private const val ZoomStep = 2f</ID>
   </CurrentIssues>

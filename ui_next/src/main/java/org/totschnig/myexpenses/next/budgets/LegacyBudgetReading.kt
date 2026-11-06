@@ -38,7 +38,8 @@ object LegacyBudgetReading {
                 start = budget.start,
                 end = budget.end,
                 total = progress.allocated,
-                categoryAllocations = categoryAllocations(repository, budget.id, progress.groupInfo.year, progress.groupInfo.second),
+                categoryAllocations =
+                    categoryAllocations(repository, budget.id, progress.groupInfo.year, progress.groupInfo.second),
                 categoryIds = criteria.filterIsInstance<CategoryCriterion>().flatMapTo(HashSet()) { it.values },
                 tagIds = criteria.filterIsInstance<TagCriterion>().flatMapTo(HashSet()) { it.values },
                 payeeIds = criteria.filterIsInstance<PayeeCriterion>().flatMapTo(HashSet()) { it.values }

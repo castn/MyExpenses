@@ -18,7 +18,8 @@ class SankeyLayoutTest {
         FlowLink(3, 6, 10.0),
     )
 
-    private fun layout(gap: Float = 10f) = SankeyLayout(columns, links, width = 400f, height = 210f, nodeWidth = 10f, nodeGap = gap, trailing = 100f)
+    private fun layout(gap: Float = 10f) =
+        SankeyLayout(columns, links, width = 400f, height = 210f, nodeWidth = 10f, nodeGap = gap, trailing = 100f)
 
     @Test
     fun scalesAllColumnsAlikeSoThatTheFullestFits() {
@@ -45,7 +46,10 @@ class SankeyLayoutTest {
     @Test
     fun placesColumnsEvenlyBeforeTheTrailingSpace() {
         val layout = layout()
-        assertEquals(listOf(0f, 0f, 96.67f, 193.33f, 193.33f, 290f, 290f), layout.nodes.map { Math.round(it.x * 100) / 100f })
+        assertEquals(
+            listOf(0f, 0f, 96.67f, 193.33f, 193.33f, 290f, 290f),
+            layout.nodes.map { Math.round(it.x * 100) / 100f }
+        )
         assertEquals(100f, layout.labelSpace(5, padding = 0f), 0.01f)
         assertEquals(96.67f - 10f - 8f, layout.labelSpace(0, padding = 4f), 0.01f)
     }
@@ -72,7 +76,14 @@ class SankeyLayoutTest {
 
     @Test
     fun narrowsGapsOfCrowdedColumns() {
-        val many = SankeyLayout(listOf(0) + List(11) { 1 }, List(11) { FlowLink(0, it + 1, 1.0) }, 100f, 100f, 4f, nodeGap = 20f)
+        val many = SankeyLayout(
+            listOf(0) + List(11) { 1 },
+            List(11) { FlowLink(0, it + 1, 1.0) },
+            100f,
+            100f,
+            4f,
+            nodeGap = 20f
+        )
         // At most half of the height for 10 gaps
         assertEquals(5f, many.nodes[2].top - many.nodes[1].bottom, 0.01f)
         assertEquals(50f, many.nodes.drop(1).sumOf { it.height.toDouble() }.toFloat(), 0.01f)

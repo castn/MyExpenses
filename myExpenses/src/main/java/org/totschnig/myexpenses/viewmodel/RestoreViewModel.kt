@@ -597,7 +597,9 @@ class RestoreViewModel(application: Application) : ContentResolvingAndroidViewMo
                                 if (contentResolver.query(
                                         CalendarContract.Events.CONTENT_URI,
                                         arrayOf(CalendarContract.Events._ID),
-                                        CalendarContract.Events.CALENDAR_ID + " = ? AND " + CalendarContract.Events.DESCRIPTION
+                                        CalendarContract.Events.CALENDAR_ID +
+                                            " = ? AND " +
+                                            CalendarContract.Events.DESCRIPTION
                                                 + " LIKE ?",
                                         arrayOf(calendarId.toString(), "%$uuid%"),
                                         null

@@ -23,7 +23,12 @@ import org.totschnig.myexpenses.next.core.common.icons.IconCatalog
  */
 @Composable
 fun CatalogIcon(name: String, modifier: Modifier = Modifier, isLarge: Boolean = false) {
-    LocalFontIcons.current.Icon(name, modifier, if (isLarge) 28.sp else 20.sp, MaterialTheme.colorScheme.onSurfaceVariant)
+    LocalFontIcons.current.Icon(
+        name,
+        modifier,
+        if (isLarge) 28.sp else 20.sp,
+        MaterialTheme.colorScheme.onSurfaceVariant
+    )
 }
 
 /** A [CatalogIcon] on an [IconTile] */

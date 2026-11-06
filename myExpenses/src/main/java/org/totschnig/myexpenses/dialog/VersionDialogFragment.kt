@@ -117,7 +117,9 @@ class VersionDialogFragment : ComposeBaseDialogFragment(), DialogInterface.OnCli
                                         .fillMaxWidth()
                                         .padding(vertical = 4.dp),
                                     shape = RoundedCornerShape(8.dp),
-                                    colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.cardBackground))
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = colorResource(id = R.color.cardBackground)
+                                    )
                                 ) {
                                     Row(
                                         modifier = Modifier
@@ -173,7 +175,10 @@ class VersionDialogFragment : ComposeBaseDialogFragment(), DialogInterface.OnCli
                                             if (version.tickets != null && ticketNumber != change) {
                                                 Row(
                                                     modifier = Modifier.clickable {
-                                                        showMoreInfo("https://github.com/mtotschnig/MyExpenses/issues/$ticketNumber")
+                                                        showMoreInfo(
+                                                            "https://github.com/mtotschnig/" +
+                                                                "MyExpenses/issues/$ticketNumber"
+                                                        )
                                                     },
                                                     verticalAlignment = Alignment.CenterVertically
                                                 ) {

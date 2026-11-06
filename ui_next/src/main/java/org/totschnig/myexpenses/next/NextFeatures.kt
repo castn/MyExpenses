@@ -46,6 +46,7 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
         val locals: Array<ProvidedValue<*>> get() = arrayOf(CategoriesFeature.picker, ReceiptsFeature.editor)
 
         /** The settings of the areas, in the order they are listed in their groups, see [NextSettings] */
-        val settings: List<AreaSettings.Factory> get() = listOf(CategorySettings, TagSettings, HintSettings, MerchantSettings, ReceiptSettings)
+        val settings: List<AreaSettings.Factory> get() =
+            listOf(CategorySettings, TagSettings, HintSettings, MerchantSettings, ReceiptSettings)
     }
 }

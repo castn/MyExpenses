@@ -26,7 +26,11 @@ import kotlin.math.pow
 data class Money(val currencyUnit: CurrencyUnit, val amountMinor: Long) : Parcelable {
 
     @Throws(ArithmeticException::class)
-    private constructor(currencyUnit: CurrencyUnit, amountMajor: BigDecimal, roundingMode: RoundingMode = RoundingMode.HALF_EVEN) :
+    private constructor(
+        currencyUnit: CurrencyUnit,
+        amountMajor: BigDecimal,
+        roundingMode: RoundingMode = RoundingMode.HALF_EVEN
+    ) :
             this(currencyUnit, convertBigDecimal(amountMajor, currencyUnit.fractionDigits, roundingMode))
 
     operator fun unaryMinus() = Money(currencyUnit, Math.negateExact(amountMinor))
@@ -49,7 +53,11 @@ data class Money(val currencyUnit: CurrencyUnit, val amountMinor: Long) : Parcel
 
     companion object {
 
-        fun convertBigDecimal(input: BigDecimal, fractionDigits: Int, roundingMode: RoundingMode = RoundingMode.HALF_EVEN) = input
+        fun convertBigDecimal(
+            input: BigDecimal,
+            fractionDigits: Int,
+            roundingMode: RoundingMode = RoundingMode.HALF_EVEN
+        ) = input
             .movePointRight(fractionDigits)
             .setScale(0, roundingMode)
             .longValueExact()
@@ -65,7 +73,11 @@ data class Money(val currencyUnit: CurrencyUnit, val amountMinor: Long) : Parcel
             return Money(currency, amountMinor)
         }
 
-        fun buildWithMajor(currency: CurrencyUnit, amountMajor: BigDecimal, roundingMode: RoundingMode = RoundingMode.HALF_EVEN) = runCatching {
+        fun buildWithMajor(
+            currency: CurrencyUnit,
+            amountMajor: BigDecimal,
+            roundingMode: RoundingMode = RoundingMode.HALF_EVEN
+        ) = runCatching {
             Money(currency, amountMajor, roundingMode)
         }
     }

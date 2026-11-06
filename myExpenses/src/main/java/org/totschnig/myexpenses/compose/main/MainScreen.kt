@@ -182,7 +182,13 @@ fun MainScreenAdaptive(
     adView: @Composable (MutableState<Boolean>) -> Unit,
     isNavigationVisible: Boolean,
     isCurrencyUsed: suspend (String) -> Boolean = { false },
-    onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -> CurrencyUnit? = { _, _, _, _, _ -> null },
+    onCreateAsset: suspend (
+        code: String,
+        symbol: String,
+        fractionDigits: Int,
+        label: String?,
+        commodityType: CommodityType
+    ) -> CurrencyUnit? = { _, _, _, _, _ -> null },
     pageContent: @Composable (pageAccount: PageAccount, isCurrent: Boolean) -> Unit,
 ) {
 
@@ -260,8 +266,10 @@ fun MainScreenAdaptive(
     val calculatedLayoutType = NavigationSuiteScaffoldDefaults.navigationSuiteType(adaptiveInfo)
     val layoutType = when (preferredNavMode) {
         MenuItem.NavigationMode.DEFAULT -> calculatedLayoutType // should not happen
-        MenuItem.NavigationMode.FIXED_BOTTOM -> calculatedLayoutType // which is either ShortNavigationBarCompact or ShortNavigationBarMedium for phone
-        MenuItem.NavigationMode.TOGGLEABLE_RAIL -> if (isNavigationVisible) NavigationSuiteType.NavigationRail else NavigationSuiteType.None
+        // which is either ShortNavigationBarCompact or ShortNavigationBarMedium for phone
+        MenuItem.NavigationMode.FIXED_BOTTOM -> calculatedLayoutType
+        MenuItem.NavigationMode.TOGGLEABLE_RAIL ->
+            if (isNavigationVisible) NavigationSuiteType.NavigationRail else NavigationSuiteType.None
         MenuItem.NavigationMode.ALWAYS_RAIL -> NavigationSuiteType.WideNavigationRailCollapsed
         MenuItem.NavigationMode.ADAPTIVE -> if (isLandscape) {
             NavigationSuiteType.WideNavigationRailCollapsed
@@ -293,8 +301,14 @@ fun MainScreenAdaptive(
         val tag = when (this) {
             MenuItem.WebUI -> !isWebUiActive
             MenuItem.Help -> when (navigator.currentDestination?.pane) {
-                ListDetailPaneScaffoldRole.List -> if (viewModel.currentAccountsTab.value == AccountsScreenTab.BALANCE_SHEET) HELP_VARIANT_BALANCE_SHEET else HELP_VARIANT_ACCOUNTS
-                ListDetailPaneScaffoldRole.Detail -> if ((viewModel.accountList.value.find { it.id == selectedAccountId } as? FullAccount)?.isPortfolio == true) HELP_VARIANT_PORTFOLIO else HELP_VARIANT_TRANSACTIONS
+                ListDetailPaneScaffoldRole.List -> if (
+                    viewModel.currentAccountsTab.value == AccountsScreenTab.BALANCE_SHEET
+                ) HELP_VARIANT_BALANCE_SHEET else HELP_VARIANT_ACCOUNTS
+                ListDetailPaneScaffoldRole.Detail -> if (
+                    (
+                        viewModel.accountList.value.find { it.id == selectedAccountId } as? FullAccount
+                    )?.isPortfolio == true
+                ) HELP_VARIANT_PORTFOLIO else HELP_VARIANT_TRANSACTIONS
                 else -> null
             }
 
@@ -415,7 +429,9 @@ fun MainScreenAdaptive(
                             onClick = { showBottomSheet = true },
                             icon = { Icon(Icons.Default.MoreHoriz, null) },
                             label = {
-                                NavigationItem(stringResource(com.android.setupwizardlib.R.string.suw_more_button_label))
+                                NavigationItem(
+                                    stringResource(com.android.setupwizardlib.R.string.suw_more_button_label)
+                                )
                             },
                             modifier = Modifier.testTag(TEST_TAG_NAV_OVERFLOW)
                         )

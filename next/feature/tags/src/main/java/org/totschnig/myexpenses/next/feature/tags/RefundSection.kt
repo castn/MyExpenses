@@ -28,7 +28,8 @@ fun RefundSection(viewModel: TagDetectionsViewModel, transaction: ShownTransacti
     val who = other.payeeName?.takeIf { it.isNotBlank() } ?: other.comment?.takeIf { it.isNotBlank() } ?: NO_NAME
     val label = stringResource(R.string.next_tag_meaning_reimbursed)
     Banner(
-        title = stringResource(if (isDebit) R.string.next_refund_question_debit else R.string.next_refund_question_credit),
+        title =
+            stringResource(if (isDebit) R.string.next_refund_question_debit else R.string.next_refund_question_credit),
         messages = listOf(
             stringResource(
                 if (isDebit) R.string.next_refund_debit_text else R.string.next_refund_credit_text,
@@ -38,6 +39,8 @@ fun RefundSection(viewModel: TagDetectionsViewModel, transaction: ShownTransacti
         )
     ) {
         TextButton(onClick = { viewModel.rejectRefund(refund) }) { Text(stringResource(R.string.next_refund_reject)) }
-        TextButton(onClick = { viewModel.acceptRefund(refund, label) }) { Text(stringResource(R.string.next_refund_accept)) }
+        TextButton(
+            onClick = { viewModel.acceptRefund(refund, label) }
+        ) { Text(stringResource(R.string.next_refund_accept)) }
     }
 }

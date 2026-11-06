@@ -38,7 +38,11 @@ class PreferencesProtectionFragment : BasePreferenceFragment() {
         requirePreference<Preference>(PrefKey.PROTECTION_DEVICE_LOCK_SCREEN).onPreferenceChangeListener =
             Preference.OnPreferenceChangeListener { _, newValue ->
                 if (newValue as Boolean) {
-                    if (!(requireContext().getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager).isKeyguardSecure) {
+                    if (
+                        !(
+                            requireContext().getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+                        ).isKeyguardSecure
+                    ) {
                         preferenceActivity.showDeviceLockScreenWarning()
                         false
                     } else if (prefHandler.getBoolean(PrefKey.PROTECTION_LEGACY, false)) {

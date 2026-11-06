@@ -40,13 +40,24 @@ class BalanceRepository(
     val memo = Memo<BalanceInput, BalanceOverview>("balance: month") { (ledger, confirmed, salaries, today) ->
         val period = BalancePeriod.of(salaries.firstOrNull(), today)
         BalanceOverview(
-            MonthlyBalance.compute(period, balanceTransactions(ledger, period), ledger.ownAccounts.dailyIds, confirmed, salaries),
+            MonthlyBalance.compute(
+                period,
+                balanceTransactions(ledger, period),
+                ledger.ownAccounts.dailyIds,
+                confirmed,
+                salaries
+            ),
             today
         )
     }
 
     val balance: SharedFlow<AnalysisState<BalanceOverview>> =
-        combine(ledgerSource.consent, ledgerSource.ledger, contractFacts, ledgerSource.today) { consent, ledger, facts, today ->
+        combine(
+            ledgerSource.consent,
+            ledgerSource.ledger,
+            contractFacts,
+            ledgerSource.today
+        ) { consent, ledger, facts, today ->
             analysisState(consent, if (ledger != null && facts != null) {
                 memo.of(BalanceInput(ledger, facts.confirmed, facts.salaries, today))
             } else null)

@@ -162,7 +162,9 @@ class HistoryChart : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
     ): View {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.accountInfo(requireActivity().intent.extras!!).collect { (account, grouping, openingBalances) ->
+                viewModel.accountInfo(
+                    requireActivity().intent.extras!!
+                ).collect { (account, grouping, openingBalances) ->
                     Timber.d("openingBalances: $openingBalances")
                     val currency = currencyContext[account.currency]
                     accountInfo = HistoryAccountInfo(
@@ -216,7 +218,9 @@ class HistoryChart : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                     if (h.stackIndex > -1) {
                         TransactionListComposeDialogFragment.newInstance(
                             TransactionListViewModel.LoadingInfo(
-                                accountId = if (accountInfo.accountId == 0L && accountInfo.accountGrouping == AccountGrouping.NONE) HOME_AGGREGATE_ID else accountInfo.accountId,
+                                accountId = if (
+                                    accountInfo.accountId == 0L && accountInfo.accountGrouping == AccountGrouping.NONE
+                                ) HOME_AGGREGATE_ID else accountInfo.accountId,
                                 currency = accountInfo.currencyUnit,
                                 accountType = accountInfo.typeId,
                                 accountFlag = accountInfo.flagId,
@@ -274,7 +278,13 @@ class HistoryChart : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
     private fun buildGroupingClause(x: Int): String? = when (grouping) {
         Grouping.DAY -> DatabaseConstants.DAY_START_JULIAN + " = " + x
         Grouping.WEEK -> DatabaseConstants.weekStartJulian + " = " + julianDayFromWeekNumber(x.toFloat())
-        Grouping.MONTH -> DatabaseConstants.yearOfMonthStart + " = " + x / MONTH_GROUPING_YEAR_X + " AND " + DatabaseConstants.month + " = " + x % MONTH_GROUPING_YEAR_X
+        Grouping.MONTH -> DatabaseConstants.yearOfMonthStart +
+            " = " +
+            x / MONTH_GROUPING_YEAR_X +
+            " AND " +
+            DatabaseConstants.month +
+            " = " +
+            x % MONTH_GROUPING_YEAR_X
         Grouping.YEAR -> DatabaseConstants.YEAR + " = " + x
         else -> null
     }
@@ -459,7 +469,8 @@ class HistoryChart : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                 currentSumIncome += sumIncome
                 currentSumExpense += sumExpense
 
-                val accountId = if (columnIndexAccountId > -1) cursor.getLong(columnIndexAccountId) else accountInfo.accountId
+                val accountId =
+                    if (columnIndexAccountId > -1) cursor.getLong(columnIndexAccountId) else accountInfo.accountId
                 val deltaEquivalent = sumIncome + sumExpense + sumTransfer
                 val deltaOriginal = if (columnIndexSum > -1) cursor.getLong(columnIndexSum) else deltaEquivalent
 
@@ -546,8 +557,11 @@ class HistoryChart : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
         private const val MONTH_GROUPING_YEAR_X = 12
 
         //julian day 0 is monday -> Only if week starts with monday it divides without remainder by 7
-        //for the x axis we need an Integer for proper rendering, for printing the week range, we add the offset from monday
+        //for the x axis we need an Integer for proper rendering, for printing the week range, we add the offset from
+        // monday
         private val JULIAN_DAY_WEEK_OFFSET =
-            if (DatabaseConstants.weekStartsOn == Calendar.SUNDAY) 6 else DatabaseConstants.weekStartsOn - Calendar.MONDAY
+            if (
+                DatabaseConstants.weekStartsOn == Calendar.SUNDAY
+            ) 6 else DatabaseConstants.weekStartsOn - Calendar.MONDAY
     }
 }

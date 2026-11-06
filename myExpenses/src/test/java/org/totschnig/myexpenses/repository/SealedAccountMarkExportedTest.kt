@@ -41,7 +41,13 @@ class SealedAccountMarkExportedTest: BaseTestWithRepository() {
         values.put(KEY_SEALED, true)
         resolver.update(ContentUris.withAppendedId(TransactionProvider.ACCOUNTS_URI, sealedAccount), values, null, null)
         repository.markAsExported(sealedAccount, null)
-        val cursor = resolver.query(TransactionProvider.TRANSACTIONS_URI, arrayOf("count(*)"), "$KEY_STATUS = $STATUS_EXPORTED", null, null)!!
+        val cursor = resolver.query(
+            TransactionProvider.TRANSACTIONS_URI,
+            arrayOf("count(*)"),
+            "$KEY_STATUS = $STATUS_EXPORTED",
+            null,
+            null
+        )!!
         cursor.moveToFirst()
         assertThat(cursor.getInt(0)).isEqualTo(1)
         cursor.close()

@@ -562,8 +562,16 @@ abstract class TransactionDelegate(
     private fun labelForNewInstance(type: Int) = context.getString(
         when (type) {
             TYPE_SPLIT -> if (isTemplate) R.string.menu_create_template_for_split else R.string.menu_create_split
-            TYPE_TRANSFER -> if (isSplitPart) R.string.menu_create_split_part_transfer else if (isTemplate) R.string.menu_create_template_for_transfer else R.string.menu_create_transfer
-            TYPE_TRANSACTION -> if (isSplitPart) R.string.menu_create_split_part_category else if (isTemplate) R.string.menu_create_template_for_transaction else R.string.menu_create_transaction
+            TYPE_TRANSFER -> when {
+                isSplitPart -> R.string.menu_create_split_part_transfer
+                isTemplate -> R.string.menu_create_template_for_transfer
+                else -> R.string.menu_create_transfer
+            }
+            TYPE_TRANSACTION -> when {
+                isSplitPart -> R.string.menu_create_split_part_category
+                isTemplate -> R.string.menu_create_template_for_transaction
+                else -> R.string.menu_create_transaction
+            }
             else -> throw IllegalStateException("Unknown operationType $type")
         }
     )
@@ -855,7 +863,9 @@ abstract class TransactionDelegate(
                     id = rowId,
                     comment = viewBinding.Comment.text.toString(),
                     date = date,
-                    valueDate = if (dateEditBinding.Date2Button.isVisible) dateEditBinding.Date2Button.date else date.toLocalDate(),
+                    valueDate = if (
+                        dateEditBinding.Date2Button.isVisible
+                    ) dateEditBinding.Date2Button.date else date.toLocalDate(),
                     crStatus = this@TransactionDelegate.crStatus,
                     parentId = parentId,
                     planId = this@TransactionDelegate.planId
@@ -869,7 +879,10 @@ abstract class TransactionDelegate(
                             val defaultAction =
                                 Template.Action.entries[viewBinding.DefaultAction.selectedItemPosition]
                             transaction.copy(
-                                initialPlan = if (recurrenceSpinner.selectedItemPosition > 0 && this@TransactionDelegate.planId == null) {
+                                initialPlan = if (
+                                    recurrenceSpinner.selectedItemPosition > 0 &&
+                                        this@TransactionDelegate.planId == null
+                                ) {
                                     InitialPlanData(
                                         title,
                                         selectedRecurrence,
@@ -880,7 +893,10 @@ abstract class TransactionDelegate(
                                 templateEditData = TemplateEditData(
                                     title = title,
                                     defaultAction = defaultAction,
-                                    planEditData = if (recurrenceSpinner.selectedItemPosition > 0 || this@TransactionDelegate.planId != null) {
+                                    planEditData = if (
+                                        recurrenceSpinner.selectedItemPosition > 0 ||
+                                            this@TransactionDelegate.planId != null
+                                    ) {
                                         PlanEditData(
                                             isPlanExecutionAutomatic = planExecutionButton.isChecked,
                                             planExecutionAdvance = viewBinding.advanceExecutionSeek.progress,
@@ -893,11 +909,21 @@ abstract class TransactionDelegate(
                                         ?: 0L) == 0L &&
                                     forSave
                                 ) {
-                                    if (it.templateEditData?.planEditData == null && defaultAction == Template.Action.SAVE) {
-                                        host.showSnackBar(context.getString(R.string.template_default_action_without_amount_hint))
+                                    if (
+                                        it.templateEditData?.planEditData == null &&
+                                            defaultAction == Template.Action.SAVE
+                                    ) {
+                                        host.showSnackBar(
+                                            context.getString(R.string.template_default_action_without_amount_hint)
+                                        )
                                         null
-                                    } else if (it.templateEditData?.planEditData != null && it.templateEditData.planEditData.isPlanExecutionAutomatic) {
-                                        host.showSnackBar(context.getString(R.string.plan_automatic_without_amount_hint))
+                                    } else if (
+                                        it.templateEditData?.planEditData != null &&
+                                            it.templateEditData.planEditData.isPlanExecutionAutomatic
+                                    ) {
+                                        host.showSnackBar(
+                                            context.getString(R.string.plan_automatic_without_amount_hint)
+                                        )
                                         null
                                     } else it
                                 } else it

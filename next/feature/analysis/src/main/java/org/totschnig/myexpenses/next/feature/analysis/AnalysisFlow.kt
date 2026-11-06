@@ -197,7 +197,11 @@ private fun TagEntry(content: AnalysisContent, backStack: NavBackStack<NavKey>, 
 }
 
 @Composable
-private fun TagTransactionsEntry(content: AnalysisContent, backStack: NavBackStack<NavKey>, key: AnalysisKey.TagTransactions) {
+private fun TagTransactionsEntry(
+    content: AnalysisContent,
+    backStack: NavBackStack<NavKey>,
+    key: AnalysisKey.TagTransactions
+) {
     val evaluation = shownOrLeave(content.evaluationOf(key.tagId), isLoaded = content.state.isLoaded) {
         backStack.remove(key)
     } ?: return
@@ -236,11 +240,19 @@ private fun CategoryEntry(content: AnalysisContent, backStack: NavBackStack<NavK
 }
 
 @Composable
-private fun CategoryTransactionsEntry(content: AnalysisContent, backStack: NavBackStack<NavKey>, key: AnalysisKey.CategoryTransactions) {
+private fun CategoryTransactionsEntry(
+    content: AnalysisContent,
+    backStack: NavBackStack<NavKey>,
+    key: AnalysisKey.CategoryTransactions
+) {
     val category = shownOrLeave(content.categoryOf(key.key), isLoaded = content.spendingState.isLoaded) {
         backStack.remove(key)
     } ?: return
-    Transactions(content, category.label ?: stringResource(R.string.next_analysis_no_category), category.transactionIds) {
+    Transactions(
+        content,
+        category.label ?: stringResource(R.string.next_analysis_no_category),
+        category.transactionIds
+    ) {
         backStack.remove(key)
     }
 }
@@ -248,7 +260,8 @@ private fun CategoryTransactionsEntry(content: AnalysisContent, backStack: NavBa
 @Composable
 private fun MoneyFlowEntry(content: AnalysisContent, backStack: NavBackStack<NavKey>) {
     val leave = { backStack -= AnalysisKey.MoneyFlow }
-    val moneyFlow = shownOrLeave(content.moneyFlow, isLoaded = content.moneyFlowState.isLoaded, onGone = leave) ?: return
+    val moneyFlow =
+        shownOrLeave(content.moneyFlow, isLoaded = content.moneyFlowState.isLoaded, onGone = leave) ?: return
     val moneyFlowViewModel = content.moneyFlowViewModel
     MoneyFlowScreen(
         flow = moneyFlow,

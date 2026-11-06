@@ -177,7 +177,13 @@ fun ToggleChip(
         label = { Text(text) },
         modifier = modifier,
         leadingIcon = if (selected) {
-            { Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
+            {
+                Icon(
+                    Icons.Default.Check,
+                    contentDescription = null,
+                    modifier = Modifier.size(FilterChipDefaults.IconSize)
+                )
+            }
         } else null,
         shape = Shapes.chip
     )

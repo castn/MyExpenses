@@ -29,9 +29,19 @@ class ReceiptFixturesTest {
 
             // Recognition splits words ("RE WE") and adds marks ("Backshoo -")
             check(name, "merchant", receipt.merchant?.let(::letters), expected.merchant?.let(::letters))
-            check(name, "items", receipt.items.map { it.name to it.amount }, expected.items.map { it.name to it.amount })
+            check(
+                name,
+                "items",
+                receipt.items.map { it.name to it.amount },
+                expected.items.map { it.name to it.amount }
+            )
             receipt.items.zip(expected.items).forEach { (item, wanted) ->
-                check(name, "quantity of ${wanted.name}", item.quantity.stripTrailingZeros(), wanted.quantity.toBigDecimal().stripTrailingZeros())
+                check(
+                    name,
+                    "quantity of ${wanted.name}",
+                    item.quantity.stripTrailingZeros(),
+                    wanted.quantity.toBigDecimal().stripTrailingZeros()
+                )
                 wanted.unit?.let { check(name, "unit of ${wanted.name}", item.unit, it) }
                 wanted.unitPrice?.let { check(name, "unit price of ${wanted.name}", item.unitPrice, it) }
                 wanted.taxClass?.let { check(name, "tax class of ${wanted.name}", item.taxClass, it) }

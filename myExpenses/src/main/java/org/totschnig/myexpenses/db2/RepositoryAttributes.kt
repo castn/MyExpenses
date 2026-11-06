@@ -101,7 +101,13 @@ fun Repository.saveAccountAttributes(accountId: Long, attributes: Map<out Attrib
     saveAttributes(ACCOUNTS_ATTRIBUTES_URI, KEY_ACCOUNTID, accountId, attributes)
 }
 
-private fun Repository.saveAttributes(uri: Uri, linkColumn: String, rowId: Long, attributes: Map<out Attribute, String>) {
+private fun Repository.saveAttributes(
+    uri: Uri,
+    linkColumn: String,
+    rowId: Long,
+    attributes: Map<out Attribute,
+    String>
+) {
     val ops = ArrayList<ContentProviderOperation>()
     attributes.forEach {
         ops.add(

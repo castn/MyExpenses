@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.asSharedFlow
  * its rules to them right away and not only when it is shown next.
  */
 object TransactionImports {
-    private val _imported = MutableSharedFlow<Unit>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val _imported =
+        MutableSharedFlow<Unit>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
     val imported: SharedFlow<Unit> = _imported.asSharedFlow()
 

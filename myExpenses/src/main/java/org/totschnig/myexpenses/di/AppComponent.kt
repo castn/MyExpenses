@@ -100,7 +100,19 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [AppModule::class, UiModule::class, NetworkModule::class, LicenceModule::class, DataModule::class, CoroutineModule::class, ViewModelModule::class, FeatureModule::class, CrashHandlerModule::class, SyncModule::class, ConfigurationModule::class]
+    modules = [
+        AppModule::class,
+        UiModule::class,
+        NetworkModule::class,
+        LicenceModule::class,
+        DataModule::class,
+        CoroutineModule::class,
+        ViewModelModule::class,
+        FeatureModule::class,
+        CrashHandlerModule::class,
+        SyncModule::class,
+        ConfigurationModule::class
+    ]
 )
 interface AppComponent {
     @Component.Builder

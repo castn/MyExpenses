@@ -36,7 +36,14 @@ class OwnTransferTest {
         val ledger = Ledger(
             listOf(
                 LedgerTransaction(1, today, amount = -1000, homeAmount = -1100, accountId = giro, payeeName = "Shop"),
-                LedgerTransaction(2, today, amount = -5000, accountId = giro, payeeName = "Ich", targetAccountId = savings),
+                LedgerTransaction(
+                    2,
+                    today,
+                    amount = -5000,
+                    accountId = giro,
+                    payeeName = "Ich",
+                    targetAccountId = savings
+                ),
                 LedgerTransaction(3, today, amount = 5000, accountId = savings, targetAccountId = giro),
             ),
             OwnAccounts(daily, mapOf(savings to "Tagesgeld"))
@@ -77,8 +84,20 @@ class OwnTransferTest {
 
     @Test
     fun rulesForPayeesAndForAccountsDoNotMix() {
-        val byPayee = ContractRule("p", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, setOf(9), interval = ContractInterval.MONTHLY)
-        val byAccount = ContractRule("a", ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, targetAccountIds = setOf(savings), interval = ContractInterval.MONTHLY)
+        val byPayee = ContractRule(
+            "p",
+            ContractRule.Kind.CONTRACT,
+            ContractDirection.EXPENSE,
+            setOf(9),
+            interval = ContractInterval.MONTHLY
+        )
+        val byAccount = ContractRule(
+            "a",
+            ContractRule.Kind.CONTRACT,
+            ContractDirection.EXPENSE,
+            targetAccountIds = setOf(savings),
+            interval = ContractInterval.MONTHLY
+        )
         val toSavings = payment(-10000, target = savings)
         val normal = payment(-4000)
         assertFalse(byPayee.matches(toSavings))

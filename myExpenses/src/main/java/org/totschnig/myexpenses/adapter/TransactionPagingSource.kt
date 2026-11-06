@@ -179,7 +179,11 @@ open class TransactionPagingSource(
                 .let { merged ->
                     val lastItem = merged.lastOrNull()
                     val lookAheadItemId = lookaheadItem?.id
-                    if (lastItem?.transferPeer != null && lookAheadItemId != null && lastItem.transferPeer == lookAheadItemId) {
+                    if (
+                        lastItem?.transferPeer != null &&
+                            lookAheadItemId != null &&
+                            lastItem.transferPeer == lookAheadItemId
+                    ) {
                         includeNextHalfTransfer = true
                         // We pull the half transfer in and advance nextKey by one more
                         merged.toMutableList().also {

@@ -26,7 +26,9 @@ import org.totschnig.myexpenses.next.data.contracts.icon
 @Composable
 private fun rememberPaymentInfo(viewModel: ContractsViewModel, transaction: ShownTransaction): PaymentContractInfo {
     val info by remember(transaction.id) { viewModel.paymentInfo(transaction.id) }
-        .collectAsStateWithLifecycle(if (transaction.isTransfer) PaymentContractInfo.Unavailable else PaymentContractInfo.Loading)
+        .collectAsStateWithLifecycle(
+            if (transaction.isTransfer) PaymentContractInfo.Unavailable else PaymentContractInfo.Loading
+        )
     return info
 }
 
@@ -122,7 +124,9 @@ fun PaymentContractChip(info: PaymentContractInfo, onMark: (ContractInterval) ->
         )
     }
     ActionChip(
-        text = stringResource(if (info.isIncome) R.string.next_payment_mark_income else R.string.next_payment_mark_contract),
+        text = stringResource(
+            if (info.isIncome) R.string.next_payment_mark_income else R.string.next_payment_mark_contract
+        ),
         icon = Icons.Default.EventRepeat,
         onClick = { showIntervalDialog = true }
     )

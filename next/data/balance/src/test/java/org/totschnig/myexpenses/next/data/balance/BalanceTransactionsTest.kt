@@ -19,7 +19,13 @@ class BalanceTransactionsTest {
             listOf(
                 LedgerTransaction(1, LocalDate.of(2026, 8, 31), amount = -500, accountId = giro),
                 LedgerTransaction(2, LocalDate.of(2026, 9, 1), amount = -1000, homeAmount = -1100, accountId = giro),
-                LedgerTransaction(3, LocalDate.of(2026, 9, 15), amount = -5000, accountId = giro, targetAccountId = savings),
+                LedgerTransaction(
+                    3,
+                    LocalDate.of(2026, 9, 15),
+                    amount = -5000,
+                    accountId = giro,
+                    targetAccountId = savings
+                ),
                 LedgerTransaction(4, LocalDate.of(2026, 10, 1), amount = -700, accountId = giro),
             ),
             OwnAccounts(setOf(giro), emptyMap())

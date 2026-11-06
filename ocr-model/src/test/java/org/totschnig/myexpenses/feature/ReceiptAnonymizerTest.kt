@@ -8,7 +8,9 @@ class ReceiptAnonymizerTest {
     private fun line(text: String, left: Int, row: Int, vararg words: String) = RecognizedLine(
         text,
         Box(left, row * 100, left + 400, row * 100 + 80),
-        words.mapIndexed { i, word -> RecognizedElement(word, Box(left + i * 100, row * 100, left + i * 100 + 90, row * 100 + 80)) }
+        words.mapIndexed { i, word ->
+            RecognizedElement(word, Box(left + i * 100, row * 100, left + i * 100 + 90, row * 100 + 80))
+        }
     )
 
     private val names = RecognizedBlock(
@@ -72,12 +74,15 @@ class ReceiptAnonymizerTest {
         val before = text.lines.associate { it.text to it.box }
         val kept = result.text.lines.first { it.text == "655809 BBQ Grillkäse" }
         assertThat(kept.box).isEqualTo(before["655809 BBQ Grillkäse"])
-        assertThat(result.text.lines.first { it.text == ReceiptAnonymizer.STREET }.box).isEqualTo(before["Lindenstraße 16"])
+        assertThat(
+            result.text.lines.first { it.text == ReceiptAnonymizer.STREET }.box
+        ).isEqualTo(before["Lindenstraße 16"])
     }
 
     @Test
     fun nothingPersonalIsLeft() {
-        val all = result.text.lines.flatMap { line -> listOf(line.text) + line.elements.map { it.text } }.joinToString("\n")
+        val all =
+            result.text.lines.flatMap { line -> listOf(line.text) + line.elements.map { it.text } }.joinToString("\n")
         listOf("Kampmann", "Lindenstraße", "50667", "Köln", "987654", "DE812345678", "Petra", "1234567890",
             "8823477712", "03.10.2026", "14:32", "Hans Meier", "*1234").forEach {
             assertThat(all).doesNotContain(it)
@@ -98,7 +103,9 @@ class ReceiptAnonymizerTest {
 
     @Test
     fun mask() {
-        assertThat(ReceiptAnonymizer.mask("Beleg 12345 vom 3.10.26 um 9:05:12")).isEqualTo("Beleg 00000 vom 0.00.00 um 0:00:00")
+        assertThat(
+            ReceiptAnonymizer.mask("Beleg 12345 vom 3.10.26 um 9:05:12")
+        ).isEqualTo("Beleg 00000 vom 0.00.00 um 0:00:00")
         assertThat(ReceiptAnonymizer.mask("1,79 A")).isEqualTo("1,79 A")
         assertThat(ReceiptAnonymizer.mask("06 Aug. 2026 14:42 Chef")).isEqualTo("00 Aug. 0000 00:00 Chef")
     }
@@ -162,7 +169,9 @@ class ReceiptAnonymizerTest {
             text, ExpectedReceipt("EDEA Kampmann", listOf(ExpectedItem("Herz.Hummus", 179)))
         )
         assertThat(result.merchant).isEqualTo("EDEA")
-        assertThat(result.text.rows().map { it.rowText() }).containsExactly("EDEKA", "EDEKA", "Herz.Hummus 1,79 A").inOrder()
+        assertThat(
+            result.text.rows().map { it.rowText() }
+        ).containsExactly("EDEKA", "EDEKA", "Herz.Hummus 1,79 A").inOrder()
         assertThat(result.text.lines.flatMap { it.elements }.map { it.text }).doesNotContain("Kampmann")
     }
 
@@ -184,7 +193,10 @@ class ReceiptAnonymizerTest {
                 RecognizedBlock(listOf(line("4,50 €", 800, 5)))
             )
         )
-        val result = ReceiptAnonymizer.anonymize(text, ExpectedReceipt("Backshop Muster", listOf(ExpectedItem("Burek Käse", 450))))
+        val result = ReceiptAnonymizer.anonymize(
+            text,
+            ExpectedReceipt("Backshop Muster", listOf(ExpectedItem("Burek Käse", 450)))
+        )
         assertThat(result.text.rows().map { it.rowText() }).containsExactly(
             "Backshop",
             ReceiptAnonymizer.OWNER,

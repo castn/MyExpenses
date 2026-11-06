@@ -119,7 +119,13 @@ fun NextMainScreen(
     adView: @Composable (MutableState<Boolean>) -> Unit,
     isNavigationVisible: Boolean,
     isCurrencyUsed: suspend (String) -> Boolean = { false },
-    onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -> CurrencyUnit? = { _, _, _, _, _ -> null },
+    onCreateAsset: suspend (
+        code: String,
+        symbol: String,
+        fractionDigits: Int,
+        label: String?,
+        commodityType: CommodityType
+    ) -> CurrencyUnit? = { _, _, _, _, _ -> null },
     pageContent: @Composable (pageAccount: PageAccount, isCurrent: Boolean) -> Unit,
     transactionList: @Composable (PageAccount, TransactionSearch) -> Unit,
     /** Lists of transactions outside of the accounts, for the pages of the areas */
@@ -341,7 +347,9 @@ private fun helpVariant(viewModel: MyExpensesV2ViewModel, pane: ThreePaneScaffol
             if (viewModel.currentAccountsTab.value == AccountsScreenTab.BALANCE_SHEET) HELP_VARIANT_BALANCE_SHEET
             else HELP_VARIANT_ACCOUNTS
         ListDetailPaneScaffoldRole.Detail ->
-            if ((viewModel.accountList.value.find { it.id == selectedAccountId } as? FullAccount)?.isPortfolio == true) HELP_VARIANT_PORTFOLIO
+            if (
+                (viewModel.accountList.value.find { it.id == selectedAccountId } as? FullAccount)?.isPortfolio == true
+            ) HELP_VARIANT_PORTFOLIO
             else HELP_VARIANT_TRANSACTIONS
         else -> null
     }
@@ -366,7 +374,13 @@ private fun AccountPanes(
     onPrepareContextMenuItem: (itemId: Int) -> Boolean,
     onPrepareMenuItem: (itemId: Int) -> Boolean,
     isCurrencyUsed: suspend (String) -> Boolean,
-    onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -> CurrencyUnit?,
+    onCreateAsset: suspend (
+        code: String,
+        symbol: String,
+        fractionDigits: Int,
+        label: String?,
+        commodityType: CommodityType
+    ) -> CurrencyUnit?,
     pageContent: @Composable (pageAccount: PageAccount, isCurrent: Boolean) -> Unit,
     transactionList: @Composable (PageAccount, TransactionSearch) -> Unit,
 ) {
@@ -537,7 +551,10 @@ private fun MenuSheet(
     )
 }
 
-/** The pages of the new design, the overview with the accounts at the bottom of the back stack; each area adds the keys of its pages here */
+/**
+ * The pages of the new design, the overview with the accounts at the bottom of the back stack; each area adds the keys
+ * of its pages here
+ */
 @Serializable
 sealed interface NextKey : NavKey {
     @Serializable

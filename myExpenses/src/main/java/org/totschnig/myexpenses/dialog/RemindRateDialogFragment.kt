@@ -36,7 +36,10 @@ import org.totschnig.myexpenses.util.distrib.DistributionHelper
 import org.totschnig.myexpenses.util.tracking.Tracker
 import javax.inject.Inject
 
-class RemindRateDialogFragment : DialogViewBinding<RemindRateBinding>(), DialogInterface.OnClickListener, OnRatingBarChangeListener {
+class RemindRateDialogFragment :
+    DialogViewBinding<RemindRateBinding>(),
+    DialogInterface.OnClickListener,
+    OnRatingBarChangeListener {
 
     @Inject
     lateinit var tracker: Tracker
@@ -50,7 +53,8 @@ class RemindRateDialogFragment : DialogViewBinding<RemindRateBinding>(), DialogI
         val builder = initBuilder {
             RemindRateBinding.inflate(it)
         }
-        binding.ratingHowMany.text = Utils.getTextWithAppName(requireContext(), R.string.dialog_remind_rate_how_many_stars)
+        binding.ratingHowMany.text =
+            Utils.getTextWithAppName(requireContext(), R.string.dialog_remind_rate_how_many_stars)
         binding.rating.onRatingBarChangeListener = this
         setRatingRemindText(true)
         return builder.setTitle(R.string.app_name)
@@ -78,7 +82,9 @@ class RemindRateDialogFragment : DialogViewBinding<RemindRateBinding>(), DialogI
         } else {
             if (which == AlertDialog.BUTTON_POSITIVE) {
                 (activity as MessageDialogListener?)?.dispatchCommand(
-                        if (binding.rating.rating >= POSITIVE_RATING) R.id.RATE_COMMAND else R.id.FEEDBACK_COMMAND, null)
+                        if (
+                            binding.rating.rating >= POSITIVE_RATING
+                        ) R.id.RATE_COMMAND else R.id.FEEDBACK_COMMAND, null)
             }
             -1
         }
@@ -94,7 +100,11 @@ class RemindRateDialogFragment : DialogViewBinding<RemindRateBinding>(), DialogI
             setRatingRemindText(rating >= POSITIVE_RATING)
             (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE).apply {
                 isEnabled = true
-                setText(if (rating >= POSITIVE_RATING) R.string.dialog_remind_rate_yes else R.string.pref_send_feedback_title)
+                setText(
+                    if (
+                        rating >= POSITIVE_RATING
+                    ) R.string.dialog_remind_rate_yes else R.string.pref_send_feedback_title
+                )
                 invalidate()
             }
         }
@@ -114,7 +124,10 @@ class RemindRateDialogFragment : DialogViewBinding<RemindRateBinding>(), DialogI
         private fun shouldShow(prefHandler: PrefHandler, activity: Context): Boolean {
             if (DistributionHelper.isGithub && !BuildConfig.DEBUG)
                 return false
-            val nextReminder = prefHandler.getLong(PrefKey.NEXT_REMINDER_RATE, Utils.getInstallTime(activity) + DateUtils.DAY_IN_MILLIS * 30)
+            val nextReminder = prefHandler.getLong(
+                PrefKey.NEXT_REMINDER_RATE,
+                Utils.getInstallTime(activity) + DateUtils.DAY_IN_MILLIS * 30
+            )
             return nextReminder != -1L && nextReminder < System.currentTimeMillis()
         }
     }

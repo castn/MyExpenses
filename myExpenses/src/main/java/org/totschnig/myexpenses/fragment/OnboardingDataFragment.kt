@@ -235,7 +235,9 @@ class OnboardingDataFragment : OnboardingFragment(), AdapterView.OnItemSelectedL
     }
 
     override fun onResult(dialogTag: String, which: Int, extras: Bundle): Boolean {
-        if (ProtectedFragmentActivity.EDIT_COLOR_DIALOG == dialogTag && which == OnDialogResultListener.BUTTON_POSITIVE) {
+        if (
+            ProtectedFragmentActivity.EDIT_COLOR_DIALOG == dialogTag && which == OnDialogResultListener.BUTTON_POSITIVE
+        ) {
             with(extras.getInt(SimpleColorDialog.COLOR)) {
                 viewModel.accountColor = this
                 binding.colorInput.setColor(this)

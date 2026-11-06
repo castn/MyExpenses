@@ -60,7 +60,8 @@ import timber.log.Timber
 @Composable
 fun IconSelector(
     modifier: Modifier = Modifier,
-    iconsForCategory: (Resources, IconCategory) -> Map<String, IIconInfo> = IIconInfo.Companion::resolveIconsForCategory,
+    iconsForCategory: (Resources, IconCategory) -> Map<String, IIconInfo> =
+        IIconInfo.Companion::resolveIconsForCategory,
     iconsForSearch: (Resources, String) -> Map<String, IIconInfo> = IIconInfo.Companion::searchIcons,
     onIconSelected: (String) -> Unit,
 ) {
@@ -211,7 +212,8 @@ fun IconSelectorDialog(
                     )
 
                     ButtonRow2(
-                        modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal)),
+                        modifier =
+                            Modifier.windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal)),
                         positiveButton = if (icon.value != null)
                             ButtonDefinition(text = R.string.remove, enabled = true) {
                                 icon.value = null

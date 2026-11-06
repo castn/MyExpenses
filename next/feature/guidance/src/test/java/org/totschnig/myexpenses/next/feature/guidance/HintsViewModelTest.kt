@@ -36,7 +36,9 @@ class HintsViewModelTest {
     }
 
     private fun ledger(categoryId: Long?) = Ledger(
-        listOf(LedgerTransaction(7, LocalDate.now(), -2500, accountId = 1, payeeName = "REWE", categoryId = categoryId)),
+        listOf(
+            LedgerTransaction(7, LocalDate.now(), -2500, accountId = 1, payeeName = "REWE", categoryId = categoryId)
+        ),
         OwnAccounts(setOf(1), emptyMap())
     )
 

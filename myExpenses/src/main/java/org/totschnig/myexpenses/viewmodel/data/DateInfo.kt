@@ -70,7 +70,9 @@ data class DateInfoExtra(
             when (groupingInfo.grouping) {
                 Grouping.DAY, Grouping.WEEK -> {
                     val maxYearToLookUp =
-                        if (groupingInfo.second <= groupingInfo.grouping.minValue) groupingInfo.year - 1 else groupingInfo.year
+                        if (
+                            groupingInfo.second <= groupingInfo.grouping.minValue
+                        ) groupingInfo.year - 1 else groupingInfo.year
                     val maxValueExpression = if (groupingInfo.grouping == Grouping.DAY)
                         "strftime('%j','$maxYearToLookUp-12-31')" else DbUtils.maximumWeekExpression(
                         maxYearToLookUp

@@ -38,7 +38,9 @@ data class Plan(
         title: String,
         description: String,
     ) : this(
-        if (recurrence == Recurrence.LAST_DAY_OF_MONTH) localDate.withDayOfMonth(localDate.lengthOfMonth()) else localDate,
+        if (
+            recurrence == Recurrence.LAST_DAY_OF_MONTH
+        ) localDate.withDayOfMonth(localDate.lengthOfMonth()) else localDate,
         recurrence.toRule(localDate),
         title,
         description

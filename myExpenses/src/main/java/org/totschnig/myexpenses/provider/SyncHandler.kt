@@ -78,7 +78,10 @@ class SyncHandler(
                     } else {
                         skipped = true
                         SyncAdapter.log()
-                            .i("Uuid found in changes already exists locally, likely a transfer implicitly created from its peer")
+                            .i(
+                                "Uuid found in changes already exists locally, likely a transfer implicitly created " +
+                                    "from its peer"
+                            )
                     }
                 } else {
                     ops.add(

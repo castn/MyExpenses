@@ -59,7 +59,14 @@ import java.math.BigDecimal
 @Composable
 fun PortfolioSetupDialog(
     onDismiss: () -> Unit,
-    onConfirm: (label: String, currency: String, color: Int, exchangeRate: Double, dynamicExchangeRates: Boolean, type: AccountType) -> Unit,
+    onConfirm: (
+        label: String,
+        currency: String,
+        color: Int,
+        exchangeRate: Double,
+        dynamicExchangeRates: Boolean,
+        type: AccountType
+    ) -> Unit,
     onDeleteAsset: (FullAccount) -> Unit = {},
     availableCurrencies: List<CurrencyUnit>,
     availableAccountTypes: List<AccountType>,

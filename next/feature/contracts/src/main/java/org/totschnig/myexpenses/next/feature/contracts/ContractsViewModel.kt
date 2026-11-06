@@ -195,7 +195,9 @@ class ContractsViewModel(
 
     /** Declares a payment as part of a contract paid every [interval] */
     fun markAsContract(transactionId: Long, interval: ContractInterval) {
-        updateRules { rules, analysis, _ -> rules.marking(transactionId, interval, analysis.transactions, analysis.today) }
+        updateRules { rules, analysis, _ ->
+            rules.marking(transactionId, interval, analysis.transactions, analysis.today)
+        }
     }
 
     /** Changes the rule of [contract], which confirms a suggestion */

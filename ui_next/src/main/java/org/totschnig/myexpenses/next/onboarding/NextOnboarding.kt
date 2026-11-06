@@ -105,7 +105,13 @@ class NextOnboarding : OnboardingHostActivity() {
                         options = targets,
                         label = { it.label },
                         supportingText = {
-                            stringResource(if (it.isSetUp) NextR.string.next_onboarding_sync_existing else NextR.string.next_onboarding_sync_new)
+                            stringResource(
+                                if (it.isSetUp) {
+                                    NextR.string.next_onboarding_sync_existing
+                                } else {
+                                    NextR.string.next_onboarding_sync_new
+                                }
+                            )
                         },
                         onSelect = {
                             syncTargets = null

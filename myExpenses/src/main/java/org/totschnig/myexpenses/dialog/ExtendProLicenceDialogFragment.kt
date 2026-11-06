@@ -45,14 +45,17 @@ class ExtendProLicenceDialogFragment : DialogFragment(), DialogInterface.OnClick
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
                 proPackages)
         binding.actSelectLicence.setAdapter(adapter)
-        binding.actSelectLicence.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ -> selectedIndex = position }
+        binding.actSelectLicence.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position, _ -> selectedIndex = position }
         val dialog = AlertDialog.Builder(requireContext())
                 .setCancelable(false)
                 .setMessage(requireArguments().getCharSequence(KEY_MESSAGE))
                 .setPositiveButton(R.string.extend_validity, null)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setView(binding.root).create()
-        dialog.setOnShowListener { dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener { onExtendClicked() } }
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener { onExtendClicked() }
+        }
         return dialog
     }
 

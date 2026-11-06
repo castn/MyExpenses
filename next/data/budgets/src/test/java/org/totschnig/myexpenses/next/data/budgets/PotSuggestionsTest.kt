@@ -23,8 +23,10 @@ class PotSuggestionsTest {
     private val eatingOut = CategoryInfo(3, "Essen gehen", "Essen gehen")
     private val restaurant = CategoryInfo(4, "Restaurant", "Essen gehen > Restaurant", mainId = 3, parentId = 3)
     private val leisure = CategoryInfo(5, "Freizeit & Hobbys", "Freizeit & Hobbys")
-    private val gym = CategoryInfo(6, "Fitnessstudio & Sport", "Freizeit & Hobbys > Fitnessstudio & Sport", mainId = 5, parentId = 5)
-    private val bars = CategoryInfo(7, "Ausgehen (Bar, Club)", "Freizeit & Hobbys > Ausgehen (Bar, Club)", mainId = 5, parentId = 5)
+    private val gym =
+        CategoryInfo(6, "Fitnessstudio & Sport", "Freizeit & Hobbys > Fitnessstudio & Sport", mainId = 5, parentId = 5)
+    private val bars =
+        CategoryInfo(7, "Ausgehen (Bar, Club)", "Freizeit & Hobbys > Ausgehen (Bar, Club)", mainId = 5, parentId = 5)
     private val barber = CategoryInfo(8, "Barbershop", "Freizeit & Hobbys > Barbershop", mainId = 5, parentId = 5)
     private val salary = CategoryInfo(9, "Lebensmittelzuschuss", "Lebensmittelzuschuss", isExpense = false)
     private val all = listOf(food, supermarket, eatingOut, restaurant, leisure, gym, bars, barber, salary)
@@ -42,7 +44,11 @@ class PotSuggestionsTest {
     private fun spend(amount: Long, date: LocalDate, category: CategoryInfo, id: Long) =
         LedgerTransaction(id = id, date = date, amount = -amount, accountId = 1, categoryId = category.id)
 
-    private fun input(transactions: List<LedgerTransaction>, pots: List<Pot> = emptyList(), contracts: List<Contract> = emptyList()) =
+    private fun input(
+        transactions: List<LedgerTransaction>,
+        pots: List<Pot> = emptyList(),
+        contracts: List<Contract> = emptyList()
+    ) =
         BudgetInput(
             Ledger(transactions, OwnAccounts(setOf(1), emptyMap())), pots, all.associateBy { it.id },
             contracts, emptyList(), emptyMap(), today
@@ -73,7 +79,8 @@ class PotSuggestionsTest {
             spend(7000, LocalDate.of(2026, 9, 5), restaurant, 2),
             spend(9000, LocalDate.of(2026, 9, 6), bars, 3),
         )
-        val restaurants = Pot(id = "r", name = "Restaurants", kind = PotKind.RUNNING, categoryIds = setOf(restaurant.id))
+        val restaurants =
+            Pot(id = "r", name = "Restaurants", kind = PotKind.RUNNING, categoryIds = setOf(restaurant.id))
         val pot = Pot(name = "Ausgehen", kind = PotKind.YEARLY, categoryIds = setOf(eatingOut.id, bars.id))
         assertEquals(9000L, PotSuggestions.suggest(input(transactions, listOf(restaurants)), pot).amount)
         assertEquals(21000L, PotSuggestions.suggest(input(transactions), pot).amount)
@@ -84,11 +91,17 @@ class PotSuggestionsTest {
         signature = ruleId,
         name = ruleId,
         interval = ContractInterval.MONTHLY,
-        transactions = listOf(ContractTransaction(100, LocalDate.of(2026, 10, 1), -3500, 1, categoryPath = category.path)),
+        transactions =
+            listOf(ContractTransaction(100, LocalDate.of(2026, 10, 1), -3500, 1, categoryPath = category.path)),
         nextExpectedDate = LocalDate.of(2026, 11, 1),
         isActive = true,
         isConfirmed = true,
-        rule = ContractRule(ruleId, ContractRule.Kind.CONTRACT, ContractDirection.EXPENSE, interval = ContractInterval.MONTHLY),
+        rule = ContractRule(
+            ruleId,
+            ContractRule.Kind.CONTRACT,
+            ContractDirection.EXPENSE,
+            interval = ContractInterval.MONTHLY
+        ),
         reserveChoice = reserve
     )
 

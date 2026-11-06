@@ -35,7 +35,8 @@ class CategoryRepositoryTest {
     @Test
     fun appliesCertainCategoriesOnlyToNewTransactionsWhileCollected() = withTestDataStore { dataStore ->
         runTest {
-            val source = FakeLedgerSource(ledger = ledger(1), catalog = Catalog(listOf(CategoryInfo(10, "Food", "Food"))))
+            val source =
+                FakeLedgerSource(ledger = ledger(1), catalog = Catalog(listOf(CategoryInfo(10, "Food", "Food"))))
             val store = CategoryStore(dataStore)
             store.update { it.copy(rules = listOf(CategoryRule("r", setOf(5), 10))) }
             val writing = FakeWriting()

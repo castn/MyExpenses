@@ -158,25 +158,39 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
                     actions = {
                         if (draft.photo != null && viewModel.canRecognize) {
                             IconButton(
-                                onClick = { if (draft.isChanged) confirmRecognizeAgain = true else viewModel.recognizeAgain() },
+                                onClick = {
+                                    if (draft.isChanged) confirmRecognizeAgain = true else viewModel.recognizeAgain()
+                                },
                                 enabled = !recognizingAgain
                             ) {
-                                Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.next_receipt_recognize_again))
+                                Icon(
+                                    Icons.Default.Refresh,
+                                    contentDescription = stringResource(R.string.next_receipt_recognize_again)
+                                )
                             }
                         }
-                        IconButton(onClick = viewModel::saveDraft, enabled = draft.items.isNotEmpty() && !recognizingAgain) {
+                        IconButton(
+                            onClick = viewModel::saveDraft,
+                            enabled = draft.items.isNotEmpty() && !recognizingAgain
+                        ) {
                             Icon(Icons.Default.Check, contentDescription = stringResource(R.string.next_receipt_save))
                         }
                     },
                     header = {
                         if (chosenRows.isNotEmpty()) SelectionBar(
-                            text = pluralStringResource(R.plurals.next_receipt_rows_chosen, chosenRows.size, chosenRows.size),
+                            text = pluralStringResource(
+                                R.plurals.next_receipt_rows_chosen,
+                                chosenRows.size,
+                                chosenRows.size
+                            ),
                             actionLabel = stringResource(R.string.next_receipt_take_rows),
                             onAction = { takeRows(draft.openLeftoverRows.filter { it in chosenRows }) },
                             onCancel = { chosenRows = emptySet() }
                         ) else Column {
                             if (recognizingAgain) {
-                                DetailCard { ProgressRow(stringResource(R.string.next_receipt_reading), isFirst = true) }
+                                DetailCard {
+                                    ProgressRow(stringResource(R.string.next_receipt_reading), isFirst = true)
+                                }
                             }
                             recognizeAgainFailed?.let { reason ->
                                 Banner(
@@ -195,7 +209,10 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
                                 walkPosition = 0
                             }
                             if (offerModel && draft.itemsWithoutGroup.isNotEmpty()) {
-                                ModelOfferBanner(onSetUp = { settingUpModel = true }, onDecline = viewModel.modelInstaller::decline)
+                                ModelOfferBanner(
+                                    onSetUp = { settingUpModel = true },
+                                    onDecline = viewModel.modelInstaller::decline
+                                )
                             }
                         }
                     }
@@ -203,9 +220,22 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
                     val photoCard: @Composable () -> Unit = {
                         photo?.let { current ->
                             DetailCard {
-                                ReceiptPhotoView(current, draft.items, draft.openLeftoverRows, focused, photoExpanded, onTapItem = openItem)
+                                ReceiptPhotoView(
+                                    current,
+                                    draft.items,
+                                    draft.openLeftoverRows,
+                                    focused,
+                                    photoExpanded,
+                                    onTapItem = openItem
+                                )
                                 LinkRow(
-                                    stringResource(if (photoExpanded) R.string.next_receipt_photo_collapse else R.string.next_receipt_photo_expand),
+                                    stringResource(
+                                        if (photoExpanded) {
+                                            R.string.next_receipt_photo_collapse
+                                        } else {
+                                            R.string.next_receipt_photo_expand
+                                        }
+                                    ),
                                     onClick = { photoExpanded = !photoExpanded }
                                 )
                             }
@@ -235,13 +265,16 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
                                                 actionLabel = undoLabel,
                                                 duration = SnackbarDuration.Short
                                             )
-                                            if (result == SnackbarResult.ActionPerformed) viewModel.insertItem(index, item)
+                                            if (
+                                                result == SnackbarResult.ActionPerformed
+                                            ) viewModel.insertItem(index, item)
                                         }
                                     },
                                     supportingText = item.quantityText(input, format),
                                     isFirst = index == 0,
                                     badge = when {
-                                        item.group != null -> ItemGroup.ofId(item.group)?.let { stringResource(it.labelRes) }
+                                        item.group != null ->
+                                            ItemGroup.ofId(item.group)?.let { stringResource(it.labelRes) }
                                         item.amount > 0 -> stringResource(R.string.next_item_group_missing)
                                         else -> null
                                     },
@@ -259,7 +292,8 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
                             rows = draft.openLeftoverRows,
                             chosen = chosenRows,
                             onTake = { takeRows(listOf(it)) },
-                            onChoose = { row -> chosenRows = if (row in chosenRows) chosenRows - row else chosenRows + row }
+                            onChoose =
+                                { row -> chosenRows = if (row in chosenRows) chosenRows - row else chosenRows + row }
                         )
                     }
                     if (isSideBySide) {
@@ -397,12 +431,29 @@ private const val NONE = "–"
 private fun ReceiptDetails(draft: ReceiptDraft, format: (Long) -> String, onEdit: (Detail) -> Unit) {
     val dateFormat = remember { DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM) }
     DetailCard {
-        EditableRow(stringResource(R.string.next_receipt_merchant), draft.merchant ?: NONE, { onEdit(Detail.MERCHANT) }, isFirst = true)
-        EditableRow(stringResource(R.string.next_receipt_date), draft.date?.format(dateFormat) ?: NONE, { onEdit(Detail.DATE) })
-        EditableRow(stringResource(R.string.next_receipt_sum), draft.total?.let(format) ?: NONE, { onEdit(Detail.TOTAL) })
+        EditableRow(
+            stringResource(R.string.next_receipt_merchant),
+            draft.merchant ?: NONE,
+            { onEdit(Detail.MERCHANT) },
+            isFirst = true
+        )
+        EditableRow(
+            stringResource(R.string.next_receipt_date),
+            draft.date?.format(dateFormat) ?: NONE,
+            { onEdit(Detail.DATE) }
+        )
+        EditableRow(
+            stringResource(R.string.next_receipt_sum),
+            draft.total?.let(format) ?: NONE,
+            { onEdit(Detail.TOTAL) }
+        )
         val cardAmount = draft.cardAmount
         if (cardAmount != null && cardAmount != draft.total) {
-            EditableRow(stringResource(R.string.next_receipt_card_amount), format(cardAmount), { onEdit(Detail.CARD_AMOUNT) })
+            EditableRow(
+                stringResource(R.string.next_receipt_card_amount),
+                format(cardAmount),
+                { onEdit(Detail.CARD_AMOUNT) }
+            )
         }
         if (draft.target is ReceiptTarget.Transaction) {
             InfoRow(stringResource(R.string.next_receipt_transaction_amount), format(draft.transactionAmount))
@@ -418,14 +469,21 @@ private fun DifferenceRows(draft: ReceiptDraft, format: (Long) -> String, isFirs
     var first = isFirst
     if (check.itemsDifference != 0L) {
         InfoRow(
-            stringResource(if (draft.total != null) R.string.next_receipt_items_difference else R.string.next_receipt_difference),
+            stringResource(
+                if (draft.total != null) R.string.next_receipt_items_difference else R.string.next_receipt_difference
+            ),
             format(check.itemsDifference), isFirst = first, valueColor = error
         )
         first = false
     }
     if (draft.target is ReceiptTarget.Transaction) {
         check.totalDifference?.takeIf { it != 0L }?.let {
-            InfoRow(stringResource(R.string.next_receipt_total_difference), format(it), isFirst = first, valueColor = error)
+            InfoRow(
+                stringResource(R.string.next_receipt_total_difference),
+                format(it),
+                isFirst = first,
+                valueColor = error
+            )
         }
     }
 }
@@ -468,7 +526,11 @@ private fun CountBanner(check: ReceiptCheck) {
     if (!check.countDiffers) return
     Banner(
         title = stringResource(R.string.next_receipt_count_title),
-        messages = listOf(check.receipt.itemCount!!.let { pluralStringResource(R.plurals.next_receipt_count_differs, it, it, check.receipt.pieces) }),
+        messages = listOf(
+            check.receipt.itemCount!!.let {
+                pluralStringResource(R.plurals.next_receipt_count_differs, it, it, check.receipt.pieces)
+            }
+        ),
         style = BannerStyle.Alert
     )
 }
@@ -504,7 +566,9 @@ private fun DetailDialog(
             var text by rememberSaveable { mutableStateOf(initial?.let(input::format).orEmpty()) }
             val parsed = input.parse(text)
             FormDialog(
-                title = stringResource(if (detail == Detail.TOTAL) R.string.next_receipt_sum else R.string.next_receipt_card_amount),
+                title = stringResource(
+                    if (detail == Detail.TOTAL) R.string.next_receipt_sum else R.string.next_receipt_card_amount
+                ),
                 onConfirm = { onAmount(parsed); onDismiss() },
                 onDismiss = onDismiss,
                 confirmEnabled = text.isBlank() || parsed != null

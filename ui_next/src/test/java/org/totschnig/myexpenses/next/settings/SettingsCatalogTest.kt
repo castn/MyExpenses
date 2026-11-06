@@ -170,7 +170,9 @@ class SettingsCatalogTest {
         SettingsGroup.entries.forEach { group ->
             // in the order of the enum and each in one block, as the page shows them
             val blocks = SettingsCatalog.of(group).mapNotNull { it.section }
-                .fold(emptyList<SettingsSection>()) { blocks, section -> if (blocks.lastOrNull() == section) blocks else blocks + section }
+                .fold(
+                    emptyList<SettingsSection>()
+                ) { blocks, section -> if (blocks.lastOrNull() == section) blocks else blocks + section }
             assertEquals(group.name, blocks.sorted(), blocks)
             assertEquals(group.name, blocks.distinct(), blocks)
         }

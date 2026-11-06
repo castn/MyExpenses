@@ -109,7 +109,12 @@ class PotMatcherTest {
     @Test
     fun potsWithoutCriteriaOrForItemGroupsHoldNothing() {
         val empty = Pot(name = "Leer", kind = PotKind.RUNNING)
-        val sweets = Pot(name = "Süßes", kind = PotKind.ITEM_GROUP, categoryIds = setOf(food.id), itemGroups = setOf("sweets_snacks"))
+        val sweets = Pot(
+            name = "Süßes",
+            kind = PotKind.ITEM_GROUP,
+            categoryIds = setOf(food.id),
+            itemGroups = setOf("sweets_snacks")
+        )
         assertNull(matcher(empty, sweets).potOf(transaction()))
     }
 

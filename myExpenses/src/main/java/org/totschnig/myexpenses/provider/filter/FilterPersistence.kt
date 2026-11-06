@@ -109,7 +109,9 @@ class FilterPersistence(
                         when (filtered.size) {
                             0 -> null
                             1 -> filtered.first() // Unwrap single criterion
-                            else -> if (oldValue is AndCriterion) AndCriterion(filtered.toSet()) else OrCriterion(filtered.toSet())
+                            else -> if (
+                                oldValue is AndCriterion
+                            ) AndCriterion(filtered.toSet()) else OrCriterion(filtered.toSet())
                         }
                     }
                 }

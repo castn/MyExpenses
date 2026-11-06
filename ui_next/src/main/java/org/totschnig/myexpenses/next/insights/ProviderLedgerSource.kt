@@ -122,7 +122,13 @@ class ProviderLedgerSource(
             uri = ACCOUNTS_MINIMAL_URI,
             selection = "$KEY_PARENTID IS NULL",
             notifyForDescendants = false
-        ).mapToList { Triple(it.getLong(KEY_ROWID), it.getString(KEY_LABEL), isDailyAccountType(it.getString(KEY_ACCOUNT_TYPE_LABEL))) }
+        ).mapToList {
+            Triple(
+                it.getLong(KEY_ROWID),
+                it.getString(KEY_LABEL),
+                isDailyAccountType(it.getString(KEY_ACCOUNT_TYPE_LABEL))
+            )
+        }
             .map { accounts ->
                 OwnAccounts(
                     dailyIds = accounts.filter { it.third }.mapTo(HashSet()) { it.first },
@@ -162,7 +168,12 @@ class ProviderLedgerSource(
             selection = "$KEY_ROWID != $SPLIT_CATID",
             notifyForDescendants = true
         ).mapToList {
-            RawCategory(it.getLong(KEY_ROWID), it.getLongOrNull(KEY_PARENTID), it.getString(KEY_LABEL), it.getInt(KEY_TYPE))
+            RawCategory(
+                it.getLong(KEY_ROWID),
+                it.getLongOrNull(KEY_PARENTID),
+                it.getString(KEY_LABEL),
+                it.getInt(KEY_TYPE)
+            )
         }.map(::categoryInfos)
 
     private val tags: Flow<List<TagInfo>> = run {
@@ -213,7 +224,9 @@ class ProviderLedgerSource(
         val splitParts: Map<Long, List<LedgerPart>>,
     )
 
-    private val ledgerMemo = Memo<LedgerInput, Ledger>("ledger: build") { (rows, ibans, accounts, tagLinks, splitParts) ->
+    private val ledgerMemo = Memo<LedgerInput, Ledger>(
+        "ledger: build"
+    ) { (rows, ibans, accounts, tagLinks, splitParts) ->
         Ledger(
             rows.map { row ->
                 val transaction = row.transaction

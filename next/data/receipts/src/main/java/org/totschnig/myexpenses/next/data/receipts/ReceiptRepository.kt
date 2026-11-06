@@ -23,7 +23,15 @@ class ReceiptRepository(
     /** What other features know about scanned receipts */
     val facts: SharedFlow<ReceiptFacts> =
         database.changes()
-            .map { measured("receipts: facts") { ReceiptFacts(database.loadAllItems().mapValues { (_, items) -> items.map { ScannedItem(it.name, it.amount, it.group) } }) } }
+            .map {
+                measured("receipts: facts") {
+                    ReceiptFacts(
+                        database.loadAllItems().mapValues { (_, items) ->
+                            items.map { ScannedItem(it.name, it.amount, it.group) }
+                        }
+                    )
+                }
+            }
             .flowOn(Dispatchers.IO)
             .distinctUntilChanged()
             .logTimings("receipts: facts")

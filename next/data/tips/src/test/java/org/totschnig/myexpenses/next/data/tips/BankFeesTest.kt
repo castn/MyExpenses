@@ -26,7 +26,12 @@ class BankFeesTest {
     )
 
     private fun monthlyAccountFee(months: Int = 12) = (0 until months).map {
-        transaction(-299, payee = "Sparkasse", comment = "Entgeltabrechnung Kontoführung", date = today.minusMonths(it.toLong()).minusDays(1))
+        transaction(
+            -299,
+            payee = "Sparkasse",
+            comment = "Entgeltabrechnung Kontoführung",
+            date = today.minusMonths(it.toLong()).minusDays(1)
+        )
     }
 
     private fun kind(payee: String? = null, comment: String? = null, category: String? = null) =
@@ -83,7 +88,9 @@ class BankFeesTest {
         val decisions = TipDecisions(dismissed = mapOf(tip.id to tip.facts))
         // One more month of the same fee is nothing new
         assertTrue(decisions.isDismissed(bankFees(fees.drop(1) + transaction(-299, comment = "Kontoführung"), today)!!))
-        assertFalse(decisions.isDismissed(bankFees(fees + transaction(-175, comment = "Auslandseinsatzentgelt"), today)!!))
+        assertFalse(
+            decisions.isDismissed(bankFees(fees + transaction(-175, comment = "Auslandseinsatzentgelt"), today)!!)
+        )
         val doubled = fees.map { it.copy(amount = it.amount * 2) }
         assertFalse(decisions.isDismissed(bankFees(doubled, today)!!))
     }

@@ -57,7 +57,10 @@ data class SearchTextCriterion(
         val like = Operation.LIKE.getOp(1)
         // IFNULL, so that excluding the search with NOT also keeps transactions without note or payee
         append("(IFNULL($KEY_COMMENT, '') $like OR IFNULL($KEY_REFERENCE_NUMBER, '') $like")
-        append(" OR IFNULL($KEY_PAYEEID, 0) IN (SELECT $KEY_ROWID FROM $TABLE_PAYEES WHERE $KEY_PAYEE_NAME_NORMALIZED $like OR $KEY_SHORT_NAME $like")
+        append(
+            " OR IFNULL($KEY_PAYEEID, 0) IN (SELECT $KEY_ROWID FROM $TABLE_PAYEES WHERE $KEY_PAYEE_NAME_NORMALIZED " +
+                "$like OR $KEY_SHORT_NAME $like"
+        )
         append(" OR $KEY_PARENTID IN (SELECT $KEY_ROWID FROM $TABLE_PAYEES WHERE $KEY_PAYEE_NAME_NORMALIZED $like))")
         append(" OR IFNULL($KEY_CATID, 0) IN (SELECT $KEY_ROWID FROM $TABLE_CATEGORIES WHERE $KEY_LABEL $like")
         append(" OR $KEY_PARENTID IN (SELECT $KEY_ROWID FROM $TABLE_CATEGORIES WHERE $KEY_LABEL $like))")

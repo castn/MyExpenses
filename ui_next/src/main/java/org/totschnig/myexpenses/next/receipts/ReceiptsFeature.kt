@@ -100,7 +100,12 @@ class ReceiptSettings(activity: ComponentActivity) : AreaSettings {
     }
 
     companion object : AreaSettings.Factory {
-        val MODEL = InsightSetting("ITEM_GROUP_MODEL", SettingsGroup.ENTRY, SettingKind.ACTION, R.string.next_settings_item_group_model)
+        val MODEL = InsightSetting(
+            "ITEM_GROUP_MODEL",
+            SettingsGroup.ENTRY,
+            SettingKind.ACTION,
+            R.string.next_settings_item_group_model
+        )
 
         override val settings = listOf(MODEL)
 

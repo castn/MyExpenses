@@ -81,7 +81,9 @@ class TransferTest : BaseTestWithRepository() {
         verifyTransaction(peer!!.id, peer.transferPeerId, testAccount2, testAccount1)
         contentResolver.update(
             ContentUris.appendId(
-                TransactionProvider.TRANSACTIONS_URI.buildUpon().appendPath(TransactionProvider.URI_SEGMENT_UNLINK_TRANSFER),
+                TransactionProvider.TRANSACTIONS_URI.buildUpon().appendPath(
+                    TransactionProvider.URI_SEGMENT_UNLINK_TRANSFER
+                ),
                 transfer.id
             ).build(), null, null, null
         )

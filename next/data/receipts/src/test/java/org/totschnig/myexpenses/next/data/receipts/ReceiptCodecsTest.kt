@@ -18,7 +18,15 @@ class ReceiptCodecsTest {
         total = 1200,
         items = listOf(
             ReceiptItem(
-                "Bananen", 199, BigDecimal("0.856"), "kg", 233, "A", Box(1, 2, 3, 4), ItemGroup.PRODUCE.id, groupByUser = true
+                "Bananen",
+                199,
+                BigDecimal("0.856"),
+                "kg",
+                233,
+                "A",
+                Box(1, 2, 3, 4),
+                ItemGroup.PRODUCE.id,
+                groupByUser = true
             ),
             ReceiptItem("Rabatt", -50)
         ),

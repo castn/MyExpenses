@@ -47,7 +47,8 @@ class CategorySuggesterTest {
 
     @Test
     fun payeeHistoryIsCertainFromFiveWithNinetyPercent() {
-        val history = List(9) { input(payeeId = 10, categoryId = supermarket.id) } + input(payeeId = 10, categoryId = leisure.id)
+        val history =
+            List(9) { input(payeeId = 10, categoryId = supermarket.id) } + input(payeeId = 10, categoryId = leisure.id)
         val suggestion = suggester(history).suggest(input(payeeId = 10))!!
         assertEquals(supermarket.id, suggestion.categoryId)
         assertEquals(SuggestionSource.PAYEE, suggestion.source)
@@ -58,7 +59,8 @@ class CategorySuggesterTest {
     fun fewOrMixedEarlierTransactionsAreOnlyASuggestion() {
         val few = List(4) { input(payeeId = 10, categoryId = supermarket.id) }
         assertFalse(suggester(few).suggest(input(payeeId = 10))!!.isCertain)
-        val mixed = List(6) { input(payeeId = 10, categoryId = supermarket.id) } + List(3) { input(payeeId = 10, categoryId = leisure.id) }
+        val mixed = List(6) { input(payeeId = 10, categoryId = supermarket.id) } +
+            List(3) { input(payeeId = 10, categoryId = leisure.id) }
         val suggestion = suggester(mixed).suggest(input(payeeId = 10))!!
         assertEquals(supermarket.id, suggestion.categoryId)
         assertFalse(suggestion.isCertain)
@@ -66,7 +68,8 @@ class CategorySuggesterTest {
 
     @Test
     fun noMajorityNoPayeeSuggestion() {
-        val tied = List(2) { input(payeeId = 10, categoryId = supermarket.id) } + List(2) { input(payeeId = 10, categoryId = leisure.id) }
+        val tied = List(2) { input(payeeId = 10, categoryId = supermarket.id) } +
+            List(2) { input(payeeId = 10, categoryId = leisure.id) }
         assertNull(suggester(tied).suggest(input(payeeId = 10, payeeName = "Amazon")))
     }
 
@@ -87,7 +90,8 @@ class CategorySuggesterTest {
     @Test
     fun wordsOfOtherPayeesLeadToASuggestion() {
         // Every branch is a payee of its own
-        val history = (1L..4L).map { input(payeeId = it, payeeName = "Rhein Center Markt $it", categoryId = supermarket.id) }
+        val history =
+            (1L..4L).map { input(payeeId = it, payeeName = "Rhein Center Markt $it", categoryId = supermarket.id) }
         val suggestion = suggester(history).suggest(input(payeeId = 99, payeeName = "Rhein Center Markt 7"))!!
         assertEquals(supermarket.id, suggestion.categoryId)
         assertEquals(SuggestionSource.WORDS, suggestion.source)
@@ -96,7 +100,8 @@ class CategorySuggesterTest {
 
     @Test
     fun paymentWordsTellNothing() {
-        val history = List(5) { input(payeeName = "Kino $it", comment = "Kartenzahlung girocard", categoryId = leisure.id) }
+        val history =
+            List(5) { input(payeeName = "Kino $it", comment = "Kartenzahlung girocard", categoryId = leisure.id) }
         assertNull(suggester(history).suggest(input(payeeName = "Unbekannt", comment = "Kartenzahlung girocard")))
     }
 
@@ -118,7 +123,9 @@ class CategorySuggesterTest {
 
     @Test
     fun deletedCategoryIsNotSuggested() {
-        val suggestion = suggester(rules = listOf(CategoryRule("r1", setOf(10), 999))).suggest(input(payeeId = 10, payeeName = "REWE"))!!
+        val suggestion = suggester(
+            rules = listOf(CategoryRule("r1", setOf(10), 999))
+        ).suggest(input(payeeId = 10, payeeName = "REWE"))!!
         assertEquals(SuggestionSource.MERCHANT, suggestion.source)
     }
 }

@@ -20,14 +20,14 @@
         <error line="21" column="110" source="standard:argument-list-wrapping" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/core/common/Perf.kt">
-        <error line="35" column="59" source="standard:binary-expression-wrapping" />
-        <error line="35" column="101" source="standard:max-line-length" />
-        <error line="55" column="20" source="standard:argument-list-wrapping" />
-        <error line="55" column="27" source="standard:argument-list-wrapping" />
-        <error line="55" column="54" source="standard:argument-list-wrapping" />
-        <error line="55" column="84" source="standard:argument-list-wrapping" />
-        <error line="55" column="96" source="standard:binary-expression-wrapping" />
-        <error line="55" column="101" source="standard:max-line-length" />
+        <error line="37" column="11" source="standard:multiline-if-else" />
+        <error line="37" column="70" source="standard:multiline-if-else" />
+        <error line="57" column="20" source="standard:argument-list-wrapping" />
+        <error line="57" column="27" source="standard:argument-list-wrapping" />
+        <error line="57" column="54" source="standard:argument-list-wrapping" />
+        <error line="57" column="84" source="standard:argument-list-wrapping" />
+        <error line="57" column="96" source="standard:binary-expression-wrapping" />
+        <error line="57" column="101" source="standard:max-line-length" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/core/common/icons/IconCatalog.kt">
         <error line="35" column="38" source="standard:wrapping" />
@@ -94,45 +94,30 @@
         <error line="299" column="40" source="standard:argument-list-wrapping" />
         <error line="315" column="56" source="standard:trailing-comma-on-call-site" />
         <error line="317" column="10" source="standard:trailing-comma-on-call-site" />
-        <error line="324" column="24" source="standard:function-literal" />
-        <error line="324" column="25" source="standard:wrapping" />
-        <error line="324" column="35" source="standard:function-literal" />
-        <error line="324" column="45" source="standard:function-literal" />
-        <error line="324" column="45" source="standard:argument-list-wrapping" />
-        <error line="324" column="46" source="standard:wrapping" />
-        <error line="324" column="55" source="standard:function-literal" />
-        <error line="324" column="58" source="standard:function-literal" />
-        <error line="324" column="58" source="standard:argument-list-wrapping" />
-        <error line="324" column="59" source="standard:wrapping" />
-        <error line="324" column="69" source="standard:function-literal" />
-        <error line="324" column="70" source="standard:argument-list-wrapping" />
-        <error line="324" column="96" source="standard:function-literal" />
-        <error line="324" column="101" source="standard:max-line-length" />
-        <error line="324" column="125" source="standard:function-literal" />
-        <error line="338" column="35" source="standard:function-literal" />
-        <error line="338" column="45" source="standard:argument-list-wrapping" />
-        <error line="338" column="57" source="standard:argument-list-wrapping" />
-        <error line="338" column="59" source="standard:argument-list-wrapping" />
-        <error line="338" column="61" source="standard:function-literal" />
-        <error line="338" column="75" source="standard:function-literal" />
-        <error line="338" column="87" source="standard:function-literal" />
-        <error line="338" column="94" source="standard:function-literal" />
-        <error line="338" column="101" source="standard:max-line-length" />
-        <error line="338" column="108" source="standard:binary-expression-wrapping" />
-        <error line="338" column="112" source="standard:function-literal" />
-        <error line="359" column="28" source="standard:function-literal" />
-        <error line="359" column="29" source="standard:wrapping" />
-        <error line="359" column="30" source="standard:mixed-condition-operators" />
-        <error line="359" column="46" source="standard:argument-list-wrapping" />
-        <error line="359" column="49" source="standard:argument-list-wrapping" />
-        <error line="359" column="62" source="standard:argument-list-wrapping" />
-        <error line="359" column="69" source="standard:argument-list-wrapping" />
-        <error line="359" column="73" source="standard:binary-expression-wrapping" />
-        <error line="359" column="96" source="standard:binary-expression-wrapping" />
-        <error line="359" column="101" source="standard:max-line-length" />
-        <error line="359" column="107" source="standard:binary-expression-wrapping" />
-        <error line="359" column="111" source="standard:function-literal" />
-        <error line="360" column="1" source="standard:indent" />
+        <error line="341" column="35" source="standard:function-literal" />
+        <error line="341" column="45" source="standard:argument-list-wrapping" />
+        <error line="341" column="57" source="standard:argument-list-wrapping" />
+        <error line="341" column="59" source="standard:argument-list-wrapping" />
+        <error line="341" column="61" source="standard:function-literal" />
+        <error line="341" column="75" source="standard:function-literal" />
+        <error line="341" column="87" source="standard:function-literal" />
+        <error line="341" column="94" source="standard:function-literal" />
+        <error line="341" column="101" source="standard:max-line-length" />
+        <error line="341" column="108" source="standard:binary-expression-wrapping" />
+        <error line="341" column="112" source="standard:function-literal" />
+        <error line="362" column="28" source="standard:function-literal" />
+        <error line="362" column="29" source="standard:wrapping" />
+        <error line="362" column="30" source="standard:mixed-condition-operators" />
+        <error line="362" column="46" source="standard:argument-list-wrapping" />
+        <error line="362" column="49" source="standard:argument-list-wrapping" />
+        <error line="362" column="62" source="standard:argument-list-wrapping" />
+        <error line="362" column="69" source="standard:argument-list-wrapping" />
+        <error line="362" column="73" source="standard:binary-expression-wrapping" />
+        <error line="362" column="96" source="standard:binary-expression-wrapping" />
+        <error line="362" column="101" source="standard:max-line-length" />
+        <error line="362" column="107" source="standard:binary-expression-wrapping" />
+        <error line="362" column="111" source="standard:function-literal" />
+        <error line="363" column="1" source="standard:indent" />
     </file>
     <file name="src/test/java/org/totschnig/myexpenses/next/core/common/JsonCodecTest.kt">
         <error line="19" column="22" source="standard:argument-list-wrapping" />

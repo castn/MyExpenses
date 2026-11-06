@@ -118,7 +118,13 @@ fun OverviewCard(
     }
     val color = MaterialTheme.colorScheme.surfaceContainerLowest
     if (onClick != null) {
-        Surface(onClick = onClick, modifier = modifier.fillMaxWidth(), shape = Shapes.card, color = color, content = body)
+        Surface(
+            onClick = onClick,
+            modifier = modifier.fillMaxWidth(),
+            shape = Shapes.card,
+            color = color,
+            content = body
+        )
     } else {
         Surface(modifier = modifier.fillMaxWidth(), shape = Shapes.card, color = color, content = body)
     }

@@ -67,7 +67,10 @@ fun CategoryDecisions.withRule(counterpart: Counterpart, categoryId: Long, newId
     val existing = others.find { it.categoryId == categoryId }
     return copy(
         rules = if (existing != null) others.map {
-            if (it === existing) it.copy(payeeIds = it.payeeIds + payeeIds, merchants = it.merchants + merchants) else it
+            if (it === existing) it.copy(
+                payeeIds = it.payeeIds + payeeIds,
+                merchants = it.merchants + merchants
+            ) else it
         }
         else others + CategoryRule(newId(), payeeIds, categoryId, merchants)
     )

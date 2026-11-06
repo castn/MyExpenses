@@ -4,8 +4,6 @@
   <CurrentIssues>
     <ID>CyclomaticComplexMethod:PayeeLogoDialog.kt:@Composable fun PayeeLogoDialog</ID>
     <ID>LongMethod:PayeeLogoDialog.kt:@Composable fun PayeeLogoDialog</ID>
-    <ID>MaxLineLength:PayeeImageDialog.kt:Icon(Icons.Outlined.Language, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)</ID>
-    <ID>MaxLineLength:PayeeImageDialog.kt:IconCatalog.suggest(payee.displayName, *categoryPath?.split('&gt;')?.asReversed()?.toTypedArray().orEmpty())</ID>
     <ID>ReturnCount:MerchantLogos.kt:MerchantLogos$private suspend fun loadEntered: Lookup</ID>
   </CurrentIssues>
 </SmellBaseline>

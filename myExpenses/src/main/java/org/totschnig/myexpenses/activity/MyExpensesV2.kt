@@ -231,7 +231,8 @@ open class MyExpensesV2 : BaseMyExpenses<MyExpensesV2ViewModel>(),
                         LaunchedEffect(
                             viewModel.accountList.collectAsState().value.isNotEmpty(),
                             selectedAccountIdFromState,
-                            viewModel.activeFilter.collectAsState().value //reloading when filter changes, because aggregate accounts have same id (0)
+                            //reloading when filter changes, because aggregate accounts have same id (0)
+                            viewModel.activeFilter.collectAsState().value
                         ) {
                             with(currentAccount) {
                                 if (this != null) {
@@ -262,7 +263,9 @@ open class MyExpensesV2 : BaseMyExpenses<MyExpensesV2ViewModel>(),
                                         viewModel.saveTrade(fullAccount, intent)
                                         if (stayOpen) {
                                             report(
-                                                IllegalStateException("did not expect stayOpen to be true when editing trade")
+                                                IllegalStateException(
+                                                    "did not expect stayOpen to be true when editing trade"
+                                                )
                                             )
                                         }
                                     },
@@ -591,7 +594,13 @@ open class MyExpensesV2 : BaseMyExpenses<MyExpensesV2ViewModel>(),
         adView: @Composable (MutableState<Boolean>) -> Unit,
         isNavigationVisible: Boolean,
         isCurrencyUsed: suspend (String) -> Boolean,
-        onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -> CurrencyUnit?,
+        onCreateAsset: suspend (
+            code: String,
+            symbol: String,
+            fractionDigits: Int,
+            label: String?,
+            commodityType: CommodityType
+        ) -> CurrencyUnit?,
         pageContent: @Composable (pageAccount: PageAccount, isCurrent: Boolean) -> Unit,
     ) {
         MainScreenAdaptive(

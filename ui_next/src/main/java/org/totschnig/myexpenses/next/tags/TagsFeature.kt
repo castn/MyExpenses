@@ -43,7 +43,13 @@ class TagsFeature(private val activity: ComponentActivity, private val data: Nex
     val viewModel by activity.viewModelsOf { TagsViewModel(data.tags, database) }
     val learning by activity.viewModelsOf { TagLearningViewModel(data.tags, database) }
     val detections by activity.viewModelsOf {
-        TagDetectionsViewModel(data.ledgerSource, data.tags.rows, data.contracts.facts, TagStore(data.dataStore), database)
+        TagDetectionsViewModel(
+            data.ledgerSource,
+            data.tags.rows,
+            data.contracts.facts,
+            TagStore(data.dataStore),
+            database
+        )
     }
 
     @Composable
@@ -128,9 +134,13 @@ class TagSettings(activity: ComponentActivity) : AreaSettings {
     }
 
     companion object : AreaSettings.Factory {
-        val RULES = InsightSetting("TAG_RULES", SettingsGroup.INSIGHTS, SettingKind.ACTION, R.string.next_settings_tag_rules)
+        val RULES =
+            InsightSetting("TAG_RULES", SettingsGroup.INSIGHTS, SettingKind.ACTION, R.string.next_settings_tag_rules)
         val REJECTED = InsightSetting(
-            "REJECTED_SUGGESTIONS", SettingsGroup.INSIGHTS, SettingKind.ACTION, R.string.next_settings_rejected_suggestions
+            "REJECTED_SUGGESTIONS",
+            SettingsGroup.INSIGHTS,
+            SettingKind.ACTION,
+            R.string.next_settings_rejected_suggestions
         )
 
         override val settings = listOf(RULES, REJECTED)

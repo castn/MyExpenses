@@ -174,7 +174,11 @@ private fun SideSheet(
                     Modifier
                         .fillMaxSize()
                         .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.32f))
-                        .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, onClick = close)
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = close
+                        )
                 )
             }
             val towardsEnd = if (LocalLayoutDirection.current == LayoutDirection.Ltr) 1 else -1
@@ -295,7 +299,12 @@ fun <T> MultiChoiceSheet(
     AdaptiveSheet(
         onDismiss = onDismiss,
         title = title,
-        actions = { ConfirmActions(onConfirm, confirmEnabled) { TextButton(onClick = onDismiss) { Text(stringResource(android.R.string.cancel)) } } }
+        actions = {
+            ConfirmActions(
+                onConfirm,
+                confirmEnabled
+            ) { TextButton(onClick = onDismiss) { Text(stringResource(android.R.string.cancel)) } }
+        }
     ) {
         MultiChoiceContent(options, selected, onToggle, label, supportingText, intro, header, footer)
     }
@@ -334,7 +343,9 @@ fun FormSheet(
         closeLabel = dismiss.takeIf { hasSecondary },
         actions = {
             ConfirmActions(onConfirm, confirmEnabled, confirmLabel) {
-                if (onSecondary != null && secondaryLabel != null) TextButton(onClick = onSecondary) { Text(secondaryLabel) }
+                if (
+                    onSecondary != null && secondaryLabel != null
+                ) TextButton(onClick = onSecondary) { Text(secondaryLabel) }
                 else TextButton(onClick = onDismiss) { Text(dismiss) }
             }
         }
@@ -529,7 +540,12 @@ private fun ActionRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (icon != null) {
-            Icon(icon(), contentDescription = null, tint = tint ?: MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
+            Icon(
+                icon(),
+                contentDescription = null,
+                tint = tint ?: MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(24.dp)
+            )
             Spacer(Modifier.width(Spacing.content))
         } else {
             Spacer(Modifier.width(24.dp + Spacing.content))
@@ -541,7 +557,11 @@ private fun ActionRow(
             modifier = Modifier.weight(1f)
         )
         if (hasSub) {
-            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+            Icon(
+                Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
     }
 }

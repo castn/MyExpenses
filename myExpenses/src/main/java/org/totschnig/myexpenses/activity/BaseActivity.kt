@@ -491,7 +491,8 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
                     )
                     Feature.values.find { featureState.modules.contains(it.mainModule.moduleName) }
                         ?.also {
-                            //after the dynamic feature module has been installed, we need to check if data needed by the module (e.g. Tesseract) has been downloaded
+                            //after the dynamic feature module has been installed, we need to check if data needed by
+                            // the module (e.g. Tesseract) has been downloaded
                             if (!featureViewModel.isFeatureAvailable(this, it)) {
                                 featureViewModel.requestFeature(this, it)
                             } else {
@@ -499,8 +500,10 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
                             }
                         }
                         ?: run {
-                            //This should be an exceptional case, for example user has installed Dropbox # Jackson, then uninstalls Jackson.
-                            //when later we need to install Jackson again, we no longer know for which feature to call onFeatureAvailable
+                            //This should be an exceptional case, for example user has installed Dropbox # Jackson, then
+                            // uninstalls Jackson.
+                            //when later we need to install Jackson again, we no longer know for which feature to call
+                            // onFeatureAvailable
                             report(Throwable("No feature found for ${featureState.modules.joinToString()}"))
                         }
 
@@ -541,7 +544,10 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
                     result?.onFailure {
                         showDismissibleSnackBar(it.safeMessage, callback)
                     }?.onSuccess {
-                        if (it == BaseFunctionalityViewModel.Scheme.HTTP || it == BaseFunctionalityViewModel.Scheme.HTTPS) {
+                        if (
+                            it == BaseFunctionalityViewModel.Scheme.HTTP ||
+                                it == BaseFunctionalityViewModel.Scheme.HTTPS
+                        ) {
                             showDismissibleSnackBar("HTTP PUT completed successfully.", callback)
                         }
                     }

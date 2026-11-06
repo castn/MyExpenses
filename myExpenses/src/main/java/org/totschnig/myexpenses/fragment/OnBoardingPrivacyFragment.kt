@@ -101,7 +101,9 @@ class OnBoardingPrivacyFragment : OnboardingFragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             binding.autoBackup.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    hostActivity.requestNotificationPermission(PermissionHelper.PERMISSIONS_REQUEST_NOTIFICATIONS_AUTO_BACKUP)
+                    hostActivity.requestNotificationPermission(
+                        PermissionHelper.PERMISSIONS_REQUEST_NOTIFICATIONS_AUTO_BACKUP
+                    )
                 }
             }
         }

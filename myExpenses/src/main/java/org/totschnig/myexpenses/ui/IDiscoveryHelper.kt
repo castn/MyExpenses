@@ -12,7 +12,13 @@ interface IDiscoveryHelper {
     fun markDiscovered(feature: Feature)
 
     companion object NO_OP : IDiscoveryHelper {
-        override fun discover(context: Activity, target: View, daysSinceInstall: Int, feature: Feature, measureTarget: Boolean) = false
+        override fun discover(
+            context: Activity,
+            target: View,
+            daysSinceInstall: Int,
+            feature: Feature,
+            measureTarget: Boolean
+        ) = false
 
         override fun markDiscovered(feature: Feature) {}
     }

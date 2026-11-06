@@ -109,7 +109,11 @@ open class DebtViewModel(application: Application) : PrintViewModel(application)
             val currency = it.getString(5)
             runningTotal -= if (currency == debt.currency.code) amount else {
                 if (currency != currencyContext.homeCurrencyString) {
-                    CrashHandler.report(IllegalStateException("Currency mismatch in debt transactions, debt currency is not home currency"))
+                    CrashHandler.report(
+                        IllegalStateException(
+                            "Currency mismatch in debt transactions, debt currency is not home currency"
+                        )
+                    )
                     0
                 } else equivalentAmount
             }

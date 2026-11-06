@@ -16,11 +16,17 @@ internal fun navigationSuiteType(
     isLandscape: Boolean,
 ): NavigationSuiteType = when (mode) {
     MenuItem.NavigationMode.DEFAULT -> calculated // should not happen
-    MenuItem.NavigationMode.FIXED_BOTTOM -> calculated // which is either ShortNavigationBarCompact or ShortNavigationBarMedium for phone
-    MenuItem.NavigationMode.TOGGLEABLE_RAIL -> if (isNavigationVisible) NavigationSuiteType.NavigationRail else NavigationSuiteType.None
+    // which is either ShortNavigationBarCompact or ShortNavigationBarMedium for phone
+    MenuItem.NavigationMode.FIXED_BOTTOM -> calculated
+    MenuItem.NavigationMode.TOGGLEABLE_RAIL ->
+        if (isNavigationVisible) NavigationSuiteType.NavigationRail else NavigationSuiteType.None
     MenuItem.NavigationMode.ALWAYS_RAIL -> NavigationSuiteType.WideNavigationRailCollapsed
     MenuItem.NavigationMode.ADAPTIVE ->
-        if (isLandscape) NavigationSuiteType.WideNavigationRailCollapsed else NavigationSuiteType.ShortNavigationBarMedium
+        if (isLandscape) {
+            NavigationSuiteType.WideNavigationRailCollapsed
+        } else {
+            NavigationSuiteType.ShortNavigationBarMedium
+        }
 }
 
 internal fun NavigationSuiteType.isBar(): Boolean =

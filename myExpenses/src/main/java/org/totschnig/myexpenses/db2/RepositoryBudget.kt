@@ -110,8 +110,10 @@ private fun buildDateFilterClauseCurrentPeriod(budget: Budget): String {
     return when (budget.grouping) {
         Grouping.YEAR -> year
         Grouping.DAY -> "$year AND $DAY = ${budget.grouping.queryArgumentForThisSecond}"
-        Grouping.WEEK -> "$yearOfWeekStart = $thisYearOfWeekStart AND $week = ${budget.grouping.queryArgumentForThisSecond}"
-        Grouping.MONTH -> "$yearOfMonthStart = $thisYearOfMonthStart AND $month = ${budget.grouping.queryArgumentForThisSecond}"
+        Grouping.WEEK ->
+            "$yearOfWeekStart = $thisYearOfWeekStart AND $week = ${budget.grouping.queryArgumentForThisSecond}"
+        Grouping.MONTH ->
+            "$yearOfMonthStart = $thisYearOfMonthStart AND $month = ${budget.grouping.queryArgumentForThisSecond}"
         Grouping.NONE -> budget.durationAsSqlFilter()
     }
 }
@@ -262,7 +264,12 @@ fun Repository.budgetAllocation(
     BUDGET_ALLOCATIONS_URI,
     arrayOf(KEY_BUDGET),
     "$KEY_BUDGETID = ? AND $KEY_CATID = ?" + if (period == null) "" else  "AND $KEY_YEAR = ? AND $KEY_SECOND_GROUP = ?",
-    listOfNotNull(budgetId.toString(), categoryId.toString(), period?.first?.toString(), period?.second?.toString()).toTypedArray(),
+    listOfNotNull(
+        budgetId.toString(),
+        categoryId.toString(),
+        period?.first?.toString(),
+        period?.second?.toString()
+    ).toTypedArray(),
     null
 )?.use {
     if (it.moveToFirst()) it.getLong(0) else null

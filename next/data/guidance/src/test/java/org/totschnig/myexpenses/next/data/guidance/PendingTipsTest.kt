@@ -46,13 +46,19 @@ class PendingTipsTest {
 
     @Test
     fun aTipThatIsThereIsNotPending() {
-        val ids = setOf("${ItemGroupRising.ID_PREFIX}SWEETS_SNACKS", DrugstoreInSupermarkets.ID, DepositNotReturned.ID, Outliers.ID)
+        val ids = setOf(
+            "${ItemGroupRising.ID_PREFIX}SWEETS_SNACKS",
+            DrugstoreInSupermarkets.ID,
+            DepositNotReturned.ID,
+            Outliers.ID
+        )
         assertEquals(emptyList<PendingTip>(), pendingTips(readiness(uncategorized = 20), ids))
     }
 
     @Test
     fun receiptsOfOtherShopsDoNotCountForTheSupermarket() {
-        val readiness = readiness(scannedRecent = 4, scannedUsual = 6, scannedLastYear = 10, scannedSupermarketLastYear = 1)
+        val readiness =
+            readiness(scannedRecent = 4, scannedUsual = 6, scannedLastYear = 10, scannedSupermarketLastYear = 1)
         assertEquals(listOf(PendingTip.DRUGSTORE_IN_SUPERMARKETS), pendingTips(readiness, emptySet()))
     }
 

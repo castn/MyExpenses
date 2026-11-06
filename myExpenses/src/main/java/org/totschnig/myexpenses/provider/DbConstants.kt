@@ -88,7 +88,9 @@ fun checkSealedWithAlias(baseTable: String) =
  */
 fun checkForSealedAccount(baseTable: String, innerTable: String, withTransfer: Boolean = true) =
     if (withTransfer)
-        "(SELECT max($KEY_SEALED) FROM $TABLE_ACCOUNTS WHERE $KEY_ROWID = $baseTable.$KEY_ACCOUNTID OR $KEY_ROWID = $KEY_TRANSFER_ACCOUNT OR $KEY_ROWID in (SELECT $KEY_TRANSFER_ACCOUNT FROM $innerTable WHERE $KEY_PARENTID = $baseTable.$KEY_ROWID))"
+        "(SELECT max($KEY_SEALED) FROM $TABLE_ACCOUNTS WHERE $KEY_ROWID = $baseTable.$KEY_ACCOUNTID OR $KEY_ROWID = " +
+            "$KEY_TRANSFER_ACCOUNT OR $KEY_ROWID in (SELECT $KEY_TRANSFER_ACCOUNT FROM $innerTable WHERE " +
+                "$KEY_PARENTID = $baseTable.$KEY_ROWID))"
     else "(SELECT $KEY_SEALED FROM $TABLE_ACCOUNTS WHERE $KEY_ROWID = $KEY_ACCOUNTID)"
 
 /**
@@ -146,8 +148,13 @@ fun budgetColumn(year: String?, second: String?, withAlias: Boolean = true): Str
         second,
         false
     )
+    val secondCondition = second?.let {
+        " OR (coalesce($KEY_YEAR,0) = $year AND coalesce($KEY_SECOND_GROUP,0) < $it)"
+    } ?: ""
     return (if (year == null) mainSelect else "coalesce($mainSelect," +
-            "(SELECT $KEY_BUDGET from Allocations WHERE $KEY_ONE_TIME = 0 AND (coalesce($KEY_YEAR,0) < $year ${second?.let { " OR (coalesce($KEY_YEAR,0) = $year AND coalesce($KEY_SECOND_GROUP,0) < $it)" } ?: ""}) ORDER BY $KEY_YEAR DESC ${if (second == null) "" else ", $KEY_SECOND_GROUP DESC"} LIMIT 1))") +
+            "(SELECT $KEY_BUDGET from Allocations WHERE $KEY_ONE_TIME = 0 AND (coalesce($KEY_YEAR,0) < $year " +
+                "$secondCondition) " +
+                "ORDER BY $KEY_YEAR DESC ${if (second == null) "" else ", $KEY_SECOND_GROUP DESC"} LIMIT 1))") +
             if (withAlias) " AS $KEY_BUDGET" else ""
 }
 
@@ -180,7 +187,8 @@ fun categoryTreeWithSum(
                 val amountStatement = if (aggregateNeutral) KEY_DISPLAY_AMOUNT else
                 //the ELSE in the CASE statement is FLAG_NEUTRAL because the categoryTreeCTE
                 // returns categories which are either the requested type or neutral
-                    "CASE $KEY_TYPE WHEN $type THEN $KEY_DISPLAY_AMOUNT ELSE ${if (incomeType) "max" else "min"}($KEY_DISPLAY_AMOUNT, 0) END"
+                    "CASE $KEY_TYPE WHEN $type THEN $KEY_DISPLAY_AMOUNT ELSE " +
+                        "${if (incomeType) "max" else "min"}($KEY_DISPLAY_AMOUNT, 0) END"
                 append("(SELECT $aggregateFunction($amountStatement) FROM $CTE_TRANSACTION_AMOUNTS ")
                 append(") AS $KEY_SUM")
             }
@@ -494,7 +502,8 @@ fun accountQueryCTEV1(
         "$TABLE_ACCOUNTS.$KEY_LABEL",
         "$TABLE_ACCOUNTS.$KEY_DESCRIPTION AS $KEY_DESCRIPTION",
         KEY_OPENING_BALANCE,
-        "CASE WHEN $KEY_CURRENCY = '$homeCurrency' THEN $KEY_OPENING_BALANCE ELSE $KEY_OPENING_BALANCE * $KEY_EXCHANGE_RATE END AS $KEY_EQUIVALENT_OPENING_BALANCE",
+        "CASE WHEN $KEY_CURRENCY = '$homeCurrency' THEN $KEY_OPENING_BALANCE ELSE $KEY_OPENING_BALANCE * " +
+            "$KEY_EXCHANGE_RATE END AS $KEY_EQUIVALENT_OPENING_BALANCE",
         "$TABLE_ACCOUNTS.$KEY_CURRENCY AS $KEY_CURRENCY",
         KEY_COLOR,
         "$TABLE_ACCOUNTS.$KEY_GROUPING AS $KEY_GROUPING",
@@ -517,7 +526,9 @@ fun accountQueryCTEV1(
         KEY_CRITERION,
         KEY_SEALED,
         "$KEY_OPENING_BALANCE + coalesce($KEY_CURRENT,0) AS $KEY_CURRENT_BALANCE",
-        "($KEY_OPENING_BALANCE + coalesce($KEY_CURRENT,0)) * CASE WHEN $KEY_CURRENCY = '$homeCurrency' THEN 1 WHEN $dynamicExpression THEN coalesce($CTE_LATEST_RATES.$KEY_VALUE,$KEY_EXCHANGE_RATE) ELSE $KEY_EXCHANGE_RATE END AS $KEY_EQUIVALENT_CURRENT_BALANCE",
+        "($KEY_OPENING_BALANCE + coalesce($KEY_CURRENT,0)) * CASE WHEN $KEY_CURRENCY = '$homeCurrency' THEN 1 WHEN " +
+            "$dynamicExpression THEN coalesce($CTE_LATEST_RATES.$KEY_VALUE,$KEY_EXCHANGE_RATE) ELSE " +
+                "$KEY_EXCHANGE_RATE END AS $KEY_EQUIVALENT_CURRENT_BALANCE",
         KEY_SUM_INCOME,
         KEY_SUM_EXPENSES,
         KEY_SUM_TRANSFERS,
@@ -525,7 +536,9 @@ fun accountQueryCTEV1(
         KEY_EQUIVALENT_EXPENSES,
         KEY_EQUIVALENT_TRANSFERS,
         "$KEY_OPENING_BALANCE + coalesce($KEY_TOTAL,0) AS $KEY_TOTAL",
-        "($KEY_OPENING_BALANCE + coalesce($KEY_TOTAL,0)) * CASE WHEN $KEY_CURRENCY = '$homeCurrency' THEN 1 WHEN $dynamicExpression THEN coalesce($CTE_LATEST_RATES.$KEY_VALUE,$KEY_EXCHANGE_RATE) ELSE $KEY_EXCHANGE_RATE END AS $KEY_EQUIVALENT_TOTAL",
+        "($KEY_OPENING_BALANCE + coalesce($KEY_TOTAL,0)) * CASE WHEN $KEY_CURRENCY = '$homeCurrency' THEN 1 WHEN " +
+            "$dynamicExpression THEN coalesce($CTE_LATEST_RATES.$KEY_VALUE,$KEY_EXCHANGE_RATE) ELSE " +
+                "$KEY_EXCHANGE_RATE END AS $KEY_EQUIVALENT_TOTAL",
         "$KEY_OPENING_BALANCE + coalesce($KEY_CLEARED_TOTAL,0) AS $KEY_CLEARED_TOTAL",
         "$KEY_OPENING_BALANCE + coalesce($KEY_RECONCILED_TOTAL,0) AS $KEY_RECONCILED_TOTAL",
         KEY_USAGES,
@@ -625,7 +638,8 @@ fun accountQueryCTE(
         "$TABLE_ACCOUNTS.$KEY_LABEL",
         "$TABLE_ACCOUNTS.$KEY_DESCRIPTION AS $KEY_DESCRIPTION",
         KEY_OPENING_BALANCE,
-        "CASE WHEN $KEY_CURRENCY = '$homeCurrency' THEN $KEY_OPENING_BALANCE ELSE $KEY_OPENING_BALANCE * $KEY_EXCHANGE_RATE END AS $KEY_EQUIVALENT_OPENING_BALANCE",
+        "CASE WHEN $KEY_CURRENCY = '$homeCurrency' THEN $KEY_OPENING_BALANCE ELSE $KEY_OPENING_BALANCE * " +
+            "$KEY_EXCHANGE_RATE END AS $KEY_EQUIVALENT_OPENING_BALANCE",
         "$TABLE_ACCOUNTS.$KEY_CURRENCY AS $KEY_CURRENCY",
         KEY_COLOR,
         "$TABLE_ACCOUNTS.$KEY_GROUPING AS $KEY_GROUPING",
@@ -794,7 +808,11 @@ private fun transactionsJoin(
     withDisplayAmount: Boolean = false,
     forHome: String? = null,
 ) = buildString {
-    append(" SELECT $tableName.*, Tree.$KEY_PATH, Tree.$KEY_ICON, Tree.$KEY_TYPE, $TABLE_PAYEES.$KEY_PAYEE_NAME, $TABLE_PAYEES.$KEY_SHORT_NAME, $TABLE_METHODS.$KEY_LABEL AS $KEY_METHOD_LABEL, $TABLE_METHODS.$KEY_ICON AS $KEY_METHOD_ICON")
+    append(
+        " SELECT $tableName.*, Tree.$KEY_PATH, Tree.$KEY_ICON, Tree.$KEY_TYPE, $TABLE_PAYEES.$KEY_PAYEE_NAME, " +
+            "$TABLE_PAYEES.$KEY_SHORT_NAME, $TABLE_METHODS.$KEY_LABEL AS $KEY_METHOD_LABEL, $TABLE_METHODS.$KEY_ICON " +
+                "AS $KEY_METHOD_ICON"
+    )
     if (withPlanInstance) {
         append(", $TABLE_PLAN_INSTANCE_STATUS.$KEY_TEMPLATEID")
     }
@@ -813,7 +831,10 @@ private fun transactionsJoin(
         | LEFT JOIN Tree ON $KEY_CATID = TREE.$KEY_ROWID""".trimMargin()
     )
     if (withPlanInstance) {
-        append(" LEFT JOIN $TABLE_PLAN_INSTANCE_STATUS ON $tableName.$KEY_ROWID = $TABLE_PLAN_INSTANCE_STATUS.$KEY_TRANSACTIONID")
+        append(
+            " LEFT JOIN $TABLE_PLAN_INSTANCE_STATUS ON $tableName.$KEY_ROWID = " +
+                "$TABLE_PLAN_INSTANCE_STATUS.$KEY_TRANSACTIONID"
+        )
     }
     append(tagJoin(tableName))
     if (forHome != null) {
@@ -923,7 +944,10 @@ fun buildTransactionGroupCte(
             //they still count if
             // 1) transaction is mapped to a transfer category
             // 2) one side of the transfer is in an account that is excluded from totals
-            append("$aggregateFunction(CASE WHEN effective_type = $FLAG_TRANSFER THEN $KEY_DISPLAY_AMOUNT ELSE 0 END) AS $KEY_SUM_TRANSFERS,")
+            append(
+                "$aggregateFunction(CASE WHEN effective_type = $FLAG_TRANSFER THEN $KEY_DISPLAY_AMOUNT ELSE 0 END) " +
+                    "AS $KEY_SUM_TRANSFERS,"
+            )
         }
 
         append("MAX($KEY_DATE) AS $KEY_DATE") //needed for julian day and week start calculation
@@ -937,13 +961,19 @@ fun buildTransactionGroupCte(
             append(",${periodEndExpression(group)} as $KEY_PERIOD_END")
         }
         //For the moment, we report only categories that are not defined as transfers
-        append(",count(CASE WHEN  $KEY_CATID > 0 AND $WHERE_NOT_VOID  AND effective_type != $FLAG_TRANSFER THEN 1 ELSE null END) as $KEY_MAPPED_CATEGORIES")
+        append(
+            ",count(CASE WHEN  $KEY_CATID > 0 AND $WHERE_NOT_VOID  AND effective_type != $FLAG_TRANSFER THEN 1 ELSE " +
+                "null END) as $KEY_MAPPED_CATEGORIES"
+        )
         append(" FROM $CTE_SEARCH ")
-        append(" WHERE $WHERE_NOT_SPLIT AND ${if (withFilter) WHERE_NOT_ARCHIVE else WHERE_NOT_ARCHIVED} AND $selection")
+        append(
+            " WHERE $WHERE_NOT_SPLIT AND ${if (withFilter) WHERE_NOT_ARCHIVE else WHERE_NOT_ARCHIVED} AND $selection"
+        )
         val groupBy = when (group) {
             Grouping.NONE -> if (breakdownByAccount) KEY_ACCOUNTID else null
             Grouping.YEAR -> if (breakdownByAccount) "$KEY_YEAR, $KEY_ACCOUNTID" else KEY_YEAR
-            else -> if (breakdownByAccount) "$KEY_YEAR, $KEY_SECOND_GROUP, $KEY_ACCOUNTID" else "$KEY_YEAR, $KEY_SECOND_GROUP"
+            else -> if (breakdownByAccount) "$KEY_YEAR, $KEY_SECOND_GROUP, " +
+                "$KEY_ACCOUNTID" else "$KEY_YEAR, $KEY_SECOND_GROUP"
         }
         groupBy?.let { append(" GROUP by $it") }
         append(")")
@@ -997,8 +1027,10 @@ fun transactionSumQuery(
         val sumExpression = "$aggregateFunction($KEY_DISPLAY_AMOUNT)"
         val columns = projection.map {
             when (it) {
-                KEY_SUM_EXPENSES -> "(SELECT $sumExpression FROM $CTE_TRANSACTION_AMOUNTS WHERE $KEY_TYPE = $FLAG_EXPENSE) AS $KEY_SUM_EXPENSES"
-                KEY_SUM_INCOME -> "(SELECT $sumExpression FROM $CTE_TRANSACTION_AMOUNTS WHERE $KEY_TYPE = $FLAG_INCOME) AS $KEY_SUM_INCOME"
+                KEY_SUM_EXPENSES -> "(SELECT $sumExpression FROM $CTE_TRANSACTION_AMOUNTS WHERE $KEY_TYPE = " +
+                    "$FLAG_EXPENSE) AS $KEY_SUM_EXPENSES"
+                KEY_SUM_INCOME -> "(SELECT $sumExpression FROM $CTE_TRANSACTION_AMOUNTS WHERE $KEY_TYPE = " +
+                    "$FLAG_INCOME) AS $KEY_SUM_INCOME"
                 else -> throw IllegalArgumentException()
             }
         }
@@ -1024,7 +1056,10 @@ fun archiveSumCTE(
         append(KEY_AMOUNT)
         append(" END AS integer) AS $KEY_DISPLAY_AMOUNT")
         append(" FROM $VIEW_WITH_ACCOUNT")
-        append(" WHERE $WHERE_NOT_SPLIT AND ($KEY_PARENTID = $archiveId OR (SELECT $KEY_PARENTID FROM $TABLE_TRANSACTIONS parents WHERE $KEY_ROWID = $VIEW_WITH_ACCOUNT.$KEY_PARENTID) = $archiveId))")
+        append(
+            " WHERE $WHERE_NOT_SPLIT AND ($KEY_PARENTID = $archiveId OR (SELECT $KEY_PARENTID FROM " +
+                "$TABLE_TRANSACTIONS parents WHERE $KEY_ROWID = $VIEW_WITH_ACCOUNT.$KEY_PARENTID) = $archiveId))"
+        )
     }
 }
 
@@ -1037,7 +1072,9 @@ fun calcEquivalentAmountForSplitParts(forTable: String) =
     "CASE WHEN $forTable.$KEY_PARENTID THEN (SELECT 1.0 * $KEY_EQUIVALENT_AMOUNT / $KEY_AMOUNT FROM $forTable parent WHERE $KEY_ROWID = $forTable.$KEY_PARENTID) * $KEY_AMOUNT ELSE $KEY_EQUIVALENT_AMOUNT END"
 
 fun getExchangeRate(forTable: String, accountIdColumn: String, homeCurrency: String) = """
-    coalesce((SELECT $KEY_EXCHANGE_RATE FROM $TABLE_ACCOUNT_EXCHANGE_RATES WHERE $KEY_ACCOUNTID = $forTable.$accountIdColumn AND $KEY_CURRENCY_SELF=$forTable.$KEY_CURRENCY AND $KEY_CURRENCY_OTHER='$homeCurrency'), 1)""".trimIndent()
+    coalesce((SELECT $KEY_EXCHANGE_RATE FROM $TABLE_ACCOUNT_EXCHANGE_RATES
+    WHERE $KEY_ACCOUNTID = $forTable.$accountIdColumn AND $KEY_CURRENCY_SELF=$forTable.$KEY_CURRENCY
+    AND $KEY_CURRENCY_OTHER='$homeCurrency'), 1)""".trimIndent()
 
 fun getAmountCalculation(
     homeCurrency: String?,
@@ -1054,7 +1091,8 @@ fun periodEndExpression(group: Grouping): String {
         Grouping.NONE -> "date('now', 'localtime')"
         Grouping.DAY -> "date($dateCol, 'unixepoch', 'localtime')"
         Grouping.WEEK -> "date($dateCol, 'unixepoch', 'localtime', 'weekday ${DatabaseConstants.nextWeekEndSqlite}')"
-        Grouping.MONTH -> "date($dateCol, 'unixepoch', 'localtime', '-${DatabaseConstants.monthStartsOn - 1} day', 'start of month', '+1 month', '-1 day', '+${DatabaseConstants.monthStartsOn - 1} day')"
+        Grouping.MONTH -> "date($dateCol, 'unixepoch', 'localtime', '-${DatabaseConstants.monthStartsOn - 1} day', " +
+            "'start of month', '+1 month', '-1 day', '+${DatabaseConstants.monthStartsOn - 1} day')"
         Grouping.YEAR -> "date($dateCol, 'unixepoch', 'localtime', 'start of year', '+1 year', '-1 day')"
     }
 }

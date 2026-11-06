@@ -78,7 +78,10 @@ class ContractsStateTest {
             )
         )
         assertEquals(listOf("liability"), state.forArea(BuiltInArea.INSURANCE).active.map { it.signature })
-        assertEquals(listOf("rent", "phone", "deletedArea"), state.forArea(BuiltInArea.HOUSING).active.map { it.signature })
+        assertEquals(
+            listOf("rent", "phone", "deletedArea"),
+            state.forArea(BuiltInArea.HOUSING).active.map { it.signature }
+        )
         assertEquals(listOf("studio"), state.forArea(gym).active.map { it.signature })
         assertEquals(6, state.active.size)
     }

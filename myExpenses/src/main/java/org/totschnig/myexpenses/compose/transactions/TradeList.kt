@@ -201,7 +201,9 @@ fun TradeRow(
 
             Text(
                 text = headline,
-                style = if (renderType == RenderType.Legacy) MaterialTheme.typography.bodySmall else MaterialTheme.typography.bodyLarge,
+                style = if (
+                    renderType == RenderType.Legacy
+                ) MaterialTheme.typography.bodySmall else MaterialTheme.typography.bodyLarge,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )

@@ -34,7 +34,11 @@ class MoreInfoDialogFragment : DialogViewBinding<MoreInfoBinding>() {
                 }.toList(), R.drawable.ic_menu_forward
         )
         binding.additionalContainer.text =
-            Utils.makeBulletList(context, resources.getStringArray(R.array.additional_credits).toList(), R.drawable.ic_menu_forward)
+            Utils.makeBulletList(
+                context,
+                resources.getStringArray(R.array.additional_credits).toList(),
+                R.drawable.ic_menu_forward
+            )
 
         binding.translatorsContainer.text =
             Utils.makeBulletList(context, context.buildTranslationCredits(), R.drawable.ic_menu_forward)

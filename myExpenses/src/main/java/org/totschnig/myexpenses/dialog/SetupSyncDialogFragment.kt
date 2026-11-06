@@ -254,7 +254,9 @@ class SetupSyncDialogFragment : ComposeBaseDialogFragment(), SimpleDialog.OnDial
                                         }
                                     ).observe(this@SetupSyncDialogFragment) { result ->
                                         result.onSuccess {
-                                            if (!it) CrashHandler.report(IllegalStateException("setupSynchronization returned false "))
+                                            if (!it) CrashHandler.report(
+                                                IllegalStateException("setupSynchronization returned false ")
+                                            )
                                             progress.value = SetupProgress.COMPLETED
                                         }
                                     }
@@ -370,7 +372,9 @@ private fun Account(
             if (item.isRemote) {
                 Icon(
                     modifier = Modifier.weight(SOURCE_WEIGHT),
-                    painter = painterResource(id = if (linkState == SyncSource.LOCAL) R.drawable.ic_menu_delete else R.drawable.ic_menu_done),
+                    painter = painterResource(
+                        id = if (linkState == SyncSource.LOCAL) R.drawable.ic_menu_delete else R.drawable.ic_menu_done
+                    ),
                     tint = if (linkState == SyncSource.REMOTE) Color.Green else
                         LocalContentColor.current,
                     contentDescription = "Remote"

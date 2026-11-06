@@ -19,7 +19,8 @@ class ContractInputTest {
     private fun ledger(vararg transactions: LedgerTransaction) =
         Ledger(transactions.toList(), OwnAccounts(setOf(giro), emptyMap()))
 
-    private val payment = LedgerTransaction(1, day, amount = -1299, accountId = giro, payeeId = 7, payeeName = "Netflix")
+    private val payment =
+        LedgerTransaction(1, day, amount = -1299, accountId = giro, payeeId = 7, payeeName = "Netflix")
 
     @Test
     fun tagsDoNotChangeTheInput() {

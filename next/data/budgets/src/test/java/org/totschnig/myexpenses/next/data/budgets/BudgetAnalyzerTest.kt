@@ -33,7 +33,8 @@ class BudgetAnalyzerTest {
     private val oneOffTag = 1L
     private val reimbursedTag = 2L
     private val tripTag = 3L
-    private val meanings = mapOf(oneOffTag to TagMeaning.ONE_OFF, reimbursedTag to TagMeaning.REIMBURSED, tripTag to TagMeaning.TRIP)
+    private val meanings =
+        mapOf(oneOffTag to TagMeaning.ONE_OFF, reimbursedTag to TagMeaning.REIMBURSED, tripTag to TagMeaning.TRIP)
 
     private var nextId = 1000L
 
@@ -62,7 +63,13 @@ class BudgetAnalyzerTest {
         name = ruleId,
         interval = ContractInterval.MONTHLY,
         transactions = dates.mapIndexed { i, date ->
-            ContractTransaction(id = firstId + i, date = date, amount = amount, accountId = giro, categoryPath = category?.path)
+            ContractTransaction(
+                id = firstId + i,
+                date = date,
+                amount = amount,
+                accountId = giro,
+                categoryPath = category?.path
+            )
         },
         nextExpectedDate = dates.last().plusMonths(1),
         isActive = true,
@@ -246,10 +253,18 @@ class BudgetAnalyzerTest {
 
     @Test
     fun goalCountsReservesAndMovementsToSavingAccountsOnce() {
-        val bauspar = contract("bauspar", -5000, LocalDate.of(2026, 9, 1), LocalDate.of(2026, 10, 1), firstId = 70, reserve = true)
+        val bauspar = contract(
+            "bauspar",
+            -5000,
+            LocalDate.of(2026, 9, 1),
+            LocalDate.of(2026, 10, 1),
+            firstId = 70,
+            reserve = true
+        )
         val pot = Pot(
             name = "Neues Spiel", kind = PotKind.GOAL, amount = 20000, categoryIds = setOf(leisure.id),
-            start = LocalDate.of(2026, 9, 15), reserveRuleIds = setOf("bauspar"), savingAccountIds = setOf(savingsAccount),
+            start = LocalDate.of(2026, 9, 15), reserveRuleIds = setOf("bauspar"), savingAccountIds =
+                setOf(savingsAccount),
             end = LocalDate.of(2026, 12, 24)
         )
         val overview = analyse(
@@ -298,7 +313,14 @@ class BudgetAnalyzerTest {
     @Test
     fun frameFromIncomeFixedCostsAndPots() {
         val salary = contract("salary", 300000, LocalDate.of(2026, 9, 1), LocalDate.of(2026, 10, 1), firstId = 1)
-        val rent = contract("rent", -100000, LocalDate.of(2026, 9, 3), LocalDate.of(2026, 10, 3), firstId = 10, category = null)
+        val rent = contract(
+            "rent",
+            -100000,
+            LocalDate.of(2026, 9, 3),
+            LocalDate.of(2026, 10, 3),
+            firstId = 10,
+            category = null
+        )
         val pot = Pot(name = "Essen", kind = PotKind.RUNNING, amount = 40000, categoryIds = setOf(food.id))
         val transactions = payments(rent, null) +
                 salary.transactions.map { spend(-it.amount, it.date, null, id = it.id) } +
@@ -320,7 +342,8 @@ class BudgetAnalyzerTest {
 
     @Test
     fun itemGroupPotWatchesTheShareInScannedPurchases() {
-        val pot = Pot(name = "Süßes", kind = PotKind.ITEM_GROUP, itemGroups = setOf("sweets_snacks"), maxSharePercent = 10)
+        val pot =
+            Pot(name = "Süßes", kind = PotKind.ITEM_GROUP, itemGroups = setOf("sweets_snacks"), maxSharePercent = 10)
         fun item(amount: Long, group: String?) = ScannedItem(name = "x", amount = amount, group = group)
         val transactions = listOf(
             spend(5000, LocalDate.of(2026, 10, 2), id = 1),

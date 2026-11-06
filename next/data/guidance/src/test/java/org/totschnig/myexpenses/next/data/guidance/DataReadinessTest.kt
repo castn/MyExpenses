@@ -37,7 +37,8 @@ class DataReadinessTest {
 
     @Test
     fun withoutReceiptsNoGapAsksForThem() {
-        val readiness = dataReadiness(Ledger(wellDescribed(), OwnAccounts(emptySet(), emptyMap())), ReceiptFacts.None, today)
+        val readiness =
+            dataReadiness(Ledger(wellDescribed(), OwnAccounts(emptySet(), emptyMap())), ReceiptFacts.None, today)
         assertEquals(emptyList<DataGap>(), readiness.gaps)
     }
 
@@ -109,7 +110,11 @@ class DataReadinessTest {
         assertEquals(
             listOf(
                 DataGap.FewReceipts(
-                    scanned = 2, supermarketPurchases = 3, unscanned = listOf(notScanned.id), missingRecent = 2, missingUsual = 5
+                    scanned = 2,
+                    supermarketPurchases = 3,
+                    unscanned = listOf(notScanned.id),
+                    missingRecent = 2,
+                    missingUsual = 5
                 )
             ),
             readiness.gaps

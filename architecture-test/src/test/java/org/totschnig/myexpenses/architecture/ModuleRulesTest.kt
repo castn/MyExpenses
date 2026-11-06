@@ -5,7 +5,9 @@ import com.lemonappdev.konsist.api.verify.assertFalse
 import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.Test
 
-/** Rules mod-charts-pure, mod-ds-pure, mod-ocr-jvm, mod-own-packages and mod-shell-boundary of ui_next/ARCHITECTURE.md. */
+/**
+ * Rules mod-charts-pure, mod-ds-pure, mod-ocr-jvm, mod-own-packages and mod-shell-boundary of ui_next/ARCHITECTURE.md.
+ */
 class ModuleRulesTest {
 
     @Test
@@ -21,7 +23,9 @@ class ModuleRulesTest {
     fun `mod-ds-pure designsystem knows no type of the app`() {
         Konsist.scopeFromProduction(moduleName = "designsystem")
             .imports
-            .assertFalse(additionalMessage = "mod-ds-pure: :designsystem knows only strings, numbers, icons and lambdas") {
+            .assertFalse(
+                additionalMessage = "mod-ds-pure: :designsystem knows only strings, numbers, icons and lambdas"
+            ) {
                 it.name.startsWith(APP) &&
                     !it.name.startsWith("$APP.myexpenses.designsystem.")
             }
@@ -40,7 +44,9 @@ class ModuleRulesTest {
     fun `mod-own-packages each module below next has packages of its own`() {
         nextScope.files
             .filter { it.projectPath.startsWith("/next/") }
-            .assertTrue(additionalMessage = "mod-own-packages: the package of a module starts with its namespace") { file ->
+            .assertTrue(
+                additionalMessage = "mod-own-packages: the package of a module starts with its namespace"
+            ) { file ->
                 // /next/<kind>/<name>/src/… -> org.totschnig.myexpenses.next.<kind>.<name>
                 val (kind, name) = file.projectPath.split('/').drop(2).take(2)
                 file.packagee?.name?.startsWith("$APP.myexpenses.next.$kind.${name.replace('-', '_')}") == true
@@ -56,9 +62,14 @@ class ModuleRulesTest {
             .toSet()
         nextScope.files
             .filter { it.projectPath.startsWith("/ui_next/src/main/") && it.name !in SHELL_WIRING }
-            .filterNot { file -> file.packagee?.name?.removePrefix("$APP.myexpenses.next.")?.substringBefore('.') in areas }
+            .filterNot { file ->
+                file.packagee?.name?.removePrefix("$APP.myexpenses.next.")?.substringBefore('.') in areas
+            }
             .flatMap { it.imports }
-            .assertFalse(additionalMessage = "mod-shell-boundary: only the package of an area, NextFeatures and NextData import its modules") {
+            .assertFalse(
+                additionalMessage =
+                    "mod-shell-boundary: only the package of an area, NextFeatures and NextData import its modules"
+            ) {
                 it.name.startsWith("$APP.myexpenses.next.feature.") || it.name.startsWith("$APP.myexpenses.next.data.")
             }
     }

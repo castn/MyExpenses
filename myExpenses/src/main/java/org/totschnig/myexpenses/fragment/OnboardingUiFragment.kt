@@ -109,7 +109,13 @@ class OnboardingUiFragment : OnboardingFragment() {
             it.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
                 prefHandler.putString(
                     PrefKey.UI_THEME,
-                    (if (isChecked) ProtectedFragmentActivity.ThemeType.light else ProtectedFragmentActivity.ThemeType.dark).name
+                    (
+                        if (isChecked) {
+                            ProtectedFragmentActivity.ThemeType.light
+                        } else {
+                            ProtectedFragmentActivity.ThemeType.dark
+                        }
+                    ).name
                 )
                 setNightMode(prefHandler, requireContext())
             }
@@ -185,7 +191,9 @@ class OnboardingUiFragment : OnboardingFragment() {
                         RenderType.Legacy -> {
                             CompactTransactionRenderer(
                                 DateTimeFormatInfo(
-                                    (Utils.ensureDateFormatWithShortYear(context) as SimpleDateFormat).asDateTimeFormatter,
+                                    (
+                                        Utils.ensureDateFormatWithShortYear(context) as SimpleDateFormat
+                                    ).asDateTimeFormatter,
                                     4.6f
                                 ),
                                 withCategoryIcon

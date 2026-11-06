@@ -93,7 +93,9 @@ class CategorySuggestionsViewModel(private val repository: CategoryRepository) :
                 ?.let { id -> analysis.paths[id]?.let { CategoryState.Automatic(id, it) } } ?: CategoryState.None
         } else {
             analysis.plan.suggestions[transactionId]
-                ?.let { suggestion -> analysis.paths[suggestion.categoryId]?.let { CategoryState.Suggested(suggestion, it) } }
+                ?.let { suggestion ->
+                    analysis.paths[suggestion.categoryId]?.let { CategoryState.Suggested(suggestion, it) }
+                }
                 ?: CategoryState.None
         }
     }
@@ -101,7 +103,9 @@ class CategorySuggestionsViewModel(private val repository: CategoryRepository) :
     /** Paths of the suggested categories by transaction, to show them in lists */
     val suggestedPaths: StateFlow<Map<Long, String>> =
         analysis.map { analysis ->
-            analysis?.plan?.suggestions?.mapNotNull { (id, suggestion) -> analysis.paths[suggestion.categoryId]?.let { id to it } }
+            analysis?.plan?.suggestions?.mapNotNull { (id, suggestion) ->
+                analysis.paths[suggestion.categoryId]?.let { id to it }
+            }
                 ?.toMap().orEmpty()
         }.stateWhileShown(viewModelScope, emptyMap())
 
@@ -155,7 +159,9 @@ class CategorySuggestionsViewModel(private val repository: CategoryRepository) :
         viewModelScope.launch {
             writing.changeCategory(transactionId, fromCategoryId, categoryId)
             if (fromCategoryId != null) store.update { decisions ->
-                if (decisions.automatic[transactionId] == fromCategoryId) decisions.rejecting(transactionId, fromCategoryId)
+                if (
+                    decisions.automatic[transactionId] == fromCategoryId
+                ) decisions.rejecting(transactionId, fromCategoryId)
                 else decisions
             }
         }

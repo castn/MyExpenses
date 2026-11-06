@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat
 
 class DateFormatPreference(context: Context, attrs: AttributeSet) :
         LocalizedFormatEditTextPreference(context, attrs) {
-    override fun getDefaultValue(): String? = (Utils.getFrameworkDateFormatSafe(context) as? SimpleDateFormat)?.toPattern()
+    override fun getDefaultValue(): String? =
+        (Utils.getFrameworkDateFormatSafe(context) as? SimpleDateFormat)?.toPattern()
     override fun validate(newValue: String) = validateDateFormat(context, newValue)
 }

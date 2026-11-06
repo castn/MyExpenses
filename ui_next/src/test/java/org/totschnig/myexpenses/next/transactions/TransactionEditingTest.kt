@@ -41,7 +41,8 @@ class TransactionEditingTest {
     @Test
     fun movesDateKeepingTimeAndValueDateOfTheSameDay() {
         val date = LocalDate.of(2026, 3, 1).atTime(14, 30).toEpochSecond(ZoneOffset.UTC)
-        val values = EditValues(amount = -100, date = date, valueDate = date, payee = null, methodId = null, comment = null)
+        val values =
+            EditValues(amount = -100, date = date, valueDate = date, payee = null, methodId = null, comment = null)
         val moved = values.withDay(LocalDate.of(2026, 3, 5), zone)
         val expected = LocalDate.of(2026, 3, 5).atTime(14, 30).toEpochSecond(ZoneOffset.UTC)
         assertEquals(expected, moved.date)
@@ -52,14 +53,16 @@ class TransactionEditingTest {
     fun keepsValueDateOfAnotherDay() {
         val date = LocalDate.of(2026, 3, 1).atStartOfDay().toEpochSecond(ZoneOffset.UTC)
         val valueDate = LocalDate.of(2026, 3, 3).atStartOfDay().toEpochSecond(ZoneOffset.UTC)
-        val values = EditValues(amount = -100, date = date, valueDate = valueDate, payee = null, methodId = null, comment = null)
+        val values =
+            EditValues(amount = -100, date = date, valueDate = valueDate, payee = null, methodId = null, comment = null)
         assertEquals(valueDate, values.withDay(LocalDate.of(2026, 3, 5), zone).valueDate)
     }
 
     @Test
     fun appliesDraftWithSignAndTrimmedTexts() {
         val transaction = transaction(amount = -4290)
-        val draft = transaction.toDraft(',', zone).copy(amountText = "50", isIncome = true, payee = "  ", comment = " Pizza ")
+        val draft =
+            transaction.toDraft(',', zone).copy(amountText = "50", isIncome = true, payee = "  ", comment = " Pizza ")
         val values = transaction.apply(draft, zone)!!
         assertEquals(5000L, values.amount)
         assertNull(values.payee)

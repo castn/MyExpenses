@@ -22,7 +22,8 @@ import org.totschnig.myexpenses.contract.TransactionsContract
 enum class Action(
     override val imageVector: ImageVector,
     @param:StringRes override val label: Int,
-    @param:TransactionsContract.Transactions.TransactionType val type: Int = TransactionsContract.Transactions.TYPE_TRANSACTION,
+    @param:TransactionsContract.Transactions.TransactionType val type: Int =
+        TransactionsContract.Transactions.TYPE_TRANSACTION,
 ) : FabMenuAction {
     Expense(Icons.Default.Remove, R.string.expense),
     Income(Icons.Default.Add, R.string.income),

@@ -237,7 +237,9 @@ class BudgetWidget : BaseWidget(PrefKey.PROTECTION_ENABLE_BUDGET_WIDGET) {
                     )
                     setTextViewText(
                         R.id.remainderDaily,
-                        if (daysRemain && withinBudget) amountFormatted(budgetInfo.remainingBudget / budgetInfo.remainingDays) else "-"
+                        if (daysRemain && withinBudget) amountFormatted(
+                            budgetInfo.remainingBudget / budgetInfo.remainingDays
+                        ) else "-"
                     )
                 }
 

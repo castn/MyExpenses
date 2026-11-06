@@ -39,7 +39,8 @@ fun basePaymentMethodProjection(context: Context) = arrayOf(
 )
 
 val mappingColumns = arrayOf(
-    "(select count(*) from $TABLE_TRANSACTIONS WHERE $KEY_METHODID=$TABLE_METHODS.$KEY_ROWID) AS $KEY_MAPPED_TRANSACTIONS",
+    "(select count(*) from $TABLE_TRANSACTIONS WHERE $KEY_METHODID=$TABLE_METHODS.$KEY_ROWID) AS " +
+        "$KEY_MAPPED_TRANSACTIONS",
     "(select count(*) from $TABLE_TEMPLATES WHERE $KEY_METHODID=$TABLE_METHODS.$KEY_ROWID) AS $KEY_MAPPED_TEMPLATES"
 
 )

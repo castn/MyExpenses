@@ -8,7 +8,15 @@ import android.widget.TextView
 import org.totschnig.myexpenses.db2.entities.Recurrence
 
 class RecurrenceAdapter(context: Context?) : ArrayAdapter<Recurrence?>(context!!, android.R.layout.simple_spinner_item,
-        arrayOf(Recurrence.NONE, Recurrence.ONETIME, Recurrence.DAILY, Recurrence.WEEKLY, Recurrence.MONTHLY, Recurrence.YEARLY, Recurrence.CUSTOM)) {
+        arrayOf(
+            Recurrence.NONE,
+            Recurrence.ONETIME,
+            Recurrence.DAILY,
+            Recurrence.WEEKLY,
+            Recurrence.MONTHLY,
+            Recurrence.YEARLY,
+            Recurrence.CUSTOM
+        )) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val result = super.getView(position, convertView, parent)
         (result as TextView).text = getItem(position)!!.label(context)

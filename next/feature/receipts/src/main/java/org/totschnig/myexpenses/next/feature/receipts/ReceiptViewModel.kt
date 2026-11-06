@@ -139,7 +139,12 @@ class ReceiptViewModel(
     init {
         savedState.get<Bundle>(KEY_SAVED_STATE)?.let { restore(ReceiptSavedState.of(it)) }
         savedState.setSavedStateProvider(KEY_SAVED_STATE) {
-            ReceiptSavedState(_draft.value, draftPayee, assignments.standaloneCurrency, assignments.assignment.value).toBundle()
+            ReceiptSavedState(
+                _draft.value,
+                draftPayee,
+                assignments.standaloneCurrency,
+                assignments.assignment.value
+            ).toBundle()
         }
     }
 
@@ -164,7 +169,8 @@ class ReceiptViewModel(
      */
     private fun classifiedOnce(transactionId: Long, receipt: Receipt, payee: String?): Receipt {
         if (receipt.items.none { it.group == null && !it.groupByUser && it.amount > 0 }) return receipt
-        val items = receipt.items.withSuggestedGroups(classifier().classify(receipt.items, shopHint(receipt.merchant, payee)))
+        val items =
+            receipt.items.withSuggestedGroups(classifier().classify(receipt.items, shopHint(receipt.merchant, payee)))
         if (items == receipt.items) return receipt
         return receipt.copy(items = items).also { database.save(transactionId, it) }
     }
@@ -296,7 +302,8 @@ class ReceiptViewModel(
                 val parsed = text?.let(ReceiptParser::parse)
                 when {
                     text == null -> _recognizeAgainFailed.value = ReceiptScanState.Reason.NoRecognition
-                    parsed == null || parsed.items.isEmpty() -> _recognizeAgainFailed.value = ReceiptScanState.Reason.NoItems
+                    parsed == null || parsed.items.isEmpty() -> _recognizeAgainFailed.value =
+                        ReceiptScanState.Reason.NoItems
                     else -> {
                         val again = ReceiptDraft.recognized(draft.target, draft.transactionAmount, parsed, photo)
                             .copy(isNewPhoto = draft.isNewPhoto, isStandalone = draft.isStandalone, isChanged = true)

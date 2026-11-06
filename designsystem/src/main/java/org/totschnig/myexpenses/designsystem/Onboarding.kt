@@ -261,7 +261,11 @@ fun ChoiceCard(
 ) {
     Surface(
         shape = Shapes.card,
-        color = if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerLow,
+        color = if (selected) {
+            MaterialTheme.colorScheme.secondaryContainer
+        } else {
+            MaterialTheme.colorScheme.surfaceContainerLow
+        },
         border = if (selected) BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
         else BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
         modifier = modifier
@@ -271,10 +275,20 @@ fun ChoiceCard(
     ) {
         Column(Modifier.padding(Spacing.content)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                IconTile(color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondaryContainer) {
+                IconTile(
+                    color = if (selected) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.secondaryContainer
+                    }
+                ) {
                     Icon(
                         icon, contentDescription = null,
-                        tint = if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondaryContainer
+                        tint = if (selected) {
+                            MaterialTheme.colorScheme.onPrimary
+                        } else {
+                            MaterialTheme.colorScheme.onSecondaryContainer
+                        }
                     )
                 }
                 Column(
@@ -283,7 +297,11 @@ fun ChoiceCard(
                         .padding(horizontal = Spacing.content)
                 ) {
                     Text(title, style = MaterialTheme.typography.titleMedium)
-                    Text(text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(
+                        text,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
                 // The whole card is selectable, the radio button only shows the state
                 RadioButton(selected = selected, onClick = null)
@@ -333,7 +351,11 @@ fun ChoiceOption(
                     .padding(horizontal = 12.dp)
             ) {
                 Text(title, style = MaterialTheme.typography.titleSmall)
-                Text(text, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(
+                    text,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
             RadioButton(selected = selected, onClick = null)
         }

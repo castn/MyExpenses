@@ -48,7 +48,13 @@ class MerchantsFeature(activity: ComponentActivity, data: NextData) : NextFeatur
         return RowDecorations(
             payeeImage = images::get,
             payeeImageDialog = { payee, transaction, onDismiss ->
-                PayeeImageDialog(logos, Payee(payee.id, payee.displayName), transaction?.categoryPath, transaction?.icon, onDismiss)
+                PayeeImageDialog(
+                    logos,
+                    Payee(payee.id, payee.displayName),
+                    transaction?.categoryPath,
+                    transaction?.icon,
+                    onDismiss
+                )
             }
         )
     }

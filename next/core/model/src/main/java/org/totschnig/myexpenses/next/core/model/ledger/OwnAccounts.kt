@@ -18,5 +18,10 @@ fun normalizeIban(iban: String) = iban.filterNot { it.isWhitespace() }.uppercase
  *
  * @param ownIbans normalized IBANs of own accounts to their id, see [normalizeIban]
  */
-fun ownTransferTarget(accountId: Long, transferAccountId: Long?, counterpartIban: String?, ownIbans: Map<String, Long>) =
+fun ownTransferTarget(
+    accountId: Long,
+    transferAccountId: Long?,
+    counterpartIban: String?,
+    ownIbans: Map<String, Long>
+) =
     transferAccountId ?: counterpartIban?.let { ownIbans[normalizeIban(it)] }?.takeIf { it != accountId }

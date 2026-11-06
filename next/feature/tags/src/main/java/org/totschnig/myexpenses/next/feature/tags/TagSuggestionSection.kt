@@ -56,14 +56,20 @@ fun TagSuggestionSection(viewModel: TagLearningViewModel, tagsViewModel: TagsVie
         else stringResource(R.string.next_tag_suggested, label),
         messages = listOf(
             if (marker != null) pluralStringResource(
-                R.plurals.next_marker_suggested_reason, suggestion.tagged, suggestion.counterpartName, suggestion.tagged, marker.label()
+                R.plurals.next_marker_suggested_reason,
+                suggestion.tagged,
+                suggestion.counterpartName,
+                suggestion.tagged,
+                marker.label()
             ) else pluralStringResource(
                 R.plurals.next_tag_suggested_reason, suggestion.tagged, suggestion.counterpartName, suggestion.tagged
             )
         )
     ) {
         TextButton(onClick = { viewModel.rejectSuggestion(suggestion) }) { Text(stringResource(R.string.next_reject)) }
-        TextButton(onClick = { viewModel.acceptSuggestion(suggestion) }) { Text(stringResource(R.string.next_tag_accept)) }
+        TextButton(
+            onClick = { viewModel.acceptSuggestion(suggestion) }
+        ) { Text(stringResource(R.string.next_tag_accept)) }
     }
 }
 
@@ -85,7 +91,11 @@ private fun FollowUp(
     val name = suggestion.counterpartName
     SectionTitle(stringResource(if (isMarker) R.string.next_markers else R.string.next_tags))
     DetailCard {
-        InfoRow(stringResource(if (isMarker) R.string.next_marker_taken else R.string.next_tag_taken), tagLabel, isFirst = true)
+        InfoRow(
+            stringResource(if (isMarker) R.string.next_marker_taken else R.string.next_tag_taken),
+            tagLabel,
+            isFirst = true
+        )
         val applied = appliedCount
         if (applied != null) {
             InfoRow(stringResource(R.string.next_category_applied_others, name), applied.toString())

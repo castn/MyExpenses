@@ -62,11 +62,15 @@ object PermissionHelper {
                         }).toString()
                 }
             }
-            PERMISSIONS_REQUEST_NOTIFICATIONS_WEBUI -> context.getString(R.string.notifications_permission_required_webui)
+            PERMISSIONS_REQUEST_NOTIFICATIONS_WEBUI ->
+                context.getString(R.string.notifications_permission_required_webui)
             PERMISSIONS_REQUEST_NOTIFICATIONS_SYNC -> context.getString(R.string.notifications_permission_required_sync)
-            PERMISSIONS_REQUEST_NOTIFICATIONS_PLANNER -> Utils.getTextWithAppName(context, R.string.notifications_permission_required_planner).toString()
-            PERMISSIONS_REQUEST_NOTIFICATIONS_AUTO_BACKUP -> context.getString(R.string.notifications_permission_required_auto_backup)
-            PERMISSIONS_REQUEST_STORAGE -> "In order to save images to external storage you must grant Storage Permission"
+            PERMISSIONS_REQUEST_NOTIFICATIONS_PLANNER ->
+                Utils.getTextWithAppName(context, R.string.notifications_permission_required_planner).toString()
+            PERMISSIONS_REQUEST_NOTIFICATIONS_AUTO_BACKUP ->
+                context.getString(R.string.notifications_permission_required_auto_backup)
+            PERMISSIONS_REQUEST_STORAGE ->
+                "In order to save images to external storage you must grant Storage Permission"
             else -> throw IllegalArgumentException()
         }
 

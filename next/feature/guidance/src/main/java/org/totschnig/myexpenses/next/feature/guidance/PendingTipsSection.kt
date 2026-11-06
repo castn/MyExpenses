@@ -40,16 +40,25 @@ private fun PendingTips(pending: List<PendingTip>) {
             pending.forEachIndexed { index, tip ->
                 val (title, text) = when (tip) {
                     PendingTip.ITEM_GROUPS_RISING ->
-                        stringResource(R.string.next_pending_item_groups) to stringResource(R.string.next_pending_item_groups_text)
+                        stringResource(R.string.next_pending_item_groups) to stringResource(
+                            R.string.next_pending_item_groups_text
+                        )
 
                     PendingTip.DRUGSTORE_IN_SUPERMARKETS ->
-                        stringResource(R.string.next_pending_drugstore) to stringResource(R.string.next_pending_drugstore_text)
+                        stringResource(R.string.next_pending_drugstore) to stringResource(
+                            R.string.next_pending_drugstore_text
+                        )
 
                     PendingTip.DEPOSIT_NOT_RETURNED ->
-                        stringResource(R.string.next_pending_deposit) to stringResource(R.string.next_pending_deposit_text)
+                        stringResource(R.string.next_pending_deposit) to stringResource(
+                            R.string.next_pending_deposit_text
+                        )
 
                     PendingTip.OUTLIERS -> stringResource(R.string.next_pending_outliers) to
-                            stringResource(R.string.next_pending_outliers_text, stringResource(R.string.next_tab_analysis))
+                            stringResource(
+                                R.string.next_pending_outliers_text,
+                                stringResource(R.string.next_tab_analysis)
+                            )
                 }
                 PendingRow(title, text, isFirst = index == 0)
             }

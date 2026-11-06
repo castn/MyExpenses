@@ -85,7 +85,11 @@ object NativeSettings {
         validate: Context.(String) -> String?,
     ) = NativeSetting(
         options = {
-            formatOptions(default(), patterns(), { example(it) }) { getString(NextR.string.next_settings_format_region, it) }
+            formatOptions(
+                default(),
+                patterns(),
+                { example(it) }
+            ) { getString(NextR.string.next_settings_format_region, it) }
         },
         read = { prefHandler.getString(key, null)?.takeIf { it.isNotEmpty() } ?: default() },
         write = { format ->
@@ -145,7 +149,11 @@ object NativeSettings {
         put(
             CUSTOM_DECIMAL_FORMAT, localizedFormat(
                 CUSTOM_DECIMAL_FORMAT,
-                default = { (NumberFormat.getCurrencyInstance(Utils.localeFromContext(this)) as DecimalFormat).toLocalizedPattern() },
+                default = {
+                    (
+                        NumberFormat.getCurrencyInstance(Utils.localeFromContext(this)) as DecimalFormat
+                    ).toLocalizedPattern()
+                },
                 patterns = { numberPatterns.map(::localizedNumberPattern) },
                 example = { numberExample(it, homeCurrency.code, homeCurrency.symbol) },
                 legend = {
@@ -184,8 +192,15 @@ object NativeSettings {
             TRANSACTION_AMOUNT_COLOR_SOURCE, NativeSetting(
                 storage = Storage.DATA_STORE,
                 options = {
-                    val type = listOf(R.string.expense, R.string.income, R.string.transfer).joinToString(" / ", transform = ::getString)
-                    val sign = listOf(R.string.pm_type_debit, R.string.pm_type_credit).joinToString(" / ", transform = ::getString)
+                    val type = listOf(
+                        R.string.expense,
+                        R.string.income,
+                        R.string.transfer
+                    ).joinToString(" / ", transform = ::getString)
+                    val sign = listOf(
+                        R.string.pm_type_debit,
+                        R.string.pm_type_credit
+                    ).joinToString(" / ", transform = ::getString)
                     listOf(
                         ColorSource.TYPE.name to type,
                         ColorSource.SIGN.name to sign,
@@ -241,7 +256,9 @@ object NativeSettings {
                         .distinctBy { it.first }
                         .sortedBy { it.second }
                     listOf("" to getString(R.string.system_default)) + apps +
-                            listOfNotNull((stored to stored).takeIf { stored.isNotEmpty() && apps.none { it.first == stored } })
+                            listOfNotNull(
+                                (stored to stored).takeIf { stored.isNotEmpty() && apps.none { it.first == stored } }
+                            )
                 },
                 read = { prefHandler.getString(CAMERA_APP).orEmpty() }
             )
@@ -256,7 +273,9 @@ object NativeSettings {
                         "*/*" to getString(NextR.string.next_settings_mime_all)
                     )
                     val stored = prefHandler.getString(ATTACHMENT_MIME_TYPES)?.split(',')?.map { it.trim() }.orEmpty()
-                    kinds + stored.filter { type -> type.isNotEmpty() && kinds.none { it.first == type } }.map { it to it }
+                    kinds + stored.filter { type ->
+                        type.isNotEmpty() && kinds.none { it.first == type }
+                    }.map { it to it }
                 }
             )
         )
@@ -284,10 +303,16 @@ object NativeSettings {
                 write = { code -> if (code != homeCurrency.code) homeCurrencyRequest = code }
             )
         )
-        listOf(UNMAPPED_TRANSACTION_AS_TRANSFER, EQUIVALENT_AMOUNTS_AUTOMATIC_UPDATE, PLANNER_EXECUTION_TIME, PLANNER_MANUAL_TIME)
+        listOf(
+            UNMAPPED_TRANSACTION_AS_TRANSFER,
+            EQUIVALENT_AMOUNTS_AUTOMATIC_UPDATE,
+            PLANNER_EXECUTION_TIME,
+            PLANNER_MANUAL_TIME
+        )
             .forEach { put(it, plain) }
         // Security & privacy, as the old screen: what depends on the screen lock only while it is on
-        val whenProtected = NativeSetting(isEnabled = { it.boolean(PROTECTION_LEGACY) || it.boolean(PROTECTION_DEVICE_LOCK_SCREEN) })
+        val whenProtected =
+            NativeSetting(isEnabled = { it.boolean(PROTECTION_LEGACY) || it.boolean(PROTECTION_DEVICE_LOCK_SCREEN) })
         listOf(
             PROTECTION_ALLOW_SCREENSHOT, PROTECTION_ENABLE_ACCOUNT_WIDGET,
             PROTECTION_ENABLE_TEMPLATE_WIDGET, PROTECTION_ENABLE_BUDGET_WIDGET, PROTECTION_ENABLE_DATA_ENTRY_FROM_WIDGET
@@ -296,7 +321,11 @@ object NativeSettings {
             PROTECTION_DELAY_SECONDS, numberChoice(
                 PROTECTION_DELAY_SECONDS, 15, listOf(1, 15, 30, 60, 120, 300), whenProtected.isEnabled
             ) { seconds ->
-                if (seconds < 60 || seconds % 60 != 0) resources.getQuantityString(NextR.plurals.next_settings_seconds, seconds, seconds)
+                if (seconds < 60 || seconds % 60 != 0) resources.getQuantityString(
+                    NextR.plurals.next_settings_seconds,
+                    seconds,
+                    seconds
+                )
                 else resources.getQuantityString(NextR.plurals.next_settings_minutes, seconds / 60, seconds / 60)
             }
         )
@@ -333,13 +362,21 @@ object NativeSettings {
         // Backup & import
         listOf(
             AUTO_BACKUP, AUTO_BACKUP_TIME, BACKUP_FILE_PREFIX, EXPORT_PASSWORD, PURGE_BACKUP, PURGE_BACKUP_KEEP,
-            PURGE_BACKUP_REQUIRE_CONFIRMATION, PERFORM_SHARE, CSV_EXPORT_SPLIT_CATEGORIES, CSV_EXPORT_CATEGORY_SEPARATOR,
+            PURGE_BACKUP_REQUIRE_CONFIRMATION,
+            PERFORM_SHARE,
+            CSV_EXPORT_SPLIT_CATEGORIES,
+            CSV_EXPORT_CATEGORY_SEPARATOR,
             CSV_EXPORT_SPLIT_AMOUNT, CSV_EXPORT_SPLIT_DATE_TIME, CSV_EXPORT_ORIGINAL_EQUIVALENT_AMOUNTS
         ).forEach { put(it, plain) }
         put(
             AUTO_BACKUP_UNENCRYPTED_INFO, NativeSetting(
                 isVisible = { prefHandler.encryptDatabase },
-                summary = { getString(R.string.warning_unencrypted_backup, getString(R.string.pref_security_export_passphrase_title)) }
+                summary = {
+                    getString(
+                        R.string.warning_unencrypted_backup,
+                        getString(R.string.pref_security_export_passphrase_title)
+                    )
+                }
             )
         )
         put(

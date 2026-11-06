@@ -110,7 +110,10 @@ class RepositoryReceiptsTest : BaseTestWithRepository() {
         val first = repository.insertTransaction(account, -399).id
         val second = repository.insertTransaction(account, -300).id
         repository.saveReceipt(first, receipt)
-        repository.saveReceipt(second, Receipt("EDEKA", 300, listOf(ReceiptItem("MEGGLE BAGUET", 300, group = "bakery"))))
+        repository.saveReceipt(
+            second,
+            Receipt("EDEKA", 300, listOf(ReceiptItem("MEGGLE BAGUET", 300, group = "bakery")))
+        )
         val all = repository.loadAllReceiptItems()
         assertThat(all.keys).containsExactly(first, second)
         assertThat(all[first]).isEqualTo(receipt.items)

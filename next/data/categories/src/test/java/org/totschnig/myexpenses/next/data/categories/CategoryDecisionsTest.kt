@@ -45,7 +45,8 @@ class CategoryDecisionsTest {
 
     @Test
     fun anotherCategoryThanTheRejectedOneIsSuggested() {
-        val plan = CategoryDecisions(firstNewId = 100, rejected = mapOf(100L to 1L)).plan(listOf(certain(100, categoryId = 2)))
+        val plan =
+            CategoryDecisions(firstNewId = 100, rejected = mapOf(100L to 1L)).plan(listOf(certain(100, categoryId = 2)))
         assertEquals(listOf(certain(100, categoryId = 2)), plan.apply)
     }
 

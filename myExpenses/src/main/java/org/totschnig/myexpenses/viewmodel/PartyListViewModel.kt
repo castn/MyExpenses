@@ -122,7 +122,8 @@ class PartyListViewModel(
                         if (hierarchical) it.appendBooleanQueryParameter(QUERY_PARAMETER_HIERARCHICAL)
                     }.build(),
                     null, selection, selectionArgs, null, true
-                ).mapToList { cursor -> Party.fromCursor(cursor) } // Let Copper handle Dispatchers.IO and cursor closing
+                // Let Copper handle Dispatchers.IO and cursor closing
+                ).mapToList { cursor -> Party.fromCursor(cursor) }
             }
             .map { allParties ->
                 if (!hierarchical) return@map allParties

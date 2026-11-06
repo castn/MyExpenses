@@ -368,7 +368,8 @@ class WebDavClient(
             try {
                 folder.delete(null)
             } catch (e: Exception) {
-                //this can fail, if the unlocking mechanism does not work. We live with not being able to delete the test folder
+                //this can fail, if the unlocking mechanism does not work. We live with not being able to delete the
+                // test folder
                 report(e)
             }
         }

@@ -134,7 +134,8 @@ private fun ManageAccountTypesScreen(
                     IconButton(onClick = onClose) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(id = androidx.appcompat.R.string.abc_action_bar_up_description)
+                            contentDescription =
+                                stringResource(id = androidx.appcompat.R.string.abc_action_bar_up_description)
                         )
                     }
                 },
@@ -165,7 +166,8 @@ private fun ManageAccountTypesScreen(
                     start = paddingValues.calculateStartPadding(layoutDirection) + horizontalPadding,
                     top = paddingValues.calculateTopPadding(),
                     end = paddingValues.calculateEndPadding(layoutDirection) + horizontalPadding,
-                    bottom = paddingValues.calculateBottomPadding() + dimensionResource(R.dimen.fab_related_bottom_padding)
+                    bottom =
+                        paddingValues.calculateBottomPadding() + dimensionResource(R.dimen.fab_related_bottom_padding)
                 )
                 AccountTypeList(
                     paddingValues = totalPadding,

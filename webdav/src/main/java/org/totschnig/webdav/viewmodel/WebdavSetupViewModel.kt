@@ -27,7 +27,16 @@ class WebdavSetupViewModel(application: Application) : AndroidViewModel(applicat
         viewModelScope.launch(context = Dispatchers.IO) {
             _result.postValue(kotlin.runCatching {
                 val app = getApplication<MyApplication>()
-                WebDavClient(app, app.appComponent, url, userName, passWord, certificate, allowUnverifiedHost, clientCertAlias).run {
+                WebDavClient(
+                    app,
+                    app.appComponent,
+                    url,
+                    userName,
+                    passWord,
+                    certificate,
+                    allowUnverifiedHost,
+                    clientCertAlias
+                ).run {
                     testLogin()
                     testClass2Locking()
                 }

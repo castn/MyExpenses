@@ -38,7 +38,8 @@ class TagsViewModelTest {
         withTestDataStore { dataStore ->
             runTest(dispatcher) {
                 val catalog = Catalog(categories = listOf(CategoryInfo(10, "Café", "Essen:Café")))
-                val repository = TagRepository(FakeLedgerSource(catalog = catalog), TagStore(dataStore), backgroundScope, database)
+                val repository =
+                    TagRepository(FakeLedgerSource(catalog = catalog), TagStore(dataStore), backgroundScope, database)
                 block(TagsViewModel(repository, database, dispatcher))
             }
         }

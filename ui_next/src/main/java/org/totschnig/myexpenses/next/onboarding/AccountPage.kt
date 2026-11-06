@@ -45,7 +45,8 @@ internal fun AccountPage(
                 onValueChange = { onDraftChange(draft.copy(label = it)) },
                 label = { Text(stringResource(NextR.string.next_onboarding_account_name)) },
                 singleLine = true,
-                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences, imeAction = ImeAction.Next),
+                keyboardOptions =
+                    KeyboardOptions(capitalization = KeyboardCapitalization.Sentences, imeAction = ImeAction.Next),
                 modifier = Modifier.fillMaxWidth()
             )
             val selected = choices.currencies.find { it.code == draft.currency }

@@ -51,7 +51,13 @@ internal fun StartPage(selected: StartChoice, offersBanking: Boolean, onSelect: 
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             @Composable
-            fun Choice(choice: StartChoice, icon: ImageVector, title: Int, text: Int, details: (@Composable () -> Unit)? = null) =
+            fun Choice(
+                choice: StartChoice,
+                icon: ImageVector,
+                title: Int,
+                text: Int,
+                details: (@Composable () -> Unit)? = null
+            ) =
                 ChoiceCard(
                     icon = icon,
                     title = stringResource(title),

@@ -48,7 +48,8 @@ class AutomaticDecisionsTest {
 
     @Test
     fun confirmedContractIsNotConfirmedAgain() {
-        val first = automaticDecisions(ContractSettings(rulesMigrated = true), emptyList(), analysis(emptyList()), today)
+        val first =
+            automaticDecisions(ContractSettings(rulesMigrated = true), emptyList(), analysis(emptyList()), today)
         val settings = ContractSettings(rulesMigrated = true, rules = first.rules)
         val second = automaticDecisions(settings, first.news, analysis(first.rules), today)
         assertEquals(first.rules, second.rules)

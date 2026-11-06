@@ -51,7 +51,8 @@ class TagDetectionsViewModel(
         }.distinctUntilChanged()
 
     /** Contract payments are no signs of a trip, e.g. a subscription paid in dollars */
-    private val contractPayments: Flow<Set<Long>> = contractFacts.map { it?.paymentIds.orEmpty() }.distinctUntilChanged()
+    private val contractPayments: Flow<Set<Long>> =
+        contractFacts.map { it?.paymentIds.orEmpty() }.distinctUntilChanged()
 
     private data class RefundSearch(val rows: List<TagRow>, val reimbursed: Set<Long>, val rejected: Set<String>)
 
@@ -69,7 +70,11 @@ class TagDetectionsViewModel(
 
     /** Suggested refunds by the ids of both their transactions */
     val refunds: StateFlow<Map<Long, Refund>> =
-        combine(rows, taggedAs(TagMeaning.REIMBURSED), store.rejected(TagStore.Rejected.REFUNDS)) { rows, reimbursed, rejected ->
+        combine(
+            rows,
+            taggedAs(TagMeaning.REIMBURSED),
+            store.rejected(TagStore.Rejected.REFUNDS)
+        ) { rows, reimbursed, rejected ->
             rows ?: return@combine emptyMap()
             refundMemo.of(RefundSearch(rows, reimbursed, rejected))
         }
@@ -110,7 +115,13 @@ class TagDetectionsViewModel(
     fun acceptRefund(refund: Refund, label: String) {
         viewModelScope.launch(io) {
             val tagIds = ledgerSource.catalog.first().tags.mapTo(HashSet()) { it.id }
-            tagDatabase.addMeaningTag(store, tagIds, listOf(refund.debit.id, refund.credit.id), TagMeaning.REIMBURSED, label)
+            tagDatabase.addMeaningTag(
+                store,
+                tagIds,
+                listOf(refund.debit.id, refund.credit.id),
+                TagMeaning.REIMBURSED,
+                label
+            )
         }
     }
 

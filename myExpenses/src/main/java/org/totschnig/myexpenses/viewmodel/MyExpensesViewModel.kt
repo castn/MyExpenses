@@ -873,7 +873,9 @@ open class MyExpensesViewModel(
             _pdfResult.update {
                 AppDirHelper.checkAppDir(getApplication()).mapCatching {
                     val colorSource = enumValueOrDefault(
-                        dataStore.data.first()[prefHandler.getStringPreferencesKey(PrefKey.TRANSACTION_AMOUNT_COLOR_SOURCE)],
+                        dataStore.data.first()[
+                            prefHandler.getStringPreferencesKey(PrefKey.TRANSACTION_AMOUNT_COLOR_SOURCE)
+                        ],
                         ColorSource.TYPE
                     )
                     PdfPrinter.print(localizedContext, account, it, whereFilter, colorSource)

@@ -89,8 +89,18 @@ class DualSplitTransactionTest : BaseTestWithRepository() {
                 accountId = accountA,
                 amount = 300L,
                 splitParts = listOf(
-                    TransactionData(accountId = accountA, amount = 100L, transferAccount = accountB, transferPeer = peers1.second),
-                    TransactionData(accountId = accountA, amount = 200L, transferAccount = accountB, transferPeer = peers2.second)
+                    TransactionData(
+                        accountId = accountA,
+                        amount = 100L,
+                        transferAccount = accountB,
+                        transferPeer = peers1.second
+                    ),
+                    TransactionData(
+                        accountId = accountA,
+                        amount = 200L,
+                        transferAccount = accountB,
+                        transferPeer = peers2.second
+                    )
                 )
             )
         )
@@ -106,8 +116,18 @@ class DualSplitTransactionTest : BaseTestWithRepository() {
                 accountId = accountB,
                 amount = -300L,
                 splitParts = listOf(
-                    TransactionData(accountId = accountB, amount = -100L, transferAccount = accountA, transferPeer = peers1.first),
-                    TransactionData(accountId = accountB, amount = -200L, transferAccount = accountA, transferPeer = peers2.first)
+                    TransactionData(
+                        accountId = accountB,
+                        amount = -100L,
+                        transferAccount = accountA,
+                        transferPeer = peers1.first
+                    ),
+                    TransactionData(
+                        accountId = accountB,
+                        amount = -200L,
+                        transferAccount = accountA,
+                        transferPeer = peers2.first
+                    )
                 )
             )
         )
@@ -186,7 +206,8 @@ class DualSplitTransactionTest : BaseTestWithRepository() {
 
         val finalA = repository.loadTransaction(idA)
         assertThat(finalA.splitParts).hasSize(2)
-        assertThat(finalA.splitParts!!.any { it.data.transferPeerId != null }).isTrue() // The transfer part stays linked
+        // The transfer part stays linked
+        assertThat(finalA.splitParts!!.any { it.data.transferPeerId != null }).isTrue()
 
         // The transfer part in account B should still exist but have no parent
         val transferPartB = finalA.splitParts.first { it.data.transferPeerId != null }.data.transferPeerId!!
@@ -282,8 +303,18 @@ class DualSplitTransactionTest : BaseTestWithRepository() {
                 accountId = accountB,
                 amount = -200L,
                 splitParts = listOf(
-                    TransactionData(accountId = accountB, amount = -100L, transferAccount = accountA, transferPeer = peers1.first),
-                    TransactionData(accountId = accountB, amount = -100L, transferAccount = accountA, transferPeer = peers2.first)
+                    TransactionData(
+                        accountId = accountB,
+                        amount = -100L,
+                        transferAccount = accountA,
+                        transferPeer = peers1.first
+                    ),
+                    TransactionData(
+                        accountId = accountB,
+                        amount = -100L,
+                        transferAccount = accountA,
+                        transferPeer = peers2.first
+                    )
                 )
             )
         )

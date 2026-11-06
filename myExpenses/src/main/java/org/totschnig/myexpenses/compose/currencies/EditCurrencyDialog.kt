@@ -101,7 +101,11 @@ fun EditCurrencyDialog(
         val delta = initialFractionDigits - currentFractionDigits
         val part1 = stringResource(R.string.warning_change_fraction_digits_1)
         val part2 = stringResource(
-            if (delta > 0) R.string.warning_change_fraction_digits_2_multiplied else R.string.warning_change_fraction_digits_2_divided,
+            if (delta > 0) {
+                R.string.warning_change_fraction_digits_2_multiplied
+            } else {
+                R.string.warning_change_fraction_digits_2_divided
+            },
             IntMath.pow(10, abs(delta))
         )
         val part3 =

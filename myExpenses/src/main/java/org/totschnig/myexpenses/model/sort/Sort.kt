@@ -56,7 +56,12 @@ enum class Sort(val commandId: Int, val isDescending: Boolean = true) {
         private val templateSort = arrayOf(TITLE, USAGES, LAST_USED, AMOUNT, ACCOUNT)
         private val templateWithPlansSort = arrayOf(TITLE, USAGES, LAST_USED, AMOUNT, ACCOUNT, NEXT_INSTANCE)
         val accountSort = arrayOf(LABEL, USAGES, LAST_USED, CUSTOM)
-        val accountSortLabels = listOf(R.string.label, R.string.pref_sort_order_usages, R.string.pref_sort_order_last_used, R.string.pref_sort_order_custom)
+        val accountSortLabels = listOf(
+            R.string.label,
+            R.string.pref_sort_order_usages,
+            R.string.pref_sort_order_last_used,
+            R.string.pref_sort_order_custom
+        )
 
         @JvmStatic
         fun fromCommandId(id: Int): Sort? = entries.find { it.commandId == id }
@@ -96,7 +101,8 @@ enum class Sort(val commandId: Int, val isDescending: Boolean = true) {
         ) =
             preferredOrderByRestricted(prefKey, prefHandler, defaultSort, accountSort, collate, tableName)
 
-        //returns null if the preferred Sort has null toOrderBy, otherwise the preferred Sort (with defaultOrderBy as secondary sort), otherwise the defaultOrderBy
+        //returns null if the preferred Sort has null toOrderBy, otherwise the preferred Sort (with defaultOrderBy as
+        // secondary sort), otherwise the defaultOrderBy
         private fun preferredOrderByRestricted(
             prefKey: PrefKey,
             prefHandler: PrefHandler,

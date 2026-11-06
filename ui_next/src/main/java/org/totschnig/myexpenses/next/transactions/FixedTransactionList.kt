@@ -76,7 +76,9 @@ class AppFixedTransactions(
             viewModel.transactions.collectAsLazyPagingItems(),
             modifier,
             actions,
-            detailsContent?.let { content -> @Composable { transaction: Transaction2 -> content(transaction.toShown()) } }
+            detailsContent?.let { content ->
+                @Composable { transaction: Transaction2 -> content(transaction.toShown()) }
+            }
         )
     }
 }

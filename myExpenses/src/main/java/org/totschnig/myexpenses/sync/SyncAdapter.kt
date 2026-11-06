@@ -168,7 +168,8 @@ class SyncAdapter @JvmOverloads constructor(
                         (throwable as? SyncParseException)?.let { report(it) }
                         nonRecoverableError(
                             account,
-                            "The backend could not be instantiated. Reason: ${throwable.message}. Please try to delete and recreate it."
+                            "The backend could not be instantiated. Reason: ${throwable.message}. Please try to " +
+                                "delete and recreate it."
                         )
                     } else if (!handleAuthException(throwable, account)) {
                         if (throwable is IOException) {
@@ -809,7 +810,8 @@ class SyncAdapter @JvmOverloads constructor(
             val currentSyncIncrease = ContentValues(1)
             val nextSequence = sequenceNumber + 1
             currentSyncIncrease.put(KEY_SYNC_SEQUENCE_LOCAL, nextSequence)
-            //in case of failed syncs due to non-available backends, sequence number might already be higher than nextSequence
+            //in case of failed syncs due to non-available backends, sequence number might already be higher than
+            // nextSequence
             //we must take care to not decrease it here
             provider.update(
                 TransactionProvider.ACCOUNTS_URI.fromSyncAdapter(),
@@ -856,7 +858,8 @@ class SyncAdapter @JvmOverloads constructor(
                                     tagsV2 =  provider.query(
                                         TransactionProvider.TRANSACTIONS_TAGS_URI,
                                         null,
-                                        "$KEY_TRANSACTIONID = (SELECT $KEY_ROWID FROM $TABLE_TRANSACTIONS WHERE $KEY_UUID = ?)",
+                                        "$KEY_TRANSACTIONID = (SELECT $KEY_ROWID FROM $TABLE_TRANSACTIONS WHERE " +
+                                            "$KEY_UUID = ?)",
                                         arrayOf(transactionChange.uuid),
                                         null
                                     )?.useAndMapToSet { cursor ->

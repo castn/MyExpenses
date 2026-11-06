@@ -125,7 +125,8 @@ class SpendingTipsTest {
     @Test
     fun outlierInLastCompleteMonth() {
         val months = (1L..12L).map { YearMonth.from(today).minusMonths(it) }
-        val leisure = months.map { debit(if (it == months.first()) 42000 else 18000, it.atDay(10), "Kino", "Freizeit > Kino") }
+        val leisure =
+            months.map { debit(if (it == months.first()) 42000 else 18000, it.atDay(10), "Kino", "Freizeit > Kino") }
         val food = months.map { debit(40000, it.atDay(12), "REWE", "Essen > Supermarkt") }
         val tip = outliers(leisure + food + debit(9000, today, "Kino", "Freizeit"), today)!!
         assertEquals(YearMonth.of(2026, 8), tip.month)

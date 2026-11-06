@@ -35,7 +35,8 @@ class BudgetViewModelTest {
     private val giro = 1L
     private val food = CategoryInfo(10, "Essen", "Essen")
     private val facts = ContractFacts(emptyList(), emptyList(), emptyList(), emptySet(), emptyList())
-    private val pot = Pot(id = "food", name = "Essen", kind = PotKind.RUNNING, amount = 40000, categoryIds = setOf(food.id))
+    private val pot =
+        Pot(id = "food", name = "Essen", kind = PotKind.RUNNING, amount = 40000, categoryIds = setOf(food.id))
 
     @Before
     fun setUp() {
@@ -53,10 +54,17 @@ class BudgetViewModelTest {
             val today = LocalDate.now()
             val transaction = LedgerTransaction(1, today, amount = -2500, accountId = giro, categoryId = food.id)
             val accounts = OwnAccounts(setOf(giro), emptyMap())
-            val source = FakeLedgerSource(ledger = Ledger(listOf(transaction), accounts), catalog = Catalog(listOf(food)), today = today)
+            val source = FakeLedgerSource(
+                ledger = Ledger(listOf(transaction), accounts),
+                catalog = Catalog(listOf(food)),
+                today = today
+            )
             val store = BudgetStore(dataStore)
             store.save(pot)
-            val viewModel = BudgetViewModel(BudgetRepository(source, MutableStateFlow(facts), MutableStateFlow(TagFacts()), store, backgroundScope), savedState = SavedStateHandle())
+            val viewModel = BudgetViewModel(
+                BudgetRepository(source, MutableStateFlow(facts), MutableStateFlow(TagFacts()), store, backgroundScope),
+                savedState = SavedStateHandle()
+            )
             suspend fun spent() = (viewModel.overview.first {
                 (it as? AnalysisState.Ready)?.value?.pots?.isNotEmpty() == true
             } as AnalysisState.Ready).value.pots.single().spent
@@ -77,8 +85,18 @@ class BudgetViewModelTest {
     fun switchesToEarlierPeriods() = withTestDataStore { dataStore ->
         runTest {
             val source = FakeLedgerSource(ledger = Ledger(emptyList(), OwnAccounts(setOf(giro), emptyMap())))
-            val viewModel = BudgetViewModel(BudgetRepository(source, MutableStateFlow(facts), MutableStateFlow(TagFacts()), BudgetStore(dataStore), backgroundScope), savedState = SavedStateHandle())
-            suspend fun offset() = (viewModel.overview.first { it is AnalysisState.Ready } as AnalysisState.Ready).value.offset
+            val viewModel = BudgetViewModel(
+                BudgetRepository(
+                    source,
+                    MutableStateFlow(facts),
+                    MutableStateFlow(TagFacts()),
+                    BudgetStore(dataStore),
+                    backgroundScope
+                ),
+                savedState = SavedStateHandle()
+            )
+            suspend fun offset() =
+                (viewModel.overview.first { it is AnalysisState.Ready } as AnalysisState.Ready).value.offset
             assertEquals(0, offset())
             viewModel.showEarlier()
             viewModel.showEarlier()
@@ -94,7 +112,13 @@ class BudgetViewModelTest {
         runTest {
             val savedState = SavedStateHandle()
             fun viewModel() = BudgetViewModel(
-                BudgetRepository(FakeLedgerSource(), MutableStateFlow(facts), MutableStateFlow(TagFacts()), BudgetStore(dataStore), backgroundScope),
+                BudgetRepository(
+                    FakeLedgerSource(),
+                    MutableStateFlow(facts),
+                    MutableStateFlow(TagFacts()),
+                    BudgetStore(dataStore),
+                    backgroundScope
+                ),
                 savedState = savedState
             )
             viewModel().grantNewPot()

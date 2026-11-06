@@ -33,13 +33,26 @@ object BankFee {
             "abhebegebühr", "abhebungsentgelt", "bargeldentgelt", "atm fee", "cash withdrawal fee"
         ),
         BankFeeKind.CARD to listOf("kartengebühr", "kartenentgelt", "card fee"),
-        BankFeeKind.OVERDRAFT to listOf("dispozins", "überziehungszins", "überziehungsentgelt", "sollzins", "overdraft"),
+        BankFeeKind.OVERDRAFT to listOf(
+            "dispozins",
+            "überziehungszins",
+            "überziehungsentgelt",
+            "sollzins",
+            "overdraft"
+        ),
         BankFeeKind.ACCOUNT to listOf(
             "kontoführung", "kontofuehrung", "kontoentgelt", "kontogebühr", "kontopreis", "entgeltabrechnung",
             "rechnungsabschluss", "account fee", "account maintenance"
         ),
         // Categories of the default setup, "Bankgebühren" / "Bank charges"
-        BankFeeKind.OTHER to listOf("bankgebühr", "bankentgelt", "bank charge", "bank fee", "depotgebühr", "depotentgelt")
+        BankFeeKind.OTHER to listOf(
+            "bankgebühr",
+            "bankentgelt",
+            "bank charge",
+            "bank fee",
+            "depotgebühr",
+            "depotentgelt"
+        )
     )
 
     fun kindOf(transaction: ContractTransaction): BankFeeKind? {

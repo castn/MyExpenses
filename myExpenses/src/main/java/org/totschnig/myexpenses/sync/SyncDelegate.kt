@@ -167,18 +167,47 @@ class SyncDelegate(
         return this.copy(
             comment = if (comment != null && merged.comment != null && merged.comment != comment) null else comment,
             date = if (date != null && merged.date != null && merged.date != date) null else date,
-            valueDate = if (valueDate != null && merged.valueDate != null && merged.valueDate != valueDate) null else valueDate,
+            valueDate =
+                if (valueDate != null && merged.valueDate != null && merged.valueDate != valueDate) null else valueDate,
             amount = if (amount != null && merged.amount != null && merged.amount != amount) null else amount,
-            label = if ((label != null || categoryInfo != null) && (merged.label != null || merged.categoryInfo != null) && (merged.label != label || merged.categoryInfo != categoryInfo)) null else label,
-            categoryInfo = if ((label != null || categoryInfo != null) && (merged.label != null || merged.categoryInfo != null) && (merged.label != label || merged.categoryInfo != categoryInfo)) null else categoryInfo,
-            payeeName = if (payeeName != null && merged.payeeName != null && merged.payeeName != payeeName) null else payeeName,
-            transferAccount = if (transferAccount != null && merged.transferAccount != null && merged.transferAccount != transferAccount) null else transferAccount,
-            methodLabel = if (methodLabel != null && merged.methodLabel != null && merged.methodLabel != methodLabel) null else methodLabel,
-            crStatus = if (crStatus != null && merged.crStatus != null && merged.crStatus != crStatus) null else crStatus,
+            label = if (
+                (label != null || categoryInfo != null) && (merged.label != null || merged.categoryInfo != null) && (
+                    merged.label != label || merged.categoryInfo != categoryInfo
+                )
+            ) null else label,
+            categoryInfo = if (
+                (label != null || categoryInfo != null) && (merged.label != null || merged.categoryInfo != null) && (
+                    merged.label != label || merged.categoryInfo != categoryInfo
+                )
+            ) null else categoryInfo,
+            payeeName =
+                if (payeeName != null && merged.payeeName != null && merged.payeeName != payeeName) null else payeeName,
+            transferAccount = if (
+                transferAccount != null && merged.transferAccount != null && merged.transferAccount != transferAccount
+            ) null else transferAccount,
+            methodLabel = if (
+                methodLabel != null && merged.methodLabel != null && merged.methodLabel != methodLabel
+            ) null else methodLabel,
+            crStatus =
+                if (crStatus != null && merged.crStatus != null && merged.crStatus != crStatus) null else crStatus,
             status = if (status != null && merged.status != null && merged.status != status) null else status,
-            referenceNumber = if (referenceNumber != null && merged.referenceNumber != null && merged.referenceNumber != referenceNumber) null else referenceNumber,
-            pictureUri = if ((pictureUri != null || attachments != null) && (merged.pictureUri != null || merged.attachments != null) && (merged.pictureUri != pictureUri || merged.attachments != attachments)) null else pictureUri,
-            attachments = if ((pictureUri != null || attachments != null) && (merged.pictureUri != null || merged.attachments != null) && (merged.pictureUri != pictureUri || merged.attachments != attachments)) null else attachments,
+            referenceNumber = if (
+                referenceNumber != null && merged.referenceNumber != null && merged.referenceNumber != referenceNumber
+            ) null else referenceNumber,
+            pictureUri = if (
+                (pictureUri != null || attachments != null) && (
+                    merged.pictureUri != null || merged.attachments != null
+                ) && (
+                    merged.pictureUri != pictureUri || merged.attachments != attachments
+                )
+            ) null else pictureUri,
+            attachments = if (
+                (pictureUri != null || attachments != null) && (
+                    merged.pictureUri != null || merged.attachments != null
+                ) && (
+                    merged.pictureUri != pictureUri || merged.attachments != attachments
+                )
+            ) null else attachments,
             splitParts = if (splitParts != null && merged.splitParts != null) {
                 splitParts.map { part ->
                     merged.splitParts.find { it.uuid == part.uuid }?.let { mergedPart ->
@@ -186,8 +215,16 @@ class SyncDelegate(
                     } ?: part
                 }
             } else splitParts,
-            tags = if ((tags != null || tagsV2 != null) && (merged.tags != null || merged.tagsV2 != null) && (merged.tags != tags || merged.tagsV2 != tagsV2)) null else tags,
-            tagsV2 = if ((tags != null || tagsV2 != null) && (merged.tags != null || merged.tagsV2 != null) && (merged.tags != tags || merged.tagsV2 != tagsV2)) null else tagsV2
+            tags = if (
+                (tags != null || tagsV2 != null) && (merged.tags != null || merged.tagsV2 != null) && (
+                    merged.tags != tags || merged.tagsV2 != tagsV2
+                )
+            ) null else tags,
+            tagsV2 = if (
+                (tags != null || tagsV2 != null) && (merged.tags != null || merged.tagsV2 != null) && (
+                    merged.tags != tags || merged.tagsV2 != tagsV2
+                )
+            ) null else tagsV2
         )
     }
 

@@ -311,10 +311,22 @@ class PriceHistoryViewModel(application: Application, val savedStateHandle: Save
                     if (importedCount > 0 || failedLines > 0) {
                         buildString {
                             if (importedCount > 0) {
-                                appendLine(context.resources.getQuantityString(R.plurals.import_prices_success_message, importedCount, importedCount))
+                                appendLine(
+                                    context.resources.getQuantityString(
+                                        R.plurals.import_prices_success_message,
+                                        importedCount,
+                                        importedCount
+                                    )
+                                )
                             }
                             if (failedLines > 0) {
-                                appendLine(context.resources.getQuantityString(R.plurals.import_prices_failure_message, failedLines, failedLines))
+                                appendLine(
+                                    context.resources.getQuantityString(
+                                        R.plurals.import_prices_failure_message,
+                                        failedLines,
+                                        failedLines
+                                    )
+                                )
                             }
                         }
                     } else {

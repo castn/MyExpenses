@@ -158,8 +158,13 @@ class ExportViewModel(application: Application) : ContentResolvingAndroidViewMod
                                             val homeCurrencyString = currencyContext.homeCurrencyString
                                             val withEquivalentAmountHeader = withOriginalAmountAndEquivalentAmount &&
                                                     (account.currency != homeCurrencyString
-                                                            || (mergeP && (currency == null || currency != homeCurrencyString)))
-                                            val withEquivalentAmount = withOriginalAmountAndEquivalentAmount && account.currency != homeCurrencyString
+                                                            || (
+                                                                mergeP && (
+                                                                    currency == null || currency != homeCurrencyString
+                                                                )
+                                                            ))
+                                            val withEquivalentAmount = withOriginalAmountAndEquivalentAmount &&
+                                                account.currency != homeCurrencyString
                                             CsvExporter(
                                                 account = account,
                                                 currencyContext = currencyContext,

@@ -51,7 +51,10 @@ class AccountSumTest: BaseTestWithRepository() {
             hasLong(KEY_SUM_INCOME, income1 + income2)
             hasLong(KEY_SUM_EXPENSES, -expense1 - expense2)
             hasLong(KEY_SUM_TRANSFERS, transferP - transferN)
-            hasLong(KEY_CURRENT_BALANCE, openingBalance + income1 + income2 - expense1 - expense2 + transferP - transferN)
+            hasLong(
+                KEY_CURRENT_BALANCE,
+                openingBalance + income1 + income2 - expense1 - expense2 + transferP - transferN
+            )
         }
 
         contentResolver.query(

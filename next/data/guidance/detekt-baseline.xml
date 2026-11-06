@@ -4,13 +4,5 @@
   <CurrentIssues>
     <ID>MatchingDeclarationName:Hints.kt:HintTopic</ID>
     <ID>MatchingDeclarationName:PendingTips.kt:PendingTip</ID>
-    <ID>MaxLineLength:DataReadiness.kt:/** Debits that can have a category: as [org.totschnig.myexpenses.next.categories.categoryInputs], without credits and own transfers */</ID>
-    <ID>MaxLineLength:DataReadinessTest.kt:DataReadinessTest$scanned = 2</ID>
-    <ID>MaxLineLength:DataReadinessTest.kt:DataReadinessTest$val readiness = dataReadiness(Ledger(wellDescribed(), OwnAccounts(emptySet(), emptyMap())), ReceiptFacts.None, today)</ID>
-    <ID>MaxLineLength:HintsTest.kt:HintsTest$LedgerTransaction(1, LocalDate.of(2026, 10, 15), amount, accountId = 1, payeeName = payee, categoryId = categoryId)</ID>
-    <ID>MaxLineLength:HintsTest.kt:HintsTest$assertEquals(HintTopic.RECEIPT, hintAfterSave(purchase(categoryId = null), hasReceipt = false, setOf(HintTopic.CATEGORY)))</ID>
-    <ID>MaxLineLength:HintsTest.kt:HintsTest$assertNull(hintAfterSave(purchase(categoryId = null).copy(transferAccountId = 2), hasReceipt = false, emptySet()))</ID>
-    <ID>MaxLineLength:PendingTipsTest.kt:PendingTipsTest$val ids = setOf("${ItemGroupRising.ID_PREFIX}SWEETS_SNACKS", DrugstoreInSupermarkets.ID, DepositNotReturned.ID, Outliers.ID)</ID>
-    <ID>MaxLineLength:PendingTipsTest.kt:PendingTipsTest$val readiness = readiness(scannedRecent = 4, scannedUsual = 6, scannedLastYear = 10, scannedSupermarketLastYear = 1)</ID>
   </CurrentIssues>
 </SmellBaseline>

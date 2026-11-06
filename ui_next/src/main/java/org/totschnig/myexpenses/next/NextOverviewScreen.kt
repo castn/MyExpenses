@@ -215,7 +215,8 @@ fun NextOverviewScreen(
                                     canReorder = canReorder,
                                     onAddAccount = onAddAccount,
                                     // Once the invitation is dismissed, budgets are added from here
-                                    onAddBudget = budgets?.takeIf { it.budgets?.isEmpty() == true && it.inviteDismissed }
+                                    onAddBudget =
+                                        budgets?.takeIf { it.budgets?.isEmpty() == true && it.inviteDismissed }
                                         ?.onAdd
                                 )
                             }
@@ -473,7 +474,8 @@ private fun BudgetRing(
     val percentFormat = remember { NumberFormat.getPercentInstance() }
     BudgetTile(
         label = budget.title,
-        labelColor = if (progress != null && progress > 1f) colors.expense else MaterialTheme.colorScheme.onSurfaceVariant,
+        labelColor =
+            if (progress != null && progress > 1f) colors.expense else MaterialTheme.colorScheme.onSurfaceVariant,
         onClick = onClick
     ) {
         Box(

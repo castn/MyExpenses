@@ -63,7 +63,8 @@ fun Banner(
     actions: (@Composable RowScope.() -> Unit)? = null,
 ) {
     val (color, contentColor) = when (style) {
-        BannerStyle.Question -> MaterialTheme.colorScheme.tertiaryContainer to MaterialTheme.colorScheme.onTertiaryContainer
+        BannerStyle.Question ->
+            MaterialTheme.colorScheme.tertiaryContainer to MaterialTheme.colorScheme.onTertiaryContainer
         BannerStyle.Alert -> MaterialTheme.colorScheme.errorContainer to MaterialTheme.colorScheme.onErrorContainer
     }
     Surface(
@@ -299,7 +300,11 @@ fun ActionCard(
             )
             Button(
                 onClick = onConfirm,
-                contentPadding = if (confirmIcon != null) ButtonDefaults.ButtonWithIconContentPadding else ButtonDefaults.ContentPadding,
+                contentPadding = if (confirmIcon != null) {
+                    ButtonDefaults.ButtonWithIconContentPadding
+                } else {
+                    ButtonDefaults.ContentPadding
+                },
                 modifier = Modifier.padding(top = 24.dp)
             ) {
                 if (confirmIcon != null) {
@@ -355,7 +360,11 @@ fun InviteCard(
                 )
             }
             IconButton(onClick = onDismiss) {
-                Icon(Icons.Default.Close, contentDescription = dismissLabel, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                Icon(
+                    Icons.Default.Close,
+                    contentDescription = dismissLabel,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     }

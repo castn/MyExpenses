@@ -121,7 +121,11 @@ class ManageBudgets : ProtectedFragmentActivity() {
                                     viewModel.importDialogDismissed()
                                 }
                             }) {
-                                Text(stringResource(if (selectedBudgets.isNotEmpty()) R.string.menu_import else R.string.menu_close))
+                                Text(
+                                    stringResource(
+                                        if (selectedBudgets.isNotEmpty()) R.string.menu_import else R.string.menu_close
+                                    )
+                                )
                             }
                         },
                         text = {

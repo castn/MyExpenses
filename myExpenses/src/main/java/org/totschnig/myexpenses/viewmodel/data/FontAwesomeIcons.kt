@@ -893,7 +893,11 @@ val FontAwesomeIcons: Map<String, IconInfo> = mapOf(
 "house-fire" to IconInfo('\ue50c', R.string.fa_house_fire_label, false),
 "house-flag" to IconInfo('\ue50d', R.string.fa_house_flag_label, false),
 "house-flood-water" to IconInfo('\ue50e', R.string.fa_house_flood_water_label, false),
-"house-flood-water-circle-arrow-right" to IconInfo('\ue50f', R.string.fa_house_flood_water_circle_arrow_right_label, false),
+"house-flood-water-circle-arrow-right" to IconInfo(
+    '\ue50f',
+    R.string.fa_house_flood_water_circle_arrow_right_label,
+    false
+),
 "house-laptop" to IconInfo('\ue066', R.string.fa_house_laptop_label, false),
 "house-lock" to IconInfo('\ue510', R.string.fa_house_lock_label, false),
 "house-medical" to IconInfo('\ue3b2', R.string.fa_house_medical_label, false),
@@ -1236,7 +1240,11 @@ val FontAwesomeIcons: Map<String, IconInfo> = mapOf(
 "person-walking" to IconInfo('\uf554', R.string.fa_person_walking_label, false),
 "person-walking-arrow-loop-left" to IconInfo('\ue551', R.string.fa_person_walking_arrow_loop_left_label, false),
 "person-walking-arrow-right" to IconInfo('\ue552', R.string.fa_person_walking_arrow_right_label, false),
-"person-walking-dashed-line-arrow-right" to IconInfo('\ue553', R.string.fa_person_walking_dashed_line_arrow_right_label, false),
+"person-walking-dashed-line-arrow-right" to IconInfo(
+    '\ue553',
+    R.string.fa_person_walking_dashed_line_arrow_right_label,
+    false
+),
 "person-walking-luggage" to IconInfo('\ue554', R.string.fa_person_walking_luggage_label, false),
 "person-walking-with-cane" to IconInfo('\uf29d', R.string.fa_person_walking_with_cane_label, false),
 "peseta-sign" to IconInfo('\ue221', R.string.fa_peseta_sign_label, false),

@@ -161,7 +161,9 @@ abstract class DistributionBaseActivity<T : DistributionViewModelBase<*>> :
         viewModel.accountInfo.value?.let { accountInfo ->
             TransactionListComposeDialogFragment.newInstance(
                 TransactionListViewModel.LoadingInfo(
-                    accountId = if (accountInfo.accountId == 0L && accountInfo.accountGrouping == AccountGrouping.NONE) HOME_AGGREGATE_ID else accountInfo.accountId,
+                    accountId = if (
+                        accountInfo.accountId == 0L && accountInfo.accountGrouping == AccountGrouping.NONE
+                    ) HOME_AGGREGATE_ID else accountInfo.accountId,
                     currency = currencyContext[accountInfo.currency],
                     accountFlag = accountInfo.flagId,
                     accountType = accountInfo.typeId,

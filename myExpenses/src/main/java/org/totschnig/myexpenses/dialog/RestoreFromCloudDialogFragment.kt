@@ -141,7 +141,9 @@ class RestoreFromCloudDialogFragment : DialogViewBinding<RestoreFromCloudBinding
             val id = contentForTab.id
             if (id == R.id.backup_list_container) {
                 val password =
-                    if (binding.passwordLayout.passwordLayout.visibility == View.VISIBLE) binding.passwordLayout.passwordEdit.text.toString() else null
+                    if (
+                        binding.passwordLayout.passwordLayout.visibility == View.VISIBLE
+                    ) binding.passwordLayout.passwordEdit.text.toString() else null
                 activity.setupFromBackup(
                     backups[findListView(contentForTab)!!.checkedItemPosition],
                     password

@@ -96,7 +96,12 @@ class CategorySettings(activity: ComponentActivity) : AreaSettings {
     }
 
     companion object : AreaSettings.Factory {
-        val RULES = InsightSetting("CATEGORY_RULES", SettingsGroup.INSIGHTS, SettingKind.ACTION, R.string.next_settings_category_rules)
+        val RULES = InsightSetting(
+            "CATEGORY_RULES",
+            SettingsGroup.INSIGHTS,
+            SettingKind.ACTION,
+            R.string.next_settings_category_rules
+        )
 
         override val settings = listOf(RULES)
 

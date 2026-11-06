@@ -32,7 +32,8 @@ class DeepLinkActivity : ProtectedFragmentActivity() {
                     showMessage("My Expenses implements a new licence validation mechanism. Please request a new key.")
                 } else if ("verify" == data.fragment) { //callback2.html
                     val isSandbox = data.getBooleanQueryParameter("sandbox", false)
-                    if (isSandbox == BuildConfig.DEBUG) { //prevent a sandbox call from hitting production app, and vice versa
+                    //prevent a sandbox call from hitting production app, and vice versa
+                    if (isSandbox == BuildConfig.DEBUG) {
                         val existingKey = prefHandler.getString(PrefKey.NEW_LICENCE, "")
                         val existingEmail = prefHandler.getString(PrefKey.LICENCE_EMAIL, "")
                         val key = data.getQueryParameter("key")

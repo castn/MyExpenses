@@ -263,7 +263,8 @@ fun FilterDialog(
                         ActionButton(
                             hintText = stringResource(android.R.string.cancel),
                             icon = Icons.Filled.Clear,
-                            modifier = Modifier.align(if (isComplexSearch) Alignment.CenterStart else Alignment.CenterEnd),
+                            modifier =
+                                Modifier.align(if (isComplexSearch) Alignment.CenterStart else Alignment.CenterEnd),
                             onClick = onDismiss
                         )
                         if (isComplexSearch) {

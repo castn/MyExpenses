@@ -81,7 +81,12 @@ data class Pot(
     /** Whether the pot holds transactions at all, unlike [PotKind.ITEM_GROUP] */
     val holdsTransactions: Boolean
         get() = kind != PotKind.ITEM_GROUP &&
-                (categoryIds.isNotEmpty() || tagIds.isNotEmpty() || payeeIds.isNotEmpty() || contractRuleIds.isNotEmpty())
+                (
+                    categoryIds.isNotEmpty() ||
+                        tagIds.isNotEmpty() ||
+                        payeeIds.isNotEmpty() ||
+                        contractRuleIds.isNotEmpty()
+                )
 
     /**
      * Whether a transaction on [date] can belong to the pot: from [start] and, for a project, until

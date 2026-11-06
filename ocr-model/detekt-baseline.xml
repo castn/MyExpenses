@@ -5,16 +5,6 @@
     <ID>CyclomaticComplexMethod:ReceiptAnonymizer.kt:ReceiptAnonymizer$fun anonymize: Result</ID>
     <ID>LongMethod:ReceiptAnonymizer.kt:ReceiptAnonymizer$fun anonymize: Result</ID>
     <ID>MagicNumber:ReceiptAnonymizer.kt:ReceiptAnonymizer$3</ID>
-    <ID>MaxLineLength:ReceiptAnonymizer.kt:ReceiptAnonymizer$Hide</ID>
-    <ID>MaxLineLength:ReceiptAnonymizer.kt:ReceiptAnonymizer$if</ID>
-    <ID>MaxLineLength:ReceiptAnonymizer.kt:ReceiptAnonymizer$is Replace</ID>
-    <ID>MaxLineLength:ReceiptAnonymizer.kt:ReceiptAnonymizer$private val paymentWords = listOf("ZAHLUNG", "ECCASH", "ECASH", "BARGELD", "GEGEBEN", "GIROCARD", "MAESTRO", "VISA", "MASTERCARD")</ID>
-    <ID>MaxLineLength:ReceiptAnonymizerTest.kt:ReceiptAnonymizerTest$assertThat(ReceiptAnonymizer.mask("Beleg 12345 vom 3.10.26 um 9:05:12")).isEqualTo("Beleg 00000 vom 0.00.00 um 0:00:00")</ID>
-    <ID>MaxLineLength:ReceiptAnonymizerTest.kt:ReceiptAnonymizerTest$assertThat(result.text.lines.first { it.text == ReceiptAnonymizer.STREET }.box).isEqualTo(before["Lindenstraße 16"])</ID>
-    <ID>MaxLineLength:ReceiptAnonymizerTest.kt:ReceiptAnonymizerTest$assertThat(result.text.rows().map { it.rowText() }).containsExactly("EDEKA", "EDEKA", "Herz.Hummus 1,79 A").inOrder()</ID>
-    <ID>MaxLineLength:ReceiptAnonymizerTest.kt:ReceiptAnonymizerTest$val all = result.text.lines.flatMap { line -&gt; listOf(line.text) + line.elements.map { it.text } }.joinToString("\n")</ID>
-    <ID>MaxLineLength:ReceiptAnonymizerTest.kt:ReceiptAnonymizerTest$val result = ReceiptAnonymizer.anonymize(text, ExpectedReceipt("Backshop Muster", listOf(ExpectedItem("Burek Käse", 450))))</ID>
-    <ID>MaxLineLength:ReceiptAnonymizerTest.kt:ReceiptAnonymizerTest$words.mapIndexed { i, word -&gt; RecognizedElement(word, Box(left + i * 100, row * 100, left + i * 100 + 90, row * 100 + 80)) }</ID>
     <ID>ReturnCount:ReceiptAnonymizer.kt:ReceiptAnonymizer$private fun withoutOwner: RecognizedLine?</ID>
   </CurrentIssues>
 </SmellBaseline>

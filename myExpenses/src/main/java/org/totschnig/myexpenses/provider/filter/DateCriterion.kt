@@ -41,8 +41,10 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 object LocalDateSerializer : KSerializer<LocalDate> {
-    // Serial names of descriptors should be unique, so choose app-specific name in case some library also would declare a serializer for Date.
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("org.totschnig.myexpenses.provider.filter.LocalDate", PrimitiveKind.STRING)
+    // Serial names of descriptors should be unique, so choose app-specific name in case some library also would declare
+    // a serializer for Date.
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("org.totschnig.myexpenses.provider.filter.LocalDate", PrimitiveKind.STRING)
     override fun serialize(encoder: Encoder, value: LocalDate) = encoder.encodeString(value.toString())
     override fun deserialize(decoder: Decoder): LocalDate = LocalDate.parse(decoder.decodeString())
 }

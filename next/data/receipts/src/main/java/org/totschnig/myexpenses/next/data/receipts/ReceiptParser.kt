@@ -79,7 +79,11 @@ object ReceiptParser {
             items = assembled.items + discounts,
             // Address, phone and column headers above the first item are no items
             leftoverRows = itemRows.drop(itemRows.indexOfFirst { it in assembled.used }.coerceAtLeast(0))
-                .filter { it !in assembled.used && it.text.count(Char::isLetterOrDigit) >= 2 && kinds.itemCount(it.text) == null }
+                .filter {
+                    it !in assembled.used &&
+                        it.text.count(Char::isLetterOrDigit) >= 2 &&
+                        kinds.itemCount(it.text) == null
+                }
                 .map { LeftoverRow(it.text, it.box) },
             total = finalTotal,
             itemCount = itemCount(rows, total.index),
@@ -91,7 +95,8 @@ object ReceiptParser {
 
     /**
      * The item the user reads from rows the parser did not take, in the order of the receipt:
-     * as the parser would read them together if it takes all of them, otherwise the rows without price make up the name,
+     * as the parser would read them together if it takes all of them, otherwise the rows without price make up the
+     * name,
      * the last price is the amount and a quantity row gives count and unit price. Its amount is 0
      * if none is found, for the user to fill in.
      */
@@ -115,7 +120,8 @@ object ReceiptParser {
                     ?.let { names += kinds.withoutArticleNumber(it) }
             }
         }
-        val counted = quantity?.let { (it.quantity * BigDecimal(it.unitPrice)).setScale(0, RoundingMode.HALF_UP).toLong() }
+        val counted =
+            quantity?.let { (it.quantity * BigDecimal(it.unitPrice)).setScale(0, RoundingMode.HALF_UP).toLong() }
         val item = ReceiptItem(
             name = names.filter { it.isNotEmpty() }.joinToString(" "),
             amount = price?.cents ?: counted ?: 0,
@@ -123,7 +129,11 @@ object ReceiptParser {
             box = box
         )
         return quantity?.takeIf { price == null || counted == price!!.cents }?.let {
-            item.copy(quantity = it.quantity, unit = "kg".takeIf { _ -> it.unit == ReceiptUnit.KG }, unitPrice = it.unitPrice)
+            item.copy(
+                quantity = it.quantity,
+                unit = "kg".takeIf { _ -> it.unit == ReceiptUnit.KG },
+                unitPrice = it.unitPrice
+            )
         } ?: item
     }
 
@@ -163,7 +173,8 @@ object ReceiptParser {
         if (index >= 0) {
             amountOf(rows[index].text)?.let { return Total(index, it, index) }
             val above = rows.getOrNull(index - 1)?.takeIf { kinds.isAmountOnly(it.text) }
-            val below = rows.getOrNull(index + 1)?.takeIf { kinds.isAmountOnly(it.text) || vocabulary.isPayment(it.text) }
+            val below =
+                rows.getOrNull(index + 1)?.takeIf { kinds.isAmountOnly(it.text) || vocabulary.isPayment(it.text) }
             val amount = (above ?: below)?.let { amountOf(it.text) }?.let(::abs)
             return Total(index, amount, if (above != null && amount != null) index - 1 else index)
         }

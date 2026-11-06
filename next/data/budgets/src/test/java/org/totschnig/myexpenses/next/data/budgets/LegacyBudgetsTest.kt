@@ -37,7 +37,8 @@ class LegacyBudgetsTest {
         assertEquals(52000L, all.amount)
         // Without filter it holds all main categories for expenses
         assertEquals(setOf(food.id, leisure.id), all.categoryIds)
-        val filtered = pots(LegacyBudget("Hund", "EUR", LegacyPeriod.YEAR, null, null, total = 60000, tagIds = setOf(7))).single()
+        val filtered =
+            pots(LegacyBudget("Hund", "EUR", LegacyPeriod.YEAR, null, null, total = 60000, tagIds = setOf(7))).single()
         assertEquals(PotKind.YEARLY, filtered.kind)
         assertEquals(emptySet<Long>(), filtered.categoryIds)
         assertEquals(setOf(7L), filtered.tagIds)
@@ -48,7 +49,15 @@ class LegacyBudgetsTest {
         val start = LocalDate.of(2026, 8, 1)
         val end = LocalDate.of(2026, 8, 14)
         val pots = pots(
-            LegacyBudget("Italien", "EUR", LegacyPeriod.NONE, start, end, total = 150000, categoryIds = setOf(leisure.id)),
+            LegacyBudget(
+                "Italien",
+                "EUR",
+                LegacyPeriod.NONE,
+                start,
+                end,
+                total = 150000,
+                categoryIds = setOf(leisure.id)
+            ),
             LegacyBudget("USA", "USD", LegacyPeriod.MONTH, null, null, total = 50000),
             LegacyBudget("Leer", "EUR", LegacyPeriod.MONTH, null, null, total = 0),
         )

@@ -309,7 +309,11 @@ class PlanMonthFragment : CaldroidFragment(), LoaderManager.LoaderCallbacks<Curs
                 text.setTextColor(
                     ResourcesCompat.getColor(
                         resources,
-                        if (brightColor) com.caldroid.R.color.cell_text_color else com.caldroid.R.color.cell_text_color_dark,
+                        if (brightColor) {
+                            com.caldroid.R.color.cell_text_color
+                        } else {
+                            com.caldroid.R.color.cell_text_color_dark
+                        },
                         null
                     )
                 )

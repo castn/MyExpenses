@@ -83,9 +83,19 @@ class ContractHabitsTest {
         val tip = frequentPayments(
             listOf(
                 contract("HUK", "Privathaftpflicht", amount = 500),
-                contract("ARAG", comment = "Beitrag", area = BuiltInArea.INSURANCE, interval = ContractInterval.QUARTERLY),
+                contract(
+                    "ARAG",
+                    comment = "Beitrag",
+                    area = BuiltInArea.INSURANCE,
+                    interval = ContractInterval.QUARTERLY
+                ),
                 contract("Spotify", amount = 1099),
-                contract("Allianz", "Hausratversicherung", interval = ContractInterval.YEARLY, since = today.minusMonths(13)),
+                contract(
+                    "Allianz",
+                    "Hausratversicherung",
+                    interval = ContractInterval.YEARLY,
+                    since = today.minusMonths(13)
+                ),
                 contract("Vattenfall"),
                 contract("Techniker Krankenkasse", "Krankenversicherung"),
                 contract("Allianz", "Pflegezusatzversicherung"),

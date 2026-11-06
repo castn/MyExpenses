@@ -80,11 +80,17 @@ class ReceiptTokensTest {
 
     @Test
     fun everyRecognizedLineOfTheFixturesIsSplit() {
-        ReceiptFixtures.dir().listFiles { file -> file.name.endsWith(".json") && !file.name.endsWith(".expected.json") }!!
+        ReceiptFixtures.dir().listFiles { file ->
+            file.name.endsWith(".json") && !file.name.endsWith(".expected.json")
+        }!!
             .flatMap { recognizedTextFromJson(it.readText()).lines }
             .forEach { line ->
                 ReceiptTokens.tokens(line.text).forEach { token ->
-                    assertEquals(line.text, token.text.replace(" ", ""), line.text.substring(token.start, token.end).replace(" ", ""))
+                    assertEquals(
+                        line.text,
+                        token.text.replace(" ", ""),
+                        line.text.substring(token.start, token.end).replace(" ", "")
+                    )
                 }
             }
     }

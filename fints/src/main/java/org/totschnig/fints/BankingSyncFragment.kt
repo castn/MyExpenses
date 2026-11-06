@@ -80,7 +80,9 @@ class BankingSyncFragment : ComposeBaseDialogFragment2() {
                     is BankingViewModel.WorkState.BankLoaded -> {
                         val state: MutableState<BankingCredentials> = rememberSaveable {
                             mutableStateOf(
-                                BankingCredentials.fromBank((workState.value as BankingViewModel.WorkState.BankLoaded).bank)
+                                BankingCredentials.fromBank(
+                                    (workState.value as BankingViewModel.WorkState.BankLoaded).bank
+                                )
                             )
                         }
                         BankingCredentials(bankingCredentials = state, onDone = {})

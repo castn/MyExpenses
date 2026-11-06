@@ -78,7 +78,9 @@ abstract class EditActivity : ProtectedFragmentActivity(), TextWatcher, ButtonWi
             Bundle().apply {
                 putString(
                     ConfirmationDialogFragment.KEY_MESSAGE,
-                    if (newInstance) getString(R.string.discard) + "?" else getString(R.string.dialog_confirm_discard_changes)
+                    if (newInstance) getString(R.string.discard) + "?" else getString(
+                        R.string.dialog_confirm_discard_changes
+                    )
                 )
                 putInt(ConfirmationDialogFragment.KEY_COMMAND_POSITIVE, android.R.id.home)
                 putInt(ConfirmationDialogFragment.KEY_POSITIVE_BUTTON_LABEL, R.string.response_yes)

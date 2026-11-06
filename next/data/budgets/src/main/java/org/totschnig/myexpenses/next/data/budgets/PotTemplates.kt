@@ -18,13 +18,88 @@ enum class PotTemplate(
     val icon: String,
     private vararg val keywords: String,
 ) {
-    DAILY(R.string.next_pot_daily, PotKind.RUNNING, "cart-shopping", "lebensmittel", "supermarkt", "bäcker", "metzger", "wochenmarkt", "getränke", "drogerie", "groceries", "food"),
-    GOING_OUT(R.string.next_pot_going_out, PotKind.RUNNING, "martini-glass", "essen gehen", "restaurant", "café", "cafe", "imbiss", "ausgehen", "=bar", "kino", "konzert", "dining", "cinema"),
-    RESTAURANTS(R.string.next_pot_restaurants, PotKind.RUNNING, "utensils", "restaurant", "café", "cafe", "=bar", "=bars", "dining"),
+    DAILY(
+        R.string.next_pot_daily,
+        PotKind.RUNNING,
+        "cart-shopping",
+        "lebensmittel",
+        "supermarkt",
+        "bäcker",
+        "metzger",
+        "wochenmarkt",
+        "getränke",
+        "drogerie",
+        "groceries",
+        "food"
+    ),
+    GOING_OUT(
+        R.string.next_pot_going_out,
+        PotKind.RUNNING,
+        "martini-glass",
+        "essen gehen",
+        "restaurant",
+        "café",
+        "cafe",
+        "imbiss",
+        "ausgehen",
+        "=bar",
+        "kino",
+        "konzert",
+        "dining",
+        "cinema"
+    ),
+    RESTAURANTS(
+        R.string.next_pot_restaurants,
+        PotKind.RUNNING,
+        "utensils",
+        "restaurant",
+        "café",
+        "cafe",
+        "=bar",
+        "=bars",
+        "dining"
+    ),
     DELIVERY(R.string.next_pot_delivery, PotKind.RUNNING, "pizza-slice", "lieferdienst", "delivery"),
-    MOBILITY(R.string.next_pot_mobility, PotKind.RUNNING, "car", "mobilität", "kraftstoff", "tanken", "öpnv", "=bahn", "taxi", "carsharing", "parken", "laden e auto", "transport", "fuel"),
-    SHOPPING(R.string.next_pot_shopping, PotKind.RUNNING, "bag-shopping", "kleidung", "schuhe", "accessoires", "elektronik", "shopping", "clothing"),
-    LEISURE(R.string.next_pot_leisure, PotKind.RUNNING, "puzzle-piece", "freizeit", "hobby", "kino", "konzerte", "museen", "bücher", "leisure", "hobbies"),
+    MOBILITY(
+        R.string.next_pot_mobility,
+        PotKind.RUNNING,
+        "car",
+        "mobilität",
+        "kraftstoff",
+        "tanken",
+        "öpnv",
+        "=bahn",
+        "taxi",
+        "carsharing",
+        "parken",
+        "laden e auto",
+        "transport",
+        "fuel"
+    ),
+    SHOPPING(
+        R.string.next_pot_shopping,
+        PotKind.RUNNING,
+        "bag-shopping",
+        "kleidung",
+        "schuhe",
+        "accessoires",
+        "elektronik",
+        "shopping",
+        "clothing"
+    ),
+    LEISURE(
+        R.string.next_pot_leisure,
+        PotKind.RUNNING,
+        "puzzle-piece",
+        "freizeit",
+        "hobby",
+        "kino",
+        "konzerte",
+        "museen",
+        "bücher",
+        "leisure",
+        "hobbies"
+    ),
     FITNESS(R.string.next_pot_fitness, PotKind.RUNNING, "dumbbell", "fitness", "sport", "vereinsbeiträge", "gym"),
     PET(R.string.next_pot_pet, PotKind.RUNNING, "paw", "haustier", "futter", "tierarzt", "pet", "pets"),
     CARE(R.string.next_pot_care, PotKind.RUNNING, "pump-soap", "körperpflege", "friseur", "kosmetik", "personal care"),
@@ -34,10 +109,37 @@ enum class PotTemplate(
     CLOTHING(R.string.next_pot_clothing, PotKind.YEARLY, "shirt", "kleidung", "schuhe", "clothing"),
     CHRISTMAS(R.string.next_pot_christmas, PotKind.YEARLY, "gifts", "weihnacht", "christmas"),
     CAR(R.string.next_pot_car, PotKind.YEARLY, "oil-can", "werkstatt", "tüv", "wartung", "car repair"),
-    HEALTH(R.string.next_pot_health, PotKind.YEARLY, "heart-pulse", "arzt", "zahnarzt", "apotheke", "brille", "doctor", "pharmacy"),
-    HOME(R.string.next_pot_home, PotKind.YEARLY, "couch", "möbel", "einrichtung", "haushaltsgeräte", "haushaltswaren", "furniture"),
+    HEALTH(
+        R.string.next_pot_health,
+        PotKind.YEARLY,
+        "heart-pulse",
+        "arzt",
+        "zahnarzt",
+        "apotheke",
+        "brille",
+        "doctor",
+        "pharmacy"
+    ),
+    HOME(
+        R.string.next_pot_home,
+        PotKind.YEARLY,
+        "couch",
+        "möbel",
+        "einrichtung",
+        "haushaltsgeräte",
+        "haushaltswaren",
+        "furniture"
+    ),
     HOLIDAYS(R.string.next_pot_holidays, PotKind.YEARLY, "umbrella-beach", "urlaub", "reisen", "vacation", "travel"),
-    EDUCATION(R.string.next_pot_education, PotKind.YEARLY, "graduation-cap", "bildung", "kurse", "weiterbildung", "education"),
+    EDUCATION(
+        R.string.next_pot_education,
+        PotKind.YEARLY,
+        "graduation-cap",
+        "bildung",
+        "kurse",
+        "weiterbildung",
+        "education"
+    ),
     DONATIONS(R.string.next_pot_donations, PotKind.YEARLY, "hand-holding-heart", "spenden", "donations", "charity"),
     GOAL(R.string.next_pot_goal, PotKind.GOAL, "piggy-bank"),
     PROJECT(R.string.next_pot_project, PotKind.PROJECT, "suitcase-rolling"),
@@ -52,7 +154,9 @@ enum class PotTemplate(
         val matching = categories.filter { it.isExpense && matches(it.label) }.mapTo(HashSet()) { it.id }
         val byId = categories.associateBy { it.id }
         fun hasMatchingAncestor(category: CategoryInfo): Boolean =
-            generateSequence(category.parentId?.let(byId::get)) { it.parentId?.let(byId::get) }.any { it.id in matching }
+            generateSequence(
+                category.parentId?.let(byId::get)
+            ) { it.parentId?.let(byId::get) }.any { it.id in matching }
         return categories.filter { it.id in matching && !hasMatchingAncestor(it) }.mapTo(LinkedHashSet()) { it.id }
     }
 

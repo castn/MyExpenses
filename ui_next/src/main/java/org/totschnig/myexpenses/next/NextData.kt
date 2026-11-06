@@ -60,12 +60,22 @@ class NextData private constructor(context: Context) {
 
     val contracts = ContractRepository(ledgerSource, ContractStore(dataStore), scope)
 
-    val tags = TagRepository(ledgerSource, TagStore(dataStore), scope, RepositoryTagDatabase(context.injector.repository()))
+    val tags =
+        TagRepository(ledgerSource, TagStore(dataStore), scope, RepositoryTagDatabase(context.injector.repository()))
 
-    val categories = CategoryRepository(ledgerSource, CategoryStore(dataStore), ProviderCategoryWriting(context.contentResolver), scope)
+    val categories = CategoryRepository(
+        ledgerSource,
+        CategoryStore(dataStore),
+        ProviderCategoryWriting(context.contentResolver),
+        scope
+    )
 
     val receipts = ReceiptRepository(
-        ProviderReceiptDatabase(context.myApplication, context.injector.repository(), context.injector.currencyContext()),
+        ProviderReceiptDatabase(
+            context.myApplication,
+            context.injector.repository(),
+            context.injector.currencyContext()
+        ),
         scope
     )
 

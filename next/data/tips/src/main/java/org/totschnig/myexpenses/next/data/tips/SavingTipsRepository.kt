@@ -43,7 +43,9 @@ class SavingTipsRepository(
         val budget: BudgetFacts?,
     )
 
-    private val memo = Memo<TipsInput, List<SavingTip>>("tips: saving tips") { (contracts, tags, receipts, today, budget) ->
+    private val memo = Memo<TipsInput, List<SavingTip>>(
+        "tips: saving tips"
+    ) { (contracts, tags, receipts, today, budget) ->
         savingTips(contracts, tags, receipts, today, budget)
     }
 

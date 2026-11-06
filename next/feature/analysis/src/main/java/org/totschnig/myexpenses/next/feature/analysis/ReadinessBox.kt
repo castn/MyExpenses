@@ -38,8 +38,10 @@ private fun point(gap: DataGap, onShow: () -> Unit): InfoPoint {
         DataGap.NoTags -> null
     }?.takeIf { gap.transactionIds.isNotEmpty() }?.let { stringResource(it) }
     val text = when (gap) {
-        is DataGap.Uncategorized -> pluralStringResource(R.plurals.next_readiness_uncategorized, gap.count, gap.count, gap.total)
-        is DataGap.VagueCategories -> pluralStringResource(R.plurals.next_readiness_vague, gap.count, gap.count, gap.total)
+        is DataGap.Uncategorized ->
+            pluralStringResource(R.plurals.next_readiness_uncategorized, gap.count, gap.count, gap.total)
+        is DataGap.VagueCategories ->
+            pluralStringResource(R.plurals.next_readiness_vague, gap.count, gap.count, gap.total)
         is DataGap.FewReceipts -> {
             val scanned = if (gap.scanned == 0) stringResource(R.string.next_readiness_receipts_none)
             else pluralStringResource(R.plurals.next_readiness_receipts_few, gap.scanned, gap.scanned)
@@ -67,7 +69,13 @@ private fun ReadinessBoxPreview() {
         ReadinessBox(
             gaps = listOf(
                 DataGap.Uncategorized(List(41) { it.toLong() }, 180),
-                DataGap.FewReceipts(scanned = 2, supermarketPurchases = 14, unscanned = listOf(1, 2), missingRecent = 2, missingUsual = 6),
+                DataGap.FewReceipts(
+                    scanned = 2,
+                    supermarketPurchases = 14,
+                    unscanned = listOf(1, 2),
+                    missingRecent = 2,
+                    missingUsual = 6
+                ),
                 DataGap.NoTags
             ),
             onShow = {},

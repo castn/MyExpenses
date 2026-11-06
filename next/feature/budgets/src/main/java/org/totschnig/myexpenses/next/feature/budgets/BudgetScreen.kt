@@ -100,7 +100,10 @@ fun BudgetScreen(
         }
     ) {
         when (state) {
-            AnalysisState.Loading -> Box(Modifier.fillMaxSize().padding(top = 48.dp), contentAlignment = Alignment.Center) {
+            AnalysisState.Loading -> Box(
+                Modifier.fillMaxSize().padding(top = 48.dp),
+                contentAlignment = Alignment.Center
+            ) {
                 CircularProgressIndicator()
             }
 
@@ -132,7 +135,12 @@ fun BudgetScreen(
 }
 
 @Composable
-private fun BudgetContent(overview: BudgetOverview, currency: CurrencyInfo, onOpenPot: (String) -> Unit, onAddPot: () -> Unit) {
+private fun BudgetContent(
+    overview: BudgetOverview,
+    currency: CurrencyInfo,
+    onOpenPot: (String) -> Unit,
+    onAddPot: () -> Unit
+) {
     val amount = rememberAmountFormat(currency)
     SectionTitle(stringResource(R.string.next_budget_frame))
     DetailCard {
@@ -188,7 +196,11 @@ internal fun PotRow(status: PotStatus, amount: (Long) -> String, isFirst: Boolea
     }
     val supporting = buildList {
         add(
-            if (pot.kind == PotKind.GOAL) stringResource(R.string.next_budget_saved_of, amount(status.saved), amount(pot.amount))
+            if (pot.kind == PotKind.GOAL) stringResource(
+                R.string.next_budget_saved_of,
+                amount(status.saved),
+                amount(pot.amount)
+            )
             else stringResource(R.string.next_budget_of, amount(total))
         )
         if (status.upcoming > 0) add(stringResource(R.string.next_budget_due, amount(status.upcoming)))
@@ -216,7 +228,8 @@ private fun ItemGroupRow(status: PotStatus, isFirst: Boolean, onClick: (() -> Un
     val share = status.share
     MeterRow(
         label = status.pot.name,
-        value = if (share != null) stringResource(R.string.next_budget_share, percent.format(share), percent.format(max))
+        value =
+            if (share != null) stringResource(R.string.next_budget_share, percent.format(share), percent.format(max))
         else stringResource(R.string.next_budget_max_share, percent.format(max)),
         used = if (share != null && max > 0f) share / max else 0f,
         supportingText = if (status.scannedPurchases > 0) {
@@ -342,13 +355,18 @@ private fun PotFigures(status: PotStatus, amount: (Long) -> String) {
 
         else -> {
             InfoRow(
-                stringResource(if (pot.kind == PotKind.YEARLY) R.string.next_budget_added else R.string.next_budget_planned_amount),
+                stringResource(
+                    if (pot.kind == PotKind.YEARLY) R.string.next_budget_added else R.string.next_budget_planned_amount
+                ),
                 amount(status.planned),
                 isFirst = true
             )
             if (status.carried != 0L) InfoRow(stringResource(R.string.next_budget_carried), amount(status.carried))
             InfoRow(stringResource(R.string.next_budget_spent), amount(status.spent))
-            if (status.fixedSpent != 0L) InfoRow(stringResource(R.string.next_budget_contracts), amount(status.fixedSpent))
+            if (status.fixedSpent != 0L) InfoRow(
+                stringResource(R.string.next_budget_contracts),
+                amount(status.fixedSpent)
+            )
             if (status.upcoming != 0L) InfoRow(stringResource(R.string.next_budget_upcoming), amount(status.upcoming))
             if (pot.kind != PotKind.RUNNING && status.spentInPeriod != status.spent) {
                 InfoRow(stringResource(R.string.next_budget_spent_in_period), amount(status.spentInPeriod))

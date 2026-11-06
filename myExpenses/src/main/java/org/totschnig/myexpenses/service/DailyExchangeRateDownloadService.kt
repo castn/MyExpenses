@@ -120,7 +120,8 @@ class DailyExchangeRateDownloadService(context: Context, workerParameters: Worke
         val result: List<kotlin.Result<Unit>>? = applicationContext.contentResolver.query(
             TransactionProvider.ACCOUNTS_MINIMAL_URI,
             arrayOf("distinct $KEY_CURRENCY"),
-            "${datastore.dynamicExchangeRates.first()} AND $KEY_CURRENCY != ? AND NOT EXISTS(SELECT 1 from $TABLE_PRICES where $KEY_COMMODITY = $TABLE_ACCOUNTS.$KEY_CURRENCY and $KEY_DATE = date('now'))",
+            "${datastore.dynamicExchangeRates.first()} AND $KEY_CURRENCY != ? AND NOT EXISTS(SELECT 1 from " +
+                "$TABLE_PRICES where $KEY_COMMODITY = $TABLE_ACCOUNTS.$KEY_CURRENCY and $KEY_DATE = date('now'))",
             arrayOf(currencyContext.homeCurrencyString),
             null
         )

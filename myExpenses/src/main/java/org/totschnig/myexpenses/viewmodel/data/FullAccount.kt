@@ -339,12 +339,16 @@ data class FullAccount(
                     getLocalDate(KEY_LATEST_EXCHANGE_RATE_DATE) to it
                 },
                 dynamic = getBoolean(KEY_DYNAMIC),
-                balanceType = if (portfolioRole == PORTFOLIO_CONTAINER) BalanceType.VALUATION else getEnumIfExists(KEY_BALANCE_TYPE, BalanceType.CURRENT),
+                balanceType = if (portfolioRole == PORTFOLIO_CONTAINER) BalanceType.VALUATION else getEnumIfExists(
+                    KEY_BALANCE_TYPE,
+                    BalanceType.CURRENT
+                ),
                 parentId = getLongIfExists(KEY_PARENTID),
                 isVisible = getBooleanIfExists(KEY_VISIBLE) ?: true,
                 portfolioRole = portfolioRole,
                 sortKey = getIntIfExists(KEY_SORT_KEY) ?: 0,
-                //in V2 this is only called for real accounts, in V1 we need to set isSingleCurrency to false for home aggregate
+                //in V2 this is only called for real accounts, in V1 we need to set isSingleCurrency to false for home
+                // aggregate
                 isSingleCurrency = !isHomeAggregate(id)
             )
         }

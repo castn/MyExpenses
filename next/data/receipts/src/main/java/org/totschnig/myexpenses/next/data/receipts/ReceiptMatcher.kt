@@ -15,7 +15,8 @@ data class ReceiptHeader(
     val cardAmount: Long? = null,
 ) {
     companion object {
-        fun of(receipt: ParsedReceipt) = ReceiptHeader(receipt.merchant, receipt.date, receipt.total, receipt.cardAmount)
+        fun of(receipt: ParsedReceipt) =
+            ReceiptHeader(receipt.merchant, receipt.date, receipt.total, receipt.cardAmount)
     }
 }
 
@@ -62,9 +63,14 @@ object ReceiptMatcher {
     const val DAYS_WITHOUT_DATE = 30L
 
     /** Parts of names that say nothing about the merchant */
-    private val FILLERS = setOf("markt", "filiale", "sagt", "danke", "und", "der", "die", "das", "bei", "fuer", "für", "ihr")
+    private val FILLERS =
+        setOf("markt", "filiale", "sagt", "danke", "und", "der", "die", "das", "bei", "fuer", "für", "ihr")
 
-    fun candidates(receipt: ReceiptHeader, transactions: List<BookedTransaction>, today: LocalDate): List<ReceiptMatch> {
+    fun candidates(
+        receipt: ReceiptHeader,
+        transactions: List<BookedTransaction>,
+        today: LocalDate
+    ): List<ReceiptMatch> {
         val amounts = setOfNotNull(receipt.total, receipt.cardAmount).filter { it > 0 }
         val from = receipt.date?.minusDays(1) ?: today.minusDays(DAYS_WITHOUT_DATE)
         val to = receipt.date?.plusDays(MAX_DAYS_AFTER) ?: today
@@ -96,14 +102,18 @@ object ReceiptMatcher {
      */
     fun merchantFits(merchant: String, transaction: BookedTransaction): Boolean {
         val names = when {
-            PaymentService.isPaymentService(transaction.payeeName) -> listOfNotNull(PaymentService.merchantOf(transaction.comment))
+            PaymentService.isPaymentService(transaction.payeeName) -> listOfNotNull(
+                PaymentService.merchantOf(transaction.comment)
+            )
             transaction.payeeName.isNullOrBlank() -> listOfNotNull(transaction.comment)
             else -> listOf(transaction.payeeName)
         }
         val receiptWords = wordsOf(merchant)
         return names.any { name ->
             val words = wordsOf(name)
-            receiptWords.any { r -> words.any { w -> r == w || (r.length >= 3 && w.startsWith(r)) || (w.length >= 3 && r.startsWith(w)) } }
+            receiptWords.any { r ->
+                words.any { w -> r == w || (r.length >= 3 && w.startsWith(r)) || (w.length >= 3 && r.startsWith(w)) }
+            }
         }
     }
 

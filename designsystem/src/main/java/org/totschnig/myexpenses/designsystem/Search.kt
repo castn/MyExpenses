@@ -156,7 +156,11 @@ fun SearchFilterChip(
             { Icon(it, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
         },
         trailingIcon = {
-            Icon(Icons.Default.ArrowDropDown, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize))
+            Icon(
+                Icons.Default.ArrowDropDown,
+                contentDescription = null,
+                modifier = Modifier.size(FilterChipDefaults.IconSize)
+            )
         },
         modifier = modifier
     )
@@ -214,7 +218,11 @@ fun OptionRow(
         modifier = Modifier
             .fillMaxWidth()
             .then(
-                if (isMultiple) Modifier.toggleable(value = selected, role = Role.Checkbox, onValueChange = { onClick() })
+                if (isMultiple) Modifier.toggleable(
+                    value = selected,
+                    role = Role.Checkbox,
+                    onValueChange = { onClick() }
+                )
                 else Modifier.selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
             )
             .heightIn(min = 48.dp)

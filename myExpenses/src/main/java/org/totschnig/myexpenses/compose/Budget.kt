@@ -133,7 +133,9 @@ fun Budget(
             val withRollOverColumn = hasRolloverNext || editRollOver != null
             val numberOfColumns = if (withRollOverColumn) 4 else 3
             val tableWidth =
-                breakPoint * (labelFraction + numberOfColumns * numberFraction) + DividerDefaults.Thickness * numberOfColumns
+                breakPoint * (
+                    labelFraction + numberOfColumns * numberFraction
+                ) + DividerDefaults.Thickness * numberOfColumns
             Header(
                 withRollOverColumn,
                 narrowScreen,

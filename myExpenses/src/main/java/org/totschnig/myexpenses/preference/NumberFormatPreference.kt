@@ -10,7 +10,8 @@ import java.text.NumberFormat
 
 class NumberFormatPreference constructor(context: Context, attrs: AttributeSet) :
         LocalizedFormatEditTextPreference(context, attrs) {
-    override fun getDefaultValue(): String? = (NumberFormat.getCurrencyInstance(Utils.localeFromContext(context)) as DecimalFormat).toLocalizedPattern()
+    override fun getDefaultValue(): String? =
+        (NumberFormat.getCurrencyInstance(Utils.localeFromContext(context)) as DecimalFormat).toLocalizedPattern()
     override fun validate(newValue: String) = try {
         DecimalFormat().applyLocalizedPattern(newValue)
         null

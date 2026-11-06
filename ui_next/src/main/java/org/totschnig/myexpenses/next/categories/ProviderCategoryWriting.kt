@@ -26,7 +26,9 @@ class ProviderCategoryWriting(private val contentResolver: ContentResolver) : Ca
             contentResolver.update(
                 TRANSACTIONS_URI,
                 ContentValues().apply { put(KEY_CATID, categoryId) },
-                "$KEY_ROWID = ? AND ($KEY_CATID IS NULL" + (fromCategoryId?.let { " OR $KEY_CATID = $it" } ?: "") + ") AND $NOT_SEALED",
+                "$KEY_ROWID = ? AND ($KEY_CATID IS NULL" + (
+                    fromCategoryId?.let { " OR $KEY_CATID = $it" } ?: ""
+                ) + ") AND $NOT_SEALED",
                 arrayOf(transactionId.toString())
             )
         }

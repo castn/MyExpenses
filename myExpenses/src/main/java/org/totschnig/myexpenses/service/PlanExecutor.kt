@@ -242,11 +242,19 @@ class PlanExecutor(context: Context, workerParameters: WorkerParameters) :
                                 builder.setContentText(content)
                                 if (template.data.planExecutionAutomatic) {
                                     val transaction = repository.createTransaction(template.instantiate(
-                                        currencyContext, exchangeRateHandler, PlanInstanceInfo(template.id, instanceId, date)
+                                        currencyContext, exchangeRateHandler, PlanInstanceInfo(
+                                            template.id,
+                                            instanceId,
+                                            date
+                                        )
                                     ))
                                     repository.linkTemplateWithTransaction(template.id, transaction.id, instanceId)
 
-                                    resultIntent = prefHandler.createShowDetailsIntent(applicationContext, notificationId, transaction.data)
+                                    resultIntent = prefHandler.createShowDetailsIntent(
+                                        applicationContext,
+                                        notificationId,
+                                        transaction.data
+                                    )
                                     builder.setContentIntent(resultIntent)
                                     builder.setAutoCancel(true)
                                     notification = builder.build()
@@ -268,7 +276,9 @@ class PlanExecutor(context: Context, workerParameters: WorkerParameters) :
                                             .putExtra(
                                                 KEY_INSTANCEID,
                                                 instanceId
-                                            ) //we also put the title in the intent, because we need it while we update the notification
+                                            //we also put the title in the intent, because we need it while we update
+                                            // the notification
+                                            )
                                             .putExtra(KEY_TITLE, title)
                                     builder.addAction(
                                         R.drawable.ic_menu_close_clear_cancel,
@@ -353,7 +363,11 @@ class PlanExecutor(context: Context, workerParameters: WorkerParameters) :
                             )
                         }
                     } else {
-                        log(if (template == null) "Template.getInstanceForPlanIfInstanceIsOpen returned null, instance might already have been dealt with" else "Plan refers to a closed account or debt")
+                        log(
+                            if (template == null) "Template.getInstanceForPlanIfInstanceIsOpen returned null, " +
+                                "instance might already have been dealt " +
+                                    "with" else "Plan refers to a closed account or debt"
+                        )
                     }
                     cursor.moveToNext()
                 }

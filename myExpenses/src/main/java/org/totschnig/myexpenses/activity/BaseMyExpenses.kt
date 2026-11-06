@@ -700,8 +700,10 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
                                     Pair(
                                         it.accountGrouping.name, when (it.accountGrouping) {
                                             AccountGrouping.CURRENCY -> it.currency to null
-                                            AccountGrouping.FLAG -> it.flag.let { it.title(this@BaseMyExpenses) to it.id }
-                                            AccountGrouping.TYPE -> it.type.let { it.title(this@BaseMyExpenses) to it.id }
+                                            AccountGrouping.FLAG ->
+                                                it.flag.let { it.title(this@BaseMyExpenses) to it.id }
+                                            AccountGrouping.TYPE ->
+                                                it.type.let { it.title(this@BaseMyExpenses) to it.id }
                                             AccountGrouping.NONE -> null
                                         }
                                     )
@@ -1233,7 +1235,8 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
             if (checkSealed(itemIds)) {
                 showConfirmationDialog(
                     tag = "LINK_TRANSFER",
-                    message = getString(R.string.warning_link_transfer) + " " + getString(R.string.continue_confirmation),
+                    message =
+                        getString(R.string.warning_link_transfer) + " " + getString(R.string.continue_confirmation),
                     commandPositive = R.id.LINK_TRANSFER_COMMAND,
                     commandPositiveLabel = R.string.menu_create_transfer
                 ) {
@@ -1682,7 +1685,8 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
                             handleTransactionEvent(event, transaction, isCurrentPage)
                         }
                     }
-                    val futureCriterion = viewModel.futureCriterion.collectAsState(initial = FutureCriterion.EndOfDay).value
+                    val futureCriterion =
+                        viewModel.futureCriterion.collectAsState(initial = FutureCriterion.EndOfDay).value
                     if (transactionList != null) {
                         transactionList(
                             TransactionListContent(
@@ -1758,7 +1762,8 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
     }
 
     fun Throwable.processDataLoadingFailure() = when (this) {
-        is SQLiteDowngradeFailedException -> "Database cannot be downgraded from a newer version. Please either uninstall MyExpenses, before reinstalling, or upgrade to a new version." to true
+        is SQLiteDowngradeFailedException -> "Database cannot be downgraded from a newer version. Please either " +
+            "uninstall MyExpenses, before reinstalling, or upgrade to a new version." to true
         is SQLiteUpgradeFailedException -> "Database upgrade failed. Please contact ${
             getString(
                 R.string.support_email

@@ -40,7 +40,8 @@ class FixedTransactionsViewModel(
     /** Never persisted, so that it cannot affect the account screens */
     private val filter = MutableStateFlow<Criterion?>(null)
 
-    private val tags: StateFlow<Map<String, Pair<String, Int?>>> = contentResolver.tagMapFlow.stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
+    private val tags: StateFlow<Map<String, Pair<String, Int?>>> =
+        contentResolver.tagMapFlow.stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
 
     /** The transactions set with [show] */
     val transactions: Flow<PagingData<Transaction2>> = run {

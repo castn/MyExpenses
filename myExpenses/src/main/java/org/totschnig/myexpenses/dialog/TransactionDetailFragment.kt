@@ -322,7 +322,9 @@ class TransactionDetailFragment : ComposeBaseDialogFragment3() {
                             }
                             transaction.isPortfolio || transaction.transferPeerIsPortfolio -> {
                                 dismiss()
-                                (requireActivity() as? MyExpensesV2)?.editTrade(transaction.transferPeerParent ?: transaction.id)
+                                (requireActivity() as? MyExpensesV2)?.editTrade(
+                                    transaction.transferPeerParent ?: transaction.id
+                                )
                             }
                             else -> {
                                 dismiss()

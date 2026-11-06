@@ -15,7 +15,14 @@ class ContractTileTest {
         name = name,
         interval = ContractInterval.MONTHLY,
         transactions = listOf(
-            ContractTransaction(1, LocalDate.of(2026, 10, 1), -1000, accountId = 1, categoryPath = categoryPath, categoryIcon = "folder")
+            ContractTransaction(
+                1,
+                LocalDate.of(2026, 10, 1),
+                -1000,
+                accountId = 1,
+                categoryPath = categoryPath,
+                categoryIcon = "folder"
+            )
         ),
         nextExpectedDate = LocalDate.of(2026, 11, 1),
         isActive = true

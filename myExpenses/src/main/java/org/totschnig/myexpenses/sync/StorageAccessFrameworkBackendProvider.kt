@@ -76,7 +76,8 @@ class StorageAccessFrameworkBackendProvider internal constructor(context: Contex
 
     override fun readFileContents(fromAccountDir: Boolean, fileName: String, maybeDecrypt: Boolean) =
         (if (fromAccountDir) accountDir else baseDir).findFile(fileName)?.let { documentFile ->
-            contentResolver.openInputStream(documentFile.uri)?.use { StreamReader(maybeDecrypt(it, maybeDecrypt)).read() }
+            contentResolver.openInputStream(documentFile.uri)
+                ?.use { StreamReader(maybeDecrypt(it, maybeDecrypt)).read() }
         }
 
     @Throws(IOException::class)
@@ -116,7 +117,8 @@ class StorageAccessFrameworkBackendProvider internal constructor(context: Contex
 
     override fun isCollection(resource: DocumentFile) = resource.isDirectory
 
-    override fun getInputStream(resource: DocumentFile) = contentResolver.openInputStream(resource.uri) ?: throw IOException()
+    override fun getInputStream(resource: DocumentFile) =
+        contentResolver.openInputStream(resource.uri) ?: throw IOException()
 
     private fun getAccountMetaData(file: DocumentFile) = try {
         getAccountMetaDataFromInputStream(
@@ -160,7 +162,9 @@ class StorageAccessFrameworkBackendProvider internal constructor(context: Contex
     @Throws(IOException::class)
     private fun saveFileContents(file: DocumentFile, fileContents: String, maybeEncrypt: Boolean) {
         try {
-            (contentResolver.openOutputStream(file.uri, "wt") ?: throw IOException("Failed to open output stream")).use { out ->
+            (
+                contentResolver.openOutputStream(file.uri, "wt") ?: throw IOException("Failed to open output stream")
+            ).use { out ->
                 (if (maybeEncrypt) maybeEncrypt(out) else out).bufferedWriter().use {
                     it.write(fileContents)
                 }

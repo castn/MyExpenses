@@ -51,7 +51,10 @@ enum class ContractKind(
         ),
         isSubscription = true
     ),
-    MUSIC_STREAMING(listOf("spotify", "deezer", "tidal", "apple music", "youtube music", "amazon music"), isSubscription = true),
+    MUSIC_STREAMING(
+        listOf("spotify", "deezer", "tidal", "apple music", "youtube music", "amazon music"),
+        isSubscription = true
+    ),
     CLOUD_STORAGE(listOf("icloud", "google one", "dropbox", "onedrive"), isSubscription = true),
     MOBILE(
         listOf(
@@ -64,7 +67,10 @@ enum class ContractKind(
     INTERNET(listOf("dsl", "vdsl", "glasfaser", "internet", "broadband"), excluded = INSURANCE, isSwitchable = true),
     ELECTRICITY(listOf("strom", "electricity", "vattenfall", "yello", "eprimo"), isSwitchable = true),
     GAS(listOf("erdgas", "gasabschlag", "gasversorgung"), words = listOf("gas"), isSwitchable = true),
-    GYM(listOf("fitnessstudio", "mcfit", "fitx", "clever fit", "john reed", "fitness first", "urban sports"), words = listOf("gym"));
+    GYM(
+        listOf("fitnessstudio", "mcfit", "fitx", "clever fit", "john reed", "fitness first", "urban sports"),
+        words = listOf("gym")
+    );
 
     /** @param text see [Words.textOf] */
     private fun matches(text: String) =
@@ -75,7 +81,8 @@ enum class ContractKind(
         /**
          * From the name the user gave, the payee, the purpose and the category of the last payment
          */
-        fun of(contract: Contract): ContractKind? = textOf(contract).let { text -> entries.firstOrNull { it.matches(text) } }
+        fun of(contract: Contract): ContractKind? =
+            textOf(contract).let { text -> entries.firstOrNull { it.matches(text) } }
 
         /** See [Words.textOf] */
         internal fun textOf(contract: Contract): String {

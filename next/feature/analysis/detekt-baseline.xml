@@ -64,24 +64,6 @@
     <ID>MagicNumber:ReadinessBox.kt:180</ID>
     <ID>MagicNumber:ReadinessBox.kt:41</ID>
     <ID>MatchingDeclarationName:AnalysisFlow.kt:AnalysisKey : NavKey</ID>
-    <ID>MaxLineLength:AnalysisFlow.kt:Transactions</ID>
-    <ID>MaxLineLength:AnalysisFlow.kt:private</ID>
-    <ID>MaxLineLength:AnalysisFlow.kt:val moneyFlow = shownOrLeave(content.moneyFlow, isLoaded = content.moneyFlowState.isLoaded, onGone = leave) ?: return</ID>
-    <ID>MaxLineLength:CategorySpendingScreen.kt:CategoryDetailScreen(analysis, analysis.categories[1], CurrencyInfo.Preview, onBack = {}, onShowTransactions = {})</ID>
-    <ID>MaxLineLength:CategorySpendingViewModel.kt:CategorySpendingViewModel$combine</ID>
-    <ID>MaxLineLength:CategorySpendingViewModel.kt:CategorySpendingViewModel$it</ID>
-    <ID>MaxLineLength:MoneyFlowChart.kt:MoneyFlowChart.Companion$.</ID>
-    <ID>MaxLineLength:MoneyFlowChart.kt:MoneyFlowChart.Companion$val node = node(labels.left, left, 2, ChartColor.Neutral, FlowItem(labels.left, left, null, emptyList()))</ID>
-    <ID>MaxLineLength:MoneyFlowScreen.kt:group(11, "Lebensmittel", 504_000, listOf(actor("REWE", 260_000), actor("Aldi", 150_000), actor(null, 94_000, 9, 5)))</ID>
-    <ID>MaxLineLength:MoneyFlowScreen.kt:group(12, "Essen gehen", 186_000, listOf(actor("McDonald's", 18_600, 20), actor("Pizzeria", 120_000), actor(null, 47_400, 6, 3)))</ID>
-    <ID>MaxLineLength:MoneyFlowScreen.kt:item.count == null || item.transactionIds.isEmpty() -&gt; InfoRow(item.title, amount(item.amount), isFirst = true)</ID>
-    <ID>MaxLineLength:ReadinessBox.kt:DataGap.FewReceipts(scanned = 2, supermarketPurchases = 14, unscanned = listOf(1, 2), missingRecent = 2, missingUsual = 6)</ID>
-    <ID>MaxLineLength:ReadinessBox.kt:is DataGap.Uncategorized -&gt; pluralStringResource(R.plurals.next_readiness_uncategorized, gap.count, gap.count, gap.total)</ID>
-    <ID>MaxLineLength:ReadinessBox.kt:is DataGap.VagueCategories -&gt; pluralStringResource(R.plurals.next_readiness_vague, gap.count, gap.count, gap.total)</ID>
-    <ID>MaxLineLength:TagAnalysisViewModel.kt:TagAnalysisViewModel$combine</ID>
-    <ID>MaxLineLength:TagEvaluationScreen.kt:TagEvaluationScreen(previewAnalysis().themes.first(), CurrencyInfo.Preview, onBack = {}, onShowTransactions = {})</ID>
-    <ID>MaxLineLength:TagEvaluationScreen.kt:description = "${month.month.getDisplayName(TextStyle.FULL_STANDALONE, locale)} ${month.year}"</ID>
-    <ID>MaxLineLength:TagEvaluationScreen.kt:pluralStringResource(R.plurals.next_analysis_days, evaluation.days.toInt(), evaluation.days.toInt())</ID>
     <ID>TooManyFunctions:CategorySpendingScreen.kt:org.totschnig.myexpenses.next.feature.analysis.CategorySpendingScreen.kt</ID>
   </CurrentIssues>
 </SmellBaseline>

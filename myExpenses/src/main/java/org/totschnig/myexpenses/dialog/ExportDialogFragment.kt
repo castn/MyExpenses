@@ -358,7 +358,10 @@ class ExportDialogFragment : DialogViewBinding<ExportDialogBinding>(),
         return TextUtils.concat(
             sb,
             HtmlCompat.fromHtml(
-                getString(R.string.help_ExportDialog_date_format, "https://developer.android.com/reference/java/time/format/DateTimeFormatter"),
+                getString(
+                    R.string.help_ExportDialog_date_format,
+                    "https://developer.android.com/reference/java/time/format/DateTimeFormatter"
+                ),
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
         )

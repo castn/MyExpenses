@@ -73,7 +73,8 @@ class OneDriveBackendProvider internal constructor(context: Context, folderName:
                                         if (result == null) {
                                             cont.resumeWithException(
                                                 SyncBackendProvider.SyncParseException(
-                                                    "Unable to retrieve Microsoft Account. Remove backend and add again."
+                                                    "Unable to retrieve Microsoft Account. Remove backend and add " +
+                                                        "again."
                                                 )
                                             )
                                         } else {
@@ -84,7 +85,9 @@ class OneDriveBackendProvider internal constructor(context: Context, folderName:
                                                     .forAccount(result)
                                                     .withCallback(object :
                                                         SilentAuthenticationCallback {
-                                                        override fun onSuccess(authenticationResult: IAuthenticationResult) {
+                                                        override fun onSuccess(
+                                                            authenticationResult: IAuthenticationResult
+                                                        ) {
                                                             cont.resume(authenticationResult.accessToken)
                                                         }
 

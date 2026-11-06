@@ -54,7 +54,9 @@ class BalanceViewModelTest {
             listOf(LedgerTransaction(1, today, amount = -2500, accountId = giro)),
             OwnAccounts(setOf(giro), emptyMap())
         )
-        val viewModel = BalanceViewModel(BalanceRepository(FakeLedgerSource(ledger = ledger), MutableStateFlow(facts), backgroundScope))
+        val viewModel = BalanceViewModel(
+            BalanceRepository(FakeLedgerSource(ledger = ledger), MutableStateFlow(facts), backgroundScope)
+        )
         val state = viewModel.balance.first { it is AnalysisState.Ready } as AnalysisState.Ready
         // Without salary the balance runs over the calendar month
         assertEquals(today.withDayOfMonth(1), state.value.balance.period.start)

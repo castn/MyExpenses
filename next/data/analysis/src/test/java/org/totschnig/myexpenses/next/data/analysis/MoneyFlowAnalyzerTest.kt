@@ -75,7 +75,10 @@ class MoneyFlowAnalyzerTest {
             transaction(-5000, food),
             transaction(-2000, transferAccountId = 2),
             transaction(-4000, food),
-            transaction(-3000, parts = listOf(LedgerPart(-1000, categoryId = 10), LedgerPart(-2000, transferAccountId = 2))),
+            transaction(
+                -3000,
+                parts = listOf(LedgerPart(-1000, categoryId = 10), LedgerPart(-2000, transferAccountId = 2))
+            ),
             transaction(-9000, food, date = today.minusYears(1)),
             excluded = setOf(3),
         )
@@ -92,8 +95,14 @@ class MoneyFlowAnalyzerTest {
             transaction(700),
             transaction(-400),
         )
-        assertEquals(listOf(20L to 3000L, CategorySpending.NO_CATEGORY to 700L), flow.incomes.map { it.key to it.amount })
-        assertEquals(listOf(30L to 1000L, CategorySpending.NO_CATEGORY to 400L), flow.expenses.map { it.key to it.amount })
+        assertEquals(
+            listOf(20L to 3000L, CategorySpending.NO_CATEGORY to 700L),
+            flow.incomes.map { it.key to it.amount }
+        )
+        assertEquals(
+            listOf(30L to 1000L, CategorySpending.NO_CATEGORY to 400L),
+            flow.expenses.map { it.key to it.amount }
+        )
         assertEquals(3700 - 1400L, flow.left)
     }
 

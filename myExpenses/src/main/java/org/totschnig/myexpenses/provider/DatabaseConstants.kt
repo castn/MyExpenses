@@ -44,7 +44,8 @@ object DatabaseConstants {
    lateinit var WEEK_START_JULIAN: String
     lateinit var WEEK_MAX: String
 
-    //in sqlite julian days are calculated from noon, in order to make sure that the returned julian day matches the day we need, we set the time to noon.
+    //in sqlite julian days are calculated from noon, in order to make sure that the returned julian day matches the day
+    // we need, we set the time to noon.
     private const val JULIAN_DAY_OFFSET = "'start of day','+12 hours'"
 
     private lateinit var PROJECTION_BASE: Array<String>
@@ -76,7 +77,9 @@ object DatabaseConstants {
         THIS_YEAR_OF_WEEK_START =
             "CAST(strftime('%Y','now','localtime','weekday $nextWeekEndSqlite', '-6 day') AS integer)"
         WEEK =
-            "CAST((strftime('%j',date,'unixepoch','localtime','weekday $nextWeekEndSqlite', '-6 day') - 1) / 7 + 1 AS integer)" //calculated for the beginning of the week
+            //calculated for the beginning of the week
+            "CAST((strftime('%j',date,'unixepoch','localtime','weekday $nextWeekEndSqlite', '-6 day') - 1) / 7 + 1 " +
+                "AS integer)"
         MONTH =
             "CAST(strftime('%m',date,'unixepoch','localtime','-$monthDelta day') AS integer) - 1" //convert to 0 based
         THIS_WEEK =
@@ -178,7 +181,9 @@ object DatabaseConstants {
     const val WHERE_NOT_ARCHIVED: String = "$KEY_STATUS != $STATUS_ARCHIVED"
     const val WHERE_NOT_ARCHIVE: String = "$KEY_STATUS != $STATUS_ARCHIVE"
 
-    const val WHERE_DEPENDENT: String = ("$KEY_PARENTID = ? OR $KEY_ROWID IN (SELECT $KEY_TRANSFER_PEER FROM $TABLE_TRANSACTIONS WHERE $KEY_PARENTID= ?)")
+    const val WHERE_DEPENDENT: String = (
+        "$KEY_PARENTID = ? OR $KEY_ROWID IN (SELECT $KEY_TRANSFER_PEER FROM $TABLE_TRANSACTIONS WHERE $KEY_PARENTID= ?)"
+    )
 
     const val WHERE_SELF_OR_PEER: String = "$KEY_TRANSFER_PEER = ? OR $KEY_ROWID = ?"
 

@@ -242,7 +242,12 @@ private fun DetailRows(
         )
     }
     if (showMethod) {
-        MethodDialog(methods, editable.values.methodId, onSelect = change::changeMethod, onDismiss = { showMethod = false })
+        MethodDialog(
+            methods,
+            editable.values.methodId,
+            onSelect = change::changeMethod,
+            onDismiss = { showMethod = false }
+        )
     }
     if (showComment) {
         TextDialog(

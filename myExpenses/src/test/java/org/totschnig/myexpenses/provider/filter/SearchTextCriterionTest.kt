@@ -12,7 +12,8 @@ class SearchTextCriterionTest {
     fun hasAnArgumentForEachPlaceholder() {
         listOf(SearchTextCriterion("Rewe"), SearchTextCriterion("12,50", 1250)).forEach { criterion ->
             listOf(false, true).forEach { queryParts ->
-                val selection = if (queryParts) criterion.getSelectionForParts("t") else criterion.getSelectionForParents("t")
+                val selection =
+                    if (queryParts) criterion.getSelectionForParts("t") else criterion.getSelectionForParents("t")
                 assertThat(criterion.getSelectionArgs(queryParts)).hasLength(placeholders(selection))
             }
         }

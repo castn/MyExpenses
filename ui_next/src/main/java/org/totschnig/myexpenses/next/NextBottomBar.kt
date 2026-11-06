@@ -131,6 +131,11 @@ private fun NextBottomBarPreview() {
 private fun NextNavigationRailPreview() {
     NextPreviewTheme {
         var selectedTab by remember { mutableStateOf(NextTab.Overview) }
-        NextNavigationRail(previewTabs, selectedTab = selectedTab, onTabClick = { selectedTab = it }, badges = setOf(NextTab.Menu))
+        NextNavigationRail(
+            previewTabs,
+            selectedTab = selectedTab,
+            onTabClick = { selectedTab = it },
+            badges = setOf(NextTab.Menu)
+        )
     }
 }

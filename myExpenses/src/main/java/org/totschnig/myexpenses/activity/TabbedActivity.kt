@@ -31,8 +31,12 @@ abstract class TabbedActivity : ProtectedFragmentActivity() {
         }.attach()
         ViewCompat.setOnApplyWindowInsetsListener(binding.appbar) { v, insets ->
             v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                leftMargin = insets.getInsets(WindowInsetsCompat.Type.systemBars() + WindowInsetsCompat.Type.displayCutout()).left
-                rightMargin = insets.getInsets(WindowInsetsCompat.Type.systemBars() + WindowInsetsCompat.Type.displayCutout()).right
+                leftMargin = insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() + WindowInsetsCompat.Type.displayCutout()
+                ).left
+                rightMargin = insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars() + WindowInsetsCompat.Type.displayCutout()
+                ).right
             }
             WindowInsetsCompat.CONSUMED
         }

@@ -9,7 +9,8 @@ import org.totschnig.myexpenses.viewmodel.SyncBackendViewModel
 @Module
 open class ViewModelModule {
     @Provides
-    open fun provideSyncBackendViewModelClass(): Class<out AbstractSyncBackendViewModel> = SyncBackendViewModel::class.java
+    open fun provideSyncBackendViewModelClass(): Class<out AbstractSyncBackendViewModel> =
+        SyncBackendViewModel::class.java
 
     @Provides
     open fun provideMyExpensesViewModelClass(): Class<out MyExpensesV2ViewModel> = MyExpensesV2ViewModel::class.java

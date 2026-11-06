@@ -144,9 +144,20 @@ fun TradeScreen(
     initialCostCategoryRefs: List<CategoryRef> = emptyList(),
     canAddMultipleCostLegs: Boolean = false,
     onShowUpgrade: () -> Unit = {},
-    onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -> CurrencyUnit? = { _, _, _, _, _ -> null },
+    onCreateAsset: suspend (
+        code: String,
+        symbol: String,
+        fractionDigits: Int,
+        label: String?,
+        commodityType: CommodityType
+    ) -> CurrencyUnit? = { _, _, _, _, _ -> null },
     isCurrencyUsed: suspend (String) -> Boolean = { false },
-    onLookupMatchingTransactions: (accountId: Long, total: BigDecimal, date: LocalDateTime, isBuy: Boolean) -> Flow<List<Transaction2>> = { _, _, _, _ -> emptyFlow() },
+    onLookupMatchingTransactions: (
+        accountId: Long,
+        total: BigDecimal,
+        date: LocalDateTime,
+        isBuy: Boolean
+    ) -> Flow<List<Transaction2>> = { _, _, _, _ -> emptyFlow() },
     roundingMode: RoundingMode = RoundingMode.HALF_UP,
     onRoundingModeChange: (RoundingMode) -> Unit = {},
 ) {
@@ -278,7 +289,9 @@ fun TradeScreen(
             var fundingSource by rememberSaveable {
                 mutableStateOf(initialTrade?.let { trade ->
                     if (trade.peerAccount != null) {
-                        if (fundingAccounts.any { it.first == trade.peerAccount.first }) FundingSource.ACCOUNT else FundingSource.PORTFOLIO
+                        if (
+                            fundingAccounts.any { it.first == trade.peerAccount.first }
+                        ) FundingSource.ACCOUNT else FundingSource.PORTFOLIO
                     } else FundingSource.EXTERNAL
                 } ?: FundingSource.EXTERNAL)
             }
@@ -536,7 +549,10 @@ fun TradeScreen(
                                             } else {
                                                 tradeType
                                             }
-                                            if (type is TradeType.CashMovement && fundingSource == FundingSource.PORTFOLIO) {
+                                            if (
+                                                type is TradeType.CashMovement &&
+                                                    fundingSource == FundingSource.PORTFOLIO
+                                            ) {
                                                 fundingSource = FundingSource.EXTERNAL
                                             }
                                         },
@@ -673,7 +689,8 @@ fun TradeScreen(
                             AmountEdit(
                                 value = quantity,
                                 onValueChange = { quantity = it },
-                                fractionDigits = (if (isAssetTrade) selectedAsset else reportingCurrency)?.fractionDigits
+                                fractionDigits =
+                                    (if (isAssetTrade) selectedAsset else reportingCurrency)?.fractionDigits
                                     ?: 2,
                                 enabled = !isAssetTrade || selectedAsset != null
                             )
@@ -690,7 +707,8 @@ fun TradeScreen(
                                     }
                                 } else {
                                     remember(portfolio.children) {
-                                        portfolio.children.find { it.type.isCashAccount }?.currentBalance to reportingCurrency
+                                        portfolio.children.find { it.type.isCashAccount }
+                                            ?.currentBalance to reportingCurrency
                                     }
                                 }
                                 currency?.let { currencyUnit ->
@@ -706,14 +724,22 @@ fun TradeScreen(
                                         Text(
                                             text = stringResource(R.string.available) + ":",
                                             style = MaterialTheme.typography.labelSmall,
-                                            color = if (isOverLimit) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
+                                            color = if (isOverLimit) {
+                                                MaterialTheme.colorScheme.error
+                                            } else {
+                                                MaterialTheme.colorScheme.onSurfaceVariant
+                                            }
                                         )
                                         AmountText(
                                             amount = available ?: 0L,
                                             currency = currencyUnit,
                                             fontSize = MaterialTheme.typography.labelSmall.fontSize,
                                             fontWeight = MaterialTheme.typography.labelSmall.fontWeight,
-                                            color = if (isOverLimit) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
+                                            color = if (isOverLimit) {
+                                                MaterialTheme.colorScheme.error
+                                            } else {
+                                                MaterialTheme.colorScheme.onSurfaceVariant
+                                            }
                                         )
                                     }
                                 }
@@ -912,7 +938,8 @@ fun TradeScreen(
                                             {
                                                 Icon(
                                                     Icons.Default.Close,
-                                                    contentDescription = stringResource(R.string.content_description_clear_category),
+                                                    contentDescription =
+                                                        stringResource(R.string.content_description_clear_category),
                                                     modifier = Modifier
                                                         .size(16.dp)
                                                         .clickable {
@@ -978,14 +1005,28 @@ fun TradeScreen(
                                 },
                             ) {
                                 Icon(
-                                    if (type.isIncoming) Icons.AutoMirrored.Filled.ArrowBack else Icons.AutoMirrored.Filled.ArrowForward,
+                                    if (type.isIncoming) {
+                                        Icons.AutoMirrored.Filled.ArrowBack
+                                    } else {
+                                        Icons.AutoMirrored.Filled.ArrowForward
+                                    },
                                     contentDescription = stringResource(
-                                        if (type.isIncoming) R.string.transfer_from_account else R.string.transfer_to_account
+                                        if (type.isIncoming) {
+                                            R.string.transfer_from_account
+                                        } else {
+                                            R.string.transfer_to_account
+                                        }
                                     )
                                 )
                             }
                             TargetPortfolioSelector(
-                                label = stringResource(if (type.isIncoming) R.string.transfer_from_account else R.string.transfer_to_account),
+                                label = stringResource(
+                                    if (type.isIncoming) {
+                                        R.string.transfer_from_account
+                                    } else {
+                                        R.string.transfer_to_account
+                                    }
+                                ),
                                 selectedPortfolioId = peerAccountId,
                                 portfolios = targetPortfolios,
                                 onSelectionChanged = { peerAccountId = it },

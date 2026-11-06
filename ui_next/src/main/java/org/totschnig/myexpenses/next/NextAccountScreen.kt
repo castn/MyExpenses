@@ -139,7 +139,13 @@ fun NextAccountScreen(
     transactionList: @Composable (PageAccount, TransactionSearch) -> Unit,
     allCurrencies: List<CurrencyUnit>,
     isCurrencyUsed: suspend (String) -> Boolean,
-    onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -> CurrencyUnit?,
+    onCreateAsset: suspend (
+        code: String,
+        symbol: String,
+        fractionDigits: Int,
+        label: String?,
+        commodityType: CommodityType
+    ) -> CurrencyUnit?,
     windowInsets: WindowInsets,
     bankIcon: (@Composable (Modifier, Long) -> Unit)? = null,
     /** Back to the overview, null if both are shown side by side */
@@ -391,7 +397,13 @@ private fun PortfolioTradeScreen(
     allCurrencies: List<CurrencyUnit>,
     initialAction: Action,
     onEvent: AppEventHandler,
-    onCreateAsset: suspend (code: String, symbol: String, fractionDigits: Int, label: String?, commodityType: CommodityType) -> CurrencyUnit?,
+    onCreateAsset: suspend (
+        code: String,
+        symbol: String,
+        fractionDigits: Int,
+        label: String?,
+        commodityType: CommodityType
+    ) -> CurrencyUnit?,
     isCurrencyUsed: suspend (String) -> Boolean,
     onDismiss: () -> Unit,
 ) {
@@ -500,7 +512,9 @@ private fun AccountActions(
     val onEvent = remember(onEvent, onSearch) {
         object : AppEventHandler {
             override fun invoke(event: AppEvent) {
-                if (onSearch != null && event is AppEvent.MenuItemClicked && event.itemId == R.id.SEARCH_COMMAND) onSearch()
+                if (
+                    onSearch != null && event is AppEvent.MenuItemClicked && event.itemId == R.id.SEARCH_COMMAND
+                ) onSearch()
                 else onEvent(event)
             }
         }

@@ -21,13 +21,15 @@ object PaymentService {
 
     /** What comes before the merchant in the purpose, e.g. "Ihr Einkauf bei Zalando SE" */
     private val MERCHANT = Regex(
-        "(?:ihr einkauf bei|ihre bestellung bei|einkauf bei|bestellung bei|your purchase at|purchase at|payment to|zahlung an)" +
+        "(?:ihr einkauf bei|ihre bestellung bei|einkauf bei|bestellung bei|your purchase at|purchase at|payment " +
+            "to|zahlung an)" +
                 "\\s+(.+?)(?=\\s*[,/;]|\\s+\\d|\\s+ref\\b|\\s+end-to-end|\\s*$)",
         RegexOption.IGNORE_CASE
     )
 
     /** Legal forms, left out when comparing names of merchants */
-    private val LEGAL_FORMS = setOf("se", "gmbh", "ag", "co", "kg", "ohg", "ug", "mbh", "ltd", "inc", "llc", "sarl", "sa", "bv", "nv")
+    private val LEGAL_FORMS =
+        setOf("se", "gmbh", "ag", "co", "kg", "ohg", "ug", "mbh", "ltd", "inc", "llc", "sarl", "sa", "bv", "nv")
 
     fun isPaymentService(payeeName: String?): Boolean {
         val text = Words.textOf(payeeName)

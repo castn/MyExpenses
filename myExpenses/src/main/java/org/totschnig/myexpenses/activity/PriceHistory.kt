@@ -231,7 +231,9 @@ class PriceHistory : ProtectedFragmentActivity() {
                         BatchPriceDownloadDialogFragment.newInstance(source.name)
                             .show(supportFragmentManager, "BATCH_DOWNLOAD")
                     } ?: run {
-                        showSnackBar(getString(R.string.exchange_rate_not_supported, viewModel.commodity, viewModel.homeCurrency))
+                        showSnackBar(
+                            getString(R.string.exchange_rate_not_supported, viewModel.commodity, viewModel.homeCurrency)
+                        )
                     }
                     true
                 }
@@ -458,7 +460,9 @@ fun PriceListScreen(
                     Row(Modifier.width(96.dp), horizontalArrangement = Arrangement.Center) {
                         IconButton(onClick = { editedDate.value = date }) {
                             Icon(
-                                imageVector = if (price?.source == ExchangeRateSource.User) Icons.Default.Edit else Icons.Default.Add,
+                                imageVector = if (
+                                    price?.source == ExchangeRateSource.User
+                                ) Icons.Default.Edit else Icons.Default.Add,
                                 contentDescription = stringResource(R.string.menu_edit)
                             )
                         }

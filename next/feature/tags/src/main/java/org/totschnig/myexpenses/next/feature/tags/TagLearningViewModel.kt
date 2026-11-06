@@ -47,15 +47,25 @@ class TagLearningViewModel(
     private val tagInputs: Flow<List<TagInput>?>
         get() = repository.tagInputs
 
-    private data class LearningInput(val inputs: List<TagInput>, val meanings: Map<Long, TagMeaning>, val rejected: Set<String>)
+    private data class LearningInput(
+        val inputs: List<TagInput>,
+        val meanings: Map<Long, TagMeaning>,
+        val rejected: Set<String>
+    )
 
-    private val suggestionMemo = Memo<LearningInput, Map<Long, TagSuggestion>>("tags: learning suggestions") { (inputs, meanings, rejected) ->
+    private val suggestionMemo = Memo<LearningInput, Map<Long, TagSuggestion>>(
+        "tags: learning suggestions"
+    ) { (inputs, meanings, rejected) ->
         TagLearner.suggest(inputs, { tagId -> meanings[tagId].isLearnable }, rejected)
     }
 
     /** By transaction */
     val suggestions: StateFlow<Map<Long, TagSuggestion>> =
-        combine(tagInputs, store.meanings, store.rejected(TagStore.Rejected.SUGGESTIONS)) { inputs, meanings, rejected ->
+        combine(
+            tagInputs,
+            store.meanings,
+            store.rejected(TagStore.Rejected.SUGGESTIONS)
+        ) { inputs, meanings, rejected ->
             inputs?.let { suggestionMemo.of(LearningInput(it, meanings, rejected)) }.orEmpty()
         }
             .flowOn(Dispatchers.Default)

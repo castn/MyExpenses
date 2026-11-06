@@ -153,7 +153,9 @@ abstract class AbstractOcrHandlerImpl(
             log("Now looking at total block: ${totalBlock.text}")
             //find amount in the total line itself and in the nearest line
             listOf(extractAmount(totalBlock), lines.minus(totalBlock).sortedBy { line ->
-                (line.bOr0() - totalBlock.bOr0()).absoluteValue.coerceAtMost((line.tOr0() - totalBlock.tOr0()).absoluteValue)
+                (line.bOr0() - totalBlock.bOr0()).absoluteValue.coerceAtMost(
+                    (line.tOr0() - totalBlock.tOr0()).absoluteValue
+                )
                     .also {
                         log("%s: distance %d", line.text, it)
                     }
@@ -161,8 +163,10 @@ abstract class AbstractOcrHandlerImpl(
                 extractAmount(it)
             })
         }.flatten().filterNotNull()
-        // We might receive data or time values split into adjacent elements, which prevents us from finding them, if we work on elements alone
-        // if we do not find any data by working on individual elements, we iterate again over pairs, then triples of elements
+        // We might receive data or time values split into adjacent elements, which prevents us from finding them, if we
+        // work on elements alone
+        // if we do not find any data by working on individual elements, we iterate again over pairs, then triples of
+        // elements
         val timeCandidates: List<Pair<LocalTime, Rect?>> =
             lines.mapNotNull { line -> extractTime(line, 1) }.takeIf { it.isNotEmpty() }
                 ?: lines.mapNotNull { line -> extractTime(line, 2) }.takeIf { it.isNotEmpty() }

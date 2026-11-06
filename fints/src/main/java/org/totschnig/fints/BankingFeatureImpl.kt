@@ -26,7 +26,8 @@ class BankingFeatureImpl: BankingFeature {
 
     }
 
-    override val bankIconRenderer: @Composable() (Modifier, Bank) -> Unit = { modifier, bank -> BankIconImpl(modifier, bank) }
+    override val bankIconRenderer: @Composable() (Modifier, Bank) -> Unit =
+        { modifier, bank -> BankIconImpl(modifier, bank) }
 
     override fun bankIcon(bank: Bank) = bank.asWellKnown?.icon
 

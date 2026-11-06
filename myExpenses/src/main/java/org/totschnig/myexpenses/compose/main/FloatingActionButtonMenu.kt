@@ -119,7 +119,8 @@ fun <T: FabMenuAction> FloatingActionButtonMenu(
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowDropUp,
-                        contentDescription = stringResource(androidx.appcompat.R.string.abc_action_menu_overflow_description),
+                        contentDescription =
+                            stringResource(androidx.appcompat.R.string.abc_action_menu_overflow_description),
                     )
                 }
             }

@@ -33,7 +33,11 @@ data class SpendingGroup(val key: String, val label: String, val transactions: L
  *
  * @param payees the ones spent most at, highest first
  */
-data class SmallPurchases(val count: Int, override val yearlyAmount: Long, val payees: List<SpendingGroup>) : SavingTip {
+data class SmallPurchases(
+    val count: Int,
+    override val yearlyAmount: Long,
+    val payees: List<SpendingGroup>
+) : SavingTip {
     override val id: String get() = ID
     val monthlyAmount: Long get() = yearlyAmount / 12
     override val facts: Set<String> get() = setOf("level:${level(yearlyAmount)}")
@@ -112,7 +116,11 @@ data class Supermarkets(val chains: List<SpendingGroup>) : SavingTip {
  * @param categories the transactions of [month], highest difference first
  * @param averages spent per month on average in the year before, by [SpendingGroup.key]
  */
-data class Outliers(val month: YearMonth, val categories: List<SpendingGroup>, val averages: Map<String, Long>) : SavingTip {
+data class Outliers(
+    val month: YearMonth,
+    val categories: List<SpendingGroup>,
+    val averages: Map<String, Long>
+) : SavingTip {
     override val id: String get() = ID
     override val yearlyAmount: Long get() = categories.sumOf { it.amount - averages.getValue(it.key) }
     override val facts: Set<String> get() = categories.mapTo(HashSet()) { "$month:${it.label}" }
@@ -149,7 +157,8 @@ internal fun spending(
 private fun List<ContractTransaction>.lastYear(today: LocalDate) = filter { it.date.isAfter(today.minusYears(1)) }
 
 /** Payee, or purpose if there is none */
-private fun ContractTransaction.payeeLabel() = payeeName?.takeIf { it.isNotBlank() } ?: comment?.takeIf { it.isNotBlank() }
+private fun ContractTransaction.payeeLabel() =
+    payeeName?.takeIf { it.isNotBlank() } ?: comment?.takeIf { it.isNotBlank() }
 
 /**
  * @param spending see [spending]

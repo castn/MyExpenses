@@ -132,7 +132,9 @@ fun AccountsScreen(
 
                         AccountsScreenTab.BALANCE_SHEET -> {
                             val accounts =
-                                viewModel.accountsForBalanceSheet.collectAsState(LocalDate.now() to emptyList()).value.second
+                                viewModel.accountsForBalanceSheet.collectAsState(
+                                    LocalDate.now() to emptyList()
+                                ).value.second
                             BalanceSheetOptions(
                                 showHiddenState.takeIf { accounts.any { !it.isVisible } },
                                 showZeroState.takeIf { accounts.any { it.currentBalance == 0L } },

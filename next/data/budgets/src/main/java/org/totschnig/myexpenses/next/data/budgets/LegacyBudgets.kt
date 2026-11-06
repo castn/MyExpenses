@@ -37,7 +37,12 @@ object LegacyBudgets {
      * @param categories of the user by id, a budget without category filter holds all main categories
      * for expenses
      */
-    fun pots(budgets: List<LegacyBudget>, homeCurrency: String, categories: Map<Long, CategoryInfo>, today: LocalDate): List<Pot> =
+    fun pots(
+        budgets: List<LegacyBudget>,
+        homeCurrency: String,
+        categories: Map<Long, CategoryInfo>,
+        today: LocalDate
+    ): List<Pot> =
         budgets.filter { it.currency == homeCurrency }.flatMap { budget ->
             val kind = when (budget.grouping) {
                 LegacyPeriod.YEAR -> PotKind.YEARLY

@@ -114,7 +114,9 @@ fun PotTemplateScreen(
 }
 
 /** A dialog of the editor */
-private enum class EditorDialog { Name, Icon, Kind, Amount, Categories, Tags, Contracts, Savings, Start, End, ItemGroups, MaxShare, Delete }
+private enum class EditorDialog {
+    Name, Icon, Kind, Amount, Categories, Tags, Contracts, Savings, Start, End, ItemGroups, MaxShare, Delete
+}
 
 /**
  * Creates or changes a pot. Changes are kept in [pot] by the caller and stored only by [onSave].
@@ -136,7 +138,14 @@ fun PotEditorScreen(
     val dates = rememberDateFormatter()
     var dialog by rememberSaveable { mutableStateOf<EditorDialog?>(null) }
     val none = stringResource(R.string.next_budget_none)
-    val suggestion by produceState<PotSuggestion?>(null, data.input, pot.kind, pot.categoryIds, pot.tagIds, pot.payeeIds) {
+    val suggestion by produceState<PotSuggestion?>(
+        null,
+        data.input,
+        pot.kind,
+        pot.categoryIds,
+        pot.tagIds,
+        pot.payeeIds
+    ) {
         value = withContext(Dispatchers.Default) { PotSuggestions.suggest(data.input, pot) }
     }
     val canSave = pot.name.isNotBlank() && when (pot.kind) {
@@ -154,12 +163,25 @@ fun PotEditorScreen(
         }
     ) {
         DetailCard {
-            EditableRow(stringResource(R.string.next_budget_name), pot.name.ifBlank { none }, { dialog = EditorDialog.Name }, isFirst = true)
+            EditableRow(
+                stringResource(R.string.next_budget_name),
+                pot.name.ifBlank { none },
+                { dialog = EditorDialog.Name },
+                isFirst = true
+            )
             EditableRow(stringResource(R.string.next_budget_icon), { dialog = EditorDialog.Icon }) { PotIconTile(pot) }
-            EditableRow(stringResource(R.string.next_budget_kind), stringResource(pot.kind.labelRes), { dialog = EditorDialog.Kind })
+            EditableRow(
+                stringResource(R.string.next_budget_kind),
+                stringResource(pot.kind.labelRes),
+                { dialog = EditorDialog.Kind }
+            )
             if (pot.kind == PotKind.ITEM_GROUP) {
                 val groups = ItemGroup.entries.filter { it.id in pot.itemGroups }.map { stringResource(it.labelRes) }
-                EditableRow(stringResource(R.string.next_budget_item_groups), groups.joinToString().ifEmpty { none }, { dialog = EditorDialog.ItemGroups })
+                EditableRow(
+                    stringResource(R.string.next_budget_item_groups),
+                    groups.joinToString().ifEmpty { none },
+                    { dialog = EditorDialog.ItemGroups }
+                )
                 EditableRow(
                     stringResource(R.string.next_budget_max_share_label),
                     pot.maxSharePercent?.let { "$it %" } ?: stringResource(R.string.next_budget_not_set),
@@ -173,11 +195,20 @@ fun PotEditorScreen(
                     { dialog = EditorDialog.Amount }
                 )
             }
-            suggestion?.amount?.takeIf { it != pot.amount && (pot.kind == PotKind.RUNNING || pot.kind == PotKind.YEARLY) }?.let {
-                LinkRow(stringResource(R.string.next_budget_suggestion, amount(it)), onClick = { onChange(pot.copy(amount = it)) })
+            suggestion?.amount?.takeIf {
+                it != pot.amount && (pot.kind == PotKind.RUNNING || pot.kind == PotKind.YEARLY)
+            }?.let {
+                LinkRow(
+                    stringResource(R.string.next_budget_suggestion, amount(it)),
+                    onClick = { onChange(pot.copy(amount = it)) }
+                )
                 HintRow(
                     if (pot.kind == PotKind.YEARLY) stringResource(R.string.next_budget_suggestion_yearly)
-                    else pluralStringResource(R.plurals.next_budget_suggestion_running, suggestion!!.periods, suggestion!!.periods)
+                    else pluralStringResource(
+                        R.plurals.next_budget_suggestion_running,
+                        suggestion!!.periods,
+                        suggestion!!.periods
+                    )
                 )
             }
         }
@@ -186,14 +217,31 @@ fun PotEditorScreen(
             SectionTitle(stringResource(R.string.next_budget_holds))
             DetailCard {
                 val categoryNames = data.categories.filter { it.id in pot.categoryIds }.map { it.label }
-                EditableRow(stringResource(R.string.next_budget_categories), categoryNames.joinToString().ifEmpty { none }, { dialog = EditorDialog.Categories }, isFirst = true)
+                EditableRow(
+                    stringResource(R.string.next_budget_categories),
+                    categoryNames.joinToString().ifEmpty { none },
+                    { dialog = EditorDialog.Categories },
+                    isFirst = true
+                )
                 val tagNames = data.tags.filter { it.id in pot.tagIds }.map { it.label }
-                EditableRow(stringResource(R.string.next_budget_groups), tagNames.joinToString().ifEmpty { none }, { dialog = EditorDialog.Tags })
+                EditableRow(
+                    stringResource(R.string.next_budget_groups),
+                    tagNames.joinToString().ifEmpty { none },
+                    { dialog = EditorDialog.Tags }
+                )
                 val contractNames = data.contracts.filter { it.rule?.id in pot.contractRuleIds }.map { it.title }
-                EditableRow(stringResource(R.string.next_budget_contracts_label), contractNames.joinToString().ifEmpty { none }, { dialog = EditorDialog.Contracts })
+                EditableRow(
+                    stringResource(R.string.next_budget_contracts_label),
+                    contractNames.joinToString().ifEmpty { none },
+                    { dialog = EditorDialog.Contracts }
+                )
                 suggestion?.contracts?.filter { it.rule!!.id !in pot.contractRuleIds }?.forEach { contract ->
                     LinkRow(
-                        stringResource(R.string.next_budget_add_contract, contract.title, amount(contract.monthlyAmount)),
+                        stringResource(
+                            R.string.next_budget_add_contract,
+                            contract.title,
+                            amount(contract.monthlyAmount)
+                        ),
                         onClick = { onChange(pot.copy(contractRuleIds = pot.contractRuleIds + contract.rule!!.id)) }
                     )
                 }
@@ -223,7 +271,11 @@ fun PotEditorScreen(
                 )
                 val savedWith = data.reserves.filter { it.rule?.id in pot.reserveRuleIds }.map { it.title } +
                         pot.savingAccountIds.mapNotNull { data.savingAccounts[it] }
-                EditableRow(stringResource(R.string.next_budget_saved_with), savedWith.joinToString().ifEmpty { none }, { dialog = EditorDialog.Savings })
+                EditableRow(
+                    stringResource(R.string.next_budget_saved_with),
+                    savedWith.joinToString().ifEmpty { none },
+                    { dialog = EditorDialog.Savings }
+                )
             }
 
             PotKind.PROJECT -> DetailCard(Modifier.padding(top = 12.dp)) {
@@ -245,7 +297,11 @@ fun PotEditorScreen(
 
         if (onDelete != null) {
             Row(Modifier.padding(top = 12.dp)) {
-                DestructiveTextButton(stringResource(R.string.next_budget_delete), { dialog = EditorDialog.Delete }, icon = Icons.Outlined.Delete)
+                DestructiveTextButton(
+                    stringResource(R.string.next_budget_delete),
+                    { dialog = EditorDialog.Delete },
+                    icon = Icons.Outlined.Delete
+                )
             }
         }
     }
@@ -283,7 +339,8 @@ fun PotEditorScreen(
             val invalid = stringResource(R.string.next_budget_amount_invalid)
             TextDialog(
                 title = stringResource(pot.kind.amountLabelRes),
-                initialText = if (pot.amount > 0) BigDecimal.valueOf(pot.amount, currency.fractionDigits).toPlainString() else "",
+                initialText =
+                    if (pot.amount > 0) BigDecimal.valueOf(pot.amount, currency.fractionDigits).toPlainString() else "",
                 onConfirm = { text -> parseAmount(text, currency)?.let { onChange(pot.copy(amount = it)) }; close() },
                 onDismiss = close,
                 keyboardType = KeyboardType.Decimal,
@@ -335,7 +392,8 @@ fun PotEditorScreen(
                 onChange(
                     pot.copy(
                         reserveRuleIds = keys.filter { it.startsWith("r:") }.mapTo(HashSet()) { it.substring(2) },
-                        savingAccountIds = keys.filter { it.startsWith("a:") }.mapTo(HashSet()) { it.substring(2).toLong() }
+                        savingAccountIds =
+                            keys.filter { it.startsWith("a:") }.mapTo(HashSet()) { it.substring(2).toLong() }
                     )
                 )
                 close()
@@ -373,10 +431,13 @@ fun PotEditorScreen(
             TextDialog(
                 title = stringResource(R.string.next_budget_max_share_label),
                 initialText = pot.maxSharePercent?.toString() ?: "",
-                onConfirm = { text -> text.trim().toIntOrNull()?.let { onChange(pot.copy(maxSharePercent = it)) }; close() },
+                onConfirm =
+                    { text -> text.trim().toIntOrNull()?.let { onChange(pot.copy(maxSharePercent = it)) }; close() },
                 onDismiss = close,
                 keyboardType = KeyboardType.Number,
-                error = { text -> invalid.takeIf { text.isNotBlank() && text.trim().toIntOrNull()?.takeIf { it in 1..100 } == null } }
+                error = { text ->
+                    invalid.takeIf { text.isNotBlank() && text.trim().toIntOrNull()?.takeIf { it in 1..100 } == null }
+                }
             )
         }
 

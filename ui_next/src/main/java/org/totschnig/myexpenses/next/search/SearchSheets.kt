@@ -59,7 +59,8 @@ private val listKinds = setOf(
 )
 
 /** Kinds chosen in a sheet of the new UI, the others still open the dialogs of the classic one */
-val SearchKind.hasSheet get() = this == SearchKind.Period || this == SearchKind.Amount || this == SearchKind.Status || this in listKinds
+val SearchKind.hasSheet get() =
+    this == SearchKind.Period || this == SearchKind.Amount || this == SearchKind.Status || this in listKinds
 
 /**
  * Chooses the value of the filter of [kind]
@@ -122,7 +123,9 @@ private fun PeriodSheet(part: SearchPart?, onApply: (SearchPart?) -> Unit, onDis
     val today = remember { LocalDate.now() }
     val initial = part?.criterion as? DateCriterion
     val initialPreset = initial?.let { PeriodPreset.of(it, today) }
-    var preset by rememberSaveable { mutableStateOf(initialPreset ?: PeriodPreset.ThisMonth.takeIf { initial == null }) }
+    var preset by rememberSaveable {
+        mutableStateOf(initialPreset ?: PeriodPreset.ThisMonth.takeIf { initial == null })
+    }
     val bounds = initial?.takeIf { initialPreset == null }?.bounds()
     var start by rememberSaveable { mutableStateOf(bounds?.first) }
     var end by rememberSaveable { mutableStateOf(bounds?.second) }
@@ -149,8 +152,17 @@ private fun PeriodSheet(part: SearchPart?, onApply: (SearchPart?) -> Unit, onDis
         )
         if (preset == null) {
             val open = stringResource(R.string.next_search_open)
-            ValueRow(stringResource(R.string.next_search_from), start?.let(dateFormatter::format) ?: open, { editing = true }, isFirst = true)
-            ValueRow(stringResource(R.string.next_search_until), end?.let(dateFormatter::format) ?: open, { editing = false })
+            ValueRow(
+                stringResource(R.string.next_search_from),
+                start?.let(dateFormatter::format) ?: open,
+                { editing = true },
+                isFirst = true
+            )
+            ValueRow(
+                stringResource(R.string.next_search_until),
+                end?.let(dateFormatter::format) ?: open,
+                { editing = false }
+            )
         }
     }
     editing?.let { isStart ->
@@ -173,7 +185,12 @@ private fun PeriodSheet(part: SearchPart?, onApply: (SearchPart?) -> Unit, onDis
 private val amountOperations = listOf(Operation.EQ, Operation.GTE, Operation.LTE, Operation.BTW)
 
 @Composable
-private fun AmountSheet(part: SearchPart?, account: PageAccount, onApply: (SearchPart?) -> Unit, onDismiss: () -> Unit) {
+private fun AmountSheet(
+    part: SearchPart?,
+    account: PageAccount,
+    onApply: (SearchPart?) -> Unit,
+    onDismiss: () -> Unit
+) {
     val currency = account.currencyUnit
     val initial = part?.criterion as? AmountCriterion
     val initialUi = remember(initial) { initial?.transformForUi() }
@@ -227,7 +244,8 @@ private fun AmountField(value: String, onValueChange: (String) -> Unit, symbol: 
 private fun StatusSheet(part: SearchPart?, onApply: (SearchPart?) -> Unit, onDismiss: () -> Unit) {
     val initial = (part?.criterion as? CrStatusCriterion)?.values.orEmpty()
     var selected by rememberSaveable { mutableStateOf(initial.toSet()) }
-    val criterion = selected.takeIf { it.isNotEmpty() }?.let { CrStatusCriterion(CrStatus.entries.filter { it in selected }) }
+    val criterion =
+        selected.takeIf { it.isNotEmpty() }?.let { CrStatusCriterion(CrStatus.entries.filter { it in selected }) }
     KindSheet(SearchKind.Status, part, criterion, onApply, onDismiss) {
         CrStatus.entries.forEach { status ->
             OptionRow(
@@ -336,7 +354,9 @@ fun SearchPart.label(): String {
     val context = LocalContext.current
     val value = when (val criterion = criterion) {
         is DateCriterion -> periodLabel(criterion)
-        is IdCriterion -> if (criterion.values.isEmpty()) stringResource(R.string.next_search_none) else criterion.prettyPrint(context)
+        is IdCriterion -> if (
+            criterion.values.isEmpty()
+        ) stringResource(R.string.next_search_none) else criterion.prettyPrint(context)
         else -> criterion.prettyPrint(context)
     }
     return if (excluded) stringResource(R.string.next_search_excluded, value) else value
@@ -347,7 +367,9 @@ private fun periodLabel(criterion: DateCriterion): String {
     val today = remember { LocalDate.now() }
     val dateFormatter = rememberDateFormatter(FormatStyle.MEDIUM)
     val monthFormatter = rememberMonthFormatter()
-    if (PeriodPreset.of(criterion, today) == PeriodPreset.Last30Days) return stringResource(R.string.next_search_last_30_days)
+    if (
+        PeriodPreset.of(criterion, today) == PeriodPreset.Last30Days
+    ) return stringResource(R.string.next_search_last_30_days)
     return when (val shape = PeriodShape.of(criterion)) {
         is PeriodShape.Month -> monthFormatter.format(shape.first)
         is PeriodShape.Year -> shape.year.toString()

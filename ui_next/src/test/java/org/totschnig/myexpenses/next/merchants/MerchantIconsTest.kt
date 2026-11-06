@@ -13,7 +13,9 @@ class MerchantIconsTest {
     fun everyMerchantHasAnIconOfTheCatalogOrFontAwesome() {
         assertEquals(
             emptyList<String>(),
-            Merchants.all.filter { MerchantIcons.of(it)?.let { icon -> icon in FontAwesomeIcons } != true }.map { it.name }
+            Merchants.all.filter {
+                MerchantIcons.of(it)?.let { icon -> icon in FontAwesomeIcons } != true
+            }.map { it.name }
         )
     }
 }

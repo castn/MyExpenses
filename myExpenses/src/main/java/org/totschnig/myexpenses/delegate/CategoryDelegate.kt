@@ -89,7 +89,8 @@ class CategoryDelegate(
         }
         if (methodId == null && data.methodId != null) {
             methodId = data.methodId
-            if (!typeHasChanged) { //if type has changed, we need to wait for methods to be reloaded, method is then selected in onLoadFinished
+            //if type has changed, we need to wait for methods to be reloaded, method is then selected in onLoadFinished
+            if (!typeHasChanged) {
                 setMethodSelection()
             }
         }

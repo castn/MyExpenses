@@ -10,7 +10,6 @@
         <error line="67" column="18" source="standard:wrapping" />
         <error line="67" column="46" source="standard:wrapping" />
         <error line="70" column="9" source="standard:wrapping" />
-        <error line="74" column="1" source="standard:final-newline" />
     </file>
     <file name="src/main/java/org/totschnig/dropbox/sync/DropboxBackendProvider.kt">
         <error line="3" column="1" source="standard:import-ordering" />
@@ -33,7 +32,6 @@
         <error line="271" column="101" source="standard:max-line-length" />
         <error line="271" column="109" source="standard:function-literal" />
         <error line="296" column="1" source="standard:no-blank-line-before-rbrace" />
-        <error line="297" column="1" source="standard:final-newline" />
     </file>
     <file name="src/main/java/org/totschnig/dropbox/sync/DropboxProviderFactory.kt">
         <error line="17" column="9" source="standard:function-signature" />
@@ -41,7 +39,6 @@
         <error line="19" column="9" source="standard:function-signature" />
         <error line="19" column="39" source="standard:function-signature" />
         <error line="20" column="9" source="standard:function-signature" />
-        <error line="26" column="1" source="standard:final-newline" />
     </file>
     <file name="src/main/java/org/totschnig/dropbox/viewmodel/DropboxSetupViewModel.kt">
         <error line="3" column="1" source="standard:import-ordering" />
@@ -57,6 +54,5 @@
         <error line="35" column="1" source="standard:indent" />
         <error line="35" column="77" source="standard:wrapping" />
         <error line="35" column="78" source="standard:argument-list-wrapping" />
-        <error line="55" column="1" source="standard:final-newline" />
     </file>
 </baseline>

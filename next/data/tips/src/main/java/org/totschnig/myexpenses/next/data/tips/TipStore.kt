@@ -29,7 +29,10 @@ class TipStore(private val dataStore: DataStore<Preferences>) {
 
     suspend fun markSeen(tips: List<SavingTip>) = change(KEY_SEEN) { it.adding(tips) }
 
-    private suspend fun change(key: Preferences.Key<String>, change: (Map<String, Set<String>>) -> Map<String, Set<String>>) {
+    private suspend fun change(
+        key: Preferences.Key<String>,
+        change: (Map<String, Set<String>>) -> Map<String, Set<String>>
+    ) {
         dataStore.edit { it[key] = TipDecisions.serialize(change(TipDecisions.parse(it[key]))) }
     }
 

@@ -103,7 +103,9 @@ class AmountInput(context: Context, attrs: AttributeSet?) : ConstraintLayout(con
         val withTypeSwitch = ta.getBoolean(R.styleable.AmountInput_withTypeSwitch, true)
         val alternateLayout = ta.getBoolean(R.styleable.AmountInput_alternateLayout, false)
         if (withTypeSwitch && withCurrencySelection && alternateLayout)
-            throw IllegalArgumentException("alternateLayout cannot be used together with typeSwitch and currencySelection")
+            throw IllegalArgumentException(
+                "alternateLayout cannot be used together with typeSwitch and currencySelection"
+            )
         val inflater = LayoutInflater.from(context)
 
 

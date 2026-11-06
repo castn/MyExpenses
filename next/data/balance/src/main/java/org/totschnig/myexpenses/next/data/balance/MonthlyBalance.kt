@@ -102,8 +102,10 @@ data class MonthlyBalance(
             salaries: List<Contract> = emptyList(),
         ): MonthlyBalance {
             val (reserveContracts, expenseContracts) = contracts.filter { !it.isIncome }.partition { it.isReserve }
-            val contractTransactionIds = expenseContracts.flatMapTo(HashSet()) { contract -> contract.transactions.map { it.id } }
-            val reserveTransactionIds = reserveContracts.flatMapTo(HashSet()) { contract -> contract.transactions.map { it.id } }
+            val contractTransactionIds =
+                expenseContracts.flatMapTo(HashSet()) { contract -> contract.transactions.map { it.id } }
+            val reserveTransactionIds =
+                reserveContracts.flatMapTo(HashSet()) { contract -> contract.transactions.map { it.id } }
             val income = mutableListOf<BalanceTransaction>()
             val contractDebits = mutableListOf<BalanceTransaction>()
             val savings = mutableListOf<BalanceTransaction>()

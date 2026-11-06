@@ -202,7 +202,9 @@ class PlannerFragment : DialogViewBinding<PlannerFragmentBinding>() {
         }
 
         fun postUpdate(update: PlanInstanceUpdate) {
-            data.indexOfFirst { planInstance -> planInstance.templateId == update.templateId && planInstance.instanceId == update.instanceId }
+            data.indexOfFirst { planInstance ->
+                planInstance.templateId == update.templateId && planInstance.instanceId == update.instanceId
+            }
                 .takeIf { it != -1 }?.let { index ->
                     val oldInstance = data[index]
                     val amount = update.amount?.let { Money(oldInstance.amount.currencyUnit, it) }
@@ -249,7 +251,9 @@ class PlannerFragment : DialogViewBinding<PlannerFragmentBinding>() {
                 amount.setTextColor(
                     ResourcesCompat.getColor(
                         resources,
-                        if (planInstance.amount.amountMinor < 0) R.color.colorExpenseOnCard else R.color.colorIncomeOnCard,
+                        if (
+                            planInstance.amount.amountMinor < 0
+                        ) R.color.colorExpenseOnCard else R.color.colorIncomeOnCard,
                         null
                     )
                 )

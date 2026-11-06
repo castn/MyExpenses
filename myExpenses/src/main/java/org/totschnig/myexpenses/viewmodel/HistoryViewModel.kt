@@ -48,7 +48,9 @@ class HistoryViewModel(application: Application, val savedStateHandle: SavedStat
         val accountId = extras.getLong(KEY_ACCOUNTID)
         return when {
             DataBaseAccount.isHomeAggregate(accountId) -> repository.loadOpeningBalancesPerAccountV1(accountId)
-            accountId == 0L && extras.containsKey(KEY_ACCOUNT_GROUPING) && extras.getString(KEY_ACCOUNT_GROUPING) != AccountGrouping.CURRENCY.name ->
+            accountId == 0L &&
+                extras.containsKey(KEY_ACCOUNT_GROUPING) &&
+                extras.getString(KEY_ACCOUNT_GROUPING) != AccountGrouping.CURRENCY.name ->
                 repository.loadOpeningBalancesPerAccountV2(extras)
             else -> account(extras).map { mapOf(it.id to
                     AccountOpeningInfo(

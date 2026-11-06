@@ -36,6 +36,10 @@ class PreferencesSyncFragment : BasePreferenceFragment() {
                 preferenceActivity.localizedQuote(getString(R.string.menu_sync_now))
             )
         requirePreference<Preference>(PrefKey.SYNC_FREQUCENCY).summary =
-            TextUtils.concatResStrings(requireContext(), R.string.pref_sync_frequency_summary, R.string.pref_sync_frequency_summary_0)
+            TextUtils.concatResStrings(
+                requireContext(),
+                R.string.pref_sync_frequency_summary,
+                R.string.pref_sync_frequency_summary_0
+            )
     }
 }

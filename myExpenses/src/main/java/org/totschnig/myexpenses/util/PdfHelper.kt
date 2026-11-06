@@ -280,7 +280,9 @@ class PdfHelper(private val baseFontSize: Float, memoryClass: Int) {
                             x,
                             y,
                             0F,
-                            if (hasAnyRtl(text) || layoutDirectionFromLocaleIsRTL) PdfWriter.RUN_DIRECTION_RTL else PdfWriter.RUN_DIRECTION_LTR,
+                            if (
+                                hasAnyRtl(text) || layoutDirectionFromLocaleIsRTL
+                            ) PdfWriter.RUN_DIRECTION_RTL else PdfWriter.RUN_DIRECTION_LTR,
                             0
                         )
                     }

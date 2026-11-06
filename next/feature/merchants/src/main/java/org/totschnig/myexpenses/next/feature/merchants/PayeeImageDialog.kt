@@ -44,7 +44,10 @@ fun PayeeImageDialog(
         title = stringResource(NextR.string.next_icons_title, payee.displayName),
         selected = chosen,
         suggestions = listOfNotNull(categoryIcon) +
-                IconCatalog.suggest(payee.displayName, *categoryPath?.split('>')?.asReversed()?.toTypedArray().orEmpty()),
+                IconCatalog.suggest(
+                    payee.displayName,
+                    *categoryPath?.split('>')?.asReversed()?.toTypedArray().orEmpty()
+                ),
         onSelect = { icon ->
             if (icon == null) logos.useAutomatic(payeeId) else logos.setIcon(payeeId, icon)
             onDismiss()
@@ -62,7 +65,11 @@ fun PayeeImageDialog(
             ) {
                 if (entered != null && logo != null) PayeeTile(payee.displayName, logo) {}
                 else IconTile {
-                    Icon(Icons.Outlined.Language, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Icon(
+                        Icons.Outlined.Language,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
             }
         }

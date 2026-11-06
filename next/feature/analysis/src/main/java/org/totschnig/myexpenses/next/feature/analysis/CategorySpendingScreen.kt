@@ -359,6 +359,12 @@ private fun CategorySpendingScreenPreview() {
 private fun CategoryDetailScreenPreview() {
     NextPreviewTheme {
         val analysis = previewSpending()
-        CategoryDetailScreen(analysis, analysis.categories[1], CurrencyInfo.Preview, onBack = {}, onShowTransactions = {})
+        CategoryDetailScreen(
+            analysis,
+            analysis.categories[1],
+            CurrencyInfo.Preview,
+            onBack = {},
+            onShowTransactions = {}
+        )
     }
 }

@@ -6,7 +6,10 @@ import com.lemonappdev.konsist.api.verify.assertFalse
 import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.Test
 
-/** Rules analysis-data-class, screen-no-alert-dialog, vm-constructor, vm-entry-points and vm-io-param of ui_next/ARCHITECTURE.md. */
+/**
+ * Rules analysis-data-class, screen-no-alert-dialog, vm-constructor, vm-entry-points and vm-io-param of
+ * ui_next/ARCHITECTURE.md.
+ */
 class UiNextRulesTest {
 
     private val scope = nextScope
@@ -16,7 +19,10 @@ class UiNextRulesTest {
         scope.classes()
             .filter { it.name.endsWith("Input") || it.name.endsWith("Facts") }
             .filterNot { it.name in NOT_ANALYSIS_INPUTS }
-            .assertTrue(additionalMessage = "analysis-data-class: inputs and facts are data classes, so that equal data compares equal") {
+            .assertTrue(
+                additionalMessage =
+                    "analysis-data-class: inputs and facts are data classes, so that equal data compares equal"
+            ) {
                 it.hasDataModifier
             }
     }
@@ -24,7 +30,9 @@ class UiNextRulesTest {
     @Test
     fun `screen-no-alert-dialog no AlertDialog in ui_next`() {
         scope.imports
-            .assertFalse(additionalMessage = "screen-no-alert-dialog: dialogs come from the dialogs of the design system") {
+            .assertFalse(
+                additionalMessage = "screen-no-alert-dialog: dialogs come from the dialogs of the design system"
+            ) {
                 it.name.endsWith(".AlertDialog")
             }
     }
@@ -44,7 +52,10 @@ class UiNextRulesTest {
         scope.files
             .filterNot { it.isEntryPoint() }
             .flatMap { it.imports }
-            .assertFalse(additionalMessage = "vm-entry-points: only MyExpensesNext, NextSettings, the …Feature entries of the shell and the …Flow of a feature import view models") {
+            .assertFalse(
+                additionalMessage = "vm-entry-points: only MyExpensesNext, NextSettings, the …Feature entries of the " +
+                    "shell and the …Flow of a feature import view models"
+            ) {
                 VIEW_MODEL_OF_NEXT.matches(it.name)
             }
     }
@@ -53,7 +64,10 @@ class UiNextRulesTest {
     fun `vm-io-param view models take their IO dispatcher as a parameter`() {
         scope.classes()
             .filter { it.isViewModel() }
-            .assertFalse(additionalMessage = "vm-io-param: take `io: CoroutineDispatcher = Dispatchers.IO` as a parameter, so that tests can run the view model") { viewModel ->
+            .assertFalse(
+                additionalMessage = "vm-io-param: take `io: CoroutineDispatcher = Dispatchers.IO` as a parameter, so " +
+                    "that tests can run the view model"
+            ) { viewModel ->
                 val constructor = viewModel.primaryConstructor?.text.orEmpty()
                 viewModel.text.replace(constructor, "").contains("Dispatchers.IO")
             }

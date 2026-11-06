@@ -113,4 +113,9 @@ fun payeeLooks(
 
 /** The domains of [payeeLooks] without icons */
 fun payeeDomains(payees: List<RawPayee>, entered: Map<Long, String>, withCatalog: Boolean): Map<Long, String> =
-    payeeLooks(payees, entered, emptyMap(), withCatalog).mapNotNull { (id, look) -> (look as? PayeeLook.Domain)?.let { id to it.domain } }.toMap()
+    payeeLooks(
+        payees,
+        entered,
+        emptyMap(),
+        withCatalog
+    ).mapNotNull { (id, look) -> (look as? PayeeLook.Domain)?.let { id to it.domain } }.toMap()

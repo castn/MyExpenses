@@ -104,7 +104,9 @@ class CsvExporter(
             add(context.getString(R.string.tags))
             if (withOriginalAmount) {
                 add(context.getString(R.string.menu_original_amount))
-                add(context.getString(R.string.menu_original_amount) + " (" + context.getString(R.string.currency) + ")")
+                add(
+                    context.getString(R.string.menu_original_amount) + " (" + context.getString(R.string.currency) + ")"
+                )
             }
             if (withEquivalentAmountHeader) {
                 add(context.getString(R.string.menu_equivalent_amount))

@@ -13,7 +13,8 @@ class SettingsSearchTest {
     private val language = entry(PrefKey.UI_LANGUAGE, SettingsGroup.APPEARANCE)
     private val about = entry(PrefKey.MORE_INFO_DIALOG, SettingsGroup.ABOUT)
     private val format = entry(PrefKey.OPTIMIZE_PICTURE_FORMAT, SettingsGroup.ENTRY, SettingsSection.ENTRY_ATTACHMENTS)
-    private val pngSize = entry(PrefKey.OPTIMIZE_PICTURE_MAX_SIZE, SettingsGroup.ENTRY, SettingsSection.ENTRY_ATTACHMENTS)
+    private val pngSize =
+        entry(PrefKey.OPTIMIZE_PICTURE_MAX_SIZE, SettingsGroup.ENTRY, SettingsSection.ENTRY_ATTACHMENTS)
 
     private val titles = mapOf(
         theme to "Theme", language to "Sprache", about to "Weitere Informationen",
@@ -28,7 +29,13 @@ class SettingsSearchTest {
     )
 
     private fun search(query: String) =
-        searchSettings(query, listOf(theme, language, about, format, pngSize), titles::getValue, places::getValue, details::getValue)
+        searchSettings(
+            query,
+            listOf(theme, language, about, format, pngSize),
+            titles::getValue,
+            places::getValue,
+            details::getValue
+        )
 
     @Test
     fun findsByTitleIgnoringCase() {

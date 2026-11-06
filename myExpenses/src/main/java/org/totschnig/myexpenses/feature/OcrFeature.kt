@@ -49,10 +49,18 @@ interface OcrFeature {
 }
 
 @Parcelize
-data class OcrResult(val amountCandidates: List<String>, val dateCandidates: List<Pair<LocalDate, LocalTime?>>, val payeeCandidates: List<Payee>): Parcelable {
+data class OcrResult(
+    val amountCandidates: List<String>,
+    val dateCandidates: List<Pair<LocalDate, LocalTime?>>,
+    val payeeCandidates: List<Payee>
+): Parcelable {
     fun needsDisambiguation() = amountCandidates.size > 1 || dateCandidates.size > 1 || payeeCandidates.size > 1
     fun selectCandidates(amountIndex: Int = 0, dateIndex: Int = 0, payeeIndex: Int = 0) =
-            OcrResultFlat(amountCandidates.getOrNull(amountIndex), dateCandidates.getOrNull(dateIndex), payeeCandidates.getOrNull(payeeIndex))
+            OcrResultFlat(
+                amountCandidates.getOrNull(amountIndex),
+                dateCandidates.getOrNull(dateIndex),
+                payeeCandidates.getOrNull(payeeIndex)
+            )
 }
 
 @Parcelize

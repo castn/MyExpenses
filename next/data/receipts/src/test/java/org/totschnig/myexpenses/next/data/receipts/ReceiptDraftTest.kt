@@ -31,7 +31,11 @@ class ReceiptDraftTest {
 
     @Test
     fun suggestedGroupsFillOnlyMissingOnes() {
-        val withGroups = draft.copy(items = draft.items.mapIndexed { i, item -> if (i == 0) item.copy(group = "other", groupByUser = true) else item })
+        val withGroups = draft.copy(
+            items = draft.items.mapIndexed { i, item ->
+                if (i == 0) item.copy(group = "other", groupByUser = true) else item
+            }
+        )
             .withSuggestedGroups(
                 listOf(
                     ItemGroupSuggestion(ItemGroup.BAKERY, ItemGroupSource.DICTIONARY),
@@ -49,10 +53,15 @@ class ReceiptDraftTest {
     fun unsureSuggestionsAreOnlyProposed() {
         val unsure = ItemGroupSuggestion(ItemGroup.DAIRY, ItemGroupSource.MODEL, confident = false)
         val proposed = draft.copy(items = draft.items + ReceiptItem("Milch.", 119))
-            .withSuggestedGroups(listOf(ItemGroupSuggestion(ItemGroup.BAKERY, ItemGroupSource.MODEL), unsure, null, unsure))
+            .withSuggestedGroups(
+                listOf(ItemGroupSuggestion(ItemGroup.BAKERY, ItemGroupSource.MODEL), unsure, null, unsure)
+            )
         assertEquals(listOf("bakery", null, null, null), proposed.items.map { it.group })
         assertEquals(listOf(1, 2, 3), proposed.itemsWithoutGroup)
-        assertEquals(listOf(null, ItemGroup.DAIRY, null, ItemGroup.DAIRY), proposed.items.indices.map(proposed::proposal))
+        assertEquals(
+            listOf(null, ItemGroup.DAIRY, null, ItemGroup.DAIRY),
+            proposed.items.indices.map(proposed::proposal)
+        )
         assertFalse(proposed.isChanged)
         // confirmed for one, the same product follows and nothing is proposed any more
         val confirmed = proposed.setGroup(1, ItemGroup.DAIRY)
@@ -119,7 +128,8 @@ class ReceiptDraftTest {
 
     @Test
     fun correctedDetailsAreSavedAndChecked() {
-        val corrected = draft.withDetails(merchant = "REWE Markt", date = java.time.LocalDate.of(2026, 10, 9), total = 398)
+        val corrected =
+            draft.withDetails(merchant = "REWE Markt", date = java.time.LocalDate.of(2026, 10, 9), total = 398)
         assertTrue(corrected.isChanged)
         assertEquals(0L, corrected.check.itemsDifference)
         assertEquals(-2L, corrected.check.totalDifference)

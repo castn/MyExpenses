@@ -131,7 +131,8 @@ data class CriterionInfo(
         get() = Money(currency, this)
 
     /**
-     * returns true if we are above the criterion, but if [onlyWhenChanged] is true only if startBalance was still below criterion
+     * returns true if we are above the criterion, but if [onlyWhenChanged] is true only if startBalance was still below
+     * criterion
      */
     fun hasReached(onlyWhenChanged: Boolean = true) =
         criterion.sign == newBalance.sign && newBalance.absoluteValue >= criterion.absoluteValue &&

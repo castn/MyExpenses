@@ -187,7 +187,10 @@ class TransferDelegate(
             removeView(viewBinding.AmountRow)
             removeView(viewBinding.TransferAmountRow)
             if (isIncome) {
-                if (accountSpinner.parent === viewBinding.AccountRow && transferAccountSpinner.parent === viewBinding.TransferAccountRow) {
+                if (
+                    accountSpinner.parent === viewBinding.AccountRow &&
+                        transferAccountSpinner.parent === viewBinding.TransferAccountRow
+                ) {
                     viewBinding.AccountRow.removeView(accountSpinner)
                     viewBinding.TransferAccountRow.removeView(transferAccountSpinner)
                     viewBinding.AccountRow.addView(transferAccountSpinner)
@@ -196,7 +199,10 @@ class TransferDelegate(
                 addView(viewBinding.TransferAmountRow, 2)
                 addView(viewBinding.AmountRow, 4)
             } else {
-                if (accountSpinner.parent === viewBinding.TransferAccountRow && transferAccountSpinner.parent === viewBinding.AccountRow) {
+                if (
+                    accountSpinner.parent === viewBinding.TransferAccountRow &&
+                        transferAccountSpinner.parent === viewBinding.AccountRow
+                ) {
                     viewBinding.AccountRow.removeView(transferAccountSpinner)
                     viewBinding.TransferAccountRow.removeView(accountSpinner)
                     viewBinding.AccountRow.addView(accountSpinner)

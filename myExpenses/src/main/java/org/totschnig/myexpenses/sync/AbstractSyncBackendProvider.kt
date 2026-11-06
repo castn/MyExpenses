@@ -300,7 +300,8 @@ abstract class AbstractSyncBackendProvider<Res>(protected val context: Context) 
     @Throws(IOException::class)
     fun getAttachment(uuid: String): Pair<String, InputStream> {
         val attachmentDir = requireCollection(ATTACHMENT_FOLDER_NAME)
-        val attachment = childrenForCollection(attachmentDir).find { nameForResource(it)?.startsWith(uuid) == true } ?: throw FileNotFoundException()
+        val attachment = childrenForCollection(attachmentDir).find { nameForResource(it)?.startsWith(uuid) == true } ?:
+            throw FileNotFoundException()
         return nameForResource(attachment)!!.substringAfter("${uuid}_") to getInputStream(attachment)
     }
 
@@ -391,7 +392,12 @@ abstract class AbstractSyncBackendProvider<Res>(protected val context: Context) 
      * should encrypt if backend is configured with encryption
      */
     @Throws(IOException::class)
-    protected abstract fun saveUriToCollection(fileName: String, uri: Uri, collection: Res, maybeEncrypt: Boolean = true)
+    protected abstract fun saveUriToCollection(
+        fileName: String,
+        uri: Uri,
+        collection: Res,
+        maybeEncrypt: Boolean = true
+    )
 
     protected fun buildMetadata(account: Account): String {
         return Json.encodeToString(
@@ -488,7 +494,9 @@ abstract class AbstractSyncBackendProvider<Res>(protected val context: Context) 
             readFileContents(false, categoriesFilename, true)?.let {
                 Json.decodeFromString<List<CategoryExport>>(it)
             }
-                ?: throw FileNotFoundException(context.getString(R.string.not_exist_file_desc) + ": " + categoriesFilename)
+                ?: throw FileNotFoundException(
+                    context.getString(R.string.not_exist_file_desc) + ": " + categoriesFilename
+                )
         }
 
     @OptIn(ExperimentalSerializationApi::class)

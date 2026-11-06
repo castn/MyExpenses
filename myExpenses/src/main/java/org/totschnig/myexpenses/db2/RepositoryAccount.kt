@@ -166,7 +166,12 @@ fun Repository.loadAggregateAccountFlow(accountId: Long): Flow<Account> {
     }
 }
 
-data class AccountOpeningInfo(val currency: String, val openingBalance: Long, val dynamic: Boolean, val openingRate: Double)
+data class AccountOpeningInfo(
+    val currency: String,
+    val openingBalance: Long,
+    val dynamic: Boolean,
+    val openingRate: Double
+)
 
 fun Repository.loadOpeningBalancesPerAccountV1(accountId: Long): Flow<Map<Long, AccountOpeningInfo>> {
     require(accountId < 0L)

@@ -69,7 +69,11 @@ fun TagEvaluationScreen(
             InfoRow(stringResource(R.string.next_analysis_total), amount(evaluation.total), isFirst = true)
             when (evaluation.group) {
                 TagGroup.TRIP -> InfoRow(
-                    pluralStringResource(R.plurals.next_analysis_days, evaluation.days.toInt(), evaluation.days.toInt()),
+                    pluralStringResource(
+                        R.plurals.next_analysis_days,
+                        evaluation.days.toInt(),
+                        evaluation.days.toInt()
+                    ),
                     stringResource(R.string.next_analysis_per_day, amount(evaluation.perDay))
                 )
                 TagGroup.THEME -> InfoRow(
@@ -89,7 +93,8 @@ fun TagEvaluationScreen(
                             label = month.month.getDisplayName(TextStyle.NARROW, locale),
                             value = spent.toFloat(),
                             valueLabel = amount(spent),
-                            description = "${month.month.getDisplayName(TextStyle.FULL_STANDALONE, locale)} ${month.year}"
+                            description =
+                                "${month.month.getDisplayName(TextStyle.FULL_STANDALONE, locale)} ${month.year}"
                         )
                     },
                     Modifier.padding(Spacing.content),
@@ -129,7 +134,12 @@ fun TagEvaluationScreen(
 @Composable
 private fun TagEvaluationScreenPreview() {
     NextPreviewTheme {
-        TagEvaluationScreen(previewAnalysis().themes.first(), CurrencyInfo.Preview, onBack = {}, onShowTransactions = {})
+        TagEvaluationScreen(
+            previewAnalysis().themes.first(),
+            CurrencyInfo.Preview,
+            onBack = {},
+            onShowTransactions = {}
+        )
     }
 }
 

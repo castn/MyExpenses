@@ -1,4 +1,4 @@
-//https://medium.com/androiddevelopers/livedata-with-snackbar-navigation-and-other-events-the-singleliveevent-case-ac2622673150
+// See "LiveData with SnackBar, Navigation and Other Events (The SingleLiveEvent case)" on the Android Developers blog
 package org.totschnig.myexpenses.viewmodel.data
 
 /**

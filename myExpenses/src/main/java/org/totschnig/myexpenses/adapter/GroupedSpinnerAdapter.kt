@@ -67,7 +67,8 @@ open class GroupedSpinnerAdapter<H, T : IdHolder>(
         data == item || (item.id != 0L && data?.id == item.id)
     }
     fun getPosition(id: Long) = items.indexOfFirst { it.itemId == id }
-    fun getFirstSelectable(): IndexedValue<SpinnerItem>? = items.withIndex().firstOrNull { (_, item) -> item is SpinnerItem.Item<*> }
+    fun getFirstSelectable(): IndexedValue<SpinnerItem>? =
+        items.withIndex().firstOrNull { (_, item) -> item is SpinnerItem.Item<*> }
 
     open fun showHeader(header: H): Boolean = true
 

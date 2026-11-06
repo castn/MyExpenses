@@ -81,7 +81,9 @@ object TripDetector {
                 val inRange = expenses.filter { it.date in days.first()..days.last() }
                 Trip(days.first(), days.last(), inRange.sortedBy { it.date }, inRange.filter(::isSignal))
             }
-            .filter { trip -> trip.key !in rejected && trip.transactions.count { it.id in ignored } * 2 < trip.transactions.size }
+            .filter { trip ->
+                trip.key !in rejected && trip.transactions.count { it.id in ignored } * 2 < trip.transactions.size
+            }
             .sortedByDescending { it.start }
     }
 }

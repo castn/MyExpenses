@@ -148,7 +148,8 @@ class LazyFontSelector(val files: Array<File>, private val baseSize: Float) {
                         }
                         sb.append(c)
                         found = true
-                        //Log.d("MyExpenses","Character " + c + " was found in font " + currentFont.getBaseFont().getPostscriptFontName());
+                        //Log.d("MyExpenses","Character " + c + " was found in font " +
+                        // currentFont.getBaseFont().getPostscriptFontName());
                         break
                     }
                 }

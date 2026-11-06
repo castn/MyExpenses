@@ -83,7 +83,8 @@ class VersionInfo(val code: Int, val name: String, val tickets: String? = null) 
 
             "381" -> arrayOf(
                 // @formatter:off
-                "${t(R.string.menu_print)}: ${t(R.string.configuration)} (${t(R.string.paper_format)}, ${t(R.string.header_footer)})"
+                "${t(R.string.menu_print)}: ${t(R.string.configuration)} (${t(R.string.paper_format)}, " +
+                    "${t(R.string.header_footer)})"
                 // @formatter:on
             )
 
@@ -104,7 +105,8 @@ class VersionInfo(val code: Int, val name: String, val tickets: String? = null) 
             "385" -> arrayOf(
                 "FinTS: ING-DiBa",
                 // @formatter:off
-                "${t(R.string.menu_print)}: ${t(R.string.configuration)} (${t(R.string.paper_format)}, ${t(R.string.orientation)}, ${t(R.string.title_font_size)})"
+                "${t(R.string.menu_print)}: ${t(R.string.configuration)} (${t(R.string.paper_format)}, " +
+                    "${t(R.string.orientation)}, ${t(R.string.title_font_size)})"
                 // @formatter:on
             )
 
@@ -162,8 +164,10 @@ class VersionInfo(val code: Int, val name: String, val tickets: String? = null) 
 
             "401" -> arrayOf(
                 t(R.string.whats_new_401),
-                "${t(R.string.menu_print)} : ${t(R.string.balance_sheet)}, ${t(R.string.title_activity_debt_overview)}.",
-                "${t(R.string.price_history)} : ${t(R.string.pref_category_title_import)} / ${t(R.string.pref_category_title_export)}."
+                "${t(R.string.menu_print)} : ${t(R.string.balance_sheet)}, " +
+                    "${t(R.string.title_activity_debt_overview)}.",
+                "${t(R.string.price_history)} : ${t(R.string.pref_category_title_import)} / " +
+                    "${t(R.string.pref_category_title_export)}."
             )
 
             "404" -> arrayOf(
@@ -184,7 +188,9 @@ class VersionInfo(val code: Int, val name: String, val tickets: String? = null) 
 
             "412" -> arrayOf(
                 // @formatter:off
-                "${t(R.string.contrib_feature_portfolio_tracking)} : ${t(R.string.menu_search)} (${t(R.string.trade_target_asset)}, ${t(R.string.amount)}, ${t(R.string.comment)}, ${t(R.string.date)})",
+                "${t(R.string.contrib_feature_portfolio_tracking)} : ${t(R.string.menu_search)} " +
+                    "(${t(R.string.trade_target_asset)}, ${t(R.string.amount)}, ${t(R.string.comment)}, " +
+                        "${t(R.string.date)})",
                 t(R.string.whats_new_412)
                 // @formatter:on
             )
@@ -250,7 +256,13 @@ class VersionInfo(val code: Int, val name: String, val tickets: String? = null) 
         resolveMoreInfo(context, "version_more_info_")?.let { context.getString(it) }
 
     fun githubUrl(context: Context) = if (tickets != null) null else githubLink(context)?.let {
-        (if (code < 740) "https://github.com/mtotschnig/MyExpenses/projects/" else "https://github.com/users/mtotschnig/projects/") + it
+        (
+            if (code < 740) {
+                "https://github.com/mtotschnig/MyExpenses/projects/"
+            } else {
+                "https://github.com/users/mtotschnig/projects/"
+            }
+        ) + it
     }
 
     fun mastodonUrl(context: Context) = mastodonLink(context)?.let {

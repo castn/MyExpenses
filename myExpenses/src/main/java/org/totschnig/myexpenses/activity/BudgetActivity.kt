@@ -368,8 +368,16 @@ class BudgetActivity : DistributionBaseActivity<BudgetViewModel2>(), OnDialogRes
                 showSnackBar(
                     concatResStrings(
                         this,
-                        if (category.level == 1) R.string.budget_exceeded_error_1_2 else R.string.sub_budget_exceeded_error_1_2,
-                        if (category.level == 1) R.string.budget_exceeded_error_2 else R.string.sub_budget_exceeded_error_2
+                        if (category.level == 1) {
+                            R.string.budget_exceeded_error_1_2
+                        } else {
+                            R.string.sub_budget_exceeded_error_1_2
+                        },
+                        if (category.level == 1) {
+                            R.string.budget_exceeded_error_2
+                        } else {
+                            R.string.sub_budget_exceeded_error_2
+                        }
                     )
                 )
                 return

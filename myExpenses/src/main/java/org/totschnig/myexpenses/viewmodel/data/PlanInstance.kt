@@ -27,7 +27,16 @@ data class PlanInstance(
     val state: PlanInstanceState,
     val sealed: Boolean,
 ) : Parcelable {
-    constructor(templateId: Long, instanceId: Long?, transactionId: Long?, title: String, date: Long, color: Int, amount: Money, sealed: Boolean) :
+    constructor(
+        templateId: Long,
+        instanceId: Long?,
+        transactionId: Long?,
+        title: String,
+        date: Long,
+        color: Int,
+        amount: Money,
+        sealed: Boolean
+    ) :
             this(templateId, transactionId, title, date, color, amount,
                     when {
                         instanceId == null -> PlanInstanceState.OPEN
@@ -76,4 +85,10 @@ data class PlanInstanceSet(private val set: HashSet<PlanInstance>) : Parcelable 
     }
 }
 
-data class PlanInstanceUpdate(val templateId: Long, val instanceId: Long, val newState: PlanInstanceState, val transactionId: Long?, val amount: Long?)
+data class PlanInstanceUpdate(
+    val templateId: Long,
+    val instanceId: Long,
+    val newState: PlanInstanceState,
+    val transactionId: Long?,
+    val amount: Long?
+)

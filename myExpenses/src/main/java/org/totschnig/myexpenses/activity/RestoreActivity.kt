@@ -62,7 +62,8 @@ abstract class RestoreActivity: ProtectedFragmentActivity() {
     fun doWithEncryptionCheck(block: () -> Unit) {
         if (prefHandler.encryptDatabase && !isSqlCryptLoaded) {
             showMessage(
-                message = "The module required for database encryption has not yet been downloaded from Play Store. Please try again!",
+                message = "The module required for database encryption has not yet been downloaded from Play Store. " +
+                    "Please try again!",
                 positive = null,
                 negative = MessageDialogFragment.Button(
                     R.string.button_label_close,

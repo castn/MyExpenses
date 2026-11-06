@@ -114,10 +114,14 @@ class CalculatorInputTest {
     @Test
     fun testPercentButton_calculatesCorrectly() {
         launchActivity()
-        testHelper("110", R.id.b1, R.id.b0, R.id.b0, R.id.bAdd, R.id.b1, R.id.b0, R.id.bPercent)  // 100 + 10% (of 100) = 110
-        testHelper("90", R.id.b1, R.id.b0, R.id.b0, R.id.bSubtract, R.id.b1, R.id.b0, R.id.bPercent)  // 100 - 10% (of 100) = 90
-        testHelper("10", R.id.b1, R.id.b0, R.id.b0, R.id.bMultiply, R.id.b1, R.id.b0, R.id.bPercent)  // 10% (of 100) = 10
-        testHelper("1000", R.id.b1, R.id.b0, R.id.b0, R.id.bDivide, R.id.b1, R.id.b0, R.id.bPercent)  // 100 = 10% of 1000
+        // 100 + 10% (of 100) = 110
+        testHelper("110", R.id.b1, R.id.b0, R.id.b0, R.id.bAdd, R.id.b1, R.id.b0, R.id.bPercent)
+        // 100 - 10% (of 100) = 90
+        testHelper("90", R.id.b1, R.id.b0, R.id.b0, R.id.bSubtract, R.id.b1, R.id.b0, R.id.bPercent)
+        // 10% (of 100) = 10
+        testHelper("10", R.id.b1, R.id.b0, R.id.b0, R.id.bMultiply, R.id.b1, R.id.b0, R.id.bPercent)
+        // 100 = 10% of 1000
+        testHelper("1000", R.id.b1, R.id.b0, R.id.b0, R.id.bDivide, R.id.b1, R.id.b0, R.id.bPercent)
     }
 
     @Test

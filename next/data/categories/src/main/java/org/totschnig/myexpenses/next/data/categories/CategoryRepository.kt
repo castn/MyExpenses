@@ -47,7 +47,9 @@ class CategoryRepository(
         val categories: List<CategoryInfo>,
     )
 
-    private val suggestionMemo = Memo<SuggestionInput, List<CategorySuggestion>>("categories: suggestions") { (inputs, rules, categories) ->
+    private val suggestionMemo = Memo<SuggestionInput, List<CategorySuggestion>>(
+        "categories: suggestions"
+    ) { (inputs, rules, categories) ->
         CategorySuggester(inputs, rules, categories).suggestAll(inputs.filter { it.categoryId == null })
     }
 
@@ -57,7 +59,12 @@ class CategoryRepository(
             .flatMapLatest { hasConsent ->
                 if (hasConsent) combine(inputs, categories, decisions) { inputs, categories, decisions ->
                     val suggestions = suggestionMemo.of(SuggestionInput(inputs, decisions.rules, categories))
-                    CategoryAnalysis(inputs, decisions, decisions.plan(suggestions), categories.associate { it.id to it.path })
+                    CategoryAnalysis(
+                        inputs,
+                        decisions,
+                        decisions.plan(suggestions),
+                        categories.associate { it.id to it.path }
+                    )
                 } else flowOf(null)
             }
             .logTimings("categories: suggestions")

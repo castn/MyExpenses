@@ -132,7 +132,10 @@ open class DataModule() {
                     }
                 }
                 if ((version == 132 || version == 133) && Build.VERSION.SDK_INT == 30) {
-                    throw Throwable("Updating from database schema version 132 or 133 is no longer supported. Please contact support@myexpenses.mobi for assistance.")
+                    throw Throwable(
+                        "Updating from database schema version 132 or 133 is no longer supported. Please contact " +
+                            "support@myexpenses.mobi for assistance."
+                    )
                 }
                 SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY).use {
                     if (!try {

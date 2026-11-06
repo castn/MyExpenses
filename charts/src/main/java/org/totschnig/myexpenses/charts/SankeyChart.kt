@@ -190,7 +190,9 @@ fun SankeyChart(
                             onTap = { position ->
                                 val x = viewport.toChartX(startX(position.x))
                                 val y = viewport.toChartY(position.y)
-                                currentOnSelect(currentLayout.hit(x, y, TapSlop.toPx() / viewport.scale, nodeWidth / viewport.scale))
+                                currentOnSelect(
+                                    currentLayout.hit(x, y, TapSlop.toPx() / viewport.scale, nodeWidth / viewport.scale)
+                                )
                             }
                         )
                     }
@@ -215,8 +217,11 @@ fun SankeyChart(
                 layout.nodes.forEachIndexed { index, box ->
                     val alpha = if (highlighted == null || index in highlighted.nodes) 1f else 0.3f
                     drawRoundRect(
-                        color = (if (nodes[index].color == ChartColor.Neutral) neutral else colors[index]).copy(alpha = alpha),
-                        topLeft = Offset(minOf(mirror(nodeStart(index)), mirror(nodeStart(index) + nodeWidth)), sy(box.top)),
+                        color = (
+                            if (nodes[index].color == ChartColor.Neutral) neutral else colors[index]
+                        ).copy(alpha = alpha),
+                        topLeft =
+                            Offset(minOf(mirror(nodeStart(index)), mirror(nodeStart(index) + nodeWidth)), sy(box.top)),
                         size = Size(nodeWidth, (box.height * viewport.scale).coerceAtLeast(1f)),
                         cornerRadius = CornerRadius(NodeRadius.toPx())
                     )
@@ -228,7 +233,9 @@ fun SankeyChart(
                     val bottom = sy(box.bottom).coerceAtMost(size.height)
                     val shownHeight = bottom - top
                     if (shownHeight <= 0) return@forEachIndexed
-                    val space = ((layout.labelSpace(index, 0f) + box.width) * viewport.scale - nodeWidth - 2 * padding).roundToInt()
+                    val space = (
+                        (layout.labelSpace(index, 0f) + box.width) * viewport.scale - nodeWidth - 2 * padding
+                    ).roundToInt()
                     if (space <= 0) return@forEachIndexed
                     val node = nodes[index]
                     val name = measureLine(measurer, node.label, nameStyle, space)
@@ -254,7 +261,12 @@ fun SankeyChart(
                 with(density) {
                     Box(
                         Modifier
-                            .offset { IntOffset((if (isRtl) width - start - nodeWidth else start).roundToInt(), top.roundToInt()) }
+                            .offset {
+                                IntOffset(
+                                    (if (isRtl) width - start - nodeWidth else start).roundToInt(),
+                                    top.roundToInt()
+                                )
+                            }
                             .size(nodeWidth.toDp(), (box.height * viewport.scale).coerceAtLeast(1f).toDp())
                             .semantics {
                                 contentDescription = nodes[index].description
@@ -267,7 +279,15 @@ fun SankeyChart(
         }
         // For those who cannot pinch: zooming around the middle in steps
         fun zoom(factor: Float) {
-            viewport = viewport.transformed(factor, viewSize.width / 2, viewSize.height / 2, 0f, 0f, viewSize.width, viewSize.height)
+            viewport = viewport.transformed(
+                factor,
+                viewSize.width / 2,
+                viewSize.height / 2,
+                0f,
+                0f,
+                viewSize.width,
+                viewSize.height
+            )
         }
         Row(
             Modifier
@@ -276,7 +296,11 @@ fun SankeyChart(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             ZoomButton("−", stringResource(R.string.chart_zoom_out), enabled = viewport.isZoomed) { zoom(1 / ZoomStep) }
-            ZoomButton("+", stringResource(R.string.chart_zoom_in), enabled = viewport.scale < Viewport.MAX_SCALE) { zoom(ZoomStep) }
+            ZoomButton(
+                "+",
+                stringResource(R.string.chart_zoom_in),
+                enabled = viewport.scale < Viewport.MAX_SCALE
+            ) { zoom(ZoomStep) }
         }
     }
 }
@@ -297,10 +321,15 @@ private class Highlight(val nodes: Set<Int>, val flows: Set<Int>)
 
 private fun highlightOf(selected: SankeyHit?, flows: List<SankeyFlow>): Highlight? = when (selected) {
     null -> null
-    is SankeyHit.Link -> flows.getOrNull(selected.index)?.let { Highlight(setOf(it.source, it.target), setOf(selected.index)) }
+    is SankeyHit.Link ->
+        flows.getOrNull(selected.index)?.let { Highlight(setOf(it.source, it.target), setOf(selected.index)) }
     is SankeyHit.Node -> {
-        val connected = flows.indices.filter { flows[it].source == selected.index || flows[it].target == selected.index }
-        Highlight(connected.flatMap { listOf(flows[it].source, flows[it].target) }.toSet() + selected.index, connected.toSet())
+        val connected =
+            flows.indices.filter { flows[it].source == selected.index || flows[it].target == selected.index }
+        Highlight(
+            connected.flatMap { listOf(flows[it].source, flows[it].target) }.toSet() + selected.index,
+            connected.toSet()
+        )
     }
 }
 
@@ -311,7 +340,14 @@ private fun measureLine(measurer: androidx.compose.ui.text.TextMeasurer, text: S
     )
 
 /** A band whose edges leave and enter horizontally, between x positions on screen in any order */
-private fun DrawScope.drawBand(sourceX: Float, sourceTop: Float, targetX: Float, targetTop: Float, thickness: Float, color: Color) {
+private fun DrawScope.drawBand(
+    sourceX: Float,
+    sourceTop: Float,
+    targetX: Float,
+    targetTop: Float,
+    thickness: Float,
+    color: Color
+) {
     val middle = (sourceX + targetX) / 2
     val path = Path().apply {
         moveTo(sourceX, sourceTop)
@@ -370,6 +406,10 @@ private object SankeyExample {
     val flows = listOf(
         SankeyFlow(0, 2, 3000f), SankeyFlow(1, 2, 200f),
         SankeyFlow(2, 3, 1200f), SankeyFlow(2, 4, 600f), SankeyFlow(2, 5, 250f), SankeyFlow(2, 6, 1150f),
-        SankeyFlow(3, 7, 1200f), SankeyFlow(4, 8, 400f), SankeyFlow(4, 9, 200f), SankeyFlow(5, 10, 186f), SankeyFlow(5, 11, 64f),
+        SankeyFlow(3, 7, 1200f),
+        SankeyFlow(4, 8, 400f),
+        SankeyFlow(4, 9, 200f),
+        SankeyFlow(5, 10, 186f),
+        SankeyFlow(5, 11, 64f),
     )
 }

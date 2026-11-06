@@ -40,7 +40,9 @@ open class FeatureModule {
     @Provides
     fun provideBankingFeature(): BankingFeature? = bankingFeature ?:
     try {
-        (Class.forName("org.totschnig.fints.BankingFeatureImpl").getConstructor().newInstance() as BankingFeature).also {
+        (
+            Class.forName("org.totschnig.fints.BankingFeatureImpl").getConstructor().newInstance() as BankingFeature
+        ).also {
             bankingFeature = it
         }
     } catch (_: ClassNotFoundException) {

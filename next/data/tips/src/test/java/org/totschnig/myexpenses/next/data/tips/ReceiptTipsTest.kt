@@ -32,7 +32,8 @@ class ReceiptTipsTest {
     fun scannedPurchasesAreTheDebitsWithReceipt() {
         val withReceipt = ContractTransaction(nextId++, today, -300, 1)
         val without = ContractTransaction(nextId++, today, -500, 1)
-        val purchases = scannedPurchases(listOf(withReceipt, without), mapOf(withReceipt.id to listOf(item(ItemGroup.DAIRY, 300))))
+        val purchases =
+            scannedPurchases(listOf(withReceipt, without), mapOf(withReceipt.id to listOf(item(ItemGroup.DAIRY, 300))))
         assertEquals(listOf(withReceipt), purchases.map { it.transaction })
     }
 
@@ -54,7 +55,8 @@ class ReceiptTipsTest {
         // a few purchases are no trend
         assertTrue(itemGroupsRising(weekly(360, 95, sweets = 250) + weekly(14, 1, sweets = 750), today).isEmpty())
         // produce is no tip, however much it rises
-        val produce = (360L downTo 95 step 7).map { purchase(it, item(ItemGroup.PRODUCE, 500), item(ItemGroup.PANTRY, 4500)) } +
+        val produce =
+            (360L downTo 95 step 7).map { purchase(it, item(ItemGroup.PRODUCE, 500), item(ItemGroup.PANTRY, 4500)) } +
                 (85L downTo 1 step 7).map { purchase(it, item(ItemGroup.PRODUCE, 4500), item(ItemGroup.PANTRY, 500)) }
         assertTrue(itemGroupsRising(produce, today).isEmpty())
     }
@@ -62,8 +64,10 @@ class ReceiptTipsTest {
     @Test
     fun depositPaidButNotReturned() {
         val paid = purchase(30, item(ItemGroup.DRINKS, 2000), item(ItemGroup.DEPOSIT, 1500))
-        val partlyReturned = purchase(20, item(ItemGroup.DRINKS, 2000), item(ItemGroup.DEPOSIT, 600), item(ItemGroup.DEPOSIT, -100))
-        val tip = depositNotReturned(listOf(paid, partlyReturned, purchase(400, item(ItemGroup.DEPOSIT, 5000))), today)!!
+        val partlyReturned =
+            purchase(20, item(ItemGroup.DRINKS, 2000), item(ItemGroup.DEPOSIT, 600), item(ItemGroup.DEPOSIT, -100))
+        val tip =
+            depositNotReturned(listOf(paid, partlyReturned, purchase(400, item(ItemGroup.DEPOSIT, 5000))), today)!!
         assertEquals(2100L, tip.paid)
         assertEquals(100L, tip.returned)
         assertEquals(2000L, tip.yearlyAmount)

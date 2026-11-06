@@ -144,7 +144,9 @@ abstract class DistributionViewModelBase<T : DistributionAccountInfo>(
     ) { groupingInfo, dateInfo, dateInfoExtra ->
         if (groupingInfo.grouping == Grouping.NONE) {
             defaultDisplayTitle
-        } else if (dateInfoExtra != null && (groupingInfo.grouping != Grouping.WEEK || dateInfoExtra.weekStart != null)) {
+        } else if (
+            dateInfoExtra != null && (groupingInfo.grouping != Grouping.WEEK || dateInfoExtra.weekStart != null)
+        ) {
             groupingInfo.grouping.getDisplayTitle(
                 localizedContext,
                 groupingInfo.year,

@@ -69,7 +69,9 @@ fun listOldBackups(appDir: DocumentFile, prefHandler: PrefHandler): List<Documen
     return if (prefHandler.getBoolean(PrefKey.PURGE_BACKUP, false) && keep > 0) {
         appDir.listFiles()
             .filter {
-                it.name?.matches("""${prefHandler.backupFilePrefix}-\d\d\d\d\d\d\d\d-\d\d\d\d\d\d\..+""".toRegex()) == true
+                it.name?.matches(
+                    """${prefHandler.backupFilePrefix}-\d\d\d\d\d\d\d\d-\d\d\d\d\d\d\..+""".toRegex()
+                ) == true
             }
             .sortedBy { it.lastModified() }
             .dropLast(keep)

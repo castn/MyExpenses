@@ -1016,7 +1016,13 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
     private fun updateDateLink() {
         dateEditBinding.DateLink.setImageResource(if (areDatesLinked) R.drawable.ic_link else R.drawable.ic_link_off)
         val help =
-            getString(if (areDatesLinked) R.string.content_description_dates_are_linked else R.string.content_description_dates_are_not_linked)
+            getString(
+                if (areDatesLinked) {
+                    R.string.content_description_dates_are_linked
+                } else {
+                    R.string.content_description_dates_are_not_linked
+                }
+            )
         dateEditBinding.DateLink.contentDescription = help
         TooltipCompat.setTooltipText(dateEditBinding.DateLink, help)
     }
@@ -1458,14 +1464,17 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
                             passedInAmount?.takeIf { passedInAccountId == id } ?: 0
                         }
                         val previousTransferAmount =
-                            (delegate as? TransferDelegate)?.run { passedInTransferAmount?.takeIf { passedInTransferAccountId == id } }
+                            (
+                                delegate as? TransferDelegate
+                            )?.run { passedInTransferAmount?.takeIf { passedInTransferAccountId == id } }
                                 ?: 0
                         criterion?.let {
                             CriterionInfo(
                                 id,
                                 currentBalance,
                                 criterion,
-                                //if we are editing the transaction the difference between the new and the old value define the delta, as long as user did not select a different account
+                                //if we are editing the transaction the difference between the new and the old value
+                                // define the delta, as long as user did not select a different account
                                 transaction.amount - previousAmount - previousTransferAmount,
                                 color,
                                 currency,
@@ -1487,7 +1496,8 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
                                 id,
                                 currentBalance,
                                 criterion,
-                                //if we are editing the transaction the difference between the new and the old value define the delta, as long as user did not select a different account
+                                //if we are editing the transaction the difference between the new and the old value
+                                // define the delta, as long as user did not select a different account
                                 transaction.transferAmount!! - previousAmount - previousTransferAmount,
                                 color,
                                 currency,
@@ -1687,7 +1697,9 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
     override val fabIcon: Int
         get() = if (createNew && delegate.createNewOverride) R.drawable.ic_action_save_new else super.fabIcon
     override val fabDescription: Int
-        get() = if (createNew && delegate.createNewOverride) R.string.menu_save_and_new_content_description else super.fabDescription
+        get() = if (
+            createNew && delegate.createNewOverride
+        ) R.string.menu_save_and_new_content_description else super.fabDescription
 
     fun showPlanMonthFragment(originTemplate: TemplateEditData, color: Int) {
         PlanMonthFragment.newInstance(

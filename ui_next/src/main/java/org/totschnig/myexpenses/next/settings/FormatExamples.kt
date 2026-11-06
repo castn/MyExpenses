@@ -6,7 +6,10 @@ import java.util.Currency
 import java.util.Date
 import java.util.Locale
 
-/** Date patterns to pick from, as an example each, see [validateDateFormat][org.totschnig.myexpenses.util.validateDateFormat] */
+/**
+ * Date patterns to pick from, as an example each, see
+ * [validateDateFormat][org.totschnig.myexpenses.util.validateDateFormat]
+ */
 val datePatterns = listOf("dd.MM.yy", "dd.MM.yyyy", "d.M.yyyy", "yyyy-MM-dd", "dd/MM/yyyy", "MM/dd/yyyy", "dd-MM-yyyy")
 
 /**

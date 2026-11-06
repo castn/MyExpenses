@@ -169,7 +169,11 @@ fun Category(
                                     sumCurrency = sumCurrency,
                                     withTypeColors = withTypeColors,
                                 )
-                                HorizontalDivider(thickness = if (index2 == category1.children.lastIndex && index1 != filteredChildren.lastIndex) 2.dp else 1.dp)
+                                HorizontalDivider(
+                                    thickness = if (
+                                        index2 == category1.children.lastIndex && index1 != filteredChildren.lastIndex
+                                    ) 2.dp else 1.dp
+                                )
                             }
                         }
                     } else {

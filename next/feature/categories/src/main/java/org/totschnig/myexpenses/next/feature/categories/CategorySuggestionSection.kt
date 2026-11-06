@@ -51,7 +51,11 @@ fun ShownTransaction.hasCategoryChoice() = !isSplit && !isTransfer && !isSplitPa
  * Tapping it chooses another one, without category it invites to set one.
  */
 @Composable
-fun CategoryChip(viewModel: CategorySuggestionsViewModel, transaction: ShownTransaction, modifier: Modifier = Modifier) {
+fun CategoryChip(
+    viewModel: CategorySuggestionsViewModel,
+    transaction: ShownTransaction,
+    modifier: Modifier = Modifier
+) {
     val pick = rememberCategoryPicker(transaction) { categoryId, path ->
         viewModel.change(transaction.id, transaction.categoryId, categoryId)
         viewModel.markApplied(transaction.id, categoryId, path)
@@ -193,7 +197,14 @@ fun CategoryBacklogBanner(viewModel: CategorySuggestionsViewModel, modifier: Mod
     val current = backlog ?: return
     Banner(
         title = stringResource(R.string.next_category_backlog_title),
-        messages = listOf(pluralStringResource(R.plurals.next_category_backlog_text, current.uncategorized, current.certain, current.uncategorized)),
+        messages = listOf(
+            pluralStringResource(
+                R.plurals.next_category_backlog_text,
+                current.uncategorized,
+                current.certain,
+                current.uncategorized
+            )
+        ),
         modifier = modifier
     ) {
         TextButton(onClick = viewModel::declineBacklog) {

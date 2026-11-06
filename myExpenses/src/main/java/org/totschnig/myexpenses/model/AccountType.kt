@@ -93,8 +93,10 @@ data class AccountType(
         val BANK = AccountType(name = PREDEFINED_NAME_BANK, isAsset = true, supportsReconciliation = true, sortKey = 1)
         val INVESTMENT =
             AccountType(name = PREDEFINED_NAME_INVESTMENT, isAsset = true, supportsReconciliation = true, sortKey = 0)
-        val ASSET = AccountType(name = PREDEFINED_NAME_ASSET, isAsset = true, supportsReconciliation = true, sortKey = -1)
-        val CCARD = AccountType(name = PREDEFINED_NAME_CCARD, isAsset = false, supportsReconciliation = true, sortKey = 0)
+        val ASSET =
+            AccountType(name = PREDEFINED_NAME_ASSET, isAsset = true, supportsReconciliation = true, sortKey = -1)
+        val CCARD =
+            AccountType(name = PREDEFINED_NAME_CCARD, isAsset = false, supportsReconciliation = true, sortKey = 0)
         val LIABILITY =
             AccountType(name = PREDEFINED_NAME_LIABILITY, isAsset = false, supportsReconciliation = true, sortKey = -1)
 

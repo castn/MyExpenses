@@ -156,7 +156,11 @@ private fun LazyPagingItems<Transaction2>.getCurrentPosition(
         val transaction2 = get(index) ?: break
         log("Comparing: %d", index)
         val comparisonResult = transaction2._date.compareTo(limit)
-        if ((sortDirection == SortDirection.ASC && comparisonResult > 0) || sortDirection == SortDirection.DESC && comparisonResult < 0) {
+        if (
+            (
+                sortDirection == SortDirection.ASC && comparisonResult > 0
+            ) || sortDirection == SortDirection.DESC && comparisonResult < 0
+        ) {
             found = true
             break
         }
@@ -363,7 +367,8 @@ fun TransactionList(
                     val item = snapshot[index] ?: continue
 
                     val headerId = item.headerId
-                    //paging library requires a stable number of items in order to keep up with refreshes in the middle of the list
+                    //paging library requires a stable number of items in order to keep up with refreshes in the middle
+                    // of the list
                     //so we add here placeholders for all headers that fall in the unloaded prepend region
                     if (lastHeader == null) {
                         (headerData as? HeaderData)?.groups?.count {
@@ -869,7 +874,9 @@ fun transactionMenu(
                                 })
                         } else {
                             report(
-                                IllegalStateException("Category path is null for ${transaction.id} / ${transaction.catId}")
+                                IllegalStateException(
+                                    "Category path is null for ${transaction.id} / ${transaction.catId}"
+                                )
                             )
                         }
                     }

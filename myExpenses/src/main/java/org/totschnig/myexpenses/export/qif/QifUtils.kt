@@ -173,7 +173,8 @@ object QifUtils {
      * Adopted from http://jgnash.svn.sourceforge.net/viewvc/jgnash/jgnash2/trunk/src/jgnash/imports/qif/QifUtils.java
      *
      * @param money   String to be parsed
-     * @param maxSize maxSize of the result, as calculated by precision - scale, i.e.  the number of digits in front of the decimal point
+     * @param maxSize maxSize of the result, as calculated by precision - scale, i.e.  the number of digits in front of
+     *     the decimal point
      * @return BigDecimal, if the result exceeds maxSize, [IllegalArgumentException] is thrown
      */
     @JvmStatic
@@ -271,7 +272,12 @@ object QifUtils {
                     allAccounts.find { it.memo == fromTransaction.toAccount }?.let { toAccount ->
                         //pair of transaction, and if it is a split part
                         val transferPeer: Pair<ImportTransaction, Boolean>? =
-                           pickBestTransferPeer(fromAccount, fromTransaction, toAccount, toAccount.transactions) ?.let { it to false } ?:
+                           pickBestTransferPeer(
+                               fromAccount,
+                               fromTransaction,
+                               toAccount,
+                               toAccount.transactions
+                           ) ?.let { it to false } ?:
                         (toAccount.transactions.firstNotNullOfOrNull { toTransaction ->
                             pickBestTransferPeer(fromAccount, fromTransaction, toAccount, toTransaction.splits)
                         })?.let { it to true }
@@ -287,7 +293,8 @@ object QifUtils {
                     if (split.isTransfer) {
                         if (split.toAccount != fromAccount.memo) {
                             allAccounts.find { it.memo == split.toAccount }?.let { toAccount ->
-                                val transferPeer = pickBestTransferPeer(fromAccount, split, toAccount, toAccount.transactions)
+                                val transferPeer =
+                                    pickBestTransferPeer(fromAccount, split, toAccount, toAccount.transactions)
                                 if (transferPeer == null) split else split.copy(toAmount = transferPeer.amount)
                             }
                         } else split

@@ -32,7 +32,11 @@ data class Party(
     override fun toString() = name
 
     val isUnused: Boolean
-        get() = id != NULL_ITEM_ID && !mappedTransactions && !mappedTemplates && !mappedDebts && duplicates.all { it.isUnused }
+        get() = id != NULL_ITEM_ID &&
+            !mappedTransactions &&
+            !mappedTemplates &&
+            !mappedDebts &&
+            duplicates.all { it.isUnused }
 
     companion object {
         fun fromCursor(cursor: Cursor) = Party(

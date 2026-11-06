@@ -121,7 +121,17 @@ fun BudgetFlow(
     }
     // The entries read the latest values, whenever NavDisplay creates their content
     val current by rememberUpdatedState(
-        BudgetContent(viewModel, fixedTransactions, currency, state, editorData, legacyCount, onBack, onConsent, requestNewPot)
+        BudgetContent(
+            viewModel,
+            fixedTransactions,
+            currency,
+            state,
+            editorData,
+            legacyCount,
+            onBack,
+            onConsent,
+            requestNewPot
+        )
     )
     NavDisplay(
         backStack = backStack,
@@ -131,7 +141,9 @@ fun BudgetFlow(
         entryProvider = entryProvider {
             entry<BudgetKey.Home>(metadata = ListPage(R.string.next_pick_pot)) { BudgetHome(current, backStack) }
             entry<BudgetKey.PotDetail>(metadata = DetailPage()) { key -> PotEntry(current, backStack, key) }
-            entry<BudgetKey.Transactions>(metadata = ExtraPage()) { key -> PotTransactionsEntry(current, backStack, key) }
+            entry<BudgetKey.Transactions>(metadata = ExtraPage()) { key ->
+                PotTransactionsEntry(current, backStack, key)
+            }
             entry<BudgetKey.Templates>(metadata = DetailPage()) { TemplatesEntry(current, backStack) }
             entry<BudgetKey.Editor>(metadata = DetailPage()) { key -> EditorEntry(current, backStack, key) }
         }
@@ -158,8 +170,18 @@ private class BudgetContent(
 
 /** The pot of the page, the page is left once it is gone, e.g. deleted or not in the period shown */
 @Composable
-private fun shownPot(content: BudgetContent, backStack: NavBackStack<NavKey>, key: BudgetKey, potId: String, isNew: Boolean = false) =
-    shownOrLeave(content.statusOf(potId), isLoaded = content.overview != null, awaitNew = isNew) { backStack.remove(key) }
+private fun shownPot(
+    content: BudgetContent,
+    backStack: NavBackStack<NavKey>,
+    key: BudgetKey,
+    potId: String,
+    isNew: Boolean = false
+) =
+    shownOrLeave(
+        content.statusOf(potId),
+        isLoaded = content.overview != null,
+        awaitNew = isNew
+    ) { backStack.remove(key) }
 
 @Composable
 private fun BudgetHome(content: BudgetContent, backStack: NavBackStack<NavKey>) {
@@ -198,11 +220,16 @@ private fun PotEntry(content: BudgetContent, backStack: NavBackStack<NavKey>, ke
 private fun PotTransactionsEntry(content: BudgetContent, backStack: NavBackStack<NavKey>, key: BudgetKey.Transactions) {
     val status = shownPot(content, backStack, key, key.potId) ?: return
     val ids = if (key.oneOffs) status.oneOffIds else status.transactionIds
-    val title = if (key.oneOffs) pluralStringResource(R.plurals.next_budget_one_offs, ids.size, ids.size) else status.pot.name
+    val title =
+        if (key.oneOffs) pluralStringResource(R.plurals.next_budget_one_offs, ids.size, ids.size) else status.pot.name
     LaunchedEffect(ids) { content.fixedTransactions.show(title, ids) }
     FixedTransactionsScreen(
         title = title,
-        subtitle = if (key.oneOffs) status.pot.name else pluralStringResource(R.plurals.next_analysis_transactions, ids.size, ids.size),
+        subtitle = if (key.oneOffs) status.pot.name else pluralStringResource(
+            R.plurals.next_analysis_transactions,
+            ids.size,
+            ids.size
+        ),
         onBack = { backStack.remove(key) }
     ) {
         content.fixedTransactions.List(it, null)

@@ -79,7 +79,8 @@ class ProviderReceiptDatabase(
 
     override fun load(transactionId: Long) = repository.loadReceipt(transactionId)?.toNext()
 
-    override fun loadWaiting() = repository.loadReceiptsWithoutTransaction().map { (id, receipt) -> id to receipt.toNext() }
+    override fun loadWaiting() =
+        repository.loadReceiptsWithoutTransaction().map { (id, receipt) -> id to receipt.toNext() }
 
     override fun loadAllItems() = repository.loadAllReceiptItems().mapValues { (_, items) -> items.map { it.toNext() } }
 
@@ -91,7 +92,17 @@ class ProviderReceiptDatabase(
         )?.useAndMapToList { it.getLong(KEY_TRANSACTIONID) }?.toSet() ?: emptySet()
         return contentResolver.query(
             TRANSACTIONS_URI,
-            arrayOf(KEY_ROWID, KEY_DATE, KEY_AMOUNT, KEY_PAYEEID, KEY_PAYEE_NAME, KEY_COMMENT, KEY_TRANSFER_ACCOUNT, KEY_CURRENCY, KEY_ACCOUNT_LABEL),
+            arrayOf(
+                KEY_ROWID,
+                KEY_DATE,
+                KEY_AMOUNT,
+                KEY_PAYEEID,
+                KEY_PAYEE_NAME,
+                KEY_COMMENT,
+                KEY_TRANSFER_ACCOUNT,
+                KEY_CURRENCY,
+                KEY_ACCOUNT_LABEL
+            ),
             "$KEY_AMOUNT < 0 AND $WHERE_NOT_SPLIT_PART AND $KEY_STATUS NOT IN ($STATUS_UNCOMMITTED, $STATUS_ARCHIVE)" +
                     " AND $WHERE_NOT_VOID AND $KEY_DATE >= ? AND $KEY_DATE < ?",
             arrayOf(from.toEpoch(LocalTime.MIN).toString(), to.toEpoch(LocalTime.MIN).toString()),

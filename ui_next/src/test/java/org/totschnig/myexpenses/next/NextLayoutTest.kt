@@ -12,15 +12,30 @@ class NextLayoutTest {
         val calculated = NavigationSuiteType.ShortNavigationBarCompact
         assertEquals(
             NavigationSuiteType.WideNavigationRailCollapsed,
-            navigationSuiteType(MenuItem.NavigationMode.ADAPTIVE, calculated, isNavigationVisible = true, isLandscape = true)
+            navigationSuiteType(
+                MenuItem.NavigationMode.ADAPTIVE,
+                calculated,
+                isNavigationVisible = true,
+                isLandscape = true
+            )
         )
         assertEquals(
             NavigationSuiteType.ShortNavigationBarMedium,
-            navigationSuiteType(MenuItem.NavigationMode.ADAPTIVE, calculated, isNavigationVisible = true, isLandscape = false)
+            navigationSuiteType(
+                MenuItem.NavigationMode.ADAPTIVE,
+                calculated,
+                isNavigationVisible = true,
+                isLandscape = false
+            )
         )
         assertEquals(
             NavigationSuiteType.None,
-            navigationSuiteType(MenuItem.NavigationMode.TOGGLEABLE_RAIL, calculated, isNavigationVisible = false, isLandscape = false)
+            navigationSuiteType(
+                MenuItem.NavigationMode.TOGGLEABLE_RAIL,
+                calculated,
+                isNavigationVisible = false,
+                isLandscape = false
+            )
         )
     }
 

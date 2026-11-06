@@ -81,7 +81,9 @@ class GuidanceFeature(
 
 /** The hints the user closed, in the settings */
 class HintSettings(activity: ComponentActivity) : AreaSettings {
-    private val viewModel by activity.viewModelsOf { HintSettingsViewModel(HintStore(activity.injector.preferencesDataStore())) }
+    private val viewModel by activity.viewModelsOf {
+        HintSettingsViewModel(HintStore(activity.injector.preferencesDataStore()))
+    }
 
     @Composable
     override fun control(setting: InsightSetting): SettingControl? {
@@ -95,7 +97,12 @@ class HintSettings(activity: ComponentActivity) : AreaSettings {
     }
 
     companion object : AreaSettings.Factory {
-        val CLOSED = InsightSetting("CLOSED_HINTS", SettingsGroup.INSIGHTS, SettingKind.ACTION, R.string.next_settings_closed_hints)
+        val CLOSED = InsightSetting(
+            "CLOSED_HINTS",
+            SettingsGroup.INSIGHTS,
+            SettingKind.ACTION,
+            R.string.next_settings_closed_hints
+        )
 
         override val settings = listOf(CLOSED)
 

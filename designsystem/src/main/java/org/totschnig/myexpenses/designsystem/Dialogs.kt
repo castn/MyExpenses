@@ -126,7 +126,10 @@ fun TextDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = { onConfirm(text) }, enabled = (allowBlank || text.isNotBlank()) && errorText == null) {
+            TextButton(
+                onClick = { onConfirm(text) },
+                enabled = (allowBlank || text.isNotBlank()) && errorText == null
+            ) {
                 Text(stringResource(R.string.ds_apply))
             }
         },
@@ -258,7 +261,10 @@ fun FormDialog(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(title, Modifier.weight(1f))
                     IconButton(onClick = onDismiss) {
-                        Icon(Icons.Default.Close, contentDescription = dismissLabel ?: stringResource(android.R.string.cancel))
+                        Icon(
+                            Icons.Default.Close,
+                            contentDescription = dismissLabel ?: stringResource(android.R.string.cancel)
+                        )
                     }
                 }
             } else Text(title)
@@ -426,7 +432,11 @@ fun <T> PickDialog(
                             }
                         }
                         value(option)?.let {
-                            Text(it, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(start = 8.dp))
+                            Text(
+                                it,
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.padding(start = 8.dp)
+                            )
                         }
                     }
                 }

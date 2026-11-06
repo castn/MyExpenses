@@ -20,7 +20,12 @@ class SelectSingleMethodDialogFragment : SelectSingleDialogFragment() {
         const val KEY_SIGNUM = "signum"
         const val KEY_ACCOUNT_TYPES = "accountTypes"
         @JvmStatic
-        fun newInstance(dialogTitle: Int, emptyListMessage: Int, accountTypes: LongArray, signum: Int) = SelectSingleMethodDialogFragment().apply {
+        fun newInstance(
+            dialogTitle: Int,
+            emptyListMessage: Int,
+            accountTypes: LongArray,
+            signum: Int
+        ) = SelectSingleMethodDialogFragment().apply {
             arguments = buildArguments(dialogTitle, emptyListMessage, MAP_METHOD_REQUEST).apply {
                 putLongArray(KEY_ACCOUNT_TYPES, accountTypes)
                 putString(KEY_SIGNUM, signum.toString())

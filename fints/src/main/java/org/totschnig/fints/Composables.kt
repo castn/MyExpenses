@@ -432,7 +432,13 @@ fun MigrationDialog(
                 {
 
                     Button(onClick = ::doDismiss) {
-                        Text(stringResource(id = if (migrationState == MigrationState.Success) android.R.string.ok else android.R.string.cancel))
+                        Text(
+                            stringResource(
+                                id = if (
+                                    migrationState == MigrationState.Success
+                                ) android.R.string.ok else android.R.string.cancel
+                            )
+                        )
                     }
                 }
             },

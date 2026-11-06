@@ -68,7 +68,9 @@ fun ReceiptScanAction(viewModel: ReceiptViewModel) {
         )
     }
 
-    when (val scan = viewModel.scan.collectAsStateWithLifecycle().value?.takeIf { it.target == ReceiptTarget.Unassigned }) {
+    when (
+        val scan = viewModel.scan.collectAsStateWithLifecycle().value?.takeIf { it.target == ReceiptTarget.Unassigned }
+    ) {
         is ReceiptScanState.Recognizing -> Dialog(onDismissRequest = {}) {
             DetailCard { ProgressRow(stringResource(R.string.next_receipt_reading), isFirst = true) }
         }
@@ -132,7 +134,10 @@ fun ReceiptAssignmentDialog(viewModel: ReceiptViewModel) {
         if (saved) viewModel.assignments.refreshCandidates()
     }
 
-    Dialog(onDismissRequest = viewModel.assignments::close, properties = DialogProperties(usePlatformDefaultWidth = false)) {
+    Dialog(
+        onDismissRequest = viewModel.assignments::close,
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surfaceContainer) {
             DetailScaffold(
                 onBack = viewModel.assignments::close,
@@ -168,7 +173,11 @@ fun ReceiptAssignmentDialog(viewModel: ReceiptViewModel) {
                 val otherList = others
                 if (otherList == null) {
                     DetailCard {
-                        LinkRow(stringResource(R.string.next_receipt_other), onClick = viewModel.assignments::loadOtherExpenses, isFirst = true)
+                        LinkRow(
+                            stringResource(R.string.next_receipt_other),
+                            onClick = viewModel.assignments::loadOtherExpenses,
+                            isFirst = true
+                        )
                     }
                 } else {
                     SectionTitle(stringResource(R.string.next_receipt_other_title))
@@ -203,9 +212,17 @@ fun ReceiptAssignmentDialog(viewModel: ReceiptViewModel) {
                 SectionTitle(stringResource(R.string.next_receipt_wait_section))
                 DetailCard {
                     if (assignment.waitingId == null) {
-                        LinkRow(stringResource(R.string.next_receipt_wait), onClick = viewModel.assignments::keepWaiting, isFirst = true)
+                        LinkRow(
+                            stringResource(R.string.next_receipt_wait),
+                            onClick = viewModel.assignments::keepWaiting,
+                            isFirst = true
+                        )
                     } else {
-                        LinkRow(stringResource(R.string.next_receipt_keep_waiting), onClick = viewModel.assignments::close, isFirst = true)
+                        LinkRow(
+                            stringResource(R.string.next_receipt_keep_waiting),
+                            onClick = viewModel.assignments::close,
+                            isFirst = true
+                        )
                     }
                     LinkRow(stringResource(R.string.next_receipt_new_transaction), onClick = {
                         scope.launch {
@@ -213,7 +230,10 @@ fun ReceiptAssignmentDialog(viewModel: ReceiptViewModel) {
                         }
                     })
                     if (assignment.waitingId != null) {
-                        LinkRow(stringResource(R.string.next_receipt_discard_waiting), onClick = { confirmDelete = true })
+                        LinkRow(
+                            stringResource(R.string.next_receipt_discard_waiting),
+                            onClick = { confirmDelete = true }
+                        )
                     }
                 }
             }
@@ -309,7 +329,11 @@ fun WaitingReceiptsBanner(viewModel: ReceiptViewModel, modifier: Modifier = Modi
         modifier = modifier
     ) {
         TextButton(onClick = { viewModel.assignments.openWaiting(next) }) {
-            Text(stringResource(if (next.candidates.isNotEmpty()) R.string.next_receipt_assign else R.string.next_receipt_show))
+            Text(
+                stringResource(
+                    if (next.candidates.isNotEmpty()) R.string.next_receipt_assign else R.string.next_receipt_show
+                )
+            )
         }
     }
 }

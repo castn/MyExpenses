@@ -95,7 +95,9 @@ fun ImportTradesDialog(
         parseResult?.fatalError?.let {
             stringResource(R.string.parse_error_at_line, parseResult?.fatalErrorLine ?: 0, it)
         },
-        parseResult?.takeIf { it.intents.isEmpty() && it.parseFailures == 0 && it.missingAssets.isEmpty() && it.fatalError == null }?.let {
+        parseResult?.takeIf {
+            it.intents.isEmpty() && it.parseFailures == 0 && it.missingAssets.isEmpty() && it.fatalError == null
+        }?.let {
             stringResource(R.string.no_data)
         }
     )
@@ -398,17 +400,27 @@ private suspend fun parseCsv(
                         quantity != null && price != null -> {
                             finalQuantity = Money.buildWithMajor(asset, quantity, roundingMode).getOrThrow()
                             finalPrice = price
-                            finalPrincipal = Money.buildWithMajor(portfolio.currencyUnit, quantity.multiply(price), roundingMode).getOrThrow()
+                            finalPrincipal = Money.buildWithMajor(
+                                portfolio.currencyUnit,
+                                quantity.multiply(price),
+                                roundingMode
+                            ).getOrThrow()
                         }
                         quantity != null && total != null && quantity.signum() != 0 -> {
                             finalQuantity = Money.buildWithMajor(asset, quantity, roundingMode).getOrThrow()
                             finalPrice = total.divide(quantity, 10, roundingMode)
-                            finalPrincipal = Money.buildWithMajor(portfolio.currencyUnit, total, roundingMode).getOrThrow()
+                            finalPrincipal =
+                                Money.buildWithMajor(portfolio.currencyUnit, total, roundingMode).getOrThrow()
                         }
                         price != null && total != null && price.signum() != 0 -> {
-                            finalQuantity = Money.buildWithMajor(asset, total.divide(price, 10, roundingMode), roundingMode).getOrThrow()
+                            finalQuantity = Money.buildWithMajor(
+                                asset,
+                                total.divide(price, 10, roundingMode),
+                                roundingMode
+                            ).getOrThrow()
                             finalPrice = price
-                            finalPrincipal = Money.buildWithMajor(portfolio.currencyUnit, total, roundingMode).getOrThrow()
+                            finalPrincipal =
+                                Money.buildWithMajor(portfolio.currencyUnit, total, roundingMode).getOrThrow()
                         }
                         else -> {
                             parseFailures++

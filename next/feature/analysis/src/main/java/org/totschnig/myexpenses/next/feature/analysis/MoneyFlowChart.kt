@@ -89,7 +89,8 @@ class MoneyFlowChart private constructor(
                 }
             }
             flow.left.takeIf { it > 0 }?.let { left ->
-                val node = node(labels.left, left, 2, ChartColor.Neutral, FlowItem(labels.left, left, null, emptyList()))
+                val node =
+                    node(labels.left, left, 2, ChartColor.Neutral, FlowItem(labels.left, left, null, emptyList()))
                 link(accounts, node, left, items[node])
             }
             return MoneyFlowChart(nodes, flows, items, flowItems)
@@ -102,7 +103,9 @@ class MoneyFlowChart private constructor(
         internal fun colorsOf(expenses: List<FlowGroup>, order: List<Long>): Map<Long, ChartColor> {
             val slots = ChartPalette.withoutGreen
             val fixed = expenses.filterNot { it.isRest }
-                .mapNotNull { expense -> order.indexOf(expense.key).takeIf { it in slots.indices }?.let { expense.key to slots[it] } }
+                .mapNotNull { expense ->
+                    order.indexOf(expense.key).takeIf { it in slots.indices }?.let { expense.key to slots[it] }
+                }
                 .toMap()
             val free = (slots - fixed.values.toSet()).iterator()
             return expenses.associate { expense ->

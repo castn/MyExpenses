@@ -354,10 +354,12 @@ class ExportTest : BaseTestWithRepository() {
     fun testExportCSV() {
         val linesCSV = arrayOf(
             csvHeader(';', false),
-            """"";"$date";"";"0";"0.10";"";"";"${context.getString(R.string.pm_cheque)}";"*";"1";"";"Tag One, 'Tags, Tags, Tags'"""",
+            """"";"$date";"";"0";"0.10";"";"";""" +
+                """"${context.getString(R.string.pm_cheque)}";"*";"1";"";"Tag One, 'Tags, Tags, Tags'"""",
             """"";"$date";"N.N.";"0";"0.20";"Main";"";"${context.getString(R.string.pm_cheque)}";"";"2";"";""""",
             """"";"$date";"";"0.30";"0";"Main > Sub";"";"";"";"";"picture.png";""""",
-            "\"\";\"$date\";\"\";\"0.40\";\"0\";\"Main > Sub\";\"Note for myself with \"\"quote\"\"\";\"\";\"\";\"\";\"\";\"\"",
+            "\"\";\"$date\";\"\";\"0.40\";\"0\";\"Main > Sub\";\"Note for myself with " +
+                "\"\"quote\"\"\";\"\";\"\";\"\";\"\";\"\"",
             """"";"$date";"";"0.50";"0";"[Account 2]";"";"";"X";"";"";""""",
             """"";"$date";"";"0";"0.60";"[Account 2]";"";"";"";"";"";""""",
             """"*";"$date";"N.N.";"0.70";"0";"";"";"";"";"";"";""""",
@@ -430,10 +432,12 @@ class ExportTest : BaseTestWithRepository() {
         val date =   base.format(DateTimeFormatter.ofPattern("M/d/yyyy"))
         val linesCSV = arrayOf(
             csvHeader(',', false),
-            """"","$date","","0","0,10","","","${context.getString(R.string.pm_cheque)}","*","1","","Tag One, 'Tags, Tags, Tags'"""",
+            """"","$date","","0","0,10","","",""" +
+                """"${context.getString(R.string.pm_cheque)}","*","1","","Tag One, 'Tags, Tags, Tags'"""",
             """"","$date","N.N.","0","0,20","Main","","${context.getString(R.string.pm_cheque)}","","2","",""""",
             """"","$date","","0,30","0","Main > Sub","","","","","picture.png",""""",
-            "\"\",\"$date\",\"\",\"0,40\",\"0\",\"Main > Sub\",\"Note for myself with \"\"quote\"\"\",\"\",\"\",\"\",\"\",\"\"",
+            "\"\",\"$date\",\"\",\"0,40\",\"0\",\"Main > Sub\",\"Note for myself with " +
+                "\"\"quote\"\"\",\"\",\"\",\"\",\"\",\"\"",
             """"","$date","","0,50","0","[Account 2]","","","X","","",""""",
             """"","$date","","0","0,60","[Account 2]","","","","","",""""",
             """"*","$date","N.N.","0,70","0","","","","","","",""""",
@@ -561,7 +565,8 @@ class ExportTest : BaseTestWithRepository() {
             csvHeader(';', false),
             "\"\";\"" + date + "\";\"\";\"0\";\"1.00\";\"\";\"Expense inserted after first export\";\""
                     + context.getString(R.string.pm_cheque) + "\";\"\";\"3\";\"\";\"\"",
-            "\"\";\"$date\";\"N.N.\";\"1.00\";\"0\";\"\";\"Income inserted after first export\";\"\";\"\";\"\";\"\";\"\""
+            "\"\";\"$date\";\"N.N.\";\"1.00\";\"0\";\"\";\"Income inserted after first " +
+                "export\";\"\";\"\";\"\";\"\";\"\""
         )
         val account = insertData1()
         expect.that(
@@ -665,7 +670,9 @@ class ExportTest : BaseTestWithRepository() {
         val result = CategoryExporter.export(context, "UTF-8", lazyFile)
         result.onSuccess {
             //includes default transfer category, that is automatically set up
-            compare(arrayOf("!Type:Cat", "N${context.getString(R.string.transfer)}", "^", "NMain", "^", "NMain:Sub", "^"))
+            compare(
+                arrayOf("!Type:Cat", "N${context.getString(R.string.transfer)}", "^", "NMain", "^", "NMain:Sub", "^")
+            )
         }.onFailure {
             expect.fail()
         }

@@ -279,7 +279,8 @@ abstract class BaseTransactionProvider : ContentProvider() {
     }
 
     /**
-     * @param transactionId When we edit a transaction, we want it to not be included into the debt sum, since it can be changed in the UI, and the variable amount will be calculated by the UI
+     * @param transactionId When we edit a transaction, we want it to not be included into the debt sum, since it can be
+     *     changed in the UI, and the variable amount will be calculated by the UI
      */
     fun debtProjection(transactionId: String?, withSum: Boolean): Array<String> {
         val exclusionClause = transactionId?.let {
@@ -297,13 +298,16 @@ abstract class BaseTransactionProvider : ContentProvider() {
             KEY_PAYEE_NAME,
             KEY_SEALED,
             KEY_EQUIVALENT_AMOUNT,
-            if (withSum) "coalesce((SELECT sum(${debtSumExpression}) FROM $CTE_TRANSACTION_AMOUNTS WHERE $KEY_DEBT_ID = $TABLE_DEBTS.$KEY_ROWID $exclusionClause),0) AS $KEY_SUM" else null,
-            if (withSum) "coalesce((SELECT sum(${debtEquivalentSumExpression}) FROM $CTE_TRANSACTION_AMOUNTS WHERE $KEY_DEBT_ID = $TABLE_DEBTS.$KEY_ROWID $exclusionClause),0) AS $KEY_EQUIVALENT_SUM" else null
+            if (withSum) "coalesce((SELECT sum(${debtSumExpression}) FROM $CTE_TRANSACTION_AMOUNTS WHERE " +
+                "$KEY_DEBT_ID = $TABLE_DEBTS.$KEY_ROWID $exclusionClause),0) AS $KEY_SUM" else null,
+            if (withSum) "coalesce((SELECT sum(${debtEquivalentSumExpression}) FROM $CTE_TRANSACTION_AMOUNTS WHERE " +
+                "$KEY_DEBT_ID = $TABLE_DEBTS.$KEY_ROWID $exclusionClause),0) AS $KEY_EQUIVALENT_SUM" else null
         ).toTypedArray()
     }
 
     private val debtSumExpression
-        get() = "CASE WHEN $TABLE_DEBTS.$KEY_CURRENCY == '$homeCurrency' AND $KEY_CURRENCY != '$homeCurrency' THEN $KEY_EQUIVALENT_AMOUNT ELSE $KEY_AMOUNT END"
+        get() = "CASE WHEN $TABLE_DEBTS.$KEY_CURRENCY == '$homeCurrency' AND $KEY_CURRENCY != '$homeCurrency' THEN " +
+            "$KEY_EQUIVALENT_AMOUNT ELSE $KEY_AMOUNT END"
 
     private val debtEquivalentSumExpression
         get() = "CASE WHEN $KEY_CURRENCY != '$homeCurrency' THEN $KEY_EQUIVALENT_AMOUNT ELSE $KEY_AMOUNT END"
@@ -311,7 +315,8 @@ abstract class BaseTransactionProvider : ContentProvider() {
     fun needsExtendedJoin(
         projection: Array<String>,
     ) =
-        projection.any { it.contains(KEY_EQUIVALENT_AMOUNT) } || // also cover cases where sum(equivalent_amount) is requested
+        // also cover cases where sum(equivalent_amount) is requested
+        projection.any { it.contains(KEY_EQUIVALENT_AMOUNT) } ||
                 projection.contains(KEY_EXCHANGE_RATE) ||
                 projection.contains(KEY_AMOUNT_HOME_EQUIVALENT) ||
                 projection.any { it.contains(KEY_DISPLAY_AMOUNT) }
@@ -323,11 +328,17 @@ abstract class BaseTransactionProvider : ContentProvider() {
         expandDisplayAmount: Boolean,
     ) = projectionIn?.map {
         when (it) {
-            KEY_COMMENT -> if (shortenComment) "case when instr($KEY_COMMENT, X'0A') > 0 THEN substr($KEY_COMMENT, 1, instr($KEY_COMMENT, X'0A')-1) else $KEY_COMMENT end AS $it" else it
-            KEY_TRANSFER_PEER_PARENT -> "(SELECT $KEY_PARENTID FROM $TABLE_TRANSACTIONS peer WHERE peer.$KEY_ROWID = $table.$KEY_TRANSFER_PEER ) AS $it"
-            KEY_TRANSFER_PEER_IS_ARCHIVED -> "(SELECT $KEY_STATUS FROM $TABLE_TRANSACTIONS peer WHERE peer.$KEY_ROWID = $table.$KEY_TRANSFER_PEER ) = $STATUS_ARCHIVED AS $it"
-            KEY_TRANSFER_PEER_IS_PORTFOLIO -> "(SELECT $KEY_IS_PORTFOLIO FROM $TABLE_ACCOUNTS WHERE $KEY_ROWID = (SELECT $KEY_ACCOUNTID FROM $TABLE_TRANSACTIONS peer WHERE peer.$KEY_ROWID = $table.$KEY_TRANSFER_PEER)) != $PORTFOLIO_NONE AS $it"
-            KEY_TRANSFER_AMOUNT -> "CASE WHEN $KEY_TRANSFER_PEER THEN (SELECT $KEY_AMOUNT FROM $TABLE_TRANSACTIONS WHERE $KEY_ROWID = $table.$KEY_TRANSFER_PEER) ELSE null END AS $it"
+            KEY_COMMENT -> if (shortenComment) "case when instr($KEY_COMMENT, X'0A') > 0 THEN substr($KEY_COMMENT, " +
+                "1, instr($KEY_COMMENT, X'0A')-1) else $KEY_COMMENT end AS $it" else it
+            KEY_TRANSFER_PEER_PARENT -> "(SELECT $KEY_PARENTID FROM $TABLE_TRANSACTIONS peer WHERE peer.$KEY_ROWID = " +
+                "$table.$KEY_TRANSFER_PEER ) AS $it"
+            KEY_TRANSFER_PEER_IS_ARCHIVED -> "(SELECT $KEY_STATUS FROM $TABLE_TRANSACTIONS peer WHERE " +
+                "peer.$KEY_ROWID = $table.$KEY_TRANSFER_PEER ) = $STATUS_ARCHIVED AS $it"
+            KEY_TRANSFER_PEER_IS_PORTFOLIO -> "(SELECT $KEY_IS_PORTFOLIO FROM $TABLE_ACCOUNTS WHERE $KEY_ROWID = " +
+                "(SELECT $KEY_ACCOUNTID FROM $TABLE_TRANSACTIONS peer WHERE peer.$KEY_ROWID = " +
+                    "$table.$KEY_TRANSFER_PEER)) != $PORTFOLIO_NONE AS $it"
+            KEY_TRANSFER_AMOUNT -> "CASE WHEN $KEY_TRANSFER_PEER THEN (SELECT $KEY_AMOUNT FROM $TABLE_TRANSACTIONS " +
+                "WHERE $KEY_ROWID = $table.$KEY_TRANSFER_PEER) ELSE null END AS $it"
             KEY_SEALED -> checkSealedWithAlias(table)
             KEY_DISPLAY_AMOUNT -> if (expandDisplayAmount)
                 "${getAmountHomeEquivalent(table, homeCurrency)} AS $it" else it
@@ -354,7 +365,8 @@ abstract class BaseTransactionProvider : ContentProvider() {
     val budgetProjection = arrayOf(
         qualifyBudgetColumn(KEY_ROWID),
         qualifyBudgetColumn(KEY_UUID),
-        "coalesce($KEY_ACCOUNTID, -(select $KEY_ROWID from $TABLE_CURRENCIES where $KEY_CODE = $TABLE_BUDGETS.$KEY_CURRENCY), ${HOME_AGGREGATE_ID}) AS $KEY_ACCOUNTID",
+        "coalesce($KEY_ACCOUNTID, -(select $KEY_ROWID from $TABLE_CURRENCIES where $KEY_CODE = " +
+            "$TABLE_BUDGETS.$KEY_CURRENCY), ${HOME_AGGREGATE_ID}) AS $KEY_ACCOUNTID",
         KEY_TITLE,
         qualifyBudgetColumn(KEY_DESCRIPTION),
         "coalesce($TABLE_BUDGETS.$KEY_CURRENCY, $TABLE_ACCOUNTS.$KEY_CURRENCY) AS $KEY_CURRENCY",
@@ -413,7 +425,8 @@ abstract class BaseTransactionProvider : ContentProvider() {
             "$tableName.$KEY_BIC",
             "$tableName.$KEY_IBAN",
             "$tableName.$KEY_PARENTID",
-            "exists (SELECT 1 FROM $TABLE_TRANSACTIONS WHERE $KEY_PAYEEID=$tableName.$KEY_ROWID) AS $KEY_MAPPED_TRANSACTIONS",
+            "exists (SELECT 1 FROM $TABLE_TRANSACTIONS WHERE $KEY_PAYEEID=$tableName.$KEY_ROWID) AS " +
+                "$KEY_MAPPED_TRANSACTIONS",
             "exists (SELECT 1 FROM $TABLE_TEMPLATES WHERE $KEY_PAYEEID=$tableName.$KEY_ROWID) AS $KEY_MAPPED_TEMPLATES",
             "exists (SELECT 1 FROM $TABLE_DEBTS WHERE $KEY_PAYEEID=$tableName.$KEY_ROWID) AS $KEY_MAPPED_DEBTS"
         )
@@ -443,7 +456,10 @@ abstract class BaseTransactionProvider : ContentProvider() {
 
         fun LIVE_ATTACHMENT_SELECTION(withUUIDSelection: Boolean = false) =
             "EXISTS(SELECT 1 FROM $TABLE_TRANSACTION_ATTACHMENTS WHERE $KEY_ATTACHMENT_ID = $KEY_ROWID" +
-                    (if (withUUIDSelection) " AND $KEY_TRANSACTIONID = (SELECT $KEY_ROWID FROM $TABLE_TRANSACTIONS WHERE $KEY_UUID = ?)" else "") +
+                    (
+                        if (withUUIDSelection) " AND $KEY_TRANSACTIONID = (SELECT $KEY_ROWID FROM " +
+                            "$TABLE_TRANSACTIONS WHERE $KEY_UUID = ?)" else ""
+                    ) +
                     ")"
 
         val STALE_ATTACHMENT_SELECTION = "NOT ${LIVE_ATTACHMENT_SELECTION()}"
@@ -647,7 +663,9 @@ abstract class BaseTransactionProvider : ContentProvider() {
                 )
             } != FutureCriterion.Current else true
             val aggregateInvisible = runBlocking {
-                dataStore.data.first()[prefHandler.getBooleanPreferencesKey(PrefKey.INVISIBLE_ACCOUNTS_ARE_AGGREGATED)] != false
+                dataStore.data.first()[
+                    prefHandler.getBooleanPreferencesKey(PrefKey.INVISIBLE_ACCOUNTS_ARE_AGGREGATED)
+                ] != false
             }
             if (mergeAggregate == null)
                 accountQueryCTE(
@@ -804,7 +822,8 @@ abstract class BaseTransactionProvider : ContentProvider() {
                         "$aggregateFunction($KEY_EQUIVALENT_TRANSFERS) AS $KEY_EQUIVALENT_TRANSFERS",
                         "$aggregateFunction($KEY_TOTAL) AS $KEY_TOTAL",
                         "$aggregateFunction($KEY_EQUIVALENT_TOTAL) AS $KEY_EQUIVALENT_TOTAL",
-                        "0 AS $KEY_CLEARED_TOTAL",  //we do not calculate cleared and reconciled totals for aggregate accounts
+                        //we do not calculate cleared and reconciled totals for aggregate accounts
+                        "0 AS $KEY_CLEARED_TOTAL",
                         "0 AS $KEY_RECONCILED_TOTAL",
                         "0 AS $KEY_USAGES",
                         aggregateColumn,
@@ -823,7 +842,8 @@ abstract class BaseTransactionProvider : ContentProvider() {
                         .selection("$KEY_EXCLUDE_FROM_TOTALS = 0", emptyArray())
                         .groupBy(KEY_CURRENCY)
                         .having(
-                            if (mergeAggregate == "1") "count(*) > 1 OR (count(*) = 1 AND sum($KEY_VISIBLE) = 0)" else "$TABLE_CURRENCIES.$KEY_ROWID = " +
+                            if (mergeAggregate == "1") "count(*) > 1 OR (count(*) = 1 AND sum($KEY_VISIBLE) = " +
+                                "0)" else "$TABLE_CURRENCIES.$KEY_ROWID = " +
                                     mergeAggregate.substring(1)
                         ).create().sql
                 )
@@ -895,7 +915,8 @@ abstract class BaseTransactionProvider : ContentProvider() {
                         "$aggregateFunction($KEY_EQUIVALENT_TRANSFERS) AS $KEY_EQUIVALENT_TRANSFERS",
                         "0 AS $KEY_TOTAL",
                         "$aggregateFunction($KEY_EQUIVALENT_TOTAL) AS $KEY_EQUIVALENT_TOTAL",
-                        "0 AS $KEY_CLEARED_TOTAL",  //we do not calculate cleared and reconciled totals for aggregate accounts
+                        //we do not calculate cleared and reconciled totals for aggregate accounts
+                        "0 AS $KEY_CLEARED_TOTAL",
                         "0 AS $KEY_RECONCILED_TOTAL",
                         "0 AS $KEY_USAGES",
                         aggregateColumn,
@@ -913,7 +934,10 @@ abstract class BaseTransactionProvider : ContentProvider() {
                     qb.columns(homeProjection)
                         .selection("$KEY_EXCLUDE_FROM_TOTALS = 0", emptyArray())
                         .groupBy("1")
-                        .having("(select count(distinct $KEY_CURRENCY) from $TABLE_ACCOUNTS WHERE $KEY_EXCLUDE_FROM_TOTALS = 0 AND $KEY_CURRENCY != '$homeCurrency') > 0")
+                        .having(
+                            "(select count(distinct $KEY_CURRENCY) from $TABLE_ACCOUNTS WHERE " +
+                                "$KEY_EXCLUDE_FROM_TOTALS = 0 AND $KEY_CURRENCY != '$homeCurrency') > 0"
+                        )
                         .create().sql
                 )
             }
@@ -936,7 +960,9 @@ abstract class BaseTransactionProvider : ContentProvider() {
 
     val sortByFlag: String
         get() = if (runBlocking {
-                dataStore.data.first()[prefHandler.getBooleanPreferencesKey(PrefKey.SORT_ACCOUNT_LIST_BY_FLAG_FIRST)] != false
+                dataStore.data.first()[
+                    prefHandler.getBooleanPreferencesKey(PrefKey.SORT_ACCOUNT_LIST_BY_FLAG_FIRST)
+                ] != false
             }) "$KEY_FLAG_SORT_KEY DESC," else ""
 
     @Synchronized
@@ -1048,20 +1074,30 @@ abstract class BaseTransactionProvider : ContentProvider() {
                                 )
             )
             val statementBuilder = StringBuilder()
-            statementBuilder.append("INSERT OR REPLACE INTO $TABLE_BUDGET_ALLOCATIONS ($KEY_BUDGETID, $KEY_CATID, $KEY_YEAR, $KEY_SECOND_GROUP, $KEY_BUDGET_ROLLOVER_PREVIOUS, $KEY_BUDGET_ROLLOVER_NEXT, $KEY_BUDGET, $KEY_ONE_TIME) ")
+            statementBuilder.append(
+                "INSERT OR REPLACE INTO $TABLE_BUDGET_ALLOCATIONS ($KEY_BUDGETID, $KEY_CATID, $KEY_YEAR, " +
+                    "$KEY_SECOND_GROUP, $KEY_BUDGET_ROLLOVER_PREVIOUS, $KEY_BUDGET_ROLLOVER_NEXT, $KEY_BUDGET, " +
+                        "$KEY_ONE_TIME) "
+            )
             statementBuilder.append("VALUES (?,?,?,?,")
             val baseArgs = listOf(budgetId, catId, year, second)
             val argsList = mutableListOf<String?>()
             argsList.addAll(baseArgs)
             if (rollOverPrevious == null) {
-                statementBuilder.append("(select $KEY_BUDGET_ROLLOVER_PREVIOUS from $TABLE_BUDGET_ALLOCATIONS where $KEY_BUDGETID = ? AND $KEY_CATID = ? AND $KEY_YEAR = ? AND $KEY_SECOND_GROUP = ?),")
+                statementBuilder.append(
+                    "(select $KEY_BUDGET_ROLLOVER_PREVIOUS from $TABLE_BUDGET_ALLOCATIONS where $KEY_BUDGETID = ? " +
+                        "AND $KEY_CATID = ? AND $KEY_YEAR = ? AND $KEY_SECOND_GROUP = ?),"
+                )
                 argsList.addAll(baseArgs)
             } else {
                 statementBuilder.append("?,")
                 argsList.add(rollOverPrevious)
             }
             if (rollOverNext == null) {
-                statementBuilder.append("(select $KEY_BUDGET_ROLLOVER_NEXT from $TABLE_BUDGET_ALLOCATIONS where $KEY_BUDGETID = ? AND $KEY_CATID = ? AND $KEY_YEAR = ? AND $KEY_SECOND_GROUP = ?),")
+                statementBuilder.append(
+                    "(select $KEY_BUDGET_ROLLOVER_NEXT from $TABLE_BUDGET_ALLOCATIONS where $KEY_BUDGETID = ? AND " +
+                        "$KEY_CATID = ? AND $KEY_YEAR = ? AND $KEY_SECOND_GROUP = ?),"
+                )
                 argsList.addAll(baseArgs)
             } else {
                 statementBuilder.append("?,")
@@ -1072,8 +1108,14 @@ abstract class BaseTransactionProvider : ContentProvider() {
                 argsList.add(budget)
                 argsList.add(oneTime ?: "1")
             } else {
-                statementBuilder.append("(select $KEY_BUDGET from $TABLE_BUDGET_ALLOCATIONS where $KEY_BUDGETID = ? AND $KEY_CATID = ? AND $KEY_YEAR = ? AND $KEY_SECOND_GROUP = ?),")
-                statementBuilder.append("(select $KEY_ONE_TIME from $TABLE_BUDGET_ALLOCATIONS where $KEY_BUDGETID = ? AND $KEY_CATID = ? AND $KEY_YEAR = ? AND $KEY_SECOND_GROUP = ?))")
+                statementBuilder.append(
+                    "(select $KEY_BUDGET from $TABLE_BUDGET_ALLOCATIONS where $KEY_BUDGETID = ? AND $KEY_CATID = ? " +
+                        "AND $KEY_YEAR = ? AND $KEY_SECOND_GROUP = ?),"
+                )
+                statementBuilder.append(
+                    "(select $KEY_ONE_TIME from $TABLE_BUDGET_ALLOCATIONS where $KEY_BUDGETID = ? AND $KEY_CATID = ? " +
+                        "AND $KEY_YEAR = ? AND $KEY_SECOND_GROUP = ?))"
+                )
                 argsList.addAll(baseArgs)
                 argsList.addAll(baseArgs)
             }
@@ -1128,7 +1170,8 @@ abstract class BaseTransactionProvider : ContentProvider() {
             db.query(
                 TABLE_TRANSACTIONS,
                 arrayOf("min($KEY_DATE)"),
-                "$KEY_ACCOUNTID IN (SELECT $KEY_ROWID FROM $TABLE_ACCOUNTS WHERE $KEY_CURRENCY = ? AND $dynamicExchangeRatesDefault)",
+                "$KEY_ACCOUNTID IN (SELECT $KEY_ROWID FROM $TABLE_ACCOUNTS WHERE $KEY_CURRENCY = ? AND " +
+                    "$dynamicExchangeRatesDefault)",
                 arrayOf(currency)
             ).use {
                 if (it.moveToFirst() && !it.isNull(0)) epoch2LocalDate(it.getLong(0)) else null
@@ -1153,7 +1196,9 @@ abstract class BaseTransactionProvider : ContentProvider() {
     fun checkCorruptedData987() = Bundle(1).apply {
         putLongArray(
             KEY_RESULT, helper.readableDatabase.query(
-                "select distinct transactions.parent_id from transactions left join transactions parent on transactions.parent_id = parent._id where transactions.parent_id is not null and parent.account_id != transactions.account_id",
+                "select distinct transactions.parent_id from transactions left join transactions parent on " +
+                    "transactions.parent_id = parent._id where transactions.parent_id is not null and " +
+                        "parent.account_id != transactions.account_id",
             ).useAndMapToList { it.getLong(0) }.toLongArray()
         )
     }
@@ -1321,23 +1366,28 @@ abstract class BaseTransactionProvider : ContentProvider() {
         val factor = 10.0.pow(abs(oldValue - newValue).toDouble()).toInt()
         db.safeUpdateWithSealed {
             db.execSQL(
-                "UPDATE $TABLE_ACCOUNTS SET $KEY_OPENING_BALANCE=$KEY_OPENING_BALANCE$operation$factor WHERE $KEY_CURRENCY=?",
+                "UPDATE $TABLE_ACCOUNTS SET $KEY_OPENING_BALANCE=$KEY_OPENING_BALANCE$operation$factor WHERE " +
+                    "$KEY_CURRENCY=?",
                 bindArgs
             )
             db.execSQL(
-                "UPDATE $TABLE_TRANSACTIONS SET $KEY_AMOUNT=$KEY_AMOUNT$operation$factor WHERE $KEY_ACCOUNTID IN (SELECT $KEY_ROWID FROM $TABLE_ACCOUNTS WHERE $KEY_CURRENCY=?)",
+                "UPDATE $TABLE_TRANSACTIONS SET $KEY_AMOUNT=$KEY_AMOUNT$operation$factor WHERE $KEY_ACCOUNTID IN " +
+                    "(SELECT $KEY_ROWID FROM $TABLE_ACCOUNTS WHERE $KEY_CURRENCY=?)",
                 bindArgs
             )
             db.execSQL(
-                "UPDATE $TABLE_TEMPLATES SET $KEY_AMOUNT=$KEY_AMOUNT$operation$factor WHERE $KEY_ACCOUNTID IN (SELECT $KEY_ROWID FROM $TABLE_ACCOUNTS WHERE $KEY_CURRENCY=?)",
+                "UPDATE $TABLE_TEMPLATES SET $KEY_AMOUNT=$KEY_AMOUNT$operation$factor WHERE $KEY_ACCOUNTID IN " +
+                    "(SELECT $KEY_ROWID FROM $TABLE_ACCOUNTS WHERE $KEY_CURRENCY=?)",
                 bindArgs
             )
             db.execSQL(
-                "UPDATE $TABLE_ACCOUNT_EXCHANGE_RATES SET $KEY_EXCHANGE_RATE=$KEY_EXCHANGE_RATE$operation$factor WHERE $KEY_CURRENCY_OTHER=?",
+                "UPDATE $TABLE_ACCOUNT_EXCHANGE_RATES SET $KEY_EXCHANGE_RATE=$KEY_EXCHANGE_RATE$operation$factor " +
+                    "WHERE $KEY_CURRENCY_OTHER=?",
                 bindArgs
             )
             db.execSQL(
-                "UPDATE $TABLE_ACCOUNT_EXCHANGE_RATES SET $KEY_EXCHANGE_RATE=$KEY_EXCHANGE_RATE$inverseOperation$factor WHERE $KEY_CURRENCY_SELF=?",
+                "UPDATE $TABLE_ACCOUNT_EXCHANGE_RATES SET " +
+                    "$KEY_EXCHANGE_RATE=$KEY_EXCHANGE_RATE$inverseOperation$factor WHERE $KEY_CURRENCY_SELF=?",
                 bindArgs
             )
             val totalBudgetClause =
@@ -1371,7 +1421,8 @@ abstract class BaseTransactionProvider : ContentProvider() {
                 bindArgs
             )
             db.execSQL(
-                "UPDATE $TABLE_EQUIVALENT_AMOUNTS SET $KEY_EQUIVALENT_AMOUNT=$KEY_EQUIVALENT_AMOUNT$operation$factor WHERE $KEY_CURRENCY=?",
+                "UPDATE $TABLE_EQUIVALENT_AMOUNTS SET $KEY_EQUIVALENT_AMOUNT=$KEY_EQUIVALENT_AMOUNT$operation$factor " +
+                    "WHERE $KEY_CURRENCY=?",
                 bindArgs
             )
         }
@@ -1499,7 +1550,10 @@ abstract class BaseTransactionProvider : ContentProvider() {
 
             add("$aggregateFunction(CASE WHEN $isIncome THEN $KEY_DISPLAY_AMOUNT ELSE 0 END) AS $KEY_SUM_INCOME")
 
-            add("$aggregateFunction(CASE WHEN $KEY_TYPE = $FLAG_TRANSFER THEN $KEY_DISPLAY_AMOUNT ELSE 0 END) AS $KEY_SUM_TRANSFERS")
+            add(
+                "$aggregateFunction(CASE WHEN $KEY_TYPE = $FLAG_TRANSFER THEN $KEY_DISPLAY_AMOUNT ELSE 0 END) AS " +
+                    "$KEY_SUM_TRANSFERS"
+            )
         }.toTypedArray()
 
         val sql = archiveSumCTE(uri.pathSegments[1].toLong(), typeWithFallBack) + " " +
@@ -1520,7 +1574,9 @@ abstract class BaseTransactionProvider : ContentProvider() {
 
         //Grand total account or aggregate account for type or flag
         val forHome: String? =
-            if (uri.getQueryParameter(KEY_ACCOUNTID) == null && uri.getQueryParameter(KEY_CURRENCY) == null) homeCurrency else null
+            if (
+                uri.getQueryParameter(KEY_ACCOUNTID) == null && uri.getQueryParameter(KEY_CURRENCY) == null
+            ) homeCurrency else null
 
         val group = enumValueOrDefault(uri.pathSegments[2], Grouping.NONE)
 
@@ -1565,7 +1621,10 @@ abstract class BaseTransactionProvider : ContentProvider() {
                 add(KEY_DYNAMIC)
                 add(KEY_SUM)
                 add(KEY_PERIOD_END)
-                add("CASE WHEN $KEY_DYNAMIC THEN coalesce(market_rate, $KEY_EXCHANGE_RATE) ELSE $KEY_EXCHANGE_RATE END AS $KEY_EXCHANGE_RATE")
+                add(
+                    "CASE WHEN $KEY_DYNAMIC THEN coalesce(market_rate, $KEY_EXCHANGE_RATE) ELSE $KEY_EXCHANGE_RATE " +
+                        "END AS $KEY_EXCHANGE_RATE"
+                )
             }
         }.toTypedArray()
 
@@ -1579,7 +1638,9 @@ abstract class BaseTransactionProvider : ContentProvider() {
             includeTransfers = includeTransfers,
             aggregateFunction = aggregateFunction
         ) + " " +
-                SupportSQLiteQueryBuilder.builder(if (breakdownByAccount) "with_market_rate" else CTE_TRANSACTION_GROUPS)
+                SupportSQLiteQueryBuilder.builder(
+                    if (breakdownByAccount) "with_market_rate" else CTE_TRANSACTION_GROUPS
+                )
                     .columns(projection)
                     .selection(null, selectionArgs)
                     .create()
@@ -1591,7 +1652,8 @@ abstract class BaseTransactionProvider : ContentProvider() {
         val name = values.getAsString(KEY_ATTRIBUTE_NAME)
         val context = values.getAsString(KEY_CONTEXT)
         db.execSQL(
-            "INSERT INTO $TABLE_ATTRIBUTES ($KEY_ATTRIBUTE_NAME, $KEY_CONTEXT)  SELECT ?,? WHERE NOT EXISTS (SELECT 1 FROM $TABLE_ATTRIBUTES WHERE $KEY_ATTRIBUTE_NAME=? AND $KEY_CONTEXT = ? )",
+            "INSERT INTO $TABLE_ATTRIBUTES ($KEY_ATTRIBUTE_NAME, $KEY_CONTEXT)  SELECT ?,? WHERE NOT EXISTS (SELECT " +
+                "1 FROM $TABLE_ATTRIBUTES WHERE $KEY_ATTRIBUTE_NAME=? AND $KEY_CONTEXT = ? )",
             arrayOf(name, context, name, context)
         )
     }
@@ -1611,7 +1673,8 @@ abstract class BaseTransactionProvider : ContentProvider() {
         linkColumn: String,
     ) {
         db.execSQL(
-            "INSERT or REPLACE INTO $table SELECT DISTINCT ?, _id, ? FROM $TABLE_ATTRIBUTES WHERE $KEY_ATTRIBUTE_NAME = ? AND $KEY_CONTEXT = ?;",
+            "INSERT or REPLACE INTO $table SELECT DISTINCT ?, _id, ? FROM $TABLE_ATTRIBUTES WHERE " +
+                "$KEY_ATTRIBUTE_NAME = ? AND $KEY_CONTEXT = ?;",
             arrayOf(
                 values.getAsLong(linkColumn),
                 values.getAsString(KEY_VALUE),
@@ -1794,8 +1857,10 @@ abstract class BaseTransactionProvider : ContentProvider() {
 
     /**
      * 1 if the category with provided uuid exists,
-     *  1.1 if target (a category with the provided label and parent) does not exist: update label, parent, icon, color and return category
-     *  1.2 if target exists: move all usages of the source category into target category; delete source category and continue with 2.1
+     *  1.1 if target (a category with the provided label and parent) does not exist: update label, parent, icon, color
+     * and return category
+     *  1.2 if target exists: move all usages of the source category into target category; delete source category and
+     * continue with 2.1
      * 2. otherwise
      * 2.1 if target exists, (update icon), append uuid and return it
      * 2.2 otherwise create category with label and uuid and return it
@@ -2068,7 +2133,9 @@ abstract class BaseTransactionProvider : ContentProvider() {
     private fun SupportSQLiteDatabase.mergeCategory(source: Long, target: Long) {
         val whereArgs: Array<Any> = arrayOf(source)
         query(
-            "SELECT $KEY_ROWID, (SELECT $KEY_ROWID FROM $TABLE_CATEGORIES target WHERE target.$KEY_PARENTID = ? AND target.$KEY_LABEL = $TABLE_CATEGORIES.$KEY_LABEL) AS peer FROM $TABLE_CATEGORIES WHERE $KEY_PARENTID = ? AND peer IS NOT NULL",
+            "SELECT $KEY_ROWID, (SELECT $KEY_ROWID FROM $TABLE_CATEGORIES target WHERE target.$KEY_PARENTID = ? AND " +
+                "target.$KEY_LABEL = $TABLE_CATEGORIES.$KEY_LABEL) AS peer FROM $TABLE_CATEGORIES WHERE " +
+                    "$KEY_PARENTID = ? AND peer IS NOT NULL",
             arrayOf(target, source)
         ).use {
             while (it.moveToNext()) {
@@ -2112,7 +2179,21 @@ abstract class BaseTransactionProvider : ContentProvider() {
                 SupportSQLiteQueryBuilder.builder(TABLE_TRANSACTIONS)
                     .columns(arrayOf(KEY_ROWID))
                     .selection(
-                        "(" + KEY_UUID + " IS NULL OR (" + KEY_TRANSFER_PEER + " IS NOT NULL AND (SELECT " + KEY_UUID + " from " + TABLE_TRANSACTIONS + " peer where " + KEY_TRANSFER_PEER + " = " + TABLE_TRANSACTIONS + "." + KEY_ROWID + ") is null )) AND ("
+                        "(" +
+                            KEY_UUID +
+                            " IS NULL OR (" +
+                            KEY_TRANSFER_PEER +
+                            " IS NOT NULL AND (SELECT " +
+                            KEY_UUID +
+                            " from " +
+                            TABLE_TRANSACTIONS +
+                            " peer where " +
+                            KEY_TRANSFER_PEER +
+                            " = " +
+                            TABLE_TRANSACTIONS +
+                            "." +
+                            KEY_ROWID +
+                            ") is null )) AND ("
                                 + KEY_TRANSFER_PEER + " IS NULL OR " + KEY_ROWID + " < " + KEY_TRANSFER_PEER + ")",
                         null
                     )
@@ -2123,7 +2204,8 @@ abstract class BaseTransactionProvider : ContentProvider() {
                         while (!it.isAfterLast) {
                             val idString: String = it.getString(0)
                             db.execSQL(
-                                "UPDATE $TABLE_TRANSACTIONS SET $KEY_UUID = ? WHERE $KEY_ROWID = ? OR $KEY_TRANSFER_PEER = ?",
+                                "UPDATE $TABLE_TRANSACTIONS SET $KEY_UUID = ? WHERE $KEY_ROWID = ? OR " +
+                                    "$KEY_TRANSFER_PEER = ?",
                                 arrayOf(generateUuid(), idString, idString)
                             )
                             it.moveToNext()
@@ -2151,12 +2233,16 @@ abstract class BaseTransactionProvider : ContentProvider() {
             }
             db.execSQL(
                 """INSERT INTO $TABLE_CHANGES($KEY_TYPE, $KEY_SYNC_SEQUENCE_LOCAL, $KEY_UUID, $KEY_PARENT_UUID, $KEY_ACCOUNTID)
-               SELECT '${TransactionChange.Type.tags.name}', 1, $KEY_UUID, $parentUUidTemplate, $KEY_ACCOUNTID FROM $TABLE_TRANSACTIONS WHERE $KEY_ACCOUNTID = ? AND EXISTS (SELECT 1 FROM $TABLE_TRANSACTIONS_TAGS WHERE $KEY_TRANSACTIONID = $KEY_ROWID)""",
+               SELECT '${TransactionChange.Type.tags.name}', 1, $KEY_UUID, $parentUUidTemplate, $KEY_ACCOUNTID
+               FROM $TABLE_TRANSACTIONS WHERE $KEY_ACCOUNTID = ?
+               AND EXISTS (SELECT 1 FROM $TABLE_TRANSACTIONS_TAGS WHERE $KEY_TRANSACTIONID = $KEY_ROWID)""",
                 accountIdBindArgs
             )
             db.execSQL(
                 """INSERT INTO $TABLE_CHANGES($KEY_TYPE, $KEY_SYNC_SEQUENCE_LOCAL, $KEY_UUID, $KEY_PARENT_UUID, $KEY_ACCOUNTID)
-               SELECT '${TransactionChange.Type.attachments.name}', 1, $KEY_UUID, $parentUUidTemplate, $KEY_ACCOUNTID FROM $TABLE_TRANSACTIONS WHERE $KEY_ACCOUNTID = ? AND EXISTS (SELECT 1 FROM $TABLE_TRANSACTION_ATTACHMENTS WHERE $KEY_TRANSACTIONID = $KEY_ROWID)""",
+               SELECT '${TransactionChange.Type.attachments.name}', 1, $KEY_UUID, $parentUUidTemplate, $KEY_ACCOUNTID
+               FROM $TABLE_TRANSACTIONS WHERE $KEY_ACCOUNTID = ?
+               AND EXISTS (SELECT 1 FROM $TABLE_TRANSACTION_ATTACHMENTS WHERE $KEY_TRANSACTIONID = $KEY_ROWID)""",
                 accountIdBindArgs
             )
             val currentSyncIncrease = ContentValues(1)
@@ -2211,7 +2297,10 @@ abstract class BaseTransactionProvider : ContentProvider() {
             )
             //parts are promoted to independence
             val partUpdateCount =
-                compileStatement("UPDATE $TABLE_TRANSACTIONS SET $KEY_PARENTID = null, $KEY_CR_STATUS = $crStatusSubSelect, $KEY_PAYEEID = $payeeIdSubSelect WHERE $KEY_PARENTID = ?").use {
+                compileStatement(
+                    "UPDATE $TABLE_TRANSACTIONS SET $KEY_PARENTID = null, $KEY_CR_STATUS = $crStatusSubSelect, " +
+                        "$KEY_PAYEEID = $payeeIdSubSelect WHERE $KEY_PARENTID = ?"
+                ).use {
                     it.bindString(1, uuid)
                     it.bindString(2, uuid)
                     it.bindLong(3, transactionId)
@@ -2224,7 +2313,8 @@ abstract class BaseTransactionProvider : ContentProvider() {
                             | ($KEY_TYPE, $KEY_ACCOUNTID, $KEY_SYNC_SEQUENCE_LOCAL, $KEY_UUID)
                             | SELECT '${TransactionChange.Type.unsplit.name}', $KEY_ROWID, $KEY_SYNC_SEQUENCE_LOCAL, ?
                             | FROM $TABLE_ACCOUNTS
-                            | WHERE $KEY_ROWID = $accountIdSubSelect AND $KEY_SYNC_ACCOUNT_NAME IS NOT NULL""".trimMargin(),
+                            | WHERE $KEY_ROWID = $accountIdSubSelect
+                            | AND $KEY_SYNC_ACCOUNT_NAME IS NOT NULL""".trimMargin(),
                     arrayOf(uuid, uuid)
                 )
             }

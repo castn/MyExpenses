@@ -270,7 +270,9 @@ open class SyncViewModel(application: Application) : ContentResolvingAndroidView
                 val syncAccounts = if (shouldQueryRemoteAccounts)
                     syncBackendProvider.remoteAccountList
                         .mapNotNull { it.getOrNull() }
-                        .filter { remoteAccount -> !localAccounts.any { it.isSynced && it.uuid == remoteAccount.uuid } } else emptyList()
+                        .filter { remoteAccount ->
+                            !localAccounts.any { it.isSynced && it.uuid == remoteAccount.uuid }
+                        } else emptyList()
                 val backups =
                     if (shouldReturnBackups) syncBackendProvider.storedBackups else emptyList()
                 SyncAccountData(

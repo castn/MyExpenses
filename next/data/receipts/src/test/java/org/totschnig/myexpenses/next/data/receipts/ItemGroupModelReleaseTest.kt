@@ -16,7 +16,9 @@ class ItemGroupModelReleaseTest {
             """{"models": [${release("de", "2026.10-de-1")}, {"language": "fr"}], "comment": "ignored"}"""
         )
         assertEquals(
-            listOf(ItemGroupModelRelease("de", "2026.10-de-1", 2, "https://example.org/2026.10-de-1.bin", "ab12", 1929216)),
+            listOf(
+                ItemGroupModelRelease("de", "2026.10-de-1", 2, "https://example.org/2026.10-de-1.bin", "ab12", 1929216)
+            ),
             releases
         )
         assertEquals(emptyList<ItemGroupModelRelease>(), ItemGroupModelRelease.parseManifest("{}"))
@@ -25,7 +27,8 @@ class ItemGroupModelReleaseTest {
     @Test
     fun choosesLanguageOfDeviceElseGermanInReadableFormat() {
         val releases = ItemGroupModelRelease.parseManifest(
-            """{"models": [${release("de", "de-1")}, ${release("de", "de-2")}, ${release("fr", "fr-1")}, ${release("it", "it-9", format = 3)}]}"""
+            """{"models": [${release("de", "de-1")}, ${release("de", "de-2")}, """ +
+                """${release("fr", "fr-1")}, ${release("it", "it-9", format = 3)}]}"""
         )
         assertEquals("fr-1", ItemGroupModelRelease.choose(releases, "fr")?.version)
         // the last entry is the latest
@@ -52,7 +55,10 @@ class ItemGroupModelReleaseTest {
 
     @Test
     fun rejectsModelOfUnknownGroups() {
-        assertRejected(InvalidItemGroupModel.Reason.Incompatible, TestModels.constantFile(0.95f, "drinks", "future_group"))
+        assertRejected(
+            InvalidItemGroupModel.Reason.Incompatible,
+            TestModels.constantFile(0.95f, "drinks", "future_group")
+        )
     }
 
     @Test

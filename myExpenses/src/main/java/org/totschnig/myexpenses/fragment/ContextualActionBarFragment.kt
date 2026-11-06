@@ -118,7 +118,8 @@ abstract class ContextualActionBarFragment : Fragment(), OnGroupClickListener, O
                 //this workaround works because orientation change collapses the groups
                 //so we never restore the CAB for PACKED_POSITION_TYPE_CHILD
                 if (!shouldStartActionMode()) return false
-                expandableListSelectionType = if (lv is ExpandableListView) PACKED_POSITION_TYPE_GROUP else PACKED_POSITION_TYPE_NULL
+                expandableListSelectionType =
+                    if (lv is ExpandableListView) PACKED_POSITION_TYPE_GROUP else PACKED_POSITION_TYPE_NULL
                 inflateContextualActionBar(menu, lv.id)
                 setTitle(mode, lv)
                 mActionMode = mode
@@ -140,7 +141,10 @@ abstract class ContextualActionBarFragment : Fragment(), OnGroupClickListener, O
                     }
                     for (i in 0 until adapter.count) {
                         if (!lv.isItemChecked(i)) {
-                            lv.setItemChecked(i, (lv as? ExpandableListView)?.getExpandableListPosition(i)?.let { expandableListSelectionType == getPackedPositionType(it) }
+                            lv.setItemChecked(
+                                i, (lv as? ExpandableListView)?.getExpandableListPosition(i)?.let {
+                                    expandableListSelectionType == getPackedPositionType(it)
+                                }
                                     ?: true)
                         }
                     }

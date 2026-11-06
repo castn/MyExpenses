@@ -157,11 +157,14 @@ fun linkTransfers(
             // We do not want to extend the table since the whole trigger based concept of recording changes
             // should be abandoned in a future new architecture of the synchronization mechanism
             val updateSql =
-                "INSERT INTO $TABLE_CHANGES ($KEY_TYPE, $KEY_ACCOUNTID, $KEY_SYNC_SEQUENCE_LOCAL, $KEY_UUID, $KEY_REFERENCE_NUMBER) " +
-                        "SELECT '${TransactionChange.Type.link.name}', $KEY_ROWID, $KEY_SYNC_SEQUENCE_LOCAL, ?, ? FROM " +
+                "INSERT INTO $TABLE_CHANGES ($KEY_TYPE, $KEY_ACCOUNTID, $KEY_SYNC_SEQUENCE_LOCAL, $KEY_UUID, " +
+                    "$KEY_REFERENCE_NUMBER) " +
+                        "SELECT '${TransactionChange.Type.link.name}', $KEY_ROWID, $KEY_SYNC_SEQUENCE_LOCAL, ?, ? " +
+                            "FROM " +
                         "$TABLE_ACCOUNTS WHERE $KEY_ROWID IN ((SELECT $KEY_ACCOUNTID FROM $TABLE_TRANSACTIONS WHERE $KEY_UUID = ?), (SELECT $KEY_TRANSFER_ACCOUNT FROM $TABLE_TRANSACTIONS WHERE $KEY_UUID = ?)) AND $KEY_SYNC_ACCOUNT_NAME IS NOT NULL"
             db.compileStatement(updateSql).use {
-                //we write identical changes for the two accounts, so that on the other end of the synchronization we know which part of the transfer keeps its uuid
+                //we write identical changes for the two accounts, so that on the other end of the synchronization we
+                // know which part of the transfer keeps its uuid
                 it.bindAllArgsAsStrings(listOf(uuid1, uuid2, uuid1, uuid1))
                 it.execute()
             }
@@ -203,7 +206,8 @@ fun transformToTransfer(
         }
         //update original transaction
         val updateCount = db.compileStatement(
-            """UPDATE $TABLE_TRANSACTIONS SET $KEY_TRANSFER_ACCOUNT = ?, $KEY_TRANSFER_PEER = ?, $KEY_METHODID = null, $KEY_CATID = coalesce($KEY_CATID, ?) WHERE $KEY_ROWID = ?"""
+            """UPDATE $TABLE_TRANSACTIONS SET $KEY_TRANSFER_ACCOUNT = ?, $KEY_TRANSFER_PEER = ?, """ +
+                """$KEY_METHODID = null, $KEY_CATID = coalesce($KEY_CATID, ?) WHERE $KEY_ROWID = ?"""
         ).use {
             it.bindString(1, transferAccountId)
             it.bindLong(2, transferPeer)
@@ -343,34 +347,52 @@ fun parseCategoriesFromXml(resources: Resources): List<CategoryTreeItem> {
                 }
                 "category" -> {
                     if (inCategory) {
-                        throw XmlPullParserException("Nested <category> tag is not supported at line ${parser.lineNumber}")
+                        throw XmlPullParserException(
+                            "Nested <category> tag is not supported at line ${parser.lineNumber}"
+                        )
                     }
                     parser.validateAttributes(ALLOWED_CATEGORY_ATTRS)
                     val typeStr = parser.getAttributeValue(null, "type")
                     if (typeStr != "income" && typeStr != "expense") {
-                        throw XmlPullParserException("Invalid or missing 'type' attribute ($typeStr) on <category> at line ${parser.lineNumber}")
+                        throw XmlPullParserException(
+                            "Invalid or missing 'type' attribute ($typeStr) on <category> at line ${parser.lineNumber}"
+                        )
                     }
                     currentMainType = if (typeStr == "income") FLAG_INCOME else FLAG_EXPENSE
                     currentMainUuid = parser.getAttributeValue(null, "uuid")?.takeIf { it.isNotEmpty() }
-                        ?: throw XmlPullParserException("Missing 'uuid' attribute on <category> at line ${parser.lineNumber}")
+                        ?: throw XmlPullParserException(
+                            "Missing 'uuid' attribute on <category> at line ${parser.lineNumber}"
+                        )
                     currentMainIcon = parser.getAttributeValue(null, "icon")?.takeIf { it.isNotEmpty() }
-                        ?: throw XmlPullParserException("Missing 'icon' attribute on <category> at line ${parser.lineNumber}")
+                        ?: throw XmlPullParserException(
+                            "Missing 'icon' attribute on <category> at line ${parser.lineNumber}"
+                        )
                     currentMainLabel = parser.resolveLabel(resources).takeIf { it.isNotEmpty() }
-                        ?: throw XmlPullParserException("Missing 'label' attribute on <category> at line ${parser.lineNumber}")
+                        ?: throw XmlPullParserException(
+                            "Missing 'label' attribute on <category> at line ${parser.lineNumber}"
+                        )
                     currentSubcategories = mutableListOf()
                     inCategory = true
                 }
                 "subcategory" -> {
                     if (!inCategory) {
-                        throw XmlPullParserException("<subcategory> tag must be inside <category> at line ${parser.lineNumber}")
+                        throw XmlPullParserException(
+                            "<subcategory> tag must be inside <category> at line ${parser.lineNumber}"
+                        )
                     }
                     parser.validateAttributes(ALLOWED_SUBCATEGORY_ATTRS)
                     val subUuid = parser.getAttributeValue(null, "uuid")?.takeIf { it.isNotEmpty() }
-                        ?: throw XmlPullParserException("Missing 'uuid' attribute on <subcategory> at line ${parser.lineNumber}")
+                        ?: throw XmlPullParserException(
+                            "Missing 'uuid' attribute on <subcategory> at line ${parser.lineNumber}"
+                        )
                     val subIcon = parser.getAttributeValue(null, "icon")?.takeIf { it.isNotEmpty() }
-                        ?: throw XmlPullParserException("Missing 'icon' attribute on <subcategory> at line ${parser.lineNumber}")
+                        ?: throw XmlPullParserException(
+                            "Missing 'icon' attribute on <subcategory> at line ${parser.lineNumber}"
+                        )
                     val subLabel = parser.resolveLabel(resources).takeIf { it.isNotEmpty() }
-                        ?: throw XmlPullParserException("Missing 'label' attribute on <subcategory> at line ${parser.lineNumber}")
+                        ?: throw XmlPullParserException(
+                            "Missing 'label' attribute on <subcategory> at line ${parser.lineNumber}"
+                        )
                     currentSubcategories.add(SubCategoryTreeItem(subLabel, subUuid, subIcon))
                 }
                 else -> {
@@ -445,7 +467,8 @@ private fun setupCategoriesInternal(
     var catIdMain: Long?
     database.beginTransaction()
     val stmt = database.compileStatement(
-        "INSERT INTO $TABLE_CATEGORIES ($KEY_LABEL, $KEY_LABEL_NORMALIZED, $KEY_PARENTID, $KEY_COLOR, $KEY_ICON, $KEY_UUID, $KEY_TYPE) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        "INSERT INTO $TABLE_CATEGORIES ($KEY_LABEL, $KEY_LABEL_NORMALIZED, $KEY_PARENTID, $KEY_COLOR, $KEY_ICON, " +
+            "$KEY_UUID, $KEY_TYPE) VALUES (?, ?, ?, ?, ?, ?, ?)"
     )
     val stmtUpdateIcon = database.compileStatement(
         "UPDATE $TABLE_CATEGORIES SET $KEY_ICON = ? WHERE $KEY_ICON IS NULL AND $KEY_ROWID = ?"

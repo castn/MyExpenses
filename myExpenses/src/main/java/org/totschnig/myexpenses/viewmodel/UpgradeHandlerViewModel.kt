@@ -316,7 +316,8 @@ class UpgradeHandlerViewModel(application: Application) :
                 if (fromVersion < 518) {
                     with(prefHandler) {
                         //semantics of pref has changed, previously true meant do Aggregate, false means don't
-                        //now unset means do Aggregate, on Distribution Screen true means show income, false means show Expenses
+                        //now unset means do Aggregate, on Distribution Screen true means show income, false means show
+                        // Expenses
                         if (getBoolean(
                                 PrefKey.DISTRIBUTION_AGGREGATE_TYPES,
                                 true
@@ -330,7 +331,9 @@ class UpgradeHandlerViewModel(application: Application) :
                         ?.getLongArray(KEY_RESULT)?.size?.let { corruptedCount ->
                             if (corruptedCount > 0) {
                                 //upgradeInfoList.add(getString(R.string.corrupted_data_detected))
-                                CrashHandler.report(Exception("Bug 987: $corruptedCount corrupted transactions detected"))
+                                CrashHandler.report(
+                                    Exception("Bug 987: $corruptedCount corrupted transactions detected")
+                                )
                             }
                         }
                 }
@@ -372,7 +375,8 @@ class UpgradeHandlerViewModel(application: Application) :
                                 }
 
                                 else -> {
-                                    "$KEY_CURRENCY = (SELECT $KEY_CODE FROM $TABLE_CURRENCIES WHERE -$KEY_ROWID = ?) AND $KEY_GROUPING = ?" to
+                                    "$KEY_CURRENCY = (SELECT $KEY_CODE FROM $TABLE_CURRENCIES WHERE -$KEY_ROWID = ?) " +
+                                        "AND $KEY_GROUPING = ?" to
                                             arrayOf(accountIdAsString, grouping)
                                 }
                             }
@@ -383,7 +387,12 @@ class UpgradeHandlerViewModel(application: Application) :
                                 selectionArgs
                             )
                             if (updateCount != 1) {
-                                CrashHandler.report(IllegalStateException("Expected one budget for ${entry.key} to be updated, but updateCount is $updateCount"))
+                                CrashHandler.report(
+                                    IllegalStateException(
+                                        "Expected one budget for ${entry.key} to be updated, but updateCount is " +
+                                            "$updateCount"
+                                    )
+                                )
                             }
                             prefHandler.remove(entry.key)
                         }
@@ -450,7 +459,8 @@ class UpgradeHandlerViewModel(application: Application) :
                         getString(
                             R.string.upgrade_info_557,
                             getString(R.string.pref_category_title_ui),
-                            "${getString(R.string.help_MyExpenses_title)} -> ${localizedContext.compactItemRendererTitle()}"
+                            "${getString(R.string.help_MyExpenses_title)} -> " +
+                                "${localizedContext.compactItemRendererTitle()}"
                         )
                     )*/
                 }
@@ -618,7 +628,11 @@ class UpgradeHandlerViewModel(application: Application) :
                 if (fromVersion < 775) {
                     contentResolver.query(ACCOUNTS_MINIMAL_URI_WITH_AGGREGATES, null, null, null, null)
                         ?.use { cursor ->
-                            migrateFilterHelper(cursor,MyExpensesViewModel::prefNameForCriteriaLegacy, MyExpensesViewModel::prefNameForCriteria)
+                            migrateFilterHelper(
+                                cursor,
+                                MyExpensesViewModel::prefNameForCriteriaLegacy,
+                                MyExpensesViewModel::prefNameForCriteria
+                            )
                         }
                     contentResolver.query(
                         BUDGETS_URI,
@@ -627,7 +641,11 @@ class UpgradeHandlerViewModel(application: Application) :
                         null,
                         null
                     )?.use { cursor ->
-                        migrateFilterHelper(cursor, BudgetViewModel::prefNameForCriteriaLegacy, BudgetViewModel::prefNameForCriteria)
+                        migrateFilterHelper(
+                            cursor,
+                            BudgetViewModel::prefNameForCriteriaLegacy,
+                            BudgetViewModel::prefNameForCriteria
+                        )
                     }
                 }
 
@@ -677,7 +695,12 @@ class UpgradeHandlerViewModel(application: Application) :
                     }
                 }
 
-                if (fromVersion < 888 && prefHandler.encryptDatabase && prefHandler.getInt(PrefKey.FIRST_INSTALL_DB_SCHEMA_VERSION, -1) > 176) {
+                if (
+                    fromVersion < 888 && prefHandler.encryptDatabase && prefHandler.getInt(
+                        PrefKey.FIRST_INSTALL_DB_SCHEMA_VERSION,
+                        -1
+                    ) > 176
+                ) {
                     migrationInfos.add(MigrationInfo(2))
                 }
 
@@ -691,7 +714,10 @@ class UpgradeHandlerViewModel(application: Application) :
                     e
                 ))
                 _upgradeInfo.update {
-                    UpgradeError("upgrade from $fromVersion to $toVersion failed (${e.safeMessage}). Please contact ${getString(R.string.support_email)} .")
+                    UpgradeError(
+                        "upgrade from $fromVersion to $toVersion failed (${e.safeMessage}). Please contact " +
+                            "${getString(R.string.support_email)} ."
+                    )
                 }
             }
         }

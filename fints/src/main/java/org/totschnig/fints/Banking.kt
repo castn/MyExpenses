@@ -201,7 +201,9 @@ class Banking : ProtectedFragmentActivity() {
                                     IconButton(onClick = { finish() }) {
                                         Icon(
                                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                            contentDescription = stringResource(id = androidx.appcompat.R.string.abc_action_bar_up_description)
+                                            contentDescription = stringResource(
+                                                id = androidx.appcompat.R.string.abc_action_bar_up_description
+                                            )
                                         )
                                     }
                                 }
@@ -280,7 +282,12 @@ class Banking : ProtectedFragmentActivity() {
                         }
                     }
                 }
-                if (tanRequested.value == null && tanMediumRequested.value == null && pushTanRequested.value == null && secMechRequested.value == null) {
+                if (
+                    tanRequested.value == null &&
+                        tanMediumRequested.value == null &&
+                        pushTanRequested.value == null &&
+                        secMechRequested.value == null
+                ) {
                     SetupDialog(dialogState, workState.value, bankingCredentials, errorState) {
                         if (calledFromOnboarding) {
                             setResult(if (it) RESULT_OK else RESULT_CANCELED)
@@ -390,7 +397,8 @@ class Banking : ProtectedFragmentActivity() {
                                     account = account.first,
                                     supportedGvs = supportedGvs,
                                     config = if (supportedGvs.isEmpty()) null else {
-                                        val standardGV = if (supportedGvs.contains(GV.DKKKU) && account.first.isCreditCardAccount)
+                                        val standardGV =
+                                            if (supportedGvs.contains(GV.DKKKU) && account.first.isCreditCardAccount)
                                             GV.DKKKU else supportedGvs.first()
                                         account.second?.let {
                                             AccountImportConfig(
@@ -402,7 +410,9 @@ class Banking : ProtectedFragmentActivity() {
                                         }
                                     },
                                     targetOptions = targetOptions.value.filter { (id) ->
-                                        id == 0L || selectedAccounts.none { it.key != index && it.value.targetAccountId == id }
+                                        id == 0L || selectedAccounts.none {
+                                            it.key != index && it.value.targetAccountId == id
+                                        }
                                     }
                                 ) { config ->
                                     //if account has been imported in the past, we set new geschaeftsvorfall immediately
@@ -413,7 +423,9 @@ class Banking : ProtectedFragmentActivity() {
                                                 config.gv
                                             )
                                         } ?: run {
-                                            CrashHandler.report(IllegalStateException("Expected non-null AccountInformation"))
+                                            CrashHandler.report(
+                                                IllegalStateException("Expected non-null AccountInformation")
+                                            )
                                         }
                                     } else {
                                         selectedAccounts[index] = config
@@ -517,7 +529,9 @@ class Banking : ProtectedFragmentActivity() {
                     icon = { DialogIcon() },
                     title = {
                         Text(
-                            text = stringResource(id = if (bankingCredentials.value.isNew) RF.string.add_new_bank else RF.string.enter_pin),
+                            text = stringResource(
+                                id = if (bankingCredentials.value.isNew) RF.string.add_new_bank else RF.string.enter_pin
+                            ),
                             style = MaterialTheme.typography.titleMedium
                         )
                     },
@@ -858,7 +872,9 @@ fun AccountRow(
                     }
                 }
             }
-            if (isSupported && supportedGvs.size > 1 && config != null && (config.alreadyImported || config.isSelected)) {
+            if (
+                isSupported && supportedGvs.size > 1 && config != null && (config.alreadyImported || config.isSelected)
+            ) {
                 IconButton(
                     modifier = Modifier.align(Alignment.TopEnd),
                     onClick = { showAdvancedOptions = !showAdvancedOptions }) {

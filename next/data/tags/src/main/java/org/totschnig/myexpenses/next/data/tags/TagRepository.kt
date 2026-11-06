@@ -72,7 +72,9 @@ class TagRepository(
             else TagLearner.applyRules(inputs, rules).also { applied = inputs to rules }
         }
             .distinctUntilChanged()
-            .onEach { additions -> additions.forEach { (transactionId, tagIds) -> tagDatabase.addTags(transactionId, tagIds) } }
+            .onEach { additions ->
+                additions.forEach { (transactionId, tagIds) -> tagDatabase.addTags(transactionId, tagIds) }
+            }
             .flowOn(Dispatchers.IO)
             .shareWhileShown(scope)
 }

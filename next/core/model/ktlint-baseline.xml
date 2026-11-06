@@ -28,28 +28,17 @@
         <error line="84" column="40" source="standard:trailing-comma-on-declaration-site" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/core/model/ledger/OwnAccounts.kt">
-        <error line="21" column="23" source="standard:parameter-list-wrapping" />
-        <error line="21" column="23" source="standard:function-signature" />
-        <error line="21" column="40" source="standard:parameter-list-wrapping" />
-        <error line="21" column="40" source="standard:function-signature" />
-        <error line="21" column="66" source="standard:parameter-list-wrapping" />
-        <error line="21" column="66" source="standard:function-signature" />
-        <error line="21" column="92" source="standard:parameter-list-wrapping" />
-        <error line="21" column="92" source="standard:function-signature" />
-        <error line="21" column="101" source="standard:max-line-length" />
-        <error line="21" column="119" source="standard:parameter-list-wrapping" />
-        <error line="21" column="119" source="standard:function-signature" />
-        <error line="22" column="23" source="standard:binary-expression-wrapping" />
-        <error line="22" column="47" source="standard:function-literal" />
-        <error line="22" column="48" source="standard:wrapping" />
-        <error line="22" column="72" source="standard:argument-list-wrapping" />
-        <error line="22" column="74" source="standard:argument-list-wrapping" />
-        <error line="22" column="77" source="standard:function-literal" />
-        <error line="22" column="87" source="standard:function-literal" />
-        <error line="22" column="88" source="standard:wrapping" />
-        <error line="22" column="94" source="standard:binary-expression-wrapping" />
-        <error line="22" column="101" source="standard:max-line-length" />
-        <error line="22" column="105" source="standard:function-literal" />
+        <error line="27" column="23" source="standard:binary-expression-wrapping" />
+        <error line="27" column="47" source="standard:function-literal" />
+        <error line="27" column="48" source="standard:wrapping" />
+        <error line="27" column="72" source="standard:argument-list-wrapping" />
+        <error line="27" column="74" source="standard:argument-list-wrapping" />
+        <error line="27" column="77" source="standard:function-literal" />
+        <error line="27" column="87" source="standard:function-literal" />
+        <error line="27" column="88" source="standard:wrapping" />
+        <error line="27" column="94" source="standard:binary-expression-wrapping" />
+        <error line="27" column="101" source="standard:max-line-length" />
+        <error line="27" column="105" source="standard:function-literal" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/core/model/transactions/ShownTransaction.kt">
         <error line="23" column="36" source="standard:trailing-comma-on-declaration-site" />

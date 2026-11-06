@@ -65,7 +65,8 @@ data class ItemGroupRising(
         const val MIN_POINTS = 0.05f
 
         /** A purchase on [date] counts to the recent months */
-        fun isRecent(date: LocalDate, today: LocalDate) = !date.isAfter(today) && date.isAfter(today.minusMonths(RECENT_MONTHS))
+        fun isRecent(date: LocalDate, today: LocalDate) =
+            !date.isAfter(today) && date.isAfter(today.minusMonths(RECENT_MONTHS))
 
         /** A purchase on [date] counts to the year before the recent months, the usual share */
         fun isUsual(date: LocalDate, today: LocalDate): Boolean {
@@ -120,7 +121,8 @@ data class DrugstoreInSupermarkets(
     }
 }
 
-private fun List<ScannedPurchase>.lastYear(today: LocalDate) = filter { it.transaction.date.isAfter(today.minusYears(1)) }
+private fun List<ScannedPurchase>.lastYear(today: LocalDate) =
+    filter { it.transaction.date.isAfter(today.minusYears(1)) }
 
 /**
  * Compares the share of each of [ItemGroupRising.WATCHED] in the last [ItemGroupRising.RECENT_MONTHS]
@@ -137,7 +139,10 @@ internal fun itemGroupsRising(purchases: List<ScannedPurchase>, today: LocalDate
     return ItemGroupRising.WATCHED.mapNotNull { group ->
         val recentShare = recent.shareOf(group)
         val usualShare = usual.shareOf(group)
-        if (recentShare < usualShare * ItemGroupRising.MIN_FACTOR || recentShare - usualShare < ItemGroupRising.MIN_POINTS) {
+        if (
+            recentShare < usualShare * ItemGroupRising.MIN_FACTOR ||
+                recentShare - usualShare < ItemGroupRising.MIN_POINTS
+        ) {
             return@mapNotNull null
         }
         ItemGroupRising(

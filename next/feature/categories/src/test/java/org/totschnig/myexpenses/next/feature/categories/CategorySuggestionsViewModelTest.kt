@@ -31,7 +31,8 @@ class CategorySuggestionsViewModelTest {
 
     /** Two payments to the supermarket without category, from before suggestions were started */
     private val ledger = Ledger(
-        listOf(1L, 2L).map { LedgerTransaction(it, today, amount = -2000, accountId = 1, payeeId = 5, payeeName = "REWE") },
+        listOf(1L, 2L)
+            .map { LedgerTransaction(it, today, amount = -2000, accountId = 1, payeeId = 5, payeeName = "REWE") },
         OwnAccounts(emptySet(), emptyMap())
     )
 
@@ -66,14 +67,22 @@ class CategorySuggestionsViewModelTest {
                 val store = CategoryStore(dataStore)
                 store.update { it.copy(rules = listOf(CategoryRule("r", setOf(5), 10))) }
                 val writing = FakeWriting()
-                val repository = CategoryRepository(FakeLedgerSource(ledger = ledger, catalog = catalog), store, writing, backgroundScope)
+                val repository = CategoryRepository(
+                    FakeLedgerSource(ledger = ledger, catalog = catalog),
+                    store,
+                    writing,
+                    backgroundScope
+                )
                 block(CategorySuggestionsViewModel(repository), store, writing)
             }
         }
 
     @Test
     fun appliesBacklogOnlyWhenTheUserAgrees() = withViewModel { viewModel, store, writing ->
-        assertEquals(CategorySuggestionsViewModel.Backlog(certain = 2, uncategorized = 2), viewModel.backlog.first { it != null })
+        assertEquals(
+            CategorySuggestionsViewModel.Backlog(certain = 2, uncategorized = 2),
+            viewModel.backlog.first { it != null }
+        )
         assertEquals(emptyList<Any>(), writing.set)
         viewModel.applyBacklog()
         store.decisions.first { it.backlogAnswered }

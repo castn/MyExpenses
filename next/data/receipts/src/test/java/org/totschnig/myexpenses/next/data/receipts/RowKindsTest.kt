@@ -12,7 +12,8 @@ class RowKindsTest {
 
     private val kinds = RowKinds(ReceiptVocabulary.GERMAN)
 
-    private fun price(text: String) = kinds.price(kinds.tokens(text))?.let { "${it.cents} ${it.taxClass} ${text.substring(0, it.start).trim()}" }
+    private fun price(text: String) =
+        kinds.price(kinds.tokens(text))?.let { "${it.cents} ${it.taxClass} ${text.substring(0, it.start).trim()}" }
 
     @Test
     fun price() {

@@ -657,7 +657,9 @@ class TransactionEditViewModel(application: Application, savedStateHandle: Saved
         }
     }
 
-    enum class InstantiationTask { TRANSACTION, TEMPLATE, TRANSACTION_FROM_TEMPLATE, FROM_INTENT_EXTRAS, TEMPLATE_FROM_TRANSACTION }
+    enum class InstantiationTask {
+        TRANSACTION, TEMPLATE, TRANSACTION_FROM_TEMPLATE, FROM_INTENT_EXTRAS, TEMPLATE_FROM_TRANSACTION
+    }
 }
 
 

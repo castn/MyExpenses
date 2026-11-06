@@ -10,36 +10,6 @@
     <ID>LongMethod:ReceiptAssignmentScreen.kt:@Composable fun ReceiptAssignmentDialog</ID>
     <ID>LongMethod:ReceiptReviewScreen.kt:@Composable fun ReceiptReviewDialog</ID>
     <ID>LongMethod:ReceiptReviewScreen.kt:@Composable private fun ReceiptItemSheet</ID>
-    <ID>MaxLineLength:ReceiptAssignmentScreen.kt:Dialog</ID>
-    <ID>MaxLineLength:ReceiptAssignmentScreen.kt:LinkRow(stringResource(R.string.next_receipt_discard_waiting), onClick = { confirmDelete = true })</ID>
-    <ID>MaxLineLength:ReceiptAssignmentScreen.kt:LinkRow(stringResource(R.string.next_receipt_keep_waiting), onClick = viewModel.assignments::close, isFirst = true)</ID>
-    <ID>MaxLineLength:ReceiptAssignmentScreen.kt:LinkRow(stringResource(R.string.next_receipt_other), onClick = viewModel.assignments::loadOtherExpenses, isFirst = true)</ID>
-    <ID>MaxLineLength:ReceiptAssignmentScreen.kt:LinkRow(stringResource(R.string.next_receipt_wait), onClick = viewModel.assignments::keepWaiting, isFirst = true)</ID>
-    <ID>MaxLineLength:ReceiptAssignmentScreen.kt:Text(stringResource(if (next.candidates.isNotEmpty()) R.string.next_receipt_assign else R.string.next_receipt_show))</ID>
-    <ID>MaxLineLength:ReceiptAssignmentScreen.kt:when</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:DetailCard { ProgressRow(stringResource(R.string.next_receipt_reading), isFirst = true) }</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:EditableRow(stringResource(R.string.next_receipt_card_amount), format(cardAmount), { onEdit(Detail.CARD_AMOUNT) })</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:EditableRow(stringResource(R.string.next_receipt_date), draft.date?.format(dateFormat) ?: NONE, { onEdit(Detail.DATE) })</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:EditableRow(stringResource(R.string.next_receipt_merchant), draft.merchant ?: NONE, { onEdit(Detail.MERCHANT) }, isFirst = true)</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:EditableRow(stringResource(R.string.next_receipt_sum), draft.total?.let(format) ?: NONE, { onEdit(Detail.TOTAL) })</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.next_receipt_recognize_again))</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:IconButton</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:InfoRow(stringResource(R.string.next_receipt_total_difference), format(it), isFirst = first, valueColor = error)</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:ModelOfferBanner(onSetUp = { settingUpModel = true }, onDecline = viewModel.modelInstaller::decline)</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:ReceiptPhotoView(current, draft.items, draft.openLeftoverRows, focused, photoExpanded, onTapItem = openItem)</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:if (result == SnackbarResult.ActionPerformed) viewModel.insertItem(index, item)</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:item.group != null -&gt; ItemGroup.ofId(item.group)?.let { stringResource(it.labelRes) }</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:messages = listOf(check.receipt.itemCount!!.let { pluralStringResource(R.plurals.next_receipt_count_differs, it, it, check.receipt.pieces) })</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:onChoose = { row -&gt; chosenRows = if (row in chosenRows) chosenRows - row else chosenRows + row }</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:onClick = { if (draft.isChanged) confirmRecognizeAgain = true else viewModel.recognizeAgain() }</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:stringResource(if (draft.total != null) R.string.next_receipt_items_difference else R.string.next_receipt_difference)</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:stringResource(if (photoExpanded) R.string.next_receipt_photo_collapse else R.string.next_receipt_photo_expand)</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:text = pluralStringResource(R.plurals.next_receipt_rows_chosen, chosenRows.size, chosenRows.size)</ID>
-    <ID>MaxLineLength:ReceiptReviewScreen.kt:title = stringResource(if (detail == Detail.TOTAL) R.string.next_receipt_sum else R.string.next_receipt_card_amount)</ID>
-    <ID>MaxLineLength:ReceiptSection.kt:val</ID>
-    <ID>MaxLineLength:ReceiptViewModel.kt:ReceiptViewModel$ReceiptSavedState(_draft.value, draftPayee, assignments.standaloneCurrency, assignments.assignment.value).toBundle()</ID>
-    <ID>MaxLineLength:ReceiptViewModel.kt:ReceiptViewModel$parsed == null || parsed.items.isEmpty() -&gt; _recognizeAgainFailed.value = ReceiptScanState.Reason.NoItems</ID>
-    <ID>MaxLineLength:ReceiptViewModel.kt:ReceiptViewModel$val items = receipt.items.withSuggestedGroups(classifier().classify(receipt.items, shopHint(receipt.merchant, payee)))</ID>
     <ID>ReturnCount:ReceiptViewModel.kt:ReceiptViewModel$private fun classifiedOnce: Receipt</ID>
     <ID>SwallowedException:ItemGroupModelInstaller.kt:ItemGroupModelInstaller$e: NoModelRelease</ID>
     <ID>TooGenericExceptionCaught:ItemGroupModelInstaller.kt:ItemGroupModelInstaller$e: Exception</ID>

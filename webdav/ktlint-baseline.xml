@@ -72,7 +72,6 @@
         <error line="253" column="9" source="standard:class-signature" />
         <error line="254" column="40" source="standard:function-expression-body" />
         <error line="258" column="42" source="standard:function-signature" />
-        <error line="261" column="1" source="standard:final-newline" />
     </file>
     <file name="src/main/java/org/totschnig/webdav/sync/WebDavBackendProvider.kt">
         <error line="3" column="1" source="standard:import-ordering" />
@@ -106,17 +105,6 @@
         <error line="311" column="91" source="standard:function-signature" />
         <error line="311" column="100" source="standard:max-line-length" />
         <error line="316" column="101" source="standard:max-line-length" />
-        <error line="338" column="26" source="standard:argument-list-wrapping" />
-        <error line="338" column="35" source="standard:argument-list-wrapping" />
-        <error line="338" column="53" source="standard:argument-list-wrapping" />
-        <error line="338" column="58" source="standard:argument-list-wrapping" />
-        <error line="338" column="68" source="standard:argument-list-wrapping" />
-        <error line="338" column="78" source="standard:argument-list-wrapping" />
-        <error line="338" column="91" source="standard:argument-list-wrapping" />
-        <error line="338" column="101" source="standard:max-line-length" />
-        <error line="338" column="108" source="standard:argument-list-wrapping" />
-        <error line="338" column="123" source="standard:argument-list-wrapping" />
-        <error line="349" column="74" source="standard:final-newline" />
     </file>
     <file name="src/main/java/org/totschnig/webdav/sync/WebDavBackendProviderFactory.kt">
         <error line="15" column="9" source="standard:function-signature" />
@@ -125,7 +113,6 @@
         <error line="17" column="39" source="standard:function-signature" />
         <error line="18" column="9" source="standard:function-signature" />
         <error line="21" column="1" source="standard:no-blank-line-before-rbrace" />
-        <error line="22" column="1" source="standard:final-newline" />
     </file>
     <file name="src/main/java/org/totschnig/webdav/sync/WebDavComponent.kt">
         <error line="26" column="1" source="standard:indent" />
@@ -153,7 +140,6 @@
         <error line="151" column="100" source="standard:max-line-length" />
         <error line="151" column="102" source="standard:argument-list-wrapping" />
         <error line="152" column="42" source="standard:no-multi-spaces" />
-        <error line="201" column="1" source="standard:final-newline" />
     </file>
     <file name="src/main/java/org/totschnig/webdav/sync/client/ClientCertMissingException.kt">
         <error line="3" column="62" source="standard:class-signature" />
@@ -185,23 +171,12 @@
         <error line="300" column="86" source="standard:function-expression-body" />
         <error line="314" column="82" source="standard:function-expression-body" />
         <error line="371" column="17" source="standard:comment-spacing" />
-        <error line="385" column="1" source="standard:indent" />
+        <error line="386" column="1" source="standard:indent" />
     </file>
     <file name="src/main/java/org/totschnig/webdav/viewmodel/WebdavSetupViewModel.kt">
         <error line="3" column="1" source="standard:import-ordering" />
         <error line="28" column="31" source="standard:wrapping" />
-        <error line="30" column="30" source="standard:argument-list-wrapping" />
-        <error line="30" column="35" source="standard:argument-list-wrapping" />
-        <error line="30" column="53" source="standard:argument-list-wrapping" />
-        <error line="30" column="58" source="standard:argument-list-wrapping" />
-        <error line="30" column="68" source="standard:argument-list-wrapping" />
-        <error line="30" column="78" source="standard:argument-list-wrapping" />
-        <error line="30" column="91" source="standard:argument-list-wrapping" />
-        <error line="30" column="101" source="standard:max-line-length" />
-        <error line="30" column="112" source="standard:argument-list-wrapping" />
-        <error line="30" column="127" source="standard:argument-list-wrapping" />
-        <error line="34" column="13" source="standard:wrapping" />
-        <error line="37" column="1" source="standard:final-newline" />
+        <error line="43" column="13" source="standard:wrapping" />
     </file>
     <file name="src/test/java/org/totschnig/webdav/sync/client/CertificateHelperTest.kt">
         <error line="3" column="1" source="standard:import-ordering" />

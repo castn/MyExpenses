@@ -66,8 +66,10 @@ data class AccountMetaData(
                 type = account.type!!.name,
                 excludeFromTotals = account.excludeFromTotals,
                 criterion = account.criterion ?: 0L,
-                exchangeRate = if (homeCurrency != null && homeCurrency != accountCurrency) account.exchangeRate else null,
-                exchangeRateOtherCurrency = if (homeCurrency != null && homeCurrency != accountCurrency) homeCurrency else null,
+                exchangeRate =
+                    if (homeCurrency != null && homeCurrency != accountCurrency) account.exchangeRate else null,
+                exchangeRateOtherCurrency =
+                    if (homeCurrency != null && homeCurrency != accountCurrency) homeCurrency else null,
                 dynamicExchangeRates = account.dynamicExchangeRates
             )
         }

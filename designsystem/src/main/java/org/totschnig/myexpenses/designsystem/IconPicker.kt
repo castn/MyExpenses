@@ -125,7 +125,11 @@ fun IconPicker(
                     }
                 }
                 items(section.keys, contentType = { "icon" }) { key ->
-                    IconChoice(isSelected = key == selected, label = label(key), onClick = { onSelect(key) }) { icon(key) }
+                    IconChoice(
+                        isSelected = key == selected,
+                        label = label(key),
+                        onClick = { onSelect(key) }
+                    ) { icon(key) }
                 }
             }
         }
@@ -147,8 +151,13 @@ fun IconChoice(isSelected: Boolean, label: String?, onClick: () -> Unit, content
         contentAlignment = Alignment.Center
     ) {
         IconTile(
-            modifier = if (isSelected) Modifier.border(2.dp, MaterialTheme.colorScheme.primary, CircleShape) else Modifier,
-            color = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh
+            modifier =
+                if (isSelected) Modifier.border(2.dp, MaterialTheme.colorScheme.primary, CircleShape) else Modifier,
+            color = if (isSelected) {
+                MaterialTheme.colorScheme.primaryContainer
+            } else {
+                MaterialTheme.colorScheme.surfaceContainerHigh
+            }
         ) { content() }
     }
 }
@@ -175,7 +184,8 @@ fun IconPickerOption(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
-            modifier = if (isSelected) Modifier.border(2.dp, MaterialTheme.colorScheme.primary, CircleShape) else Modifier,
+            modifier =
+                if (isSelected) Modifier.border(2.dp, MaterialTheme.colorScheme.primary, CircleShape) else Modifier,
         ) { tile() }
         Column(Modifier.padding(start = Spacing.content).weight(1f)) {
             Text(title, style = MaterialTheme.typography.bodyLarge)

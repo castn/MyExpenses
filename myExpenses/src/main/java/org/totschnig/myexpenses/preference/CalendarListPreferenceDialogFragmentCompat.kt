@@ -47,7 +47,9 @@ class CalendarListPreferenceDialogFragmentCompat : PreferenceDialogFragmentCompa
             requireContext().contentResolver.query(
                 CalendarContract.Calendars.CONTENT_URI,
                 projection,
-                CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL + " >= " + CalendarContract.Calendars.CAL_ACCESS_CONTRIBUTOR,
+                CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL +
+                    " >= " +
+                    CalendarContract.Calendars.CAL_ACCESS_CONTRIBUTOR,
                 null,
                 CalendarContract.Calendars._ID + " ASC"
             )
@@ -98,7 +100,11 @@ class CalendarListPreferenceDialogFragmentCompat : PreferenceDialogFragmentCompa
                     val plannerId: String = plannerUtils.createPlanner(false)
                     val success = plannerId != INVALID_CALENDAR_ID
                     (activity as ProtectedFragmentActivity?)!!.showSnackBar(
-                        if (success) R.string.planner_create_calendar_success else R.string.planner_create_calendar_failure
+                        if (success) {
+                            R.string.planner_create_calendar_success
+                        } else {
+                            R.string.planner_create_calendar_failure
+                        }
                     )
                     if (success) {
                         preference.value = plannerId

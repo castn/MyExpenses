@@ -66,7 +66,9 @@ internal fun TransactionEditForm(
                 ChoiceChips(
                     options = listOf(false, true),
                     selected = draft.isIncome,
-                    label = { stringResource(if (it) R.string.next_transaction_income else R.string.next_transaction_expense) },
+                    label = {
+                        stringResource(if (it) R.string.next_transaction_income else R.string.next_transaction_expense)
+                    },
                     onSelect = { onChange(draft.copy(isIncome = it)) }
                 )
             }
@@ -121,7 +123,12 @@ internal fun TransactionEditForm(
         )
     }
     if (showMethod) {
-        MethodDialog(methods, draft.methodId, onSelect = { onChange(draft.copy(methodId = it)) }, onDismiss = { showMethod = false })
+        MethodDialog(
+            methods,
+            draft.methodId,
+            onSelect = { onChange(draft.copy(methodId = it)) },
+            onDismiss = { showMethod = false }
+        )
     }
 }
 

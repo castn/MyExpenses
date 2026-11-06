@@ -20,7 +20,15 @@ class CategoryInfosTest {
         assertEquals(
             listOf(
                 CategoryInfo(1, "Essen", "Essen", isExpense = true, isIncome = false),
-                CategoryInfo(2, "Supermarkt", "Essen > Supermarkt", isExpense = true, isIncome = false, mainId = 1, parentId = 1),
+                CategoryInfo(
+                    2,
+                    "Supermarkt",
+                    "Essen > Supermarkt",
+                    isExpense = true,
+                    isIncome = false,
+                    mainId = 1,
+                    parentId = 1
+                ),
                 CategoryInfo(3, "Sonstiges", "Sonstiges", isExpense = true, isIncome = true),
             ),
             categories

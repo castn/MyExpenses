@@ -29,7 +29,9 @@ fun buildAmountField(
                     if (level > 1) R.string.sub_budget_exceeded_error_1_1 else R.string.budget_exceeded_error_1_1,
                     max
                 ),
-                context.getString(if (level > 1) R.string.sub_budget_exceeded_error_2 else R.string.budget_exceeded_error_2)
+                context.getString(
+                    if (level > 1) R.string.sub_budget_exceeded_error_2 else R.string.budget_exceeded_error_2
+                )
             )
         )
     }

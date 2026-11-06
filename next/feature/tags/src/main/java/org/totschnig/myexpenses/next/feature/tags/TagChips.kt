@@ -202,7 +202,9 @@ private fun GroupPickerSheet(
                 ) {
                     Text(
                         stringResource(
-                            if (current is NameWarning.Category) R.string.next_group_create_anyway else R.string.next_tag_create
+                            if (
+                                current is NameWarning.Category
+                            ) R.string.next_group_create_anyway else R.string.next_tag_create
                         )
                     )
                 }

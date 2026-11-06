@@ -120,7 +120,11 @@ abstract class DebtActivity : ProtectedFragmentActivity() {
     private fun deleteDebtDo(debtId: Long) {
         debtViewModel.deleteDebt(debtId).observe(this) {
             if (it) {
-                (supportFragmentManager.findFragmentByTag(PartiesList.DIALOG_DEBT_DETAILS) as? DebtDetailsDialogFragment)?.dismiss()
+                (
+                    supportFragmentManager.findFragmentByTag(
+                        PartiesList.DIALOG_DEBT_DETAILS
+                    ) as? DebtDetailsDialogFragment
+                )?.dismiss()
             } else {
                 lifecycleScope.launchWhenResumed {
                     showSnackBar("ERROR", Snackbar.LENGTH_LONG, null)

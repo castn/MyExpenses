@@ -33,7 +33,10 @@ import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.provider.KEY_ACCOUNTID
 import org.totschnig.myexpenses.viewmodel.DistributionViewModel
 
-@Ignore("For unknown reason, testing for expense works, while testing for income fails. We run this test connected for the moment.")
+@Ignore(
+    "For unknown reason, testing for expense works, while testing for income fails. We run this test connected for " +
+        "the moment."
+)
 @RunWith(AndroidJUnit4::class)
 class DistributionTest : BaseTestWithRepository() {
     private lateinit var scenario: ActivityScenario<DistributionActivity>
@@ -124,7 +127,9 @@ class DistributionTest : BaseTestWithRepository() {
     fun testColorCommand() {
         launchWithContextCommand(R.string.color, null) {
             scenario.onActivity {
-                assertThat(it.supportFragmentManager.findFragmentByTag(ProtectedFragmentActivity.EDIT_COLOR_DIALOG)).isNotNull()
+                assertThat(
+                    it.supportFragmentManager.findFragmentByTag(ProtectedFragmentActivity.EDIT_COLOR_DIALOG)
+                ).isNotNull()
             }
         }
     }

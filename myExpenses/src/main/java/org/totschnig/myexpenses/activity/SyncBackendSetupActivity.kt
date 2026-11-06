@@ -165,7 +165,11 @@ abstract class SyncBackendSetupActivity : RestoreActivity(),
                 dismissSnackBar()
                 recordUsage(ContribFeature.SYNCHRONIZATION)
                 if ("xiaomi".equals(Build.MANUFACTURER, ignoreCase = true)) {
-                    showMessage("On some Xiaomi devices, synchronization does not work without AutoStart permission. Visit <a href=\"https://faq.myexpenses.mobi/sync-xiaomi\">MyExpenses FAQ</a> for more information.")
+                    showMessage(
+                        "On some Xiaomi devices, synchronization does not work without AutoStart permission. Visit " +
+                            "<a href=\"https://faq.myexpenses.mobi/sync-xiaomi\">MyExpenses FAQ</a> for more " +
+                                "information."
+                    )
                 }
                 onReceiveSyncAccountData(it)
             }.onFailure { throwable ->

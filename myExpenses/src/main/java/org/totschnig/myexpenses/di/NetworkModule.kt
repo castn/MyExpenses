@@ -167,7 +167,10 @@ open class NetworkModule {
         @JvmStatic
         @Provides
         @Singleton
-        fun provideRoadmapService(builder: OkHttpClient.Builder, converterFactory: GsonConverterFactory): RoadmapService {
+        fun provideRoadmapService(
+            builder: OkHttpClient.Builder,
+            converterFactory: GsonConverterFactory
+        ): RoadmapService {
             val okHttpClient: OkHttpClient = builder
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .writeTimeout(20, TimeUnit.SECONDS)

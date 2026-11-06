@@ -84,23 +84,6 @@
     <ID>MagicNumber:WellKnownBank.kt:WellKnownBank.TARGO$192</ID>
     <ID>MagicNumber:WellKnownBank.kt:WellKnownBank.VOLKSBANK$101</ID>
     <ID>MagicNumber:WellKnownBank.kt:WellKnownBank.VOLKSBANK$178</ID>
-    <ID>MaxLineLength:Banking.kt:Banking$CrashHandler.report(IllegalStateException("Expected non-null AccountInformation"))</ID>
-    <ID>MaxLineLength:Banking.kt:Banking$contentDescription = stringResource(id = androidx.appcompat.R.string.abc_action_bar_up_description)</ID>
-    <ID>MaxLineLength:Banking.kt:Banking$id == 0L || selectedAccounts.none { it.key != index &amp;&amp; it.value.targetAccountId == id }</ID>
-    <ID>MaxLineLength:Banking.kt:Banking$if</ID>
-    <ID>MaxLineLength:Banking.kt:Banking$text = stringResource(id = if (bankingCredentials.value.isNew) RF.string.add_new_bank else RF.string.enter_pin)</ID>
-    <ID>MaxLineLength:Banking.kt:Banking$val</ID>
-    <ID>MaxLineLength:Banking.kt:if</ID>
-    <ID>MaxLineLength:BankingCredentials.kt:BankingCredentials$get() = bankLeitZahl.all { it.isDigit() } &amp;&amp; bankLeitZahl.length == 8 &amp;&amp; user.isNotEmpty() &amp;&amp; !password.isNullOrEmpty()</ID>
-    <ID>MaxLineLength:BankingFeatureImpl.kt:BankingFeatureImpl$override val bankIconRenderer: @Composable() (Modifier, Bank) -&gt; Unit = { modifier, bank -&gt; BankIconImpl(modifier, bank) }</ID>
-    <ID>MaxLineLength:BankingSyncFragment.kt:BankingSyncFragment$BankingCredentials.fromBank((workState.value as BankingViewModel.WorkState.BankLoaded).bank)</ID>
-    <ID>MaxLineLength:BankingViewModel.kt:BankingViewModel$"(select $KEY_VALUE from $TABLE_TRANSACTION_ATTRIBUTES left join $TABLE_ATTRIBUTES on $KEY_ATTRIBUTE_ID = $TABLE_ATTRIBUTES.$KEY_ROWID WHERE $KEY_ATTRIBUTE_NAME = ? and $KEY_TRANSACTIONID = $VIEW_EXTENDED.$KEY_ROWID) = ? "</ID>
-    <ID>MaxLineLength:BankingViewModel.kt:BankingViewModel$?.</ID>
-    <ID>MaxLineLength:BankingViewModel.kt:BankingViewModel$if</ID>
-    <ID>MaxLineLength:BankingViewModel.kt:BankingViewModel$it.iban == konto.iban || (it.number == konto.number &amp;&amp; it.subnumber == konto.subnumber)</ID>
-    <ID>MaxLineLength:BankingViewModel.kt:BankingViewModel$val</ID>
-    <ID>MaxLineLength:BankingViewModel.kt:BankingViewModel.MyHBCICallback$throwAndReport(HBCI_Exception("Flicker not yet implemented for ${bankingCredentials.blz} Please contact support@myexpenses.mobi !"))</ID>
-    <ID>MaxLineLength:Composables.kt:Text(stringResource(id = if (migrationState == MigrationState.Success) android.R.string.ok else android.R.string.cancel))</ID>
     <ID>ReturnCount:BankingViewModel.kt:BankingViewModel$@WorkerThread private fun &lt;T&gt; doHBCI: Result&lt;T&gt;</ID>
     <ID>ThrowsCount:BankingViewModel.kt:BankingViewModel.MyHBCICallback$override fun callback</ID>
     <ID>TooGenericExceptionCaught:BankingViewModel.kt:BankingViewModel$e: Exception</ID>

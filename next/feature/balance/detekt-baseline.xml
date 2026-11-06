@@ -8,6 +8,5 @@
     <ID>MagicNumber:MonthlyBalanceCard.kt:0.5f</ID>
     <ID>MagicNumber:MonthlyBalanceCard.kt:22</ID>
     <ID>MagicNumber:MonthlyBalanceCard.kt:8</ID>
-    <ID>MaxLineLength:BalanceViewModelTest.kt:BalanceViewModelTest$val viewModel = BalanceViewModel(BalanceRepository(FakeLedgerSource(ledger = ledger), MutableStateFlow(facts), backgroundScope))</ID>
   </CurrentIssues>
 </SmellBaseline>

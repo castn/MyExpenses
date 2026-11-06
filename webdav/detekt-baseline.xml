@@ -9,9 +9,6 @@
     <ID>MagicNumber:LockableDavResource.kt:LockableDavResource$207</ID>
     <ID>MagicNumber:LockableDavResource.kt:LockableDavResource$404</ID>
     <ID>MagicNumber:LockableDavResource.kt:LockableDavResource$405</ID>
-    <ID>MaxLineLength:WebDavBackendProvider.kt:WebDavBackendProvider$WebDavClient(context, context.injector, url, userName, password, certificate, allowUnverified, clientCertAlias)</ID>
-    <ID>MaxLineLength:WebDavClient.kt:WebDavClient$//this can fail, if the unlocking mechanism does not work. We live with not being able to delete the test folder</ID>
-    <ID>MaxLineLength:WebdavSetupViewModel.kt:WebdavSetupViewModel$WebDavClient(app, app.appComponent, url, userName, passWord, certificate, allowUnverifiedHost, clientCertAlias)</ID>
     <ID>NestedBlockDepth:WebDavClient.kt:WebDavClient$@Throws(Exception::class) fun testClass2Locking</ID>
     <ID>NestedBlockDepth:WebDavClient.kt:WebDavClient$fun lock: Boolean</ID>
     <ID>SwallowedException:WebdavSetup.kt:WebdavSetup$e: Exception</ID>

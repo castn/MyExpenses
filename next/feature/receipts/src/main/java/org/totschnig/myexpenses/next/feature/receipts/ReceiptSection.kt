@@ -89,7 +89,9 @@ internal fun rememberReceiptScanner(viewModel: ReceiptViewModel, onPhoto: (Uri) 
 /** The saved receipt of [transaction] once loaded, the outer null while it is loading */
 @Composable
 private fun rememberLoadedReceipt(viewModel: ReceiptViewModel, transaction: ShownTransaction): LoadedReceipt? {
-    val loaded by remember(transaction.id) { viewModel.receipt(transaction.id, transaction.payeeName).map(::LoadedReceipt) }
+    val loaded by remember(transaction.id) {
+        viewModel.receipt(transaction.id, transaction.payeeName).map(::LoadedReceipt)
+    }
         .collectAsStateWithLifecycle(null)
     return loaded
 }

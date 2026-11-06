@@ -85,7 +85,10 @@ class SankeyLayout(
             require(it.value >= 0) { "A link cannot be negative: $it" }
         }
         val values = columns.indices.map { node ->
-            maxOf(links.filter { it.source == node }.sumOf { it.value }, links.filter { it.target == node }.sumOf { it.value })
+            maxOf(
+                links.filter { it.source == node }.sumOf { it.value },
+                links.filter { it.target == node }.sumOf { it.value }
+            )
         }
         val byColumn = columns.indices.groupBy { columns[it] }
         val gaps = byColumn.mapValues { (_, nodes) ->
@@ -152,7 +155,11 @@ class SankeyLayout(
      */
     fun hit(x: Float, y: Float, slop: Float, nodeWidth: Float? = null): SankeyHit? {
         nodes.indices
-            .filter { node -> nodes[node].let { x in it.x - slop..it.x + (nodeWidth ?: it.width) + slop && y in it.top - slop..it.bottom + slop } }
+            .filter { node ->
+                nodes[node].let {
+                    x in it.x - slop..it.x + (nodeWidth ?: it.width) + slop && y in it.top - slop..it.bottom + slop
+                }
+            }
             .minByOrNull { node -> abs(y - (nodes[node].top + nodes[node].bottom) / 2) }
             ?.let { return SankeyHit.Node(it) }
         return bands.indices

@@ -21,7 +21,11 @@ class ContractNewsTest {
             )
         }
 
-    private fun rule(payeeId: Long = 1, direction: ContractDirection = ContractDirection.EXPENSE, cancelledOn: LocalDate? = null) =
+    private fun rule(
+        payeeId: Long = 1,
+        direction: ContractDirection = ContractDirection.EXPENSE,
+        cancelledOn: LocalDate? = null
+    ) =
         ContractRule(
             id = "r$payeeId", kind = ContractRule.Kind.CONTRACT, direction = direction, payeeIds = setOf(payeeId),
             interval = ContractInterval.MONTHLY, name = "Contract $payeeId", cancelledOn = cancelledOn
@@ -110,7 +114,8 @@ class ContractNewsTest {
     fun addingDropsOldNewsAndLimitsCount() {
         val template = detect(listOf(rule()), monthly(listOf(-1399, -1399, -1399, -1799))).news.single()
         val old = template.copy(id = "old", createdAt = today.minusMonths(25))
-        val many = (1..ContractNews.MAX_COUNT + 5).map { template.copy(id = "n$it", createdAt = today.minusDays(it.toLong())) }
+        val many =
+            (1..ContractNews.MAX_COUNT + 5).map { template.copy(id = "n$it", createdAt = today.minusDays(it.toLong())) }
         val result = listOf(old).adding(many, today)
         assertEquals(ContractNews.MAX_COUNT, result.size)
         assertTrue(result.none { it.id == "old" })
@@ -120,11 +125,14 @@ class ContractNewsTest {
     @Test
     fun missingPaymentAfterTolerance() {
         // Last payment 36 days ago, expected 5 days ago: beyond the tolerance of 4 days
-        val late = detect(listOf(rule()), monthly(listOf(-4000, -4000, -4000), last = today.minusDays(36))).news.single()
+        val late =
+            detect(listOf(rule()), monthly(listOf(-4000, -4000, -4000), last = today.minusDays(36))).news.single()
         assertEquals(ContractNews.Type.PAYMENT_MISSING, late.type)
         assertEquals(today.minusDays(36).plusMonths(1), late.date)
         // Expected 2 days ago: within the tolerance, e.g. moved by a weekend
-        assertTrue(detect(listOf(rule()), monthly(listOf(-4000, -4000, -4000), last = today.minusDays(33))).news.isEmpty())
+        assertTrue(
+            detect(listOf(rule()), monthly(listOf(-4000, -4000, -4000), last = today.minusDays(33))).news.isEmpty()
+        )
     }
 
     @Test
@@ -142,13 +150,19 @@ class ContractNewsTest {
     @Test
     fun stoppedContractRecentlyEnded() {
         // Monthly contract ends 42 days after the last payment
-        val stopped = detect(listOf(rule()), monthly(listOf(-3000, -3000, -3000), last = today.minusDays(50))).news.single()
+        val stopped =
+            detect(listOf(rule()), monthly(listOf(-3000, -3000, -3000), last = today.minusDays(50))).news.single()
         assertEquals(ContractNews.Type.CONTRACT_STOPPED, stopped.type)
         // Ended long ago: history, no news
-        assertTrue(detect(listOf(rule()), monthly(listOf(-3000, -3000, -3000), last = today.minusDays(120))).news.isEmpty())
+        assertTrue(
+            detect(listOf(rule()), monthly(listOf(-3000, -3000, -3000), last = today.minusDays(120))).news.isEmpty()
+        )
         // Cancelled by the user: expected to stop
         assertTrue(
-            detect(listOf(rule(cancelledOn = today.minusDays(60))), monthly(listOf(-3000, -3000, -3000), last = today.minusDays(70)))
+            detect(
+                listOf(rule(cancelledOn = today.minusDays(60))),
+                monthly(listOf(-3000, -3000, -3000), last = today.minusDays(70))
+            )
                 .news.isEmpty()
         )
     }
@@ -172,7 +186,8 @@ class ContractNewsTest {
 
     @Test
     fun newsOfReserveAreMarked() {
-        val news = detect(listOf(rule().copy(reserve = true)), monthly(listOf(-10000, -10000, -10000, -15000))).news.single()
+        val news =
+            detect(listOf(rule().copy(reserve = true)), monthly(listOf(-10000, -10000, -10000, -15000))).news.single()
         assertTrue(news.isReserve)
         assertFalse(detect(listOf(rule()), monthly(listOf(-1399, -1399, -1399, -1799))).news.single().isReserve)
     }

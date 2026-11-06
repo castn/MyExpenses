@@ -33,7 +33,8 @@ fun SupportSQLiteDatabase.unarchive(
         TransactionProvider.pauseChangeTrigger(this)
         //parts are promoted to independence
         execSQL(
-            "UPDATE $TABLE_TRANSACTIONS SET $KEY_PARENTID = null, $KEY_STATUS = $STATUS_NONE WHERE $KEY_PARENTID = $rowIdSubSelect ",
+            "UPDATE $TABLE_TRANSACTIONS SET $KEY_PARENTID = null, $KEY_STATUS = $STATUS_NONE WHERE $KEY_PARENTID = " +
+                "$rowIdSubSelect ",
             arrayOf(uuid)
         )
         //Change is recorded
@@ -43,7 +44,8 @@ fun SupportSQLiteDatabase.unarchive(
                             | ($KEY_TYPE, $KEY_ACCOUNTID, $KEY_SYNC_SEQUENCE_LOCAL, $KEY_UUID)
                             | SELECT '${TransactionChange.Type.unarchive.name}', $KEY_ROWID, $KEY_SYNC_SEQUENCE_LOCAL, ?
                             | FROM $TABLE_ACCOUNTS
-                            | WHERE $KEY_ROWID = $accountIdSubSelect AND $KEY_SYNC_ACCOUNT_NAME IS NOT NULL""".trimMargin(),
+                            | WHERE $KEY_ROWID = $accountIdSubSelect
+                            | AND $KEY_SYNC_ACCOUNT_NAME IS NOT NULL""".trimMargin(),
                 arrayOf(uuid, uuid)
             )
         }
@@ -94,7 +96,12 @@ private fun Bundle.parseArchiveArguments() = Triple(
 )
 
 private fun SupportSQLiteDatabase.accountType(accountId: Long) =
-    query(TABLE_ACCOUNT_TYPES, null, "$KEY_ROWID = (SELECT $KEY_TYPE FROM $TABLE_ACCOUNTS WHERE $KEY_ROWID = ?)", arrayOf(accountId)).use {
+    query(
+        TABLE_ACCOUNT_TYPES,
+        null,
+        "$KEY_ROWID = (SELECT $KEY_TYPE FROM $TABLE_ACCOUNTS WHERE $KEY_ROWID = ?)",
+        arrayOf(accountId)
+    ).use {
         it.moveToFirst()
         AccountType.fromCursor(it)
     }
@@ -134,7 +141,8 @@ fun SupportSQLiteDatabase.archive(extras: Bundle): Long {
                     throw IllegalStateException("Transactions in archive have different states.")
                 }
                 val nonVoidStates = states.filter { it.key != CrStatus.VOID.name }.values
-                //If we archive a cash account, where we find multiple states (which can happen when user updates account type),
+                //If we archive a cash account, where we find multiple states (which can happen when user updates
+                // account type),
                 // we create an unreconciled transaction, since this is the expected state for cash accounts
                 Triple(
                     CrStatus.UNRECONCILED.name,

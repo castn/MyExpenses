@@ -2,8 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>MaxLineLength:OneDriveBackendProvider.kt:OneDriveBackendProvider.&lt;no name provided&gt;.&lt;no name provided&gt;$"Unable to retrieve Microsoft Account. Remove backend and add again."</ID>
-    <ID>MaxLineLength:OneDriveBackendProvider.kt:OneDriveBackendProvider.&lt;no name provided&gt;.&lt;no name provided&gt;.&lt;no name provided&gt;$override</ID>
     <ID>TooGenericExceptionCaught:OneDriveBackendProvider.kt:OneDriveBackendProvider$e: Exception</ID>
     <ID>TooManyFunctions:OneDriveBackendProvider.kt:OneDriveBackendProvider : AbstractSyncBackendProvider</ID>
   </CurrentIssues>

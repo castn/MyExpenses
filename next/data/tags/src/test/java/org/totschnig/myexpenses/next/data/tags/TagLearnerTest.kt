@@ -59,7 +59,10 @@ class TagLearnerTest {
         val new = transaction("p:fressnapf")
         val alreadyTagged = transaction("p:fressnapf", dog)
         val other = transaction("p:rewe")
-        assertEquals(mapOf(new.id to setOf(dog)), TagLearner.applyRules(listOf(old, new, alreadyTagged, other), listOf(rule)))
+        assertEquals(
+            mapOf(new.id to setOf(dog)),
+            TagLearner.applyRules(listOf(old, new, alreadyTagged, other), listOf(rule))
+        )
     }
 
     @Test

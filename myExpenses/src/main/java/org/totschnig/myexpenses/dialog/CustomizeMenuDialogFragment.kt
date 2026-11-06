@@ -119,7 +119,9 @@ class CustomizeMenuDialogFragment : ComposeBaseDialogFragment3() {
                     .padding(bottom = 16.dp)
             ) {
 
-                (if (isTablet) MenuItem.NavigationMode.forTablet else MenuItem.NavigationMode.forPhone).forEachIndexed { index, item ->
+                (
+                    if (isTablet) MenuItem.NavigationMode.forTablet else MenuItem.NavigationMode.forPhone
+                ).forEachIndexed { index, item ->
                     SegmentedButton(
                         selected = navigationMode == item,
                         onClick = { scope.launch { navigationModeAccessor.set(item) } },

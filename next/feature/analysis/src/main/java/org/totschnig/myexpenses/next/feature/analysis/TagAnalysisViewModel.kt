@@ -50,7 +50,13 @@ class TagAnalysisViewModel(
 
     /** Null while loading or without consent */
     private val input: Flow<AnalysisInput?> =
-        combine(ledgerSource.ledger, ledgerSource.catalog, tagFacts, ledgerSource.today, year) { ledger, catalog, tags, today, year ->
+        combine(
+            ledgerSource.ledger,
+            ledgerSource.catalog,
+            tagFacts,
+            ledgerSource.today,
+            year
+        ) { ledger, catalog, tags, today, year ->
             ledger?.let { AnalysisInput(it, catalog.tags, tags.meanings, catalog.categoriesById, today, year) }
         }
 

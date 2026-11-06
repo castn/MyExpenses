@@ -77,14 +77,16 @@ class SavingTipTest {
 
     @Test
     fun severalIncreasesCountFromThePriceBefore() {
-        val increase = increases(contract(List(6) { 1000L } + List(4) { 1100L } + List(4) { 1200L }))!!.increases.single()
+        val increase =
+            increases(contract(List(6) { 1000L } + List(4) { 1100L } + List(4) { 1200L }))!!.increases.single()
         assertEquals(1000L, increase.before)
         assertEquals(1200L, increase.after)
     }
 
     @Test
     fun yearlyContract() {
-        val increase = increases(contract(listOf(30000L, 36000L), interval = ContractInterval.YEARLY))!!.increases.single()
+        val increase =
+            increases(contract(listOf(30000L, 36000L), interval = ContractInterval.YEARLY))!!.increases.single()
         assertEquals(6000L, increase.yearlyAmount)
     }
 
@@ -93,7 +95,9 @@ class SavingTipTest {
         assertNull(increases(contract(List(10) { 1799L } + List(4) { 1399L })))
         assertNull(increases(contract(List(10) { 5000L } + listOf(5600L, 6100L))))
         assertNull(increases(contract(List(10) { 5000L } + List(4) { 5010L })))
-        assertNull(increases(contract(List(10) { 200000L } + List(4) { 210000L }, direction = ContractDirection.INCOME)))
+        assertNull(
+            increases(contract(List(10) { 200000L } + List(4) { 210000L }, direction = ContractDirection.INCOME))
+        )
         assertNull(increases(contract(List(10) { 5000L } + List(4) { 10000L }, reserve = true)))
     }
 

@@ -321,7 +321,10 @@ object IconCatalog {
     val icons: List<CatalogIcon> = themes.flatMap { it.icons }.distinctBy { it.name }
 
     private val wordsByName: Map<String, List<String>> =
-        themes.flatMap { it.icons }.groupBy({ it.name }, { it.words }).mapValues { (_, words) -> words.flatten().distinct() }
+        themes.flatMap { it.icons }.groupBy(
+            { it.name },
+            { it.words }
+        ).mapValues { (_, words) -> words.flatten().distinct() }
 
     /** Words of [name] in the catalog, empty if it is not part of it */
     fun wordsOf(name: String): List<String> = wordsByName[name].orEmpty()

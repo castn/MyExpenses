@@ -128,7 +128,8 @@ class BudgetViewModel(
             .stateWhileShown(viewModelScope, null)
 
     /** Budgets of the classic screens to offer to take over, 0 if there are none or they were handled */
-    val legacyOffer: StateFlow<Int> = combine(legacyCount, store.legacyHandled) { count, handled -> if (handled) 0 else count }
+    val legacyOffer: StateFlow<Int> =
+        combine(legacyCount, store.legacyHandled) { count, handled -> if (handled) 0 else count }
         .stateWhileShown(viewModelScope, 0)
 
     /** Whether the user closed the invitation to a first budget, true until known so it does not flash */
@@ -141,7 +142,8 @@ class BudgetViewModel(
     override fun importLegacy() {
         viewModelScope.launch {
             val pots = LegacyBudgets.pots(
-                loadLegacy(), homeCurrency.value.code, ledgerSource.catalog.first().categoriesById, ledgerSource.today.first()
+                loadLegacy(), homeCurrency.value.code, ledgerSource.catalog.first()
+                    .categoriesById, ledgerSource.today.first()
             )
             store.addFromLegacy(pots)
         }

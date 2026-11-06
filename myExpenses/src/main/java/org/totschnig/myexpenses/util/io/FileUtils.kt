@@ -5,7 +5,7 @@ object FileUtils {
      * Gets the extension of a file name, like ".png" or ".jpg".
      * @return Extension without the dot("."); "" if there is no extension;
      * null if uri was null.
-     * originally based on //https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java
+     * originally based on FileUtils.java of //https://github.com/iPaulPro/aFileChooser
      */
     @JvmStatic
     fun getExtension(uri: String): String {

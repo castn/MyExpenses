@@ -75,10 +75,17 @@ sealed class SimpleCriterion<T : Any> : Criterion, Parcelable {
     private fun applyToSplitParts(selection: String, tableName: String) = buildList {
         add(selection)
         if (shouldApplyToSplitTransactions) {
-            add("($KEY_CATID = $SPLIT_CATID AND exists(select 1 from $tableName children WHERE  $KEY_PARENTID = $tableName.$KEY_ROWID AND ($selection)))")
+            add(
+                "($KEY_CATID = $SPLIT_CATID AND exists(select 1 from $tableName children WHERE  $KEY_PARENTID = " +
+                    "$tableName.$KEY_ROWID AND ($selection)))"
+            )
         }
         if (shouldApplyToArchive) {
-            add("($KEY_STATUS = $STATUS_ARCHIVE AND exists(select 1 from $tableName children WHERE $KEY_PARENTID in ($tableName.$KEY_ROWID, (select $KEY_ROWID from $TABLE_TRANSACTIONS grandchildren where $KEY_PARENTID = $tableName.$KEY_ROWID)) AND ($selection)))")
+            add(
+                "($KEY_STATUS = $STATUS_ARCHIVE AND exists(select 1 from $tableName children WHERE $KEY_PARENTID in " +
+                    "($tableName.$KEY_ROWID, (select $KEY_ROWID from $TABLE_TRANSACTIONS grandchildren where " +
+                        "$KEY_PARENTID = $tableName.$KEY_ROWID)) AND ($selection)))"
+            )
         }
     }.joinToString(separator = " OR ", prefix = "(", postfix = ")")
 
@@ -94,7 +101,8 @@ sealed class SimpleCriterion<T : Any> : Criterion, Parcelable {
      * matched by the criteria
      */
     private fun applyToSplitParents(selection: String, tableName: String): String {
-        return "($selection OR exists(select 1 from $TABLE_TRANSACTIONS parents WHERE $KEY_ROWID = $tableName.$KEY_PARENTID AND ($selection)))"
+        return "($selection OR exists(select 1 from $TABLE_TRANSACTIONS parents WHERE $KEY_ROWID = " +
+            "$tableName.$KEY_PARENTID AND ($selection)))"
     }
 
     override fun getSelectionArgs(queryParts: Boolean) = when {

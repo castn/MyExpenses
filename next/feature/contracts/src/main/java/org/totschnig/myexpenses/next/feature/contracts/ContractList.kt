@@ -114,15 +114,21 @@ internal fun ContractList(
         }
 
         // All contracts removed: nothing to show outside of the edit mode
-        if (state.isEmpty || !isEditing && state.active.isEmpty() && state.ended.isEmpty() && state.suggestions.isEmpty() &&
+        if (
+            state.isEmpty || !isEditing &&
+                state.active.isEmpty() &&
+                state.ended.isEmpty() &&
+                state.suggestions.isEmpty() &&
             state.cancelled.isEmpty()
         ) {
             ContractsEmptyState(isArea, Modifier.weight(1f), isIncome)
             return@Column
         }
 
-        val dismissLabel = stringResource(if (isIncome) R.string.next_income_dismiss else R.string.next_contracts_dismiss)
-        val confirmLabel = stringResource(if (isIncome) R.string.next_income_confirm else R.string.next_contracts_confirm)
+        val dismissLabel =
+            stringResource(if (isIncome) R.string.next_income_dismiss else R.string.next_contracts_dismiss)
+        val confirmLabel =
+            stringResource(if (isIncome) R.string.next_income_confirm else R.string.next_contracts_confirm)
         val restoreLabel = stringResource(R.string.next_contracts_restore)
         val renameLabel = stringResource(R.string.next_contracts_rename)
 
@@ -162,7 +168,8 @@ internal fun ContractList(
 
         LazyColumn(
             modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = if (hasToolbar) 0.dp else 16.dp, bottom = 16.dp)
+            contentPadding =
+                PaddingValues(start = 16.dp, end = 16.dp, top = if (hasToolbar) 0.dp else 16.dp, bottom = 16.dp)
         ) {
             if (state.active.isNotEmpty()) {
                 item(key = "summary") {
@@ -190,7 +197,9 @@ internal fun ContractList(
             if (state.cancelled.isNotEmpty()) {
                 item(key = "header_cancelled") {
                     SectionHeader(
-                        title = stringResource(if (isIncome) R.string.next_income_cancelled else R.string.next_contracts_cancelled),
+                        title = stringResource(
+                            if (isIncome) R.string.next_income_cancelled else R.string.next_contracts_cancelled
+                        ),
                         count = state.cancelled.size,
                         total = null,
                         currency = currency
@@ -368,7 +377,10 @@ private fun SummaryCard(
         )
         if (reservesMonthlyAmount != 0L) {
             Text(
-                stringResource(R.string.next_contracts_of_which_reserves, formatter.format(reservesMonthlyAmount, currency)),
+                stringResource(
+                    R.string.next_contracts_of_which_reserves,
+                    formatter.format(reservesMonthlyAmount, currency)
+                ),
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.SemiBold
             )

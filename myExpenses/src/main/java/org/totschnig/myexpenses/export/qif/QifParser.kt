@@ -117,7 +117,11 @@ class QifParser(
         accounts.add(account.build())
     }
 
-    private fun readTransaction(r: QifBufferedReader, dateFormat: QifDateFormat, currency: CurrencyUnit): ImportTransaction.Builder {
+    private fun readTransaction(
+        r: QifBufferedReader,
+        dateFormat: QifDateFormat,
+        currency: CurrencyUnit
+    ): ImportTransaction.Builder {
         val builder = ImportTransaction.Builder()
         var split: ImportTransaction.Builder? = null
         val splits = mutableListOf<ImportTransaction.Builder>()

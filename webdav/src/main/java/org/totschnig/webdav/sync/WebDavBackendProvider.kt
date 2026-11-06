@@ -335,7 +335,16 @@ class WebDavBackendProvider @SuppressLint("MissingPermission") internal construc
         }
         val clientCertAlias = accountManager.getUserData(account, KEY_CLIENT_CERT_ALIAS)
         webDavClient = try {
-            WebDavClient(context, context.injector, url, userName, password, certificate, allowUnverified, clientCertAlias)
+            WebDavClient(
+                context,
+                context.injector,
+                url,
+                userName,
+                password,
+                certificate,
+                allowUnverified,
+                clientCertAlias
+            )
         } catch (e: InvalidCertificateException) {
             throw SyncParseException(e)
         } catch (e: ClientCertMissingException) {

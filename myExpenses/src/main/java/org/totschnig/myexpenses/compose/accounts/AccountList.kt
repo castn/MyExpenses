@@ -191,7 +191,9 @@ fun AccountListV2(
                         currency = groupKey as? CurrencyUnit
                             ?: LocalCurrencyContext.current.homeCurrencyUnit,
                         total = group.filter { !it.excludeFromTotals }.sumOf {
-                            if (grouping == AccountGrouping.CURRENCY) it.effectiveBalance else it.equivalentEffectiveBalance
+                            if (
+                                grouping == AccountGrouping.CURRENCY
+                            ) it.effectiveBalance else it.equivalentEffectiveBalance
                         },
                         onToggleExpand = { expansionHandlerGroups.toggle(headerId) },
                         onNavigate = if (group.size < 2) null else {
@@ -830,7 +832,12 @@ fun AccountCard(
                         currency
                     )
                 )
-                if (showEquivalent && isFx && account.equivalentOpeningBalance != 0L && account.initialExchangeRate != null) {
+                if (
+                    showEquivalent &&
+                        isFx &&
+                        account.equivalentOpeningBalance != 0L &&
+                        account.initialExchangeRate != null
+                ) {
                     val realRate = calculateRealExchangeRate(
                         account.initialExchangeRate,
                         account.currencyUnit,
@@ -891,7 +898,8 @@ fun AccountCard(
                         val realRate =
                             calculateRealExchangeRate(rate, account.currencyUnit, homeCurrency)
                         Text(
-                            "1 $accountCurrencyIsolated = ${fXFormat.format(realRate)} $homeCurrencyIsolated ($dateFormatted)"
+                            "1 $accountCurrencyIsolated = ${fXFormat.format(realRate)} $homeCurrencyIsolated " +
+                                "($dateFormatted)"
                         )
                     }
                 }

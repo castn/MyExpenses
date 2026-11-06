@@ -66,7 +66,16 @@ fun SavingTipsFlow(
     val backStack = rememberNavBackStack(SavingTipsKey.Home)
     // The entries read the latest values, whenever NavDisplay creates their content
     val current by rememberUpdatedState(
-        SavingTipsContent(tipsViewModel, fixedTransactions, currency, state, onOpenContract, onInsightSettings, transactionDetails, footer)
+        SavingTipsContent(
+            tipsViewModel,
+            fixedTransactions,
+            currency,
+            state,
+            onOpenContract,
+            onInsightSettings,
+            transactionDetails,
+            footer
+        )
     )
     NavDisplay(
         backStack = backStack,
@@ -74,8 +83,12 @@ fun SavingTipsFlow(
         modifier = modifier,
         sceneStrategies = listOf(rememberListDetailPages()),
         entryProvider = entryProvider {
-            entry<SavingTipsKey.Home>(metadata = ListPage(R.string.next_pick_saving_tip)) { SavingTipsHome(current, backStack) }
-            entry<SavingTipsKey.Transactions>(metadata = DetailPage()) { key -> TransactionsEntry(current, backStack, key) }
+            entry<SavingTipsKey.Home>(
+                metadata = ListPage(R.string.next_pick_saving_tip)
+            ) { SavingTipsHome(current, backStack) }
+            entry<SavingTipsKey.Transactions>(metadata = DetailPage()) { key ->
+                TransactionsEntry(current, backStack, key)
+            }
         }
     )
 }
@@ -105,17 +118,24 @@ private fun SavingTipsHome(content: SavingTipsContent, backStack: NavBackStack<N
         onMarkSeen = tipsViewModel::markTipsSeen,
         navigation = TipNavigation(
             onOpenContract = content.onOpenContract,
-            onShowTransactions = { key, title, subtitle -> backStack.add(SavingTipsKey.Transactions(key, title, subtitle)) }
+            onShowTransactions =
+                { key, title, subtitle -> backStack.add(SavingTipsKey.Transactions(key, title, subtitle)) }
         ),
         footer = content.footer
     )
 }
 
 @Composable
-private fun TransactionsEntry(content: SavingTipsContent, backStack: NavBackStack<NavKey>, key: SavingTipsKey.Transactions) {
+private fun TransactionsEntry(
+    content: SavingTipsContent,
+    backStack: NavBackStack<NavKey>,
+    key: SavingTipsKey.Transactions
+) {
     // Looked up in the current tips: once the tip is gone, so is its page
     val transactions = shownOrLeave(
-        content.state.valueOrNull?.let { it.tips + it.dismissed }?.firstNotNullOfOrNull { it.transactionGroups[key.key] },
+        content.state.valueOrNull?.let { it.tips + it.dismissed }?.firstNotNullOfOrNull {
+            it.transactionGroups[key.key]
+        },
         isLoaded = content.state != AnalysisState.Loading
     ) { backStack.remove(key) } ?: return
     val ids = transactions.map { it.id }

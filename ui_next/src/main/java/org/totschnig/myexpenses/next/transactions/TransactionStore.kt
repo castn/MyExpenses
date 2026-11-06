@@ -66,7 +66,9 @@ class RepositoryTransactionStore(private val repository: Repository) : Transacti
                 .appendPath(if (isIncome) "1" else "-1")
                 .appendQueryParameter(TransactionProvider.QUERY_PARAMETER_ACCOUNT_TYPE_LIST, accountType.toString())
                 .build(), null, null, null, null
-        )?.useAndMapToList { MethodOption(it.getLong(KEY_ROWID), it.getString(KEY_LABEL).translateIfPredefined(repository.context)) }.orEmpty()
+        )?.useAndMapToList {
+            MethodOption(it.getLong(KEY_ROWID), it.getString(KEY_LABEL).translateIfPredefined(repository.context))
+        }.orEmpty()
 
     override suspend fun save(id: Long, values: EditValues) {
         val data = repository.loadTransaction(id, withTransfer = false).data

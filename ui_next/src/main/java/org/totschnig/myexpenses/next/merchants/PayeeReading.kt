@@ -23,6 +23,9 @@ fun ContentResolver.rawPayees(): Flow<List<RawPayee>> =
         projection = arrayOf(KEY_ROWID, KEY_PAYEE_NAME, KEY_SHORT_NAME, KEY_PARENTID),
     ).mapToList {
         RawPayee(
-            it.getLong(KEY_ROWID), it.getString(KEY_PAYEE_NAME), it.getStringOrNull(KEY_SHORT_NAME), it.getLongOrNull(KEY_PARENTID)
+            it.getLong(KEY_ROWID),
+            it.getString(KEY_PAYEE_NAME),
+            it.getStringOrNull(KEY_SHORT_NAME),
+            it.getLongOrNull(KEY_PARENTID)
         )
     }
