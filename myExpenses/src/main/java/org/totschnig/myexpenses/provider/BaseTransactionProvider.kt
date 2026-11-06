@@ -9,6 +9,7 @@ import android.content.Intent
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.database.sqlite.SQLiteConstraintException
+import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteDatabase.CONFLICT_IGNORE
 import android.database.sqlite.SQLiteDatabase.CONFLICT_NONE
 import android.database.sqlite.SQLiteDatabase.CONFLICT_REPLACE
@@ -1024,24 +1025,33 @@ abstract class BaseTransactionProvider : ContentProvider() {
             }
     }
 
+    /**
+     * The backup is written next to the current database and only replaces it once complete,
+     * so that the current database and its settings stay usable when this returns false or throws.
+     */
     @Synchronized
     open fun restore(backupFile: File, encrypt: Boolean): Boolean {
         val dataDir = File(getInternalAppDir(), "databases")
         dataDir.mkdir()
         val currentDb = File(dataDir, provideDatabaseName(encrypt))
+        val tempDb = File(dataDir, "${currentDb.name}.restoring")
         _helper?.close()
         _helper = null
-        val result: Boolean = try {
-            if (encrypt) {
-                DataModule.cryptProvider.encrypt(context!!, backupFile, currentDb)
+        try {
+            val written = if (encrypt) {
+                DataModule.cryptProvider.encrypt(context!!, backupFile, tempDb)
                 true
             } else {
-                FileCopyUtils.copy(backupFile, currentDb)
+                FileCopyUtils.copy(backupFile, tempDb) && tempDb.length() == backupFile.length()
             }
+            if (!written || !tempDb.renameTo(currentDb)) return false
         } finally {
-            prefHandler.putBoolean(PrefKey.ENCRYPT_DATABASE, encrypt)
+            SQLiteDatabase.deleteDatabase(tempDb)
         }
-        return result
+        // These belong to the database that has just been replaced
+        listOf("-journal", "-wal", "-shm").forEach { File(dataDir, currentDb.name + it).delete() }
+        prefHandler.putBoolean(PrefKey.ENCRYPT_DATABASE, encrypt)
+        return true
     }
 
     fun budgetCategoryUpsert(db: SupportSQLiteDatabase, uri: Uri, values: ContentValues): Int {

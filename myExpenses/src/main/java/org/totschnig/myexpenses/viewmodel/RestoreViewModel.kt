@@ -66,6 +66,8 @@ import java.io.PushbackInputStream
 import java.security.GeneralSecurityException
 import javax.inject.Inject
 
+private const val TEMP_PREFS = "backup_temp"
+
 class RestoreViewModel(application: Application) : ContentResolvingAndroidViewModel(application) {
 
     private val _publishProgress: MutableSharedFlow<String?> = MutableSharedFlow()
@@ -210,7 +212,7 @@ class RestoreViewModel(application: Application) : ContentResolvingAndroidViewMo
                     failureResult(R.string.restore_preferences_failure)
                     return@launch
                 }
-                val tempPrefFile = File(sharedPrefsDir, "backup_temp.xml")
+                val tempPrefFile = File(sharedPrefsDir, "$TEMP_PREFS.xml")
                 if (!FileCopyUtils.copy(backupPrefFile, tempPrefFile)) {
                     CrashHandler.report(
                         Exception("Preferences restore failed"),
@@ -223,7 +225,7 @@ class RestoreViewModel(application: Application) : ContentResolvingAndroidViewMo
                     failureResult(R.string.restore_preferences_failure)
                     return@launch
                 }
-                val backupPref = application.getSharedPreferences("backup_temp", 0)
+                val backupPref = application.getSharedPreferences(TEMP_PREFS, 0)
                 val calendarId = backupPref
                     .getString(prefHandler.getKey(PrefKey.PLANNER_CALENDAR_ID), "-1")
                 val calendarPath = backupPref
@@ -282,16 +284,16 @@ class RestoreViewModel(application: Application) : ContentResolvingAndroidViewMo
                         )
                     }
 
-                dataStore.edit {
-                    it.clear()
-                    if (dataStoreBackup != null) {
-                        it.plusAssign(dataStoreBackup.data.first())
-                    }
-                }
-
                 val encrypt = args.getBoolean(KEY_ENCRYPT, false)
                 if (DbUtils.restore(getApplication(), backupFile, encrypt)) {
                     publishProgress(R.string.restore_db_success)
+
+                    dataStore.edit {
+                        it.clear()
+                        if (dataStoreBackup != null) {
+                            it.plusAssign(dataStoreBackup.data.first())
+                        }
+                    }
 
                     //since we already started reading settings, we can not just copy the file
                     //unless I found a way
@@ -363,7 +365,6 @@ class RestoreViewModel(application: Application) : ContentResolvingAndroidViewMo
                     }
                     edit.putBoolean(prefHandler.getKey(PrefKey.ENCRYPT_DATABASE), encrypt)
                     edit.apply()
-                    tempPrefFile.delete()
                     publishProgress(R.string.restore_preferences_success)
                     //if a user restores a backup we do not want past plan instances to flood the database
                     prefHandler.putLong(
@@ -465,6 +466,8 @@ class RestoreViewModel(application: Application) : ContentResolvingAndroidViewMo
                 failureResult(e)
                 return@launch
             } finally {
+                // Also forgets the values in memory, which a later restore must not read
+                application.deleteSharedPreferences(TEMP_PREFS)
                 workingDir.deleteRecursively()
             }
         }
