@@ -74,6 +74,11 @@ subprojects {
                     exclude { it.file.path.contains("${File.separator}build${File.separator}") }
                 }
             }
+            // Their reports hold absolute paths. Taken from the build cache of another worktree,
+            // they put that worktree's paths into a regenerated baseline.
+            tasks.matching { it.name.startsWith('runKtlintCheckOver') }.configureEach {
+                outputs.doNotCacheIf('Reports hold absolute paths') { true }
+            }
         }
     }
 }
