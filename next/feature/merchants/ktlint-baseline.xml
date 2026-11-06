@@ -74,9 +74,9 @@
         <error line="90" column="110" source="standard:argument-list-wrapping" />
     </file>
     <file name="src/test/java/org/totschnig/myexpenses/next/feature/merchants/MerchantLogosTest.kt">
-        <error line="42" column="27" source="standard:function-signature" />
-        <error line="42" column="99" source="standard:function-signature" />
-        <error line="42" column="100" source="standard:max-line-length" />
-        <error line="42" column="102" source="standard:function-signature" />
+        <error line="45" column="27" source="standard:function-signature" />
+        <error line="45" column="99" source="standard:function-signature" />
+        <error line="45" column="100" source="standard:max-line-length" />
+        <error line="45" column="102" source="standard:function-signature" />
     </file>
 </baseline>
