@@ -1,11 +1,14 @@
 package org.totschnig.myexpenses.next.feature.merchants
 
+import androidx.lifecycle.viewModelScope
 import kotlin.io.path.createTempDirectory
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.job
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -51,7 +54,12 @@ class MerchantLogosTest {
                     icons,
                     MerchantLogoStore(directory, fetch = { MerchantLogoStore.Fetched.Missing })
                 )
-                block(logos, domains, icons)
+                try {
+                    block(logos, domains, icons)
+                } finally {
+                    // Its coroutines must not outlive the test dispatcher set as Main
+                    logos.viewModelScope.coroutineContext.job.cancelAndJoin()
+                }
             }
         }
 
