@@ -198,10 +198,17 @@ class TransactionEditViewModel(application: Application, savedStateHandle: Saved
         ) else null
     }
 
-    @SuppressLint("MissingPermission")
+    // SavedStateHandle may only be read on the main thread, so originalUris is read before switching
     suspend fun save(
         transaction: TransactionEditData,
         userSetExchangeRate: BigDecimal?,
+    ): Result<TransactionEditResult> = save(transaction, userSetExchangeRate, originalUris)
+
+    @SuppressLint("MissingPermission")
+    private suspend fun save(
+        transaction: TransactionEditData,
+        userSetExchangeRate: BigDecimal?,
+        originalUris: List<Uri>
     ): Result<TransactionEditResult> = withContext(coroutineContext()) {
         runCatching {
             val transaction = transaction.copy(
