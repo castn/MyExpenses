@@ -2,7 +2,39 @@ package org.totschnig.myexpenses.next.settings
 
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.preference.PrefKey
-import org.totschnig.myexpenses.preference.PrefKey.*
+import org.totschnig.myexpenses.preference.PrefKey.ATTACHMENT_MIME_TYPES
+import org.totschnig.myexpenses.preference.PrefKey.BACKUP_FILE_PREFIX
+import org.totschnig.myexpenses.preference.PrefKey.CAMERA_CHOOSER
+import org.totschnig.myexpenses.preference.PrefKey.CRITERION_FUTURE
+import org.totschnig.myexpenses.preference.PrefKey.DB_SAFE_MODE
+import org.totschnig.myexpenses.preference.PrefKey.DEBUG_ADS
+import org.totschnig.myexpenses.preference.PrefKey.DEBUG_LOGGING
+import org.totschnig.myexpenses.preference.PrefKey.DEBUG_REPAIR_987
+import org.totschnig.myexpenses.preference.PrefKey.DEFAULT_ACTION
+import org.totschnig.myexpenses.preference.PrefKey.DEFAULT_TRANSFER_CATEGORY
+import org.totschnig.myexpenses.preference.PrefKey.EQUIVALENT_AMOUNTS_AUTOMATIC_UPDATE
+import org.totschnig.myexpenses.preference.PrefKey.EXPORT_PASSWORD
+import org.totschnig.myexpenses.preference.PrefKey.FEATURE_UNINSTALL_FEATURES
+import org.totschnig.myexpenses.preference.PrefKey.FEATURE_UNINSTALL_LANGUAGES
+import org.totschnig.myexpenses.preference.PrefKey.HOME_CURRENCY
+import org.totschnig.myexpenses.preference.PrefKey.MANAGE_SYNC_BACKENDS
+import org.totschnig.myexpenses.preference.PrefKey.MLKIT_SCRIPT
+import org.totschnig.myexpenses.preference.PrefKey.OCR_ENGINE
+import org.totschnig.myexpenses.preference.PrefKey.OPTIMIZE_PICTURE_MAX_SIZE
+import org.totschnig.myexpenses.preference.PrefKey.PLANNER_EXECUTION_TIME
+import org.totschnig.myexpenses.preference.PrefKey.PLANNER_MANUAL_TIME
+import org.totschnig.myexpenses.preference.PrefKey.PROTECTION_ALLOW_SCREENSHOT
+import org.totschnig.myexpenses.preference.PrefKey.PROTECTION_DELAY_SECONDS
+import org.totschnig.myexpenses.preference.PrefKey.PROTECTION_ENABLE_ACCOUNT_WIDGET
+import org.totschnig.myexpenses.preference.PrefKey.PROTECTION_ENABLE_BUDGET_WIDGET
+import org.totschnig.myexpenses.preference.PrefKey.PROTECTION_ENABLE_TEMPLATE_WIDGET
+import org.totschnig.myexpenses.preference.PrefKey.REMOVE_LOCAL_CALENDAR
+import org.totschnig.myexpenses.preference.PrefKey.SHARE_TARGET
+import org.totschnig.myexpenses.preference.PrefKey.SYNC_FREQUCENCY
+import org.totschnig.myexpenses.preference.PrefKey.TESSERACT_LANGUAGE
+import org.totschnig.myexpenses.preference.PrefKey.UI_ITEM_RENDERER_ORIGINAL_AMOUNT
+import org.totschnig.myexpenses.preference.PrefKey.WEBDAV_ALLOW_UNVERIFIED_HOST
+import org.totschnig.myexpenses.preference.PrefKey.WEBDAV_TIMEOUT
 
 /**
  * Texts of the new settings for those whose texts on the old screens are technical or missing,

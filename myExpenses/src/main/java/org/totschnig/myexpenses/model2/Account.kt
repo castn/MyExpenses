@@ -108,6 +108,8 @@ data class Account(
     fun withLabel(label: String) = copy(label = label)
 
     companion object {
+        private const val serialVersionUID = 1L
+
 
         const val DEFAULT_COLOR = -0xff6978
 

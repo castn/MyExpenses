@@ -1,5 +1,6 @@
 package org.totschnig.myexpenses.retrofit
 
+import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -38,8 +39,15 @@ interface CoinApi {
     data class AllCurrentResult(val rates: List<ExchangeRateResult>)
 
     @Keep
-    data class ExchangeRateResult(val time: ZonedDateTime, val rate: Double, val asset_id_quote: String)
+    data class ExchangeRateResult(
+        val time: ZonedDateTime,
+        val rate: Double,
+        @SerializedName("asset_id_quote") val assetIdQuote: String
+    )
 
     @Keep
-    data class HistoryResult(val time_period_start: ZonedDateTime, val rate_close: Double)
+    data class HistoryResult(
+        @SerializedName("time_period_start") val timePeriodStart: ZonedDateTime,
+        @SerializedName("rate_close") val rateClose: Double
+    )
 }

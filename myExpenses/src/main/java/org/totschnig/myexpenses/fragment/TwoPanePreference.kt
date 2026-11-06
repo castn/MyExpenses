@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.view.doOnLayout
-import androidx.preference.*
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceHeaderFragmentCompat
+import androidx.preference.R
 import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import org.totschnig.myexpenses.activity.PreferenceActivity
 import org.totschnig.myexpenses.fragment.preferences.BasePreferenceFragment

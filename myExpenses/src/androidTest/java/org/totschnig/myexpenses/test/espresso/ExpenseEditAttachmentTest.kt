@@ -32,7 +32,7 @@ import org.totschnig.myexpenses.testutils.ACCOUNT_LABEL_2
 import org.totschnig.myexpenses.testutils.BaseExpenseEditTest
 import org.totschnig.myexpenses.testutils.TestShard2
 import org.totschnig.myexpenses.testutils.addDebugAttachment
-import org.totschnig.shared_test.TransactionData
+import org.totschnig.sharedtest.TransactionData
 
 @TestShard2
 class ExpenseEditAttachmentTest : BaseExpenseEditTest() {

@@ -7,11 +7,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 open class PrintViewModel(application: Application) : ContentResolvingAndroidViewModel(application) {
-    protected val _pdfResult: MutableStateFlow<Result<Pair<Uri, String>>?> = MutableStateFlow(null)
-    val pdfResult: StateFlow<Result<Pair<Uri, String>>?> = _pdfResult
+    protected val mutablePdfResult: MutableStateFlow<Result<Pair<Uri, String>>?> = MutableStateFlow(null)
+    val pdfResult: StateFlow<Result<Pair<Uri, String>>?> = mutablePdfResult
 
     fun pdfResultProcessed() {
-        _pdfResult.update {
+        mutablePdfResult.update {
             null
         }
     }

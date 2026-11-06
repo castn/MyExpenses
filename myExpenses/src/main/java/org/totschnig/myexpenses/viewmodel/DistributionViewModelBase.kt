@@ -71,11 +71,11 @@ abstract class DistributionViewModelBase<T : DistributionAccountInfo>(
 
     val selectionState: MutableState<Category?> = mutableStateOf(null)
     val expansionState: SnapshotStateList<Category> = SnapshotStateList()
-    protected val _accountInfo = MutableStateFlow<T?>(null)
-    val accountInfo: StateFlow<T?> = _accountInfo
+    protected val mutableAccountInfo = MutableStateFlow<T?>(null)
+    val accountInfo: StateFlow<T?> = mutableAccountInfo
 
-    protected val _whereFilter: MutableStateFlow<Criterion?> = MutableStateFlow(null)
-    val whereFilter: StateFlow<Criterion?> = _whereFilter
+    protected val mutableWhereFilter: MutableStateFlow<Criterion?> = MutableStateFlow(null)
+    val whereFilter: StateFlow<Criterion?> = mutableWhereFilter
 
     val groupingInfoFlow: Flow<GroupingInfo?>
         get() = savedStateHandle.getLiveData<GroupingInfo?>(KEY_GROUPING_INFO, null).asFlow()
@@ -135,7 +135,7 @@ abstract class DistributionViewModelBase<T : DistributionAccountInfo>(
                 Grouping.MONTH -> DateInfoExtra(11, null)
                 else -> DateInfoExtra(0, null)
             }
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, null)
+        }.stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, null)
 
     val displaySubTitle: Flow<String> = combine(
         groupingInfoFlow.filterNotNull(),
@@ -212,7 +212,7 @@ abstract class DistributionViewModelBase<T : DistributionAccountInfo>(
         }
 
     val filterClause: String
-        get() = buildFilterClause(groupingInfo!!, _whereFilter.value)
+        get() = buildFilterClause(groupingInfo!!, mutableWhereFilter.value)
 
     private fun buildFilterClause(
         groupingInfo: GroupingInfo,
@@ -257,12 +257,12 @@ abstract class DistributionViewModelBase<T : DistributionAccountInfo>(
     @OptIn(ExperimentalCoroutinesApi::class)
     val sums: Flow<Pair<Long, Long>> by lazy {
         combine(
-            _accountInfo.filterNotNull(),
+            mutableAccountInfo.filterNotNull(),
             //if we ask for both expense and income, aggregateNeutral does not make sense, since
             //then transactions from neutral categories would appear on both sides, giving meaningless results
             if (withIncomeSum) flowOf(false) else aggregateNeutral,
             groupingInfoFlow,
-            _whereFilter
+            mutableWhereFilter
         ) { accountInfo, aggregateNeutral, grouping, whereFilter ->
             grouping?.let {
                 Tuple4(

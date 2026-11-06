@@ -142,7 +142,7 @@ class OnboardingUiFragment : OnboardingFragment() {
         binding.designPreview.setContent {
             val demo = Transaction2(
                 id = -1,
-                _date = System.currentTimeMillis() / 1000,
+                dateEpochSeconds = System.currentTimeMillis() / 1000,
                 displayAmount = Money(currencyContext.homeCurrencyUnit, -7000),
                 methodLabel = "CHEQUE",
                 referenceNumber = "1",

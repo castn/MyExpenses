@@ -6,7 +6,7 @@ import org.totschnig.myexpenses.provider.TemplateInfo
 import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.provider.insert
 import org.totschnig.myexpenses.testutils.BaseTemplateTest
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 
 class TemplateTest : BaseTemplateTest() {
 

@@ -20,7 +20,7 @@ import org.totschnig.myexpenses.provider.insert
 import org.totschnig.myexpenses.testutils.BaseDbTest
 import org.totschnig.myexpenses.testutils.CategoryInfo
 import org.totschnig.myexpenses.util.ColorUtils
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 
 class CategoryTest : BaseDbTest() {
     private lateinit var testCategories: List<Pair<Long, CategoryInfo>>

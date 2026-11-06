@@ -81,7 +81,7 @@ data class AmountCriterion(
                         currencyFormatter.formatMoney(Money(currencyUnit, transformed.second[1]))
                     )
 
-                    else -> throw IllegalArgumentException()
+                    else -> throw IllegalArgumentException("Unexpected first: ${transformed.first}")
                 }
     }
 

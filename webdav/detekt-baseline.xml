@@ -9,13 +9,10 @@
     <ID>MagicNumber:LockableDavResource.kt:LockableDavResource$405</ID>
     <ID>NestedBlockDepth:WebDavClient.kt:WebDavClient$@Throws(Exception::class) fun testClass2Locking</ID>
     <ID>NestedBlockDepth:WebDavClient.kt:WebDavClient$fun lock: Boolean</ID>
-    <ID>SwallowedException:WebdavSetup.kt:WebdavSetup$e: Exception</ID>
     <ID>ThrowsCount:WebDavClient.kt:WebDavClient$@Throws(IOException::class, HttpException::class, DavException::class) fun testLogin</ID>
     <ID>TooGenericExceptionCaught:CertificateHelper.kt:CertificateHelper$e: Exception</ID>
     <ID>TooGenericExceptionCaught:WebDavClient.kt:WebDavClient$e2: Exception</ID>
     <ID>TooGenericExceptionCaught:WebDavClient.kt:WebDavClient$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:WebdavSetup.kt:WebdavSetup$e: Exception</ID>
     <ID>TooManyFunctions:WebDavClient.kt:WebDavClient</ID>
-    <ID>VariableNaming:WebDavClient.kt:WebDavClient$private val MIME_XML: MediaType = "application/xml; charset=utf-8".toMediaTypeOrNull()!!</ID>
   </CurrentIssues>
 </SmellBaseline>

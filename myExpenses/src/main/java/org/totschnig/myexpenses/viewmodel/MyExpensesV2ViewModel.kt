@@ -306,7 +306,7 @@ open class MyExpensesV2ViewModel(
                 }
             }
         }
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, null)
+            .stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, null)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -385,7 +385,7 @@ open class MyExpensesV2ViewModel(
                 }
                 result
             }
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, emptyList())
+        }.stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, emptyList())
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -401,18 +401,18 @@ open class MyExpensesV2ViewModel(
                     }
                 }
             }
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, null)
+        }.stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, null)
     }
 
     val hasPortfolioAccounts: StateFlow<Boolean> by lazy {
         accountDataV2.map { it?.getOrNull()?.any { it.isPortfolio } == true }
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, false)
+            .stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, false)
     }
 
     val canCreatePortfolio: StateFlow<Boolean> by lazy {
         hasPortfolioAccounts.map { hasAny ->
             !hasAny || licenceHandler.hasAccessTo(ContribFeature.PORTFOLIO)
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, true)
+        }.stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, true)
     }
 
     val canAddMultipleCostLegs: Boolean
@@ -659,7 +659,7 @@ open class MyExpensesV2ViewModel(
         dataStore.isWebUiActive
             .stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.WhileSubscribedWithTimeout,
+                started = SharingStarted.whileSubscribedWithTimeout,
                 initialValue = false
             )
     }
@@ -942,13 +942,13 @@ open class MyExpensesV2ViewModel(
                         repository,
                         account,
                         filterPersistence.getValue(account.id).whereFilter,
-                        pageSize,
+                        PAGE_SIZE,
                         viewModelScope
                     )
                 }
             val flow = Pager(
                 config = PagingConfig(
-                    pageSize = pageSize,
+                    pageSize = PAGE_SIZE,
                     enablePlaceholders = true
                 ),
                 pagingSourceFactory = factory

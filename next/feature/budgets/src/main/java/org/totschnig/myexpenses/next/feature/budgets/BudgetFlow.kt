@@ -22,9 +22,9 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import kotlinx.serialization.Serializable
-import org.totschnig.myexpenses.next.core.ui.DetailPage
-import org.totschnig.myexpenses.next.core.ui.ExtraPage
-import org.totschnig.myexpenses.next.core.ui.ListPage
+import org.totschnig.myexpenses.next.core.ui.detailPage
+import org.totschnig.myexpenses.next.core.ui.extraPage
+import org.totschnig.myexpenses.next.core.ui.listPage
 import org.totschnig.myexpenses.next.core.ui.rememberListDetailPages
 import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
@@ -139,13 +139,13 @@ fun BudgetFlow(
         modifier = modifier,
         sceneStrategies = listOf(rememberListDetailPages()),
         entryProvider = entryProvider {
-            entry<BudgetKey.Home>(metadata = ListPage(R.string.next_pick_pot)) { BudgetHome(current, backStack) }
-            entry<BudgetKey.PotDetail>(metadata = DetailPage()) { key -> PotEntry(current, backStack, key) }
-            entry<BudgetKey.Transactions>(metadata = ExtraPage()) { key ->
+            entry<BudgetKey.Home>(metadata = listPage(R.string.next_pick_pot)) { BudgetHome(current, backStack) }
+            entry<BudgetKey.PotDetail>(metadata = detailPage()) { key -> PotEntry(current, backStack, key) }
+            entry<BudgetKey.Transactions>(metadata = extraPage()) { key ->
                 PotTransactionsEntry(current, backStack, key)
             }
-            entry<BudgetKey.Templates>(metadata = DetailPage()) { TemplatesEntry(current, backStack) }
-            entry<BudgetKey.Editor>(metadata = DetailPage()) { key -> EditorEntry(current, backStack, key) }
+            entry<BudgetKey.Templates>(metadata = detailPage()) { TemplatesEntry(current, backStack) }
+            entry<BudgetKey.Editor>(metadata = detailPage()) { key -> EditorEntry(current, backStack, key) }
         }
     )
 }

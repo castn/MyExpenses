@@ -14,7 +14,7 @@ import org.totschnig.myexpenses.provider.KEY_USAGES
 import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.provider.appendBooleanQueryParameter
 import org.totschnig.myexpenses.util.Utils
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 
 //TODO test grouping
 @RunWith(Parameterized::class)

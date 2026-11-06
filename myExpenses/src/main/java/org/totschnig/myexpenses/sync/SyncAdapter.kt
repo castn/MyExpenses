@@ -238,12 +238,12 @@ class SyncAdapter @JvmOverloads constructor(
                                     //make sure user data did not stick around after a user might have cleared data
                                     accountManager.setUserData(
                                         account,
-                                        KEY_LAST_SYNCED_LOCAL(accountId),
+                                        keyLastSyncedLocal(accountId),
                                         null
                                     )
                                     accountManager.setUserData(
                                         account,
-                                        KEY_LAST_SYNCED_REMOTE(accountId),
+                                        keyLastSyncedRemote(accountId),
                                         null
                                     )
                                 } catch (e: RemoteException) {
@@ -273,8 +273,8 @@ class SyncAdapter @JvmOverloads constructor(
                         if (cursor.moveToFirst()) {
                             do {
                                 val accountId = cursor.getLong(0)
-                                val lastLocalSyncKey = KEY_LAST_SYNCED_LOCAL(accountId)
-                                val lastRemoteSyncKey = KEY_LAST_SYNCED_REMOTE(accountId)
+                                val lastLocalSyncKey = keyLastSyncedLocal(accountId)
+                                val lastRemoteSyncKey = keyLastSyncedRemote(accountId)
                                 var lastSyncedLocal = getUserDataWithDefault(
                                     accountManager, account,
                                     lastLocalSyncKey, "0"
@@ -982,12 +982,12 @@ class SyncAdapter @JvmOverloads constructor(
         const val TAG = "SyncAdapter"
 
         @JvmStatic
-        fun KEY_LAST_SYNCED_REMOTE(accountId: Long): String {
+        fun keyLastSyncedRemote(accountId: Long): String {
             return "last_synced_remote_$accountId"
         }
 
         @JvmStatic
-        fun KEY_LAST_SYNCED_LOCAL(accountId: Long): String {
+        fun keyLastSyncedLocal(accountId: Long): String {
             return "last_synced_local_$accountId"
         }
 

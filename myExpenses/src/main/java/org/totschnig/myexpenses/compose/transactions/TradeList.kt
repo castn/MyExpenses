@@ -254,12 +254,12 @@ fun TradeRow(
             }
         }
         onEvent?.let {
-            HierarchicalMenu(showMenu, tradeMenu(trade, it))
+            HierarchicalMenu(showMenu, tradeMenu(it))
         }
     }
 }
 
-private fun tradeMenu(trade: Trade, onEvent: (TradeEvent) -> Unit): Menu = buildList {
+private fun tradeMenu(onEvent: (TradeEvent) -> Unit): Menu = buildList {
     add(MenuEntry.edit("EDIT_TRADE") { onEvent(TradeEvent.Edit) })
     add(MenuEntry.delete("DELETE_TRADE") { onEvent(TradeEvent.Delete) })
 }

@@ -454,7 +454,7 @@ abstract class BaseTransactionProvider : ContentProvider() {
 
         protected const val URI_SEGMENT_GROUPS = "groups"
 
-        fun LIVE_ATTACHMENT_SELECTION(withUUIDSelection: Boolean = false) =
+        fun liveAttachmentSelection(withUUIDSelection: Boolean = false) =
             "EXISTS(SELECT 1 FROM $TABLE_TRANSACTION_ATTACHMENTS WHERE $KEY_ATTACHMENT_ID = $KEY_ROWID" +
                     (
                         if (withUUIDSelection) " AND $KEY_TRANSACTIONID = (SELECT $KEY_ROWID FROM " +
@@ -462,7 +462,7 @@ abstract class BaseTransactionProvider : ContentProvider() {
                     ) +
                     ")"
 
-        val STALE_ATTACHMENT_SELECTION = "NOT ${LIVE_ATTACHMENT_SELECTION()}"
+        val STALE_ATTACHMENT_SELECTION = "NOT ${liveAttachmentSelection()}"
 
         fun defaultBudgetAllocationUri(accountSegment: String, grouping: Grouping): Uri =
             BUDGETS_URI.buildUpon()
@@ -629,7 +629,7 @@ abstract class BaseTransactionProvider : ContentProvider() {
 
 
     val accountsWithExchangeRate: String
-        get() = exchangeRateJoin(accountWithTypeAndFlag, KEY_ROWID, homeCurrency, TABLE_ACCOUNTS)
+        get() = exchangeRateJoin(ACCOUNT_WITH_TYPE_AND_FLAG, KEY_ROWID, homeCurrency, TABLE_ACCOUNTS)
 
     val budgetTableJoin =
         "$TABLE_BUDGETS LEFT JOIN $TABLE_ACCOUNTS ON ($KEY_ACCOUNTID = $TABLE_ACCOUNTS.$KEY_ROWID)"
@@ -687,7 +687,7 @@ abstract class BaseTransactionProvider : ContentProvider() {
             )
         }
 
-        val tableName = if (minimal) accountWithTypeAndFlag else CTE_TABLE_NAME_FULL_ACCOUNTS
+        val tableName = if (minimal) ACCOUNT_WITH_TYPE_AND_FLAG else CTE_TABLE_NAME_FULL_ACCOUNTS
 
         val query = if (mergeAggregate == null) {
             SupportSQLiteQueryBuilder.builder(tableName)
@@ -999,7 +999,7 @@ abstract class BaseTransactionProvider : ContentProvider() {
                         val message = "Unable to find shared preference file at " +
                                 sharedPrefFile.path
                         report(message)
-                        throw Throwable(message)
+                        throw IllegalStateException(message)
                     }
                 }
                 val copyPrefSuccess = FileCopyUtils.copy(sharedPrefFile, backupPrefFile)
@@ -1014,7 +1014,7 @@ abstract class BaseTransactionProvider : ContentProvider() {
                         prefHandler.putBoolean(PrefKey.AUTO_BACKUP_DIRTY, false)
                         false
                     } else {
-                        throw Throwable(
+                        throw IllegalStateException(
                             "Unable to copy file from " +
                                     (if (copyPrefSuccess) preferencesDataStoreFile else sharedPrefFile).path +
                                     " to " +
@@ -2269,10 +2269,10 @@ abstract class BaseTransactionProvider : ContentProvider() {
         require(passedInUuid != null || passedInRowId != null)
         val uuid = passedInUuid
             ?: uuidForTransaction(passedInRowId)
-            ?: throw Exception("Missing uuid")
+            ?: throw IllegalStateException("Missing uuid")
         val transactionId = passedInRowId
             ?: findTransactionByUuid(passedInUuid)
-            ?: throw Exception("Missing transaction id")
+            ?: throw IllegalStateException("Missing transaction id")
 
         val crStatusSubSelect = subSelectTemplate(KEY_CR_STATUS)
         val payeeIdSubSelect = subSelectTemplate(KEY_PAYEEID)

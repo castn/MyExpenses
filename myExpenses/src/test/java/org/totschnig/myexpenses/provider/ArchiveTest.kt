@@ -11,7 +11,7 @@ import org.totschnig.myexpenses.db2.unarchive
 import org.totschnig.myexpenses.model.CrStatus
 import org.totschnig.myexpenses.model.PREDEFINED_NAME_BANK
 import org.totschnig.myexpenses.model.PREDEFINED_NAME_CASH
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 import java.time.LocalDate
 
 @RunWith(RobolectricTestRunner::class)

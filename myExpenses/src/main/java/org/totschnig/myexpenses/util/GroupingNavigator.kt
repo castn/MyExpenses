@@ -17,7 +17,11 @@ data class GroupingInfo(
     val grouping: Grouping = NONE,
     val year: Int = -1,
     val second: Int = -1
-) : Parcelable, Serializable
+) : Parcelable, Serializable {
+    private companion object {
+        private const val serialVersionUID = 1L
+    }
+}
 
 object GroupingNavigator {
     fun current(grouping: Grouping, dateInfo: DateInfo) = with(dateInfo) {
@@ -39,7 +43,7 @@ object GroupingNavigator {
 
     suspend fun next(groupingInfo: GroupingInfo, dateInfo: suspend () -> DateInfoExtra) =
         when(groupingInfo.grouping) {
-            NONE -> throw IllegalArgumentException()
+            NONE -> throw IllegalArgumentException("Unexpected grouping: ${groupingInfo.grouping}")
             YEAR -> groupingInfo.copy(year = groupingInfo.year + 1)
             else -> {
                 val nextSecond = groupingInfo.second + 1
@@ -53,7 +57,7 @@ object GroupingNavigator {
 
     suspend fun previous(groupingInfo: GroupingInfo, dateInfo: suspend () -> DateInfoExtra) =
         when(groupingInfo.grouping) {
-            NONE -> throw IllegalArgumentException()
+            NONE -> throw IllegalArgumentException("Unexpected grouping: ${groupingInfo.grouping}")
             YEAR -> groupingInfo.copy(year = groupingInfo.year - 1)
             else -> {
                 val nextSecond = groupingInfo.second - 1

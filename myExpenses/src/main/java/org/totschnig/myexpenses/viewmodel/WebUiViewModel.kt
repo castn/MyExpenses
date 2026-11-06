@@ -46,7 +46,7 @@ class WebUiViewModel(application: Application) : AndroidViewModel(application) {
 
     fun bind(context: Context) = getServiceIntent().mapCatching {
         if (!context.bindService(it, serviceConnection, Context.BIND_AUTO_CREATE)) {
-            throw Exception("Unable to bind to service $it")
+            throw IllegalStateException("Unable to bind to service $it")
         }
     }
 

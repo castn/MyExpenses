@@ -32,7 +32,7 @@ import org.totschnig.myexpenses.testutils.TAG_LABEL
 import org.totschnig.myexpenses.testutils.TEMPLATE_TITLE
 import org.totschnig.myexpenses.testutils.TestShard2
 import org.totschnig.myexpenses.testutils.cleanup
-import org.totschnig.shared_test.TransactionData
+import org.totschnig.sharedtest.TransactionData
 
 private const val TAG_LABEL_2 = "Unwichtig"
 

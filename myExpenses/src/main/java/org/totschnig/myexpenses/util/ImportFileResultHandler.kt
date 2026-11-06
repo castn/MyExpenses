@@ -45,7 +45,7 @@ object ImportFileResultHandler {
     @Throws(Throwable::class)
     private fun handleError(errorMsg: String?, fileNameEditText: EditText) {
         fileNameEditText.error = errorMsg
-        throw Throwable(errorMsg)
+        throw IllegalStateException(errorMsg)
     }
 
     fun checkTypePartsDefault(mimeType: String): Boolean {

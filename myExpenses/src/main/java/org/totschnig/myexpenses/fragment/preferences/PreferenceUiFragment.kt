@@ -264,7 +264,7 @@ class PreferenceUiFragment : BasePreferenceFragment() {
                             TransactionsContract.Transactions.TYPE_SPLIT -> ShortcutHelper.ID_SPLIT
                             TransactionsContract.Transactions.TYPE_TRANSACTION -> ShortcutHelper.ID_TRANSACTION
                             TransactionsContract.Transactions.TYPE_TRANSFER -> ShortcutHelper.ID_TRANSFER
-                            else -> throw IllegalStateException()
+                            else -> throw IllegalStateException("Unexpected operationType: $operationType")
                         }
                     ).build(),
                     null

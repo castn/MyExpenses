@@ -108,7 +108,7 @@ class LicenceValidationViewModel(application: Application) : BaseViewModel(appli
                             successMessage += if (type == null) concatResStrings(
                                 localizedContext,
                                 ", ",
-                                *licence.featureListAsResIDs(localizedContext)
+                                *licence.featureListAsResIDs()
                             ) else " " + localizedContext.getString(type.resId)
                             true to successMessage
                         } else {

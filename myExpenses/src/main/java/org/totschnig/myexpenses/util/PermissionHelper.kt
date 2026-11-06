@@ -58,7 +58,7 @@ object PermissionHelper {
                         context, when(it) {
                             PermissionGroup.CALENDAR -> R.string.calendar_permission_required
                             PermissionGroup.NOTIFICATION -> R.string.notifications_permission_required_planner
-                            else -> throw IllegalArgumentException()
+                            else -> throw IllegalArgumentException("Unexpected value: $it")
                         }).toString()
                 }
             }
@@ -71,7 +71,7 @@ object PermissionHelper {
                 context.getString(R.string.notifications_permission_required_auto_backup)
             PERMISSIONS_REQUEST_STORAGE ->
                 "In order to save images to external storage you must grant Storage Permission"
-            else -> throw IllegalArgumentException()
+            else -> throw IllegalArgumentException("Unexpected requestCode: $requestCode")
         }
 
     enum class PermissionGroup(

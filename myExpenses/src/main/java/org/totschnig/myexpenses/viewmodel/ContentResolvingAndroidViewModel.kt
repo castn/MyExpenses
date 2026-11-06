@@ -86,7 +86,7 @@ import org.totschnig.myexpenses.provider.TransactionProvider.DUAL_URI
 import org.totschnig.myexpenses.provider.TransactionProvider.METHOD_SORT_ACCOUNTS
 import org.totschnig.myexpenses.provider.TransactionProvider.TRANSACTIONS_URI
 import org.totschnig.myexpenses.provider.buildTransactionRowSelect
-import org.totschnig.myexpenses.provider.checkForSealedDebt
+import org.totschnig.myexpenses.provider.CHECK_FOR_SEALED_DEBT
 import org.totschnig.myexpenses.provider.filter.Criterion
 import org.totschnig.myexpenses.sync.GenericAccountService
 import org.totschnig.myexpenses.sync.SyncAdapter
@@ -215,7 +215,7 @@ open class ContentResolvingAndroidViewModel(application: Application) :
     }
 
     val accountTypes by lazy {
-        accountTypesRaw.stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, emptyList())
+        accountTypesRaw.stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, emptyList())
     }
 
     val accountFlagsRaw by lazy {
@@ -223,7 +223,7 @@ open class ContentResolvingAndroidViewModel(application: Application) :
     }
 
     val accountFlags by lazy {
-        repository.getAccountFlags().stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, emptyList())
+        repository.getAccountFlags().stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, emptyList())
     }
 
     sealed class DeleteState {
@@ -282,7 +282,7 @@ open class ContentResolvingAndroidViewModel(application: Application) :
     internal fun deleteAccountsInternal(accountIds: LongArray) =
         if (contentResolver.query(
                 TRANSACTIONS_URI,
-                arrayOf("MAX($checkForSealedDebt)"),
+                arrayOf("MAX($CHECK_FOR_SEALED_DEBT)"),
                 "$KEY_ACCOUNTID IN (${accountIds.joinToString()})",
                 null,
                 null
@@ -301,11 +301,11 @@ open class ContentResolvingAndroidViewModel(application: Application) :
                         val syncAccount = GenericAccountService.getAccount(it)
                         accountManager.setUserData(
                             syncAccount,
-                            SyncAdapter.KEY_LAST_SYNCED_LOCAL(accountId), null
+                            SyncAdapter.keyLastSyncedLocal(accountId), null
                         )
                         accountManager.setUserData(
                             syncAccount,
-                            SyncAdapter.KEY_LAST_SYNCED_REMOTE(accountId), null
+                            SyncAdapter.keyLastSyncedRemote(accountId), null
                         )
                     }
                 } catch (e: Exception) {

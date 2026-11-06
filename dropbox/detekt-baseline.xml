@@ -3,7 +3,5 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>TooGenericExceptionCaught:DropboxSetupViewModel.kt:DropboxSetupViewModel$e: Exception</ID>
-    <ID>TooGenericExceptionThrown:DropboxSetupViewModel.kt:DropboxSetupViewModel$throw Exception("Dropbox client not set up")</ID>
-    <ID>WildcardImport:DropboxBackendProvider.kt:import org.totschnig.myexpenses.sync.*</ID>
   </CurrentIssues>
 </SmellBaseline>

@@ -5,7 +5,6 @@
     <ID>CyclomaticComplexMethod:AbstractOcrHandlerImpl.kt:AbstractOcrHandlerImpl$fun processTextRecognitionResult: OcrResult</ID>
     <ID>LongMethod:AbstractOcrHandlerImpl.kt:AbstractOcrHandlerImpl$fun processTextRecognitionResult: OcrResult</ID>
     <ID>LongMethod:OcrHandlerImplTest.kt:OcrHandlerImplTest.Companion$@JvmStatic @Parameterized.Parameters(name="locale_for_{0}_should_be_{1}") fun data</ID>
-    <ID>TooGenericExceptionThrown:ScanPreviewViewModel.kt:ScanPreviewViewModel$throw Exception("Received null intent")</ID>
     <ID>TooManyFunctions:AbstractOcrHandlerImpl.kt:AbstractOcrHandlerImpl : OcrHandler</ID>
   </CurrentIssues>
 </SmellBaseline>

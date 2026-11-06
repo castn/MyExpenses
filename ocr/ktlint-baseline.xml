@@ -179,18 +179,15 @@
         <error line="53" column="20" source="standard:argument-list-wrapping" />
         <error line="53" column="30" source="standard:wrapping" />
         <error line="53" column="31" source="standard:argument-list-wrapping" />
-        <error line="58" column="30" source="standard:argument-list-wrapping" />
-        <error line="58" column="42" source="standard:function-literal" />
-        <error line="58" column="43" source="standard:wrapping" />
-        <error line="58" column="66" source="standard:binary-expression-wrapping" />
-        <error line="58" column="66" source="standard:argument-list-wrapping" />
-        <error line="58" column="73" source="standard:binary-expression-wrapping" />
-        <error line="58" column="92" source="standard:argument-list-wrapping" />
-        <error line="58" column="101" source="standard:max-line-length" />
-        <error line="58" column="114" source="standard:argument-list-wrapping" />
-        <error line="58" column="115" source="standard:argument-list-wrapping" />
-        <error line="58" column="117" source="standard:function-literal" />
-        <error line="58" column="118" source="standard:argument-list-wrapping" />
+        <error line="59" column="29" source="standard:function-literal" />
+        <error line="59" column="53" source="standard:binary-expression-wrapping" />
+        <error line="59" column="53" source="standard:argument-list-wrapping" />
+        <error line="59" column="60" source="standard:binary-expression-wrapping" />
+        <error line="59" column="91" source="standard:argument-list-wrapping" />
+        <error line="59" column="101" source="standard:max-line-length" />
+        <error line="59" column="113" source="standard:argument-list-wrapping" />
+        <error line="59" column="114" source="standard:argument-list-wrapping" />
+        <error line="59" column="116" source="standard:function-literal" />
     </file>
     <file name="src/main/java/org/totschnig/ocr/Text.kt">
         <error line="10" column="49" source="standard:colon-spacing" />

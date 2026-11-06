@@ -155,7 +155,7 @@ private fun LazyPagingItems<Transaction2>.getCurrentPosition(
     while (index < itemCount) {
         val transaction2 = get(index) ?: break
         log("Comparing: %d", index)
-        val comparisonResult = transaction2._date.compareTo(limit)
+        val comparisonResult = transaction2.dateEpochSeconds.compareTo(limit)
         if (
             (
                 sortDirection == SortDirection.ASC && comparisonResult > 0

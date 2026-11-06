@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <baseline version="1.0">
-    <file name="src/main/java/org/totschnig/shared_test/CursorSubject.kt">
-        <error line="1" column="9" source="standard:package-name" />
+    <file name="src/main/java/org/totschnig/sharedtest/CursorSubject.kt">
         <error line="12" column="5" source="standard:class-signature" />
         <error line="13" column="5" source="standard:class-signature" />
         <error line="13" column="23" source="standard:class-signature" />
@@ -18,8 +17,7 @@
         <error line="99" column="101" source="standard:max-line-length" />
         <error line="99" column="107" source="standard:argument-list-wrapping" />
     </file>
-    <file name="src/main/java/org/totschnig/shared_test/LocalizationTestHelper.kt">
-        <error line="1" column="9" source="standard:package-name" />
+    <file name="src/main/java/org/totschnig/sharedtest/LocalizationTestHelper.kt">
         <error line="11" column="34" source="standard:function-signature" />
         <error line="11" column="52" source="standard:function-signature" />
         <error line="11" column="70" source="standard:function-signature" />
@@ -30,15 +28,13 @@
         <error line="20" column="47" source="standard:argument-list-wrapping" />
         <error line="20" column="61" source="standard:argument-list-wrapping" />
     </file>
-    <file name="src/main/java/org/totschnig/shared_test/TransactionData.kt">
-        <error line="1" column="9" source="standard:package-name" />
+    <file name="src/main/java/org/totschnig/sharedtest/TransactionData.kt">
         <error line="3" column="1" source="standard:import-ordering" />
         <error line="23" column="37" source="standard:trailing-comma-on-declaration-site" />
-        <error line="25" column="75" source="standard:unary-op-spacing" />
+        <error line="25" column="82" source="standard:unary-op-spacing" />
     </file>
-    <file name="src/main/java/org/totschnig/shared_test/asserts.kt">
+    <file name="src/main/java/org/totschnig/sharedtest/asserts.kt">
         <error line="1" column="1" source="standard:filename" />
-        <error line="1" column="9" source="standard:package-name" />
         <error line="16" column="5" source="standard:function-signature" />
         <error line="17" column="5" source="standard:function-signature" />
         <error line="17" column="30" source="standard:trailing-comma-on-declaration-site" />

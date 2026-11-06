@@ -50,7 +50,7 @@ import org.totschnig.myexpenses.testutils.BaseUiTest
 import org.totschnig.myexpenses.testutils.TestShard3
 import org.totschnig.myexpenses.testutils.cleanup
 import org.totschnig.myexpenses.testutils.withDrawableState
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 import java.time.LocalTime
 import java.time.ZonedDateTime
 

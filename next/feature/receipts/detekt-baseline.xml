@@ -2,7 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>SwallowedException:ItemGroupModelInstaller.kt:ItemGroupModelInstaller$e: NoModelRelease</ID>
     <ID>TooGenericExceptionCaught:ItemGroupModelInstaller.kt:ItemGroupModelInstaller$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ReceiptAssignments.kt:ReceiptAssignments$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ReceiptPhotoLoader.kt:ReceiptPhotoLoader$e: Exception</ID>

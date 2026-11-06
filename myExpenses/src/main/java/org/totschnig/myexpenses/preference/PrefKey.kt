@@ -6,7 +6,7 @@ import org.totschnig.myexpenses.R
 // the following keys are stored as string resources, so that
 // they can be referenced from preferences xml, and thus we
 // can guarantee the referential integrity
-enum class PrefKey(internal val resId: Int, internal val _key: String?) {
+enum class PrefKey(internal val resId: Int, internal val keyName: String?) {
     CATEGORIES_SORT_BY_USAGES_LEGACY(R.string.pref_categories_sort_by_usages_key),
     SORT_ORDER_LEGACY(R.string.pref_sort_order_key),
     SORT_ORDER_TEMPLATES("sort_order_templates"),
@@ -235,7 +235,7 @@ enum class PrefKey(internal val resId: Int, internal val _key: String?) {
 
     @Deprecated("")
     fun getKey(): String? {
-        return if (resId == 0) _key else MyApplication.instance.getString(resId)
+        return if (resId == 0) keyName else MyApplication.instance.getString(resId)
     }
 
     @Deprecated("")

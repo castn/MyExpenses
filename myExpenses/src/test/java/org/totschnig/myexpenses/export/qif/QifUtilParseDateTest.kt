@@ -10,8 +10,8 @@ import java.text.SimpleDateFormat
 
 @RunWith(JUnitParamsRunner::class)
 class QifUtilParseDateTest {
-    private val VERIFICATION_FORMAT = SimpleDateFormat("yyyy-MM-dd")
-    private val VERIFICATION_FORMAT_WITH_TIME = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    private val verificationFormat = SimpleDateFormat("yyyy-MM-dd")
+    private val verificationFormatWithTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
     @Test
     @Parameters(
@@ -28,7 +28,7 @@ class QifUtilParseDateTest {
     )
     fun shouldParseUs(dateString: String) {
         val date = parseDate(dateString, QifDateFormat.US)
-        assertThat(VERIFICATION_FORMAT.format(date)).isEqualTo(VERIFICATION)
+        assertThat(verificationFormat.format(date)).isEqualTo(VERIFICATION)
     }
 
     @Test
@@ -49,7 +49,7 @@ class QifUtilParseDateTest {
     )
     fun shouldParseEu(dateString: String) {
         val date = parseDate(dateString, QifDateFormat.EU)
-        assertThat(VERIFICATION_FORMAT.format(date)).isEqualTo(VERIFICATION)
+        assertThat(verificationFormat.format(date)).isEqualTo(VERIFICATION)
     }
 
     @Test
@@ -63,7 +63,7 @@ class QifUtilParseDateTest {
     )
     fun shouldParseYMD(dateString: String) {
         val date = parseDate(dateString, QifDateFormat.YMD)
-        assertThat(VERIFICATION_FORMAT.format(date)).isEqualTo(VERIFICATION)
+        assertThat(verificationFormat.format(date)).isEqualTo(VERIFICATION)
     }
 
     @Test
@@ -72,7 +72,7 @@ class QifUtilParseDateTest {
     )
     fun shouldParseWithTimeEU(dateTimeString: String) {
         val date = parseDate(dateTimeString, QifDateFormat.EU)
-        assertThat(VERIFICATION_FORMAT_WITH_TIME.format(date)).isEqualTo(VERIFICATION_WITH_TIME)
+        assertThat(verificationFormatWithTime.format(date)).isEqualTo(VERIFICATION_WITH_TIME)
     }
 
     @Test
@@ -81,7 +81,7 @@ class QifUtilParseDateTest {
     )
     fun shouldParseWithTimeYMD(dateTimeString: String) {
         val date = parseDate(dateTimeString, QifDateFormat.YMD)
-        assertThat(VERIFICATION_FORMAT_WITH_TIME.format(date)).isEqualTo(VERIFICATION_WITH_TIME)
+        assertThat(verificationFormatWithTime.format(date)).isEqualTo(VERIFICATION_WITH_TIME)
     }
 
     companion object {

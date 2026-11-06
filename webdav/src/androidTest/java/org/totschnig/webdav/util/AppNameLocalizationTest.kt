@@ -6,7 +6,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.totschnig.webdav.R
 import org.totschnig.myexpenses.ui.ContextHelper
-import org.totschnig.shared_test.LocalizationTestHelper
+import org.totschnig.sharedtest.LocalizationTestHelper
 import java.util.Locale
 
 @RunWith(AndroidJUnit4::class)

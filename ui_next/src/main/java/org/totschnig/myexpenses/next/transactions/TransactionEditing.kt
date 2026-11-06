@@ -21,7 +21,11 @@ data class EditValues(
     val payee: String?,
     val methodId: Long?,
     val comment: String?,
-) : Serializable
+) : Serializable {
+    private companion object {
+        private const val serialVersionUID = 1L
+    }
+}
 
 /**
  * A transaction as loaded for changing it in its details
@@ -56,7 +60,11 @@ data class EditDraft(
     val payee: String,
     val methodId: Long?,
     val comment: String,
-) : Serializable
+) : Serializable {
+    private companion object {
+        private const val serialVersionUID = 1L
+    }
+}
 
 /** Which value a quick change in the details changed, for the text of its undo */
 enum class ChangedField { COMMENT, DATE, METHOD, ALL }

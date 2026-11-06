@@ -490,8 +490,8 @@ class RestoreViewModel(application: Application) : ContentResolvingAndroidViewMo
                 do {
                     val accountId = it.getLong(0)
                     val accountName = it.getString(1)
-                    val localKey = SyncAdapter.KEY_LAST_SYNCED_LOCAL(accountId)
-                    val remoteKey = SyncAdapter.KEY_LAST_SYNCED_REMOTE(accountId)
+                    val localKey = SyncAdapter.keyLastSyncedLocal(accountId)
+                    val remoteKey = SyncAdapter.keyLastSyncedRemote(accountId)
                     if (accounts.contains(accountName)) {
                         val account = GenericAccountService.getAccount(accountName)
                         accountManager.setUserData(

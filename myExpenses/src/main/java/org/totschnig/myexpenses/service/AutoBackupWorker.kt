@@ -4,7 +4,12 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import androidx.work.*
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.Operation
+import androidx.work.WorkManager
+import androidx.work.WorkerParameters
+import java.util.concurrent.TimeUnit
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.PreferenceActivity
 import org.totschnig.myexpenses.preference.PrefHandler
@@ -16,7 +21,6 @@ import org.totschnig.myexpenses.util.AppDirHelper
 import org.totschnig.myexpenses.util.NotificationBuilderWrapper
 import org.totschnig.myexpenses.viewmodel.BackupViewModel
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 
 abstract class BaseAutoBackupWorker(context: Context, workerParameters: WorkerParameters) :
     NotifyingBaseWorker(context, workerParameters) {

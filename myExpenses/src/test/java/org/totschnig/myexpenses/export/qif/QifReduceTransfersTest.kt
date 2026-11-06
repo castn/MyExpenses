@@ -7,18 +7,18 @@ import org.totschnig.myexpenses.io.ImportTransaction
 import java.math.BigDecimal
 import java.util.Date
 
-const val account1 = "Konto 1"
-const val account2 = "Konto 2"
+const val ACCOUNT_1 = "Konto 1"
+const val ACCOUNT_2 = "Konto 2"
 
 class QifReduceTransfersTest {
 
     @Test
     fun transformUnknownTransfer() {
         val now = Date(System.currentTimeMillis())
-        val fromAccount = ImportAccount(memo = account1,
+        val fromAccount = ImportAccount(memo = ACCOUNT_1,
             transactions = listOf(
                 ImportTransaction.Builder()
-                    .toAccount(account2)
+                    .toAccount(ACCOUNT_2)
                     .date(now)
                     .amount(BigDecimal(-5)).build()!!
             ))
@@ -30,14 +30,14 @@ class QifReduceTransfersTest {
     @Test
     fun transformUnknownTransferInSplit() {
         val now = Date(System.currentTimeMillis())
-        val fromAccount = ImportAccount(memo = account1,
+        val fromAccount = ImportAccount(memo = ACCOUNT_1,
             transactions = listOf(
                 ImportTransaction.Builder()
-                    .toAccount(account2)
+                    .toAccount(ACCOUNT_2)
                     .date(now)
                     .amount(BigDecimal(-5))
                     .addSplit(ImportTransaction.Builder()
-                        .toAccount(account2)
+                        .toAccount(ACCOUNT_2)
                         .date(now)
                         .amount(BigDecimal(-5)))
                     .build()!!
@@ -52,17 +52,17 @@ class QifReduceTransfersTest {
     @Test
     fun reduceTransferBetweenMainTransactions() {
         val now = Date(System.currentTimeMillis())
-        val fromAccount = ImportAccount(memo = account1,
+        val fromAccount = ImportAccount(memo = ACCOUNT_1,
             transactions = listOf(
                 ImportTransaction.Builder()
-                    .toAccount(account2)
+                    .toAccount(ACCOUNT_2)
                     .date(now)
                     .amount(BigDecimal(-5)).build()!!
             ))
-        val toAccount = ImportAccount(memo = account2,
+        val toAccount = ImportAccount(memo = ACCOUNT_2,
             transactions = listOf(
                 ImportTransaction.Builder()
-                    .toAccount(account1)
+                    .toAccount(ACCOUNT_1)
                     .date(now)
                     .amount(BigDecimal(5)).build()!!
             ))
@@ -75,21 +75,21 @@ class QifReduceTransfersTest {
     @Test
     fun reduceTransferWithSplitTransaction() {
         val now = Date(System.currentTimeMillis())
-        val fromAccount = ImportAccount(memo = account1,
+        val fromAccount = ImportAccount(memo = ACCOUNT_1,
             transactions = listOf(
                 ImportTransaction.Builder()
                     .date(now)
                     .amount(BigDecimal(-5))
                     .addSplit(ImportTransaction.Builder()
-                        .toAccount(account2)
+                        .toAccount(ACCOUNT_2)
                         .date(now)
                         .amount(BigDecimal(-5)))
                     .build()!!
             ))
-        val toAccount = ImportAccount(memo = account2,
+        val toAccount = ImportAccount(memo = ACCOUNT_2,
             transactions = listOf(
                 ImportTransaction.Builder()
-                    .toAccount(account1)
+                    .toAccount(ACCOUNT_1)
                     .date(now)
                     .amount(BigDecimal(5)).build()!!
             ))
@@ -105,22 +105,22 @@ class QifReduceTransfersTest {
     @Test
     fun reduceTransferWithSplitTransactionInverse() {
         val now = Date(System.currentTimeMillis())
-        val fromAccount = ImportAccount(memo = account1,
+        val fromAccount = ImportAccount(memo = ACCOUNT_1,
             transactions = listOf(
                 ImportTransaction.Builder()
-                    .toAccount(account2)
+                    .toAccount(ACCOUNT_2)
                     .date(now)
                     .amount(BigDecimal(5))
                     .addSplit(ImportTransaction.Builder()
-                        .toAccount(account2)
+                        .toAccount(ACCOUNT_2)
                         .date(now)
                         .amount(BigDecimal(5)))
                     .build()!!
             ))
-        val toAccount = ImportAccount(memo = account2,
+        val toAccount = ImportAccount(memo = ACCOUNT_2,
             transactions = listOf(
                 ImportTransaction.Builder()
-                    .toAccount(account1)
+                    .toAccount(ACCOUNT_1)
                     .date(now)
                     .amount(BigDecimal(-5)).build()!!
             ))

@@ -27,7 +27,7 @@ import org.totschnig.myexpenses.viewmodel.data.PageAccount
 import org.totschnig.myexpenses.viewmodel.data.Transaction2
 import org.totschnig.myexpenses.viewmodel.data.mergeTransfers
 import org.totschnig.myexpenses.viewmodel.data.pickForMerge
-import org.totschnig.myexpenses.viewmodel.pageSize
+import org.totschnig.myexpenses.viewmodel.PAGE_SIZE
 import timber.log.Timber
 import java.time.Duration
 import java.time.Instant
@@ -196,7 +196,7 @@ open class TransactionPagingSource(
                 }
         } else itemsForThisPage
 
-        val prevKey = if (position > 0) (position - pageSize) else null
+        val prevKey = if (position > 0) (position - PAGE_SIZE) else null
         val nextKey = if (fullList.size < fetchSize) null else
             offset + loadSize + if (includeNextHalfTransfer) 1 else 0
         val itemsAfter = if (nextKey == null) 0 else (totalCount - nextKey).coerceAtLeast(0)

@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "org.totschnig.shared_test"
+    namespace = "org.totschnig.sharedtest"
     compileSdk = project.compileSdkVersion
 
     defaultConfig {

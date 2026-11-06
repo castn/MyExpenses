@@ -8,7 +8,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.totschnig.myexpenses.R
-import org.totschnig.shared_test.LocalizationTestHelper
+import org.totschnig.sharedtest.LocalizationTestHelper
 
 @RunWith(RobolectricTestRunner::class)
 class AppNameLocalizationTest {
@@ -45,7 +45,7 @@ class AppNameLocalizationTest {
             setLocale(locale)
             try {
                 Utils.getTellAFriendMessage(context)
-            } catch (e: Exception) {
+            } catch (expected: Exception) {
                 failures.add(locale)
             }
         }

@@ -99,7 +99,7 @@ class PlannerFragment : DialogViewBinding<PlannerFragmentBinding>() {
         super.onDestroy()
         try {
             context?.contentResolver?.unregisterContentObserver(stateObserver)
-        } catch (ise: IllegalStateException) {
+        } catch (ignored: IllegalStateException) {
             // Do Nothing.  Observer has already been unregistered.
         }
     }
@@ -198,7 +198,7 @@ class PlannerFragment : DialogViewBinding<PlannerFragmentBinding>() {
         }
 
         override fun onBindViewHolder(holder: PlanInstanceViewHolder, position: Int) {
-            holder.bind(data[position], position)
+            holder.bind(data[position])
         }
 
         fun postUpdate(update: PlanInstanceUpdate) {
@@ -234,7 +234,7 @@ class PlannerFragment : DialogViewBinding<PlannerFragmentBinding>() {
             itemBinding.root.context.injector.inject(this)
         }
 
-        fun bind(planInstance: PlanInstance, position: Int) {
+        fun bind(planInstance: PlanInstance) {
             with(itemBinding) {
                 root.isSelected = selectedInstances.contains(planInstance)
                 date.text = planInstance.localDate.format(formatter)

@@ -15,8 +15,8 @@ import org.totschnig.myexpenses.db2.transactionExists
 import org.totschnig.myexpenses.db2.updateTransaction
 import org.totschnig.myexpenses.model.generateUuid
 import org.totschnig.myexpenses.provider.SPLIT_CATID
-import org.totschnig.shared_test.TransactionData
-import org.totschnig.shared_test.assertTransaction
+import org.totschnig.sharedtest.TransactionData
+import org.totschnig.sharedtest.assertTransaction
 
 @RunWith(RobolectricTestRunner::class)
 class DualSplitTransactionTest : BaseTestWithRepository() {

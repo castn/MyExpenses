@@ -13,8 +13,8 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognizerOptionsInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.totschnig.mlkit_core.TextRecognizer
-import org.totschnig.mlkit_core.documentScannerOptions
+import org.totschnig.mlkitcore.TextRecognizer
+import org.totschnig.mlkitcore.documentScannerOptions
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.feature.Script
 import org.totschnig.myexpenses.feature.getUserConfiguredMlkitScript
@@ -80,7 +80,7 @@ object Engine : org.totschnig.ocr.MlkitEngine {
                 .addOnFailureListener { cont.resumeWithException(it) }
         }
 
-    override fun documentScanResult(data: Intent?) = org.totschnig.mlkit_core.documentScanResult(data)
+    override fun documentScanResult(data: Intent?) = org.totschnig.mlkitcore.documentScanResult(data)
 
     override fun info(context: Context, prefHandler: PrefHandler) = "Ml Kit (" +
             getDisplayNameForScript(

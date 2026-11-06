@@ -101,7 +101,7 @@ val Int.toDayOfWeek: DayOfWeek
         Calendar.THURSDAY -> DayOfWeek.THURSDAY
         Calendar.FRIDAY -> DayOfWeek.FRIDAY
         Calendar.SATURDAY -> DayOfWeek.SATURDAY
-        else -> throw IllegalArgumentException()
+        else -> throw IllegalArgumentException("Unexpected value: $this")
     }
 
 /**

@@ -34,7 +34,7 @@ import org.totschnig.myexpenses.provider.TransactionInfo
 import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.provider.insert
 import org.totschnig.myexpenses.testutils.BaseDbTest
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 
 class TransactionTest : BaseDbTest() {
     private lateinit var infos: Array<TransactionInfo>

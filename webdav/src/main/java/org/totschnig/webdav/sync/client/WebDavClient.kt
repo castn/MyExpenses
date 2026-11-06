@@ -67,7 +67,7 @@ class WebDavClient(
     allowUnverified: Boolean,
     clientCertAlias: String? = null,
 ) {
-    private val MIME_XML: MediaType = "application/xml; charset=utf-8".toMediaTypeOrNull()!!
+    private val mimeXml: MediaType = "application/xml; charset=utf-8".toMediaTypeOrNull()!!
     private val httpClient: OkHttpClient
     private val mBaseUri: HttpUrl
     private var currentLockToken: String? = null
@@ -209,7 +209,7 @@ class WebDavClient(
   <D:locktype><D:write/></D:locktype>
   <D:owner>MyExpenses</D:owner>
 </D:lockinfo>"""
-            .toRequestBody(MIME_XML)
+            .toRequestBody(mimeXml)
         val request: Request = Request.Builder()
             .url(buildCollectionUri(folderName))
             .header("Timeout", LOCK_TIMEOUT)

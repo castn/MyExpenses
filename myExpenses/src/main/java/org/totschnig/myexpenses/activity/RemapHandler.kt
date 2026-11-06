@@ -179,7 +179,7 @@ class RemapHandler(val activity: BaseMyExpenses<*>) : FragmentResultListener {
                 context, when (requestKey) {
                     MAP_CATEGORY_REQUEST -> ManageCategories::class.java
                     MAP_PAYEE_REQUEST -> ManageParties::class.java
-                    else -> throw java.lang.IllegalArgumentException()
+                    else -> throw java.lang.IllegalArgumentException("Unexpected requestKey: $requestKey")
                 }
             ).apply {
                 action = Action.SELECT_MAPPING.name

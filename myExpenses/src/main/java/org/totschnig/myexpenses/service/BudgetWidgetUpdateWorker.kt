@@ -111,7 +111,7 @@ class BudgetWidgetUpdateWorker(context: Context, workerParameters: WorkerParamet
                 ZoneId.systemDefault()
             )
             else when (grouping) {
-                NONE -> throw IllegalArgumentException()
+                NONE -> throw IllegalArgumentException("Unexpected grouping: $grouping")
                 DAY -> ZonedDateTime.of(
                     now.plusDays(1),
                     LocalTime.MIDNIGHT,

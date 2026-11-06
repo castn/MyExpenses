@@ -203,13 +203,13 @@ sealed class MenuItem(
             rememberVectorPainter(
                 when (this) {
                     Tune -> Icons.Filled.Tune
-                    else -> throw IllegalArgumentException()
+                    else -> throw IllegalArgumentException("Unexpected value: $this")
                 }
             )
 
 
     @Parcelize
-    sealed class MenuContext(private val _prefKey: String): Parcelable {
+    sealed class MenuContext(private val prefKeyName: String): Parcelable {
 
         fun title(context: Context) = when (this) {
             V2Navigation -> context.getString(R.string.main_navigation)
@@ -217,7 +217,7 @@ sealed class MenuItem(
         }
 
         @IgnoredOnParcel
-        val prefKey: Preferences.Key<String> = stringPreferencesKey(_prefKey)
+        val prefKey: Preferences.Key<String> = stringPreferencesKey(prefKeyName)
 
         data object V2Navigation : MenuContext("customize_menu_v2_main")
         data object V2Transactions : MenuContext("customize_menu_v2_transactions")

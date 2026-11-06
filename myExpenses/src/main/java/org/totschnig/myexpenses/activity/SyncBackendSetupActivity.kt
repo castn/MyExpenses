@@ -219,7 +219,7 @@ abstract class SyncBackendSetupActivity : RestoreActivity(),
 
     fun getBackendServiceById(id: Int) = try {
         getBackendServiceByIdOrThrow(id)
-    } catch (e: NoSuchElementException) {
+    } catch (ignored: NoSuchElementException) {
         null
     }
 

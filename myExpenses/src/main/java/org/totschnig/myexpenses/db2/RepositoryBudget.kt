@@ -125,7 +125,7 @@ fun dateFilterClause(grouping: Grouping, year: Int, second: Int): String {
         Grouping.DAY -> "$yearExpression AND $DAY = $second"
         Grouping.WEEK -> "$yearOfWeekStart = $year AND $week = $second"
         Grouping.MONTH -> "$yearOfMonthStart = $year AND $month = $second"
-        else -> throw IllegalArgumentException()
+        else -> throw IllegalArgumentException("Unexpected grouping: $grouping")
     }
 }
 
@@ -193,7 +193,7 @@ suspend fun Repository.loadBudgetProgress(budgetId: Long, period: Pair<Int, Int>
                         LocalDate.of(info.year, 12, 31)
                     )
 
-                    else -> throw IllegalStateException()
+                    else -> throw IllegalStateException("Unexpected grouping: $grouping")
                 },
                 description = grouping.getDisplayTitle(
                     context,

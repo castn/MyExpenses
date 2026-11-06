@@ -192,7 +192,7 @@ class ExchangeRateService(
                 requireNotNull(apiKey)
                 val resultList = coinApi.getAllCurrent(base, symbolsArg, apiKey).rates
                 LocalDate.now() to symbols.map { symbol ->
-                    val result = resultList.find { it.asset_id_quote == symbol }
+                    val result = resultList.find { it.assetIdQuote == symbol }
                         ?: throw IOException("Unable to retrieve data for $symbol")
                     //We ignore the time returned as part of the response, since it might relate to a different
                     //day then the requested one (due to time zone difference)

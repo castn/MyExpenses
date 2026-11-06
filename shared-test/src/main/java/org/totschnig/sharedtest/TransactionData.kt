@@ -1,4 +1,4 @@
-package org.totschnig.shared_test
+package org.totschnig.sharedtest
 
 import android.net.Uri
 import org.totschnig.myexpenses.provider.SPLIT_CATID
@@ -18,11 +18,11 @@ data class TransactionData(
     val comment: String? = null,
     val transferAccount: Long? = null,
     val transferPeer: Long? = null,
-    val _transferAmount: Long? = null,
+    val transferAmountOverride: Long? = null,
     val date: LocalDateTime? = null,
     val valueDate: LocalDate? = null,
 ) {
-    val transferAmount = _transferAmount ?: if (transferAccount != null) - amount else null
+    val transferAmount = transferAmountOverride ?: if (transferAccount != null) - amount else null
     init {
         if (splitParts != null) {
             require(category == SPLIT_CATID)

@@ -68,7 +68,7 @@ open class CurrencyViewModel(application: Application) :
         ).mapToList(dispatcher = coroutineDispatcher) {
             currencyContext[it.getString(0)] to currencyContext[it.getString(1)]
         }
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, emptyList())
+            .stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, emptyList())
     }
 
     val currenciesFromEnum: List<Currency>

@@ -581,7 +581,7 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
                                     }
                                 }
 
-                                else -> throw IllegalStateException()
+                                else -> throw IllegalStateException("Unexpected operationType: $operationType")
                             }
                         }
                     )

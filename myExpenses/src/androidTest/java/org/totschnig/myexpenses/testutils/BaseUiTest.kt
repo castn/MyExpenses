@@ -90,9 +90,9 @@ import org.totschnig.myexpenses.util.ICurrencyFormatter
 import org.totschnig.myexpenses.util.distrib.DistributionHelper
 import org.totschnig.myexpenses.util.toEpoch
 import org.totschnig.myexpenses.viewmodel.data.compileDescription
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
-import org.totschnig.shared_test.TransactionData
-import org.totschnig.shared_test.assertTransaction
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.TransactionData
+import org.totschnig.sharedtest.assertTransaction
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -498,7 +498,7 @@ abstract class BaseUiTest<A : ProtectedFragmentActivity> {
                 amount = expectedAmount,
                 accountId = expectedAccount,
                 transferAccount = expectedTransferAccount,
-                _transferAmount = expectedTransferAmount,
+                transferAmountOverride = expectedTransferAmount,
                 transferPeer = expectedPeer,
                 category = transferCategoryId,
                 attachments = expectedAttachments

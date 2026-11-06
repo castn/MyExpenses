@@ -189,7 +189,7 @@ class PlanMonthFragment : CaldroidFragment(), LoaderManager.LoaderCallbacks<Curs
                 null
             )
         }
-        throw IllegalArgumentException()
+        throw IllegalArgumentException("Unexpected loader id: $id")
     }
 
     private val templateId: Long

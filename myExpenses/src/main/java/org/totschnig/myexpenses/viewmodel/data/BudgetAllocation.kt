@@ -25,6 +25,8 @@ data class BudgetAllocation(
     val totalAllocated = budget + rollOverPrevious
 
     companion object {
+        private const val serialVersionUID = 1L
+
         val EMPTY = BudgetAllocation(0, 0, 0, false)
 
         fun fromCursor(cursor: Cursor) = BudgetAllocation(

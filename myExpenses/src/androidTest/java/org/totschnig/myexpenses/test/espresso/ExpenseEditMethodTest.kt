@@ -26,7 +26,7 @@ import org.totschnig.myexpenses.testutils.BaseExpenseEditTest
 import org.totschnig.myexpenses.testutils.TEMPLATE_TITLE
 import org.totschnig.myexpenses.testutils.TestShard2
 import org.totschnig.myexpenses.testutils.cleanup
-import org.totschnig.shared_test.TransactionData
+import org.totschnig.sharedtest.TransactionData
 
 @TestShard2
 class ExpenseEditMethodTest : BaseExpenseEditTest() {

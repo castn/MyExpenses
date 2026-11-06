@@ -4,6 +4,8 @@ import kotlin.reflect.KClass
 
 interface Configurator {
 
+    // The names are the keys of the remote configuration.
+    @Suppress("EnumNaming")
     enum class Configuration {
         USE_SET_DECOR_PADDING_WORKAROUND,
         AUTO_COMPLETE_DROPDOWN_SET_INPUT_METHOD_NEEDED,

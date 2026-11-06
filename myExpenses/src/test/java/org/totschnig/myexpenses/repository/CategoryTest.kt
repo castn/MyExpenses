@@ -28,7 +28,7 @@ import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.provider.TransactionProvider.TEMPLATES_URI
 import org.totschnig.myexpenses.provider.TransactionProvider.TRANSACTIONS_URI
 import org.totschnig.myexpenses.viewmodel.CategoryViewModel
-import org.totschnig.shared_test.CursorSubject
+import org.totschnig.sharedtest.CursorSubject
 
 @RunWith(RobolectricTestRunner::class)
 class CategoryTest : BaseTestWithRepository() {

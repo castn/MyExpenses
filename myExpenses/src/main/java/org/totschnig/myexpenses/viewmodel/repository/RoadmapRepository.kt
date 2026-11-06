@@ -144,7 +144,7 @@ class RoadmapRepository @Inject constructor(
                     writeToFile(ROADMAP_VOTE, gson.toJson(vote))
                 } else {
                     val code = voteResponse.code()
-                    throw Exception(
+                    throw IllegalStateException(
                         when (code) {
                             452 -> context.getString(R.string.roadmap_vote_outdated)
                             453 -> context.getString(R.string.roadmap_vote_validation_failure)

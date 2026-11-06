@@ -34,9 +34,9 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import kotlinx.serialization.Serializable
 import java.time.LocalDate
-import org.totschnig.myexpenses.next.core.ui.DetailPage
-import org.totschnig.myexpenses.next.core.ui.ExtraPage
-import org.totschnig.myexpenses.next.core.ui.ListPage
+import org.totschnig.myexpenses.next.core.ui.detailPage
+import org.totschnig.myexpenses.next.core.ui.extraPage
+import org.totschnig.myexpenses.next.core.ui.listPage
 import org.totschnig.myexpenses.next.core.ui.rememberListDetailPages
 import org.totschnig.myexpenses.designsystem.NameDialog
 import org.totschnig.myexpenses.designsystem.PageTopBar
@@ -142,14 +142,14 @@ fun NextContractsScreen(
         sceneStrategies = listOf(rememberListDetailPages()),
         entryProvider = entryProvider {
             entry<ContractsKey.Home>(
-                metadata = ListPage(if (isIncome) R.string.next_pick_income else R.string.next_pick_contract)
+                metadata = listPage(if (isIncome) R.string.next_pick_income else R.string.next_pick_contract)
             ) { ContractsHome(current, backStack) }
-            entry<ContractsKey.Detail>(metadata = DetailPage()) { key -> ContractDetailEntry(current, backStack, key) }
-            entry<ContractsKey.Transactions>(metadata = ExtraPage()) { key ->
+            entry<ContractsKey.Detail>(metadata = detailPage()) { key -> ContractDetailEntry(current, backStack, key) }
+            entry<ContractsKey.Transactions>(metadata = extraPage()) { key ->
                 ContractTransactionsEntry(current, backStack, key)
             }
-            entry<ContractsKey.NewsHistory>(metadata = DetailPage()) { NewsHistoryEntry(current, backStack) }
-            entry<ContractsKey.Suggestions>(metadata = DetailPage()) { key ->
+            entry<ContractsKey.NewsHistory>(metadata = detailPage()) { NewsHistoryEntry(current, backStack) }
+            entry<ContractsKey.Suggestions>(metadata = detailPage()) { key ->
                 SuggestionsEntry(current, backStack, key)
             }
         }

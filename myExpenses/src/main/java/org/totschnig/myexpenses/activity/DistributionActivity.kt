@@ -214,7 +214,7 @@ class DistributionActivity : DistributionBaseActivity<DistributionViewModel>(),
                         RenderCombined(whereFilter, ::clearFilter)
                     }
 
-                    !showIncome && !showExpense -> throw IllegalStateException()
+                    !showIncome && !showExpense -> throw IllegalStateException("Neither income nor expense is shown")
                     else -> RenderSingle(
                         showIncome,
                         whereFilter,

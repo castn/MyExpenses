@@ -121,7 +121,7 @@ class BudgetViewModel2(application: Application, savedStateHandle: SavedStateHan
     lateinit var categoryTreeForBudget: Flow<Category>
 
     val sum: StateFlow<Long> by lazy {
-        sums.map { it.second }.stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, 0)
+        sums.map { it.second }.stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, 0)
     }
 
     val sortOrder by lazy {
@@ -150,7 +150,7 @@ class BudgetViewModel2(application: Application, savedStateHandle: SavedStateHan
                 uri = BaseTransactionProvider.budgetUri(budgetId),
                 notifyForDescendants = true
             ).mapToOne(mapper = repository.budgetCreatorFunction).collect { budget ->
-                _accountInfo.tryEmit(budget)
+                mutableAccountInfo.tryEmit(budget)
                 if (groupingInfo == null) {
                     if (groupingYear == 0 && groupingSecond == 0) {
                         setGrouping(budget.grouping)
@@ -165,7 +165,7 @@ class BudgetViewModel2(application: Application, savedStateHandle: SavedStateHan
             FilterPersistence(
                 dataStore, BudgetViewModel.prefNameForCriteria(budgetId), viewModelScope
             ).whereFilter.collect { newValue ->
-                _whereFilter.update { newValue }
+                mutableWhereFilter.update { newValue }
             }
         }
 
@@ -175,11 +175,11 @@ class BudgetViewModel2(application: Application, savedStateHandle: SavedStateHan
         }
 
         categoryTreeForBudget = combine(
-            _accountInfo.filterNotNull(),
+            mutableAccountInfo.filterNotNull(),
             aggregateNeutral,
             _allocatedOnly,
             groupingInfoFlow.filterNotNull(),
-            _whereFilter
+            mutableWhereFilter
         ) { accountInfo, aggregateNeutral, allocatedOnly, grouping, whereFilter ->
             Tuple5(
                 accountInfo,
@@ -450,7 +450,7 @@ class BudgetViewModel2(application: Application, savedStateHandle: SavedStateHan
                         CrashHandler.report(it)
                         getString(R.string.write_fail_reason_cannot_write) + ": " + it.message
                     }
-                )?.let { message -> _syncResult.update { message } }
+                )?.let { message -> mutableSyncResult.update { message } }
         }
     }
 

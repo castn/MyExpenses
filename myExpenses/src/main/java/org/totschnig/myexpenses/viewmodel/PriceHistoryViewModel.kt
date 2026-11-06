@@ -139,7 +139,7 @@ class PriceHistoryViewModel(application: Application, val savedStateHandle: Save
                     )
                 )
             }
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, emptyMap())
+            .stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, emptyMap())
     }
 
 

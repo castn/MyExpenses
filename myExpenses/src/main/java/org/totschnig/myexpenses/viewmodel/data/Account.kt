@@ -40,6 +40,8 @@ data class Account(
     }
 
     companion object {
+        private const val serialVersionUID = 1L
+
         fun fromCursor(cursor: Cursor, currencyContext: CurrencyContext): Account {
             val currency =
                 currencyContext[cursor.getString(KEY_CURRENCY)]

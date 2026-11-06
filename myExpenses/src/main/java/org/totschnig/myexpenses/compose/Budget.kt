@@ -134,7 +134,7 @@ fun Budget(
             val numberOfColumns = if (withRollOverColumn) 4 else 3
             val tableWidth =
                 breakPoint * (
-                    labelFraction + numberOfColumns * numberFraction
+                    LabelFraction + numberOfColumns * NumberFraction
                 ) + DividerDefaults.Thickness * numberOfColumns
             Header(
                 withRollOverColumn,
@@ -218,8 +218,8 @@ private fun Summary(
 }
 
 val breakPoint = 600.dp
-const val labelFraction = 0.35f
-const val numberFraction = 0.2f
+const val LabelFraction = 0.35f
+const val NumberFraction = 0.2f
 val columnPadding = 8.dp
 
 private fun Modifier.labelColumn(scope: RowScope, narrowScreen: Boolean) =

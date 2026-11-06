@@ -1,4 +1,4 @@
-package org.totschnig.shared_test
+package org.totschnig.sharedtest
 
 import android.content.Context
 import org.junit.Assert

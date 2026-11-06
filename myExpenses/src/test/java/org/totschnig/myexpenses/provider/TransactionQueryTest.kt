@@ -5,7 +5,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.totschnig.myexpenses.BaseTestWithRepository
 import org.totschnig.myexpenses.provider.TransactionProvider.QUERY_PARAMETER_SEARCH
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 
 @RunWith(RobolectricTestRunner::class)
 class TransactionQueryTest: BaseTestWithRepository() {

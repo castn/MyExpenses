@@ -1,9 +1,0 @@
-<?xml version="1.0" ?>
-<SmellBaseline>
-  <ManuallySuppressedIssues/>
-  <CurrentIssues>
-    <ID>FunctionNaming:ListDetailPages.kt:@OptIn(ExperimentalMaterial3AdaptiveApi::class) fun DetailPage: Map&lt;String, Any&gt;</ID>
-    <ID>FunctionNaming:ListDetailPages.kt:@OptIn(ExperimentalMaterial3AdaptiveApi::class) fun ExtraPage: Map&lt;String, Any&gt;</ID>
-    <ID>FunctionNaming:ListDetailPages.kt:@OptIn(ExperimentalMaterial3AdaptiveApi::class) fun ListPage: Map&lt;String, Any&gt;</ID>
-  </CurrentIssues>
-</SmellBaseline>

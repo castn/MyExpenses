@@ -353,7 +353,7 @@ abstract class MainDelegate(
                             }
                         }
 
-                        else -> throw IllegalStateException()
+                        else -> throw IllegalStateException("Unexpected installmentSign: $installmentSign")
                     },
                     currencyFormatter.formatMoney(installmentMoney)
                 )

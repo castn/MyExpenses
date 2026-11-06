@@ -156,7 +156,7 @@ data class CriterionInfo(
     }
 }
 
-class CriterionReachedDialogFragment() : ComposeBaseDialogFragment3(), OnDialogResultListener {
+class CriterionReachedDialogFragment : ComposeBaseDialogFragment3(), OnDialogResultListener {
 
     val viewModel: CriterionViewModel by viewModels()
 

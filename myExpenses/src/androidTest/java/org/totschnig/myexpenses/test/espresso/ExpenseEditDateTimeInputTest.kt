@@ -19,7 +19,7 @@ import org.totschnig.myexpenses.testutils.Espresso.checkEffectiveGone
 import org.totschnig.myexpenses.testutils.Espresso.checkEffectiveVisible
 import org.totschnig.myexpenses.testutils.TestShard2
 import org.totschnig.myexpenses.testutils.dateButtonHasDate
-import org.totschnig.shared_test.TransactionData
+import org.totschnig.sharedtest.TransactionData
 import java.time.LocalDate
 import java.time.LocalTime
 

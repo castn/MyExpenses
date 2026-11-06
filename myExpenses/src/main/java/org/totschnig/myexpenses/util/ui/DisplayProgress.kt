@@ -29,7 +29,7 @@ data class DisplayProgress(val displayValue: Float, val displayExcess: Float) {
 
             progress >= 0 -> DisplayProgress(progress, 0f)
 
-            else -> throw IllegalArgumentException()
+            else -> throw IllegalArgumentException("Negative progress: $progress")
         }
 
         fun contentDescription(context: Context, progress: Float): String =

@@ -41,6 +41,8 @@ data class Currency(
     }
 
     companion object {
+        private const val serialVersionUID = 1L
+
         fun create(code: String, context: Context) = create(code, Utils.localeFromContext(context))
 
         fun create(code: String, locale: Locale) = Currency(code, findDisplayName(code, locale))

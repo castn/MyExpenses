@@ -59,7 +59,7 @@ import org.totschnig.myexpenses.testutils.addDebugAttachment
 import org.totschnig.myexpenses.testutils.cleanup
 import org.totschnig.myexpenses.testutils.debugAttachment
 import org.totschnig.myexpenses.testutils.isOrchestrated
-import org.totschnig.shared_test.TransactionData
+import org.totschnig.sharedtest.TransactionData
 import java.time.LocalDateTime
 
 @TestShard3

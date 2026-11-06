@@ -299,7 +299,8 @@ class ContribDialogFragment : BaseDialogFragment(), View.OnClickListener,
     }
 
     private fun getSinglePackage(): AddOnPackage =
-        AddOnPackage.values.find { it.feature == feature } ?: throw IllegalStateException()
+        AddOnPackage.values.find { it.feature == feature }
+            ?: throw IllegalStateException("No package for feature $feature")
 
     private val contribActivity: ContribInfoDialogActivity?
         get() = activity as ContribInfoDialogActivity?

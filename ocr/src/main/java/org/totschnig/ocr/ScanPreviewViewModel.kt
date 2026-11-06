@@ -55,7 +55,9 @@ class ScanPreviewViewModel(application: Application) : AndroidViewModel(applicat
 
     fun handleData(intent: Intent?) {
         viewModelScope.launch {
-            result.postValue(runCatching { ocrHandler.handleData(intent ?: throw Exception("Received null intent")) })
+            result.postValue(
+                runCatching { ocrHandler.handleData(intent ?: throw IllegalStateException("Received null intent")) }
+            )
         }
     }
 

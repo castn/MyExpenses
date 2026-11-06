@@ -32,7 +32,7 @@ object TransactionMapper {
             date = epoch2LocalDateTime(transaction.date),
             valueDate = epoch2LocalDate(transaction.valueDate),
             party = transaction.payeeId?.let { DisplayParty(it, transaction.payeeName ?: run {
-                CrashHandler.report(NullPointerException())
+                CrashHandler.report(NullPointerException("Payee id without payee name"))
                 "_null_"
             }) },
             categoryId = transaction.categoryId,

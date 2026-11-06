@@ -51,7 +51,7 @@ class PlannerViewModel(application: Application) : ContentResolvingAndroidViewMo
 
     data class Month(val year: Int, val month: Int, val startDay: Int = 1) {
         init {
-            if (month !in 1..12) throw IllegalArgumentException()
+            if (month !in 1..12) throw IllegalArgumentException("Month out of range: $month")
         }
 
         fun next(): Month {

@@ -29,8 +29,8 @@ import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.provider.appendBooleanQueryParameter
 import org.totschnig.myexpenses.provider.useAndMapToOne
 import org.totschnig.myexpenses.util.toEpoch
-import org.totschnig.shared_test.TransactionData
-import org.totschnig.shared_test.assertTransaction
+import org.totschnig.sharedtest.TransactionData
+import org.totschnig.sharedtest.assertTransaction
 import java.time.LocalDateTime
 
 @RunWith(RobolectricTestRunner::class)

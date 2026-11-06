@@ -35,7 +35,7 @@ class PreferencesBackupRestoreFragment : BasePreferenceIOBRFragment() {
                     value = null
                 }
                 if (accountName != null) {
-                    CrashHandler.report(IllegalStateException())
+                    CrashHandler.report(IllegalStateException("Account name set without a sync backend"))
                 }
             }
             requirePreference<Preference>(PrefKey.AUTO_BACKUP_CLOUD_SETUP).isVisible = !hasSyncBackends

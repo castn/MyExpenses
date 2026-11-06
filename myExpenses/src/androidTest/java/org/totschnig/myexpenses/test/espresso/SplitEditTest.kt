@@ -64,7 +64,7 @@ import org.totschnig.myexpenses.testutils.withAccountGrouped
 import org.totschnig.myexpenses.testutils.withCategoryIcon
 import org.totschnig.myexpenses.testutils.withViewCount
 import org.totschnig.myexpenses.viewmodel.data.Debt
-import org.totschnig.shared_test.TransactionData
+import org.totschnig.sharedtest.TransactionData
 
 @TestShard5
 class SplitEditTest : BaseExpenseEditTest() {

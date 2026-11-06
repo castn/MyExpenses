@@ -85,6 +85,8 @@ data class TransactionChange(
             parentUuid == null && tags == null && tagsV2 == null && categoryInfo == null &&
             attachments == null && status == null
 
+    // The names are stored in sync files and in the change log of the database.
+    @Suppress("EnumNaming")
     enum class Type {
         created, updated, deleted, unsplit, metadata, link, tags, attachments, unarchive;
 

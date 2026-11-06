@@ -6,9 +6,15 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.res.ResourcesCompat
-import androidx.preference.*
+import androidx.preference.MultiSelectListPreference
+import androidx.preference.MultiSelectListPreferenceDialogFragment2
+import androidx.preference.Preference
+import androidx.preference.PreferenceGroupAdapter
+import androidx.preference.PreferenceScreen
+import androidx.preference.PreferenceViewHolder
 import com.evernote.android.state.State
 import com.evernote.android.state.StateSaver
+import java.util.Locale
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.dialog.ConfirmationDialogFragment
 import org.totschnig.myexpenses.dialog.MoreInfoDialogFragment
@@ -18,7 +24,6 @@ import org.totschnig.myexpenses.preference.PopupMenuPreference
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.util.AppDirHelper
 import org.totschnig.myexpenses.viewmodel.SettingsViewModel
-import java.util.Locale
 
 class MainPreferenceFragment : BasePreferenceFragment(),
     MultiSelectListPreferenceDialogFragment2.OnClickListener {

@@ -99,7 +99,7 @@ object AppDirHelper {
         .filterNotNull()
         .firstOrNull()
         ?.let { DocumentFile.fromFile(it) }
-        ?: throw Exception("no not-null value found in getExternalFilesDirs")
+        ?: throw IllegalStateException("no not-null value found in getExternalFilesDirs")
 
     fun cacheDir(context: Context): File = context.cacheDir
 

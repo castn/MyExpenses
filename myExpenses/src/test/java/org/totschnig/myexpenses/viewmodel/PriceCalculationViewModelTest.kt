@@ -24,7 +24,7 @@ import org.totschnig.myexpenses.provider.TransactionProvider.PRICES_URI
 import org.totschnig.myexpenses.provider.requireString
 import org.totschnig.myexpenses.provider.useAndMapToList
 import org.totschnig.myexpenses.retrofit.ExchangeRateApi
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 import java.time.LocalDate
 import java.time.LocalDateTime
 

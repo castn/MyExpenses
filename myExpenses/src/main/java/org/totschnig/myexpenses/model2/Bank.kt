@@ -35,6 +35,8 @@ data class Bank(
     }
 
     companion object {
+        private const val serialVersionUID = 1L
+
         fun fromCursor(cursor: Cursor) = Bank(
             id = cursor.getLong(KEY_ROWID),
             blz = cursor.getString(KEY_BLZ),

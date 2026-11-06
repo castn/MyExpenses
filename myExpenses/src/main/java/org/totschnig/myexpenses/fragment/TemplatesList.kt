@@ -452,7 +452,7 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
                 null,
                 preferredOrderByForTemplatesWithPlans(prefHandler, Sort.USAGES, prefHandler.collate)
             )
-        } else throw IllegalArgumentException()
+        } else throw IllegalArgumentException("Unexpected loader id: $id")
     }
 
     override fun onLoadFinished(loader: Loader<Cursor?>, c: Cursor?) {

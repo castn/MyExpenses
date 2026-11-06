@@ -97,7 +97,7 @@ class CsvImportActivity : TabbedActivity(), ConfirmationDialogListener {
     override fun createFragment(position: Int) = when(position) {
         0 -> CsvImportParseFragment.newInstance()
         1 -> CsvImportDataFragment.newInstance()
-        else -> throw IllegalArgumentException()
+        else -> throw IllegalArgumentException("Unexpected position: $position")
     }
 
     override fun getItemCount() = 2
@@ -105,7 +105,7 @@ class CsvImportActivity : TabbedActivity(), ConfirmationDialogListener {
     override fun getTitle(position: Int) = when(position) {
         0 -> getString(R.string.menu_parse)
         1 -> getString(R.string.preview)
-        else -> throw IllegalArgumentException()
+        else -> throw IllegalArgumentException("Unexpected position: $position")
     }
 
 

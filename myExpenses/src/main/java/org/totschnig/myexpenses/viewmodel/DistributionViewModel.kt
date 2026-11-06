@@ -69,7 +69,7 @@ class DistributionViewModel(application: Application, savedStateHandle: SavedSta
     ) {
         viewModelScope.launch(coroutineContext()) {
             account(extras).collect {
-                _accountInfo.tryEmit(it)
+                mutableAccountInfo.tryEmit(it)
             }
         }
         viewModelScope.launch {
@@ -81,7 +81,7 @@ class DistributionViewModel(application: Application, savedStateHandle: SavedSta
                 setGrouping(prefGrouping)
             }
         }
-        _whereFilter.update { whereFilter }
+        mutableWhereFilter.update { whereFilter }
     }
 
     fun persistGrouping(grouping: Grouping) {
@@ -155,10 +155,10 @@ class DistributionViewModel(application: Application, savedStateHandle: SavedSta
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun categoryFlow(isIncome: Boolean) = combine(
-        _accountInfo.filterNotNull(),
+        mutableAccountInfo.filterNotNull(),
         shouldAggregateNeutral,
         groupingInfoFlow.filterNotNull(),
-        _whereFilter
+        mutableWhereFilter
     ) { accountInfo, aggregateNeutral, grouping, whereFilter ->
         Tuple4(accountInfo, aggregateNeutral, grouping, whereFilter)
     }.flatMapLatest { (accountInfo, aggregateNeutral, grouping, whereFilter) ->
@@ -175,7 +175,7 @@ class DistributionViewModel(application: Application, savedStateHandle: SavedSta
 
 
     fun clearFilter() {
-        _whereFilter.update { null }
+        mutableWhereFilter.update { null }
     }
 
     companion object {

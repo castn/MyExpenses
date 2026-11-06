@@ -32,7 +32,7 @@ class AccountTypeViewModel(application: Application) : ContentResolvingAndroidVi
                 accountTypes = accountTypes,
                 editingAccountType = editingAccountType
             )
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, AccountTypesUiState(isLoading = true))
+        }.stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, AccountTypesUiState(isLoading = true))
     }
 
     fun onAdd() {

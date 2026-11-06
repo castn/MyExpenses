@@ -12,7 +12,7 @@ import org.totschnig.myexpenses.provider.KEY_SECOND_GROUP
 import org.totschnig.myexpenses.provider.KEY_YEAR
 import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.testutils.BaseDbTest
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 
 class BudgetTest : BaseDbTest() {
 

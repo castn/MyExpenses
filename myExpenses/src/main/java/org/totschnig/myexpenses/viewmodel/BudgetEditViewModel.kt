@@ -23,8 +23,8 @@ class BudgetEditViewModel(application: Application) : BudgetViewModel(applicatio
      */
     val databaseResult = MutableLiveData<Long>()
 
-    val _criteria : MutableStateFlow<Set<SimpleCriterion<*>>> = MutableStateFlow(emptySet())
-    val criteria:  StateFlow<Set<SimpleCriterion<*>>> = _criteria
+    val mutableCriteria : MutableStateFlow<Set<SimpleCriterion<*>>> = MutableStateFlow(emptySet())
+    val criteria:  StateFlow<Set<SimpleCriterion<*>>> = mutableCriteria
 
     fun budget(budgetId: Long) = liveData(context = coroutineContext()) {
         contentResolver.query(
@@ -49,7 +49,7 @@ class BudgetEditViewModel(application: Application) : BudgetViewModel(applicatio
                 dataStore,
                 prefNameForCriteria(budgetId)
             ).getValue()?.asSimpleList?.let { criteria ->
-                _criteria.update { criteria.toSet() }
+                mutableCriteria.update { criteria.toSet() }
             }
         }
     }
@@ -64,13 +64,13 @@ class BudgetEditViewModel(application: Application) : BudgetViewModel(applicatio
     }
 
     fun addFilterCriterion(criterion: SimpleCriterion<*>) {
-        _criteria.update {
+        mutableCriteria.update {
             it.filterNot { it::class == criterion::class }.toSet() + criterion
         }
     }
 
     fun removeFilter(id: Int) {
-        _criteria.update {
+        mutableCriteria.update {
             it.filterNot { it.id == id }.toSet()
         }
     }

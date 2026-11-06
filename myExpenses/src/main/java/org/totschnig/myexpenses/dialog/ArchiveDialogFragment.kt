@@ -98,7 +98,7 @@ class ArchiveDialogFragment : ComposeBaseDialogFragment2() {
                             getString(it.toStringRes())
                         })
 
-                    else -> throw IllegalStateException()
+                    else -> throw IllegalStateException("No archive status")
                 }
             },
             enabled = archiveInfo?.canArchive == true

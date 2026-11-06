@@ -81,7 +81,7 @@ class AccountWidget :
                 } else {
                     throw NoDataException(context.getString(R.string.account_deleted))
                 }
-            } ?: throw Exception("Cursor returned null")
+            } ?: throw IllegalStateException("Cursor returned null")
         }.getOrElse { errorView(context, it) }
         appWidgetManager.updateAppWidget(appWidgetId, widget)
     }

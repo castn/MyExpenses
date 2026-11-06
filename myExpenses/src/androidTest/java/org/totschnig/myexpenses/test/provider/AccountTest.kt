@@ -28,7 +28,7 @@ import org.totschnig.myexpenses.provider.TABLE_ACCOUNTS
 import org.totschnig.myexpenses.provider.DbUtils
 import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.provider.TransactionProvider.SORT_URI
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 
 class AccountTest {
     @get:Rule

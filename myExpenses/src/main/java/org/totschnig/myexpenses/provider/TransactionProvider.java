@@ -161,7 +161,7 @@ import static org.totschnig.myexpenses.provider.DatabaseConstants.WHERE_NOT_SPLI
 import static org.totschnig.myexpenses.provider.DatabaseConstants.WHERE_SELF_OR_RELATED;
 import static org.totschnig.myexpenses.provider.DbConstantsKt.CATEGORY_DEPTH_QUERY;
 import static org.totschnig.myexpenses.provider.DbConstantsKt.CTE_SEARCH;
-import static org.totschnig.myexpenses.provider.DbConstantsKt.accountWithTypeAndFlag;
+import static org.totschnig.myexpenses.provider.DbConstantsKt.ACCOUNT_WITH_TYPE_AND_FLAG;
 import static org.totschnig.myexpenses.provider.DbConstantsKt.amountCteForDebts;
 import static org.totschnig.myexpenses.provider.DbConstantsKt.budgetAllocation;
 import static org.totschnig.myexpenses.provider.DbConstantsKt.buildSearchCte;
@@ -633,7 +633,7 @@ public class TransactionProvider extends BaseTransactionProvider {
                     Sort.Companion.preferredOrderByForAccounts(PrefKey.SORT_ORDER_ACCOUNTS, prefHandler, Sort.LABEL, getCollate(), TABLE_ACCOUNTS);
             sortOrder = KEY_FLAG_SORT_KEY + " DESC, " + sortOrder;
           }
-          qb = SupportSQLiteQueryBuilder.builder(minimal ? accountWithTypeAndFlag : getAccountsWithExchangeRate());
+          qb = SupportSQLiteQueryBuilder.builder(minimal ? ACCOUNT_WITH_TYPE_AND_FLAG : getAccountsWithExchangeRate());
           if (projection == null) {
               projection =  org.totschnig.myexpenses.model2.Account.Companion.getProjection(minimal);
           }
@@ -980,7 +980,7 @@ public class TransactionProvider extends BaseTransactionProvider {
         qb = SupportSQLiteQueryBuilder.builder(TABLE_ATTACHMENTS);
         if (selection == null) {
           String uuidSelection = uri.getQueryParameter(KEY_UUID);
-          selection = Companion.LIVE_ATTACHMENT_SELECTION(uuidSelection != null);
+          selection = Companion.liveAttachmentSelection(uuidSelection != null);
           selectionArgs = uuidSelection != null ? new String[]{uuidSelection} : null;
         }
         break;

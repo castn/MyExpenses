@@ -50,6 +50,6 @@ class DropboxSetupViewModel(application: Application, savedStateHandle: SavedSta
                 Timber.w("Unable to create folder with label %s", label)
                 throw e
             }.metadata.let { Pair(it.id, it.name) }
-        } ?: throw Exception("Dropbox client not set up")
+        } ?: throw IllegalStateException("Dropbox client not set up")
     }
 }

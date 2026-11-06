@@ -36,7 +36,7 @@ import org.totschnig.myexpenses.testutils.BaseUiTest
 import org.totschnig.myexpenses.testutils.TestShard4
 import org.totschnig.myexpenses.testutils.isOrchestrated
 import org.totschnig.myexpenses.util.Utils
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 
 @TestShard4
 class OnboardingTest : BaseUiTest<OnboardingActivity>() {

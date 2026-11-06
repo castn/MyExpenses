@@ -284,7 +284,7 @@ abstract class AbstractSyncBackendProvider<Res>(protected val context: Context) 
         (attachments - existing.toSet()).forEach { uuid ->
             try {
                 getAttachment(uuid)
-            } catch (e: FileNotFoundException) {
+            } catch (ignored: FileNotFoundException) {
                 null
             }?.let {
                 (fileName, inputStream) -> storeAttachmentToDatabase(fileName, uuid, inputStream)

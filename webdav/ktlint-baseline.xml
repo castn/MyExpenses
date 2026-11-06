@@ -148,7 +148,6 @@
     <file name="src/main/java/org/totschnig/webdav/sync/client/WebDavClient.kt">
         <error line="18" column="1" source="standard:import-ordering" />
         <error line="68" column="36" source="standard:trailing-comma-on-declaration-site" />
-        <error line="70" column="17" source="standard:property-naming" />
         <error line="93" column="55" source="standard:argument-list-wrapping" />
         <error line="93" column="65" source="standard:argument-list-wrapping" />
         <error line="115" column="74" source="standard:function-literal" />

@@ -13,7 +13,7 @@ open class PrefHandlerImpl(
     private val sharedPreferences: SharedPreferences,
 ) : PrefHandler {
     override fun getKey(key: PrefKey) =
-        if (key.resId == 0) key._key!! else context.getString(key.resId)
+        if (key.resId == 0) key.keyName!! else context.getString(key.resId)
 
     override fun getString(key: String, defValue: String?) =
         sharedPreferences.getString(key, defValue)

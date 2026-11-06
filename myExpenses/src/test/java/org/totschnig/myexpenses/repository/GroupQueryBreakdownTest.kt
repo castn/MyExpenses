@@ -22,7 +22,7 @@ import org.totschnig.myexpenses.provider.KEY_SUM
 import org.totschnig.myexpenses.provider.KEY_SUM_INCOME
 import org.totschnig.myexpenses.provider.TransactionProvider.QUERY_PARAMETER_BREAKDOWN_BY_ACCOUNT
 import org.totschnig.myexpenses.retrofit.ExchangeRateSource
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 import java.time.LocalDate
 import java.time.temporal.TemporalAdjusters
 import java.util.Locale

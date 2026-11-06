@@ -11,9 +11,9 @@ import org.robolectric.RobolectricTestRunner
 import org.totschnig.myexpenses.db2.extractTagId
 import org.totschnig.myexpenses.db2.findCategory
 import org.totschnig.myexpenses.db2.findParty
-import org.totschnig.shared_test.TransactionData
-import org.totschnig.shared_test.assertTransaction
-import org.totschnig.shared_test.findCategoryPath
+import org.totschnig.sharedtest.TransactionData
+import org.totschnig.sharedtest.assertTransaction
+import org.totschnig.sharedtest.findCategoryPath
 
 @RunWith(RobolectricTestRunner::class)
 class SyncHandlerTest : TransactionProviderBaseTest() {

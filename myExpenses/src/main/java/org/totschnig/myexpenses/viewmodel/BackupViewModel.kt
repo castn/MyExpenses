@@ -92,7 +92,7 @@ class BackupViewModel(application: Application) : ContentResolvingAndroidViewMod
                                     }
                                 },
                                 ifRight = {
-                                    throw IllegalStateException()
+                                    throw IllegalStateException("Backups have already been purged")
                                 }
                             )
                         }

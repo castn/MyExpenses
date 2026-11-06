@@ -31,6 +31,6 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
     protected fun coroutineContext() = viewModelScope.coroutineContext + coroutineDispatcher
 
-    val SharingStarted.Companion.WhileSubscribedWithTimeout: SharingStarted get() =
+    val SharingStarted.Companion.whileSubscribedWithTimeout: SharingStarted get() =
         WhileSubscribed(stopTimeoutMillis = 5000)
 }

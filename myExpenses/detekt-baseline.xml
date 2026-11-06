@@ -17,13 +17,6 @@
     <ID>ComplexCondition:SyncDelegate.kt:SyncDelegate$(pictureUri != null || attachments != null) &amp;&amp; ( merged.pictureUri != null || merged.attachments != null ) &amp;&amp; ( merged.pictureUri != pictureUri || merged.attachments != attachments )</ID>
     <ID>ComplexCondition:SyncDelegate.kt:SyncDelegate$(tags != null || tagsV2 != null) &amp;&amp; (merged.tags != null || merged.tagsV2 != null) &amp;&amp; ( merged.tags != tags || merged.tagsV2 != tagsV2 )</ID>
     <ID>ComplexCondition:TransactionList.kt:( sortDirection == SortDirection.ASC &amp;&amp; comparisonResult &gt; 0 ) || sortDirection == SortDirection.DESC &amp;&amp; comparisonResult &lt; 0</ID>
-    <ID>ConstructorParameterNaming:CoinApi.kt:CoinApi.ExchangeRateResult$val asset_id_quote: String</ID>
-    <ID>ConstructorParameterNaming:CoinApi.kt:CoinApi.HistoryResult$val rate_close: Double</ID>
-    <ID>ConstructorParameterNaming:CoinApi.kt:CoinApi.HistoryResult$val time_period_start: ZonedDateTime</ID>
-    <ID>ConstructorParameterNaming:MenuItem.kt:MenuItem.MenuContext$private val _prefKey: String</ID>
-    <ID>ConstructorParameterNaming:PrefKey.kt:PrefKey$internal val _key: String?</ID>
-    <ID>ConstructorParameterNaming:Transaction2.kt:Transaction2$val _date: Long</ID>
-    <ID>ConstructorParameterNaming:Transaction2.kt:Transaction2$val _valueDate: Long = _date</ID>
     <ID>CyclomaticComplexMethod:AbstractExporter.kt:AbstractExporter$@Throws(IOException::class) open fun export: Result&lt;DocumentFile&gt;</ID>
     <ID>CyclomaticComplexMethod:BackupRestoreActivity.kt:BackupRestoreActivity$public override fun onCreate</ID>
     <ID>CyclomaticComplexMethod:BaseActivity.kt:BaseActivity$@CallSuper override fun dispatchCommand: Boolean</ID>
@@ -94,24 +87,6 @@
     <ID>CyclomaticComplexMethod:TransactionRenderer.kt:ItemRenderer$fun Transaction2.buildPrimaryInfo</ID>
     <ID>CyclomaticComplexMethod:TransferDelegate.kt:TransferDelegate$override fun buildTransaction: TransactionEditData?</ID>
     <ID>CyclomaticComplexMethod:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$fun upgrade</ID>
-    <ID>EmptyDefaultConstructor:CriterionReachedDialogFragment.kt:CriterionReachedDialogFragment</ID>
-    <ID>EmptyDefaultConstructor:DataModule.kt:DataModule</ID>
-    <ID>EmptyDefaultConstructor:GroupedSpinnerAdapter.kt:SpinnerItem</ID>
-    <ID>EnumNaming:Configurator.kt:Configurator.Configuration$ad_handling_waterfall</ID>
-    <ID>EnumNaming:TransactionChange.kt:TransactionChange.Type$attachments</ID>
-    <ID>EnumNaming:TransactionChange.kt:TransactionChange.Type$created</ID>
-    <ID>EnumNaming:TransactionChange.kt:TransactionChange.Type$deleted</ID>
-    <ID>EnumNaming:TransactionChange.kt:TransactionChange.Type$link</ID>
-    <ID>EnumNaming:TransactionChange.kt:TransactionChange.Type$metadata</ID>
-    <ID>EnumNaming:TransactionChange.kt:TransactionChange.Type$tags</ID>
-    <ID>EnumNaming:TransactionChange.kt:TransactionChange.Type$unarchive</ID>
-    <ID>EnumNaming:TransactionChange.kt:TransactionChange.Type$unsplit</ID>
-    <ID>EnumNaming:TransactionChange.kt:TransactionChange.Type$updated</ID>
-    <ID>ExplicitItLambdaParameter:CSVParser.kt:CSVParser${ it -&gt; saveGetFromRecord(record, it).takeIf { it.isNotEmpty() }?.let { tagList -&gt; val tokenizer = StringTokenizer(tagList) tokenizer.quoteMatcher = StringMatcherFactory.INSTANCE.quoteMatcher() tokenizer.delimiterMatcher = StringMatcherFactory.INSTANCE.commaMatcher() with(tokenizer.tokenList.filterNotNull()) { transaction.addTags(this) tags.addAll(this) } } }</ID>
-    <ID>ExplicitItLambdaParameter:PdfPrinter.kt:PdfPrinter${ it -&gt; val list = it.asSequence.map { Transaction2.fromCursor( currencyContext = currencyContext, cursor = it, tags = tagMap, accountCurrency = account.currencyUnit, grouping = account.grouping ) }.toList() list.forEachIndexed { index, split -&gt; split.print( paddingTop = 0f, paddingBottom = if (index == list.lastIndex) 5f else 0f, isSplitPart = true ) } }</ID>
-    <ID>FunctionNaming:BaseTransactionProvider.kt:BaseTransactionProvider.Companion$fun LIVE_ATTACHMENT_SELECTION</ID>
-    <ID>FunctionNaming:SyncAdapter.kt:SyncAdapter.Companion$@JvmStatic fun KEY_LAST_SYNCED_LOCAL: String</ID>
-    <ID>FunctionNaming:SyncAdapter.kt:SyncAdapter.Companion$@JvmStatic fun KEY_LAST_SYNCED_REMOTE: String</ID>
     <ID>LargeClass:BaseActivity.kt:BaseActivity : AppCompatActivityMessageDialogListenerConfirmationDialogListenerPermissionCallbacksHostContribIFaceOnDialogResultListenerOnSharedPreferenceChangeListenerOcrHost</ID>
     <ID>LargeClass:BaseMyExpenses.kt:BaseMyExpenses&lt;T : MyExpensesViewModel&gt; : LaunchActivityHost</ID>
     <ID>LargeClass:BaseTransactionDatabase.kt:BaseTransactionDatabase : Callback</ID>
@@ -572,48 +547,6 @@
     <ID>ReturnCount:SyncDelegate.kt:SyncDelegate$private fun mergeUpdate: TransactionChange</ID>
     <ID>ReturnCount:TemplatesList.kt:TemplatesList$override fun dispatchCommandMultiple: Boolean</ID>
     <ID>ReturnCount:TemplatesList.kt:TemplatesList$override fun dispatchCommandSingle: Boolean</ID>
-    <ID>SerialVersionUIDInSerializableClass:Account.kt:Account : DataBaseAccountSerializableDistributionAccountInfo</ID>
-    <ID>SerialVersionUIDInSerializableClass:Account.kt:Account : IdHolderSerializable</ID>
-    <ID>SerialVersionUIDInSerializableClass:Bank.kt:Bank : ParcelableSerializable</ID>
-    <ID>SerialVersionUIDInSerializableClass:BudgetAllocation.kt:BudgetAllocation : ParcelableSerializable</ID>
-    <ID>SerialVersionUIDInSerializableClass:Category.kt:Category : ParcelableSerializable</ID>
-    <ID>SerialVersionUIDInSerializableClass:Currency.kt:Currency : ParcelableSerializable</ID>
-    <ID>SerialVersionUIDInSerializableClass:ExportDialogFragment.kt:ExportDialogFragment$AccountInfo : Serializable</ID>
-    <ID>SerialVersionUIDInSerializableClass:GroupingNavigator.kt:GroupingInfo : ParcelableSerializable</ID>
-    <ID>SwallowedException:AbstractSyncBackendProvider.kt:AbstractSyncBackendProvider$e: FileNotFoundException</ID>
-    <ID>SwallowedException:AppNameLocalizationTest.kt:AppNameLocalizationTest$e: Exception</ID>
-    <ID>SwallowedException:CalendarListPreferenceDialogFragmentCompat.kt:CalendarListPreferenceDialogFragmentCompat$e: SecurityException</ID>
-    <ID>SwallowedException:ConfigurationModule.kt:ConfigurationModule$e: Exception</ID>
-    <ID>SwallowedException:PlannerFragment.kt:PlannerFragment$ise: IllegalStateException</ID>
-    <ID>SwallowedException:SyncBackendSetupActivity.kt:SyncBackendSetupActivity$e: NoSuchElementException</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:AmountCriterion.kt:AmountCriterion$IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:ArchiveDialogFragment.kt:ArchiveDialogFragment$IllegalStateException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:BackupViewModel.kt:BackupViewModel$IllegalStateException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:BaseTransactionDatabase.kt:IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:BudgetWidgetUpdateWorker.kt:BudgetWidgetUpdateWorker.Companion$IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:ContribDialogFragment.kt:ContribDialogFragment$IllegalStateException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:CsvImportActivity.kt:CsvImportActivity$IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:DateUtils.kt:IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:DbConstants.kt:IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:DisplayProgress.kt:DisplayProgress.Companion$IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:DistributionActivity.kt:DistributionActivity$IllegalStateException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:ExpenseEdit.kt:ExpenseEdit$IllegalStateException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:GroupingNavigator.kt:GroupingNavigator$IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:HistoryChart.kt:HistoryChart$IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:MainDelegate.kt:MainDelegate$IllegalStateException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:MenuItem.kt:MenuItem$IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:MyExpensesViewModel.kt:MyExpensesViewModel$Exception()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:NestedScrollableHost.kt:NestedScrollableHost$IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:PermissionHelper.kt:PermissionHelper$IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:PlanMonthFragment.kt:PlanMonthFragment$IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:PlannerViewModel.kt:PlannerViewModel.Month$IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:PreferenceUiFragment.kt:PreferenceUiFragment$IllegalStateException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:PreferencesBackupRestoreFragment.kt:PreferencesBackupRestoreFragment$IllegalStateException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:RemapHandler.kt:RemapHandler.PickObjectContract$IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:RepositoryBudget.kt:IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:RepositoryBudget.kt:IllegalStateException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:TemplatesList.kt:TemplatesList$IllegalArgumentException()</ID>
-    <ID>ThrowingExceptionsWithoutMessageOrCause:TransactionMapper.kt:TransactionMapper$NullPointerException()</ID>
     <ID>ThrowsCount:AbstractSyncBackendProvider.kt:AbstractSyncBackendProvider$@Throws(Exception::class) override suspend fun setUp</ID>
     <ID>ThrowsCount:Archive.kt:fun SupportSQLiteDatabase.archive: Long</ID>
     <ID>ThrowsCount:ImageOptimizer.kt:ImageOptimizer$fun optimize</ID>
@@ -630,7 +563,6 @@
     <ID>TooGenericExceptionCaught:BaseTransactionProvider.kt:BaseTransactionProvider$e: Throwable</ID>
     <ID>TooGenericExceptionCaught:BatchPriceDownloadDialogFragment.kt:BatchPriceDownloadDialogFragment$e: Exception</ID>
     <ID>TooGenericExceptionCaught:BroadCastReceiverExt.kt:e: Exception</ID>
-    <ID>TooGenericExceptionCaught:ConfigurationModule.kt:ConfigurationModule$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ContentResolvingAndroidViewModel.kt:ContentResolvingAndroidViewModel$e: Exception</ID>
     <ID>TooGenericExceptionCaught:CsvImportParseFragment.kt:CsvImportParseFragment$throwable: Throwable</ID>
     <ID>TooGenericExceptionCaught:CsvImportViewModel.kt:CsvImportViewModel$e: Exception</ID>
@@ -673,23 +605,6 @@
     <ID>TooGenericExceptionCaught:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ViewIntentProvider.kt:ViewIntentProvider$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ZipUtils.kt:ZipUtils$e: Exception</ID>
-    <ID>TooGenericExceptionThrown:AbstractSyncBackendViewModel.kt:AbstractSyncBackendViewModel$throw Exception( TextUtils.concatResStrings( getApplication(), R.string.link_account_failure_2, R.string.link_account_failure_3 ) + "(" + TextUtils.concatResStrings( getApplication(), ", ", R.string.settings_label, R.string.pref_manage_sync_backends_title ) + ")" )</ID>
-    <ID>TooGenericExceptionThrown:AccountWidget.kt:AccountWidget$throw Exception("Cursor returned null")</ID>
-    <ID>TooGenericExceptionThrown:AppDirHelper.kt:AppDirHelper$throw Exception("no not-null value found in getExternalFilesDirs")</ID>
-    <ID>TooGenericExceptionThrown:BaseTransactionProvider.kt:BaseTransactionProvider$throw Exception("Missing transaction id")</ID>
-    <ID>TooGenericExceptionThrown:BaseTransactionProvider.kt:BaseTransactionProvider$throw Exception("Missing uuid")</ID>
-    <ID>TooGenericExceptionThrown:BaseTransactionProvider.kt:BaseTransactionProvider$throw Throwable( "Unable to copy file from " + (if (copyPrefSuccess) preferencesDataStoreFile else sharedPrefFile).path + " to " + (if (copyPrefSuccess) backupDataStoreFile else backupPrefFile).path )</ID>
-    <ID>TooGenericExceptionThrown:BaseTransactionProvider.kt:BaseTransactionProvider$throw Throwable(message)</ID>
-    <ID>TooGenericExceptionThrown:DataModule.kt:DataModule$throw Throwable( "Updating from database schema version 132 or 133 is no longer supported. Please contact " + "support@myexpenses.mobi for assistance." )</ID>
-    <ID>TooGenericExceptionThrown:DataModule.kt:DataModule$throw Throwable( context.getString( R.string.restore_cannot_downgrade, it, DATABASE_VERSION ) )</ID>
-    <ID>TooGenericExceptionThrown:DataModule.kt:DataModule$throw Throwable("Database integrity check failed")</ID>
-    <ID>TooGenericExceptionThrown:ImportDataViewModel.kt:ImportDataViewModel$throw Exception( "Exception during QIF import. Did not get instance from DB for id " + dbAccountId )</ID>
-    <ID>TooGenericExceptionThrown:ImportFileResultHandler.kt:ImportFileResultHandler$throw Throwable(errorMsg)</ID>
-    <ID>TooGenericExceptionThrown:PdfPrinter.kt:PdfPrinter$throw Exception("No data")</ID>
-    <ID>TooGenericExceptionThrown:PdfPrinter.kt:PdfPrinter$throw Exception(context.getString(R.string.print_configuration_empty))</ID>
-    <ID>TooGenericExceptionThrown:QifImportViewModel.kt:QifImportViewModel$throw Exception("Exception during QIF import. Did not get instance from DB for id $accountId")</ID>
-    <ID>TooGenericExceptionThrown:RoadmapRepository.kt:RoadmapRepository$throw Exception( when (code) { 452 -&gt; context.getString(R.string.roadmap_vote_outdated) 453 -&gt; context.getString(R.string.roadmap_vote_validation_failure) else -&gt; "Received unexpected response: $code" } )</ID>
-    <ID>TooGenericExceptionThrown:WebUiViewModel.kt:WebUiViewModel$throw Exception("Unable to bind to service $it")</ID>
     <ID>TooManyFunctions:AbstractSyncBackendProvider.kt:AbstractSyncBackendProvider&lt;Res&gt; : SyncBackendProviderResourceStorage</ID>
     <ID>TooManyFunctions:AmountInput.kt:AmountInput : ConstraintLayout</ID>
     <ID>TooManyFunctions:AppComponent.kt:AppComponent</ID>
@@ -751,34 +666,5 @@
     <ID>TooManyFunctions:TemplatesList.kt:TemplatesList : SortableListFragmentLoaderCallbacksOnDialogResultListener</ID>
     <ID>TooManyFunctions:TransactionDelegate.kt:TransactionDelegate : OnItemSelectedListener</ID>
     <ID>TooManyFunctions:TransactionEditViewModel.kt:TransactionEditViewModel : TagHandlingViewModel</ID>
-    <ID>TopLevelPropertyNaming:Budget.kt:const val labelFraction = 0.35f</ID>
-    <ID>TopLevelPropertyNaming:Budget.kt:const val numberFraction = 0.2f</ID>
-    <ID>TopLevelPropertyNaming:DbConstants.kt:/** * we check if the object is linked to a sealed debt. * This can be used for queries that also include parts, where we do not need to include the parts here */ const val checkForSealedDebt = "coalesce((SELECT $KEY_SEALED FROM $TABLE_DEBTS WHERE $KEY_ROWID = $KEY_DEBT_ID), 0)"</ID>
-    <ID>TopLevelPropertyNaming:DbConstants.kt:const val accountWithTypeAndFlag = "$TABLE_ACCOUNTS LEFT JOIN $TABLE_ACCOUNT_TYPES ON $KEY_TYPE = $TABLE_ACCOUNT_TYPES.$KEY_ROWID LEFT JOIN $TABLE_ACCOUNT_FLAGS ON $KEY_FLAG = $TABLE_ACCOUNT_FLAGS.$KEY_ROWID"</ID>
-    <ID>TopLevelPropertyNaming:DbConstants.kt:const val categoryTreeSelectForTrigger = """ WITH Tree AS ( SELECT $KEY_ROWID, $KEY_PARENTID, 1 AS $KEY_LEVEL FROM $TABLE_CATEGORIES main WHERE $KEY_ROWID= new.$KEY_ROWID UNION ALL SELECT subtree.$KEY_ROWID, subtree.$KEY_PARENTID, level + 1 FROM $TABLE_CATEGORIES subtree JOIN Tree ON Tree.$KEY_ROWID = subtree.$KEY_PARENTID ORDER BY $KEY_LEVEL DESC ) SELECT $KEY_ROWID From Tree """</ID>
-    <ID>TopLevelPropertyNaming:MyExpensesViewModel.kt:const val pageSize = 150</ID>
-    <ID>TopLevelPropertyNaming:QifReduceTransfersTest.kt:const val account1 = "Konto 1"</ID>
-    <ID>TopLevelPropertyNaming:QifReduceTransfersTest.kt:const val account2 = "Konto 2"</ID>
-    <ID>UnusedParameter:Licence.kt:Licence$context: Context</ID>
-    <ID>UnusedParameter:MoreDbUtils.kt:baseAmount: Money</ID>
-    <ID>UnusedParameter:PlannerFragment.kt:PlannerFragment.PlanInstanceViewHolder$position: Int</ID>
-    <ID>UnusedParameter:TradeList.kt:trade: Trade</ID>
-    <ID>VariableNaming:BaseViewModel.kt:BaseViewModel$val SharingStarted.Companion.WhileSubscribedWithTimeout: SharingStarted get() = WhileSubscribed(stopTimeoutMillis = 5000)</ID>
-    <ID>VariableNaming:BudgetEditViewModel.kt:BudgetEditViewModel$val _criteria : MutableStateFlow&lt;Set&lt;SimpleCriterion&lt;*&gt;&gt;&gt; = MutableStateFlow(emptySet())</ID>
-    <ID>VariableNaming:CategoryViewModel.kt:CategoryViewModel$protected val _syncResult: MutableStateFlow&lt;String?&gt; = MutableStateFlow(null)</ID>
-    <ID>VariableNaming:DistributionViewModelBase.kt:DistributionViewModelBase$protected val _accountInfo = MutableStateFlow&lt;T?&gt;(null)</ID>
-    <ID>VariableNaming:DistributionViewModelBase.kt:DistributionViewModelBase$protected val _whereFilter: MutableStateFlow&lt;Criterion?&gt; = MutableStateFlow(null)</ID>
-    <ID>VariableNaming:MaterialSpinnerAdapter.kt:MaterialSpinnerAdapter$private val filter_that_does_nothing = object: Filter() { override fun performFiltering(constraint: CharSequence?): FilterResults { val results = FilterResults() results.values = values results.count = values.size return results } override fun publishResults(constraint: CharSequence?, results: FilterResults?) { notifyDataSetChanged() } }</ID>
-    <ID>VariableNaming:NonScrollListView.kt:NonScrollListView$val heightMeasureSpec_custom = MeasureSpec.makeMeasureSpec( Int.MAX_VALUE shr 2, MeasureSpec.AT_MOST)</ID>
-    <ID>VariableNaming:PrintViewModel.kt:PrintViewModel$protected val _pdfResult: MutableStateFlow&lt;Result&lt;Pair&lt;Uri, String&gt;&gt;?&gt; = MutableStateFlow(null)</ID>
-    <ID>VariableNaming:QifUtilParseDateTest.kt:QifUtilParseDateTest$private val VERIFICATION_FORMAT = SimpleDateFormat("yyyy-MM-dd")</ID>
-    <ID>VariableNaming:QifUtilParseDateTest.kt:QifUtilParseDateTest$private val VERIFICATION_FORMAT_WITH_TIME = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")</ID>
-    <ID>WildcardImport:AccountEditViewModel.kt:import org.totschnig.myexpenses.db2.*</ID>
-    <ID>WildcardImport:AutoBackupWorker.kt:import androidx.work.*</ID>
-    <ID>WildcardImport:MainPreferenceFragment.kt:import androidx.preference.*</ID>
-    <ID>WildcardImport:PackageTest.kt:import org.junit.Assert.*</ID>
-    <ID>WildcardImport:StorageAccessFrameworkBackendProvider.kt:import java.io.*</ID>
-    <ID>WildcardImport:TestMyApplication.kt:import org.totschnig.myexpenses.di.*</ID>
-    <ID>WildcardImport:TwoPanePreference.kt:import androidx.preference.*</ID>
   </CurrentIssues>
 </SmellBaseline>

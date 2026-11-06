@@ -50,12 +50,12 @@ abstract class AbstractSyncBackendViewModel(application: Application) :
                     val syncAccount = getAccount(syncAccountName)
                     accountManager.setUserData(
                         syncAccount,
-                        SyncAdapter.KEY_LAST_SYNCED_LOCAL(account.first),
+                        SyncAdapter.keyLastSyncedLocal(account.first),
                         null
                     )
                     accountManager.setUserData(
                         syncAccount,
-                        SyncAdapter.KEY_LAST_SYNCED_REMOTE(account.first),
+                        SyncAdapter.keyLastSyncedRemote(account.first),
                         null
                     )
 
@@ -72,7 +72,7 @@ abstract class AbstractSyncBackendViewModel(application: Application) :
                 if (syncBackendProvider.remoteAccountList.mapNotNull { it.getOrNull() }
                         .any { it.uuid == uuid }
                 ) {
-                    throw Exception(
+                    throw IllegalStateException(
                         TextUtils.concatResStrings(
                             getApplication(),
                             R.string.link_account_failure_2, R.string.link_account_failure_3

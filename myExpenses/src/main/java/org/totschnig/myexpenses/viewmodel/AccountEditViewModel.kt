@@ -6,7 +6,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import org.totschnig.myexpenses.db2.*
+import org.totschnig.myexpenses.db2.loadAccount
+import org.totschnig.myexpenses.db2.loadActiveTagsForAccount
+import org.totschnig.myexpenses.db2.saveActiveTagsForAccount
+import org.totschnig.myexpenses.db2.storeExchangeRate
+import org.totschnig.myexpenses.db2.toContentValues
+import org.totschnig.myexpenses.db2.updateAccount
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model2.Account
 

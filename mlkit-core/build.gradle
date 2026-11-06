@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'org.totschnig.mlkit_core'
+    namespace 'org.totschnig.mlkitcore'
 }
 
 // Call of ML Kit text recognition and document scanner, kept apart from the mlkit feature, so that

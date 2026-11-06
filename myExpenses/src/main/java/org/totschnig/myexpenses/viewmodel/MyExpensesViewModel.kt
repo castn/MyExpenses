@@ -169,7 +169,7 @@ enum class ScrollToCurrentDate { Never, AppLaunch, AccountOpen }
 private const val BALANCE_DATE_KEY = "balanceDate"
 private const val SELECTED_ACCOUNT_KEY = "selectedAccountId"
 
-const val pageSize = 150
+const val PAGE_SIZE = 150
 
 sealed class ResolvedExtraInfo {
     data class Split(val items: List<Pair<String, String?>>) : ResolvedExtraInfo()
@@ -368,7 +368,7 @@ open class MyExpensesViewModel(
             }
             val flow = Pager(
                 config = PagingConfig(
-                    pageSize = pageSize,
+                    pageSize = PAGE_SIZE,
                     prefetchDistance = 40
                 ),
                 pagingSourceFactory = factory
@@ -388,7 +388,7 @@ open class MyExpensesViewModel(
                 .build()
         ).mapToOne {
             SumInfo.fromCursor(it)
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, SumInfo.EMPTY)
+        }.stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, SumInfo.EMPTY)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -420,11 +420,11 @@ open class MyExpensesViewModel(
                     headerData?.let { HeaderData(account, it, dateInfo, filter != null) }
                         ?: HeaderDataError
                 }
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, HeaderDataEmpty)
+        }.stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, HeaderDataEmpty)
 
     protected val tags: StateFlow<Map<String, Pair<String, Int?>>> by lazy {
         contentResolver.tagMapFlow
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, emptyMap())
+            .stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, emptyMap())
     }
 
     open fun buildTransactionPagingSource(account: PageAccount) =
@@ -499,7 +499,7 @@ open class MyExpensesViewModel(
             }
         }.stateIn(
             viewModelScope,
-            SharingStarted.WhileSubscribedWithTimeout,
+            SharingStarted.whileSubscribedWithTimeout,
             LocalDate.now() to emptyList()
         )
 
@@ -512,7 +512,7 @@ open class MyExpensesViewModel(
         ).map {
             it.fold(0L) { sum, debt -> sum + debt.currentEquivalentBalance }
         }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, 0L)
+    }.stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, 0L)
 
     val sortOrderAccounts: Sort
         get() = prefHandler.enumValueOrDefault(
@@ -829,7 +829,7 @@ open class MyExpensesViewModel(
         ) {
             emit(ResultUnit)
         } else {
-            emit(Result.failure(Exception()))
+            emit(Result.failure(Exception("Could not revoke split of transaction $id")))
         }
     }
 
@@ -870,7 +870,7 @@ open class MyExpensesViewModel(
 
     fun print(account: PageAccount, whereFilter: Criterion?) {
         viewModelScope.launch(coroutineContext()) {
-            _pdfResult.update {
+            mutablePdfResult.update {
                 AppDirHelper.checkAppDir(getApplication()).mapCatching {
                     val colorSource = enumValueOrDefault(
                         dataStore.data.first()[
@@ -886,7 +886,7 @@ open class MyExpensesViewModel(
 
     fun printBalanceSheet() {
         viewModelScope.launch(coroutineContext()) {
-            _pdfResult.update {
+            mutablePdfResult.update {
                 AppDirHelper.checkAppDir(getApplication()).mapCatching {
                     val (date, accounts) = accountsForBalanceSheet.first()
                     BalanceSheetPdfGenerator(localizedContext).generatePdf(

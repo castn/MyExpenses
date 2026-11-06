@@ -2,11 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ConstructorParameterNaming:TransactionData.kt:TransactionData$val _transferAmount: Long? = null</ID>
-    <ID>PackageNaming:CursorSubject.kt:package org.totschnig.shared_test</ID>
-    <ID>PackageNaming:LocalizationTestHelper.kt:package org.totschnig.shared_test</ID>
-    <ID>PackageNaming:TransactionData.kt:package org.totschnig.shared_test</ID>
-    <ID>PackageNaming:asserts.kt:package org.totschnig.shared_test</ID>
     <ID>TooManyFunctions:CursorSubject.kt:CursorSubject : Subject</ID>
   </CurrentIssues>
 </SmellBaseline>

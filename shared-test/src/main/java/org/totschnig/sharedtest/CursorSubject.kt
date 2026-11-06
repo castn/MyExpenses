@@ -1,4 +1,4 @@
-package org.totschnig.shared_test
+package org.totschnig.sharedtest
 
 import android.database.Cursor
 import com.google.common.truth.FailureMetadata

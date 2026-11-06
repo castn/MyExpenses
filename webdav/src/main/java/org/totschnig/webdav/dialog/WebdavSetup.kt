@@ -71,7 +71,7 @@ class WebdavSetup : EditActivity() {
                 if (encodedCert != null) {
                     mTrustCertificate = try {
                         fromString(encodedCert)
-                    } catch (e: Exception) {
+                    } catch (ignored: Exception) {
                         null
                     }
                     if (mTrustCertificate != null) {

@@ -493,7 +493,11 @@ class ExportDialogFragment : DialogViewBinding<ExportDialogBinding>(),
         val hasExported: Boolean,
         val isFiltered: Boolean,
         val aggregate: Pair<String, Pair<String, Long?>?>? = null
-    ) : Serializable
+    ) : Serializable {
+        private companion object {
+            private const val serialVersionUID = 1L
+        }
+    }
 
     companion object {
         private const val KEY_DATA = "data"

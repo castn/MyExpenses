@@ -169,7 +169,7 @@ class ManageCategoriesViewModel(application: Application, savedStateHandle: Save
             withColors = false
         )
     }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, LoadingState.Loading)
+        .stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, LoadingState.Loading)
 
     val categoryTreeForSelect: Flow<LoadingState> by lazy {
         categoryTree(sortOrder = sortOrder.value.toOrderByWithDefault(defaultSort, collate))
@@ -507,7 +507,7 @@ class ManageCategoriesViewModel(application: Application, savedStateHandle: Save
                         CrashHandler.report(it)
                         getString(R.string.write_fail_reason_cannot_write) + ": " + it.message
                     }
-                )?.let { message -> _syncResult.update { message } }
+                )?.let { message -> mutableSyncResult.update { message } }
         }
     }
 
@@ -529,7 +529,7 @@ class ManageCategoriesViewModel(application: Application, savedStateHandle: Save
                         }
                         it.safeMessage
                     }
-                ).let { message -> _syncResult.update { message } }
+                ).let { message -> mutableSyncResult.update { message } }
         }
     }
 }

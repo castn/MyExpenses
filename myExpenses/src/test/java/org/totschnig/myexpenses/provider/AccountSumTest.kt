@@ -6,7 +6,7 @@ import org.robolectric.RobolectricTestRunner
 import org.totschnig.myexpenses.BaseTestWithRepository
 import org.totschnig.myexpenses.db2.insertTransaction
 import org.totschnig.myexpenses.db2.insertTransfer
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 
 @RunWith(RobolectricTestRunner::class)
 class AccountSumTest: BaseTestWithRepository() {

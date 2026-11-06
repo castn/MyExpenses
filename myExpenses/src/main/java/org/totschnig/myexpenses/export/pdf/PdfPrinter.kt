@@ -181,7 +181,7 @@ object PdfPrinter {
             selection, selectionArgs, sortBy + " " + account.sortDirection
         )!!.use { cursor ->
             if (cursor.count == 0) {
-                throw Exception("No data")
+                throw IllegalStateException("No data")
             }
 
             PdfWriter.getInstance(
@@ -237,7 +237,7 @@ object PdfPrinter {
                     finalColumns to finalColumnWidths
                 } else columnsPreference to columnWidthsPreference
                 if (columns.count { it.isNotEmpty() } == 0) {
-                    throw Exception(context.getString(R.string.print_configuration_empty))
+                    throw IllegalStateException(context.getString(R.string.print_configuration_empty))
                 }
                 addTransactionList(
                     document,
@@ -648,7 +648,7 @@ object PdfPrinter {
                     Date -> listOf(
                         if (isSplitPart) null else
                             itemDateFormat?.let {
-                                Utils.convDateTime(_date, it)
+                                Utils.convDateTime(dateEpochSeconds, it)
                             }
                     )
 
@@ -729,8 +729,8 @@ object PdfPrinter {
             transaction.print()
 
             if (SPLIT_CATID == transaction.catId) {
-                splitCursor(transaction.id).use { it ->
-                    val list = it.asSequence.map {
+                splitCursor(transaction.id).use { cursor ->
+                    val list = cursor.asSequence.map {
                         Transaction2.fromCursor(
                             currencyContext = currencyContext,
                             cursor = it,

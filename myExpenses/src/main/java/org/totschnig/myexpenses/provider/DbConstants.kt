@@ -97,7 +97,7 @@ fun checkForSealedAccount(baseTable: String, innerTable: String, withTransfer: B
  * we check if the object is linked to a sealed debt.
  * This can be used for queries that also include parts, where we do not need to include the parts here
  */
-const val checkForSealedDebt =
+const val CHECK_FOR_SEALED_DEBT =
     "coalesce((SELECT $KEY_SEALED FROM $TABLE_DEBTS WHERE $KEY_ROWID = $KEY_DEBT_ID), 0)"
 
 /**
@@ -122,7 +122,7 @@ fun categoryTreeSelect(
     type = typeParameter?.toByte()
 ) + "SELECT ${projection?.joinToString() ?: "*"} FROM Tree ${selection?.let { "WHERE $it" } ?: ""}"
 
-const val categoryTreeSelectForTrigger = """
+const val CATEGORY_TREE_SELECT_FOR_TRIGGER = """
 WITH Tree AS (
 SELECT
     $KEY_ROWID,
@@ -606,7 +606,7 @@ WITH now as (
    from amounts group by $KEY_ACCOUNTID
 ), $CTE_TABLE_NAME_FULL_ACCOUNTS AS (
     SELECT ${fullAccountProjection.joinToString()}
-    FROM $accountWithTypeAndFlag LEFT JOIN aggregates ON $TABLE_ACCOUNTS.$KEY_ROWID = aggregates.$KEY_ACCOUNTID LEFT JOIN $CTE_LATEST_RATES ON $TABLE_ACCOUNTS.$KEY_CURRENCY = $CTE_LATEST_RATES.$KEY_COMMODITY  
+    FROM $ACCOUNT_WITH_TYPE_AND_FLAG LEFT JOIN aggregates ON $TABLE_ACCOUNTS.$KEY_ROWID = aggregates.$KEY_ACCOUNTID LEFT JOIN $CTE_LATEST_RATES ON $TABLE_ACCOUNTS.$KEY_CURRENCY = $CTE_LATEST_RATES.$KEY_COMMODITY  
     ${exchangeRateJoin("", KEY_ROWID, homeCurrency, TABLE_ACCOUNTS)} $invisibleFilter
 )
 """
@@ -726,13 +726,13 @@ WITH now as (
    from amounts group by $KEY_ACCOUNTID
 ), $CTE_TABLE_NAME_FULL_ACCOUNTS AS (
     SELECT ${fullAccountProjection.joinToString()}
-    FROM $accountWithTypeAndFlag LEFT JOIN aggregates ON $TABLE_ACCOUNTS.$KEY_ROWID = aggregates.$KEY_ACCOUNTID
+    FROM $ACCOUNT_WITH_TYPE_AND_FLAG LEFT JOIN aggregates ON $TABLE_ACCOUNTS.$KEY_ROWID = aggregates.$KEY_ACCOUNTID
     ${exchangeRateJoin("", KEY_ROWID, homeCurrency, TABLE_ACCOUNTS)} $invisibleFilter
 )
 """
 }
 
-const val accountWithTypeAndFlag =
+const val ACCOUNT_WITH_TYPE_AND_FLAG =
     "$TABLE_ACCOUNTS LEFT JOIN $TABLE_ACCOUNT_TYPES ON $KEY_TYPE = $TABLE_ACCOUNT_TYPES.$KEY_ROWID LEFT JOIN $TABLE_ACCOUNT_FLAGS ON $KEY_FLAG = $TABLE_ACCOUNT_FLAGS.$KEY_ROWID"
 
 @JvmOverloads
@@ -769,7 +769,7 @@ fun tagJoin(mainTable: String): String {
     val (joinTable, referenceColumn) = when (mainTable) {
         TABLE_TRANSACTIONS -> TABLE_TRANSACTIONS_TAGS to KEY_TRANSACTIONID
         TABLE_TEMPLATES -> TABLE_TEMPLATES_TAGS to KEY_TEMPLATEID
-        else -> throw IllegalArgumentException()
+        else -> throw IllegalArgumentException("Unexpected mainTable: $mainTable")
     }
     return associativeJoin(mainTable, joinTable, TABLE_TAGS, referenceColumn, KEY_TAGID)
 }
@@ -1018,7 +1018,7 @@ fun transactionSumQuery(
         val type = when (column) {
             KEY_SUM_INCOME -> FLAG_INCOME
             KEY_SUM_EXPENSES -> FLAG_EXPENSE
-            else -> throw IllegalArgumentException()
+            else -> throw IllegalArgumentException("Unexpected column: $column")
         }
         //@formatter:off
         "WITH ${buildSearchCte(VIEW_WITH_ACCOUNT, homeCurrency, forHome)} SELECT $aggregateFunction($KEY_DISPLAY_AMOUNT) AS $column FROM $CTE_SEARCH WHERE $typeWithFallBack IN ($type, $FLAG_NEUTRAL) AND ($WHERE_NOT_SPLIT AND $WHERE_NOT_VOID AND $selection)"
@@ -1031,7 +1031,7 @@ fun transactionSumQuery(
                     "$FLAG_EXPENSE) AS $KEY_SUM_EXPENSES"
                 KEY_SUM_INCOME -> "(SELECT $sumExpression FROM $CTE_TRANSACTION_AMOUNTS WHERE $KEY_TYPE = " +
                     "$FLAG_INCOME) AS $KEY_SUM_INCOME"
-                else -> throw IllegalArgumentException()
+                else -> throw IllegalArgumentException("Unexpected value: $it")
             }
         }
         require(columns.isNotEmpty())

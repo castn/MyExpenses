@@ -11,7 +11,7 @@ import org.totschnig.myexpenses.provider.DataBaseAccount.Companion.HOME_AGGREGAT
 import org.totschnig.myexpenses.provider.KEY_SUM_EXPENSES
 import org.totschnig.myexpenses.provider.KEY_SUM_INCOME
 import org.totschnig.myexpenses.provider.TransactionProvider
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 
 /**
  * For the moment, this tests if the queries are valid,

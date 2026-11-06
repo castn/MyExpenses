@@ -1,4 +1,4 @@
-package org.totschnig.shared_test
+package org.totschnig.sharedtest
 
 import com.google.common.truth.Truth.assertThat
 import org.totschnig.myexpenses.db2.Repository

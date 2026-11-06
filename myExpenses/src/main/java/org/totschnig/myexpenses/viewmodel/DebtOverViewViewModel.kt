@@ -63,7 +63,7 @@ class DebtOverViewViewModel(application: Application) : DebtViewModel(applicatio
 
     fun print() {
         viewModelScope.launch(coroutineContext()) {
-            _pdfResult.update {
+            mutablePdfResult.update {
                 AppDirHelper.checkAppDir(getApplication()).mapCatching { destDir ->
                     DebtOverviewPdfGenerator(localizedContext).generatePdf(
                         destDir = destDir,
@@ -91,6 +91,6 @@ class DebtOverViewViewModel(application: Application) : DebtViewModel(applicatio
                     }
                 } else debts
             }
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, Sort.LABEL to emptyList())
+        }.stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, Sort.LABEL to emptyList())
     }
 }

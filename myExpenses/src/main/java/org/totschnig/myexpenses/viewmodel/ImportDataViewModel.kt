@@ -71,7 +71,7 @@ abstract class ImportDataViewModel(application: Application) :
             val dbAccountId =
                 if (TextUtils.isEmpty(account.memo)) null else repository.findAnyOpenByLabel(account.memo)
             val dbAccount = if (dbAccountId != null) {
-                repository.loadAccount(dbAccountId) ?: throw Exception(
+                repository.loadAccount(dbAccountId) ?: throw IllegalStateException(
                     "Exception during QIF import. Did not get instance from DB for id " +
                             dbAccountId
                 )

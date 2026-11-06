@@ -8,7 +8,7 @@ import org.totschnig.myexpenses.BaseTestWithRepository
 import org.totschnig.myexpenses.db2.savePrice
 import org.totschnig.myexpenses.retrofit.ExchangeRateApi
 import org.totschnig.myexpenses.retrofit.ExchangeRateSource
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 import java.time.LocalDate
 
 @RunWith(RobolectricTestRunner::class)

@@ -12,7 +12,7 @@ import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.model.AccountFlag
 import org.totschnig.myexpenses.viewmodel.data.Account
 
-sealed class SpinnerItem() {
+sealed class SpinnerItem {
     abstract val itemId: Long
 
     data class Header<H>(val header: H, override val itemId: Long) : SpinnerItem()

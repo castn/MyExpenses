@@ -19,7 +19,7 @@ import org.totschnig.myexpenses.provider.TransactionProvider.STALE_IMAGES_URI
 import org.totschnig.myexpenses.provider.TransactionProvider.TRANSACTIONS_ATTACHMENTS_URI
 import org.totschnig.myexpenses.provider.insert
 import org.totschnig.myexpenses.testutils.BaseDbTest
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 
 class AttachmentTest : BaseDbTest() {
 

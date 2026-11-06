@@ -73,7 +73,7 @@ END
 
 private const val CATEGORY_HIERARCHY_TRIGGER = """
 CREATE TRIGGER category_hierarchy_update
-BEFORE UPDATE ON $TABLE_CATEGORIES WHEN new.$KEY_PARENTID IS NOT old.$KEY_PARENTID AND new.$KEY_PARENTID IN ($categoryTreeSelectForTrigger)
+BEFORE UPDATE ON $TABLE_CATEGORIES WHEN new.$KEY_PARENTID IS NOT old.$KEY_PARENTID AND new.$KEY_PARENTID IN ($CATEGORY_TREE_SELECT_FOR_TRIGGER)
 BEGIN $RAISE_INCONSISTENT_CATEGORY_HIERARCHY END
 """
 
@@ -432,12 +432,12 @@ fun SupportSQLiteDatabase.linkedTableTrigger(
     val reference = when (operation) {
         "INSERT" -> "new"
         "DELETE" -> "old"
-        else -> throw IllegalArgumentException()
+        else -> throw IllegalArgumentException("Unexpected operation: $operation")
     }
     val type = when (table) {
         TABLE_TRANSACTIONS_TAGS -> TransactionChange.Type.tags
         TABLE_TRANSACTION_ATTACHMENTS -> TransactionChange.Type.attachments
-        else -> throw IllegalArgumentException()
+        else -> throw IllegalArgumentException("Unexpected table: $table")
     }
     val triggerName = triggerName(operation, table)
     execSQL("DROP TRIGGER IF EXISTS $triggerName")
@@ -467,7 +467,7 @@ private fun referenceForTable(reference: String, table: String, column: String) 
     TABLE_TRANSACTIONS -> "$reference.$column"
     TABLE_TRANSACTIONS_TAGS, TABLE_TRANSACTION_ATTACHMENTS, TABLE_EQUIVALENT_AMOUNTS ->
         "(SELECT $column FROM $TABLE_TRANSACTIONS WHERE $KEY_ROWID = $reference.$KEY_TRANSACTIONID)"
-    else -> throw IllegalArgumentException()
+    else -> throw IllegalArgumentException("Unexpected table: $table")
 }
 
 @JvmOverloads

@@ -22,9 +22,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import org.totschnig.myexpenses.next.core.ui.DetailPage
-import org.totschnig.myexpenses.next.core.ui.ExtraPage
-import org.totschnig.myexpenses.next.core.ui.ListPage
+import org.totschnig.myexpenses.next.core.ui.detailPage
+import org.totschnig.myexpenses.next.core.ui.extraPage
+import org.totschnig.myexpenses.next.core.ui.listPage
 import org.totschnig.myexpenses.next.core.ui.rememberListDetailPages
 import org.totschnig.myexpenses.designsystem.DetailCard
 import org.totschnig.myexpenses.designsystem.DialogActionRow
@@ -212,12 +212,12 @@ fun NextSettingsScreen(actions: SettingsActions, onBack: () -> Unit, initialGrou
         onBack = { backStack.removeLastOrNull() },
         sceneStrategies = listOf(rememberListDetailPages()),
         entryProvider = entryProvider {
-            entry<SettingsKey.Start>(metadata = ListPage(R.string.next_pick_settings)) {
+            entry<SettingsKey.Start>(metadata = listPage(R.string.next_pick_settings)) {
                 SettingsStart(actions, onBack) { group, highlighted ->
                     backStack.add(SettingsKey.Group(group, highlighted))
                 }
             }
-            entry<SettingsKey.Group>(metadata = DetailPage()) { key ->
+            entry<SettingsKey.Group>(metadata = detailPage()) { key ->
                 var highlighted by rememberSaveable { mutableStateOf(key.highlighted) }
                 SettingsGroupPage(
                     key.group, actions, onBack = { leave(key) }, highlighted,
@@ -225,7 +225,7 @@ fun NextSettingsScreen(actions: SettingsActions, onBack: () -> Unit, initialGrou
                     onOpenPage = { backStack.add(SettingsKey.Page(it.id)) }
                 )
             }
-            entry<SettingsKey.Page>(metadata = ExtraPage()) { key ->
+            entry<SettingsKey.Page>(metadata = extraPage()) { key ->
                 val setting = InsightSetting.all.firstOrNull { it.id == key.setting }
                 if (setting != null) actions.page(setting) { leave(key) } else LaunchedEffect(key) { leave(key) }
             }

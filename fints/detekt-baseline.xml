@@ -81,6 +81,5 @@
     <ID>TooGenericExceptionCaught:BankingViewModel.kt:BankingViewModel$e: Exception</ID>
     <ID>TooGenericExceptionCaught:BankingViewModel.kt:BankingViewModel.MyHBCICallback$e: Exception</ID>
     <ID>TooManyFunctions:BankingViewModel.kt:BankingViewModel : ContentResolvingAndroidViewModel</ID>
-    <ID>WildcardImport:Banking.kt:import org.totschnig.fints.BankingViewModel.WorkState.*</ID>
   </CurrentIssues>
 </SmellBaseline>

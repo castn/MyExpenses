@@ -12,9 +12,9 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import kotlinx.serialization.Serializable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.totschnig.myexpenses.next.core.ui.DetailPage
-import org.totschnig.myexpenses.next.core.ui.ExtraPage
-import org.totschnig.myexpenses.next.core.ui.ListPage
+import org.totschnig.myexpenses.next.core.ui.detailPage
+import org.totschnig.myexpenses.next.core.ui.extraPage
+import org.totschnig.myexpenses.next.core.ui.listPage
 import org.totschnig.myexpenses.next.core.ui.rememberListDetailPages
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
@@ -84,9 +84,9 @@ fun SavingTipsFlow(
         sceneStrategies = listOf(rememberListDetailPages()),
         entryProvider = entryProvider {
             entry<SavingTipsKey.Home>(
-                metadata = ListPage(R.string.next_pick_saving_tip)
+                metadata = listPage(R.string.next_pick_saving_tip)
             ) { SavingTipsHome(current, backStack) }
-            entry<SavingTipsKey.Transactions>(metadata = DetailPage()) { key ->
+            entry<SavingTipsKey.Transactions>(metadata = detailPage()) { key ->
                 TransactionsEntry(current, backStack, key)
             }
         }

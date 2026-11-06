@@ -10,7 +10,7 @@ import org.totschnig.myexpenses.BaseTestWithRepository
 import org.totschnig.myexpenses.compose.transactions.FutureCriterion
 import org.totschnig.myexpenses.db2.insertTransaction
 import org.totschnig.myexpenses.preference.PrefKey
-import org.totschnig.shared_test.CursorSubject.Companion.useAndAssert
+import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 import java.time.LocalDateTime
 
 @RunWith(RobolectricTestRunner::class)

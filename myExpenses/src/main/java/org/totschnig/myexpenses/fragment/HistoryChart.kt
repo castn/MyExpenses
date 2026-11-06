@@ -374,7 +374,7 @@ class HistoryChart : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
                 null, selection, selectionArgs, null
             )
         }
-        throw IllegalArgumentException()
+        throw IllegalArgumentException("Unexpected loader id: $id")
     }
 
     private fun shouldUseGroupStart(): Boolean {

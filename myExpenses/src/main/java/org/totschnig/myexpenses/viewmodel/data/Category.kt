@@ -115,6 +115,8 @@ data class Category(
         get() = budget.rollOverNext != 0L || children.any { it.budget.rollOverNext != 0L }
 
     companion object {
+        private const val serialVersionUID = 1L
+
         val LOADING = Category(label = "LOADING")
         val EMPTY = Category(label = "EMPTY")
     }

@@ -1,6 +1,5 @@
 package org.totschnig.myexpenses.util.licence
 
-import android.content.Context
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.time.LocalDate
@@ -19,7 +18,7 @@ data class Licence(
     val featureList
         get() = parseFeatures(features)
 
-    fun featureListAsResIDs(context: Context) =
+    fun featureListAsResIDs() =
         parseFeatures(features).map { it.labelResId }.toIntArray()
 
     companion object {

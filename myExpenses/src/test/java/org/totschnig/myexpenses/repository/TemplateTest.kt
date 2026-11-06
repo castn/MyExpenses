@@ -34,8 +34,8 @@ import org.totschnig.myexpenses.provider.SPLIT_CATID
 import org.totschnig.myexpenses.util.toEpoch
 import org.totschnig.myexpenses.util.toEpochMillis
 import org.totschnig.myexpenses.viewmodel.PlanInstanceInfo
-import org.totschnig.shared_test.TransactionData
-import org.totschnig.shared_test.assertTransaction
+import org.totschnig.sharedtest.TransactionData
+import org.totschnig.sharedtest.assertTransaction
 import java.time.LocalDate
 import java.time.LocalDateTime
 

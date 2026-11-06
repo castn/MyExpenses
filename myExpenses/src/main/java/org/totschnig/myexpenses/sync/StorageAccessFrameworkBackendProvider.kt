@@ -3,12 +3,13 @@ package org.totschnig.myexpenses.sync
 import android.content.Context
 import android.net.Uri
 import androidx.documentfile.provider.DocumentFile
+import java.io.FileNotFoundException
+import java.io.IOException
 import org.acra.util.StreamReader
 import org.totschnig.myexpenses.model2.Account
 import org.totschnig.myexpenses.sync.json.AccountMetaData
 import org.totschnig.myexpenses.util.io.FileCopyUtils
 import org.totschnig.myexpenses.util.io.getMimeType
-import java.io.*
 
 class StorageAccessFrameworkBackendProvider internal constructor(context: Context, uri: Uri) :
     AbstractSyncBackendProvider<DocumentFile>(context) {

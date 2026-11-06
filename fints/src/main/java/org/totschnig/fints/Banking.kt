@@ -81,11 +81,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.phrase.Phrase
+import java.time.LocalDate
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import org.kapott.hbci.structures.Konto
-import org.totschnig.fints.BankingViewModel.WorkState.*
+import org.totschnig.fints.BankingViewModel.WorkState.AccountsLoaded
+import org.totschnig.fints.BankingViewModel.WorkState.Done
+import org.totschnig.fints.BankingViewModel.WorkState.Initial
+import org.totschnig.fints.BankingViewModel.WorkState.Loading
+import org.totschnig.fints.BankingViewModel.WorkState.Success
+import org.totschnig.fints.R as RF
 import org.totschnig.myexpenses.MyApplication
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.ProtectedFragmentActivity
@@ -98,8 +104,6 @@ import org.totschnig.myexpenses.compose.rememberMutableStateMapOf
 import org.totschnig.myexpenses.dialog.MessageDialogFragment
 import org.totschnig.myexpenses.model2.Bank
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
-import java.time.LocalDate
-import org.totschnig.fints.R as RF
 
 /**
  * Geschäftsvorfall

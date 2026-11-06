@@ -16,20 +16,24 @@ import com.dropbox.core.v2.files.FolderMetadata
 import com.dropbox.core.v2.files.GetMetadataErrorException
 import com.dropbox.core.v2.files.Metadata
 import com.dropbox.core.v2.files.WriteMode
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.io.InputStream
+import java.util.*
 import org.acra.util.StreamReader
 import org.totschnig.dropbox.activity.ACTION_RE_AUTHENTICATE
 import org.totschnig.dropbox.activity.DropboxSetup
 import org.totschnig.myexpenses.BuildConfig
 import org.totschnig.myexpenses.model2.Account
 import org.totschnig.myexpenses.provider.KEY_SYNC_ACCOUNT_NAME
-import org.totschnig.myexpenses.sync.*
+import org.totschnig.myexpenses.sync.AbstractSyncBackendProvider
+import org.totschnig.myexpenses.sync.GenericAccountService
+import org.totschnig.myexpenses.sync.SequenceNumber
+import org.totschnig.myexpenses.sync.SyncAdapter
+import org.totschnig.myexpenses.sync.SyncBackendProvider
 import org.totschnig.myexpenses.sync.json.AccountMetaData
 import org.totschnig.myexpenses.util.Preconditions
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
-import java.io.FileNotFoundException
-import java.io.IOException
-import java.io.InputStream
-import java.util.*
 
 class DropboxBackendProvider internal constructor(context: Context, folderName: String) :
     AbstractSyncBackendProvider<Metadata>(context) {

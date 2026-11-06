@@ -61,8 +61,8 @@ open class CategoryViewModel(
     protected val savedStateHandle: SavedStateHandle,
 ) : ContentResolvingAndroidViewModel(application) {
 
-    protected val _syncResult: MutableStateFlow<String?> = MutableStateFlow(null)
-    val syncResult: Flow<String> = _syncResult.asStateFlow().filterNotNull()
+    protected val mutableSyncResult: MutableStateFlow<String?> = MutableStateFlow(null)
+    val syncResult: Flow<String> = mutableSyncResult.asStateFlow().filterNotNull()
 
     var filter: String?
         get() = savedStateHandle[KEY_FILTER]
@@ -150,7 +150,7 @@ open class CategoryViewModel(
     }
 
     open fun messageShown() {
-        _syncResult.update { null }
+        mutableSyncResult.update { null }
     }
 
     fun defaultTransferCategory() = liveData(context = coroutineContext()) {

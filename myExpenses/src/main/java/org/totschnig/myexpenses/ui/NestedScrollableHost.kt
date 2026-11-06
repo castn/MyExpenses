@@ -59,7 +59,7 @@ class NestedScrollableHost : FrameLayout {
         return when (orientation) {
             0 -> child?.canScrollHorizontally(direction) ?: false
             1 -> child?.canScrollVertically(direction) ?: false
-            else -> throw IllegalArgumentException()
+            else -> throw IllegalArgumentException("Unexpected orientation: $orientation")
         }
     }
 

@@ -38,7 +38,7 @@ interface SqlCryptProvider {
 }
 
 @Module
-open class DataModule() {
+open class DataModule {
     companion object {
         val cryptProvider: SqlCryptProvider by lazy {
             Class.forName("org.totschnig.sqlcrypt.SQLiteOpenHelperFactory")
@@ -124,7 +124,7 @@ open class DataModule() {
                 val version = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY).use { database ->
                     database.version.also {
                         if (it > DATABASE_VERSION)
-                            throw Throwable(
+                            throw IllegalStateException(
                                 context.getString(
                                     R.string.restore_cannot_downgrade, it, DATABASE_VERSION
                                 )
@@ -132,7 +132,7 @@ open class DataModule() {
                     }
                 }
                 if ((version == 132 || version == 133) && Build.VERSION.SDK_INT == 30) {
-                    throw Throwable(
+                    throw IllegalStateException(
                         "Updating from database schema version 132 or 133 is no longer supported. Please contact " +
                             "support@myexpenses.mobi for assistance."
                     )
@@ -144,7 +144,7 @@ open class DataModule() {
                             false
                         }
                     ) {
-                        throw Throwable("Database integrity check failed")
+                        throw IllegalStateException("Database integrity check failed")
                     }
                 }
             }

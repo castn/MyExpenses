@@ -49,7 +49,7 @@ class SettingsCatalogTest {
     private val PrefKey.token: String
         get() {
             val resId = PrefKey::class.java.getDeclaredField("resId").apply { isAccessible = true }.getInt(this)
-            return if (resId == 0) PrefKey::class.java.getDeclaredField("_key").apply { isAccessible = true }
+            return if (resId == 0) PrefKey::class.java.getDeclaredField("keyName").apply { isAccessible = true }
                 .get(this) as String
             else "@string/" + stringNames.getValue(resId)
         }

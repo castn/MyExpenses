@@ -128,7 +128,9 @@ totalCategories, totalCategories
                     return
                 }
                 accountTitleToAccount[parser.accounts[0].memo] = repository.loadAccount(accountId)
-                    ?: throw Exception("Exception during QIF import. Did not get instance from DB for id $accountId")
+                    ?: throw IllegalStateException(
+                        "Exception during QIF import. Did not get instance from DB for id $accountId"
+                    )
             }
             insertTransactions(parser.accounts, currencyUnit, autoFillCategories)
         }

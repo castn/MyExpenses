@@ -9,7 +9,7 @@ import android.widget.Filter
  */
 class MaterialSpinnerAdapter<String>(context: Context, layout: Int, var values: List<String>) :
     ArrayAdapter<String>(context, layout, values) {
-    private val filter_that_does_nothing = object: Filter() {
+    private val filterThatDoesNothing = object: Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val results = FilterResults()
             results.values = values
@@ -22,6 +22,6 @@ class MaterialSpinnerAdapter<String>(context: Context, layout: Int, var values: 
     }
 
     override fun getFilter(): Filter {
-        return filter_that_does_nothing
+        return filterThatDoesNothing
     }
 }

@@ -53,7 +53,7 @@ class CalendarListPreferenceDialogFragmentCompat : PreferenceDialogFragmentCompa
                 null,
                 CalendarContract.Calendars._ID + " ASC"
             )
-        } catch (e: SecurityException) {
+        } catch (ignored: SecurityException) {
             null
             // android.permission.READ_CALENDAR or android.permission.WRITE_CALENDAR missing
         }

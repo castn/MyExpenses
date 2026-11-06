@@ -14,7 +14,7 @@ open class ConfigurationModule {
         try {
             Class.forName("org.totschnig.myexpenses.util.config.FirebaseRemoteConfigurator")
                 .getConstructor().newInstance() as Configurator
-        } catch (e: Exception) {
+        } catch (ignored: Exception) {
             Configurator.NO_OP
         }
 }

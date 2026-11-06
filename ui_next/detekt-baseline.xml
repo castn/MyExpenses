@@ -31,11 +31,6 @@
     <ID>MatchingDeclarationName:StartPage.kt:StartChoice</ID>
     <ID>ReturnCount:NextSettings.kt:NextSettings.&lt;no name provided&gt;$@Composable override fun control: SettingControl?</ID>
     <ID>ReturnCount:NextSettings.kt:NextSettings.&lt;no name provided&gt;$override fun isVisible: Boolean</ID>
-    <ID>SerialVersionUIDInSerializableClass:TransactionEditing.kt:EditDraft : Serializable</ID>
-    <ID>SerialVersionUIDInSerializableClass:TransactionEditing.kt:EditValues : Serializable</ID>
     <ID>TooManyFunctions:SettingsCatalog.kt:ScreenScope</ID>
-    <ID>WildcardImport:NativeSettings.kt:import org.totschnig.myexpenses.preference.PrefKey.*</ID>
-    <ID>WildcardImport:SettingTexts.kt:import org.totschnig.myexpenses.preference.PrefKey.*</ID>
-    <ID>WildcardImport:SettingsCatalog.kt:import org.totschnig.myexpenses.preference.PrefKey.*</ID>
   </CurrentIssues>
 </SmellBaseline>

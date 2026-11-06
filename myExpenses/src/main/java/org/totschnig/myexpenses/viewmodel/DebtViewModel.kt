@@ -73,7 +73,7 @@ open class DebtViewModel(application: Application) : PrintViewModel(application)
             null
         ).mapToOne {
             DisplayDebt.fromCursor(it, currencyContext)
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribedWithTimeout, null)
+        }.stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, null)
 
     private fun singleDebtUri(debtId: Long) =
         ContentUris.withAppendedId(TransactionProvider.DEBTS_URI, debtId)

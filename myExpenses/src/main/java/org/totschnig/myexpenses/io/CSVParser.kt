@@ -182,8 +182,8 @@ class CSVParser(
             if (columnIndexNumber != -1) {
                 transaction.number(saveGetFromRecord(record, columnIndexNumber))
             }
-            columnToFieldMap.indexOf(R.string.tags).takeIf { it != -1 }?.let { it ->
-                saveGetFromRecord(record, it).takeIf { it.isNotEmpty() }?.let { tagList ->
+            columnToFieldMap.indexOf(R.string.tags).takeIf { it != -1 }?.let { index ->
+                saveGetFromRecord(record, index).takeIf { it.isNotEmpty() }?.let { tagList ->
                     val tokenizer = StringTokenizer(tagList)
                     tokenizer.quoteMatcher = StringMatcherFactory.INSTANCE.quoteMatcher()
                     tokenizer.delimiterMatcher = StringMatcherFactory.INSTANCE.commaMatcher()

@@ -236,7 +236,7 @@ abstract class AbstractExporter
                     ).amountMajor
                 },
                 equivalentAmount = if (withEquivalentAmount)
-                    calculateEquivalentAmount(currencyContext.homeCurrencyUnit, money)
+                    calculateEquivalentAmount(currencyContext.homeCurrencyUnit)
                 else null
             )
             splitCursor?.close()

@@ -91,8 +91,8 @@ import kotlin.math.max
 @Immutable
 data class Transaction2(
     val id: Long,
-    val _date: Long,
-    val _valueDate: Long = _date,
+    val dateEpochSeconds: Long,
+    val valueDateEpochSeconds: Long = dateEpochSeconds,
     val currency: String? = null,
     val amount: Money? = null,
     val displayAmount: Money,
@@ -141,10 +141,10 @@ data class Transaction2(
         get() = transferPeer != null
 
     val date: ZonedDateTime
-        get() = epoch2ZonedDateTime(_date)
+        get() = epoch2ZonedDateTime(dateEpochSeconds)
 
     val valueDate: ZonedDateTime
-        get() = epoch2ZonedDateTime(_valueDate)
+        get() = epoch2ZonedDateTime(valueDateEpochSeconds)
 
     val isArchive: Boolean
         get() = status == STATUS_ARCHIVE
@@ -265,8 +265,8 @@ data class Transaction2(
                 else null,
                 displayAmount = displayAmount,
                 parentId = cursor.getLongOrNull(KEY_PARENTID),
-                _date = cursor.getLong(KEY_DATE),
-                _valueDate = cursor.getLong(KEY_VALUE_DATE),
+                dateEpochSeconds = cursor.getLong(KEY_DATE),
+                valueDateEpochSeconds = cursor.getLong(KEY_VALUE_DATE),
                 comment = cursor.getStringOrNull(KEY_COMMENT),
                 catId = cursor.getLongOrNull(KEY_CATID),
                 party = DisplayParty.fromCursor(cursor),

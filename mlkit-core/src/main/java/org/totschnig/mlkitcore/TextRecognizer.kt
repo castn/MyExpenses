@@ -1,4 +1,4 @@
-package org.totschnig.mlkit_core
+package org.totschnig.mlkitcore
 
 import android.content.Context
 import android.content.Intent

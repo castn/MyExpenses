@@ -121,7 +121,7 @@ class ItemGroupModelInstaller(
                 hasModel.value = true
                 onInstalled()
                 ModelSetup.Done
-            } catch (e: NoModelRelease) {
+            } catch (ignored: NoModelRelease) {
                 ModelSetup.Failed(ModelSetup.Reason.NoRelease)
             } catch (e: InvalidItemGroupModel) {
                 Timber.w(e)
