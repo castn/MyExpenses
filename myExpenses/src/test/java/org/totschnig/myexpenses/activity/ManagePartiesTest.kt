@@ -54,11 +54,24 @@ class ManagePartiesTest {
 
     private fun testSearch(action: Action, expectedInitialCount: Int) {
         fixture(action)
-        onView(withId(R.id.list))
-            .check(ViewAssertions.matches(ViewMatchers.hasChildCount(expectedInitialCount)))
+        assertListSize(expectedInitialCount)
         clickMenu(R.id.SEARCH_COMMAND)
         onView(withId(androidx.appcompat.R.id.search_src_text)).perform(typeText("John"))
-        onView(withId(R.id.list))
-            .check(ViewAssertions.matches(ViewMatchers.hasChildCount(expectedInitialCount -1)))
+        assertListSize(expectedInitialCount - 1)
+    }
+
+    // The list loads on Dispatchers.IO, which Espresso does not wait for
+    private fun assertListSize(expected: Int) {
+        val deadline = System.currentTimeMillis() + 5000
+        while (true) {
+            try {
+                onView(withId(R.id.list))
+                    .check(ViewAssertions.matches(ViewMatchers.hasChildCount(expected)))
+                return
+            } catch (e: AssertionError) {
+                if (System.currentTimeMillis() > deadline) throw e
+                Thread.sleep(50)
+            }
+        }
     }
 }
