@@ -39,7 +39,6 @@ android {
         versionName project.versionName
 
         buildConfigField "String", "DISTRIBUTION", "\"GITHUB\""
-        buildConfigField "java.time.LocalDateTime", "BUILD_DATE", getDate()
         testInstrumentationRunner "org.totschnig.myexpenses.MyTestRunner"
 
         resourceConfigurations = resConfig
@@ -74,6 +73,8 @@ android {
         debug {
             applicationIdSuffix ".debug"
             manifestPlaceholders["appName"] = "My Expenses Debug"
+            // Constant, so that a new commit does not rebuild the module; release gets the real date below
+            buildConfigField "java.time.LocalDateTime", "BUILD_DATE", "java.time.LocalDateTime.of(2000, 1, 1, 0, 0)"
             buildConfigField "int", "TEST_SCENARIO", getPropertyIfDefined('testScenario', "1")
             buildConfigField "String", "OPEN_EXCHANGE_RATES_API_KEY", "\"" + getPropertyIfDefined('OPEN_EXCHANGE_RATES_API_KEY', "") + "\""
             buildConfigField "String", "COIN_API_API_KEY", "\"" + getPropertyIfDefined('COIN_API_API_KEY', "") + "\""
@@ -330,9 +331,17 @@ dependencies {
     testImplementation libs.snakeyaml
 }
 
-static def getDate() {
-    def formattedDate = "java.time.LocalDateTime.of(" + "git show --no-patch --format=%cd --date=format-local:%Y,%-m,%-d,%-H,%-M".execute().text.trim() + ")"
-    return formattedDate
+def buildDate = providers.exec {
+    workingDir = rootDir
+    commandLine 'git', 'show', '--no-patch', '--format=%cd', '--date=format-local:%Y,%-m,%-d,%-H,%-M'
+}.standardOutput.asText.map { "java.time.LocalDateTime.of(${it.trim()})".toString() }
+
+androidComponents {
+    onVariants(selector().withBuildType('release')) { variant ->
+        variant.buildConfigFields.put('BUILD_DATE', buildDate.map {
+            new com.android.build.api.variant.BuildConfigField('java.time.LocalDateTime', it, null)
+        })
+    }
 }
 
 //apply plugin: 'com.jakewharton.hugo'
