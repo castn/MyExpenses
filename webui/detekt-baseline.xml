@@ -26,9 +26,6 @@
     <ID>MagicNumber:Certificates.kt:8</ID>
     <ID>MagicNumber:WebInputService.kt:WebInputService$9000</ID>
     <ID>MagicNumber:WebInputService.kt:WebInputService$9050</ID>
-    <ID>NewLineAtEndOfFile:TransactionDTO.kt:org.totschnig.webui.TransactionDTO.kt</ID>
-    <ID>NewLineAtEndOfFile:WebInputService.kt:org.totschnig.webui.WebInputService.kt</ID>
-    <ID>NewLineAtEndOfFile:WebUiComponent.kt:org.totschnig.webui.WebUiComponent.kt</ID>
     <ID>ReturnCount:WebInputService.kt:WebInputService$override fun onStartCommand: Int</ID>
     <ID>TooManyFunctions:Certificates.kt:org.totschnig.webui.Certificates.kt</ID>
     <ID>TooManyFunctions:WebInputService.kt:WebInputService : LifecycleServiceIWebInputService</ID>

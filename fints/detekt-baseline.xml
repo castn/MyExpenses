@@ -101,15 +101,6 @@
     <ID>MaxLineLength:BankingViewModel.kt:BankingViewModel$val</ID>
     <ID>MaxLineLength:BankingViewModel.kt:BankingViewModel.MyHBCICallback$throwAndReport(HBCI_Exception("Flicker not yet implemented for ${bankingCredentials.blz} Please contact support@myexpenses.mobi !"))</ID>
     <ID>MaxLineLength:Composables.kt:Text(stringResource(id = if (migrationState == MigrationState.Success) android.R.string.ok else android.R.string.cancel))</ID>
-    <ID>NewLineAtEndOfFile:Banking.kt:org.totschnig.fints.Banking.kt</ID>
-    <ID>NewLineAtEndOfFile:BankingCredentials.kt:org.totschnig.fints.BankingCredentials.kt</ID>
-    <ID>NewLineAtEndOfFile:BankingFeatureImpl.kt:org.totschnig.fints.BankingFeatureImpl.kt</ID>
-    <ID>NewLineAtEndOfFile:BankingSyncFragment.kt:org.totschnig.fints.BankingSyncFragment.kt</ID>
-    <ID>NewLineAtEndOfFile:BankingViewModel.kt:org.totschnig.fints.BankingViewModel.kt</ID>
-    <ID>NewLineAtEndOfFile:FinTSComponent.kt:org.totschnig.fints.FinTSComponent.kt</ID>
-    <ID>NewLineAtEndOfFile:HbciConverter.kt:org.totschnig.fints.HbciConverter.kt</ID>
-    <ID>NewLineAtEndOfFile:KontoExt.kt:org.totschnig.fints.KontoExt.kt</ID>
-    <ID>NewLineAtEndOfFile:WellKnownBank.kt:org.totschnig.fints.WellKnownBank.kt</ID>
     <ID>ReturnCount:BankingViewModel.kt:BankingViewModel$@WorkerThread private fun &lt;T&gt; doHBCI: Result&lt;T&gt;</ID>
     <ID>ThrowsCount:BankingViewModel.kt:BankingViewModel.MyHBCICallback$override fun callback</ID>
     <ID>TooGenericExceptionCaught:BankingViewModel.kt:BankingViewModel$e: Exception</ID>

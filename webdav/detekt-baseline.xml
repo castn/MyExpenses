@@ -14,11 +14,6 @@
     <ID>MaxLineLength:WebdavSetupViewModel.kt:WebdavSetupViewModel$WebDavClient(app, app.appComponent, url, userName, passWord, certificate, allowUnverifiedHost, clientCertAlias)</ID>
     <ID>NestedBlockDepth:WebDavClient.kt:WebDavClient$@Throws(Exception::class) fun testClass2Locking</ID>
     <ID>NestedBlockDepth:WebDavClient.kt:WebDavClient$fun lock: Boolean</ID>
-    <ID>NewLineAtEndOfFile:CertificateHelper.kt:org.totschnig.webdav.sync.client.CertificateHelper.kt</ID>
-    <ID>NewLineAtEndOfFile:WebDavBackendProvider.kt:org.totschnig.webdav.sync.WebDavBackendProvider.kt</ID>
-    <ID>NewLineAtEndOfFile:WebDavBackendProviderFactory.kt:org.totschnig.webdav.sync.WebDavBackendProviderFactory.kt</ID>
-    <ID>NewLineAtEndOfFile:WebdavSetup.kt:org.totschnig.webdav.dialog.WebdavSetup.kt</ID>
-    <ID>NewLineAtEndOfFile:WebdavSetupViewModel.kt:org.totschnig.webdav.viewmodel.WebdavSetupViewModel.kt</ID>
     <ID>SwallowedException:WebdavSetup.kt:WebdavSetup$e: Exception</ID>
     <ID>ThrowsCount:CertificateHelper.kt:CertificateHelper$@JvmStatic @Throws(ClientCertMissingException::class) fun createKeyManager: KeyManager</ID>
     <ID>ThrowsCount:WebDavClient.kt:WebDavClient$@Throws(IOException::class, HttpException::class, DavException::class) fun testLogin</ID>
