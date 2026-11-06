@@ -18,9 +18,14 @@ class TemplateSaver : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val templateId = intent.getLongExtra(KEY_TEMPLATEID, 0)
+        if (templateId <= 0) {
+            finish()
+            return
+        }
         injector.inject(viewModel)
 
-        viewModel.instantiateTemplateForResult(intent.getLongExtra(KEY_TEMPLATEID, 0))
+        viewModel.instantiateTemplateForResult(templateId)
             .observe(this) {
                 showTemplateInstantiationResult(it)
                 finish()
