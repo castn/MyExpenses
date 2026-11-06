@@ -19185,6 +19185,29 @@
         <error line="65" column="31" source="standard:argument-list-wrapping" />
         <error line="71" column="1" source="standard:final-newline" />
     </file>
+    <file name="src/test/java/org/totschnig/myexpenses/provider/DefaultCategoriesTest.kt">
+        <error line="18" column="39" source="standard:argument-list-wrapping" />
+        <error line="18" column="84" source="standard:argument-list-wrapping" />
+        <error line="18" column="90" source="standard:argument-list-wrapping" />
+        <error line="23" column="45" source="standard:argument-list-wrapping" />
+        <error line="24" column="66" source="standard:argument-list-wrapping" />
+        <error line="24" column="72" source="standard:argument-list-wrapping" />
+        <error line="30" column="45" source="standard:argument-list-wrapping" />
+        <error line="30" column="53" source="standard:argument-list-wrapping" />
+        <error line="30" column="62" source="standard:argument-list-wrapping" />
+        <error line="30" column="65" source="standard:argument-list-wrapping" />
+        <error line="30" column="86" source="standard:argument-list-wrapping" />
+        <error line="30" column="94" source="standard:argument-list-wrapping" />
+        <error line="30" column="101" source="standard:max-line-length" />
+        <error line="30" column="113" source="standard:argument-list-wrapping" />
+        <error line="30" column="116" source="standard:argument-list-wrapping" />
+        <error line="62" column="19" source="standard:property-wrapping" />
+        <error line="62" column="34" source="standard:argument-list-wrapping" />
+        <error line="62" column="42" source="standard:argument-list-wrapping" />
+        <error line="62" column="89" source="standard:argument-list-wrapping" />
+        <error line="62" column="101" source="standard:max-line-length" />
+        <error line="62" column="107" source="standard:argument-list-wrapping" />
+    </file>
     <file name="src/test/java/org/totschnig/myexpenses/provider/DynamicCurrenciesTest.kt">
         <error line="14" column="28" source="standard:colon-spacing" />
         <error line="27" column="19" source="standard:argument-list-wrapping" />
