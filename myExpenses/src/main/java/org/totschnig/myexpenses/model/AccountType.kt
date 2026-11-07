@@ -87,8 +87,6 @@ data class AccountType(
             qifToInternalMap["Oth L"] = PREDEFINED_NAME_LIABILITY
         }
 
-        fun qif2Internal(qifName: String) = qifToInternalMap[qifName]
-
         val CASH = AccountType(name = PREDEFINED_NAME_CASH, isAsset = true, supportsReconciliation = false, sortKey = 2)
         val BANK = AccountType(name = PREDEFINED_NAME_BANK, isAsset = true, supportsReconciliation = true, sortKey = 1)
         val INVESTMENT =

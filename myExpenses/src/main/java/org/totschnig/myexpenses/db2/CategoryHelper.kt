@@ -18,24 +18,16 @@ object CategoryHelper {
         repository: Repository,
         name: String,
         categoryToId: MutableMap<String, Long>,
-        stripQifCategoryClass: Boolean,
         typeFlags: Byte = FLAG_NEUTRAL
     ): Int {
         countInserted = 0
         insertCategory(
             repository,
-            parse(if (stripQifCategoryClass) stripCategoryClass(name) else name),
+            parse(name),
             categoryToId,
             typeFlags
         )
         return countInserted
-    }
-
-    private fun stripCategoryClass(name: String): String {
-        val i = name.indexOf('/')
-        return if (i != -1) {
-            name.substring(0, i)
-        } else name
     }
 
     private fun parse(name: String) = name.split(":".toRegex())

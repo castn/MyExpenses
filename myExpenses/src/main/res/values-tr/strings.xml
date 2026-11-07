@@ -90,8 +90,6 @@
     <string name="export_sdcard_success">Veriler başarıyla \"%1$s\" dosyasına aktarıldı</string>
     <string name="feedback">Geri bildirim</string>
     <string name="ftp_uri_malformed">Yanlış yapılandırılmış URI %1$s</string>
-    <string name="grisbi_import_categories_loading">%1$s konumundan kategoriler yükleniyor</string>
-    <string name="grisbi_import_parties_loading">%1$s konumunundan bölümler yükleniyor</string>
     <string name="grouping_day">Gün</string>
     <string name="grouping_last_week">Geçen hafta</string>
     <string name="grouping_month">Ay</string>
@@ -191,9 +189,7 @@
     <string name="numbered">sayılı</string>
     <string name="opening_balance">Açılış bakiyesi</string>
     <string name="parse_error_file_not_found">%1$s dosyası bulunamadı</string>
-    <string name="parse_error_grisbi_version_not_supported">Desteklenmeyen Grisbi dosya sürümü: %1$s</string>
     <string name="parse_error_other_exception">Bir hata meydana geldi: %1$s</string>
-    <string name="parse_error_parse_exception">Dosya ayrıştırılamadı</string>
     <string name="password_disabled_reenable">Parola ile koruma devre dışı bırakıldı. Ayarlarda tekrar etkinleştirebilirsiniz.</string>
     <string name="password_lost">Unutulmuş parola</string>
     <string name="password_not_valid">Geçersiz parola. Tekrar deneyin!</string>
@@ -234,7 +230,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Yükseltme anahtarı</string>
     <string name="pref_enter_licence_title">Anahtarını gir</string>
     <string name="pref_export_format_title">Veri biçimi</string>
-    <string name="pref_import_from_grisbi_summary">Kategorileri ve tarafları Grisbi XML dosyasından içe aktarın</string>
     <string name="pref_import_from_grisbi_title">Grisbi\'den içeri aktar</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">Muameleleri, kategorileri ve parçaları %s dosyasından içe aktar</string>
@@ -280,9 +275,7 @@
     <string name="pref_visit_website_title">Siteyi ziyaret et</string>
     <string name="progress_dialog_deleting">Nesneler siliniyor</string>
     <string name="progress_dialog_printing">%s oluşturuluyor</string>
-    <string name="qif_parse_result">Ayrıştırıldı:  %1$s hesap,  %2$s kategori ve %3$s kişi</string>
     <string name="qif_parse_failure_found_multiple_accounts">%s dosyasında birden çok hesap bulundu.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Bunlar mevcut bir hesapla birleştirilemez.</string>
     <string name="reference_number">Referans sayısı</string>
     <string name="restore_db_failure">Veri tabanı geri yüklemesi başarısız oldu.</string>
     <string name="restore_db_success">Veri tabanı yedekten geri yüklendi.</string>
@@ -366,14 +359,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d kategori başarıyla içe aktarıldı.</item>
         <item quantity="other">%1$d kategori başarıyla içe aktarıldı.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d bölüm başarıyla içe aktarıldı.</item>
-        <item quantity="other">%1$d bölüm başarıyla içe aktarıldı.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d hesap başarılı bir şekilde içe aktarıldı.</item>
-        <item quantity="other">%1$d hesap başarılı bir şekilde içe aktarıldı.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d muamele başarılı bir şekilde %2$s hesabına aktarıldı.</item>

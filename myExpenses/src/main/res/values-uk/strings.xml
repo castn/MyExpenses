@@ -88,8 +88,6 @@
     <string name="export_sdcard_success">Витрати експортовано до файлу \"%1$s\"</string>
     <string name="feedback">Відгук</string>
     <string name="ftp_uri_malformed">Невірно сформовано URI %1$s</string>
-    <string name="grisbi_import_categories_loading">Завантаження категорій з \"%1$s\"</string>
-    <string name="grisbi_import_parties_loading">Завантаження учасників з %1$s</string>
     <string name="grouping_day">День</string>
     <string name="grouping_last_week">Минулого тижня</string>
     <string name="grouping_month">Місяць</string>
@@ -191,9 +189,7 @@
     <string name="numbered">пронумерований</string>
     <string name="opening_balance">Початковий баланс</string>
     <string name="parse_error_file_not_found">Не вдалося знайти файл %1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">Непідтримувана версія файлу Grisbi: %1$s</string>
     <string name="parse_error_other_exception">Виникла помилка: %1$s</string>
-    <string name="parse_error_parse_exception">Не вдалося розпізнати файл</string>
     <string name="password_disabled_reenable">Захист паролів було вимкнено. Ви можете повторно увімкнути його в налаштуваннях.</string>
     <string name="password_lost">Втрачений Пароль</string>
     <string name="password_not_valid">Неправильний пароль. Спробуйте ще раз!</string>
@@ -234,7 +230,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Підвищити рівень ключа</string>
     <string name="pref_enter_licence_title">Введіть ключ</string>
     <string name="pref_export_format_title">Формат даних</string>
-    <string name="pref_import_from_grisbi_summary">Імпортуйте категорії та учасників з XML-файлу Grisbi</string>
     <string name="pref_import_from_grisbi_title">Імпортувати з Grisbi</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">Імпортуйте транзакції, категорії та учасників з файлу %s</string>
@@ -280,9 +275,7 @@
     <string name="pref_visit_website_title">Відвідати вебсайт</string>
     <string name="progress_dialog_deleting">Видалення об\'єктів</string>
     <string name="progress_dialog_printing">Створення %s-файлу</string>
-    <string name="qif_parse_result">Проаналізовано: %1$s рахунки; %2$s категорій і %3$s учасників</string>
     <string name="qif_parse_failure_found_multiple_accounts">Знайдено декілька рахунків у файлі %s.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Не вдається об\'єднати їх у існуючий рахунок.</string>
     <string name="reference_number">Номер посилання</string>
     <string name="restore_db_failure">Не вдалося відновити базу даних.</string>
     <string name="restore_db_success">База даних відновлена з резервної копії.</string>
@@ -374,18 +367,6 @@
         <item quantity="few">%1$d категорії імпортовано.</item>
         <item quantity="many">%1$d категорій імпортовано.</item>
         <item quantity="other">%1$d категорій імпортовано.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">Імпортовано %1$d учасника.</item>
-        <item quantity="few">Імпортовано %1$d учасники.</item>
-        <item quantity="many">Імпортовано %1$d учасників.</item>
-        <item quantity="other">Імпортовано %1$d учасників.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">Імпортовано %1$d рахунок.</item>
-        <item quantity="few">Імпортовано %1$d рахунки.</item>
-        <item quantity="many">Імпортовано %1$d рахунків.</item>
-        <item quantity="other">Імпортовано %1$d рахунків.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">Імпортовано %1$d транзакцію до рахунку %2$s.</item>

@@ -90,8 +90,6 @@
     <string name="export_sdcard_success">تم تصدير المصروفات إلى ملف %1$s</string>
     <string name="feedback">التقييم</string>
     <string name="ftp_uri_malformed">خطأ في العنوان %1$s</string>
-    <string name="grisbi_import_categories_loading">جاري تحميل التصنيفات من %1$s</string>
-    <string name="grisbi_import_parties_loading">جاري تحميل الاطراف من %1$s</string>
     <string name="grouping_day">يوم</string>
     <string name="grouping_last_week">نهاية الاسبوع</string>
     <string name="grouping_month">شهر</string>
@@ -199,9 +197,7 @@
     <string name="numbered">مرقم</string>
     <string name="opening_balance">الرصيد الافتتاحي</string>
     <string name="parse_error_file_not_found">لم يتم العثور على الملف %1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">نسخة ملف Grisbi غير مدعومة: %1$s</string>
     <string name="parse_error_other_exception">خطأ: %1$s</string>
-    <string name="parse_error_parse_exception">لا يمكن فتح الملف</string>
     <string name="password_disabled_reenable">تم تعطيل كلمة المرور. يمكنك تمكينه من جديد عن طريق الاعدادات.</string>
     <string name="password_lost">نسيت كلمة المرور</string>
     <string name="password_not_valid">كلمة المرور غير صحيحة. حاول مجددا!</string>
@@ -242,7 +238,6 @@
     <string name="pref_contrib_purchase_title_upgrade">مفتاح الترقية </string>
     <string name="pref_enter_licence_title">أدخل المفتاح</string>
     <string name="pref_export_format_title">تنسيق البيانات</string>
-    <string name="pref_import_from_grisbi_summary">استيراد التصنيفات والأطراف  Grisbi XML </string>
     <string name="pref_import_from_grisbi_title">استيراد من Grisbi</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">استيراد العمليات والتصنيفات والحفلات من الملف %s</string>
@@ -288,9 +283,7 @@
     <string name="pref_visit_website_title">زيارة الموقع</string>
     <string name="progress_dialog_deleting">جارِ حذف الكائنات</string>
     <string name="progress_dialog_printing">انشاء ملف %s</string>
-    <string name="qif_parse_result">تم إيجاد: %1$s حسابات; %2$s تصنيفات و %3$s أطراف</string>
     <string name="qif_parse_failure_found_multiple_accounts">تم العثور على أكثر من حساب في ملف %s.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">لا يمكن دمجهم لحساب موجود. </string>
     <string name="reference_number">رقم المرجع</string>
     <string name="restore_db_failure">فشلت عملية استعادة قاعدة البيانات.</string>
     <string name="restore_db_success">تم استعادة قاعدة البيانات من النسخة الاحتياطية.</string>
@@ -394,22 +387,6 @@
         <item quantity="few">تم استيراد %1$d فئات بنجاح.</item>
         <item quantity="many">تم استيراد %1$d فئة بنجاح.</item>
         <item quantity="other">تم استيراد %1$d فئة بنجاح.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="zero">لم يتم استيراد أي أطراف.</item>
-        <item quantity="one">تم استيراد طرف واحد بنجاح.</item>
-        <item quantity="two">تم استيراد طرفين بنجاح.</item>
-        <item quantity="few">تم استيراد %1$d أطراف بنجاح.</item>
-        <item quantity="many">تم استيراد %1$d طرفًا بنجاح.</item>
-        <item quantity="other">تم استيراد %1$d طرف بنجاح.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="zero">لم يتم استيراد أي حسابات.</item>
-        <item quantity="one">تم استيراد حساب واحد بنجاح.</item>
-        <item quantity="two">تم استيراد حسابين بنجاح.</item>
-        <item quantity="few">تم استيراد %1$d حسابات بنجاح.</item>
-        <item quantity="many">تم استيراد %1$d حسابًا بنجاح.</item>
-        <item quantity="other">تم استيراد %1$d حساب بنجاح.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="zero">تم استيراد %1$d معاملات بنجاح إلى الحساب %2$s</item>

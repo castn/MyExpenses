@@ -55,7 +55,6 @@
     <string name="export_sdcard_success">Datos exportados satisfactoriamente ao ficheiro \"%1$s!</string>
     <string name="feedback">Comentarios (feedback)</string>
     <string name="ftp_uri_malformed">URI %1$s non válido</string>
-    <string name="grisbi_import_categories_loading">A cargar categorías desde %1$s</string>
     <string name="grouping_day">Día</string>
     <string name="grouping_last_week">Semana pasada</string>
     <string name="grouping_month">Mes</string>
@@ -184,14 +183,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d categorías importadas satisfactoriamente.</item>
         <item quantity="other">%1$d categorías importadas satisfactoriamente.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d contas importadas satisfactoriamente.</item>
-        <item quantity="other">%1$d contas importadas satisfactoriamente.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d partes importadas satisfactoriamente.</item>
-        <item quantity="other">%1$d partes importadas satisfactoriamente.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d transaccións importadas satisfactoriamente na conta %2$s</item>

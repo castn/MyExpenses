@@ -90,8 +90,6 @@
     <string name="export_sdcard_success">Datuan ongi esportatu dira \"%1$s\" fitxategira</string>
     <string name="feedback">Iruzkina</string>
     <string name="ftp_uri_malformed">Gaizki osatutako URIa %1$s</string>
-    <string name="grisbi_import_categories_loading">Kategoriak kargatzen hemendik: %1$s</string>
-    <string name="grisbi_import_parties_loading">Onuradun/ordaintzaileak %1$s(e)tik kargatzen</string>
     <string name="grouping_day">Eguna</string>
     <string name="grouping_last_week">Aurreko astea</string>
     <string name="grouping_month">Hilabetea</string>
@@ -190,9 +188,7 @@
     <string name="numbered">zenbakitua</string>
     <string name="opening_balance">Irekiera saldoa</string>
     <string name="parse_error_file_not_found">Ezin izan da %1$s fitxategia aurkitu</string>
-    <string name="parse_error_grisbi_version_not_supported">Euskarririk gabeko Grisbi fitxategi bertsioa:  %1$s</string>
     <string name="parse_error_other_exception">Errore bat gertatu da: %1$s</string>
-    <string name="parse_error_parse_exception">Ezin izan da fitxategia aztertu</string>
     <string name="password_disabled_reenable">Pasahitz bidezko babesa ezgaitu da. Berriro gaitu dezakezu ezarpenetan.</string>
     <string name="password_lost">Pasahitza ahaztu dut</string>
     <string name="password_not_valid">Pasahitz okerra. Saiatu berriro!</string>
@@ -232,7 +228,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Eguneratu gakoa</string>
     <string name="pref_enter_licence_title">Sartu gakoa</string>
     <string name="pref_export_format_title">Datuen formatua</string>
-    <string name="pref_import_from_grisbi_summary">Inportatu kategoriak eta onuradun/ordaintzaileak Grisbi XML fitxategitik</string>
     <string name="pref_import_from_grisbi_title">Inportatu Grisbitik</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">Inportatu transakzioak, kategoriak, eta onuradun/ordaintzaileak %s fitxategitik</string>
@@ -278,9 +273,7 @@
     <string name="pref_visit_website_title">Bisitatu webgunea</string>
     <string name="progress_dialog_deleting">Objektuak ezabatzen</string>
     <string name="progress_dialog_printing">%sa sortzen</string>
-    <string name="qif_parse_result">Aztertuta: %1$s kontu; %2$s kategoria eta %3$s onuradun/ordaintzaile</string>
     <string name="qif_parse_failure_found_multiple_accounts">Hainbat kontu aurkitu dira %s fitxategian.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Ezin dira uneko kontuan bateratu</string>
     <string name="reference_number">Erreferentzia zenbakia</string>
     <string name="restore_db_failure">Huts egin du datu-basea berreskuratzean.</string>
     <string name="restore_db_success">Datu-basea berreskuratu da babeskopiatik.</string>
@@ -363,14 +356,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d kategoria ondo inportatu dira.</item>
         <item quantity="other">%1$d kategoria ondo inportatu dira.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d onuradun/ordaintzaile ondo inportatu dira.</item>
-        <item quantity="other">%1$d onuradun/ordaintzaile ondo inportatu dira.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d kontu ondo inportatu dira.</item>
-        <item quantity="other">%1$d kontu ondo inportatu dira.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d transakzio ondo inportatu dira %2$s kontura</item>

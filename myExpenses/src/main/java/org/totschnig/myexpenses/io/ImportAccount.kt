@@ -34,10 +34,6 @@ data class ImportAccount(
         private var openingBalance: BigDecimal? = null
         private var transactions: MutableList<ImportTransaction.Builder> = mutableListOf()
 
-        fun type(type: String) = apply {
-            this.type = AccountType.qif2Internal(type)
-        }
-
         fun typeInternal(type: String) = apply {
             this.type = type
         }

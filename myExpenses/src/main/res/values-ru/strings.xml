@@ -90,8 +90,6 @@
     <string name="export_sdcard_success">Расходы экспортированы в файл \"%1$s\"</string>
     <string name="feedback">Отзыв</string>
     <string name="ftp_uri_malformed">Неверно сформирован URI %1$s</string>
-    <string name="grisbi_import_categories_loading">Загрузка категорий из %1$s</string>
-    <string name="grisbi_import_parties_loading">Загрузка контрагентов из %1$s</string>
     <string name="grouping_day">День</string>
     <string name="grouping_last_week">На прошлой неделе</string>
     <string name="grouping_month">Месяц</string>
@@ -194,9 +192,7 @@
     <string name="numbered">Пронумерованный</string>
     <string name="opening_balance">Начальный баланс</string>
     <string name="parse_error_file_not_found">Не найден файл %1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">Не поддерживаемая версия файла Grisbi: %1$s</string>
     <string name="parse_error_other_exception">Возникла ошибка: %1$s</string>
-    <string name="parse_error_parse_exception">Невозможно обработать файл</string>
     <string name="password_disabled_reenable">Защита паролем была отключена. Вы можете включить её в настройках.</string>
     <string name="password_lost">Утерян пароль</string>
     <string name="password_not_valid">Пароль неверный. Повторите!</string>
@@ -237,7 +233,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Повысить уровень ключа</string>
     <string name="pref_enter_licence_title">Ввести ключ</string>
     <string name="pref_export_format_title">Формат даты</string>
-    <string name="pref_import_from_grisbi_summary">Импорт категорий и контрагентов из файла Grisbi XML</string>
     <string name="pref_import_from_grisbi_title">Ипортировать из Grisbi</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">Импорт операций, категорий и контрагентов из файла %s</string>
@@ -283,9 +278,7 @@
     <string name="pref_visit_website_title">Посетить веб-сайт</string>
     <string name="progress_dialog_deleting">Удалить объекты</string>
     <string name="progress_dialog_printing">Создание %s</string>
-    <string name="qif_parse_result">Проанализировано: %1$s счетов; %2$s категорий и %3$s контрагентов</string>
     <string name="qif_parse_failure_found_multiple_accounts">Найдено несколько счетов в %s-файле.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Не удается объединить в существующий счёт.</string>
     <string name="reference_number">Номер ссылки</string>
     <string name="restore_db_failure">Восстановление БД не удалось.</string>
     <string name="restore_db_success">БД восстановлена из резервной копии.</string>
@@ -379,18 +372,6 @@
         <item quantity="few">Успешно импортированы %1$d категории.</item>
         <item quantity="many">Успешно импортировано %1$d категорий.</item>
         <item quantity="other">Успешно импортировано %1$d категорий.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">Успешно импортирован %1$d контрагент.</item>
-        <item quantity="few">Успешно импортированы %1$d контрагента.</item>
-        <item quantity="many">Успешно импортировано %1$d контрагентов.</item>
-        <item quantity="other">Успешно импортировано %1$d контрагентов.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">Успешно импортирован %1$d счёт.</item>
-        <item quantity="few">Успешно импортированы %1$d счёта.</item>
-        <item quantity="many">Успешно импортировано %1$d счетов.</item>
-        <item quantity="other">Успешно импортировано %1$d счетов.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d операция успешно импортирована в счёт %2$s</item>

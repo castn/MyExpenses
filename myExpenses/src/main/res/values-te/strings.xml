@@ -224,14 +224,6 @@
         <item quantity="one">%1$d వర్గాలు విజయవంతంగా దిగుమతి చేయబడ్డాయి.</item>
         <item quantity="other">%1$d వర్గాలు విజయవంతంగా దిగుమతి చేయబడ్డాయి.</item>
     </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d పార్టీలు విజయవంతంగా దిగుమతి చేయబడ్డాయి.</item>
-        <item quantity="other">%1$d పార్టీలు విజయవంతంగా దిగుమతి చేయబడ్డాయి.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d ఖాతాలు విజయవంతంగా దిగుమతి చేయబడ్డాయి.</item>
-        <item quantity="other">%1$d ఖాతాలు విజయవంతంగా దిగుమతి చేయబడ్డాయి.</item>
-    </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d లావాదేవీలు విజయవంతంగా %2$s లోకి దిగుమతి చేయబడ్డాయి</item>
         <item quantity="other">%1$d లావాదేవీలు విజయవంతంగా %2$s లోకి దిగుమతి చేయబడ్డాయి</item>
@@ -326,9 +318,7 @@
     <string name="restore_db_success">డేటాబేస్ బ్యాకప్ నుండి పునరుద్ధరించబడింది.</string>
     <string name="restore_db_failure">డేటాబేస్ పునరుద్ధరణ విఫలమైంది.</string>
     <string name="reference_number">సూచన సంఖ్య</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">వాటిని ఇప్పటికే ఉన్న ఖాతాలో విలీనం చేయలేరు.</string>
     <string name="qif_parse_failure_found_multiple_accounts">%s ఫైల్‌లో బహుళ ఖాతాలు కనుగొనబడ్డాయి.</string>
-    <string name="qif_parse_result">అన్వయించబడింది: %1$s ఖాతాలు; %2$s వర్గాలు మరియు %3$s పార్టీలు</string>
     <string name="progress_dialog_printing">%s ను ఉత్పత్తి చేస్తోంది</string>
     <string name="progress_dialog_deleting">వస్తువులను తొలగిస్తోంది</string>
     <string name="pref_visit_website_title">వెబ్‌సైట్‌ను సందర్శించండి</string>
@@ -369,7 +359,6 @@
     <string name="pref_import_title">%s దిగుమతి</string>
     <string name="pref_import_summary">%s ఫైల్ నుండి లావాదేవీలు, వర్గాలు మరియు పార్టీలను దిగుమతి చేయండి</string>
     <string name="pref_import_from_grisbi_title">గ్రిస్బీ నుండి దిగుమతి</string>
-    <string name="pref_import_from_grisbi_summary">గ్రిస్బీ XML ఫైల్ నుండి వర్గాలు మరియు పార్టీలను దిగుమతి చేయండి</string>
     <string name="pref_export_format_title">డేటా ఫార్మాట్</string>
     <string name="pref_enter_licence_title">కీని నమోదు చేయండి</string>
     <string name="pref_contrib_purchase_title_upgrade">కీని అప్‌గ్రేడ్ చేయండి</string>
@@ -405,7 +394,6 @@
     <string name="password_not_valid">పాస్వర్డ్ చెల్లదు. మళ్ళీ ప్రయత్నించండి!</string>
     <string name="password_lost">పాస్వర్డ్ కోల్పోయింది</string>
     <string name="password_disabled_reenable">పాస్వర్డ్ రక్షణ నిలిపివేయబడింది. మీరు దీన్ని సెట్టింగులలో తిరిగి ప్రారంభించవచ్చు.</string>
-    <string name="parse_error_parse_exception">ఫైల్‌ను అన్వయించడం సాధ్యం కాలేదు</string>
     <string name="parse_error_other_exception">లోపం సంభవించింది: %1$s</string>
     <string name="menu_contrib">సహకరించండి</string>
     <string name="menu_clone_transaction">క్లోన్</string>
@@ -513,7 +501,6 @@
     <string name="account_types">ఖాతా రకాలు</string>
     <string name="account_type_asset">ఆస్తి ఖాతా</string>
     <string name="account">ఖాతా</string>
-    <string name="parse_error_grisbi_version_not_supported">మద్దతు లేని గ్రిస్బీ ఫైల్ వెర్షన్: %1$s</string>
     <string name="parse_error_file_not_found">%1$s ఫైల్ కనుగొనబడలేదు</string>
     <string name="opening_balance">ప్రారంభ నిల్వ</string>
     <string name="numbered">సంఖ్య</string>
@@ -567,8 +554,6 @@
     <string name="menu_edit_account">ఖాతాను సవరించండి</string>
     <string name="menu_edit">సవరించండి</string>
     <string name="menu_distribution">పంపిణీ</string>
-    <string name="grisbi_import_parties_loading">%1$s నుండి పార్టీలను లోడ్ చేస్తోంది</string>
-    <string name="grisbi_import_categories_loading">%1$s నుండి వర్గాలను లోడ్ చేస్తోంది</string>
     <string name="ftp_uri_malformed">చెడ్డ URI %1$s</string>
     <string name="export_sdcard_success">\"%1$s\" ఫైల్‌కు డేటా విజయవంతంగా ఎగుమతి చేయబడింది</string>
     <string name="menu_delete">తొలగించు</string>

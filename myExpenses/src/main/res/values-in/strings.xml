@@ -165,11 +165,9 @@
     <string name="dialog_title_warning_delete_account">Hapus akun?</string>
     <string name="dialog_password_activate_protection">Aktifkan perlindungan kata sandi</string>
     <string name="help_heading_credits">Kredit</string>
-    <string name="grisbi_import_parties_loading">Memuat pihak dari %1$s</string>
     <string name="grouping_month">Bulan</string>
     <string name="income">Pemasukan</string>
     <string name="dialog_export_delete">Hapus transaksi yang telah diekspor</string>
-    <string name="grisbi_import_categories_loading">Memuat kategori dari %1$s</string>
     <string name="grouping_day">Hari</string>
     <string name="grouping_week">Minggu</string>
     <string name="help_button_rate">Beri penilaian atau ulasan</string>
@@ -264,9 +262,7 @@
     <string name="numbered">bernomor</string>
     <string name="opening_balance">Saldo awal</string>
     <string name="parse_error_file_not_found">Tidak dapat menemukan file %1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">Versi File Grisbi Tidak Didukung: %1$s</string>
     <string name="parse_error_other_exception">Terjadi kesalahan: %1$s</string>
-    <string name="parse_error_parse_exception">Tidak dapat mengurai file</string>
     <string name="password_disabled_reenable">Perlindungan kata sandi telah dinonaktifkan. Anda dapat mengaktifkannya kembali di pengaturan.</string>
     <string name="password_lost">Lupa kata sandi</string>
     <string name="password_not_valid">Kata sandi tidak valid. Coba lagi!</string>
@@ -302,7 +298,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Kunci peningkatan</string>
     <string name="pref_enter_licence_title">Masukkan kunci</string>
     <string name="pref_export_format_title">Format data</string>
-    <string name="pref_import_from_grisbi_summary">Impor kategori dan pihak dari file XML Grisbi</string>
     <string name="pref_import_from_grisbi_title">Impor dari Grisbi</string>
     <string name="pref_import_summary">Impor transaksi, kategori, dan pihak dari file %s</string>
     <string name="pref_import_title">Impor %s</string>
@@ -344,9 +339,7 @@
     <string name="pref_visit_website_title">Kunjungi Situs Web</string>
     <string name="progress_dialog_deleting">Menghapus objek</string>
     <string name="progress_dialog_printing">Membuat %s</string>
-    <string name="qif_parse_result">Diurai: %1$s akun; %2$s kategori dan %3$s pihak</string>
     <string name="qif_parse_failure_found_multiple_accounts">Ditemukan beberapa akun dalam file %s.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Tidak dapat menggabungkannya ke akun yang sudah ada.</string>
     <string name="reference_number">Nomor Referensi</string>
     <string name="restore_db_failure">Pemulihan database gagal.</string>
     <string name="restore_db_success">Database telah dipulihkan dari cadangan.</string>
@@ -422,12 +415,6 @@
     <string name="warning_change_fraction_digits_checkbox_label">Perbarui jumlah dalam database</string>
     <plurals name="import_categories_result">
         <item quantity="other">%1$d kategori berhasil diimpor.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="other">%1$d pihak berhasil diimpor.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="other">%1$d akun berhasil diimpor.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="other">%1$d transaksi berhasil diimpor ke akun %2$s</item>

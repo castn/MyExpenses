@@ -90,8 +90,6 @@
     <string name="export_sdcard_success">Les données ont été exportées avec succès vers le fichier « %1$s »</string>
     <string name="feedback">Réactions</string>
     <string name="ftp_uri_malformed">Mauvaise syntaxe de l\'URI %1$s</string>
-    <string name="grisbi_import_categories_loading">Import des catégories à partir de %1$s</string>
-    <string name="grisbi_import_parties_loading">Import des tiers à partir de %1$s</string>
     <string name="grouping_day">Jour</string>
     <string name="grouping_last_week">La semaine dernière</string>
     <string name="grouping_month">Mois</string>
@@ -193,9 +191,7 @@
     <string name="numbered">numérotation</string>
     <string name="opening_balance">Solde initial</string>
     <string name="parse_error_file_not_found">Le fichier %1$s n\'existe pas</string>
-    <string name="parse_error_grisbi_version_not_supported">La version du fichier Grisbi n\'est pas prise en charge : %1$s</string>
     <string name="parse_error_other_exception">Une erreur s\'est produite : %1$s</string>
-    <string name="parse_error_parse_exception">Le fichier ne peut pas être analysé</string>
     <string name="password_disabled_reenable">La protection par mot de passe a été désactivée. Vous pouvez la réactiver dans les paramètres.</string>
     <string name="password_lost">Mot de passe oublié</string>
     <string name="password_not_valid">Mot de passe invalide. Essayez de nouveau !</string>
@@ -236,7 +232,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Mettre la clé à niveau</string>
     <string name="pref_enter_licence_title">Saisir la clé</string>
     <string name="pref_export_format_title">Format de données</string>
-    <string name="pref_import_from_grisbi_summary">Importer les catégories (et tiers) à partir de Grisbi XML</string>
     <string name="pref_import_from_grisbi_title">Import des données Grisbi</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">Importer des transactions, des catégories et des tiers du fichier %s</string>
@@ -282,9 +277,7 @@
     <string name="pref_visit_website_title">Visiter le site Web</string>
     <string name="progress_dialog_deleting">Les objets sont effacés</string>
     <string name="progress_dialog_printing">Génération du %s</string>
-    <string name="qif_parse_result">Analysé : %1$s comptes, %2$s catégories et %3$s tiers</string>
     <string name="qif_parse_failure_found_multiple_accounts">Plusieurs comptes trouvés dans le fichier %s.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Impossible de fusionner avec le compte existant.</string>
     <string name="reference_number">Numéro de référence</string>
     <string name="restore_db_failure">La restauration de la base de données a échoué.</string>
     <string name="restore_db_success">La base de données a été rétablie à partir de la sauvegarde.</string>
@@ -373,16 +366,6 @@
         <item quantity="one">%1$d catégorie a été importée.</item>
         <item quantity="many">%1$d catégories ont été importées.</item>
         <item quantity="other">%1$d catégories ont été importées.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d tiers a été importé.</item>
-        <item quantity="many">%1$d tiers ont été importés.</item>
-        <item quantity="other">%1$d tiers ont été importés.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d compte a été importé.</item>
-        <item quantity="many">%1$d comptes ont été importés.</item>
-        <item quantity="other">%1$d comptes ont été importés.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d opération a été importée dans le compte %2$s.</item>

@@ -35,7 +35,7 @@ object ProviderUtils {
                 val categoryLabel = extras.getString(Transactions.CATEGORY_LABEL)
                 val catId = categoryLabel?.let {
                     val categoryToId: MutableMap<String, Long> = mutableMapOf()
-                    CategoryHelper.insert(repository, categoryLabel, categoryToId, false)
+                    CategoryHelper.insert(repository, categoryLabel, categoryToId)
                     categoryToId[categoryLabel]
                 }
                 TransactionEditData(

@@ -37,12 +37,10 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.IconMarginSpan;
-import android.util.Xml;
 import android.view.SubMenu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.util.Pair;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 
@@ -50,21 +48,15 @@ import com.squareup.phrase.Phrase;
 
 import org.totschnig.myexpenses.MyApplication;
 import org.totschnig.myexpenses.R;
-import org.totschnig.myexpenses.db2.Repository;
-import org.totschnig.myexpenses.db2.RepositoryPartyKt;
 import org.totschnig.myexpenses.model.CurrencyEnum;
 import org.totschnig.myexpenses.model.CurrencyUnit;
 import org.totschnig.myexpenses.model.Grouping;
 import org.totschnig.myexpenses.preference.PrefKey;
-import org.totschnig.myexpenses.task.GrisbiImportTask;
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler;
 import org.totschnig.myexpenses.util.distrib.DistributionHelper;
 import org.totschnig.myexpenses.util.ui.UiUtils;
-import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -344,36 +336,6 @@ public class Utils {
       return dateFormat;
     }
   }
-
-  public static Result<Pair<CategoryTree, ArrayList<String>>> analyzeGrisbiFileWithSAX(InputStream is) {
-    GrisbiHandler handler = new GrisbiHandler();
-    try {
-      Xml.parse(is, Xml.Encoding.UTF_8, handler);
-    } catch (IOException e) {
-      return Result.ofFailure(R.string.parse_error_other_exception, e.getMessage());
-    } catch (GrisbiHandler.FileVersionNotSupportedException e) {
-      return Result.ofFailure(R.string.parse_error_grisbi_version_not_supported, e.getMessage());
-    } catch (SAXException e) {
-      return Result.ofFailure(R.string.parse_error_parse_exception);
-    }
-    return handler.getResult();
-  }
-
-  public static int importParties(Repository repository, ArrayList<String> partiesList,
-                                  GrisbiImportTask task) {
-    int total = 0;
-    for (int i = 0, partiesListSize = partiesList.size(); i < partiesListSize; i++) {
-      String party = partiesList.get(i);
-      if (RepositoryPartyKt.findParty(repository, party) == null) {
-        if (RepositoryPartyKt.createParty(repository, party) != null) total++;
-      }
-      if (task != null && i % 10 == 0) {
-        task.publishProgress(i);
-      }
-    }
-    return total;
-  }
-
 
   public static CharSequence getTextWithAppName(Context ctx, int resId) {
     return Phrase.from(ctx, resId).put(PLACEHOLDER_APP_NAME, ctx.getString(R.string.app_name)).format();

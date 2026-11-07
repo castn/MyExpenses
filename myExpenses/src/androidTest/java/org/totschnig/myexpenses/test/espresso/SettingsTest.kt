@@ -24,13 +24,11 @@ import org.junit.Test
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.BackupRestoreActivity
 import org.totschnig.myexpenses.activity.CsvImportActivity
-import org.totschnig.myexpenses.activity.GrisbiImport
 import org.totschnig.myexpenses.activity.ManageCategories
 import org.totschnig.myexpenses.activity.ManageCurrencies
 import org.totschnig.myexpenses.activity.ManageMethods
 import org.totschnig.myexpenses.activity.ManageSyncBackends
 import org.totschnig.myexpenses.activity.PreferenceActivity
-import org.totschnig.myexpenses.activity.QifImport
 import org.totschnig.myexpenses.activity.RoadmapVoteActivity
 import org.totschnig.myexpenses.model.CommodityType
 import org.totschnig.myexpenses.model.ContribFeature
@@ -79,18 +77,6 @@ class SettingsTest : BaseUiTest<PreferenceActivity>() {
     fun manageMethods() {
         navigateTo(R.string.data, R.string.pref_manage_methods_title)
         intended(ManageMethods::class)
-    }
-
-    @Test
-    fun importGrisbi() {
-        navigateTo(withText(ioTitle), withText(R.string.pref_import_from_grisbi_title))
-        intended(GrisbiImport::class)
-    }
-
-    @Test
-    fun importQif() {
-        navigateTo(withText(ioTitle), withText(getString(R.string.pref_import_title, "QIF")))
-        intended(QifImport::class)
     }
 
     @Test

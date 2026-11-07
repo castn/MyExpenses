@@ -64,7 +64,6 @@
     <string name="dialog_contrib_reminder_remove_limitation">اس حد کو ہٹائیں اور اپ گریڈ کرکے مزید خصوصیات تک رسائی حاصل کریں۔ <i>{app_name}</i>.</string>
     <string name="grouping_day">دن</string>
     <string name="grouping_this_week">اس ہفتے</string>
-    <string name="grisbi_import_parties_loading">%1$s سے پارٹیاں لوڈ ہو رہی ہیں</string>
     <string name="help_heading_whats_new">نیا کیا ہے</string>
     <string name="menu_aggregates">کل</string>
     <string name="menu_cancel_plan_instance">منسوخ کریں</string>
@@ -77,7 +76,6 @@
     <string name="export_sdcard_success">ڈیٹا کامیابی کے ساتھ فائل \"%1$s\" میں برآمد ہو گیا</string>
     <string name="feedback">فیڈ بیک</string>
     <string name="ftp_uri_malformed">خراب URI %1$s</string>
-    <string name="grisbi_import_categories_loading">%1$s سے زمرے لوڈ ہو رہے ہیں</string>
     <string name="grouping_last_week">پچھلا ہفتہ</string>
     <string name="grouping_month">مہینہ</string>
     <string name="grouping_none">غیر گروپ شدہ</string>
@@ -166,14 +164,12 @@
         <item quantity="one">منتخب آبجیکٹ کو ٹیمپلیٹ میں میپ کیا گیا ہے اور اسے حذف نہیں کیا جا سکتا.</item>
         <item quantity="other">%1$d آبجیکٹس کو ٹیمپلیٹس میں میپ کیا گیا ہے اور انہیں حذف نہیں کیا جا سکتا.</item>
     </plurals>
-    <string name="parse_error_grisbi_version_not_supported">غیر تعاون یافتہ Grisbi فائل ورژن: %1$s</string>
     <plurals name="not_deletable_mapped_transactions">
         <item quantity="one">منتخب آبجیکٹ کو لین دین میں میپ کیا گیا ہے اور اسے حذف نہیں کیا جا سکتا.</item>
         <item quantity="other">%1$d اشیاء کو لین دین میں میپ کیا گیا ہے اور انہیں حذف نہیں کیا جا سکتا.</item>
     </plurals>
     <string name="password_not_valid">پاس ورڈ غلط ہے۔ دوبارہ کوشش کریں!</string>
     <string name="password_prompt">اپنا پاس ورڈ درج کریں</string>
-    <string name="parse_error_parse_exception">فائل کو پارس نہیں کیا جا سکا</string>
     <string name="password_disabled_reenable">پاس ورڈ کی حفاظت کو غیر فعال کر دیا گیا ہے۔ آپ اسے سیٹنگز میں دوبارہ فعال کر سکتے ہیں.</string>
     <string name="password_lost">پاس ورڈ کھو گیا</string>
     <string name="password_security_answer_not_valid">غلط جواب. دوبارہ کوشش کریں!</string>
@@ -207,7 +203,6 @@
     <string name="pref_contrib_purchase_title_upgrade">اپ گریڈ کلید</string>
     <string name="pref_enter_licence_title">کلید درج کریں</string>
     <string name="pref_export_format_title">ڈیٹا فارمیٹ</string>
-    <string name="pref_import_from_grisbi_summary">Grisbi XML فائل سے زمرے اور پارٹیاں درآمد کریں</string>
     <string name="pref_import_from_grisbi_title">گرسبی سے درآمد کریں</string>
     <string name="pref_import_summary">%s فائل سے لین دین، زمرے اور پارٹیاں درآمد کریں</string>
     <string name="pref_import_title">%s درآمد</string>
@@ -245,8 +240,6 @@
     <string name="pref_visit_website_title">ویب سائیٹ پر جائیں</string>
     <string name="progress_dialog_deleting">اشیاء کو حذف کرنا</string>
     <string name="progress_dialog_printing">%s تیار کر رہا ہے</string>
-    <string name="qif_parse_result">تجزیہ کیا گیا: %1$s اکاؤنٹس؛ %2$s زمرے اور %3$s پارٹیاں</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">انہیں موجودہ اکاؤنٹ میں ضم نہیں کیا جا سکتا.</string>
     <string name="reference_number">حوالہ نمبر</string>
     <string name="pref_protection_enable_data_entry_from_widget_summary_on">پاس ورڈ کے بغیر اجازت ہے.</string>
     <string name="pref_news_title">خبریں</string>
@@ -329,14 +322,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d زمرے کامیابی کے ساتھ درآمد ہو گئے.</item>
         <item quantity="other">%1$d زمرے کامیابی کے ساتھ درآمد ہو گئے.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d پارٹیاں کامیابی کے ساتھ درآمد ہو گئیں</item>
-        <item quantity="other">%1$d پارٹیاں کامیابی کے ساتھ درآمد ہو گئیں</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d اکاؤنٹس کامیابی کے ساتھ درآمد ہو گئے</item>
-        <item quantity="other">%1$d اکاؤنٹس کامیابی کے ساتھ درآمد ہو گئے</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d ٹرانزیکشنز کو کامیابی سے اکاؤنٹ %2$s میں درآمد کیا گیا</item>

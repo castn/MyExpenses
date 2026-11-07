@@ -90,8 +90,6 @@
     <string name="export_sdcard_success">\"%1$s\" ಫೈಲ್ ಮಾಡಲು ಡೇಟಾವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ರಫ್ತು ಮಾಡಲಾಗಿದೆ</string>
     <string name="feedback">ಪ್ರತಿಕ್ರಿಯೆ</string>
     <string name="ftp_uri_malformed">ದೋಷಪೂರಿತ URI %1$s</string>
-    <string name="grisbi_import_categories_loading">%1$s ನಿಂದ ವಿಭಾಗಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ</string>
-    <string name="grisbi_import_parties_loading">%1$s ನಿಂದ ಪಕ್ಷಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="grouping_day">ದಿನ</string>
     <string name="grouping_last_week">ಕಳೆದ ವಾರ</string>
     <string name="grouping_month">ತಿಂಗಳು</string>
@@ -190,9 +188,7 @@
     <string name="numbered">ಸಂಖ್ಯೆಯ</string>
     <string name="opening_balance">ಆರಂಭ ಶಿಲ್ಕು</string>
     <string name="parse_error_file_not_found">%1$s ಫೈಲ್ ಅನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗಲಿಲ್ಲ</string>
-    <string name="parse_error_grisbi_version_not_supported">ಬೆಂಬಲಿಸದ ಗ್ರಿಸ್ಬಿ ಫೈಲ್ ಆವೃತ್ತಿ: %1$s</string>
     <string name="parse_error_other_exception">ದೋಷ ಸಂಭವಿಸಿದೆ: %1$s</string>
-    <string name="parse_error_parse_exception">ಫೈಲ್ ಅನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ</string>
     <string name="password_disabled_reenable">ಪಾಸ್ವರ್ಡ್ ರಕ್ಷಣೆಯನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ. ನೀವು ಅದನ್ನು ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಪುನಃ ಸಕ್ರಿಯಗೊಳಿಸಬಹುದು.</string>
     <string name="password_lost">ಪಾಸ್ವರ್ಡ್ ಕಳೆದುಹೋಗಿದೆ</string>
     <string name="password_not_valid">ಪಾಸ್ವರ್ಡ್ ಅಮಾನ್ಯವಾಗಿದೆ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸು!</string>
@@ -233,7 +229,6 @@
     <string name="pref_contrib_purchase_title_upgrade">ಕೀಲಿಯನ್ನು ನವೀಕರಿಸಿ</string>
     <string name="pref_enter_licence_title">ಕೀಲಿಯನ್ನು ನಮೂದಿಸಿ</string>
     <string name="pref_export_format_title">ಡೇಟಾ ಸ್ವರೂಪ</string>
-    <string name="pref_import_from_grisbi_summary">ಗ್ರಿಸ್ಬಿ ಎಕ್ಸ್‌ಎಂಎಲ್ ಫೈಲ್‌ನಿಂದ ವಿಭಾಗಗಳು ಮತ್ತು ಪಕ್ಷಗಳನ್ನು ಆಮದು ಮಾಡಿ</string>
     <string name="pref_import_from_grisbi_title">ಗ್ರಿಸ್ಬಿಯಿಂದ ಆಮದು ಮಾಡಿ</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">%s ಫೈಲ್‌ನಿಂದ ವ್ಯವಹಾರಗಳು, ವಿಭಾಗಗಳು ಮತ್ತು ಪಕ್ಷಗಳನ್ನು ಆಮದು ಮಾಡಿ</string>
@@ -279,9 +274,7 @@
     <string name="pref_visit_website_title">ವೆಬ್‌ಸೈಟ್‌ಗೆ ಭೇಟಿ ನೀಡಿ</string>
     <string name="progress_dialog_deleting">ವಸ್ತುಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತಿದೆ</string>
     <string name="progress_dialog_printing">%s ರಚಿಸಲಾಗುತ್ತಿದೆ</string>
-    <string name="qif_parse_result">ಪಾರ್ಸ್ ಮಾಡಲಾಗಿದೆ: %1$s ಖಾತೆಗಳು; %2$s ವಿಭಾಗಗಳು ಮತ್ತು %3$s ಪಕ್ಷಗಳು</string>
     <string name="qif_parse_failure_found_multiple_accounts">%s ಫೈಲ್‌ನಲ್ಲಿ ಬಹು ಖಾತೆಗಳು ಕಂಡುಬರುತ್ತವೆ.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">ಅವುಗಳನ್ನು ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಖಾತೆಗೆ ವಿಲೀನಗೊಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.</string>
     <string name="reference_number">ರೆಫ಼ರೆನ್ಸ್ ಸಂಖ್ಯೆ</string>
     <string name="restore_db_failure">ಡೇಟಾಬೇಸ್ ಮರುಸ್ಥಾಪನೆ ವಿಫಲವಾಗಿದೆ.</string>
     <string name="restore_db_success">ಡೇಟಾಬೇಸ್ ಅನ್ನು ಬ್ಯಾಕಪ್‌ನಿಂದ ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ.</string>
@@ -365,14 +358,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d ವಿಭಾಗಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಆಮದು ಮಾಡಲಾಗಿದೆ.</item>
         <item quantity="other">%1$d ವಿಭಾಗಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಆಮದು ಮಾಡಲಾಗಿದೆ.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d ಪಕ್ಷಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಆಮದು ಮಾಡಲಾಗಿದೆ.</item>
-        <item quantity="other">%1$d ಪಕ್ಷಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಆಮದು ಮಾಡಲಾಗಿದೆ.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d ಖಾತೆಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಆಮದು ಮಾಡಲಾಗಿದೆ.</item>
-        <item quantity="other">%1$d ಖಾತೆಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಆಮದು ಮಾಡಲಾಗಿದೆ.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d ವಹಿವಾಟುಗಳನ್ನು %2$s ಖಾತೆಗೆ ಯಶಸ್ವಿಯಾಗಿ ಆಮದು ಮಾಡಲಾಗಿದೆ</item>

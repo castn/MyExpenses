@@ -90,8 +90,6 @@
     <string name="export_sdcard_success">Успешен експорт на Разходи във файл „%1$s“</string>
     <string name="feedback">Обратна връзка</string>
     <string name="ftp_uri_malformed">Неправилен URI %1$s</string>
-    <string name="grisbi_import_categories_loading">Зареждане на категории от %1$s</string>
-    <string name="grisbi_import_parties_loading">Зареждане на страни от %1$s</string>
     <string name="grouping_day">Ден</string>
     <string name="grouping_last_week">Миналата седмица</string>
     <string name="grouping_month">Месец</string>
@@ -191,9 +189,7 @@
     <string name="numbered">Номерирани</string>
     <string name="opening_balance">Начално салдо</string>
     <string name="parse_error_file_not_found">Не е намерен файл %1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">Неподдържана версия на Grisbi файл: %1$s</string>
     <string name="parse_error_other_exception">Възникна грешка: %1$s</string>
-    <string name="parse_error_parse_exception">Не мога да анализирам файлa</string>
     <string name="password_disabled_reenable">Защитатa с парола е прекратена. Може да я възстановите в Настройки.</string>
     <string name="password_lost">Загубена парола</string>
     <string name="password_not_valid">Невалидна парола. Опитайте отново!</string>
@@ -234,7 +230,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Надстройте ключ</string>
     <string name="pref_enter_licence_title">Въведете ключ</string>
     <string name="pref_export_format_title">Формат на данните</string>
-    <string name="pref_import_from_grisbi_summary">Внасяне на категории и страни от Grisbi XML файл</string>
     <string name="pref_import_from_grisbi_title">Внасяне от Grisbi</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">Внасяне на транзакции, категории и страни от %s файл</string>
@@ -280,9 +275,7 @@
     <string name="pref_visit_website_title">Посетете сайта ни</string>
     <string name="progress_dialog_deleting">Изтриване на обекти</string>
     <string name="progress_dialog_printing">Генериране на %s</string>
-    <string name="qif_parse_result">Анализирани: %1$s сметки; %2$s категории и %3$s страни</string>
     <string name="qif_parse_failure_found_multiple_accounts">Открити са множество сметки в %s файла.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Не могат да бъдат обединени в съществуваща сметка.</string>
     <string name="reference_number">Референтен номер</string>
     <string name="restore_db_failure">Неуспешно възстановяване на база данни.</string>
     <string name="restore_db_success">Базата данни е възстановена успешно.</string>
@@ -366,14 +359,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">Успешно е внесена %1$d категория.</item>
         <item quantity="other">Успешно са внесени %1$d категории.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">Успешно е внесена %1$d страна.</item>
-        <item quantity="other">Успешно са внесени %1$d страни.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">Успешно е внесена %1$d сметка.</item>
-        <item quantity="other">Успешно са внесени %1$d сметки.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">Успешно е внесена %1$d транзакция в сметка %2$s.</item>

@@ -97,8 +97,6 @@
     <string name="export_sdcard_success">ডাটা সফলভাবে \"%1$s\" ফাইলে এক্সপোর্ট করা হয়েছে</string>
     <string name="feedback">ফিডব্যাক</string>
     <string name="ftp_uri_malformed">ইনভ্যালিড URI %1$s</string>
-    <string name="grisbi_import_categories_loading">%1$s থেকে ক্যাটাগরি লোড হচ্ছে</string>
-    <string name="grisbi_import_parties_loading">%1$s থেকে পার্টি লোড হচ্ছে</string>
     <string name="grouping_day">দিন</string>
     <string name="grouping_last_week">গত সপ্তাহ</string>
     <string name="grouping_month">মাস</string>
@@ -199,9 +197,7 @@
     <string name="numbered">সংখ্যাযুক্ত</string>
     <string name="opening_balance">ওপেনিং ব্যালেন্স</string>
     <string name="parse_error_file_not_found">%1$s ফাইল খুঁজে পাওয়া যায়নি</string>
-    <string name="parse_error_grisbi_version_not_supported">অসমর্থিত Grisbi ফাইল ভার্সন: %1$s</string>
     <string name="parse_error_other_exception">একটি এরর ঘটেছে: %1$s</string>
-    <string name="parse_error_parse_exception">ফাইল পার্স করতে পারেনি</string>
     <string name="password_disabled_reenable">পাসওয়ার্ড প্রটেকশন বন্ধ করা হয়েছে। আপনি সেটিংসে এটি পুনরায় চালু করতে পারেন।</string>
     <string name="password_lost">পাসওয়ার্ড ভুলে গেছি</string>
     <string name="password_not_valid">পাসওয়ার্ড ইনভ্যালিড আবার চেষ্টা করুন!</string>
@@ -242,7 +238,6 @@
     <string name="pref_contrib_purchase_title_upgrade">কী আপগ্রেড করুন</string>
     <string name="pref_enter_licence_title">কী পেস্ট করুন</string>
     <string name="pref_export_format_title">ডাটা ফরম্যাট</string>
-    <string name="pref_import_from_grisbi_summary">Grisbi XML ফাইল থেকে ক্যাটাগরি এবং পার্টি ইমপোর্ট করুন</string>
     <string name="pref_import_from_grisbi_title">Grisbi থেকে ইমপোর্ট করুন</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">%s ফাইল থেকে লেনদেন, ক্যাটাগরি এবং পার্টি ইমপোর্ট করুন</string>
@@ -291,10 +286,8 @@
     <string name="progress_dialog_deleting">অবজেক্ট মুছছে</string>
     <!-- %s is replaced with format (PDF, HTML) -->
     <string name="progress_dialog_printing">%s তৈরি করছে</string>
-    <string name="qif_parse_result">পার্স করা: %1$s অ্যাকাউন্ট; %2$s ক্যাটাগরি এবং %3$s পার্টি</string>
     <!-- %s is replaced with format (CSV, QIF) -->
     <string name="qif_parse_failure_found_multiple_accounts">%s ফাইলে একাধিক অ্যাকাউন্ট পাওয়া গেছে।</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">বিদ্যমান অ্যাকাউন্টের সাথে সেগুলি একত্রিত করা যাবে না।</string>
     <string name="reference_number">রেফারেন্স নম্বর</string>
     <string name="restore_db_failure">ডাটাবেস পুনরুদ্ধার ব্যর্থ হয়েছে।</string>
     <string name="restore_db_success">ডাটাবেস ব্যাকআপ থেকে পুনরুদ্ধার করা হয়েছে।</string>
@@ -378,14 +371,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d ক্যাটাগরি সফলভাবে ইমপোর্ট করা হয়েছে।</item>
         <item quantity="other">%1$d ক্যাটাগরি সফলভাবে ইমপোর্ট করা হয়েছে।</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d পার্টি সফলভাবে ইমপোর্ট করা হয়েছে।</item>
-        <item quantity="other">%1$d পার্টি সফলভাবে ইমপোর্ট করা হয়েছে।</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d অ্যাকাউন্ট সফলভাবে ইমপোর্ট করা হয়েছে।</item>
-        <item quantity="other">%1$d অ্যাকাউন্ট সফলভাবে ইমপোর্ট করা হয়েছে।</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d লেনদেন সফলভাবে %2$s অ্যাকাউন্টে ইমপোর্ট করা হয়েছে</item>

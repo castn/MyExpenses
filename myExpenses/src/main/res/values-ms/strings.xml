@@ -90,8 +90,6 @@
     <string name="export_sdcard_success">Perbelanjaan dieksport ke fail \"%1$s\"</string>
     <string name="feedback">Maklumbalas</string>
     <string name="ftp_uri_malformed">URI %1$s cacat</string>
-    <string name="grisbi_import_categories_loading">Memuatkan kategori dari %1$s</string>
-    <string name="grisbi_import_parties_loading">Memuatkan pihak daripada %1$s</string>
     <string name="grouping_day">Hari</string>
     <string name="grouping_last_week">Minggu terakhir</string>
     <string name="grouping_month">Bulan</string>
@@ -187,9 +185,7 @@
     <string name="numbered">bernombor</string>
     <string name="opening_balance">Baki mula</string>
     <string name="parse_error_file_not_found">Tidak dapat cari fail %1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">Veris Fail Grisbi Tidak Disokong: %1$s</string>
     <string name="parse_error_other_exception">Satu ralat berlaku: %1$s</string>
-    <string name="parse_error_parse_exception">Tidak dapat hurai fail</string>
     <string name="password_disabled_reenable">Perlindungan kata laluan telah dilumpuhkan. Anda boleh benarkan semula ia di dalam tetapan.</string>
     <string name="password_lost">Kata laluan hilang</string>
     <string name="password_not_valid">Kata laluan tidak sah. Cuba lagi!</string>
@@ -230,7 +226,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Kunci tatar</string>
     <string name="pref_enter_licence_title">Masukkan kunci</string>
     <string name="pref_export_format_title">Format data</string>
-    <string name="pref_import_from_grisbi_summary">Import kategori dan pihak dari fail XML Grisbi</string>
     <string name="pref_import_from_grisbi_title">Import dari Grisbi</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">Import transaksi, kategori dan pihak dari fail %s</string>
@@ -276,9 +271,7 @@
     <string name="pref_visit_website_title">Lawati Laman Sesawang</string>
     <string name="progress_dialog_deleting">Memadam objek</string>
     <string name="progress_dialog_printing">Menjana %s</string>
-    <string name="qif_parse_result">Dihurai: %1$s akaun; %2$s kategori dan %3$s pihak</string>
     <string name="qif_parse_failure_found_multiple_accounts">Akaun berbilang ditemui dalam fail %s.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Tidak dapat gabung ia ke dalam akaun sedia ada.</string>
     <string name="reference_number">Nombor Rujukan</string>
     <string name="restore_db_failure">Pemulihan pangkalan data gagal.</string>
     <string name="restore_db_success">Pangkalan data telah dipulihkan dari sandar.</string>
@@ -356,12 +349,6 @@
     <string name="warning_change_fraction_digits_checkbox_label">Kemaskini amaun dalam pangkalan data</string>
     <plurals name="import_categories_result">
         <item quantity="other">%1$d kategori berjaya diimport.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="other">%1$d pihak berjaya diimport.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="other">%1$d akaun berjaya diimport.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="other">%1$d transaksi berjaya diimport ke dalam akaun %2$s</item>

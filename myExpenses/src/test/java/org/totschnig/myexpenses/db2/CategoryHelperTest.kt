@@ -19,47 +19,34 @@ class CategoryHelperTest: BaseTestWithRepository() {
     }
 
     @Test
-    fun shouldInsertNormalWithStrip() {
-        insert("abc", true)
-        assertNotNull(categoryToId["abc"])
-    }
-
-    @Test
-    fun shouldInsertNormalWithoutStrip() {
-        insert("abc", false)
+    fun shouldInsertNormal() {
+        insert("abc")
         assertNotNull(categoryToId["abc"])
     }
 
     @Test
     fun shouldInsertTwoLevels() {
-        insert("abc:def", false)
+        insert("abc:def")
         assertNotNull(categoryToId["abc:def"])
         assertNotNull(categoryToId["abc"])
     }
 
     @Test
     fun shouldInsertThreeLevels() {
-        insert("abc:def:ghi", false)
+        insert("abc:def:ghi")
         assertNotNull(categoryToId["abc:def:ghi"])
         assertNotNull(categoryToId["abc:def"])
         assertNotNull(categoryToId["abc"])
     }
 
     @Test
-    fun shouldInsertSpecialWithStrip() {
-        insert("abc/", true)
-        assertNotNull(categoryToId["abc"])
-        assertNull(categoryToId["abc/"])
-    }
-
-    @Test
-    fun shouldInsertSpecialWithoutStrip() {
-        insert("abc/", false)
+    fun shouldKeepSlashInLabel() {
+        insert("abc/")
         assertNull(categoryToId["abc"])
         assertNotNull(categoryToId["abc/"])
     }
 
-    private fun insert(label: String, stripQifCategoryClass: Boolean) {
-        CategoryHelper.insert(repository, label, categoryToId, stripQifCategoryClass)
+    private fun insert(label: String) {
+        CategoryHelper.insert(repository, label, categoryToId)
     }
 }

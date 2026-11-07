@@ -90,8 +90,6 @@
     <string name="export_sdcard_success">הנתונים יוצאו בהצלחה לקובץ \"%1$s\"</string>
     <string name="feedback">משוב</string>
     <string name="ftp_uri_malformed">כתובת אתר לא נכונה %1$s</string>
-    <string name="grisbi_import_categories_loading">טוען קטגוריות מ- %1$s</string>
-    <string name="grisbi_import_parties_loading">טוען צדדים מ- %1$s</string>
     <string name="grouping_day">יום</string>
     <string name="grouping_last_week">שבוע שעבר</string>
     <string name="grouping_month">חודש</string>
@@ -193,9 +191,7 @@
     <string name="numbered">ממוספר</string>
     <string name="opening_balance">מאזן פתיחה</string>
     <string name="parse_error_file_not_found">לא ניתן למצוא את הקובץ%1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">גירסת קובץ Grisbi לא נתמכת:%1$s</string>
     <string name="parse_error_other_exception">אירעה שגיעה: %1$s</string>
-    <string name="parse_error_parse_exception">לא ניתן לנתח את הקובץ</string>
     <string name="password_disabled_reenable">הגנת הסיסמה הושבתה. תוכל להפעיל אותה מחדש בהגדרות.</string>
     <string name="password_lost">סיסמה אבדה</string>
     <string name="password_not_valid">הסיסימא אינה תקפה. נסה שוב!</string>
@@ -236,7 +232,6 @@
     <string name="pref_contrib_purchase_title_upgrade">מפתח לשדרוג</string>
     <string name="pref_enter_licence_title">הכנס מפתח</string>
     <string name="pref_export_format_title">פורמט נתונים</string>
-    <string name="pref_import_from_grisbi_summary">ייבוא קטגוריות וקבוצות מקובץ XML של Grisbi</string>
     <string name="pref_import_from_grisbi_title">יבא מ- Grisbi</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">ייבוא עסקאות, קטגוריות וקבוצות מקובץ%s</string>
@@ -282,9 +277,7 @@
     <string name="pref_visit_website_title">בקר באתר</string>
     <string name="progress_dialog_deleting">מחיקת אובייקטים</string>
     <string name="progress_dialog_printing">מיצר קובץ %s</string>
-    <string name="qif_parse_result">מנותח:%1$sחשבונות; %2$s קטגוריות %3$sוחלקים</string>
     <string name="qif_parse_failure_found_multiple_accounts">נמצאו מספר חשבונות בקובץ %s.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">לא ניתן למזג אותם בחשבון קיים.</string>
     <string name="reference_number">מספר סימוכין</string>
     <string name="restore_db_failure">שחזור בסיס הנתונים נכשל.</string>
     <string name="restore_db_success">מסד הנתונים שוחזר מהגיבוי.</string>
@@ -373,16 +366,6 @@
         <item quantity="one">%1$d קטגוריה יובאה בהצלחה.</item>
         <item quantity="two">%1$d קטגוריות יובאו בהצלחה.</item>
         <item quantity="other">%1$d קטגוריות יובאו בהצלחה.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d צד יובא בהצלחה.</item>
-        <item quantity="two">%1$d צדדים יובאו בהצלחה.</item>
-        <item quantity="other">%1$d צדדים יובאו בהצלחה.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d חשבון יובא בהצלחה.</item>
-        <item quantity="two">%1$d חשבונות יובאו בהצלחה.</item>
-        <item quantity="other">%1$d חשבונות יובאו בהצלחה.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d עסקה יובאה בהצלחה לחשבון %2$s</item>

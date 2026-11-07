@@ -45,6 +45,7 @@
     <ID>CyclomaticComplexMethod:HelpDialogFragment.kt:HelpDialogFragment$override fun onCreateDialog: Dialog</ID>
     <ID>CyclomaticComplexMethod:HistoryChart.kt:HistoryChart$override fun onLoadFinished</ID>
     <ID>CyclomaticComplexMethod:ImportTradesDialog.kt:private suspend fun parseCsv: ImportTradesParseResult</ID>
+    <ID>CyclomaticComplexMethod:ImportUtils.kt:ImportUtils$private fun reduceTransfers: List&lt;ImportTransaction&gt;</ID>
     <ID>CyclomaticComplexMethod:LazyFontSelector.kt:LazyFontSelector$@Throws(DocumentException::class, IOException::class) fun processChar: Chunk?</ID>
     <ID>CyclomaticComplexMethod:MainDelegate.kt:MainDelegate$fun setupDebtChangedListener</ID>
     <ID>CyclomaticComplexMethod:ManageBudgets.kt:ManageBudgets$@OptIn(ExperimentalMaterial3Api::class) public override fun onCreate</ID>
@@ -58,9 +59,6 @@
     <ID>CyclomaticComplexMethod:PlanExecutor.kt:PlanExecutor$@RequiresPermission(allOf = [Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR]) @SuppressLint("InlinedApi") override suspend fun doWork: Result</ID>
     <ID>CyclomaticComplexMethod:PreferenceActivity.kt:PreferenceActivity$override fun onSharedPreferenceChanged</ID>
     <ID>CyclomaticComplexMethod:ProviderUtils.kt:ProviderUtils$fun buildFromExtras: TransactionEditData?</ID>
-    <ID>CyclomaticComplexMethod:QifParser.kt:QifParser$@Throws(IOException::class) fun parse</ID>
-    <ID>CyclomaticComplexMethod:QifParser.kt:QifParser$private fun readTransaction: ImportTransaction.Builder</ID>
-    <ID>CyclomaticComplexMethod:QifUtils.kt:QifUtils$private fun reduceTransfers: List&lt;ImportTransaction&gt;</ID>
     <ID>CyclomaticComplexMethod:RepositoryBudget.kt:suspend fun Repository.importBudget: Long</ID>
     <ID>CyclomaticComplexMethod:RepositoryTransaction.kt:fun Repository.loadTrades: List&lt;Trade&gt;</ID>
     <ID>CyclomaticComplexMethod:RepositoryTransaction.kt:fun Repository.updateDualSplitTransaction: Array&lt;ContentProviderResult&gt;</ID>
@@ -97,7 +95,6 @@
     <ID>LargeClass:MyExpensesV2ViewModel.kt:MyExpensesV2ViewModel : MyExpensesViewModel</ID>
     <ID>LargeClass:MyExpensesViewModel.kt:MyExpensesViewModel : PrintViewModel</ID>
     <ID>LargeClass:PdfPrinter.kt:PdfPrinter</ID>
-    <ID>LargeClass:QifParserTest.kt:QifParserTest</ID>
     <ID>LargeClass:SyncAdapter.kt:SyncAdapter : AbstractThreadedSyncAdapter</ID>
     <ID>LargeClass:TemplatesList.kt:TemplatesList : SortableListFragmentLoaderCallbacksOnDialogResultListener</ID>
     <ID>LargeClass:TransactionDelegate.kt:TransactionDelegate : OnItemSelectedListener</ID>
@@ -193,7 +190,6 @@
     <ID>LongMethod:PriceCalculationViewModel.kt:PriceCalculationViewModel$suspend fun reCalculatePrices</ID>
     <ID>LongMethod:PriceHistory.kt:PriceHistory$@OptIn(ExperimentalMaterial3Api::class) override fun onCreate</ID>
     <ID>LongMethod:PriceHistoryViewModel.kt:PriceHistoryViewModel$fun importPricesFromUri</ID>
-    <ID>LongMethod:QifParserTest.kt:QifParserTest$@Test fun should_parse_transfer_splits</ID>
     <ID>LongMethod:RepositoryBudget.kt:suspend fun Repository.importBudget: Long</ID>
     <ID>LongMethod:RepositoryBudget.kt:suspend fun Repository.loadBudgetProgress</ID>
     <ID>LongMethod:RepositoryTransaction.kt:@VisibleForTesting @JvmName("createSplitTransactionWithTransfers") fun Repository.createSplitTransaction: RepositoryTransaction</ID>
@@ -227,8 +223,6 @@
     <ID>LongMethod:VersionInfo.kt:VersionInfo$fun getChanges: Array&lt;String&gt;?</ID>
     <ID>LoopWithTooManyJumpStatements:ImportTradesDialog.kt:while</ID>
     <ID>LoopWithTooManyJumpStatements:LazyFontSelector.kt:LazyFontSelector$for</ID>
-    <ID>LoopWithTooManyJumpStatements:QifParser.kt:QifParser$do</ID>
-    <ID>LoopWithTooManyJumpStatements:QifParser.kt:QifParser$while</ID>
     <ID>LoopWithTooManyJumpStatements:SyncAdapter.kt:SyncAdapter$do</ID>
     <ID>LoopWithTooManyJumpStatements:TransactionList.kt:while</ID>
     <ID>MagicNumber:AbstractSyncBackendProvider.kt:AbstractSyncBackendProvider$10</ID>
@@ -298,7 +292,6 @@
     <ID>MagicNumber:DistributionBaseActivity.kt:DistributionBaseActivity$0.6f</ID>
     <ID>MagicNumber:ExpenseEdit.kt:ExpenseEdit$100</ID>
     <ID>MagicNumber:FloatSeekBarPreference.kt:FloatSeekBarPreference$.1F</ID>
-    <ID>MagicNumber:GrisbiImportHelper.kt:GrisbiImportHelper$10</ID>
     <ID>MagicNumber:Grouping.kt:Grouping.Companion$1000</ID>
     <ID>MagicNumber:Grouping.kt:Grouping.Companion$6</ID>
     <ID>MagicNumber:HistoryChart.kt:HistoryChart$10</ID>
@@ -306,6 +299,13 @@
     <ID>MagicNumber:HistoryChart.kt:HistoryChart$7</ID>
     <ID>MagicNumber:IconInfo.kt:IconInfo$24</ID>
     <ID>MagicNumber:ImportTradesDialog.kt:10</ID>
+    <ID>MagicNumber:ImportUtils.kt:ImportUtils$100</ID>
+    <ID>MagicNumber:ImportUtils.kt:ImportUtils$18</ID>
+    <ID>MagicNumber:ImportUtils.kt:ImportUtils$1900</ID>
+    <ID>MagicNumber:ImportUtils.kt:ImportUtils$2000</ID>
+    <ID>MagicNumber:ImportUtils.kt:ImportUtils$29</ID>
+    <ID>MagicNumber:ImportUtils.kt:ImportUtils$3</ID>
+    <ID>MagicNumber:ImportUtils.kt:ImportUtils$8</ID>
     <ID>MagicNumber:LaunchActivity.kt:LaunchActivity$7</ID>
     <ID>MagicNumber:LazyFontSelector.kt:LazyFontSelector.FontType.BALANCE_CHAPTER$1.2f</ID>
     <ID>MagicNumber:LazyFontSelector.kt:LazyFontSelector.FontType.HEADER$1.2f</ID>
@@ -397,15 +397,6 @@
     <ID>MagicNumber:PrintLayoutConfiguration.kt:PrintLayoutConfiguration$100</ID>
     <ID>MagicNumber:PrintLayoutConfigurationViewModel.kt:PrintLayoutConfigurationViewModel$100</ID>
     <ID>MagicNumber:PrintLayoutConfigurationViewModel.kt:PrintLayoutConfigurationViewModel$250f</ID>
-    <ID>MagicNumber:QifBufferedReader.kt:QifBufferedReader$2048</ID>
-    <ID>MagicNumber:QifParser.kt:QifParser$6</ID>
-    <ID>MagicNumber:QifUtils.kt:QifUtils$100</ID>
-    <ID>MagicNumber:QifUtils.kt:QifUtils$18</ID>
-    <ID>MagicNumber:QifUtils.kt:QifUtils$1900</ID>
-    <ID>MagicNumber:QifUtils.kt:QifUtils$2000</ID>
-    <ID>MagicNumber:QifUtils.kt:QifUtils$29</ID>
-    <ID>MagicNumber:QifUtils.kt:QifUtils$3</ID>
-    <ID>MagicNumber:QifUtils.kt:QifUtils$8</ID>
     <ID>MagicNumber:Receipts.kt:3</ID>
     <ID>MagicNumber:RepositoryCategory.kt:3</ID>
     <ID>MagicNumber:RepositoryCategory.kt:4</ID>
@@ -513,7 +504,6 @@
     <ID>NestedBlockDepth:PlanExecutor.kt:PlanExecutor$@RequiresPermission(allOf = [Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR]) @SuppressLint("InlinedApi") override suspend fun doWork: Result</ID>
     <ID>NestedBlockDepth:PlannerUtils.kt:PlannerUtils$@RequiresPermission(Manifest.permission.READ_CALENDAR) private fun checkPlannerInternal</ID>
     <ID>NestedBlockDepth:PlannerUtils.kt:PlannerUtils$@RequiresPermission(Manifest.permission.READ_CALENDAR, conditional = true) fun onPlannerCalendarIdChanged</ID>
-    <ID>NestedBlockDepth:QifParser.kt:QifParser$@Throws(IOException::class) fun parse</ID>
     <ID>NestedBlockDepth:Receipts.kt:fun saveReceipt: Bundle</ID>
     <ID>NestedBlockDepth:RepositoryTemplate.kt:fun Repository.loadTemplate</ID>
     <ID>NestedBlockDepth:RestoreViewModel.kt:RestoreViewModel$private fun restorePlanner: Int</ID>
@@ -536,11 +526,11 @@
     <ID>ReturnCount:HelpDialogFragment.kt:HelpDialogFragment$override fun onCreateDialog: Dialog</ID>
     <ID>ReturnCount:HistoryChart.kt:HistoryChart$@Deprecated("Deprecated in Java") override fun onOptionsItemSelected: Boolean</ID>
     <ID>ReturnCount:ImportTradesDialog.kt:private fun CSVRecord.getSafe: String?</ID>
+    <ID>ReturnCount:ImportUtils.kt:ImportUtils$@JvmStatic fun parseDate: Date</ID>
     <ID>ReturnCount:ManageSyncBackends.kt:ManageSyncBackends$override fun dispatchCommand: Boolean</ID>
     <ID>ReturnCount:MoreUiUtils.kt:fun resolveThemeColor: Int</ID>
     <ID>ReturnCount:PermissionHelper.kt:PermissionHelper$@JvmStatic fun canReadUri: Boolean</ID>
     <ID>ReturnCount:PlanExecutor.kt:PlanExecutor$@RequiresPermission(allOf = [Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR]) @SuppressLint("InlinedApi") override suspend fun doWork: Result</ID>
-    <ID>ReturnCount:QifUtils.kt:QifUtils$@JvmStatic fun parseDate: Date</ID>
     <ID>ReturnCount:RoadmapVoteActivity.kt:RoadmapVoteActivity$override fun onContextItemSelected: Boolean</ID>
     <ID>ReturnCount:RoadmapVoteActivity.kt:RoadmapVoteActivity$override fun onResult: Boolean</ID>
     <ID>ReturnCount:SyncBackendList.kt:SyncBackendList$override fun onContextItemSelected: Boolean</ID>
@@ -576,6 +566,7 @@
     <ID>TooGenericExceptionCaught:ImportSourceDialogFragment.kt:ImportSourceDialogFragment$throwable: Exception</ID>
     <ID>TooGenericExceptionCaught:ImportSourceDialogFragment.kt:ImportSourceDialogFragment$throwable: Throwable</ID>
     <ID>TooGenericExceptionCaught:ImportTradesDialog.kt:e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ImportUtils.kt:ImportUtils$e: IndexOutOfBoundsException</ID>
     <ID>TooGenericExceptionCaught:LazyFontSelector.kt:LazyFontSelector$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ManageCategoriesViewModel.kt:ManageCategoriesViewModel$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ManageTemplates.kt:ManageTemplates$e: Exception</ID>
@@ -589,7 +580,6 @@
     <ID>TooGenericExceptionCaught:PriceHistory.kt:PriceHistory$e: Exception</ID>
     <ID>TooGenericExceptionCaught:PriceHistoryViewModel.kt:PriceHistoryViewModel$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ProtectedCursorLoader.kt:ProtectedCursorLoader$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:QifUtils.kt:QifUtils$e: IndexOutOfBoundsException</ID>
     <ID>TooGenericExceptionCaught:RepositoryTemplate.kt:RepositoryTemplate$e: Exception</ID>
     <ID>TooGenericExceptionCaught:RepositoryTransaction.kt:e: Exception</ID>
     <ID>TooGenericExceptionCaught:RestoreViewModel.kt:RestoreViewModel$e: Exception</ID>
@@ -632,6 +622,7 @@
     <ID>TooManyFunctions:GenericAccountService.kt:GenericAccountService$Companion</ID>
     <ID>TooManyFunctions:HelpDialogHelper.kt:HelpDialogHelper : ImageGetter</ID>
     <ID>TooManyFunctions:ImportAccount.kt:ImportTransaction$Builder</ID>
+    <ID>TooManyFunctions:ImportUtils.kt:ImportUtils</ID>
     <ID>TooManyFunctions:LicenceHandler.kt:LicenceHandler</ID>
     <ID>TooManyFunctions:MainDelegate.kt:MainDelegate : TransactionDelegate</ID>
     <ID>TooManyFunctions:ManageCategories.kt:ManageCategories : ProtectedFragmentActivityContribIFace</ID>
@@ -643,7 +634,6 @@
     <ID>TooManyFunctions:MyExpensesViewModel.kt:MyExpensesViewModel : PrintViewModel</ID>
     <ID>TooManyFunctions:PrefHandler.kt:PrefHandler</ID>
     <ID>TooManyFunctions:PrintLayoutConfigurationViewModel.kt:PrintLayoutConfigurationViewModel : AndroidViewModel</ID>
-    <ID>TooManyFunctions:QifUtils.kt:QifUtils</ID>
     <ID>TooManyFunctions:RemapHandler.kt:RemapHandler : FragmentResultListener</ID>
     <ID>TooManyFunctions:RepositoryAccount.kt:org.totschnig.myexpenses.db2.RepositoryAccount.kt</ID>
     <ID>TooManyFunctions:RepositoryBudget.kt:org.totschnig.myexpenses.db2.RepositoryBudget.kt</ID>

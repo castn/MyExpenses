@@ -57,8 +57,6 @@
     <string name="export_sdcard_success">\"%1$s\" ලිපි ගොනුවට වියදම් අපනයන කරන ලදී</string>
     <string name="feedback">ප්‍රතිචාරය </string>
     <string name="ftp_uri_malformed">වැරදුනු යු ආර් අයි %1$s</string>
-    <string name="grisbi_import_categories_loading">%1$s න්  වර්ග පැටවීම </string>
-    <string name="grisbi_import_parties_loading">%1$s න් කොටස් පැටවීම් </string>
     <string name="grouping_day">දවස </string>
     <string name="grouping_last_week">පසුගීය  සතියේ </string>
     <string name="grouping_month">මාසය </string>
@@ -149,9 +147,7 @@
     <string name="numbered">අංකනය </string>
     <string name="opening_balance">ආරම්භක ශේෂය </string>
     <string name="parse_error_file_not_found">ලිපිගොනුව සොයගත නොහැක %1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">සහාය නොමැති ග්රිස්බි ලිපිගොනු වර්ගයක් %1$s</string>
     <string name="parse_error_other_exception">වරදක් හටගන්නා ලදී %1$s</string>
-    <string name="parse_error_parse_exception">ලිපිගොනුවෙහි ව්‍යාකරණ විග්‍රහය කිරමට නොහැකි විය </string>
     <string name="password_disabled_reenable">මුරපද ආරක්ෂාව අක්‍රිය කර ඇත.ඔබට එය නැවත කට්ටල අංග තුලින් සක්‍රිය කල හැක </string>
     <string name="password_lost">නැතිවූ මුරපදය </string>
     <string name="password_not_valid">ඔබගේ මුරපදය වැරදි.නැවත අතුලත් කරන්න </string>
@@ -186,7 +182,6 @@
     <string name="pref_category_title_ui">පාවිච්චි කරන්නාගේ අතුරු මුහුණත </string>
     <string name="pref_enter_licence_title">යතුර ඇතුළු කරන්න </string>
     <string name="pref_export_format_title">දත්ත ආකෘතිය</string>
-    <string name="pref_import_from_grisbi_summary">පක්ෂ සහ වර්ග ග්රිස්බි හි  XML ලිපිගොනුවෙන් ආනයනය කරන්න </string>
     <string name="pref_import_from_grisbi_title">ග්රිස්බි වලින් අපනයනය කරන්න </string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">ගනුදෙනු,ප්‍රබේධ සහ පක්ෂ %s ගොනුවෙන් ආනයනය කරන්න </string>
@@ -229,9 +224,7 @@
     <string name="pref_visit_website_summary">වෙනස්වන ලොගය සහ නිතරම අසන ප්‍රශ්න </string>
     <string name="pref_visit_website_title">වෙබ් අඩවිය සදහා පිවිසෙන්න </string>
     <string name="progress_dialog_deleting">අවයව මකාදැමීම </string>
-    <string name="qif_parse_result">ව්‍යාකරණ විග්‍රහ කිරීම: ගිණුම් %1$s; ප්‍රබේධ  %2$s සහ  පක්ෂ %3$s</string>
     <string name="qif_parse_failure_found_multiple_accounts">%s ලිපිගොනුවෙන් බහු ගිණුම් සමු විය </string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">දැනට පවතින ගිණුමට එකතු කල නොහැකිය </string>
     <string name="reference_number">යොමු අංකය </string>
     <string name="restore_db_failure">දත්ත ගබඩාව නැවත පිහිටුවීම අසාර්කයි </string>
     <string name="restore_db_success">දත්ත ගබඩාව උපස්ථය උපයෝගී කරගෙන  නැවත පිහිටුවන ලදී </string>
@@ -296,14 +289,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">ප්‍රබේධ %1$d සාර්ථකල ලෙස ආනයනය කරන ලදී.</item>
         <item quantity="other">ප්‍රබේධ %1$d සාර්ථකල ලෙස ආනයනය කරන ලදී.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">පක්ෂ %1$d සාර්ථකල ලෙස ආනයනය කරන ලදී.</item>
-        <item quantity="other">පක්ෂ %1$d සාර්ථකල ලෙස ආනයනය කරන ලදී.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">ගිණුම් %1$d  සාර්ථකල ලෙස ආනයනය කරන ලදී.</item>
-        <item quantity="other">ගිණුම් %1$d  සාර්ථකල ලෙස ආනයනය කරන ලදී.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">ගනුදෙනු %1$d සාර්ථකල ලෙස %2$s ගිණුමට ආනයනය කරන ලදී </item>

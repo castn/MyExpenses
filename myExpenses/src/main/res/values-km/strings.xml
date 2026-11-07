@@ -93,8 +93,6 @@
     <string name="export_sdcard_success">ទិន្នន័យ​ចំណាយបានបញ្ចូលទៅឯកសារ %1$s</string>
     <string name="feedback">ផ្តល់មតិ</string>
     <string name="ftp_uri_malformed">URI មិនត្រឹមត្រូវ %1$s</string>
-    <string name="grisbi_import_categories_loading">ផ្ទុកចំណាត់ថ្នាក់ពី %1$s</string>
-    <string name="grisbi_import_parties_loading">ផ្ទុកទិន្នន័យ​ភាគី​ពី %1$s បាន</string>
     <string name="grouping_day">ថ្ងៃ</string>
     <string name="grouping_last_week">សប្តាហ៍ក្រោយ</string>
     <string name="grouping_month">ខែ</string>
@@ -187,9 +185,7 @@
     <string name="numbered">ជាលេខ</string>
     <string name="opening_balance">បើក​សមតុល្យ</string>
     <string name="parse_error_file_not_found">មិនអាច​រកឯកសារ %1$s ឃើញទេ</string>
-    <string name="parse_error_grisbi_version_not_supported">មិនគាំទ្រ ឯកសារ Grisbi កំណែ៖ %1$s</string>
     <string name="parse_error_other_exception">មានកំហុស​កើតឡើង៖ %1$s</string>
-    <string name="parse_error_parse_exception">មិនអាចអាន​ញែកឯកសារនេះទេ។</string>
     <string name="parse_error_at_line">កំហុសត្រង់ជួរ %1$d: %2$s</string>
     <string name="password_disabled_reenable">ការការពារពាក្យ​សម្ងាត់ត្រូវ​បានបិទ។ អ្នកអាចបើក​វានៅក្នុងការកំណត់។</string>
     <string name="password_lost">បាត់ពាក្យសម្ងាត់</string>
@@ -226,7 +222,6 @@
     <string name="pref_contrib_purchase_title_upgrade">អាប់ហ្គ្រេដកូនសោ</string>
     <string name="pref_enter_licence_title">បញ្ចូលកូនសោ</string>
     <string name="pref_export_format_title">ទ្រង់ទ្រាយទិន្នន័យ</string>
-    <string name="pref_import_from_grisbi_summary">នាំចូលចំណាត់ថ្នាក់ និងភាគីពីឯកសារ Grisbi XML</string>
     <string name="pref_import_from_grisbi_title">នាំចូលពី Grisbi</string>
     <string name="pref_import_summary">នាំចូលប្រតិបត្តិការ ចំណាត់ថ្នាក់ និងភាគីពីឯកសារ %s</string>
     <string name="pref_import_title">ការនាំចូល %s</string>
@@ -268,9 +263,7 @@
     <string name="pref_visit_website_title">សូមចូលទស្សនាគេហទំព័រ</string>
     <string name="progress_dialog_deleting">កំពុងលុប​អ្វីផ្សេងៗ</string>
     <string name="progress_dialog_printing">កំពុងបង្កើត %s</string>
-    <string name="qif_parse_result">បានវិភាគ៖ %1$s គណនី; %2$s ចំណាត់ថ្នាក់ និង %3$s ភាគី</string>
     <string name="qif_parse_failure_found_multiple_accounts">រកឃើញគណនីច្រើននៅក្នុងឯកសារ %s។</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">មិនអាចបញ្ជូលចូលគ្នាក្នុងគណនីដែលមានស្រាប់បានទេ។</string>
     <string name="reference_number">លេខ​យោង</string>
     <string name="restore_db_failure">ការ​ restore មូលដ្ឋានទិន្នន័យមិនបានសំរេច</string>
     <string name="restore_db_success">មូលដ្ឋានទិន្នន័យត្រូវបានស្តារឡើងវិញពីការបម្រុងទុក។</string>
@@ -346,12 +339,6 @@
     <string name="warning_change_fraction_digits_checkbox_label">ធ្វើបច្ចុប្បន្នភាពចំនួនទឹកប្រាក់ក្នុងមូលដ្ឋានទិន្នន័យ</string>
     <plurals name="import_categories_result">
         <item quantity="other">%1$d ចំណាត់ថ្នាក់ បាន​នាំចូល​ដោយជោគជ័យ</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="other">%1$d ភាគី​បាន​នាំចូល​ដោយជោគជ័យ</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="other">%1$d គណនី​បាន​នាំចូល​ដោយជោគជ័យ</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="other">%1$d ប្រតិបត្តិការ​បាន​នាំចូល​ដោយជោគជ័យ​ទៅ​គណនី %2$s</item>

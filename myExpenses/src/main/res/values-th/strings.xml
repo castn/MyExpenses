@@ -18,7 +18,6 @@
     <string name="pm_type_debit">เดบิต</string>
     <string name="pref_backup_summary">สร้างข้อมูลสำรองของฐานข้อมูลและการตั้งค่า</string>
     <string name="pref_category_title_ui">ส่วนติดต่อผู้ใช้</string>
-    <string name="pref_import_from_grisbi_summary">นำเข้าหมวดหมู่และคู่สัญญาจากไฟล์ Grisbi XML</string>
     <string name="pref_manage_categories_summary">เพิ่ม แก้ไข หรือลบหมวดหมู</string>
     <string name="account">บัญชี</string>
     <string name="account_types">บัญชีประเภทต่าง ๆ</string>
@@ -91,8 +90,6 @@
     <string name="expense">ค่าใช้จ่าย</string>
     <string name="grouping_day">วัน</string>
     <string name="grouping_last_week">สัปดาห์ที่แล้ว</string>
-    <string name="grisbi_import_categories_loading">กำลังโหลดหมวดหมู่จาก %1$s</string>
-    <string name="grisbi_import_parties_loading">กำลังโหลดคู่กรณีจาก %1$s</string>
     <string name="grouping_none">ไม่จัดกลุ่ม</string>
     <string name="grouping_month">เดือน</string>
     <string name="help_button_rate">ให้คะแนนหรือรีวิว</string>
@@ -160,10 +157,8 @@
     <string name="no_parties">ไม่มีคู่สัญญา</string>
     <string name="no_templates">ไม่มีแม่แบบ</string>
     <string name="no_accounts">ไม่มีบัญชี</string>
-    <string name="parse_error_grisbi_version_not_supported">เวอร์ชันไฟล์ Grisbi ที่ไม่รองรับ: %1$s</string>
     <string name="parse_error_file_not_found">ไม่พบไฟล์ %1$s</string>
     <string name="parse_error_other_exception">เกิดข้อผิดพลาด: %1$s</string>
-    <string name="parse_error_parse_exception">ไม่สามารถแยกวิเคราะห์ไฟล์ได้</string>
     <string name="password_lost">ลืมรหัสผ่าน</string>
     <string name="password_not_valid">รหัสผ่านไม่ถูกต้อง ลองใหม่อีกครั้ง!</string>
     <string name="password_prompt">ป้อนรหัสผ่านของคุณ</string>
@@ -243,7 +238,6 @@
     <string name="pref_share_target_summary">ปล่อยว่างไว้หากต้องการเลือกระหว่างแอปที่เหมาะสม (อีเมล, Dropbox, Google Docs, …) หรือระบุ URL ในรูปแบบที่รองรับ</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">การป้อนข้อมูลจากวิดเจ็ตและทางลัด</string>
     <string name="pref_manage_sync_backends_summary">เพิ่มแบ็กเอนด์สำหรับซิงค์บัญชี (%s)</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">ไม่สามารถรวมเข้ากับบัญชีที่มีอยู่ได้</string>
     <string name="share_scheme_not_supported">ไม่รองรับรูปแบบ %1$s</string>
     <string name="subcategory">หมวดหมู่ย่อย</string>
     <string name="sum_expenses">ค่าใช้จ่าย</string>
@@ -300,7 +294,6 @@
     <string name="restore_calendar_success" tools:ignore="PluralsCandidate">กู้คืน %d แผนจากข้อมูลสำรองเรียบร้อยแล้ว</string>
     <string name="save_transaction_and_new_success">บันทึกเรียบร้อยแล้ว</string>
     <string name="warning_delete_category_with_budget">สำหรับอย่างน้อยหนึ่งหมวดหมู่ที่เลือก มีการจัดสรรงบประมาณที่จะถูกลบด้วย</string>
-    <string name="qif_parse_result">วิเคราะห์แล้ว: %1$s บัญชี; %2$s หมวดหมู่ และ %3$s คู่กรณี</string>
     <string name="reference_number">หมายเลขอ้างอิง</string>
     <string name="progress_dialog_printing">กำลังสร้าง %s</string>
     <string name="crash_dialog_comment_prompt">คุณอาจเพิ่มความคิดเห็นเกี่ยวกับปัญหาด้านล่างนี้:</string>
@@ -335,12 +328,6 @@
     <string name="warning_change_fraction_digits_checkbox_label">อัปเดตจำนวนเงินในฐานข้อมูล</string>
     <plurals name="import_categories_result">
         <item quantity="other">นำเข้า %1$d หมวดหมู่เรียบร้อยแล้ว</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="other">นำเข้า %1$d คู่กรณีเรียบร้อยแล้ว</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="other">นำเข้า %1$d บัญชีเรียบร้อยแล้ว</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="other">นำเข้า %1$d รายการเรียบร้อยแล้วในบัญชี %2$s</item>

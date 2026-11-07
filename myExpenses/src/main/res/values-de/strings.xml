@@ -90,8 +90,6 @@
     <string name="export_sdcard_success">Daten in Datei „%1$s“ exportiert</string>
     <string name="feedback">Rückmeldung</string>
     <string name="ftp_uri_malformed">Ungültige URI %1$s</string>
-    <string name="grisbi_import_categories_loading">Kategorien werden von %1$s geladen</string>
-    <string name="grisbi_import_parties_loading">Parteien werden von %1$s geladen</string>
     <string name="grouping_day">Tag</string>
     <string name="grouping_last_week">Letzte Woche</string>
     <string name="grouping_month">Monat</string>
@@ -191,9 +189,7 @@
     <string name="numbered">nummeriert</string>
     <string name="opening_balance">Anfangssaldo</string>
     <string name="parse_error_file_not_found">Konnte Datei %1$s nicht finden</string>
-    <string name="parse_error_grisbi_version_not_supported">Grisbi Datei Version %1$s wird nicht unterstützt</string>
     <string name="parse_error_other_exception">Ein Fehler ist aufgetreten: %1$s</string>
-    <string name="parse_error_parse_exception">Konnte Datei nicht analysieren</string>
     <string name="password_disabled_reenable">Passwort-Schutz wurde aufgehoben. Sie können diesen in den Einstellungen wieder aktivieren.</string>
     <string name="password_lost">Passwort vergessen</string>
     <string name="password_not_valid">Passwort ungültig. Versuchen Sie es erneut!</string>
@@ -234,7 +230,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Schlüssel erweitern</string>
     <string name="pref_enter_licence_title">Schlüssel eingeben</string>
     <string name="pref_export_format_title">Datenformat</string>
-    <string name="pref_import_from_grisbi_summary">Kategorien und Parteien aus Grisbi XML importieren</string>
     <string name="pref_import_from_grisbi_title">Import aus Grisbi</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">Buchungen, Kategorien und Parteien aus %s Datei importieren</string>
@@ -280,9 +275,7 @@
     <string name="pref_visit_website_title">Website besuchen</string>
     <string name="progress_dialog_deleting">Objekte werden gelöscht</string>
     <string name="progress_dialog_printing">Generierung von %s</string>
-    <string name="qif_parse_result">Gefunden: %1$s Konten, %2$s Kategorien und %3$s parteien</string>
     <string name="qif_parse_failure_found_multiple_accounts">In der %s Datei wurden mehrere Konten gefunden.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Diese konten nicht mit einem bestehendes Konto zusammengefügt werden.</string>
     <string name="reference_number">Referenznummer</string>
     <string name="restore_db_failure">Fehler bei der Wiederherstellung der Datenbank.</string>
     <string name="restore_db_success">Die Datenbank wurde aus der Datensicherung wiederhergestellt.</string>
@@ -366,14 +359,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d Kategorien erfolgreich importiert.</item>
         <item quantity="other">%1$d Kategorien erfolgreich importiert.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d Parteien erfolgreich importiert.</item>
-        <item quantity="other">%1$d Parteien erfolgreich importiert.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d Konten erfolgreich importiert.</item>
-        <item quantity="other">%1$d Konten erfolgreich importiert.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d Buchungen erfolgreich in das Konto %2$s importiert</item>

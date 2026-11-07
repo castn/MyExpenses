@@ -90,8 +90,6 @@
     <string name="export_sdcard_success">Έξοδα που εξάγονται σε αρχείο %1$s</string>
     <string name="feedback">Ανατροφοδότηση</string>
     <string name="ftp_uri_malformed">Ακατάλληλη URI %1$s</string>
-    <string name="grisbi_import_categories_loading">Φόρτωση κατηγορίες από %1$s</string>
-    <string name="grisbi_import_parties_loading">Φόρτωση μέρη από %1$s</string>
     <string name="grouping_day">Ημέρα</string>
     <string name="grouping_last_week">Την προηγούμενη εβδομάδα</string>
     <string name="grouping_month">Μήνας</string>
@@ -191,9 +189,7 @@
     <string name="numbered">αριθμημένος, -η</string>
     <string name="opening_balance">Απογραφή Υπολοίπου </string>
     <string name="parse_error_file_not_found">Δεν μπορούσε να βρει το αρχείο %1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">Μη υποστηριζόμενη έκδοση αρχείου Grisbi: %1$s</string>
     <string name="parse_error_other_exception">Παρουσιάστηκε σφάλμα: %1$s</string>
-    <string name="parse_error_parse_exception">Δεν ήταν δυνατό να αναλυθεί αρχείο</string>
     <string name="password_disabled_reenable">Έχει απενεργοποιηθεί η προστασία κωδικού πρόσβασης. Μπορείτε να την ενεργοποιήσετε ξανά στις ρυθμίσεις.</string>
     <string name="password_lost">Απωλέσατε τον κωδικό σας</string>
     <string name="password_not_valid">Κωδικός πρόσβασης δεν είναι έγκυρος. Δοκίμασε ξανά!</string>
@@ -234,7 +230,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Κλειδί αναβάθμισης</string>
     <string name="pref_enter_licence_title">Εισάγετε το κλειδί</string>
     <string name="pref_export_format_title"> Μορφή δεδομένων</string>
-    <string name="pref_import_from_grisbi_summary">Κάνετε εισαγωγή κατηγοριών και μερών Grisbi XML</string>
     <string name="pref_import_from_grisbi_title">Εισαγωγή από Grisbi</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">Εισαγωγή συναλλαγών, κατηγοριών και μερών από το αρχείο %s</string>
@@ -278,9 +273,7 @@
     <string name="pref_visit_website_title">Επισκεφθείτε την ιστοσελίδα</string>
     <string name="progress_dialog_deleting">Διαγραφή αντικειμένων</string>
     <string name="progress_dialog_printing">Δημιουργία %s</string>
-    <string name="qif_parse_result">Εγγράφηκαν: %1$s λογαριασμοί· %2$s κατηγορίες και %3$s μέρη</string>
     <string name="qif_parse_failure_found_multiple_accounts">Πολλαπλοί λογαριασμοί βρέθηκαν στο αρχείο %s.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Δεν είναι δυνατή η συγχώνευσή τους σε υπάρχοντα λογαριασμό.</string>
     <string name="reference_number">Αριθμός αναφοράς</string>
     <string name="restore_db_failure">Απέτυχε η επαναφορά της βάσης δεδομένων.</string>
     <string name="restore_db_success">Η βάση δεδομένων έχει αποκατασταθεί από την δημιουργία αντιγράφων.</string>
@@ -363,14 +356,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d κατηγορίες που εισάγονται με επιτυχία.</item>
         <item quantity="other">%1$d κατηγορίες που εισάγονται με επιτυχία.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d μέρη που εισάγονται με επιτυχία.</item>
-        <item quantity="other">%1$d μέρη που εισάγονται με επιτυχία.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d λογαριασμοί εισάχθηκαν με επιτυχία.</item>
-        <item quantity="other">%1$d λογαριασμοί εισάχθηκαν με επιτυχία.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d συναλλαγές εισήχθηκαν με επιτυχία στον λογαριασμό %2$s</item>

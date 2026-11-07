@@ -90,8 +90,6 @@
     <string name="export_sdcard_success">Kiadások sikeresen a(z) %1$s fájlba exportálva</string>
     <string name="feedback">Visszajelzés</string>
     <string name="ftp_uri_malformed">Helytelen URI %1$s</string>
-    <string name="grisbi_import_categories_loading">Kategóriák betöltése innen: %1$s</string>
-    <string name="grisbi_import_parties_loading">Résztvevők betöltése innen: %1$s</string>
     <string name="grouping_day">Nap</string>
     <string name="grouping_last_week">Múlt hét</string>
     <string name="grouping_month">Hónap</string>
@@ -191,9 +189,7 @@
     <string name="numbered">számozott</string>
     <string name="opening_balance">Nyitó egyenleg</string>
     <string name="parse_error_file_not_found">%1$s állomány nem található</string>
-    <string name="parse_error_grisbi_version_not_supported">Nem támogatott Grisbi fájl verzió: %1$s</string>
     <string name="parse_error_other_exception">Hiba történt: %1$s</string>
-    <string name="parse_error_parse_exception">A fájl nem olvasható</string>
     <string name="password_disabled_reenable">A jelszavas védelem kikapcsolva. Újra engedélyezés a beállítások alatt.</string>
     <string name="password_lost">Elveszett jelszó</string>
     <string name="password_not_valid">A jelszó nem megfelelő. Próbálja újra!</string>
@@ -234,7 +230,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Kulcs frissítése</string>
     <string name="pref_enter_licence_title">Kulcs megadása</string>
     <string name="pref_export_format_title">Adat formátum</string>
-    <string name="pref_import_from_grisbi_summary">Kategóriák és résztvevők beolvasása Grisbi XML.</string>
     <string name="pref_import_from_grisbi_title">Importálás innen: Grisbi</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">Tranzakciók, kategóriák és felek importálása a(z) %s fájlból</string>
@@ -280,9 +275,7 @@
     <string name="pref_visit_website_title">Weboldal megtekintése</string>
     <string name="progress_dialog_deleting">Objektumok törlése</string>
     <string name="progress_dialog_printing">%s létrehozása</string>
-    <string name="qif_parse_result">Elemezve: %1$s fiók; %2$s kategória és %3$s fél</string>
     <string name="qif_parse_failure_found_multiple_accounts">Több fiók található a %s fájlban.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Nem lehet egyesíteni őket egy meglévő fiókban.</string>
     <string name="reference_number">Referencia szám</string>
     <string name="restore_db_failure">Az adatbázis visszaállítása sikertelen.</string>
     <string name="restore_db_success">Az adatbázis sikeresen visszaállítva korábbi mentésből.</string>
@@ -366,14 +359,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d kategóriák sikeresen beolvasva.</item>
         <item quantity="other">%1$d kategóriák sikeresen beolvasva.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d résztvevők sikeresen beolvasva.</item>
-        <item quantity="other">%1$d résztvevők sikeresen beolvasva.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d fiók sikeresen importálva.</item>
-        <item quantity="other">%1$d fiók sikeresen importálva.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d tranzakció sikeresen importálva %2$s fiókba</item>

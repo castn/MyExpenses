@@ -185,7 +185,7 @@ class CsvImportViewModel(application: Application, val savedStateHandle: SavedSt
 
                 insertPayees(parser.payees)
                 repository.extractTagIds(parser.tags, tagToId)
-                insertCategories(parser.categories, false)
+                insertCategories(parser.categories)
 
                 insertTransactions(accounts, currencyUnit, autoFill)
             } finally {

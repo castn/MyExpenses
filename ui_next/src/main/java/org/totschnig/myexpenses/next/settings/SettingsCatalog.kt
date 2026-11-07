@@ -66,7 +66,6 @@ import org.totschnig.myexpenses.preference.PrefKey.GROUP_WEEK_STARTS
 import org.totschnig.myexpenses.preference.PrefKey.HELP
 import org.totschnig.myexpenses.preference.PrefKey.HOME_CURRENCY
 import org.totschnig.myexpenses.preference.PrefKey.IMPORT_CSV
-import org.totschnig.myexpenses.preference.PrefKey.IMPORT_QIF
 import org.totschnig.myexpenses.preference.PrefKey.MANAGE_APP_DIR_FILES
 import org.totschnig.myexpenses.preference.PrefKey.MANAGE_CURRENCIES
 import org.totschnig.myexpenses.preference.PrefKey.MANAGE_STALE_IMAGES
@@ -442,8 +441,6 @@ object SettingsCatalog {
             section(SettingsSection.BACKUP_IMPORT_EXPORT) {
                 on(LegacyScreen.IO) {
                     action(IMPORT_CSV)
-                    action(IMPORT_QIF)
-                    action("import_from_grisbi")
                     switch(CSV_EXPORT_SPLIT_CATEGORIES)
                     text(CSV_EXPORT_CATEGORY_SEPARATOR)
                     switch(CSV_EXPORT_SPLIT_AMOUNT)

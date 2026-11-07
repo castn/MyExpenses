@@ -17,20 +17,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <org.totschnig.myexpenses.preference.HeaderPreference />
     <Preference android:key="@string/pref_import_csv_key" />
-    <Preference android:key="@string/pref_import_qif_key">
-        <intent
-            android:targetClass="org.totschnig.myexpenses.activity.QifImport"
-            android:targetPackage="@string/application_id" />
-    </Preference>
-    <Preference
-        android:key="import_from_grisbi"
-        android:summary="@string/pref_import_from_grisbi_summary"
-        android:title="@string/pref_import_from_grisbi_title">
-
-        <intent
-            android:targetClass="org.totschnig.myexpenses.activity.GrisbiImport"
-            android:targetPackage="@string/application_id" />
-    </Preference>
     <PreferenceCategory android:key="@string/pref_csv_export_key">
         <SwitchPreferenceCompat
             android:defaultValue="false"

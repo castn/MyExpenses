@@ -23,11 +23,6 @@ object ImportUtils {
     private val MONEY_PREFIX_PATTERN = Pattern.compile("\\D")
     private val ISO_T_PATTERN = Regex("(\\d)T(\\d)")
     @JvmStatic
-    fun trimFirstChar(s: String): String {
-        return if (s.length > 1) s.substring(1) else ""
-    }
-
-    @JvmStatic
     fun parseDate(sDateTime: String, format: ImportDateFormat): Date {
         val s = sDateTime.trim().replace(ISO_T_PATTERN, "$1 $2")
         return try {
@@ -168,7 +163,7 @@ object ImportUtils {
     }
 
     /**
-     * Adopted from http://jgnash.svn.sourceforge.net/viewvc/jgnash/jgnash2/trunk/src/jgnash/imports/qif/ImportUtils.java
+     * Adopted from http://jgnash.svn.sourceforge.net/viewvc/jgnash/jgnash2/trunk/src/jgnash/imports/qif/QifUtils.java
      *
      * @param money   String to be parsed
      * @param maxSize maxSize of the result, as calculated by precision - scale, i.e.  the number of digits in front of

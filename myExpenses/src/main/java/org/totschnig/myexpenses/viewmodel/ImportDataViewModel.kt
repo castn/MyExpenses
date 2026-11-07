@@ -138,10 +138,9 @@ abstract class ImportDataViewModel(application: Application) :
         return count
     }
 
-    fun insertCategories(categories: Set<CategoryInfo>, stripQifCategoryClass: Boolean) =
-        categories.sumOf {
-            CategoryHelper.insert(repository, it.name, categoryToId, stripQifCategoryClass, it.type)
-        }
+    fun insertCategories(categories: Set<CategoryInfo>) = categories.sumOf {
+        CategoryHelper.insert(repository, it.name, categoryToId, typeFlags = it.type)
+    }
 
     fun ImportTransaction.toTransaction(
         a: Account,

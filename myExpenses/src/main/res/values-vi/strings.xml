@@ -88,8 +88,6 @@
     <string name="export_sdcard_success">Dữ liệu về chi tiêu đã được xuất ra tập tin %1$s</string>
     <string name="feedback">Phản hồi</string>
     <string name="ftp_uri_malformed">URI lỗi %1$s</string>
-    <string name="grisbi_import_categories_loading">Đang tải phân loại từ %1$s</string>
-    <string name="grisbi_import_parties_loading">Đang tải các bên từ %1$s</string>
     <string name="grouping_day">Ngày</string>
     <string name="grouping_last_week">Tuần trước</string>
     <string name="grouping_month">Tháng</string>
@@ -185,9 +183,7 @@
     <string name="numbered">được đánh số</string>
     <string name="opening_balance">Số dư ban đầu</string>
     <string name="parse_error_file_not_found">Không thể tìm thấy tập tin %1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">Không hỗ trợ phiên bản tập tin Grisbi: %1$s</string>
     <string name="parse_error_other_exception">Xảy ra lỗi: %1$s</string>
-    <string name="parse_error_parse_exception">Không thể phân tích tập tin</string>
     <string name="password_disabled_reenable">Phần bảo vệ mật khẩu hiện đã bị vô hiệu hóa. Bạn có thể bật lại tính năng này trong phần Thiết Lập.</string>
     <string name="password_lost">Mất mật khẩu</string>
     <string name="password_not_valid">Mật khẩu không hợp lệ. Xin thử lại lần nữa!</string>
@@ -228,7 +224,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Nâng cấp khóa</string>
     <string name="pref_enter_licence_title">Nhập khóa</string>
     <string name="pref_export_format_title">Định dạng dữ liệu</string>
-    <string name="pref_import_from_grisbi_summary">Nhập các phân loại (và các nhóm) Grisbi XML</string>
     <string name="pref_import_from_grisbi_title">Nhập dữ liệu về Grisbi</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">Nhập các giao dich, danh mục và người giao dịch từ tập tin %s</string>
@@ -274,9 +269,7 @@
     <string name="pref_visit_website_title">Truy cập Website</string>
     <string name="progress_dialog_deleting">Đang xóa mục</string>
     <string name="progress_dialog_printing">Đang tạo tập tin %s</string>
-    <string name="qif_parse_result">Đã phân tích : %1$s tài khoản; %2$s danh mục và %3$s bên giao dịch</string>
     <string name="qif_parse_failure_found_multiple_accounts">Phát hiện nhiều tài khoản trong tập tin %s.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Không thể ghép chúng vào tài khoản hiện có.</string>
     <string name="reference_number">Số tham chiếu</string>
     <string name="restore_db_failure">Xảy ra lỗi khi khôi phục cơ sở dữ liệu</string>
     <string name="restore_db_success">Cơ sở dữ liệu đã được phục hồi từ phần sao lưu</string>
@@ -353,12 +346,6 @@
     <string name="warning_change_fraction_digits_checkbox_label">Cập nhật các số tiền</string>
     <plurals name="import_categories_result">
         <item quantity="other">%1$d phân loại đã được nhập dữ liệu thành công.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="other">%1$d nhóm đã được nhập dữ liệu thành công.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="other">%1$d tài khoản đã được nhập thành công.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="other">%1$d giao dịch đã được nhập vào tài khoản %2$s</item>

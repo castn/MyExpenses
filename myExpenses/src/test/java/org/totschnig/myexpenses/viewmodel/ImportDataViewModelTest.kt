@@ -123,7 +123,7 @@ class ImportDataViewModelTest : BaseTestWithRepository() {
         val account = repository.findAnyOpenByLabel("test")
         assertThat(account).isNotNull()
         runBlocking {
-            viewModel.insertCategories(setOf(CategoryInfo("Grocery")), false)
+            viewModel.insertCategories(setOf(CategoryInfo("Grocery")))
             viewModel.insertPayees(setOf("Joe"))
             viewModel.insertTransactions(importAccounts, testCurrency, false)
             val transactions = repository.loadTransactions(account!!)
@@ -283,7 +283,7 @@ class ImportDataViewModelTest : BaseTestWithRepository() {
         val account = repository.findAnyOpenByLabel("test")
         assertThat(account).isNotNull()
         runBlocking {
-            viewModel.insertCategories(setOf(CategoryInfo("Grocery"), CategoryInfo("Sports")), false)
+            viewModel.insertCategories(setOf(CategoryInfo("Grocery"), CategoryInfo("Sports")))
             viewModel.insertPayees(setOf("Joe"))
             viewModel.insertTransactions(importAccounts, testCurrency, false)
             val transactions = repository.loadTransactions(account!!)

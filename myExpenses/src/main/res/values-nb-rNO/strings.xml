@@ -102,14 +102,6 @@
         <item quantity="one">Importerte %1$d kategorier.</item>
         <item quantity="other">Importerte %1$d kategorier.</item>
     </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">Importerte %1$d parter.</item>
-        <item quantity="other">Importerte %1$d parter.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">Importerte %1$d kontoer.</item>
-        <item quantity="other">Importerte %1$d kontoer.</item>
-    </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">Importerte %1$d transaksjoner til konto %2$s.</item>
         <item quantity="other">Importerte %1$d transaksjoner til konto %2$s.</item>
@@ -175,7 +167,6 @@
     <string name="password_prompt">Skriv inn passordet ditt</string>
     <string name="password_not_valid">Ugyldig passord. Prøv igjen.</string>
     <string name="password_lost">Glemt passord</string>
-    <string name="parse_error_parse_exception">Kunne ikke tolke fil</string>
     <string name="parse_error_other_exception">En feil inntraff: %1$s</string>
     <string name="parse_error_file_not_found">Fant ikke filen %1$s</string>
     <string name="no_templates">Ingen maler.</string>
@@ -229,7 +220,6 @@
     <string name="grouping_month">Måned</string>
     <string name="grouping_last_week">Siste uke</string>
     <string name="grouping_day">Dag</string>
-    <string name="grisbi_import_categories_loading">Laster inn kategorier fra %1$s</string>
     <string name="ftp_uri_malformed">Feilformatert URI %1$s</string>
     <string name="feedback">Tilbakemeldinger</string>
     <string name="expense">Utgift</string>

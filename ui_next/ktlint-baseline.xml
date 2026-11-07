@@ -1781,18 +1781,18 @@
         <error line="93" column="85" source="standard:argument-list-wrapping" />
         <error line="93" column="92" source="standard:argument-list-wrapping" />
         <error line="93" column="101" source="standard:max-line-length" />
-        <error line="145" column="30" source="standard:argument-list-wrapping" />
-        <error line="145" column="59" source="standard:argument-list-wrapping" />
-        <error line="145" column="70" source="standard:binary-expression-wrapping" />
-        <error line="145" column="84" source="standard:argument-list-wrapping" />
-        <error line="145" column="101" source="standard:max-line-length" />
-        <error line="145" column="115" source="standard:argument-list-wrapping" />
-        <error line="148" column="30" source="standard:argument-list-wrapping" />
-        <error line="148" column="66" source="standard:argument-list-wrapping" />
-        <error line="148" column="79" source="standard:argument-list-wrapping" />
-        <error line="148" column="101" source="standard:argument-list-wrapping" />
-        <error line="148" column="101" source="standard:max-line-length" />
-        <error line="148" column="102" source="standard:argument-list-wrapping" />
+        <error line="144" column="30" source="standard:argument-list-wrapping" />
+        <error line="144" column="59" source="standard:argument-list-wrapping" />
+        <error line="144" column="70" source="standard:binary-expression-wrapping" />
+        <error line="144" column="84" source="standard:argument-list-wrapping" />
+        <error line="144" column="101" source="standard:max-line-length" />
+        <error line="144" column="115" source="standard:argument-list-wrapping" />
+        <error line="147" column="30" source="standard:argument-list-wrapping" />
+        <error line="147" column="66" source="standard:argument-list-wrapping" />
+        <error line="147" column="79" source="standard:argument-list-wrapping" />
+        <error line="147" column="101" source="standard:argument-list-wrapping" />
+        <error line="147" column="101" source="standard:max-line-length" />
+        <error line="147" column="102" source="standard:argument-list-wrapping" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/settings/NativeSettings.kt">
         <error line="3" column="1" source="standard:import-ordering" />
@@ -2634,28 +2634,28 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/settings/SettingsCatalog.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="214" column="46" source="standard:trailing-comma-on-declaration-site" />
-        <error line="221" column="24" source="standard:argument-list-wrapping" />
-        <error line="221" column="48" source="standard:argument-list-wrapping" />
-        <error line="222" column="49" source="standard:argument-list-wrapping" />
-        <error line="226" column="54" source="standard:argument-list-wrapping" />
-        <error line="226" column="61" source="standard:argument-list-wrapping" />
-        <error line="226" column="64" source="standard:binary-expression-wrapping" />
-        <error line="226" column="95" source="standard:function-literal" />
-        <error line="226" column="96" source="standard:wrapping" />
-        <error line="226" column="101" source="standard:max-line-length" />
-        <error line="226" column="109" source="standard:function-literal" />
-        <error line="240" column="101" source="standard:max-line-length" />
-        <error line="567" column="42" source="standard:binary-expression-wrapping" />
-        <error line="567" column="101" source="standard:max-line-length" />
-        <error line="575" column="33" source="standard:binary-expression-wrapping" />
-        <error line="575" column="101" source="standard:max-line-length" />
-        <error line="577" column="33" source="standard:binary-expression-wrapping" />
-        <error line="577" column="101" source="standard:max-line-length" />
-        <error line="611" column="26" source="standard:class-signature" />
-        <error line="611" column="60" source="standard:class-signature" />
-        <error line="611" column="100" source="standard:max-line-length" />
-        <error line="611" column="106" source="standard:class-signature" />
+        <error line="216" column="46" source="standard:trailing-comma-on-declaration-site" />
+        <error line="223" column="24" source="standard:argument-list-wrapping" />
+        <error line="223" column="48" source="standard:argument-list-wrapping" />
+        <error line="224" column="49" source="standard:argument-list-wrapping" />
+        <error line="228" column="54" source="standard:argument-list-wrapping" />
+        <error line="228" column="61" source="standard:argument-list-wrapping" />
+        <error line="228" column="64" source="standard:binary-expression-wrapping" />
+        <error line="228" column="95" source="standard:function-literal" />
+        <error line="228" column="96" source="standard:wrapping" />
+        <error line="228" column="101" source="standard:max-line-length" />
+        <error line="228" column="109" source="standard:function-literal" />
+        <error line="242" column="101" source="standard:max-line-length" />
+        <error line="573" column="42" source="standard:binary-expression-wrapping" />
+        <error line="573" column="101" source="standard:max-line-length" />
+        <error line="581" column="33" source="standard:binary-expression-wrapping" />
+        <error line="581" column="101" source="standard:max-line-length" />
+        <error line="583" column="33" source="standard:binary-expression-wrapping" />
+        <error line="583" column="101" source="standard:max-line-length" />
+        <error line="617" column="26" source="standard:class-signature" />
+        <error line="617" column="60" source="standard:class-signature" />
+        <error line="617" column="100" source="standard:max-line-length" />
+        <error line="617" column="106" source="standard:class-signature" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/settings/SettingsSearch.kt">
         <error line="16" column="38" source="standard:trailing-comma-on-declaration-site" />

@@ -90,8 +90,6 @@
     <string name="export_sdcard_success">Výdaje vyexportovány do souboru %1$s</string>
     <string name="feedback">Zpětná vazba</string>
     <string name="ftp_uri_malformed">Chybné URI %1$s</string>
-    <string name="grisbi_import_categories_loading">Načítání kategorií z %1$s</string>
-    <string name="grisbi_import_parties_loading">Načítání stran z %1$s</string>
     <string name="grouping_day">Den</string>
     <string name="grouping_last_week">Minulý týden</string>
     <string name="grouping_month">Měsíc</string>
@@ -195,9 +193,7 @@
     <string name="numbered">číslování</string>
     <string name="opening_balance">Počáteční zůstatek</string>
     <string name="parse_error_file_not_found">Nelze najít soubor %1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">Nepodporovaná verze Grisbi souboru: %1$s</string>
     <string name="parse_error_other_exception">Došlo k chybě: %1$s</string>
-    <string name="parse_error_parse_exception">Nelze analyzovat soubor</string>
     <string name="password_disabled_reenable">Ochrana heslem je vypnuta. Můžete ji povolit v nastavení.</string>
     <string name="password_lost">Zapomenuté heslo</string>
     <string name="password_not_valid">Heslo není platné. Zkuste to znovu!</string>
@@ -238,7 +234,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Klíč pro upgrade</string>
     <string name="pref_enter_licence_title">Vložte klíč</string>
     <string name="pref_export_format_title">Formát dat</string>
-    <string name="pref_import_from_grisbi_summary">Import kategorií a stran Grisbi XML</string>
     <string name="pref_import_from_grisbi_title">Importovat z Grisbi</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">Importujte transakce, kategorie a součásti ze souboru %s</string>
@@ -284,9 +279,7 @@
     <string name="pref_visit_website_title">Navštivte webové stránky</string>
     <string name="progress_dialog_deleting">Odstraňování objektů</string>
     <string name="progress_dialog_printing">Vytváření souboru %s</string>
-    <string name="qif_parse_result">Zanalyzováno: %1$s účty, %2$s kategorie a %3$s strany</string>
     <string name="qif_parse_failure_found_multiple_accounts">V souboru %s bylo nalezeno několik účtů.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Nelze sloučit do stávajícího účtu.</string>
     <string name="reference_number">Referenční číslo</string>
     <string name="restore_db_failure">Obnovení databáze se nezdařilo.</string>
     <string name="restore_db_success">Databáze byla obnovena ze zálohy.</string>
@@ -380,18 +373,6 @@
         <item quantity="few">%1$d kategorie byly úspěšně importovány.</item>
         <item quantity="many">%1$d kategorií bylo úspěšně importováno.</item>
         <item quantity="other">%1$d kategorií bylo úspěšně importováno.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d strana byla úspěšně importována.</item>
-        <item quantity="few">%1$d strany byly úspěšně importovány.</item>
-        <item quantity="many">%1$d stran bylo úspěšně importováno.</item>
-        <item quantity="other">%1$d stran bylo úspěšně importováno.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d účet byl úspěšně importován.</item>
-        <item quantity="few">%1$d účty byly úspěšně importovány.</item>
-        <item quantity="many">%1$d účtů bylo úspěšně importováno.</item>
-        <item quantity="other">%1$d účtů bylo úspěšně importováno.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d transakce byla úspěšně importována na účet %2$s</item>

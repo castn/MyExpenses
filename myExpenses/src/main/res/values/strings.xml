@@ -99,8 +99,6 @@
     <string name="export_sdcard_success">Data successfully exported to file \"%1$s\"</string>
     <string name="feedback">Feedback</string>
     <string name="ftp_uri_malformed">Malformed URI %1$s</string>
-    <string name="grisbi_import_categories_loading">Loading categories from %1$s</string>
-    <string name="grisbi_import_parties_loading">Loading parties from %1$s</string>
     <string name="grouping_day">Day</string>
     <string name="grouping_last_week">Last week</string>
     <string name="grouping_month">Month</string>
@@ -201,9 +199,7 @@
     <string name="numbered">numbered</string>
     <string name="opening_balance">Opening balance</string>
     <string name="parse_error_file_not_found">Could not find file %1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">Unsupported Grisbi File Version: %1$s</string>
     <string name="parse_error_other_exception">An error occurred: %1$s</string>
-    <string name="parse_error_parse_exception">Could not parse file</string>
     <string name="parse_error_at_line">Error at line %1$d: %2$s</string>
     <string name="password_disabled_reenable">The password protection has been disabled. You can reenable it in the settings.</string>
     <string name="password_lost">Lost password</string>
@@ -245,7 +241,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Upgrade key</string>
     <string name="pref_enter_licence_title">Enter key</string>
     <string name="pref_export_format_title">Data format</string>
-    <string name="pref_import_from_grisbi_summary">Import categories and parties from Grisbi XML file</string>
     <string name="pref_import_from_grisbi_title">Import from Grisbi</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">Import transactions, categories and parties from %s file</string>
@@ -294,10 +289,8 @@
     <string name="progress_dialog_deleting">Deleting objects</string>
     <!-- %s is replaced with format (PDF, HTML) -->
     <string name="progress_dialog_printing">Generating %s</string>
-    <string name="qif_parse_result">Parsed: %1$s accounts; %2$s categories and %3$s parties</string>
     <!-- %s is replaced with format (CSV, QIF) -->
     <string name="qif_parse_failure_found_multiple_accounts">Multiple accounts found in %s file.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Cannot merge them into existing account.</string>
     <string name="reference_number">Reference Number</string>
     <string name="restore_db_failure">Database restore failed.</string>
     <string name="restore_db_success">Database has been restored from backup.</string>
@@ -381,14 +374,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d category imported.</item>
         <item quantity="other">%1$d categories imported.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d party imported.</item>
-        <item quantity="other">%1$d parties imported.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d account imported.</item>
-        <item quantity="other">%1$d accounts imported.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d transaction imported into account %2$s.</item>

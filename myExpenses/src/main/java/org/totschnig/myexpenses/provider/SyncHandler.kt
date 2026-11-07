@@ -356,7 +356,7 @@ class SyncHandler(
 
     private fun TransactionChange.extractCatId(): Long? {
         return label?.let {
-            CategoryHelper.insert(repository, it, categoryToId, false)
+            CategoryHelper.insert(repository, it, categoryToId)
             categoryToId[it] ?: throw IOException("Saving category $it failed")
         } ?: categoryInfo?.let { repository.ensureCategoryPath(it) }
     }

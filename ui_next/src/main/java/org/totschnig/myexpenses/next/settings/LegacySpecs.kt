@@ -139,7 +139,6 @@ class LegacySpecs(private val context: Context, private val prefHandler: PrefHan
             // Upstream sets its title only at runtime, after reading the database
             PrefKey.ENCRYPT_DATABASE_INFO to { it.getString(R.string.database_is_encrypted) },
             PrefKey.MANAGE_CURRENCIES to { CommodityType.title(it.resources) },
-            PrefKey.IMPORT_QIF to { it.getString(R.string.pref_import_title, "QIF") },
             PrefKey.IMPORT_CSV to { it.getString(R.string.pref_import_title, "CSV") },
             PrefKey.CSV_EXPORT_ORIGINAL_EQUIVALENT_AMOUNTS to {
                 it.getString(R.string.menu_original_amount) + " / " + it.getString(R.string.menu_equivalent_amount)

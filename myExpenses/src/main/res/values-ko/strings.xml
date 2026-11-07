@@ -79,8 +79,6 @@
     <string name="export_sdcard_success">\"%1$s\" 파일으로 데이터 내보내기 성공</string>
     <string name="feedback">피드백</string>
     <string name="ftp_uri_malformed">올바르지 않은 URI %1$s</string>
-    <string name="grisbi_import_categories_loading">%1$s에서 카테고리 불러오는 중</string>
-    <string name="grisbi_import_parties_loading">%1$s에서 단체 가져오는 중</string>
     <string name="grouping_day">일</string>
     <string name="grouping_last_week">저번주</string>
     <string name="grouping_month">월</string>
@@ -175,9 +173,7 @@
     <string name="numbered">번호 계좌</string>
     <string name="opening_balance">개시 잔고</string>
     <string name="parse_error_file_not_found">%1$s 파일을 찾을 수 없습니다</string>
-    <string name="parse_error_grisbi_version_not_supported">지원하지 않는 Grisbi 파일 버전: %1$s</string>
     <string name="parse_error_other_exception">오류 발생: %1$s</string>
-    <string name="parse_error_parse_exception">파일을 분석할 수 없습니다</string>
     <string name="password_disabled_reenable">암호 보안이 해제되었습니다. 설정 화면에서 다시 활성화할 수 있습니다.</string>
     <string name="password_lost">잊어버린 암호</string>
     <string name="password_not_valid">올바르지 않은 암호입니다. 다시 시도하세요!</string>
@@ -217,7 +213,6 @@
     <string name="pref_contrib_purchase_title_upgrade">키 업그레이드</string>
     <string name="pref_enter_licence_title">기부 확인 키 입력</string>
     <string name="pref_export_format_title">데이터 형식</string>
-    <string name="pref_import_from_grisbi_summary">Grisbi XML 파일에서 카테고리와 구성원 가져오기</string>
     <string name="pref_import_from_grisbi_title">Grisbi에서 가져오기</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">%s 파일에서 거래 내역, 카테고리, 구성원 가져오기</string>
@@ -261,9 +256,7 @@
     <string name="pref_visit_website_title">웹사이트 방문</string>
     <string name="progress_dialog_deleting">항목 삭제하는 중</string>
     <string name="progress_dialog_printing">%s 파일 만드는 중</string>
-    <string name="qif_parse_result">분석됨: %1$s 계좌; %2$s 카테고리와 %3$s 구성원</string>
     <string name="qif_parse_failure_found_multiple_accounts">%s 파일에서 여러개의 계좌가 발견되었습니다.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">기존 계좌에 합칠 수 없습니다.</string>
     <string name="reference_number">참조 번호</string>
     <string name="restore_db_failure">데이터베이스 복원을 실패했습니다.</string>
     <string name="restore_db_success">데이터베이스를 백업으로부터 복원했습니다.</string>
@@ -333,12 +326,6 @@
     <string name="validation_error_number_out_of_range" tools:ignore="PluralsCandidate">%1$d과 %2$d 사이의 숫자를 설정하세요</string>
     <plurals name="import_categories_result">
         <item quantity="other">%1$d 카테고리를 성공적으로 가져왔습니다.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="other">%1$d 구성원을 성공적으로 가져왔습니다.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="other">%1$d 계좌를 성공적으로 가져왔습니다.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="other">%1$d 거래 내역을 %2$s 계좌로 성공적으로 가져왔습니다</item>

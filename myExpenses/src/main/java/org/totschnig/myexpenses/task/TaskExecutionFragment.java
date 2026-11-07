@@ -18,7 +18,6 @@ package org.totschnig.myexpenses.task;
 
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 
 import org.totschnig.myexpenses.MyApplication;
@@ -42,11 +41,7 @@ public class TaskExecutionFragment<T> extends Fragment {
   public static final String KEY_OBJECT_IDS = "objectIds";
   private static final String KEY_RUNNING = "running";
   private static final String KEY_TASKID = "taskId";
-  public static final String KEY_WITH_PARTIES = "withParties";
-  public static final String KEY_WITH_CATEGORIES = "withCategories";
-  public static final String KEY_FILE_PATH = "filePath";
 
-  public static final int TASK_GRISBI_IMPORT = 19;
   public static final int TASK_REPAIR_PLAN = 41;
 
   /**
@@ -90,17 +85,6 @@ public class TaskExecutionFragment<T> extends Fragment {
     return f;
   }
 
-  public static TaskExecutionFragment newInstanceGrisbiImport(Uri mUri, boolean withCategories, boolean withParties) {
-    TaskExecutionFragment f = new TaskExecutionFragment();
-    Bundle bundle = new Bundle();
-    bundle.putInt(KEY_TASKID, TASK_GRISBI_IMPORT);
-    bundle.putParcelable(KEY_FILE_PATH, mUri);
-    bundle.putBoolean(KEY_WITH_PARTIES, withParties);
-    bundle.putBoolean(KEY_WITH_CATEGORIES, withCategories);
-    f.setArguments(bundle);
-    return f;
-  }
-
   /**
    * Hold a reference to the parent Activity so we can report the task's current
    * progress and results. The Android framework will pass us a reference to the
@@ -139,17 +123,11 @@ public class TaskExecutionFragment<T> extends Fragment {
     Bundle args = getArguments();
     int taskId = args.getInt(KEY_TASKID);
     crashHandler.addBreadcrumb(String.valueOf(taskId));
-    switch (taskId) {
-      case TASK_GRISBI_IMPORT:
-        new GrisbiImportTask(this, args).execute();
-        break;
-      default:
-        try {
-          new GenericTask<T>(this, taskId, args.getSerializable(KEY_EXTRA))
-              .execute((T[]) args.getSerializable(KEY_OBJECT_IDS));
-        } catch (ClassCastException e) {
-          CrashHandler.report(e);
-        }
+    try {
+      new GenericTask<T>(this, taskId, args.getSerializable(KEY_EXTRA))
+          .execute((T[]) args.getSerializable(KEY_OBJECT_IDS));
+    } catch (ClassCastException e) {
+      CrashHandler.report(e);
     }
   }
 

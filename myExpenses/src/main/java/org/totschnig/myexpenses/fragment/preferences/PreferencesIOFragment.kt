@@ -21,11 +21,6 @@ class PreferencesIOFragment: BasePreferenceIOBRFragment() {
         super.onCreatePreferences(savedInstanceState, rootKey)
         addPreferencesFromResource(R.xml.preferences_include_share)
 
-        with(requirePreference<Preference>(PrefKey.IMPORT_QIF)) {
-            summary = getString(R.string.pref_import_summary, "QIF")
-            title = getString(R.string.pref_import_title, "QIF")
-        }
-
         with(requirePreference<Preference>(PrefKey.IMPORT_CSV)) {
             summary = getString(R.string.pref_import_summary, "CSV")
             title = getString(R.string.pref_import_title, "CSV")

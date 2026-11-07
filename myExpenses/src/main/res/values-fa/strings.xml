@@ -89,8 +89,6 @@
     <string name="export_sdcard_success">داده‌ها با موفقیت در فایل «%1$s» استخراج شدند</string>
     <string name="feedback">بازخورد</string>
     <string name="ftp_uri_malformed">نقص URI %1$s</string>
-    <string name="grisbi_import_categories_loading">بارگیری دسته‌بندی‌ها از %1$s</string>
-    <string name="grisbi_import_parties_loading">بارگذاری بخش ها از %1$s</string>
     <string name="grouping_day">روز</string>
     <string name="grouping_last_week">هفته پیش</string>
     <string name="grouping_month">ماه</string>
@@ -166,9 +164,7 @@
     <string name="no_accounts">بدون حساب</string>
     <string name="opening_balance">تراز باز</string>
     <string name="parse_error_file_not_found">فایل %1$s پیدا نشد</string>
-    <string name="parse_error_grisbi_version_not_supported">نسخه فایل Grisbi پشتیبانی نشده است: %1$s</string>
     <string name="parse_error_other_exception">یک خطا رخ داد : %1$s</string>
-    <string name="parse_error_parse_exception">فایل تجزیه نشد</string>
     <string name="password_disabled_reenable">حفاظت از طریق گذرواژه غیرفعال شد. شما می‌توانید آن را در تنظیمات، مجدد فعال کنید.</string>
     <string name="password_lost">گذرواژه‌ام را گم کرده‌ام</string>
     <string name="password_not_valid">گذرواژه نامعتبر است. لطفاً مجدداً تلاش کنید!</string>
@@ -235,7 +231,6 @@
     <string name="pref_visit_website_title">دیدن وبسایت</string>
     <string name="progress_dialog_deleting">حذف کردن اشیاء</string>
     <string name="progress_dialog_printing">ساخت %s</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">نمی‌توان آن‌ها را در حساب موجود ادغام نمود.</string>
     <string name="restore_db_failure">بازیابی پایگاه داده شکست خورد.</string>
     <string name="restore_db_success">پایگاه داده از فایل بک‌آپ بازیابی شد.</string>
     <string name="restore_preferences_failure">بازیابی ترجیحات شکست خورد</string>
@@ -279,14 +274,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d دسته‌بندی با موفقیت درون‌ریزی شد.</item>
         <item quantity="other">%1$d دسته‌بندی با موفقیت درون‌ریزی شد.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d شخص با موفقیت درون ریزی شد</item>
-        <item quantity="other">%1$d شخص با موفقیت درون ریزی شد</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d حساب با موفقیت درون‌ریزی شد</item>
-        <item quantity="other">%1$d حساب با موفقیت درون‌ریزی شد</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d تراکنش با موفقیت به حساب %2$s درون‌ریزی شد</item>
@@ -441,7 +428,6 @@
     <string name="menu_split_transaction">تبدیل به تسهیم</string>
     <string name="no_split_parts">دسته تسهیم وجود ندارد.</string>
     <string name="numbered">شماره گذاری شده</string>
-    <string name="pref_import_from_grisbi_summary">وارد کردن دسته‌ها و اشخاص از فایل XML Grisbi</string>
     <string name="pref_import_from_grisbi_title">وارد کردن از Grisbi</string>
     <string name="pref_import_summary">وارد کردن تراکنش ها، دسته ها و اشخاص از فایل %s</string>
     <string name="pref_news_title">اخبار</string>
@@ -466,7 +452,6 @@
         <item quantity="one">تراکنش جدید از الگو با موفقیت ذخیره شد.</item>
         <item quantity="other">%1$d تراکنش جدید از الگوها با موفقیت ذخیره شد.</item>
     </plurals>
-    <string name="qif_parse_result">اجزا: %1$s حساب; %2$s دسته و %3$s شخص</string>
     <string name="select_payee">پرداخت کننده/گیرنده را انتخاب کنید</string>
     <string name="share_scheme_not_supported">طرح %1$s پشتیبانی نمی‌شود</string>
     <string name="pref_sort_order_usages">تعداد موارد استفاده</string>

@@ -60,7 +60,6 @@ import org.totschnig.myexpenses.service.DailyExchangeRateDownloadService
 import org.totschnig.myexpenses.service.PlanExecutor
 import org.totschnig.myexpenses.service.PlanNotificationClickHandler
 import org.totschnig.myexpenses.sync.SyncAdapter
-import org.totschnig.myexpenses.task.GrisbiImportTask
 import org.totschnig.myexpenses.util.ExchangeRateHandler
 import org.totschnig.myexpenses.util.ICurrencyFormatter
 import org.totschnig.myexpenses.util.ads.BaseAdHandlerImpl
@@ -299,8 +298,6 @@ interface AppComponent {
     fun inject(distributionViewModel: DistributionViewModel)
 
     fun inject(distributionViewModel: BudgetViewModel2)
-
-    fun inject(grisbiImportTask: GrisbiImportTask)
 
     fun inject(licenceValidationViewModel: LicenceValidationViewModel)
 

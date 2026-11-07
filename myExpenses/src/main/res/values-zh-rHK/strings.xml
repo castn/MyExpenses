@@ -81,8 +81,6 @@
     <string name="export_sdcard_success">匯出開支到檔案 %1$s</string>
     <string name="feedback">意見反饋</string>
     <string name="ftp_uri_malformed">異常URI %1$s</string>
-    <string name="grisbi_import_categories_loading">從 %1$s 載入類別</string>
-    <string name="grisbi_import_parties_loading">由 %1$s 載入部分</string>
     <string name="grouping_day">日</string>
     <string name="grouping_last_week">上星期</string>
     <string name="grouping_month">月</string>
@@ -175,9 +173,7 @@
     <string name="numbered">編號</string>
     <string name="opening_balance">金額</string>
     <string name="parse_error_file_not_found">未能找到檔案 %1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">不支援 Grisbi 文檔版本： %1$s</string>
     <string name="parse_error_other_exception">遇到錯誤: %1$s</string>
-    <string name="parse_error_parse_exception">無法分析的文件</string>
     <string name="parse_error_at_line">第 %1$d 行發生錯誤：%2$s</string>
     <string name="password_disabled_reenable">密碼保護已被停用。您可以在設定中重新啟用它。</string>
     <string name="password_lost">忘記密碼</string>
@@ -214,7 +210,6 @@
     <string name="pref_contrib_purchase_title_upgrade">升級鑰匙</string>
     <string name="pref_enter_licence_title">輸入鍵</string>
     <string name="pref_export_format_title">日期格式</string>
-    <string name="pref_import_from_grisbi_summary">匯入類別 和貿易夥伴.</string>
     <string name="pref_import_from_grisbi_title">由Grisbi匯入</string>
     <string name="pref_import_summary">從 %s 檔案匯入交易、類別和各方</string>
     <string name="pref_import_title">%s 導入</string>
@@ -256,9 +251,7 @@
     <string name="pref_visit_website_title">瀏覽官方網站</string>
     <string name="progress_dialog_deleting">刪除對象</string>
     <string name="progress_dialog_printing">生成%s</string>
-    <string name="qif_parse_result">解析：%1$s 帳戶； %2$s 類別和 %3$s 各方</string>
     <string name="qif_parse_failure_found_multiple_accounts">在 %s 檔案中找到多個帳戶。</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">無法將它們合併到現有帳戶中。</string>
     <string name="reference_number">參考編號</string>
     <string name="restore_db_failure">數據庫恢復失敗。</string>
     <string name="restore_db_success">數據庫已從備份恢復過來。</string>
@@ -334,12 +327,6 @@
     <string name="warning_change_fraction_digits_checkbox_label">更新資料庫中的金額</string>
     <plurals name="import_categories_result">
         <item quantity="other">%1$d 類別 被匯入成功。</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="other">%1$d 貿易夥伴被匯入成功。</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="other">%1$d 帳戶已成功匯入。</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="other">%1$d交易已成功導入帳戶%2$s</item>

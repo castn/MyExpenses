@@ -56,7 +56,6 @@
     <string name="ftp_uri_malformed">Няправільнае ўражанне URI %1$s</string>
     <string name="grouping_last_week">На мінулым тыдні</string>
     <string name="grouping_month">Месяц</string>
-    <string name="parse_error_grisbi_version_not_supported">Непадтрымліваемая версія файла Grisbi: %1$s</string>
     <string name="pref_category_title_more_information">Больш інфармацыі</string>
     <string name="pref_manage_parties_title">Удзельнікі</string>
     <string name="pref_perform_share_title">Падзяліцца экспартаваным файлам і бэкапам</string>
@@ -140,14 +139,12 @@
     <string name="pref_ui_theme_dark">Цёмная</string>
     <string name="import_select_transactions">Транзакцыі</string>
     <string name="continue_confirmation">Хочаце працягнуць?</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Немагчыма аб\'яднаць іх з існуючым рахункам.</string>
     <string name="split_transaction">Раздзеленая транзакцыя</string>
     <string name="select">Выбраць</string>
     <string name="search_payee">Пошук контрагента</string>
     <string name="between_and">паміж %1$s і %2$s</string>
     <string name="progress_dialog_printing">Стварэнне %s</string>
     <string name="total_reconciled">Узгоднены вынік</string>
-    <string name="qif_parse_result">Прааналізавана: %1$s рахункаў; %2$s катэгорый і %3$s удзельнікаў</string>
     <string name="total_cleared">Сума пацверджаных аперацый</string>
     <string name="pref_news_title">Навіны</string>
     <string name="pref_import_title">%s імпарт</string>
@@ -266,18 +263,6 @@
         <item quantity="many">Паспяхова імпартавана %1$d катэгорый.</item>
         <item quantity="other">Паспяхова імпартавана %1$d катэгорый.</item>
     </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d група паспяхова імпартавана.</item>
-        <item quantity="few">%1$d групы паспяхова імпартавана.</item>
-        <item quantity="many">%1$d груп паспяхова імпартавана.</item>
-        <item quantity="other">%1$d груп паспяхова імпартавана.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d рахунак паспяхова імпартаваны.</item>
-        <item quantity="few">%1$d рахункі паспяхова імпартаваныя.</item>
-        <item quantity="many">%1$d рахункаў паспяхова імпартавана.</item>
-        <item quantity="other">%1$d рахункаў паспяхова імпартавана.</item>
-    </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d транзакцыя паспяхова імпартавана ў рахунак %2$s</item>
         <item quantity="few">%1$d транзакцыі паспяхова імпартаваны ў рахунак %2$s</item>
@@ -336,7 +321,6 @@
     <string name="menu_edit_party">Рэдагаваць групу</string>
     <string name="menu_edit_cat">Рэдагаваць катэгорыю</string>
     <string name="numbered">пранумараваны</string>
-    <string name="parse_error_parse_exception">Не атрымалася разабраць файл</string>
     <string name="image_capture_not_installed">Праграма для фатаграфавання не знойдзена.</string>
     <string name="planner_create_calendar_success">Лакальны каляндар планавання паспяхова створаны</string>
     <string name="plan_execution_canceled">Выкананне плана адменена</string>
@@ -395,8 +379,6 @@
         <item quantity="many">%1$d выбраных транзакцый будуць выдалены.</item>
         <item quantity="other">%1$d выбраных транзакцый будуць выдалены.</item>
     </plurals>
-    <string name="grisbi_import_categories_loading">Загрузка катэгорый з %1$s</string>
-    <string name="grisbi_import_parties_loading">Загрузка груп з %1$s</string>
     <string name="grouping_this_week">На гэтым тыдні</string>
     <string name="licence_validation_failure">Немагчыма праверыць ліцэнзійны ключ.</string>
     <string name="licence_validation_success">Ліцэнзійны ключ паспяхова пацверджаны:</string>
@@ -455,7 +437,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Ключ абнаўлення</string>
     <string name="pref_enter_licence_title">Увесці ключ</string>
     <string name="pref_export_format_title">Фармат дадзеных</string>
-    <string name="pref_import_from_grisbi_summary">Імпартаваць катэгорыі і групы з файла Grisbi XML</string>
     <string name="pref_import_summary">Імпартаваць транзакцыі, катэгорыі і ўдзельнікаў з файла %s</string>
     <string name="pref_sort_order_next_instance">Наступны асобнік</string>
     <string name="crash_dialog_text">Адбылася нечаканая памылка, якая прымусіла прыкладанне спыніцца. Калі ласка, дапамажыце нам выправіць гэта, даслаўшы нам дадзеныя пра памылку, усё, што вам трэба зрабіць, гэта націснуць OK.</string>

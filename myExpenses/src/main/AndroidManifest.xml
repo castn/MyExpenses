@@ -205,14 +205,6 @@
                 <data android:mimeType="application/octet-stream" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.GrisbiImport"
-            android:exported="false"
-            android:theme="@style/Translucent" />
-        <activity
-            android:name=".activity.QifImport"
-            android:exported="false"
-            android:theme="@style/Translucent" />
         <activity android:name=".activity.CsvImportActivity" />
         <activity
             android:name=".activity.PreferenceActivity"

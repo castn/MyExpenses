@@ -9,7 +9,6 @@
     <string name="licence_status_free">Gratis</string>
     <string name="income">Inkomst</string>
     <string name="dialog_export_delete">Ta bort exporterade transaktioner</string>
-    <string name="grisbi_import_categories_loading">Laddar kategorier från %1$s</string>
     <string name="account_type_ccard">Kreditkort</string>
     <string name="grouping_day">Dag</string>
     <string name="grouping_week">Vecka</string>
@@ -78,7 +77,6 @@
     <string name="decimal_separator">Decimaltecken</string>
     <string name="dialog_confirm_discard_changes">Kasta bort ändringarna?</string>
     <string name="already_defined">%1$s är redan definierat</string>
-    <string name="grisbi_import_parties_loading">Laddar parter från %1$s</string>
     <string name="menu_create_party">Ny part</string>
     <string name="licence_validation_premium">Premium-funktioner har låsts upp.</string>
     <string name="dialog_contrib_usage_limit_accounts" tools:ignore="PluralsCandidate">Din aktuella licens status (%2$s) tillåter dig att skapa %1$d konton.</string>
@@ -143,7 +141,6 @@
     <string name="dialog_title_contrib_feature">Premium-funktion</string>
     <string name="save_transaction_and_new_success">Sparningen lyckades</string>
     <string name="password_security_answer_not_valid">Fel svar. Försök igen!</string>
-    <string name="qif_parse_result">Tolkades: %1$s konton; %2$s kategorier och %3$s parter</string>
     <string name="no_accounts">Inga konton.</string>
     <string name="transfer_from_account">Från</string>
     <string name="type">Typ</string>
@@ -217,7 +214,6 @@
     <string name="share_scheme_not_supported">Schemat %1$s stöds inte</string>
     <string name="pref_perform_share_title">Dela exporteringar och säkerhetskopior</string>
     <string name="no_expenses">Inga utgifter än!</string>
-    <string name="parse_error_parse_exception">Kunde inte tolka fil</string>
     <string name="pm_type_credit">Kredit</string>
     <string name="pref_ui_language_title">Språk</string>
     <string name="no_methods">Inga betalningsmetoder.</string>
@@ -241,7 +237,6 @@
     <string name="pref_manage_methods_summary">Skapa och redigera betalningsmetoder och associera dem med kontotyper.</string>
     <string name="pref_export_format_title">Dataformat</string>
     <string name="pm_type_debit">Skuld</string>
-    <string name="pref_import_from_grisbi_summary">Importera kategorier och parter från Grisbi XML-fil</string>
     <string name="pref_protection_enable_data_entry_from_widget_summary_on">Tillåts utan lösenord.</string>
     <string name="dialog_command_disabled_insert_transfer">Överföringstransaktioner kräver ett ytterligare konto.</string>
     <string name="dialog_remind_rate_1">Vänligen ta en stund för att betygsätta och granska {app_name}.</string>
@@ -470,7 +465,6 @@
     </plurals>
     <string name="numbered">numrerad</string>
     <string name="opening_balance">Ingående saldo</string>
-    <string name="parse_error_grisbi_version_not_supported">Grisbi-filversion som inte stöds: %1$s</string>
     <string name="plan_execution_canceled">Utförandet av planen avbrutet</string>
     <string name="planner_create_calendar_failure">Kan inte skapa lokal planerarkalender</string>
     <string name="planner_create_calendar_success">Lokal planerarkalender framgångsrikt skapad</string>
@@ -485,7 +479,6 @@
     <string name="pref_qif_export_file_encoding_title">Teckenkodning</string>
     <string name="pref_restore_summary">Välj en säkerhetskopia att återställa databas och inställningar ifrån.</string>
     <string name="pref_share_target_summary">Lämna det tomt om du vill välja mellan lämpliga appar (e-post, Dropbox, Google Docs, …), eller ange URL i någon av de stödda systemen</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Kan inte slå ihop dem med ett befintligt konto.</string>
     <string name="restore_backup_file_not_found">Ingen fil %1$s hittad i arkivet \"%2$s\"</string>
     <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d planer har återställts från säkerhetskopia</string>
     <plurals name="save_transaction_from_template_success">
@@ -527,14 +520,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d kategori har importerats.</item>
         <item quantity="other">%1$d kategorier har importerats.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d motpart har importerats.</item>
-        <item quantity="other">%1$d motparter har importerats.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d konto har importerats.</item>
-        <item quantity="other">%1$d konton har importerats.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d transaktion har importerats till kontot %2$s.</item>

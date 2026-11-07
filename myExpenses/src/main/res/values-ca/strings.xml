@@ -68,8 +68,6 @@
     <string name="export_sdcard_success">Les despses s\'han exportat al fitxer \"%1$s\"</string>
     <string name="feedback">Comentaris</string>
     <string name="ftp_uri_malformed">URI %1$s no és vàlid</string>
-    <string name="grisbi_import_categories_loading">Les categories es carreguen des de %1$s</string>
-    <string name="grisbi_import_parties_loading">S\'està carregant els tercers des de %1$s</string>
     <string name="grouping_day">Dia</string>
     <string name="grouping_last_week">Darrera setmana</string>
     <string name="grouping_month">Mes</string>
@@ -153,9 +151,7 @@
     <string name="numbered">numerat</string>
     <string name="opening_balance">Saldo inicial</string>
     <string name="parse_error_file_not_found">No ha estat possible trobar el fitxer %1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">La versió  %1$s del fitxer Grisbi no està permesa</string>
     <string name="parse_error_other_exception">S\'ha produït un error: %1$s</string>
-    <string name="parse_error_parse_exception">No ha estat possible analitzar el fitxer</string>
     <string name="password_disabled_reenable">La protecció per contrasenya ha estat desactivada. Podeu tornar-la a activar a la configuració.</string>
     <string name="password_lost">He oblidat la contrasenya</string>
     <string name="password_not_valid">La contrasenya no és vàlida. Torneu-hi!</string>
@@ -192,7 +188,6 @@
     <string name="pref_category_title_ui">Interfície d\'usuari</string>
     <string name="pref_enter_licence_title">Entreu la clau</string>
     <string name="pref_export_format_title">Format de les dades</string>
-    <string name="pref_import_from_grisbi_summary">Importeu les categories i els tercers de Grisbi XML</string>
     <string name="pref_import_from_grisbi_title">Importeu de Grisbi</string>
     <string name="pref_manage_accounts_title">Comptes</string>
     <string name="pref_manage_categories_summary">Afegiu, modifiqueu i suprimiu categories.</string>
@@ -326,7 +321,6 @@
     <string name="dialog_contrib_usage_limit_with_dialog">Amb la vostra llicència actual (%1$s), aquest diàleg es mostrarà a cada ús.</string>
     <string name="dialog_remind_rate_1_suggest_improvement">Siusplau, preneu-vos un segon per enviar-nos suggeriments de millora.</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">Entrada de dades des de widget o drecera</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">No es pot fusionar amb el compte existent.</string>
     <string name="pref_protection_enable_data_entry_from_widget_summary_on">Autoritzar sense contrasenya.</string>
     <string name="menu_balance">Conciliar compte</string>
     <string name="menu_exclude_from_totals">Excloure dels totals</string>
@@ -340,7 +334,6 @@
     <string name="pref_import_summary">Importar transaccions, categories o parts des de l\'arxiu %s</string>
     <string name="pref_import_title">Importar %s</string>
     <string name="pref_manage_sync_backends_summary">Afegiu un servei per a la sincronització del compte (%s).</string>
-    <string name="qif_parse_result">Analitzat: %1$s comptes; %2$s categories i %3$s parts</string>
     <string name="restore_backup_file_not_found">L\'arxiu %1$s no s\'ha trobat a l\'arxiu \"%2$s\"</string>
     <string name="contrib_feature_category_tree_label">Jerarquia de categories molt profunda</string>
     <string name="default_account_name">Llibre de Pressupost</string>
@@ -458,14 +451,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d categories importades amb èxit.</item>
         <item quantity="other">%1$d categories importades amb èxit.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d tercers s\'han importat correctament.</item>
-        <item quantity="other">%1$d tercers s\'han importat correctament.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d comptes importats amb èxit.</item>
-        <item quantity="other">%1$d comptes importats amb èxit.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d operacions importades amb èxit al compte %2$s</item>

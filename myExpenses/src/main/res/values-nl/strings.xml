@@ -110,8 +110,6 @@
     <string name="export_sdcard_success">Gegevens succesvol geëxporteerd naar bestand \"%1$s\"</string>
     <string name="feedback">Feedback</string>
     <string name="ftp_uri_malformed">Onjuist opgemaakte URI %1$s</string>
-    <string name="grisbi_import_categories_loading">Categorieën laden van %1$s</string>
-    <string name="grisbi_import_parties_loading">Partijen laden van %1$s</string>
     <string name="grouping_month">Maand</string>
     <string name="export_sdcard_failure">Exporteren naar bestand \"%1$s\" mislukt: %2$s</string>
     <string name="grouping_day">Dag</string>
@@ -143,7 +141,6 @@
     <string name="planner_create_calendar_success">Lokale planner-kalender met succes aangemaakt</string>
     <string name="pref_backup_summary">Maak een back-up van de database en voorkeuren.</string>
     <string name="pref_category_title_import">Importeren</string>
-    <string name="qif_parse_result">Ontleed: %1$s rekeningen; %2$s categorieën en %3$s partijen</string>
     <string name="pref_share_target_title">Upload-URL</string>
     <string name="pref_manage_sync_backends_summary">Voeg backends toe voor het synchroniseren van rekeningen (%s).</string>
     <string name="pref_perform_share_title">Deel exports en back-ups</string>
@@ -214,7 +211,6 @@
     </plurals>
     <string name="opening_balance">Beginsaldo</string>
     <string name="parse_error_other_exception">Er is een fout opgetreden: %1$s</string>
-    <string name="parse_error_parse_exception">Kon bestand niet ontleden</string>
     <string name="password_prompt">Vul je wachtwoord in</string>
     <string name="payee">Begunstigde</string>
     <string name="payer">Betaler</string>
@@ -244,7 +240,6 @@
     <string name="pref_visit_website_title">Bezoek Website</string>
     <string name="progress_dialog_deleting">Objecten verwijderen</string>
     <string name="progress_dialog_printing">%s genereren</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Kan ze niet samenvoegen met bestaande rekening.</string>
     <string name="restore_db_failure">Databaseherstel is mislukt.</string>
     <string name="restore_db_success">Database is hersteld vanaf back-up.</string>
     <string name="restore_preferences_success">Voorkeuren zijn hersteld vanaf back-up.</string>
@@ -307,7 +302,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Upgradesleutel</string>
     <string name="pref_enter_licence_title">Voer sleutel in</string>
     <string name="pref_export_format_title">Data formaat</string>
-    <string name="pref_import_from_grisbi_summary">Importeer categorieën en partijen uit het Grisbi XML-bestand</string>
     <string name="pref_import_from_grisbi_title">Importeren uit Grisbi</string>
     <string name="pref_restore_summary">Selecteer een back-up om de database en voorkeuren te herstellen.</string>
     <string name="pref_send_feedback_title">Verstuur feedback</string>
@@ -325,7 +319,6 @@
     <string name="move_category_failure">Eén categorie is niet verplaatst, omdat dezelfde tag al bestaat bij het doel.</string>
     <string name="menu_edit_transfer">Bewerk Overdracht</string>
     <string name="numbered">genummerd</string>
-    <string name="parse_error_grisbi_version_not_supported">Niet-ondersteunde Grisbi-bestandsversie: %1$s</string>
     <string name="pm_directdebit">Domiciliëring</string>
     <string name="pref_manage_sync_backends_title">Synchronisatie-backends</string>
     <plurals name="not_deletable_mapped_transactions">
@@ -655,14 +648,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d categorieën succesvol geïmporteerd.</item>
         <item quantity="other">%1$d categorieën succesvol geïmporteerd.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d partijen succesvol geïmporteerd.</item>
-        <item quantity="other">%1$d partijen succesvol geïmporteerd.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d rekeningen succesvol geïmporteerd.</item>
-        <item quantity="other">%1$d rekeningen succesvol geïmporteerd.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d transacties succesvol geïmporteerd in rekening %2$s</item>

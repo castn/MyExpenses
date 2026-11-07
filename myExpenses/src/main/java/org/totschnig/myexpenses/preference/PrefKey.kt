@@ -20,7 +20,6 @@ enum class PrefKey(internal val resId: Int, internal val keyName: String?) {
     UI_FONT_SIZE(R.string.pref_ui_fontsize_key),
     BACKUP(R.string.pref_backup_key),
     RESTORE(R.string.pref_restore_key),
-    IMPORT_QIF(R.string.pref_import_qif_key),
     IMPORT_CSV(R.string.pref_import_csv_key),
     CONTRIB_PURCHASE(R.string.pref_contrib_purchase_key),
     LICENCE_LEGACY(R.string.pref_enter_licence_key),

@@ -89,8 +89,6 @@
     <string name="export_sdcard_success">Wydatki zostały wyeksportowane do pliku %1$s</string>
     <string name="feedback">Opinie</string>
     <string name="ftp_uri_malformed">Nieprawidłowo sformułowany URI %1$s</string>
-    <string name="grisbi_import_categories_loading">Wczytywanie kategorii z %1$s</string>
-    <string name="grisbi_import_parties_loading">Wczytywanie partii z %1$s</string>
     <string name="grouping_day">Dzień</string>
     <string name="grouping_last_week">Ostatni tydzień</string>
     <string name="grouping_month">Miesiąc</string>
@@ -194,9 +192,7 @@
     <string name="numbered">ponumerowane</string>
     <string name="opening_balance">Bilans otwarcia</string>
     <string name="parse_error_file_not_found">Nie można znaleźć pliku %1$s</string>
-    <string name="parse_error_grisbi_version_not_supported">Niewspierana wersja pliku Grisbi: %1$s</string>
     <string name="parse_error_other_exception">Wystąpił błąd: %1$s</string>
-    <string name="parse_error_parse_exception">Nie można zanalizować pliku </string>
     <string name="password_disabled_reenable">Zabezpieczenie hasłem zostało wyłączone. Możesz je włączyć ponownie w ustawieniach.</string>
     <string name="password_lost">Zapomniane hasło</string>
     <string name="password_not_valid">Hasło nieprawidłowe. Spróbuj jeszcze raz!</string>
@@ -237,7 +233,6 @@
     <string name="pref_contrib_purchase_title_upgrade">Klucz aktualizacji</string>
     <string name="pref_enter_licence_title">Wprowadź klucz</string>
     <string name="pref_export_format_title">Format daty</string>
-    <string name="pref_import_from_grisbi_summary">Kategorie importu oraz partii Grisbi XML.</string>
     <string name="pref_import_from_grisbi_title">Import z Grisbi</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">Importuj transakcje, kategorie i partie z pliku %s</string>
@@ -283,9 +278,7 @@
     <string name="pref_visit_website_title">Odwiedź stronę internetową</string>
     <string name="progress_dialog_deleting">Usuwanie obiektów</string>
     <string name="progress_dialog_printing">Generowanie pliku %s</string>
-    <string name="qif_parse_result">Zanalizowano: %1$s kont; %2$s kategorii oraz %3$s partii</string>
     <string name="qif_parse_failure_found_multiple_accounts">Znaleziono wiele kont w pliku %s.</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">Nie można importu do istniejącego konta.</string>
     <string name="reference_number">Numer Odniesienia</string>
     <string name="restore_db_failure">Przywracanie bazy danych nie powiodło się.</string>
     <string name="restore_db_success">Baza danych została przywrócona z kopii zapasowej.</string>
@@ -376,18 +369,6 @@
         <item quantity="few">%1$d kategorie zostały pomyślnie zaimportowane.</item>
         <item quantity="many">%1$d kategorii zostało pomyślnie zaimportowanych.</item>
         <item quantity="other">%1$d kategorii zostało pomyślnie zaimportowanych.</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d strona została pomyślnie zaimportowana.</item>
-        <item quantity="few">%1$d strony zostały pomyślnie zaimportowane.</item>
-        <item quantity="many">%1$d stron zostało pomyślnie zaimportowanych.</item>
-        <item quantity="other">%1$d strony zostały pomyślnie zaimportowane.</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d konto pomyślnie zaimportowano.</item>
-        <item quantity="few">%1$d konta pomyślnie zaimportowano.</item>
-        <item quantity="many">%1$d kont pomyślnie zaimportowano.</item>
-        <item quantity="other">%1$d kont pomyślnie zaimportowano.</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d transakcję pomyślnie zaimportowano do konta %2$s</item>

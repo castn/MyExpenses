@@ -89,8 +89,6 @@
     <string name="export_sdcard_success">ファイル \"%1$s\" にデータを正常にエクスポートしました</string>
     <string name="feedback">フィードバック</string>
     <string name="ftp_uri_malformed">不正な形式の URI %1$s</string>
-    <string name="grisbi_import_categories_loading">%1$s から分類をロード中</string>
-    <string name="grisbi_import_parties_loading">%1$s から取引先をロード中</string>
     <string name="grouping_day">日</string>
     <string name="grouping_last_week">先週</string>
     <string name="grouping_month">月</string>
@@ -187,9 +185,7 @@
     <string name="numbered">付番されました</string>
     <string name="opening_balance">期首残高</string>
     <string name="parse_error_file_not_found">ファイル %1$s が見つかりません</string>
-    <string name="parse_error_grisbi_version_not_supported">サポートされない Grisbi ファイル バージョン: %1$s</string>
     <string name="parse_error_other_exception">エラーが発生しました: %1$s</string>
-    <string name="parse_error_parse_exception">ファイルを解析できません</string>
     <string name="password_disabled_reenable">パスワード保護が無効になっています。設定で再度有効にすることができます。</string>
     <string name="password_lost">パスワードを忘れた</string>
     <string name="password_not_valid">パスワードが正しくありません。もう一度試してください!</string>
@@ -230,7 +226,6 @@
     <string name="pref_contrib_purchase_title_upgrade">キーをアップグレード</string>
     <string name="pref_enter_licence_title">キーを入力</string>
     <string name="pref_export_format_title">データ形式</string>
-    <string name="pref_import_from_grisbi_summary">Grisbi XML ファイルから分類と取引先をインポートします</string>
     <string name="pref_import_from_grisbi_title">Grisbi からインポート</string>
     <!-- %s is replaced with QIF or CSV -->
     <string name="pref_import_summary">%s ファイルから取引、分類、および取引先をインポートします</string>
@@ -276,9 +271,7 @@
     <string name="pref_visit_website_title">Webサイトを訪問</string>
     <string name="progress_dialog_deleting">オブジェクトを削除中</string>
     <string name="progress_dialog_printing">%s を生成中</string>
-    <string name="qif_parse_result">解析しました: %1$s 勘定; %2$s 分類 および %3$s 取引先</string>
     <string name="qif_parse_failure_found_multiple_accounts">%s ファイルに複数の勘定が見つかりました。</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">既存の勘定にそれをマージすることはできません。</string>
     <string name="reference_number">参照番号</string>
     <string name="restore_db_failure">データベースの復元に失敗しました。</string>
     <string name="restore_db_success">バックアップからデータベースが復元されました。</string>
@@ -357,12 +350,6 @@
     <string name="warning_change_fraction_digits_checkbox_label">データベースの金額を更新</string>
     <plurals name="import_categories_result">
         <item quantity="other">%1$d 分類は正常にインポートされました。</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="other">%1$d 取引先は正常にインポートされました。</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="other">%1$d 勘定は正常にインポートされました。</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="other">%1$d 取引は勘定 %2$s に正常にインポートされました</item>

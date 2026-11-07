@@ -70,8 +70,6 @@
     <string name="export_sdcard_failure"> \"%1$s\" फ़ाइल पर निर्यात असफल: %2$s</string>
     <string name="feedback">प्रतिक्रिया</string>
     <string name="ftp_uri_malformed">विकृत यूआरआई %1$s</string>
-    <string name="grisbi_import_categories_loading">%1$s से श्रेणियां लोड हो रही है</string>
-    <string name="grisbi_import_parties_loading">%1$s से पार्टियां लोड हो रही है</string>
     <string name="grouping_day">दिवस</string>
     <string name="grouping_last_week">पिछला सप्ताह</string>
     <string name="grouping_month">माह</string>
@@ -246,10 +244,8 @@
     <string name="no_exportable_expenses">ऐसा कोई लेन-देन नहीं है जिसे अभी तक निर्यात नहीं किया गया है।</string>
     <string name="pref_auto_fill_summary">उसी भुगतानकर्ता के लिए अंतिम लेन-देन से डेटा भरें</string>
     <string name="pref_app_dir_title">बैकअप और निर्यात के लिए फ़ोल्डर</string>
-    <string name="parse_error_grisbi_version_not_supported">असमर्थित ग्रिस्बी फ़ाइल संस्करण: %1$s</string>
     <string name="image_capture_not_installed">तस्वीर लेने के लिए कोई ऐप नहीं मिला।</string>
     <string name="no_mapped_transactions">इस अवधि के दौरान श्रेणियों के लिए कोई लेन-देन मैप नहीं किया गया है।</string>
-    <string name="parse_error_parse_exception">फ़ाइल पार्स नहीं कर सका</string>
     <string name="plan_execution_canceled">योजना का क्रियान्वयन रद्द कर दिया गया</string>
     <string name="contrib_feature_category_tree_label">श्रेणी वृक्ष</string>
     <string name="dialog_command_disabled_balance">समाधान किए जाने के लिए कोई समाशोधित लेन-देन नहीं।</string>
@@ -286,7 +282,6 @@
     <string name="planner_notification_channel_name">योजनाकार</string>
     <string name="planner_create_calendar_success">स्थानीय योजनाकार कैलेंडर सफलतापूर्वक बनाया गया</string>
     <string name="pref_backup_summary">डेटाबेस और प्राथमिकता का बैकअप बनाएं।</string>
-    <string name="pref_import_from_grisbi_summary">ग्रिस्बी एक्सएमएल फ़ाइल से श्रेणियां और पार्टियां आयात करें</string>
     <string name="pref_news_title">समाचार</string>
     <string name="pref_import_title">%s आयात</string>
     <string name="pref_more_info_dialog_title">लाइसेंस और क्रेडिट</string>
@@ -301,7 +296,6 @@
     <string name="restore_db_failure">डेटाबेस पुनर्स्थापना विफल रही।</string>
     <string name="restore_preferences_failure">प्राथमिकताएँ पुनर्स्थापना विफल रही</string>
     <string name="qif_parse_failure_found_multiple_accounts">%s फ़ाइल में एकाधिक खाते मिले।</string>
-    <string name="qif_parse_failure_found_multiple_accounts_cannot_merge">उन्हें मौजूदा खाते में मर्ज नहीं किया जा सकता।</string>
     <string name="restore_backup_file_not_found">संग्रह \"%2$s\" में कोई फ़ाइल %1$s नहीं मिली</string>
     <string name="restore_preferences_success">प्राथमिकताएँ बैकअप से पुनर्स्थापित कर दी गई हैं।</string>
     <string name="select_payee">दाता/आदाता का चयन करें</string>
@@ -325,14 +319,6 @@
     <plurals name="import_categories_result">
         <item quantity="one">%1$d श्रेणियाँ सफलतापूर्वक आयात की गईं।</item>
         <item quantity="other">%1$d श्रेणियाँ सफलतापूर्वक आयात की गईं।</item>
-    </plurals>
-    <plurals name="import_parties_result">
-        <item quantity="one">%1$d पार्टियाँ सफलतापूर्वक आयात की गईं</item>
-        <item quantity="other">%1$d पार्टियाँ सफलतापूर्वक आयात की गईं</item>
-    </plurals>
-    <plurals name="import_accounts_result">
-        <item quantity="one">%1$d खाते सफलतापूर्वक आयात किए गए</item>
-        <item quantity="other">%1$d खाते सफलतापूर्वक आयात किए गए</item>
     </plurals>
     <plurals name="import_transactions_result">
         <item quantity="one">%1$d लेनदेन सफलतापूर्वक %2$s खाते में आयात किया गया</item>
