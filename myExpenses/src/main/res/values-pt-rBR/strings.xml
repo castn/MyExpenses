@@ -784,7 +784,6 @@
     <string name="pref_group_header_show_details_summary">Exibir somas detalhadas no cabeçalho do grupo</string>
     <!-- Title of a menu item and a dialogue that allow to adjust the current balance. User can enter the new balance, and transaction form is opened with the amount prefiled to the difference between old and new balance  -->
     <string name="new_balance">Novo saldo</string>
-    <string name="title_webui">Interface web do utilizador</string>
     <string name="single_feature_info">Como alternativa, você pode comprar acesso ilimitado apenas a este recurso.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
     <string name="recurrence_last_day_of_month">Último dia</string>
@@ -860,7 +859,6 @@
     <string name="pref_csv_export_split_amount_summary">Usa colunas separadas para receitas e despesas</string>
     <string name="pref_csv_export_split_categories_summary">Usa colunas separadas para cada nível da hierarquia de categoria</string>
     <string name="pref_csv_export_split_date_time_summary">Usa colunas separadas para data e hora</string>
-    <string name="webui_warning_move_transaction">A transação será movida para a conta {account}.</string>
     <string name="icons_for_categories">Ícones para categorias</string>
     <string name="budget_only_current_period">Definido somente para %s</string>
     <string name="budget_table_header_rollover">Prorrogar</string>
@@ -888,7 +886,6 @@
     <string name="debt_lend_additional">Eu empresto %s.</string>
     <string name="pref_backup_file_prefix_title">Prefixo do arquivo</string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> necessita da sua permissão para enviar notificações, quando futuras transações forem publicadas.</string>
-    <string name="notifications_permission_required_webui">Ao conceder a permissão para enviar notificações, você pode controlar o status do servidor web.</string>
     <string name="notifications_permission_required_sync">Ao conceder a permissão para enviar notificações, você pode monitorar o andamento das operações de sincronização.</string>
     <string name="optimize_image_file_size">Otimizar o tamanho do arquivo de imagem</string>
     <string name="maximum_size">Tamanho máximo</string>
@@ -959,7 +956,6 @@
     <string name="credit_limit_available_credit">Crédito disponível</string>
     <string name="content_description_equivalent_amount">Defina o valor dessa transação em sua moeda de origem. Em vez de inserir o valor, você também pode inserir a taxa de câmbio para calculá-lo.</string>
     <string name="budget_import_can_be_imported">Os seguintes orçamentos podem ser importados:</string>
-    <string name="webui_download_no_data">Depois de imprimir, exportar ou criar backups no aplicativo, os arquivos estarão disponíveis aqui para download.</string>
     <string name="initial_value">Valor inicial</string>
     <string name="current_value">Valor atual</string>
     <string name="total_value">Valor total</string>
@@ -1087,7 +1083,6 @@
     <string name="prioritize_flag_order">Priorizar ordem dos marcadores</string>
     <string name="pref_content_based_colors_title">Cor dinâmica baseada na conta</string>
     <string name="pref_content_based_colors_summary">Derivar cores do tema a partir da cor da conta atual. Desative se o texto ficar difícil de ler.</string>
-    <string name="service_starting">Iniciando…</string>
     <string name="rounding">Arredondamento</string>
     <string name="important_upgrade_information_heading">Informações importantes</string>
     <string name="single_pane_view">Painel único</string>

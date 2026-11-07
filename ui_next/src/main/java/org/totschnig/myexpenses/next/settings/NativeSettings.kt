@@ -91,8 +91,6 @@ import org.totschnig.myexpenses.preference.PrefKey.UI_THEME
 import org.totschnig.myexpenses.preference.PrefKey.UNMAPPED_TRANSACTION_AS_TRANSFER
 import org.totschnig.myexpenses.preference.PrefKey.WEBDAV_ALLOW_UNVERIFIED_HOST
 import org.totschnig.myexpenses.preference.PrefKey.WEBDAV_TIMEOUT
-import org.totschnig.myexpenses.preference.PrefKey.WEBUI_HTTPS
-import org.totschnig.myexpenses.preference.PrefKey.WEBUI_PASSWORD
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.util.distrib.DistributionHelper
 import org.totschnig.myexpenses.util.getLocale
@@ -434,7 +432,7 @@ object NativeSettings {
                 else resources.getQuantityString(NextR.plurals.next_settings_every_hours, hours, hours)
             }
         )
-        listOf(SYNC_WIFI_ONLY, SYNC_CHANGES_IMMEDIATELY, SYNC_NOTIFICATION, SYNC_NOW_ALL, WEBUI_PASSWORD, WEBUI_HTTPS)
+        listOf(SYNC_WIFI_ONLY, SYNC_CHANGES_IMMEDIATELY, SYNC_NOTIFICATION, SYNC_NOW_ALL)
             .forEach { put(it, plain) }
         // Backup & import
         listOf(

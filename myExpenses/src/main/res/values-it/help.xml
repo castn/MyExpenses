@@ -194,10 +194,6 @@
     <string name="menu_BudgetActivity_rollover_edit">Questa opzione consente di configurare con precisione il rollover. Ad esempio, è possibile impostare rollover parziali solo per alcune categorie o sottocategorie e trasferire la parte rimanente nel budget totale.</string>
     <string name="help_ManageTags_context_menu_info">Tocca l\'icona &lt;img src=more&gt; per modificare, assegnare un colore o eliminare un tag.</string>
     <string name="menu_parent_category_selection_help_text">Con questa opzione si personalizza il tocco su una categoria che ha categorie figlie: se è selezionato, un breve tocco selezionerà la categoria; Se non è selezionato, un breve tocco espanderà / comprimerà la categoria. In quest\'ultimo caso, la selezione è disponibile dal menu contestuale.</string>
-    <string name="help_WebUI_info_1">Chiama l\'URL visualizzato nel sottotitolo da un browser web sul tuo computer desktop.</string>
-    <string name="help_WebUI_info_2">Attualmente l\'interfaccia utente web non supporta trasferimenti o transazioni frazionate.</string>
-    <string name="help_WebUI_info_3">È possibile impostare una password per proteggere l\'accesso. Nella finestra di dialogo presentata dal browser web, viene presa in conto solo la password, il nome utente viene ignorato.</string>
-    <string name="help_WebUI_info_4">Quando si visualizzano le transazioni per il conto selezionato, l\'interfaccia utente web utilizzerà gli stessi filtri che hai impostato con l\'app sul dispositivo Android.</string>
     <string name="cab_MyExpenses_select_help_text">La selezione multipla può essere avviata selezionando questo comando o toccando a lungo una voce dell\'elenco.</string>
     <string name="help_DebtOverview_info">Fare clic su una voce per ingrandire / comprimere.</string>
     <string name="debt_help_overflow">Per ogni debito, utilizza il menu in alto a destra per modificarlo, chiuderlo, eliminarlo o condividerlo. I debiti in valuta estera possono essere opzionalmente elencati con importi equivalenti nella valuta nazionale.</string>

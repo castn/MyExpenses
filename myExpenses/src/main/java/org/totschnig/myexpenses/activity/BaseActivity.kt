@@ -243,7 +243,6 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
         when (requestCode) {
             PermissionHelper.PERMISSIONS_REQUEST_WRITE_CALENDAR -> enqueuePlanner(true)
-            PermissionHelper.PERMISSIONS_REQUEST_NOTIFICATIONS_WEBUI -> activateWebUi()
         }
     }
 
@@ -331,30 +330,9 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
                 }
             }
 
-            ContribFeature.WEB_UI -> {
-                if (featureViewModel.isFeatureAvailable(this, Feature.WEBUI)) {
-                    activateWebUi()
-                } else {
-                    featureViewModel.requestFeature(this, Feature.WEBUI)
-                }
-            }
-
             else -> {}
         }
     }
-
-    fun activateWebUi() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            !NotificationManagerCompat.from(this).areNotificationsEnabled()
-        ) {
-            requestNotificationPermission(PermissionHelper.PERMISSIONS_REQUEST_NOTIFICATIONS_WEBUI)
-        } else {
-            baseViewModel.toggleWebUi(true)
-            onWebUiActivated()
-        }
-    }
-
-    open fun onWebUiActivated() {}
 
     private fun onDownloadComplete() {
         downloadPending?.let {
@@ -419,7 +397,6 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
         featureManager.initActivity(this)
         when (feature) {
             Feature.FINTS -> startBanking()
-            Feature.WEBUI -> activateWebUi()
             else -> {}
         }
     }

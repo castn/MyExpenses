@@ -471,7 +471,6 @@
     <string name="scan_result_no_payee">Geen begunstigde gevonden</string>
     <string name="content_description_edit_plan">Bewerk plan in kalender-app</string>
     <string name="tesseract_download_confirmation">Wil je tekstherkenningsgegevens downloaden voor %s?</string>
-    <string name="title_webui">Web-gebruikersinterface</string>
     <string name="single_feature_info">Als alternatief kun je onbeperkte toegang kopen tot alleen deze functie.</string>
     <string name="account_widget_configuration">Configuratie van rekeningwidget</string>
     <string name="merge_parties_select">Selecteer de naam van de samengevoegde partij</string>
@@ -486,7 +485,6 @@
         <item quantity="one">Eén oud back-upbestand is schoongemaakt.</item>
         <item quantity="other">%d oude back-upbestanden werden schoongemaakt.</item>
     </plurals>
-    <string name="webui_warning_move_transaction">De transactie wordt verplaatst naar rekening {account}.</string>
     <string name="pref_csv_export_split_amount_summary">Gebruik aparte kolommen voor inkomsten en uitgaven</string>
     <string name="budget_table_header_rollover">Omrollen</string>
     <string name="redesign">Herontwerp</string>
@@ -792,7 +790,6 @@
     <string name="debt_paid_off_other">%s\' schuld is afbetaald.</string>
     <string name="pref_unmapped_transaction_as_transfer_summary_on">worden geteld als overdracht</string>
     <string name="warning_delete_default_transfer_category">Categorie %s is geconfigureerd als standaard overdrachtscategorie en mag niet verwijderd worden.</string>
-    <string name="notifications_permission_required_webui">Door toestemming te geven om notificaties te versturen, kun je de status van de webserver controleren.</string>
     <string name="pref_attachment_mime_types_title">Toegestane MIME-typen voor bijlagen</string>
     <string name="button_relink_update_date">Opnieuw koppelen en datum bijwerken</string>
     <string name="widget_title_budget">Mijn budget</string>
@@ -870,7 +867,6 @@
     <string name="budget_import_cannot_be_imported">De volgende budgetten verwijzen naar rekeningen die niet zijn gesynchroniseerd:</string>
     <string name="budget_import_none_found">Geen budgetten gevonden.</string>
     <string name="pref_sync_frequency_summary_0">Stel in op 0 om automatische synchronisatie uit te schakelen.</string>
-    <string name="webui_download_no_data">Na het afdrukken, exporteren of maken van back-ups in de app kunnen de bestanden hier worden gedownload.</string>
     <string name="filter_dialog_empty">Nog geen criteria toegevoegd. Tik op de bovenstaande knoppen om je vraag te definiëren en je resultaten te verfijnen.</string>
     <string name="quick_search">Snel zoeken</string>
     <string name="complex_search">Complexe zoekopdracht</string>

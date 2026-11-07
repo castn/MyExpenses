@@ -174,12 +174,9 @@
     <string name="menu_BudgetActivity_rollover_categories">Pozostała część każdej kategorii jest przenoszona, co będzie miało wpływ na odpowiednią alokację w następnym okresie.</string>
     <string name="help_ManageBudgets_info">Na tym ekranie wyświetlane jest podsumowanie wszystkich utworzonych budżetów. Użyj pływającego przycisku akcji, aby utworzyć nowy budżet. Kliknięcie pozycji listy powoduje wyświetlenie pojedynczego budżetu.</string>
     <string name="form_DebtEdit_date_help_text">Wprowadź datę zaciągnięcia długu.</string>
-    <string name="help_WebUI_info_1">Wywołaj adres URL wyświetlany w podtytule z przeglądarki internetowej na komputerze stacjonarnym.</string>
-    <string name="help_WebUI_info_2">Obecnie internetowy interfejs użytkownika nie obsługuje przelewów ani podzielonych transakcji.</string>
     <string name="menu_type_filter_help_text">Gdy ta opcja jest aktywna, można wybrać wyświetlanie tylko kategorii wydatków, przychodów lub przelewów.</string>
     <string name="cab_MyExpenses_select_help_text">Wybór wielokrotny można uruchomić, wybierając to polecenie lub dotykając długo pozycji na liście.</string>
     <string name="form_DebtEdit_amount_help_text">Wprowadź pierwotną kwotę zadłużenia. Transakcje powiązane z długiem będą zmniejszać lub zwiększać saldo. Użyj przełącznika, aby odróżnić długi, które jesteś winien, od długów, które są należne Tobie. Jeśli wybierzesz walutę inną niż waluta krajowa, zadłużenie będzie widoczne tylko na rachunkach w tej samej walucie.</string>
-    <string name="help_WebUI_info_4">Podczas wyświetlania transakcji dla wybranego konta internetowy interfejs użytkownika będzie korzystał z tych samych filtrów, które zostały ustawione w aplikacji na urządzeniu z systemem Android.</string>
     <string name="help_DebtOverview_info">Kliknij wpis, aby go rozwinąć/zawinąć.</string>
     <string name="debt_help_overflow">Dla każdego długu użyj menu w prawym górnym rogu, aby go edytować, zamknąć, usunąć lub udostępnić. Zadłużenia w walutach obcych mogą być opcjonalnie wymienione z równoważnymi kwotami w walucie krajowej.</string>
     <string name="cab_remap_help_text">Użyj poleceń w tym podmenu, jeśli chcesz zmienić daną właściwość (konto, kategorię, płatnika/odbiorcę lub metodę płatności) dla wszystkich wybranych transakcji.</string>
@@ -199,6 +196,5 @@
     <string name="form_BudgetEdit_filter_help_text">Budżety można filtrować według kategorii, stron, metod lub stanów. Uwzględniane są tylko transakcje dopasowane do tych filtrów.</string>
     <string name="form_tags_help_text">Ikona + umożliwia wybór istniejących tagów i tworzenie nowych. Ikona x na każdym tagu pozwala usunąć mapowanie między transakcją a tagiem.</string>
     <string name="menu_aggregate_neutral_categories_help_text">Transakcje zmapowane do kategorii przychodów są zawsze liczone jako przychody, a transakcje zmapowane do kategorii wydatków są zawsze liczone jako wydatki. Ta opcja pozwala skonfigurować sposób liczenia transakcji zmapowanych do kategorii neutralnych: Domyślnie, jeśli są dodatnie, stanowią przychód, jeśli są ujemne - wydatek. Ale jeśli ta opcja jest aktywna, są one zawsze uwzględniane zarówno w sumach przychodów, jak i wydatków.</string>
-    <string name="help_WebUI_info_3">Można ustawić hasło w celu ochrony dostępu. W oknie dialogowym wyświetlanym przez przeglądarkę internetową uwzględniane jest tylko hasło, nazwa użytkownika jest ignorowana.</string>
     <string name="cab_MyExpenses_filter_help_text">Wyszukaj transakcje o tych samych właściwościach.</string>
 </resources>

@@ -665,7 +665,6 @@
     <string name="pref_criterion_futur_title">مستقبل کے لین دین کے لیے معیار</string>
     <string name="pref_group_header_show_details_summary">گروپ ہیڈر میں تفصیلی رقم دکھائیں</string>
     <string name="new_balance">نیا بیلنس</string>
-    <string name="title_webui">ویب یوزر انٹرفیس</string>
     <string name="single_feature_info">متبادل طور پر آپ صرف اس خصوصیت تک لامحدود رسائی خرید سکتے ہیں.</string>
     <string name="recurrence_last_day_of_month">آخری دن</string>
     <string name="download_completed">ڈاؤن لوڈ (%s) مکمل ہو گیا ہے.</string>
@@ -728,7 +727,6 @@
     <string name="account_widget_configuration_sum_total">مستقبل کے لین دین کو شامل کریں</string>
     <string name="warning_link_transfer">دو منتخب ٹرانزیکشنز کو ٹرانسفر کے طور پر منسلک کیا جائے گا. وصول کنندہ/ ادا کنندہ اور زمرہ کی معلومات چھوڑ دی جائیں گی.</string>
     <string name="warning_party_delete_debt">اس پارٹی کو حذف کرتے وقت، اس کے لیے بیان کردہ قرضوں کو بھی حذف کر دیا جائے گا.</string>
-    <string name="webui_warning_move_transaction">ٹرانزیکشن کو اکاؤنٹ {account} میں منتقل کر دیا جائے گا.</string>
     <string name="crash_reports_user_info">{app_name} اپنے ڈیولپرز کو ایپلیکیشن کریشز کے بارے میں خود بخود رپورٹس بھیجے گا، جس سے وہ مسائل کو زیادہ تیزی سے حل کر سکتے ہیں.</string>
     <string name="pref_enable_acra">کریش رپورٹس کو خودکار بھیجنے کی اجازت دیں</string>
     <string name="debts">قرضے</string>

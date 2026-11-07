@@ -139,7 +139,7 @@ sealed class AddOnPackage(
         //https://youtrack.jetbrains.com/issue/KT-8970
         val values: List<AddOnPackage>
             get() = listOf(
-                SplitTemplate, History, Budget, Ocr, WebUi, CategoryTree,
+                SplitTemplate, History, Budget, Ocr, CategoryTree,
                 AccountsUnlimited, PlansUnlimited, SplitTransaction, Distribution, Print, AdFree,
                 CsvImport, Synchronization, Banking, AutomaticFxDownload, Portfolio
             )
@@ -168,9 +168,6 @@ sealed class AddOnPackage(
 
     @Keep
     data object Ocr : AddOnPackage(ContribFeature.OCR)
-
-    @Keep
-    data object WebUi : AddOnPackage(ContribFeature.WEB_UI)
 
     @Keep
     data object CategoryTree : AddOnPackage(ContribFeature.CATEGORY_TREE)

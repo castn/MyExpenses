@@ -697,7 +697,6 @@
         <item quantity="other"/>
     </plurals>
     <string name="menu_transform_to_transfer">Converteix en transferència</string>
-    <string name="title_webui">Interfície d\'usuari web</string>
     <string name="account_widget_configuration_sum_total">Inclou les operacions futures</string>
     <string name="budget_widget_configuration">Selecciona el pressupost</string>
     <string name="pref_mlkit_script_title">Script per al MlKit</string>
@@ -711,7 +710,6 @@
     <string name="pref_debug_logging_share_summary">Comparteix els fitxers de registre</string>
     <string name="pref_purge_backup_keep_title">Nombre màxim de fitxers de còpia de seguretat més recents a mantenir</string>
     <string name="pref_purge_backup_require_confirmation_summary">Mostra l\'indicador de confirmació abans de purgar els fitxers</string>
-    <string name="webui_warning_move_transaction">La transacció es mourà al compte {account}.</string>
     <string name="pref_csv_export_split_categories_summary">Usa columnes separades per a cada nivell de jerarquia de categories</string>
     <string name="budget_only_current_period">Estableix només per a %s</string>
     <string name="pref_planner_manual_time_title">Hora per a l\'operació planificada aplicada manualment</string>
@@ -824,7 +822,6 @@
     <string name="select_all_list_too_large">L\'ordre %s no està disponible perquè la llista només està parcialment carregada. Utilitzeu la funcionalitat Cerca per a reduir la mida de la llista.</string>
     <string name="github_sponsors"><![CDATA[Les claus de llicència també es proporcionen a <a href=%s>Github Sponsors</a>.]]></string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> necessita permís per enviar-vos notificacions, quan es publiquin transaccions futures.</string>
-    <string name="notifications_permission_required_webui">En concedir el permís per enviar notificacions, podeu controlar l\'estat del servidor web.</string>
     <string name="notifications_permission_required_sync">En concedir el permís per a enviar notificacions, podeu controlar el progrés de les operacions de sincronització.</string>
     <string name="debt_installment_receive">Rebo una quota de %s.</string>
     <string name="debt_lend_additional">Deixo %s.</string>

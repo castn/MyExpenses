@@ -21,8 +21,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
 import androidx.compose.material.icons.filled.AccountBalance
-import androidx.compose.material.icons.filled.CheckBox
-import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreHoriz
@@ -63,7 +61,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -295,11 +292,8 @@ fun MainScreenAdaptive(
     val quickItems = menuConfig.take(maxQuickItems)
     val overflowItems = menuConfig.drop(maxQuickItems)
 
-    val isWebUiActive by viewModel.isWebUiActive.collectAsState(false)
-
     fun MenuItem.onMenuItemClicked() {
         val tag = when (this) {
-            MenuItem.WebUI -> !isWebUiActive
             MenuItem.Help -> when (navigator.currentDestination?.pane) {
                 ListDetailPaneScaffoldRole.List -> if (
                     viewModel.currentAccountsTab.value == AccountsScreenTab.BALANCE_SHEET
@@ -410,7 +404,7 @@ fun MainScreenAdaptive(
 
                 (if (splitMenu) quickItems else menuConfig).forEach {
                     item(
-                        selected = if (it == MenuItem.WebUI) isWebUiActive else false,
+                        selected = false,
                         onClick = {
                             it.onMenuItemClicked()
                         },
@@ -567,12 +561,7 @@ fun MainScreenAdaptive(
                         headlineContent = { Text(it.getLabel(LocalContext.current)) },
                         leadingContent = {
                             Icon(
-                                if (it == MenuItem.WebUI) {
-                                    rememberVectorPainter(
-                                        if (isWebUiActive) Icons.Filled.CheckBox
-                                        else Icons.Filled.CheckBoxOutlineBlank
-                                    )
-                                } else it.painter,
+                                it.painter,
                                 contentDescription = null
                             )
                         },

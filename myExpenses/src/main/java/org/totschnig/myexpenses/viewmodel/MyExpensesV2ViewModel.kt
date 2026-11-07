@@ -77,7 +77,6 @@ import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.preference.PreferenceAccessor
 import org.totschnig.myexpenses.preference.PreferenceState
 import org.totschnig.myexpenses.preference.enumValueOrDefault
-import org.totschnig.myexpenses.preference.isWebUiActive
 import org.totschnig.myexpenses.provider.DataBaseAccount.Companion.GROUPING_AGGREGATE
 import org.totschnig.myexpenses.provider.DataBaseAccount.Companion.HOME_AGGREGATE_ID
 import org.totschnig.myexpenses.provider.DataBaseAccount.Companion.SORT_BY_AGGREGATE
@@ -654,15 +653,6 @@ open class MyExpensesV2ViewModel(
             MenuItem.getDefaultConfiguration(menuContext),
             MenuItem.mapper
         )
-
-    val isWebUiActive: Flow<Boolean> by lazy {
-        dataStore.isWebUiActive
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.whileSubscribedWithTimeout,
-                initialValue = false
-            )
-    }
 
     fun findMatchingTransactions(
         accountId: Long,

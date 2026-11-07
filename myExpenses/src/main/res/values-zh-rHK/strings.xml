@@ -693,7 +693,6 @@
     <string name="warning_unencrypted_backup">目前设备创建的是不加密的备份文件，它可以防止未经授权的访问。但若您要求加密的备份文件，请配置%s。</string>
     <string name="pref_group_header_show_details_summary">在分组标题中显示明细总和</string>
     <string name="new_balance">更新账户余额</string>
-    <string name="title_webui">网络的用户界面</string>
     <string name="single_feature_info">或者，您可以购买仅此功能的无限制访问权限。</string>
     <string name="recurrence_last_day_of_month">每月的最后一天</string>
     <string name="warning_link_transfer">选定的两笔交易将连接为转账。交易对手方和类别信息将被删除。</string>
@@ -747,7 +746,6 @@
     <string name="pref_purge_backup_keep_title">保留的最新備份檔案最大數量</string>
     <string name="pref_purge_backup_require_confirmation_summary">清除檔案前顯示確認提示</string>
     <string name="pref_debug_logging_share_summary">分享記錄檔</string>
-    <string name="webui_warning_move_transaction">交易將移至帳戶「{account}」。</string>
     <string name="pref_csv_export_split_categories_summary">每個類別階層層級使用單獨的欄位</string>
     <string name="pref_csv_export_split_amount_summary">收入和支出使用單獨的欄位</string>
     <string name="pref_csv_export_split_date_time_summary">日期和時間使用單獨的欄位</string>
@@ -766,7 +764,6 @@
     <string name="github_sponsors">許可證金鑰也提供給 &lt;a href="%s"&gt;Github 贊助者&lt;/a&gt;。</string>
     <string name="notifications_permission_required_planner">
         <i>{app_name}</i> 需要获取权限才能在未来交易发生时向您发送通知</string>
-    <string name="notifications_permission_required_webui">透過授予發送通知的權限，您可以控制 Web 伺服器的狀態。</string>
     <string name="notifications_permission_required_sync">透過授予發送通知的權限，您可以監控同步操作的進度。</string>
     <string name="notifications_permission_required_auto_backup">透過授予發送通知的權限，您將收到自動備份的通知。</string>
     <string name="notifications_channel_required">請啟用通知管道 %s。</string>
@@ -849,7 +846,6 @@
     <string name="budget_import_can_be_imported">可以匯入以下預算：</string>
     <string name="budget_import_cannot_be_imported">以下預算參照了未同步的帳戶：</string>
     <string name="budget_import_none_found">未找到預算。</string>
-    <string name="webui_download_no_data">在應用程式中列印、匯出或建立備份後，檔案將可從此處下載。</string>
     <string name="filter_dialog_empty">尚未新增條件。輕觸上方的按鈕以定義查詢並精確篩選結果。</string>
     <string name="initial_value">初始值</string>
     <string name="current_value">當前值</string>
@@ -934,7 +930,6 @@
     <string name="prioritize_flag_order">優先採用標籤順序</string>
     <string name="pref_content_based_colors_title">基於帳戶的動態顏色</string>
     <string name="pref_content_based_colors_summary">根據當前帳戶的顏色衍生主題顏色。若文字難以閱讀請關閉。</string>
-    <string name="service_starting">正在啟動…</string>
     <string name="trade_buy">買入</string>
     <string name="trade_sell">賣出</string>
     <string name="trade_transfer">轉移</string>

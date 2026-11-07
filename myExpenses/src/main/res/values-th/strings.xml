@@ -721,7 +721,6 @@
     <string name="tesseract_download_confirmation">คุณต้องการดาวน์โหลดข้อมูลการจดจำข้อความสำหรับ %s หรือไม่?</string>
     <string name="pref_group_header_show_details_summary">แสดงผลรวมรายละเอียดในส่วนหัวกลุ่ม</string>
     <string name="new_balance">ยอดคงเหลือใหม่</string>
-    <string name="title_webui">ส่วนติดต่อผู้ใช้เว็บ</string>
     <string name="recurrence_last_day_of_month">วันสุดท้าย</string>
     <string name="warning_link_transfer">รายการทั้งสองที่เลือกจะถูกเชื่อมโยงเป็นการโอนเงิน ข้อมูลผู้รับเงิน/ผู้จ่ายเงินและหมวดหมู่จะถูกยกเลิก</string>
     <string name="budget_widget_configuration">เลือกงบประมาณ</string>
@@ -736,7 +735,6 @@
     <string name="content_description_attachment">ไฟล์แนบ</string>
     <string name="select_all_list_too_large">คำสั่ง %s ไม่สามารถใช้งานได้เนื่องจากโหลดรายการเพียงบางส่วน โปรดใช้ฟังก์ชันการค้นหาเพื่อลดขนาดรายการ</string>
     <string name="encrypt_database_info">ฐานข้อมูลจะถูกเข้ารหัสด้วยวลีรหัสที่ไม่สามารถดึงออกจากอุปกรณ์นี้ได้ ดังนั้นจึงจะไม่ถูกสำรองข้อมูลโดยบริการสำรองข้อมูลของอุปกรณ์ของคุณ</string>
-    <string name="notifications_permission_required_webui">โดยการอนุญาตให้ส่งการแจ้งเตือน คุณสามารถควบคุมสถานะของเว็บเซิร์ฟเวอร์ได้</string>
     <string name="notifications_permission_required_sync">โดยการอนุญาตให้ส่งการแจ้งเตือน คุณสามารถติดตามความคืบหน้าของการดำเนินการซิงโครไนซ์ได้</string>
     <string name="notifications_permission_required_auto_backup">โดยการอนุญาตให้ส่งการแจ้งเตือน คุณจะได้รับแจ้งเกี่ยวกับการสำรองข้อมูลอัตโนมัติ</string>
     <string name="debt_installment_pay">ฉันจ่ายเงินงวดจำนวน %s</string>
@@ -769,7 +767,6 @@
     <string name="warning_archived_transfer_cannot_be_edited">ไม่สามารถแก้ไขการโอนเงินได้เนื่องจากอีกด้านหนึ่งถูกเก็บถาวรแล้ว</string>
     <string name="warning_budget_sync_import">การกำหนดค่างบประมาณนี้จะถูกนำเข้าจากแบ็กเอนด์ซิงโครไนซ์ การเปลี่ยนแปลงทั้งหมดในเครื่องจะสูญหาย</string>
     <string name="budget_import_can_be_imported">สามารถนำเข้างบประมาณต่อไปนี้:</string>
-    <string name="webui_download_no_data">หลังจากพิมพ์ ส่งออก หรือสร้างข้อมูลสำรองในแอป ไฟล์จะพร้อมให้ดาวน์โหลดจากที่นี่</string>
     <string name="filter_dialog_empty">ยังไม่ได้เพิ่มเกณฑ์ แตะปุ่มด้านบนเพื่อกำหนดคำถามของคุณและปรับแต่งผลลัพธ์</string>
     <string name="initial_value">มูลค่าเริ่มต้น</string>
     <string name="current_value">มูลค่าปัจจุบัน</string>
@@ -819,7 +816,6 @@
     <string name="stability_improvements" tools:ignore="UnusedResources">การปรับปรุงความเสถียร</string>
     <string name="new_version">เวอร์ชันใหม่</string>
     <string name="debt">หนี้สิน</string>
-    <string name="webui_warning_move_transaction">รายการจะถูกย้ายไปยังบัญชี {account}</string>
     <string name="icons_for_categories">ไอคอนสำหรับหมวดหมู่</string>
     <string name="merge_parties_strategy_delete">รายการที่ซ้ำกันถูกลบแล้ว</string>
     <string name="debt_paid_off_other">หนี้สินของ %s ได้รับการชำระแล้ว</string>

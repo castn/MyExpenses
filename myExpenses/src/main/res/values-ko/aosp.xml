@@ -14,7 +14,6 @@
     <string name="postal_country">"국가"</string>
     <string name="toast_text_copied">"텍스트 복사됨"</string>
     <string name="copy_text">"클립보드에 복사"</string>
-    <string name="stop">"중지"</string>
     <string name="style">"종류"</string>
     <string name="loading">"로드 중…"</string>
     <string name="button_label_continue">계속</string>

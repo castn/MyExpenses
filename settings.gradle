@@ -28,7 +28,6 @@ dependencyResolutionManagement {
 //include ':mlkit_kore'
 //include ":tesseract"
 include ':myExpenses'
-include ':webui'
 include ':ocr'
 include ':ocr-model'
 include ':mlkit-core'

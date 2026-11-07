@@ -115,8 +115,6 @@
     <string name="pref_feature_uninstall_languages_key">feature_uninstall_languages</string>
     <string name="pref_ocr_engine_key">ocr_engine</string>
     <string name="pref_group_header_show_details_key">group_header</string>
-    <string name="pref_web_ui_key">web_ui</string>
-    <string name="pref_web_ui_password_key">web_ui_password</string>
     <string name="pref_purge_backup_key">purge_backup</string>
     <string name="pref_purge_backup_keep_key">purge_backup_keep</string>
     <string name="pref_purge_backup_require_confirmation_key">purge_backup_require_confirmation</string>
@@ -220,7 +218,6 @@
     <string name="contrib_feature_split_transaction_label" tools:ignore="UnusedResources">@string/split_transaction</string>
     <string name="contrib_feature_budget_label" tools:ignore="UnusedResources">@string/menu_budget</string>
     <string name="contrib_feature_ocr_label" tools:ignore="UnusedResources">@string/title_scan_receipt_feature</string>
-    <string name="contrib_feature_web_ui_label" tools:ignore="UnusedResources">@string/title_webui</string>
     <string name="drive_backend_upgrade" tools:ignore="UnusedResources">Since 2.8.0, My Expenses supports synchronization with Drive folders from multiple Google accounts. Please select the Google account from which your existing Drive backends were created.</string>
     <string name="licence_validation_upgrade_needed" tools:ignore="UnusedResources">Please upgrade My Expenses Contrib to version 1.5.</string>
 
@@ -272,7 +269,6 @@
     <string name="pref_csv_export_split_date_time_key">csv_export_split_date_time</string>
     <string name="pref_csv_export_original_equivalent_amounts_key">csv_export_original_equivalent_amounts</string>
     <string name="date_format_a">am/pm</string>
-    <string name="pref_web_ui_https_key">web_ui_https</string>
     <string name="pref_running_balance_key">running_balance</string>
     <string name="html">HTML</string>
     <string name="txt">TXT</string>

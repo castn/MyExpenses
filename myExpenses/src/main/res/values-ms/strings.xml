@@ -759,7 +759,6 @@
     <string name="pref_csv_export_split_date_time_summary">Gunakan lajur berasingan untuk tarikh dan masa</string>
     <string name="pref_unmapped_transaction_as_transfer_summary_on">dikira sebagai pemindahan</string>
     <string name="roadmap_vote">Undi Peta Jalan</string>
-    <string name="title_webui">Antara Muka Pengguna Web</string>
     <string name="pref_copy_attachments_summary_on">Fail disalin ke folder aplikasi.</string>
     <string name="pref_unmapped_transaction_as_transfer_title">Transaksi tidak dipetakan</string>
     <string name="pref_criterion_futur_title">Kriteria untuk transaksi masa hadapan</string>
@@ -819,7 +818,6 @@
     </plurals>
     <string name="menu_budget_allocated_only">Tunjukkan kategori dengan peruntukan sahaja</string>
     <string name="pref_ocr_engine_title">Enjin untuk pengecaman teks</string>
-    <string name="webui_warning_move_transaction">Transaksi akan dipindahkan ke akaun {account}.</string>
     <string name="pref_sync_now_all_summary">%s menyegerakkan semua akaun untuk bahagian belakang yang sama</string>
     <string name="synchronization_select_folder_dialog_title">Pilih folder sedia ada atau buat yang baharu</string>
     <string name="remap_payee">Semua transaksi yang dipilih akan dipetakan kepada pembayar / penerima %s.</string>
@@ -854,7 +852,6 @@
     <string name="pref_csv_export_split_categories_summary">Gunakan lajur berasingan untuk setiap peringkat hierarki kategori</string>
     <string name="dialog_confirm_rollover_delete">Semua jumlah peralihan untuk tempoh ini akan dipadamkan.</string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> memerlukan kebenaran untuk menghantar pemberitahuan kepada anda, apabila transaksi akan datang disiarkan.</string>
-    <string name="notifications_permission_required_webui">Dengan memberikan kebenaran untuk menghantar pemberitahuan, anda boleh mengawal status pelayan web.</string>
     <string name="notifications_permission_required_sync">Dengan memberikan kebenaran untuk menghantar pemberitahuan, anda boleh memantau kemajuan operasi penyegerakan.</string>
     <string name="image_optimize_quality_summary">Kualiti 0 bermakna memampatkan untuk saiz terkecil. 100 bermaksud memampatkan untuk kualiti visual yang maksimum.</string>
     <string name="remap_date">Pada semua transaksi yang dipilih, tarikh akan ditetapkan kepada %s.</string>

@@ -693,7 +693,6 @@
     <string name="warning_unencrypted_backup">目前设备创建的是不加密的备份文件，它可以防止未经授权的访问。但若您要求加密的备份文件，请配置%s。</string>
     <string name="pref_group_header_show_details_summary">在分组标题中显示明细总和</string>
     <string name="new_balance">更新账户余额</string>
-    <string name="title_webui">网络的用户界面</string>
     <string name="single_feature_info">或者，您可以购买仅此功能的无限制访问权限。</string>
     <string name="recurrence_last_day_of_month">每月的最后一天</string>
     <string name="warning_link_transfer">选定的两笔交易将连接为转账。交易对手方和类别信息将被删除。</string>
@@ -747,7 +746,6 @@
     <string name="pref_purge_backup_keep_title">最大备份文件数量</string>
     <string name="pref_purge_backup_require_confirmation_summary">清除文件之前显示确认提示</string>
     <string name="pref_debug_logging_share_summary">分享日志文件</string>
-    <string name="webui_warning_move_transaction">交易将移至账户 {account}。</string>
     <string name="pref_csv_export_split_categories_summary">每个类别层次结构级别单独一列</string>
     <string name="pref_csv_export_split_amount_summary">收入和支出单独一列</string>
     <string name="pref_csv_export_split_date_time_summary">日期和时间单独一列</string>
@@ -766,7 +764,6 @@
     <string name="github_sponsors"><![CDATA[许可密钥也提供给 <a href="%s">Github 赞助者</a>.]]></string>
     <string name="notifications_permission_required_planner">
         <i>{app_name}</i> 需要获取权限才能在未来交易发生时向您发送通知</string>
-    <string name="notifications_permission_required_webui">通过授予发送通知的权限，你可以控制 Web 服务器的状态。</string>
     <string name="notifications_permission_required_sync">通过授予发送通知的权限，您可以监控同步操作的进度</string>
     <string name="notifications_permission_required_auto_backup">通过授予发送通知的权限，你将收到自动备份的通知。</string>
     <string name="notifications_channel_required">请启用“%s”通知渠道</string>
@@ -849,7 +846,6 @@
     <string name="budget_import_can_be_imported">可以导入以下预算：</string>
     <string name="budget_import_cannot_be_imported">以下预算引用的账户未同步：</string>
     <string name="budget_import_none_found">未找到预算。</string>
-    <string name="webui_download_no_data">在应用程序中打印、导出或创建备份后，文件将可在此处下载。</string>
     <string name="filter_dialog_empty">尚未添加条件。轻按上方的按钮以定义查询并精确筛选结果。</string>
     <string name="initial_value">初始值</string>
     <string name="current_value">当前值</string>
@@ -934,7 +930,6 @@
     <string name="prioritize_flag_order">优先采用标记顺序</string>
     <string name="pref_content_based_colors_title">基于账户的动态颜色</string>
     <string name="pref_content_based_colors_summary">根据当前账户的颜色衍生主题颜色。若文字难以阅读请关闭。</string>
-    <string name="service_starting">正在启动…</string>
     <string name="trade_buy">买入</string>
     <string name="trade_sell">卖出</string>
     <string name="trade_transfer">转移</string>

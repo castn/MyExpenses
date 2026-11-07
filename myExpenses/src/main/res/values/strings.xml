@@ -807,7 +807,6 @@
     <string name="pref_group_header_show_details_summary">Show detail sums in group header</string>
     <!-- Title of a menu item and a dialogue that allow to adjust the current balance. User can enter the new balance, and transaction form is opened with the amount prefiled to the difference between old and new balance  -->
     <string name="new_balance">New balance</string>
-    <string name="title_webui">Web User Interface</string>
     <string name="single_feature_info">Alternatively you can buy unlimited access to only this feature.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
     <string name="recurrence_last_day_of_month">Last day</string>
@@ -888,7 +887,6 @@
     <!-- Summary for an entry on the preference screen that prepares a message with log files attached for debugging purposes.  -->
     <string name="pref_debug_logging_share_summary">Share log files</string>
     <!-- {account} is replaced with account label -->
-    <string name="webui_warning_move_transaction">The transaction will be moved to account "{account}".</string>
     <string name="pref_csv_export_split_categories_summary">Use separate columns for each level of category hierarchy</string>
     <string name="pref_csv_export_split_amount_summary">Use separate columns for income and expenses</string>
     <string name="pref_csv_export_split_date_time_summary">Use separate columns for date and time</string>
@@ -911,7 +909,6 @@
     <string name="database_is_encrypted">Database is encrypted.</string>
     <string name="github_sponsors"><![CDATA[Licence keys are also provided to <a href="%s">Github Sponsors</a>.]]></string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> needs permission to send you notifications, when future transactions are posted.</string>
-    <string name="notifications_permission_required_webui">By granting the permission to send notifications, you can control the status of the web server.</string>
     <string name="notifications_permission_required_sync">By granting the permission to send notifications, you can monitor the progress of the synchronization operations.</string>
     <string name="notifications_permission_required_auto_backup">By granting the permission to send notifications, you will be informed about auto-backups.</string>
     <string name="notifications_channel_required">Please enable channel %s.</string>
@@ -1022,7 +1019,6 @@
     <string name="budget_import_can_be_imported">The following budgets can be imported:</string>
     <string name="budget_import_cannot_be_imported">The following budgets refer to accounts that are not synchronized:</string>
     <string name="budget_import_none_found">No budgets found.</string>
-    <string name="webui_download_no_data">After printing, exporting or creating backups in the app, files will be available from here for download.</string>
     <string name="filter_dialog_empty">No criteria added yet. Tap the buttons above to define your query and refine your results.</string>
     <string name="initial_value">Initial value</string>
     <string name="current_value">Current value</string>
@@ -1142,7 +1138,6 @@
     <string name="pref_content_based_colors_title">Account-based dynamic color</string>
     <string name="pref_content_based_colors_summary">Derive theme colors from the current account\'s color. Turn off if text is difficult to read.</string>
     <!-- Shown to user while Web User Interface is starting -->
-    <string name="service_starting">Starting…</string>
     <string name="trade_buy">Buy</string>
     <string name="trade_sell">Sell</string>
     <!-- Transfer of securities, might be translated differently than a transfer of money between accounts, e.g. in German (Depot-)Übertrag -->

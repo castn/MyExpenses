@@ -784,7 +784,6 @@
     <string name="pref_group_header_show_details_summary">Mostrar sumas detalladas en la cabecera del grupo</string>
     <!-- Title of a menu item and a dialogue that allow to adjust the current balance. User can enter the new balance, and transaction form is opened with the amount prefiled to the difference between old and new balance  -->
     <string name="new_balance">Nuevo balance</string>
-    <string name="title_webui">Interfaz de usuario web</string>
     <string name="single_feature_info">Alternativamente, puede comprar acceso ilimitado solo a esta función.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
     <string name="recurrence_last_day_of_month">Último día</string>
@@ -860,7 +859,6 @@
     <string name="pref_csv_export_split_categories_summary">Utilizar columnas separadas para cada nivel de jerarquía de categoría</string>
     <string name="pref_csv_export_split_amount_summary">Utilizar columnas separadas para ingresos y gastos</string>
     <string name="pref_csv_export_split_date_time_summary">Utilizar columnas separadas para fecha y hora</string>
-    <string name="webui_warning_move_transaction">La transacción será trasladada a la cuenta {account}.</string>
     <string name="icons_for_categories">Iconos por categorías</string>
     <string name="content_description_attachment">Archivo adjunto</string>
     <string name="redesign">Rediseño</string>
@@ -875,7 +873,6 @@
     <string name="database_is_encrypted">La base de datos está cifrada.</string>
     <string name="github_sponsors"><![CDATA[Las claves de licencia también se proporcionan a <a href="%s">Patrocinadores de Github</a>.]]></string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> necesita permiso para enviarte notificaciones, cuando se publiquen futuras transacciones.</string>
-    <string name="notifications_permission_required_webui">Al conceder el permiso para enviar notificaciones, puede controlar el estado del servidor web.</string>
     <string name="notifications_permission_required_sync">Al conceder el permiso para enviar notificaciones, puede supervisar el progreso de las operaciones de sincronización.</string>
     <string name="notifications_channel_required">Por favor, active el canal %s.</string>
     <string name="debt_installment_receive">Recibo una cuota de %s.</string>
@@ -980,7 +977,6 @@
     <string name="pref_sync_frequency_summary_0">Establézcalo en 0 para desactivar la sincronización automática.</string>
     <string name="current_value">Valor actual</string>
     <string name="progress_recalculating">Recalculando</string>
-    <string name="webui_download_no_data">Después de imprimir, exportar o crear copias de seguridad en la aplicación, los archivos estarán disponibles desde aquí para descargar.</string>
     <string name="total_value">Valor total</string>
     <string name="recalculate_equivalent_amounts_warning">Los importes equivalentes se (re)calcularán si se dispone de los tipos de cambio almacenados aplicables.</string>
     <string name="account_closed">La cuenta está cerrada</string>
@@ -1087,7 +1083,6 @@
     <string name="prioritize_flag_order">Priorizar el orden de las banderas</string>
     <string name="pref_content_based_colors_title">Color dinámico basado en la cuenta</string>
     <string name="pref_content_based_colors_summary">Derivar los colores temáticos del color de la cuenta actual. Apágalo si el texto es difícil de leer.</string>
-    <string name="service_starting">Iniciando…</string>
     <string name="trade_transfer">Transferencia</string>
     <string name="important_upgrade_information_heading">Información importante</string>
     <string name="single_pane_view">Panel único</string>

@@ -6,14 +6,12 @@ import androidx.annotation.StringRes
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.livefront.sealedenum.GenSealedEnum
-import kotlinx.coroutines.flow.first
 import org.totschnig.myexpenses.MyApplication
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.BaseActivity
 import org.totschnig.myexpenses.preference.PrefHandler
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.preference.enumValueOrDefault
-import org.totschnig.myexpenses.preference.isWebUiActive
 import org.totschnig.myexpenses.sync.BackendService
 import org.totschnig.myexpenses.sync.GenericAccountService
 import org.totschnig.myexpenses.util.Utils
@@ -22,7 +20,6 @@ import java.util.Locale
 
 enum class Module(@StringRes val labelResId: Int) {
     OCR(R.string.title_scan_receipt_feature),
-    WEBUI(R.string.title_webui),
     TESSERACT(R.string.title_tesseract),
     MLKIT(R.string.title_mlkit),
     MLKIT_DEVA(R.string.title_mlkit_deva),
@@ -119,14 +116,6 @@ sealed class Feature(vararg val requiredModules: Module) {
             OCR.canUninstall(context, prefHandler, datastore) ||
                     MLKIT.canUninstall(context, prefHandler, datastore) ||
                     getUserConfiguredMlkitScriptModule(context, prefHandler) != this
-    }
-
-    data object WEBUI : Feature(Module.WEBUI) {
-        override suspend fun canUninstall(
-            context: Context,
-            prefHandler: PrefHandler,
-            datastore: DataStore<Preferences>
-        ) = !datastore.isWebUiActive.first()
     }
 
     data object TESSERACT : OcrEngine(

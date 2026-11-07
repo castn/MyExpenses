@@ -800,7 +800,6 @@
     <string name="pref_group_header_show_details_summary">Ukázat detailní součty v záhlaví skupiny</string>
     <!-- Title of a menu item and a dialogue that allow to adjust the current balance. User can enter the new balance, and transaction form is opened with the amount prefiled to the difference between old and new balance  -->
     <string name="new_balance">Nový zůstatek</string>
-    <string name="title_webui">Webové uživatelské rozhraní</string>
     <string name="single_feature_info">Případně si můžete zakoupit neomezený přístup pouze k této funkci.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
     <string name="recurrence_last_day_of_month">Poslední den</string>
@@ -880,7 +879,6 @@
     <string name="contact_us">Napište nám</string>
     <string name="icons_for_categories">Ikony pro kategorie</string>
     <string name="menu_new_debt">Nový dluh</string>
-    <string name="webui_warning_move_transaction">Transakce bude přesunuta na účet {account}.</string>
     <string name="pref_csv_export_split_categories_summary">Použití samostatných sloupců pro každou úroveň hierarchie kategorií</string>
     <string name="budget_table_header_rollover">Převrácení</string>
     <string name="rollover_edit_invalid">Součet rolloverů přiřazených ke kategorii a rolloverů přiřazených k podkategoriím nesmí překročit zbývající část.</string>
@@ -939,7 +937,6 @@
     <string name="dialog_confirm_rollover_delete">Všechny částky za toto období budou smazány.</string>
     <string name="select_all_list_too_large">Příkaz %s není k dispozici, protože seznam je načten pouze částečně. Chcete-li zmenšit velikost seznamu, použijte funkci Hledat.</string>
     <string name="github_sponsors"><![CDATA[Licenční klíče jsou také poskytovány <a href=%s>Github Sponsors</a>.]]></string>
-    <string name="notifications_permission_required_webui">Udělením oprávnění k odesílání oznámení můžete řídit stav webového serveru.</string>
     <string name="notifications_permission_required_auto_backup">Udělením oprávnění k zasílání oznámení budete informováni o automatických zálohách.</string>
     <string name="pref_sync_now_all_summary">%s synchronizuje všechny účty pro stejný back-end.</string>
     <string name="budget_deleted">Rozpočet byl smazán</string>
@@ -998,7 +995,6 @@
     <string name="budget_import_can_be_imported">Lze importovat následující rozpočty:</string>
     <string name="budget_import_cannot_be_imported">Následující rozpočty se týkají účtů, které nejsou synchronizované:</string>
     <string name="budget_import_none_found">Žádné rozpočty nenalezeny.</string>
-    <string name="webui_download_no_data">Po vytištění, exportu nebo vytvoření záloh v aplikaci budou soubory dostupné ke stažení zde.</string>
     <string name="filter_dialog_empty">Žádná kritéria zatím nebyla přidána. Klepněte na tlačítka výše, abyste definovali svůj dotaz a upřesnili výsledky.</string>
     <string name="initial_value">Počáteční hodnota</string>
     <string name="current_value">Současná hodnota</string>
@@ -1083,7 +1079,6 @@
     <string name="prioritize_flag_order">Prioritizace pořadí vlajek</string>
     <string name="pref_content_based_colors_title">Dynamická barva založená na účtu</string>
     <string name="pref_content_based_colors_summary">Odvozte barvy tématu z barvy aktuálního účtu. Vypněte je, pokud je text obtížně čitelný.</string>
-    <string name="service_starting">Spouštím</string>
     <string name="trade_buy">Nákup</string>
     <string name="trade_sell">Prodej</string>
     <string name="trade_transfer">Převod</string>

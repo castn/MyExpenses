@@ -790,7 +790,6 @@
     <string name="pref_group_header_show_details_summary">הצג סכומי פירוט בכותרת הקבוצה</string>
     <!-- Title of a menu item and a dialogue that allow to adjust the current balance. User can enter the new balance, and transaction form is opened with the amount prefiled to the difference between old and new balance  -->
     <string name="new_balance">איזון חדש</string>
-    <string name="title_webui">ממשק משתמש באינטרנט</string>
     <string name="single_feature_info">לחלופין ניתן לרכוש גישה בלתי מוגבלת ליכולת זו בלבד.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
     <string name="recurrence_last_day_of_month">יום אחרון</string>
@@ -863,7 +862,6 @@
         <item quantity="other">מחיקת %d מקובצי הגיבוי הישנים נכשלה.</item>
     </plurals>
     <string name="pref_debug_logging_share_summary">שיתוף קובצי יומנים</string>
-    <string name="webui_warning_move_transaction">העסקה תועבר לחשבון {account}.</string>
     <string name="pref_csv_export_split_categories_summary">להשתמש בעמודות נפרדות לכל רמה של היררכיית קטגוריות</string>
     <string name="pref_csv_export_split_amount_summary">להשתמש בעמודות נפרדות להכנסות והוצאות</string>
     <string name="pref_csv_export_split_date_time_summary">להשתמש בעמודות נפרדות לתאריך ולשעה</string>
@@ -882,7 +880,6 @@
     <string name="github_sponsors"><![CDATA[מפתחות רישוי מסופקים גם ל־<a href="%s">GitHub Sponsors</a> (נותני החסות).]]></string>
     <string name="notifications_permission_required_sync">הענקת הרשאות לשליחת התראות מאפשרת לעקוב אחר התקדמות פעילויות הסנכרון.</string>
     <string name="notifications_channel_required">נא להפעיל את הערוץ %s.</string>
-    <string name="notifications_permission_required_webui">הענקת ההרשאות לשליחת התראות מאפשרת שליטה במצב השרת של האתר.</string>
     <string name="notifications_permission_required_planner">ל־<i>{app_name}</i> נדרשות הרשאות כדי לשלוח לך התראות, כאשר מפורסמות העברות עתידיות.</string>
     <string name="debt_lend_additional">הלוויתי %s.</string>
     <string name="debt_borrow_additional">לוויתי %s.</string>
@@ -945,7 +942,6 @@
     <string name="pref_sync_frequency_summary_0">הגדרה ל־0 תשבית את הסנכרון האוטומטי.</string>
     <string name="budget_import_cannot_be_imported">התקציבים הבאים מתייחסים לחשבונות שאינם מסונכרנים:</string>
     <string name="budget_import_can_be_imported">אפשר לייבא את התקציבים הבאים:</string>
-    <string name="webui_download_no_data">לאחר הדפסה, ייצוא או יצירת גיבויים ביישומון, הקבצים יהיו זמינים דרך כאן להורדה.</string>
     <string name="budget_import_none_found">לא נמצאו תקציבים.</string>
     <string name="filter_dialog_empty">לא נוספו עדיין קריטריונים. נגיעה בכפתור שלעיל תאפשר להגדיר את השאילתה ולדייק את התוצאות שלך.</string>
     <string name="buy">רכישה</string>

@@ -719,12 +719,10 @@
     <string name="scan_result_no_date">Дата не знойдзена</string>
     <string name="scan_result_no_payee">Атрымальнік плацяжу не знойдзены</string>
     <string name="menu_save_and_new_content_description">Захавайце дадзеныя, пакіньце форму адкрытай для стварэння новай транзакцыі з тымі ж дадзенымі.</string>
-    <string name="title_webui">Вэб-інтэрфейс карыстальніка</string>
     <string name="active_tags">Актыўныя тэгі</string>
     <string name="pref_enable_acra">Дазволіць аўтаматычную адпраўку справаздач аб збоях</string>
     <string name="object_sealed_debt">Аб\'ект адносіцца да закрытага доўгу.</string>
     <string name="menu_parent_category_selection">Выберыце бацькоўскую катэгорыю кароткім націскам</string>
-    <string name="webui_warning_move_transaction">Транзакцыя будзе пераведзена на рахунак {account}.</string>
     <string name="pref_csv_export_split_categories_summary">Выкарыстоўвайце асобныя слупкі для кожнага ўзроўню іерархіі катэгорый</string>
     <string name="budget_only_current_period">Усталяваць толькі для %s</string>
     <string name="rollover_edit_invalid">Сума пераводаў, прызначаных катэгорыі, і пераводаў, прызначаных падкатэгорыям, не можа перавышаць рэшту.</string>
@@ -750,7 +748,6 @@
     </plurals>
     <string name="budget_table_header_rollover">Перанос</string>
     <string name="database_is_encrypted">База дадзеных зашыфравана.</string>
-    <string name="notifications_permission_required_webui">Даючы дазвол на адпраўку апавяшчэнняў, вы можаце кантраляваць стан вэб-сервера.</string>
     <string name="notifications_permission_required_sync">Даўшы дазвол на адпраўку апавяшчэнняў, вы можаце сачыць за ходам аперацый сінхранізацыі.</string>
     <string name="debt_borrow_additional">Я бяру ў доўг %s.</string>
     <string name="optimize_image_file_size">Аптымізаваць памер файла выявы</string>
@@ -902,7 +899,6 @@
     <string name="menu_aggregate_neutral_categories">Агрэгаваныя нейтральныя катэгорыі</string>
     <string name="pref_attachment_mime_types_title">Дазволеныя тыпы MIME для укладанняў</string>
     <string name="warning_transform_to_transfer">Выбраная транзакцыя будзе заменена пераводам з %1$s на %2$s.</string>
-    <string name="webui_download_no_data">Пасля друку, экспарту або стварэння рэзервовых копій у дадатку файлы будуць даступныя для запампоўкі тут.</string>
     <string name="warning_delete_archive">Усе транзакцыі, якія змяшчаюцца ў гэтым архіве (%d), будуць выдалены.</string>
     <string name="credit_limit_reached">Вы дасягнулі свайго крэдытнага ліміту.</string>
     <string name="warning_empty_archive">У выбраным дыяпазоне дат няма транзакцый.</string>

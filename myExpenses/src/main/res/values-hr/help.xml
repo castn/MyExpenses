@@ -40,8 +40,6 @@
     <string name="help_ExpenseEdit_templateCategory_title">Obrazac za predloške transakcija</string>
     <string name="help_ExpenseEdit_templateTransfer_title">Obrazac za predloške prijenosa</string>
     <string name="help_ExpenseEdit_templateSplit_title">Obrazac za predloške podjele</string>
-    <string name="help_WebUI_info_3">Za zaštitu pristupa možeš postaviti lozinku. U dijalogu koji prikazuje web preglednik uzima se u obzir samo lozinka, korisničko ime se zanemaruje.</string>
-    <string name="help_WebUI_info_4">Prilikom prikaza transakcija za odabrani račun, internetsko korisničko sučelje će koristiti iste filtre koju su postavljeni u programu na Android uređaju.</string>
     <string name="help_ManageTemplates_plans_title">Prikaz kalendara planova</string>
     <string name="help_ManageTemplates_planner_title">Nadolazeća ponavljanja</string>
     <string name="help_ManageTemplates_planner_intro">Dugim dodirom na otvorenu instancu pokreće se višestruki odabir. Dodirom na početak ili kraj datumskog raspona možeš proširiti raspon u prošlost ili budućnost.</string>
@@ -54,14 +52,12 @@
     <string name="help_ExpenseEdit_transfer_title">Obrazac za prijenose</string>
     <string name="menu_save_help_text">Spremi podatke i zatvori obrazac.</string>
     <string name="help_ManageBudgets_title">Popis svih budžeta</string>
-    <string name="help_WebUI_info_2">Internetsko korisničko sučelje trenutačno ne podržava prijenose ili podijeljene transakcije.</string>
     <string name="help_ManageParties_manage_info">Ovaj ekran prikazuje popis stranaka koje se koriste za automatsko popunjavanje polja Platiša/Primalac.</string>
     <string name="help_ExpenseEdit_transaction_title">Obrazac za transakcije</string>
     <string name="help_BudgetEdit_title">Obrazac za budžete</string>
     <string name="help_BudgetEdit_info">Koristi ovaj obrazac za izradu novog budžeta ili za uređivanje postojećeg.</string>
     <string name="form_BudgetEdit_title_help_text">Naslov budžeta pomaže da ga se identificira u popisu budžeta.</string>
     <string name="help_MethodEdit_title">Obrazac za načine plaćanja</string>
-    <string name="help_WebUI_info_1">Pozovi prikazani URL u podnaslovu putem web preglednika na tvom računalu.</string>
     <string name="cab_ManageCategories_create_sub_cat_help_text">Otvara dijalog za stvaranje nove potkategorije ispod odabrane kategorije. Potkategorije se mogu smjestiti na proizvoljnu razinu.</string>
     <string name="cab_ManageCategories_move_help_text">Bilo koja kategorija (zajedno sa svojim potkategorijama) može se premjestiti u novu nadređenu kategoriju. Potkategorije se mogu promijeniti u glavne kategorije.</string>
     <string name="menu_ManageCategories_search_help_text">Prikazat će se samo glavne kategorije i potkategorije koje odgovaraju tvom upitu.</string>

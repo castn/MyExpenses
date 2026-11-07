@@ -13,7 +13,6 @@
     <string name="postal_country">"Χώρα"</string>
     <string name="toast_text_copied">"Το κείμενο αντιγράφηκε"</string>
     <string name="copy_text">"Αντιγραφή στο πρόχειρο"</string>
-    <string name="stop">"Διακοπή"</string>
     <string name="style">"Στυλ"</string>
     <string name="loading">"Φόρτωση…"</string>
     <string name="button_label_continue">Συνέχεια</string>

@@ -68,6 +68,9 @@ import javax.inject.Inject
 
 private const val TEMP_PREFS = "backup_temp"
 
+// Settings of the removed web user interface, which older backups still carry
+private val WEB_UI_KEYS = setOf("web_ui", "web_ui_password", "web_ui_https")
+
 class RestoreViewModel(application: Application) : ContentResolvingAndroidViewModel(application) {
 
     private val _publishProgress: MutableSharedFlow<String?> = MutableSharedFlow()
@@ -322,7 +325,7 @@ class RestoreViewModel(application: Application) : ContentResolvingAndroidViewMo
                         val key = it.key
                         if (key == prefHandler.getKey(PrefKey.LICENCE_LEGACY) ||
                             key == prefHandler.getKey(PrefKey.FIRST_INSTALL_VERSION) ||
-                            key == prefHandler.getKey(PrefKey.UI_WEB)
+                            key in WEB_UI_KEYS
                         ) {
                             return@forEach
                         }

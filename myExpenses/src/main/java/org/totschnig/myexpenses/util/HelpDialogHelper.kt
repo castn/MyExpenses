@@ -191,9 +191,6 @@ class HelpDialogHelper(val context: Context, val extra: CharSequence? = null) : 
                 context.localizedQuote(getString(R.string.enable_automatic_daily_exchange_rate_download))
             )
 
-            "help_WebUI_info_1" -> if (extra == null || extra.startsWith("http"))
-                getString(R.string.help_WebUI_info_1) + (extra?.let { "($it)" } ?: "") else ""
-
             "help_PrintLayoutConfiguration_title" -> context.screenTitle
 
             "help_ManageCurrencies_title" -> CommodityType.title(resources)

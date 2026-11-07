@@ -790,7 +790,6 @@
     <string name="active_tags">Etichete active</string>
     <string name="content_description_attachment">Atașament</string>
     <string name="database_is_encrypted">Baza de date este criptată.</string>
-    <string name="notifications_permission_required_webui">Prin acordarea permisiunii de a trimite notificări, puteți controla starea serverului web.</string>
     <string name="new_balance">Balanta noua</string>
     <string name="debt_paid_off_other">Datoria lui %seste plătită.</string>
     <string name="merge_parties_strategy_delete">Duplicatele sunt șterse.</string>
@@ -826,7 +825,6 @@
     <string name="scan_result_no_amount">Nu a fost găsită nicio sumă</string>
     <string name="ocr_recognition_info">Rularea recunoașterii textului cu %s</string>
     <string name="warning_unencrypted_backup">În timp ce datele dvs. sunt protejate împotriva accesului neautorizat pe acest dispozitiv, copiile de rezervă sunt create fără criptare, cu excepția cazului în care configurați %s.</string>
-    <string name="title_webui">Interfață cu utilizatorul web</string>
     <string name="merge_parties_select">Selectați numele părții fuzionate</string>
     <string name="menu_new_debt">Noua datorie</string>
     <string name="cb_label_merge_accounts">Îmbinați conturile</string>
@@ -850,7 +848,6 @@
     </plurals>
     <string name="pref_purge_backup_require_confirmation_summary">Afișați promptul de confirmare înainte ca fișierele să fie curățate</string>
     <string name="pref_csv_export_split_amount_summary">Utilizați coloane separate pentru venituri și cheltuieli</string>
-    <string name="webui_warning_move_transaction">Tranzacția va fi mutată în cont {account}.</string>
     <string name="pref_csv_export_split_date_time_summary">Utilizați coloane separate pentru dată și oră</string>
     <string name="budget_only_current_period">Set numai pentru %s</string>
     <string name="budget_table_header_rollover">Rollover</string>

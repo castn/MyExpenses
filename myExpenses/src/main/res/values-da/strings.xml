@@ -681,7 +681,6 @@
     <string name="select_package">Vælg venligst en licenspakke.</string>
     <string name="plan_automatic_without_amount_hint">Planer uden beløb bør ikke gemmes med automatisk planudførelse</string>
     <string name="new_balance">Ny saldo</string>
-    <string name="title_webui">Webbrugergrænseflade</string>
     <string name="translated_by">Oversat af</string>
     <string name="pref_exchange_rate_provider_title">Valutakursudbyder</string>
     <string name="menu_create_budget">Nyt budget</string>
@@ -772,7 +771,6 @@
     <string name="notifications_permission_required_planner"><i>{app_name}</i> skal have tilladelse til at sende dig notifikationer, når fremtidige transaktioner bogføres.</string>
     <string name="button_relink_keep_date">Tilknyt igen, men behold dato</string>
     <string name="pref_attachment_mime_types_title">Tilladte MIME-typer til vedhæftninger</string>
-    <string name="webui_warning_move_transaction">Transaktionen flyttes til kontoen {account}.</string>
     <string name="debt_balance_i_owe">Jeg skylder nu %s.</string>
     <string name="read_from_data">Læs fra data</string>
     <string name="merge_parties_strategy_delete">Duplikater slettes.</string>
@@ -800,7 +798,6 @@
     <string name="dialog_confirm_rollover_delete">Alle fremførelsesbeløb for denne periode slettes.</string>
     <string name="image_optimize_quality_summary">Kvalitet 0 betyder komprimering for minimal størrelse. 100 betyder komprimering for maksimal visuel kvalitet.</string>
     <string name="template_shortcut">Genvej til skabelon</string>
-    <string name="notifications_permission_required_webui">Ved at give tilladelse til at sende notifikationer kan du kontrollere webserverens status.</string>
     <string name="button_relink_update_date">Tilknyt igen, og opdater dato</string>
     <string name="pref_unmapped_transaction_as_transfer_summary_on">tælles som overførsel</string>
     <string name="pref_sync_now_all_summary">%s synkroniserer alle konti for den samme backend</string>
@@ -896,7 +893,6 @@
     <string name="budget_import_none_found">Ingen budgetter fundet.</string>
     <string name="filter_dialog_empty">Ingen kriterier tilføjet endnu. Tryk på knapperne ovenfor for at definere din søgning og præcisere resultaterne.</string>
     <string name="pref_sync_frequency_summary_0">Sæt til 0 for at deaktivere automatisk synk.</string>
-    <string name="webui_download_no_data">Efter udskrivning, eksport eller sikkerhedskopiering i appen kan filerne hentes herfra.</string>
     <string name="initial_value">Oprindelig værdi</string>
     <string name="current_value">Aktuel værdi</string>
     <string name="total_value">Samlet værdi</string>

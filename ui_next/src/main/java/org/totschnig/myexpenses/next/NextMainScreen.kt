@@ -19,9 +19,6 @@ import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckBox
-import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import org.totschnig.myexpenses.designsystem.ActionSheet
@@ -52,7 +49,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -234,11 +230,8 @@ fun NextMainScreen(
 
     val isAdLoaded = remember { mutableStateOf(false) }
 
-    val isWebUiActive by viewModel.isWebUiActive.collectAsState(false)
-
     fun MenuItem.onMenuItemClicked() {
         val tag = when (this) {
-            MenuItem.WebUI -> !isWebUiActive
             MenuItem.Help -> helpVariant(viewModel, navigator.currentDestination?.pane, selectedAccountId)
             else -> null
         }
@@ -332,7 +325,6 @@ fun NextMainScreen(
     if (showBottomSheet) {
         MenuSheet(
             items = menuConfig,
-            isWebUiActive = isWebUiActive,
             onClick = { it.onMenuItemClicked() },
             onDismiss = { showBottomSheet = false }
         )
@@ -525,25 +517,14 @@ internal fun BehindStatusBar(color: Color, content: @Composable () -> Unit) {
 
 /** The items of the menu, behind the tab "Menu" of the bar or rail */
 @Composable
-private fun MenuSheet(
-    items: List<MenuItem>,
-    isWebUiActive: Boolean,
-    onClick: (MenuItem) -> Unit,
-    onDismiss: () -> Unit,
-) {
+private fun MenuSheet(items: List<MenuItem>, onClick: (MenuItem) -> Unit, onDismiss: () -> Unit) {
     val context = LocalContext.current
     ActionSheet(
         actions = items.map { item ->
             SheetAction(
                 label = item.getLabel(context),
-                icon = {
-                    if (item == MenuItem.WebUI) rememberVectorPainter(
-                        if (isWebUiActive) Icons.Filled.CheckBox else Icons.Filled.CheckBoxOutlineBlank
-                    ) else item.painter
-                },
+                icon = { item.painter },
                 testTag = item.testTag,
-                // The web UI is switched on and off, so it is announced as a checkbox
-                checked = isWebUiActive.takeIf { item == MenuItem.WebUI },
                 onClick = { onClick(item) }
             )
         },

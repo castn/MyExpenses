@@ -13,7 +13,6 @@
     <string name="postal_country">"国家/地区"</string>
     <string name="toast_text_copied">"文本已复制"</string>
     <string name="copy_text">"复制到剪贴板"</string>
-    <string name="stop">"停止"</string>
     <string name="style">"样式"</string>
     <string name="loading">"正在加载…"</string>
     <string name="button_label_continue">继续</string>

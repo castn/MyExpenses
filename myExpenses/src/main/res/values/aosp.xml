@@ -57,7 +57,6 @@
     <string name="take_photo">Take photo</string>
     <!--  packages/apps/DeskClock/res/values/strings.xml name="timer_stop" -->
     <string name="start">Start</string>
-    <string name="stop">Stop</string>
     <!-- name="clock_style" -->
     <string name="style">Style</string>
     <!-- name="loading_widget" -->

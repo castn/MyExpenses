@@ -704,7 +704,6 @@
     <string name="warning_unencrypted_backup">ខណៈពេលដែលទិន្នន័យរបស់អ្នកត្រូវបានការពារពីការចូលប្រើដោយគ្មានការអនុញ្ញាតលើឧបករណ៍នេះ ការបម្រុងទុកត្រូវបានបង្កើតឡើងដោយគ្មានការរ៉កខូដ លើកលែងតែអ្នកកំណត់រចនាសម្ព័ន្ធ %s។</string>
     <string name="pref_group_header_show_details_summary">បង្ហាញសរុបលម្អិតនៅក្នុងបឋមកថាថ្នាក់</string>
     <string name="new_balance">សមតុល្យថ្មី</string>
-    <string name="title_webui">ចំណុចប្រទាក់អ្នកប្រើគេហទំព័រ</string>
     <string name="single_feature_info">ផ្ទុយទៅវិញ អ្នកអាចទិញការចូលប្រើប្រាស់ដោយគ្មានដែនកំណត់ចំពោះតែមុខងារនេះប៉ុណ្ណោះ។</string>
     <string name="recurrence_last_day_of_month">ថ្ងៃចុងក្រោយ</string>
     <string name="warning_link_transfer">ប្រតិបត្តិការទាំងពីរដែលបានជ្រើសរើសនឹងត្រូវភ្ជាប់ជាការផ្ទេរ។ ព័ត៌មានភាគីផ្ទុយ និងចំណាត់ថ្នាក់នឹងត្រូវបោះបង់។</string>
@@ -758,7 +757,6 @@
     <string name="pref_purge_backup_keep_title">ចំនួនអតិបរមានៃឯកសារបម្រុងទុកថ្មីៗបំផុតត្រូវរក្សាទុក</string>
     <string name="pref_purge_backup_require_confirmation_summary">បង្ហាញការរំលឹកអះអាងមុនពេលឯកសារត្រូវបានសំអាត</string>
     <string name="pref_debug_logging_share_summary">ចែករំលែកឯកសារកំណត់ហេតុ</string>
-    <string name="webui_warning_move_transaction">ប្រតិបត្តិការនឹងត្រូវផ្លាស់ទីទៅគណនី "{account}"។</string>
     <string name="pref_csv_export_split_categories_summary">ប្រើជួរឈរដាច់ដោយឡែកសម្រាប់កម្រិតនីមួយៗនៃឋានានុក្រមចំណាត់ថ្នាក់</string>
     <string name="pref_csv_export_split_amount_summary">ប្រើជួរឈរដាច់ដោយឡែកសម្រាប់ចំណូល និងចំណាយ</string>
     <string name="pref_csv_export_split_date_time_summary">ប្រើជួរឈរដាច់ដោយឡែកសម្រាប់កាលបរិច្ឆេទ និងពេលវេលា</string>
@@ -776,7 +774,6 @@
     <string name="database_is_encrypted">មូលដ្ឋានទិន្នន័យត្រូវបានរ៉កខូដ។</string>
     <string name="github_sponsors">កូនសោអាជ្ញាប័ណ្ណត្រូវបានផ្តល់ជូនផងដែរដល់ <a href="%s">អ្នកឧបត្ថម្ភ GitHub</a>។</string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> ត្រូវការការអនុញ្ញាតដើម្បីផ្ញើការជូនដំណឹងមកអ្នក នៅពេលប្រតិបត្តិការនាពេលអនាគតត្រូវបានបង្ហោះ។</string>
-    <string name="notifications_permission_required_webui">ដោយការផ្តល់ការអនុញ្ញាតក្នុងការផ្ញើការជូនដំណឹង អ្នកអាចគ្រប់គ្រងស្ថានភាពនៃម៉ាស៊ីនបម្រើគេហទំព័របាន។</string>
     <string name="notifications_permission_required_sync">ដោយការផ្តល់ការអនុញ្ញាតក្នុងការផ្ញើការជូនដំណឹង អ្នកអាចឃ្លាំមើលដំណើរកើនឡើងនៃប្រតិបត្តិការធ្វើសមកាលកម្មបាន។</string>
     <string name="notifications_permission_required_auto_backup">ដោយការផ្តល់ការអនុញ្ញាតក្នុងការផ្ញើការជូនដំណឹង អ្នកនឹងទទួលបានព័ត៌មានអំពីការបម្រុងទុកស្វ័យប្រវត្តិ។</string>
     <string name="notifications_channel_required">សូមបើកប៉ុស្តិ៍ %s។</string>
@@ -859,7 +856,6 @@
     <string name="budget_import_can_be_imported">ថវិកាខាងក្រោមអាចត្រូវនាំចូល៖</string>
     <string name="budget_import_cannot_be_imported">ថវិកាខាងក្រោមយោងទៅកាន់គណនីដែលមិនត្រូវបានធ្វើសមកាលកម្ម៖</string>
     <string name="budget_import_none_found">រកមិនឃើញថវិកាទេ។</string>
-    <string name="webui_download_no_data">បន្ទាប់ពីបោះពុម្ព នាំចេញ ឬបង្កើតការបម្រុងទុកនៅក្នុងកម្មវិធី ឯកសារនឹងមានសម្រាប់ទាញយកពីទីនេះ។</string>
     <string name="filter_dialog_empty">មិនទាន់មានលក្ខណៈវិនិច្ឆ័យត្រូវបានបន្ថែមនៅឡើយទេ។ ប៉ះប៊ូតុងខាងលើដើម្បីកំណត់សំណួររបស់អ្នក និងចម្រាញ់លទ្ធផលរបស់អ្នក។</string>
     <string name="initial_value">តម្លៃដើម</string>
     <string name="current_value">តម្លៃបច្ចុប្បន្ន</string>
@@ -944,7 +940,6 @@
     <string name="prioritize_flag_order">ផ្តល់អាទិភាពដល់លំដាប់ទង់</string>
     <string name="pref_content_based_colors_title">ពណ៌ថាមវន្តផ្អែកលើគណនី</string>
     <string name="pref_content_based_colors_summary">ទាញយកពណ៌ប្រធានបទចេញពីពណ៌គណនីបច្ចុប្បន្ន។ បិទប្រសិនបើអត្ថបទពិបាកអាន។</string>
-    <string name="service_starting">កំពុងចាប់ផ្តើម…</string>
     <string name="trade_buy">ទិញ</string>
     <string name="trade_sell">លក់</string>
     <string name="trade_transfer">ផ្ទេរ</string>

@@ -14,7 +14,6 @@
     <string name="postal_country">"Държава"</string>
     <string name="toast_text_copied">"Текстът бе копиран"</string>
     <string name="copy_text">"Копиране в буфера"</string>
-    <string name="stop">"Спиране"</string>
     <string name="style">"Стил"</string>
     <string name="loading">"Зарежда се…"</string>
     <string name="button_label_continue">Напред</string>

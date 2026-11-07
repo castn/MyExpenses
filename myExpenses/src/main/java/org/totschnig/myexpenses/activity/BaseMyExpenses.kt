@@ -431,22 +431,10 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
             .show(supportFragmentManager, "DELETE_ACCOUNT")
     }
 
-    private fun toggleWebUI(enabled: Boolean) {
-        if (enabled) {
-            contribFeatureRequested(ContribFeature.WEB_UI)
-        } else {
-            baseViewModel.toggleWebUi(false)
-        }
-    }
-
     override fun dispatchCommand(command: Int, tag: Any?): Boolean {
         if (super.dispatchCommand(command, tag)) {
             return true
         } else when (command) {
-
-            R.id.WEB_UI_COMMAND -> {
-                toggleWebUI(tag as Boolean)
-            }
 
             R.id.BACKUP_COMMAND -> startActivity(
                 Intent(

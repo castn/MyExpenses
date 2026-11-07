@@ -718,7 +718,6 @@
     <string name="warning_unencrypted_backup">Meskipun data Anda terlindungi dari akses tidak sah di perangkat ini, cadangan dibuat tanpa enkripsi, kecuali Anda mengonfigurasi %s.</string>
     <string name="pref_group_header_show_details_summary">Tampilkan jumlah detail di header grup</string>
     <string name="new_balance">Saldo baru</string>
-    <string name="title_webui">Antarmuka Pengguna Web</string>
     <string name="single_feature_info">Sebagai alternatif, Anda dapat membeli akses tanpa batas hanya untuk fitur ini.</string>
     <string name="recurrence_last_day_of_month">Hari terakhir</string>
     <string name="warning_link_transfer">Dua transaksi yang dipilih akan ditautkan sebagai transfer. Informasi pihak lawan dan kategori akan dihapus.</string>
@@ -741,7 +740,6 @@
     </plurals>
     <string name="object_sealed_debt">Objek merujuk ke utang yang ditutup.</string>
     <string name="pref_debug_logging_share_summary">Bagikan file log</string>
-    <string name="webui_warning_move_transaction">Transaksi akan dipindahkan ke akun {account}.</string>
     <string name="pref_csv_export_split_categories_summary">Gunakan kolom terpisah untuk setiap tingkat hierarki kategori</string>
     <string name="pref_csv_export_split_amount_summary">Gunakan kolom terpisah untuk pemasukan dan pengeluaran</string>
     <string name="pref_csv_export_split_date_time_summary">Gunakan kolom terpisah untuk tanggal dan waktu</string>
@@ -759,7 +757,6 @@
     <string name="database_is_encrypted">Database dienkripsi.</string>
     <string name="github_sponsors"><![CDATA[Kunci lisensi juga diberikan kepada <a href="%s">Sponsor Github</a>.]]></string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> memerlukan izin untuk mengirimkan notifikasi kepada Anda ketika transaksi masa depan dibukukan.</string>
-    <string name="notifications_permission_required_webui">Dengan memberikan izin untuk mengirim notifikasi, Anda dapat mengontrol status server web.</string>
     <string name="notifications_permission_required_sync">Dengan memberikan izin untuk mengirim notifikasi, Anda dapat memantau kemajuan operasi sinkronisasi.</string>
     <string name="notifications_permission_required_auto_backup">Dengan memberikan izin untuk mengirim notifikasi, Anda akan diberi tahu tentang cadangan otomatis.</string>
     <string name="notifications_channel_required">Harap aktifkan kanal %s.</string>
@@ -841,7 +838,6 @@
     <string name="budget_import_can_be_imported">Anggaran berikut dapat diimpor:</string>
     <string name="budget_import_cannot_be_imported">Anggaran berikut merujuk ke akun yang tidak disinkronkan:</string>
     <string name="budget_import_none_found">Tidak ada anggaran yang ditemukan.</string>
-    <string name="webui_download_no_data">Setelah mencetak, mengekspor, atau membuat cadangan di aplikasi, file akan tersedia dari sini untuk diunduh.</string>
     <string name="filter_dialog_empty">Belum ada kriteria yang ditambahkan. Ketuk tombol di atas untuk menentukan kueri Anda dan menyempurnakan hasil.</string>
     <string name="initial_value">Nilai awal</string>
     <string name="current_value">Nilai saat ini</string>
@@ -920,7 +916,6 @@
     <string name="prioritize_flag_order">Prioritaskan urutan penanda</string>
     <string name="pref_content_based_colors_title">Warna dinamis berbasis akun</string>
     <string name="pref_content_based_colors_summary">Turunkan warna tema dari warna akun saat ini. Matikan jika teks sulit dibaca.</string>
-    <string name="service_starting">Memulai…</string>
     <string name="rounding">Pembulatan</string>
     <string name="parse_error_at_line">Kesalahan pada baris %1$d: %2$s</string>
     <plurals name="import_trades_missing_assets_message">

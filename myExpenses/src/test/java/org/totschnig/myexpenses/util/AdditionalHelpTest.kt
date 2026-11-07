@@ -9,11 +9,6 @@ import org.robolectric.RobolectricTestRunner
 class AdditionalHelpTest: BaseHelpTest() {
 
     @Test
-    fun testHelpWebUi() {
-        assertThat(resolveStringOrArray("help_WebUI_info")).isNotNull()
-    }
-
-    @Test
     fun testHelpSetupSync() {
         assertThat(resolveStringOrArray("help_SetupSync_info")).isNotNull()
     }

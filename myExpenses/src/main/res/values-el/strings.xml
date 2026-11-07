@@ -726,7 +726,6 @@
     <string name="currency_code_already_definded">Ο κωδικός νομίσματος έχει ήδη οριστεί.</string>
     <string name="pref_backup_cloud_summary">Εκτός από την τοπική αποθήκευση στη συσκευή, το αρχείο αντιγράφου ασφαλείας μπορεί να αντιγραφεί σε ένα απομακρυσμένο backend.</string>
     <string name="menu_create_sync_backend">Νέο backend συγχρονισμού</string>
-    <string name="title_webui">Διεπαφή χρήστη Ιστού</string>
     <string name="sync_io_exception_locking">Το απομακρυσμένο backend είναι κλειδωμένο ή δεν μπορεί να κλειδωθεί.</string>
     <string name="link_account_failure_2">Υπάρχει ήδη ένας λογαριασμός με το ίδιο uuid στο απομακρυσμένο backend.</string>
     <string name="budget_filter_all_parties">Όλα τα μέρη</string>
@@ -821,7 +820,6 @@
     <string name="debt_paid_off_other">Το χρέος του/της %s εξοφλήθηκε.</string>
     <string name="pref_unmapped_transaction_as_transfer_summary_on">υπολογίζονται ως μεταφορές</string>
     <string name="warning_delete_default_transfer_category">Η κατηγορία %s έχει ρυθμιστεί ως προεπιλεγμένη κατηγορία μεταφοράς και δεν πρέπει να διαγραφεί.</string>
-    <string name="notifications_permission_required_webui">Χορηγώντας την άδεια αποστολής ειδοποιήσεων, μπορείτε να ελέγξετε την κατάσταση του διακομιστή ιστού.</string>
     <string name="pref_attachment_mime_types_title">Επιτρεπόμενοι τύποι MIME για συνημμένα</string>
     <string name="button_relink_update_date">Επανασύνδεση και ενημέρωση ημερομηνίας</string>
     <string name="widget_title_budget">Ο προϋπολογισμός μου</string>
@@ -873,7 +871,6 @@
     <string name="search_account">Αναζήτηση λογαριασμού</string>
     <string name="pref_purge_backup_keep_title">Μέγιστος αριθμός των πιο πρόσφατων αρχείων αντιγράφων ασφαλείας προς διατήρηση</string>
     <string name="pref_copy_attachments_summary_off">Τα αρχεία δεν αντιγράφονται, αποθηκεύεται μόνο μια αναφορά.</string>
-    <string name="webui_warning_move_transaction">Η συναλλαγή θα μεταφερθεί στο λογαριασμό {account}.</string>
     <string name="contrib_feature_category_tree_label">Αυθαίρετα βαθιά ιεραρχία κατηγοριών</string>
     <string name="show_duplicates">Εμφάνιση διπλότυπων</string>
     <string name="debt_paid_off_self">Το χρέος μου εξοφλήθηκε.</string>
@@ -937,7 +934,6 @@
     <string name="budget_import_can_be_imported">Μπορούν να εισαχθούν οι ακόλουθοι προϋπολογισμοί:</string>
     <string name="budget_import_cannot_be_imported">Οι ακόλουθοι προϋπολογισμοί αναφέρονται σε λογαριασμούς που δεν είναι συγχρονισμένοι:</string>
     <string name="budget_import_none_found">Δεν βρέθηκαν προϋπολογισμοί.</string>
-    <string name="webui_download_no_data">Μετά την εκτύπωση, την εξαγωγή ή τη δημιουργία αντιγράφων ασφαλείας στην εφαρμογή, τα αρχεία θα είναι διαθέσιμα από εδώ για λήψη.</string>
     <string name="filter_dialog_empty">Δεν έχουν προστεθεί ακόμη κριτήρια. Πατήστε τα παραπάνω κουμπιά για να ορίσετε το ερώτημά σας και να βελτιώσετε τα αποτελέσματά σας.</string>
     <string name="initial_value">Αρχική αξία</string>
     <string name="current_value">Τρέχουσα αξία</string>

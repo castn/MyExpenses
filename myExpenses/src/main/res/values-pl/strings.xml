@@ -734,7 +734,6 @@
     <string name="pref_unmapped_transaction_as_transfer_summary_on">są liczone jako transfer</string>
     <string name="warning_delete_default_transfer_category">Kategoria %s jest skonfigurowana jako domyślna kategoria transferu i nie powinna być usuwana.</string>
     <string name="pref_exchange_rate_provider_summary">Wybierz dostawcę, aby pobrać kursy wymiany walut</string>
-    <string name="notifications_permission_required_webui">Przyznając uprawnienie do wysyłania powiadomień, możesz kontrolować stan serwera WWW.</string>
     <string name="dialog_multi_tag">Wszystkie wybrane transakcje zostaną oznaczone tagiem %s.</string>
     <string name="download_completed">Pobieranie (%s) zostało zakończone.</string>
     <string name="pref_attachment_mime_types_title">Dozwolone typy MIME dla załączników</string>
@@ -751,7 +750,6 @@
     <string name="pref_ocr_engine_title">Silnik rozpoznawania tekstu</string>
     <string name="pref_mlkit_script_title">Skrypt dla MlKita</string>
     <string name="pref_feature_uninstall_summary">Sklep Play próbuje ostatecznie usunąć te moduły w tle.</string>
-    <string name="title_webui">Sieciowy interfejs użytkownika</string>
     <string name="content_description_dates_are_linked">Data rezerwacji i data wartości są aktualizowane razem</string>
     <string name="pref_copy_attachments_summary_on">Pliki zostaną skopiowane do folderu aplikacji.</string>
     <string name="database_is_encrypted">Baza danych jest szyfrowana.</string>
@@ -870,7 +868,6 @@
     <string name="pref_planner_manual_time_current">Godzina złożenia wniosku</string>
     <string name="pref_purge_backup_keep_title">Maksymalna liczba najnowszych plików kopii zapasowych do zachowania</string>
     <string name="pref_copy_attachments_summary_off">Pliki nie są kopiowane, przechowywane jest tylko odniesienie.</string>
-    <string name="webui_warning_move_transaction">Transakcja zostanie przeniesiona na konto {account}.</string>
     <string name="contrib_feature_category_tree_label">Dowolnie głęboka hierarchia kategorii</string>
     <string name="show_duplicates">Pokaż duplikaty</string>
     <string name="debt_paid_off_self">Mój dług został spłacony.</string>
@@ -965,7 +962,6 @@
     <string name="budget_import_can_be_imported">Można importować następujące budżety:</string>
     <string name="budget_import_cannot_be_imported">Poniższe budżety dotyczą kont, które nie są zsynchronizowane:</string>
     <string name="budget_import_none_found">Nie znaleziono żadnych budżetów.</string>
-    <string name="webui_download_no_data">Po wydrukowaniu, wyeksportowaniu lub utworzeniu kopii zapasowych w aplikacji, pliki będą dostępne do pobrania stąd.</string>
     <string name="filter_dialog_empty">Nie dodano jeszcze żadnych kryteriów. Stuknij powyższe przyciski, aby zdefiniować swoje zapytanie i dopracować wyniki.</string>
     <string name="initial_value">Wartość początkowa:</string>
     <string name="current_value">Obecna wartość</string>
@@ -1039,7 +1035,6 @@
     <string name="prioritize_flag_order">Priorytetyzacja kolejności flag</string>
     <string name="pref_content_based_colors_title">Dynamiczny kolor oparty na koncie</string>
     <string name="pref_content_based_colors_summary">Wywodź kolory motywu z koloru bieżącego konta. Wyłącz, jeśli tekst jest trudny do odczytania.</string>
-    <string name="service_starting">Rozpoczynam…</string>
     <string name="trade_buy">Zakup</string>
     <string name="trade_sell">Sprzedaż</string>
     <string name="trade_transfer">Przelew</string>

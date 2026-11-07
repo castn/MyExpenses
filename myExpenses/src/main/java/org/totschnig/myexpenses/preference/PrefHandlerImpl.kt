@@ -78,7 +78,6 @@ open class PrefHandlerImpl(
         setDefaultValues(context, R.xml.preferences_protection)
         setDefaultValues(context, R.xml.preferences_sync)
         setDefaultValues(context, R.xml.preferences_ui)
-        setDefaultValues(context, R.xml.preferences_web_ui)
     }
 
     open fun setDefaultValues(context: Context, resId: Int) {

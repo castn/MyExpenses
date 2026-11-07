@@ -52,7 +52,6 @@ enum class ContribFeature(
     HISTORY(licenceStatus = LicenceStatus.PROFESSIONAL),
     BUDGET(licenceStatus = LicenceStatus.PROFESSIONAL),
     OCR(licenceStatus = LicenceStatus.PROFESSIONAL),
-    WEB_UI(licenceStatus = LicenceStatus.PROFESSIONAL),
     CATEGORY_TREE(TrialMode.UNLIMITED, LicenceStatus.PROFESSIONAL),
     BANKING(licenceStatus = LicenceStatus.PROFESSIONAL),
     AUTOMATIC_FX_DOWNLOAD(licenceStatus = LicenceStatus.PROFESSIONAL),
@@ -89,7 +88,6 @@ enum class ContribFeature(
             HISTORY -> R.string.contrib_feature_history_label
             BUDGET -> R.string.contrib_feature_budget_label
             OCR -> R.string.contrib_feature_ocr_label
-            WEB_UI -> R.string.contrib_feature_web_ui_label
             CATEGORY_TREE -> R.string.contrib_feature_category_tree_label
             BANKING -> R.string.title_fints
             AUTOMATIC_FX_DOWNLOAD -> R.string.enable_automatic_daily_exchange_rate_download

@@ -754,7 +754,6 @@
     <string name="account_widget_configuration_sum">ಪ್ರದರ್ಶಿತ ಮೊತ್ತದ ಪ್ರಕಾರ</string>
     <string name="recurrence_last_day_of_month">ಕೊನೆಯ ದಿನ</string>
     <string name="single_feature_info">ಪರ್ಯಾಯವಾಗಿ ನೀವು ಈ ವೈಶಿಷ್ಟ್ಯಕ್ಕೆ ಮಾತ್ರ ಅನಿಯಮಿತ ಪ್ರವೇಶವನ್ನು ಖರೀದಿಸಬಹುದು.</string>
-    <string name="title_webui">ವೆಬ್ ಬಳಕೆದಾರ ಇಂಟರ್ಫೇಸ್</string>
     <string name="new_balance">ಹೊಸ ಸಮತೋಲನ</string>
     <string name="pref_group_header_show_details_summary">ಗುಂಪು ಹೆಡರ್ನಲ್ಲಿ ವಿವರ ಮೊತ್ತವನ್ನು ತೋರಿಸಿ</string>
     <string name="warning_unencrypted_backup">ಈ ಸಾಧನದಲ್ಲಿನ ಅನಧಿಕೃತ ಪ್ರವೇಶದಿಂದ ನಿಮ್ಮ ಡೇಟಾವನ್ನು ರಕ್ಷಿಸಲಾಗಿದ್ದರೂ, ನೀವು %s ಅನ್ನು ಕಾನ್ಫಿಗರ್ ಮಾಡದ ಹೊರತು ಎನ್‌ಕ್ರಿಪ್ಶನ್ ಇಲ್ಲದೆ ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ರಚಿಸಲಾಗುತ್ತದೆ.</string>
@@ -818,7 +817,6 @@
     <string name="pref_csv_export_split_categories_summary">ವರ್ಗ ಶ್ರೇಣಿಯ ಪ್ರತಿ ಹಂತಕ್ಕೆ ಪ್ರತ್ಯೇಕ ಕಾಲಮ್‌ಗಳನ್ನು ಬಳಸಿ</string>
     <string name="pref_csv_export_split_amount_summary">ಆದಾಯ ಮತ್ತು ವೆಚ್ಚಗಳಿಗಾಗಿ ಪ್ರತ್ಯೇಕ ಕಾಲಮ್ಗಳನ್ನು ಬಳಸಿ</string>
     <string name="pref_csv_export_split_date_time_summary">ದಿನಾಂಕ ಮತ್ತು ಸಮಯಕ್ಕಾಗಿ ಪ್ರತ್ಯೇಕ ಕಾಲಮ್‌ಗಳನ್ನು ಬಳಸಿ</string>
-    <string name="webui_warning_move_transaction">ವಹಿವಾಟನ್ನು ಖಾತೆಗೆ ಸರಿಸಲಾಗುತ್ತದೆ {account}.</string>
     <string name="budget_table_header_rollover">ಉರುಳಿಸು</string>
     <string name="dialog_confirm_rollover_delete">ಈ ಅವಧಿಯ ಎಲ್ಲಾ ರೋಲ್‌ಓವರ್ ಮೊತ್ತಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತದೆ.</string>
     <string name="content_description_attachment">ಲಗತ್ತು</string>

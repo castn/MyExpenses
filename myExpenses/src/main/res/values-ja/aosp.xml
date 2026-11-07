@@ -14,7 +14,6 @@
     <string name="postal_country">"国"</string>
     <string name="toast_text_copied">"テキストをコピーしました"</string>
     <string name="copy_text">"クリップボードにコピー"</string>
-    <string name="stop">"停止"</string>
     <string name="style">"スタイル"</string>
     <string name="loading">"読み込んでいます…"</string>
     <string name="button_label_continue">"次へ"</string>

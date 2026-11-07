@@ -16,7 +16,7 @@ import java.io.File
 
 
 object PermissionHelper {
-    @IntDef(PERMISSIONS_REQUEST_WRITE_CALENDAR, PERMISSIONS_REQUEST_NOTIFICATIONS_WEBUI,
+    @IntDef(PERMISSIONS_REQUEST_WRITE_CALENDAR,
         PERMISSIONS_REQUEST_NOTIFICATIONS_SYNC, PERMISSIONS_REQUEST_NOTIFICATIONS_PLANNER,
         PERMISSIONS_REQUEST_NOTIFICATIONS_AUTO_BACKUP, PERMISSIONS_REQUEST_STORAGE
     )
@@ -24,7 +24,6 @@ object PermissionHelper {
     annotation class PermissionRequestCode
 
     const val PERMISSIONS_REQUEST_WRITE_CALENDAR = 1
-    const val PERMISSIONS_REQUEST_NOTIFICATIONS_WEBUI = 2
     const val PERMISSIONS_REQUEST_NOTIFICATIONS_SYNC = 3
     const val PERMISSIONS_REQUEST_NOTIFICATIONS_PLANNER = 4
     const val PERMISSIONS_REQUEST_NOTIFICATIONS_AUTO_BACKUP = 5
@@ -62,8 +61,6 @@ object PermissionHelper {
                         }).toString()
                 }
             }
-            PERMISSIONS_REQUEST_NOTIFICATIONS_WEBUI ->
-                context.getString(R.string.notifications_permission_required_webui)
             PERMISSIONS_REQUEST_NOTIFICATIONS_SYNC -> context.getString(R.string.notifications_permission_required_sync)
             PERMISSIONS_REQUEST_NOTIFICATIONS_PLANNER ->
                 Utils.getTextWithAppName(context, R.string.notifications_permission_required_planner).toString()

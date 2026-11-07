@@ -59,7 +59,6 @@ Credits
 - [PageIndicatorView](https://github.com/romandanylyk/PageIndicatorView)
 - [FlexboxLayout](https://github.com/google/flexbox-layout)
 - [Android Image Cropper](https://github.com/ArthurHub/Android-Image-Cropper)
-- [Ktor](https://ktor.io/)
 - [FontDrawable](https://github.com/k4zy/FontDrawable/)
 - [Accompanist](https://github.com/google/accompanist) (drawablepainter, pager, flowlayout with patch from Sven Obser (https://github.com/brudaswen/accompanist/commit/582feb405276ce406260ad50634fd6b76ba19904))
 - [Email Intent Builder](https://github.com/cketti/EmailIntentBuilder)

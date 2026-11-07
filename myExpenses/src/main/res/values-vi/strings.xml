@@ -715,7 +715,6 @@
     <string name="rollover_edit_invalid">Tổng số tái đầu tư được gán cho một danh mục và các khoản tái đầu tư được gán cho các danh mục con không được vượt quá số dư còn lại.</string>
     <string name="content_description_attachment">Đính kèm</string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> cần có quyền gửi thông báo cho bạn khi các giao dịch trong tương lai được đăng.</string>
-    <string name="notifications_permission_required_webui">Bằng cách cấp quyền gửi thông báo, bạn có thể kiểm soát trạng thái của máy chủ web.</string>
     <string name="debt_paid_off_other">Nợ của %sđã được trả hết.</string>
     <string name="debt_balance_they_owe">%1$s bây giờ nợ %2$s.</string>
     <string name="pref_backup_file_prefix_title">Tiền tố tệp</string>
@@ -754,7 +753,6 @@
     <string name="warning_unencrypted_backup">Mặc dù dữ liệu của bạn được bảo vệ khỏi truy cập trái phép trên thiết bị này nhưng các bản sao lưu sẽ được tạo mà không cần mã hóa, trừ khi bạn định cấu hình %s.</string>
     <string name="account_widget_configuration_sum">Loại tổng hiển thị</string>
     <string name="pref_group_header_show_details_summary">Hiển thị số tiền chi tiết trong tiêu đề nhóm</string>
-    <string name="title_webui">Giao diện người dùng web</string>
     <string name="account_widget_configuration_sum_total">Bao gồm các giao dịch trong tương lai</string>
     <string name="warning_split_transactions">Các giao dịch đã chọn sẽ được nhóm thành một giao dịch chia nhỏ. Thông tin ngày tháng của họ sẽ bị mất, tức là được thay thế bằng mức trung bình của họ.</string>
     <string name="menu_parent_category_selection">Chọn danh mục mẹ trên phím ngắn</string>
@@ -769,7 +767,6 @@
         <item quantity="other">Các danh mục %1$d đã được cập nhật với các biểu tượng.</item>
     </plurals>
     <string name="pref_debug_logging_share_summary">Chia sẻ tệp nhật ký</string>
-    <string name="webui_warning_move_transaction">Giao dịch sẽ được chuyển đến tài khoản {account}.</string>
     <string name="dialog_confirm_rollover_delete">Tất cả số tiền tái đầu tư trong khoảng thời gian này sẽ bị xóa.</string>
     <string name="debt_installment_pay">Tôi trả góp %s.</string>
     <string name="redesign">Thiết kế lại</string>

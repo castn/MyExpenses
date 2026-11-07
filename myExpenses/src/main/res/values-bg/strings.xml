@@ -776,7 +776,6 @@
     <string name="pref_group_header_show_details_summary">Показвай подробни суми в заглавието на групата</string>
     <!-- Title of a menu item and a dialogue that allow to adjust the current balance. User can enter the new balance, and transaction form is opened with the amount prefiled to the difference between old and new balance  -->
     <string name="new_balance">Ново салдо</string>
-    <string name="title_webui">Уеб потребителски интерфейс</string>
     <string name="single_feature_info">Като алтернатива може да закупите неограничен достъп само за тази функция.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
     <string name="recurrence_last_day_of_month">Последния ден</string>
@@ -848,7 +847,6 @@
     <string name="pref_csv_export_split_categories_summary">Използвай отделна колона за всяко ниво в йерархията на категориите</string>
     <string name="pref_csv_export_split_amount_summary">Използвай отделни колони за приходи и разходи</string>
     <string name="pref_debug_logging_share_summary">Споделяне на файловете дневници за дебъг</string>
-    <string name="webui_warning_move_transaction">Транзакцията ще бъде преместена в сметка {account}.</string>
     <string name="icons_for_categories">Икони за категориите</string>
     <string name="budget_only_current_period">Задай само за %s</string>
     <string name="budget_table_header_rollover">Пренасяне на суми</string>
@@ -863,7 +861,6 @@
     <string name="database_is_encrypted">Базата данни е шифрована.</string>
     <string name="github_sponsors"><![CDATA[Предоставят се лицензионни ключове за <a href="%s">Github спонсор и</a>.]]></string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> се нуждае от разрешение да ви изпраща известия, когато бъдат публикувани бъдещи транзакции.</string>
-    <string name="notifications_permission_required_webui">Чрез предоставяне на разрешение за изпращане на известия, вие контролирате състоянието на уеб сървъра.</string>
     <string name="notifications_permission_required_sync">При предоставяне на разрешение за изпращане на известия, вие може да следите развитието на действията по синхронизиране.</string>
     <string name="notifications_channel_required">Моля, разрешете канала %s.</string>
     <string name="debt_installment_pay">Плащам вноска от %s.</string>
@@ -958,7 +955,6 @@
     <string name="budget_import_can_be_imported">Следните бюджети могат да бъдат импортирана:</string>
     <string name="budget_import_none_found">Не са намерени бюджети.</string>
     <string name="pref_sync_frequency_summary_0">Задайте стойност 0, за да спрете автоматичната синхронизация.</string>
-    <string name="webui_download_no_data">След печат, експорт или създаване на архивно копие в приложението, файловете ще бъдат налични тук за сваляне.</string>
     <string name="initial_value">Начална стойност</string>
     <string name="current_value">Текуща стойност</string>
     <string name="total_value">Обща стойност</string>
@@ -1043,7 +1039,6 @@
     <string name="prioritize_flag_order">Приоритет според флаговете</string>
     <string name="pref_content_based_colors_title">Динамичен цвят на сметки</string>
     <string name="pref_content_based_colors_summary">Цветове на темата според цвета на текущата сметка. Изключете, ако текстовете се четат трудно.</string>
-    <string name="service_starting">Стартиране…</string>
     <string name="asset_quantity_at_price">%1$s по %2$s</string>
     <string name="menu_create_portfolio">Нов портфейл</string>
     <string name="asset_type_fiat_plural">Валути</string>

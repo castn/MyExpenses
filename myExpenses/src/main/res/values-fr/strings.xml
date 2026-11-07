@@ -788,7 +788,6 @@
     <string name="pref_group_header_show_details_summary">Afficher les sommes détaillées dans l\'en-tête de groupe</string>
     <!-- Title of a menu item and a dialogue that allow to adjust the current balance. User can enter the new balance, and transaction form is opened with the amount prefiled to the difference between old and new balance  -->
     <string name="new_balance">Nouveau solde</string>
-    <string name="title_webui">Interface utilisateur Web</string>
     <string name="single_feature_info">Vous pouvez également acheter un accès illimité à cette fonctionnalité uniquement.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
     <string name="recurrence_last_day_of_month">Dernier jour</string>
@@ -861,7 +860,6 @@
     </plurals>
     <string name="pref_purge_backup_keep_title">Nombre maximal de fichiers de sauvegarde les plus récents à conserver</string>
     <string name="pref_debug_logging_share_summary">Partager les fichiers journaux</string>
-    <string name="webui_warning_move_transaction">La transaction sera déplacée vers le compte {account}.</string>
     <string name="pref_csv_export_split_categories_summary">Utiliser des colonnes distinctes pour chaque niveau de la hiérarchie des catégories</string>
     <string name="pref_csv_export_split_amount_summary">Utiliser des colonnes distinctes pour les revenus et les dépenses</string>
     <string name="pref_csv_export_split_date_time_summary">Utiliser des colonnes distinctes pour la date et l\'heure</string>
@@ -878,7 +876,6 @@
     <string name="encrypt_database_info">La base de données sera cryptée avec une phrase secrète qui ne peut pas être extraite de cet appareil. Par conséquent, elle ne sera pas sauvegardé par le service de sauvegarde de votre appareil.</string>
     <string name="database_is_encrypted">La base de données est cryptée.</string>
     <string name="github_sponsors"><![CDATA[Les clés de licence sont également fournies aux <a href="%s">Github Sponsors</a>.]]></string>
-    <string name="notifications_permission_required_webui">En accordant l’autorisation d’envoyer des notifications, vous pouvez contrôler l’état du serveur Web.</string>
     <string name="notifications_channel_required">Veuillez activer le canal %s.</string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> requiert votre permission d\'envoyer des notifications lorsque des transactions futures sont enregistrées.</string>
     <string name="notifications_permission_required_sync">En accordant l’autorisation d’envoyer des notifications, vous pouvez surveiller la progression des opérations de synchronisation.</string>
@@ -974,7 +971,6 @@
     <string name="budget_import_can_be_imported">Les budgets suivants peuvent être importés :</string>
     <string name="budget_import_none_found">Aucun budget trouvé.</string>
     <string name="pref_sync_frequency_summary_0">Réglez sur 0 afin de désactiver la synchronisation automatique.</string>
-    <string name="webui_download_no_data">Après avoir imprimé, exporté ou créé des sauvegardes dans l\'application, les fichiers seront disponibles à partir d\'ici pour téléchargement.</string>
     <string name="filter_dialog_empty">Aucun critère n\'a encore été ajouté. Appuyez sur les boutons ci-dessus pour définir votre requête et affiner vos résultats.</string>
     <string name="initial_value">Valeur initiale</string>
     <string name="total_value">Valeur totale</string>
@@ -1089,7 +1085,6 @@
         <item quantity="many">%1$d lignes font référence à des actifs inconnus : %2$s.</item>
         <item quantity="other">%1$d lignes font référence à des actifs inconnus : %2$s.</item>
     </plurals>
-    <string name="service_starting">Démarrage…</string>
     <string name="rounding">Arrondi</string>
     <string name="trade_transfer">Transfert</string>
     <string name="asset_type_commodity">Matière première</string>

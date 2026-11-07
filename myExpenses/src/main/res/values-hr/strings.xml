@@ -570,7 +570,6 @@
     <string name="warning_link_transfer">Dvije odabrane transakcije će se povezati kao prijenos. Informacije o protustranci i kategoriji se neće koristiti.</string>
     <string name="recurrence_last_day_of_month">Zadnji dan</string>
     <string name="single_feature_info">Alternativno možeš kupiti neograničeni pristup samo ovoj funkciji.</string>
-    <string name="title_webui">Internetsko korisničko sučelje</string>
     <string name="new_balance">Novi saldo</string>
     <string name="pref_group_header_show_details_summary">Prikaži zbrojeve u zaglavlju grupe</string>
     <string name="warning_unencrypted_backup">Iako su tvoji podaci zaštićeni od neovlaštenog pristupa na ovom uređaju, sigurnosne kopije se izrađuju bez šifriranja, osim ako konfiguriraš %s.</string>
@@ -795,7 +794,6 @@
     <string name="contrib_feature_category_tree_label">Proizvoljna razina hijerarhije kategorija</string>
     <string name="dialog_contrib_usage_limit_with_dialog">S tvojim trenutačnim stanjem licence (%1$s) će se ovaj dijalog prikazati pri svakoj upotrebi.</string>
     <string name="menu_parent_category_selection">Odaberi nadređenu kategoriju kratkim dodirom</string>
-    <string name="webui_warning_move_transaction">Transakcija će se premjestiti na račun {account}.</string>
     <string name="pref_csv_export_split_categories_summary">Koristi zasebne stupce za svaku razinu hijerarhije kategorija</string>
     <string name="pref_csv_export_split_amount_summary">Koristi zasebne stupce za prihod i troškove</string>
     <string name="pref_csv_export_split_date_time_summary">Koristi zasebne stupce za datum i vrijeme</string>
@@ -816,7 +814,6 @@
     <string name="debt_borrow_additional">Uzajmljujem %s.</string>
     <string name="debt_paid_off_other">Dug od %s je otplaćen.</string>
     <string name="github_sponsors"><![CDATA[Licencni ključevi se također dodaju <a href="%s">Github sponzorima</a>.]]></string>
-    <string name="notifications_permission_required_webui">Davanjem dozvole za slanje obavijesti možeš kontrolirati stanje web poslužitelja.</string>
     <string name="notifications_permission_required_sync">Davanjem dozvole za slanje obavijesti možeš pratiti napredak sinkronizacije.</string>
     <string name="notifications_channel_required">Aktiviraj kanal %s.</string>
     <string name="debt_balance_they_owe">%1$s sada duguje %2$s.</string>
@@ -908,7 +905,6 @@
     <string name="budget_import_cannot_be_imported">Sljedeći budžeti se odnose na račune koji nisu sinkronizirani:</string>
     <string name="content_description_original_amount">Definiraj izvorni iznos ove transakcije odabirom valute i unosom iznosa. Za izračun stvarnog iznosa možeš definirati i tečaj koji će se koristiti.</string>
     <string name="pref_sync_frequency_summary_0">Postavi na 0 za deaktiviranje automatske sinkronizacije.</string>
-    <string name="webui_download_no_data">Nakon ispisa, izvoza ili izrade sigurnosnih kopija u aplikaciji, datoteke će ovdje biti dostupne za preuzimanje.</string>
     <string name="content_description_equivalent_amount">Definiraj vrijednost ove transakcije u svojoj domaćoj valuti. Umjesto unosa iznosa, za izračunavanje vrijednosti možeš unijeti tečaj.</string>
     <string name="quick_search">Brza pretraga</string>
     <string name="complex_search">Složena pretraga</string>
@@ -997,7 +993,6 @@
     <string name="prioritize_flag_order">Prioriziraj redoslijed znački</string>
     <string name="pref_content_based_colors_title">Dinamična boja na osnovi računa</string>
     <string name="pref_content_based_colors_summary">Izvedi boje teme iz boje trenutačnog računa. Isključi ako je tekst teško čitljiv.</string>
-    <string name="service_starting">Pokretanje …</string>
     <string name="rounding">Zaokruživanje</string>
     <string name="important_upgrade_information_heading">Važne informacije</string>
     <string name="pref_tag_style_title">Stil oznake</string>

@@ -111,8 +111,6 @@ const val DYNAMIC_EXCHANGE_RATES_DEFAULT_KEY = "dynamic_exchange_rates_default"
 
 val dynamicExchangeRatesDefaultKey = stringPreferencesKey(DYNAMIC_EXCHANGE_RATES_DEFAULT_KEY)
 
-val webUiKey = booleanPreferencesKey("web_ui")
-
 /**
  * 1 if all accounts should have dynamic exchange rates,
  * 0 if none should have dynamic exchange rates,
@@ -143,14 +141,5 @@ suspend fun DataStore<Preferences>.persistMenu(
 ) {
     edit { preferences ->
         preferences[menuContext.prefKey] = MenuItem.mapper.toPreference(data)
-    }
-}
-
-val DataStore<Preferences>.isWebUiActive: Flow<Boolean>
-    get() = data.map { it[webUiKey] == true }
-
-suspend fun DataStore<Preferences>.setWebUiActive(active: Boolean) {
-    edit { preferences ->
-        preferences[webUiKey] = active
     }
 }

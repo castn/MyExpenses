@@ -776,7 +776,6 @@
     <string name="pref_group_header_show_details_summary">Grup başlığında ayrıntılı toplamları göster</string>
     <!-- Title of a menu item and a dialogue that allow to adjust the current balance. User can enter the new balance, and transaction form is opened with the amount prefiled to the difference between old and new balance  -->
     <string name="new_balance">Yeni bakiye</string>
-    <string name="title_webui">İnternet Kullanıcı Arayüzü</string>
     <string name="single_feature_info">Alternatif olarak, yalnızca bu özelliğe sınırsız erişim satın alabilirsiniz.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
     <string name="recurrence_last_day_of_month">Son gün</string>
@@ -845,7 +844,6 @@
     </plurals>
     <string name="pref_purge_backup_keep_title">Saklanacak en fazla son yedekleme dosyası sayısı</string>
     <string name="pref_debug_logging_share_summary">Günlük dosyalarını paylaş</string>
-    <string name="webui_warning_move_transaction">Muamele {account} hesabına taşınacak.</string>
     <string name="pref_csv_export_split_amount_summary">Gelir ve giderler için ayrı sütunlar kullanın</string>
     <string name="pref_csv_export_split_categories_summary">Kategori hiyerarşisinin her seviyesi için ayrı sütunlar kullanın</string>
     <string name="pref_csv_export_split_date_time_summary">Tarih ve saat için ayrı sütunlar kullanın</string>
@@ -863,7 +861,6 @@
     <string name="database_is_encrypted">Veri tabanı şifrelendi.</string>
     <string name="github_sponsors"><![CDATA[<a href="%s">Github Sponsorlarına</a> da lisans anahtarları sağlanmaktadır.]]></string>
     <string name="notifications_permission_required_planner">Gelecekteki muameleler gönderildiğinde size bildirim göndermek için <i>{app_name}</i> izne ihtiyaç duyuyor.</string>
-    <string name="notifications_permission_required_webui">Bildirim gönderme izni vererek web sunucusunun durumunu denetleyebilirsiniz.</string>
     <string name="notifications_permission_required_sync">Bildirim gönderme izni vererek, eşzamanlama işlemlerinin ilerleyişini izleyebilirsiniz.</string>
     <string name="notifications_channel_required">Lütfen %s kanalını etkinleştirin.</string>
     <string name="debt_lend_additional">%s borç veriyorum.</string>
@@ -999,7 +996,6 @@
     <string name="budget_import_can_be_imported">Şu bütçeler içe aktarılabilir:</string>
     <string name="budget_import_cannot_be_imported">Şu bütçeler eşzamanlanmayan hesaplara ait:</string>
     <string name="budget_import_none_found">Bütçe bulunamadı.</string>
-    <string name="webui_download_no_data">Uygulamada yazdırma, dışa aktarma veya yedekleme işlemleri yapıldıktan sonra, dosyalar buradan indirilebilir.</string>
     <string name="filter_dialog_empty">Henüz bir ölçüt eklenmedi. Sorgunuzu tanımlamak ve sonuçlarınızı daraltmak için yukarıdaki düğmelere dokunun.</string>
     <string name="initial_value">İlk değer</string>
     <string name="current_value">Güncel değer</string>
@@ -1043,7 +1039,6 @@
     <string name="prioritize_flag_order">Bayrak sıralamasını önceliklendir</string>
     <string name="pref_content_based_colors_title">Hesaba dayalı değişken renk</string>
     <string name="pref_content_based_colors_summary">Tema renklerini geçerli hesabın renginden al. Metin okunması zor ise bu özelliği kapatın.</string>
-    <string name="service_starting">Başlatılıyor…</string>
     <string name="trade_fee">Ücret</string>
     <string name="trade_price">Fiyat</string>
     <string name="trade_sell">Sat</string>

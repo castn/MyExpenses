@@ -776,7 +776,6 @@
     <string name="pref_group_header_show_details_summary">Detailsummen in der Gruppenkopfzeile anzeigen</string>
     <!-- Title of a menu item and a dialogue that allow to adjust the current balance. User can enter the new balance, and transaction form is opened with the amount prefiled to the difference between old and new balance  -->
     <string name="new_balance">Neuer Saldo</string>
-    <string name="title_webui">Web-Benutzeroberfläche</string>
     <string name="single_feature_info">Alternativ können Sie uneingeschränkten Zugriff nur auf diese Funktion erwerben.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
     <string name="recurrence_last_day_of_month">Letzter Tag</string>
@@ -848,7 +847,6 @@
     <string name="pref_csv_export_split_categories_summary">Verwendung getrennter Spalten für jede Ebene der Kategorienhierarchie</string>
     <string name="pref_csv_export_split_amount_summary">Verwendung getrennter Spalten für Einkommen und Ausgaben</string>
     <string name="pref_csv_export_split_date_time_summary">Verwendung getrennter Spalten für Datum und Zeit</string>
-    <string name="webui_warning_move_transaction">Die Buchung wird in das Konto {account} verschoben.</string>
     <string name="icons_for_categories">Symbole für Kategorien</string>
     <string name="budget_table_header_rollover">Übertrag</string>
     <string name="dialog_confirm_rollover_delete">Für diesen Zeitraum werden alle Überträge gelöscht.</string>
@@ -862,7 +860,6 @@
     <string name="encrypt_database_info">Die Datenbank wird mit einer Passphrase verschlüsselt, die nicht von diesem Gerät extrahiert werden kann. Folglich wird sie nicht vom Backup-Service Ihres Geräts gesichert.</string>
     <string name="database_is_encrypted">Die Datenbank ist verschlüsselt.</string>
     <string name="github_sponsors"><![CDATA[Lizenzschlüssel werden auch <a href="%s">Github-Sponsoren</a> zur Verfügung gestellt.]]></string>
-    <string name="notifications_permission_required_webui">Indem Sie die Erlaubnis zum Senden von Benachrichtigungen erteilen, können Sie den Status des Webservers kontrollieren.</string>
     <string name="notifications_channel_required">Bitte aktivieren Sie den Kanal %s.</string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> benötigt die Berechtigung, Ihnen Benachrichtigungen zu senden, wenn zukünftige Transaktionen gebucht werden.</string>
     <string name="notifications_permission_required_sync">Indem Sie die Berechtigung zum Senden von Benachrichtigungen erteilen, können Sie den Fortschritt der Synchronisierungsvorgänge überwachen.</string>
@@ -960,7 +957,6 @@
     <string name="budget_import_cannot_be_imported">Die folgenden Budgets beziehen sich auf Konten, die nicht synchronisiert sind:</string>
     <string name="budget_import_none_found">Keine Budgets gefunden.</string>
     <string name="pref_sync_frequency_summary_0">Setzen Sie diesen Wert auf 0, um die automatische Synchronisierung zu deaktivieren.</string>
-    <string name="webui_download_no_data">Nach dem Drucken, Exportieren oder Erstellen von Backups in der App stehen die Dateien hier zum Download bereit.</string>
     <string name="filter_dialog_empty">Es wurden noch keine Kriterien hinzugefügt. Tippen Sie auf die Schaltflächen oben, um Ihre Abfrage zu definieren und Ihre Ergebnisse zu verfeinern.</string>
     <string name="initial_value">Anfangswert</string>
     <string name="current_value">Aktueller Wert</string>
@@ -1073,7 +1069,6 @@
         <item quantity="one">%1$d Zeile bezieht sich auf unbekannte Vermögenswerte: %2$s.</item>
         <item quantity="other">%1$d Zeilen beziehen sich auf unbekannte Vermögenswerte: %2$s.</item>
     </plurals>
-    <string name="service_starting">Wird gestartet…</string>
     <string name="trade_transfer">Übertrag</string>
     <string name="important_upgrade_information_heading">Wichtige Information</string>
     <string name="search_asset">Suche nach Vermögenswert</string>

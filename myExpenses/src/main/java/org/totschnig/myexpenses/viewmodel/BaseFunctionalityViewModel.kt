@@ -27,7 +27,6 @@ import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.dialog.getDisplayName
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.preference.SecurePreferenceDataStore
-import org.totschnig.myexpenses.preference.setWebUiActive
 import org.totschnig.myexpenses.util.AppDirHelper
 import org.totschnig.myexpenses.util.Utils
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
@@ -235,12 +234,6 @@ class BaseFunctionalityViewModel(application: Application) :
             viewModelScope.launch(coroutineContext()) {
                 contentResolver.delete(result.originalUri, null, null)
             }
-        }
-    }
-
-    fun toggleWebUi(enabled: Boolean) {
-        viewModelScope.launch {
-            dataStore.setWebUiActive(enabled)
         }
     }
 }

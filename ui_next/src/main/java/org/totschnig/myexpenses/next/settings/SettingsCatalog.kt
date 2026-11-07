@@ -148,12 +148,9 @@ import org.totschnig.myexpenses.preference.PrefKey.UI_LANGUAGE
 import org.totschnig.myexpenses.preference.PrefKey.UI_MAIN_SCREEN_VERSION
 import org.totschnig.myexpenses.preference.PrefKey.UI_START_SCREEN
 import org.totschnig.myexpenses.preference.PrefKey.UI_THEME
-import org.totschnig.myexpenses.preference.PrefKey.UI_WEB
 import org.totschnig.myexpenses.preference.PrefKey.UNMAPPED_TRANSACTION_AS_TRANSFER
 import org.totschnig.myexpenses.preference.PrefKey.WEBDAV_ALLOW_UNVERIFIED_HOST
 import org.totschnig.myexpenses.preference.PrefKey.WEBDAV_TIMEOUT
-import org.totschnig.myexpenses.preference.PrefKey.WEBUI_HTTPS
-import org.totschnig.myexpenses.preference.PrefKey.WEBUI_PASSWORD
 import org.totschnig.myexpenses.R
 
 /** Groups of the start page of the settings, in their order */
@@ -254,7 +251,6 @@ enum class LegacyScreen(val xml: Int, val header: SettingKey?) {
     BACKUP_RESTORE(R.xml.preferences_backup_restore, SettingKey.Pref(CATEGORY_BACKUP_RESTORE)),
     OCR(R.xml.preferences_ocr, SettingKey.Plain("ocr")),
     SYNC(R.xml.preferences_sync, SettingKey.Plain("sync")),
-    WEB_UI(R.xml.preferences_web_ui, SettingKey.Plain("web_ui")),
     ATTACH_PICTURE(R.xml.preferences_attach_picture, SettingKey.Plain("attach_picture")),
     PRINT(R.xml.preferences_print, SettingKey.Plain("print")),
     CONTRIB(0, SettingKey.Pref(CONTRIB_PURCHASE)),
@@ -414,11 +410,6 @@ object SettingsCatalog {
             }
             on(LegacyScreen.MAIN) {
                 action(BANKING_FINTS)
-            }
-            on(LegacyScreen.WEB_UI) {
-                action(UI_WEB)
-                password(WEBUI_PASSWORD)
-                switch(WEBUI_HTTPS)
             }
         }
         group(SettingsGroup.BACKUP) {

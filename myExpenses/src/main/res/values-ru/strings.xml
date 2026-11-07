@@ -748,7 +748,6 @@
     <string name="pref_planner_manual_time_noon">12 часов дня</string>
     <string name="budget_filter_all_accounts">Все счета</string>
     <string name="single_feature_info">Либо вы можете купить безлимитный доступ только к этой функции.</string>
-    <string name="title_webui">Веб-интерфейс пользователя</string>
     <string name="new_balance">Новый баланс</string>
     <string name="pref_group_header_show_details_summary">Показать подробные суммы в заголовке группы</string>
     <string name="warning_unencrypted_backup">Хотя ваши данные защищены от несанкционированного доступа на этом устройстве, резервные копии создаются без шифрования, если вы не настроите %s.</string>
@@ -903,12 +902,10 @@
     <string name="budget_widget_configuration">Выбрать бюджет</string>
     <string name="pref_purge_backup_keep_title">Количество последних резервных копий для сохранения</string>
     <string name="pref_debug_logging_share_summary">Поделиться файлами журнала</string>
-    <string name="webui_warning_move_transaction">Транзакция будет перенесена в счёт {account}.</string>
     <string name="budget_table_header_rollover">Перенос</string>
     <string name="rollover_edit_invalid">Сумма переноса, назначенного категории, и переносов, назначенных подкатегориям, не может превышать остаток.</string>
     <string name="dialog_confirm_rollover_delete">Все перенесенные суммы за этот период будут удалены.</string>
     <string name="select_all_list_too_large">Команда %s не доступна, так как список загружен не полностью. Пожалуйста, используйте функцию поиска, чтобы сократить размер списка.</string>
-    <string name="notifications_permission_required_webui">Разрешив отправку уведомлений, вы сможете управлять статусом веб-сервера.</string>
     <string name="notifications_channel_required">Пожалуйста, включите канал %s.</string>
     <string name="debt_installment_pay">Я оплачиваю очередной платеж в размере %s.</string>
     <string name="image_optimize_quality_summary">Качество 0 означает сжатие для минимального размера. 100 означает сжатие для максимального визуального качества.</string>
@@ -960,7 +957,6 @@
     <string name="budget_import_cannot_be_imported">Следующие бюджеты относятся к счетам, которые не синхронизированы:</string>
     <string name="budget_import_none_found">Бюджеты не найдены.</string>
     <string name="pref_sync_frequency_summary_0">Установите значение 0, чтобы отключить автоматическую синхронизацию.</string>
-    <string name="webui_download_no_data">После печати, экспорта или создания резервных копий в приложении, файлы будут доступны для загрузки отсюда.</string>
     <string name="filter_dialog_empty">Критерии ещё не заданы. Нажмите кнопки выше, чтобы определить запрос и уточнить результаты.</string>
     <string name="initial_value">Начальная стоимость</string>
     <string name="current_value">Текущая стоимость</string>
@@ -1053,7 +1049,6 @@
     <string name="prioritize_flag_order">Приоритет порядка флагов</string>
     <string name="pref_content_based_colors_title">Динамический цвет на основе цвета счета</string>
     <string name="pref_content_based_colors_summary">Определение цветов темы на основе цвета текущего счета. Отключите, если текст становится трудночитаемым.</string>
-    <string name="service_starting">Запуск…</string>
     <string name="asset_quantity_at_price">%1$s по %2$s</string>
     <plurals name="import_trades_missing_assets_message">
         <item quantity="one">%1$d строка относится к неизвестным активам: %2$s.</item>

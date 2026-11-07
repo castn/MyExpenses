@@ -778,7 +778,6 @@
     <string name="pref_group_header_show_details_summary">Részletösszegek mutatása a csoport fejlécében</string>
     <!-- Title of a menu item and a dialogue that allow to adjust the current balance. User can enter the new balance, and transaction form is opened with the amount prefiled to the difference between old and new balance  -->
     <string name="new_balance">Új egyenleg</string>
-    <string name="title_webui">Webes felhasználói kezelőfelület</string>
     <string name="single_feature_info">Másik lehetőségként korlátlan hozzáférést vásárolhat csak ehhez a funkcióhoz.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
     <string name="recurrence_last_day_of_month">Utolsó nap</string>
@@ -805,7 +804,6 @@
     <string name="dialog_contrib_trial_info_play">Ez az ingyenes próbaverzió soha nem vált át semmilyen típusú előfizetésre.</string>
     <string name="dialog_contrib_subscription_info_play">Ez az előfizetés azonnal hatályba lép, havonta vagy évente kerül számlázásra, és bármikor lemondható.</string>
     <string name="stability_improvements" tools:ignore="UnusedResources">Stabilitási fejlesztések</string>
-    <string name="notifications_permission_required_webui">Az értesítések küldésére vonatkozó engedély megadásával szabályozhatja a webkiszolgáló állapotát.</string>
     <string name="auto_fill_focus">Fókusz beállítása a kedvezményezettre</string>
     <string name="warning_plan_instance_delete">A kiválasztott dátumra létrehozott tranzakció törlődik.</string>
     <string name="performance_enhancement" tools:ignore="UnusedResources">Teljesítménynövelés</string>
@@ -866,7 +864,6 @@
         <item quantity="other">%d régi biztonsági mentési fájlokat nem lehetett törölni.</item>
     </plurals>
     <string name="pref_csv_export_split_date_time_summary">Használjon külön oszlopokat a dátumhoz és az időhöz</string>
-    <string name="webui_warning_move_transaction">A tranzakció átkerül a(z) {account} fiókba.</string>
     <string name="pref_mlkit_script_title">Parancsfájl az MlKit-hez</string>
     <string name="content_description_attachment">Melléklet</string>
     <string name="dialog_confirm_rollover_delete">Az erre az időszakra vonatkozó összes átgörgetési összeg törlődik.</string>
@@ -972,7 +969,6 @@
     <string name="budget_import_can_be_imported">Az alábbi költségvetések importálhatók:</string>
     <string name="budget_import_cannot_be_imported">Az alábbi költségvetések azokra a számlákra vonatkoznak, amelyek nincsenek szinkronizálva:</string>
     <string name="budget_import_none_found">Nem találtak költségvetést.</string>
-    <string name="webui_download_no_data">Nyomtatás, exportálás vagy biztonsági mentések készítése után a fájlok innen elérhetők lesznek letöltésre.</string>
     <string name="filter_dialog_empty">Még nincs hozzáadott kritérium. Érintsd meg a fenti gombokat, hogy meghatározd a lekérdezésedet és finomítsd az eredményeket.</string>
     <string name="initial_value">Kezdeti érték</string>
     <string name="current_value">Jelenlegi érték</string>
@@ -1048,7 +1044,6 @@
     <string name="prioritize_flag_order">Prioritás zászlósorrend</string>
     <string name="pref_content_based_colors_title">Fiókalapú dinamikus szín</string>
     <string name="pref_content_based_colors_summary">A témaszíneket a jelenlegi fiók színéből származtasd. Kapcsold ki, ha a szöveg nehezen olvasható.</string>
-    <string name="service_starting">Indítás…</string>
     <string name="trade_buy">Vétel</string>
     <string name="trade_sell">Eladás</string>
     <string name="trade_transfer">Átutalás</string>

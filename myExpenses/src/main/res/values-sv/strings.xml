@@ -773,7 +773,6 @@
     <string name="ocr_download_info">Textigenkänningsförmåga tillhandahålls av en extern applikation.</string>
     <string name="warning_unencrypted_backup">Även om din data är skyddad från obehörig åtkomst på denna enhet, skapas säkerhetskopior utan kryptering, om du inte konfigurerar %s.</string>
     <string name="pref_group_header_show_details_summary">Visa detaljsummor i grupphuvudet</string>
-    <string name="title_webui">Webbanvändargränssnitt</string>
     <string name="single_feature_info">Alternativt kan du köpa obegränsad tillgång till endast denna funktion.</string>
     <string name="warning_link_transfer">De två valda transaktionerna kommer att kopplas ihop som överföring. Motparts- och kategoriinformation kommer att tas bort.</string>
     <string name="account_widget_configuration_sum">Typ av visad summa</string>
@@ -809,7 +808,6 @@
     </plurals>
     <string name="pref_purge_backup_keep_title">Maximalt antal senaste säkerhetskopior att behålla</string>
     <string name="pref_purge_backup_require_confirmation_summary">Visa bekräftelseprompt innan filer rensas</string>
-    <string name="webui_warning_move_transaction">Transaktionen kommer att flyttas till kontot {konto}.</string>
     <string name="pref_csv_export_split_categories_summary">Använd separata kolumner för varje nivå i kategorihierarkin</string>
     <string name="pref_csv_export_split_amount_summary">Använd separata kolumner för intäkter och utgifter</string>
     <string name="pref_csv_export_split_date_time_summary">Använd separata kolumner för datum och tid</string>
@@ -821,7 +819,6 @@
     <string name="encrypt_database_info">Databasen kommer att krypteras med en lösenfras som inte kan extraheras från denna enhet. Därför säkerhetskopieras det inte av enhetens backuptjänst.</string>
     <string name="github_sponsors"><![CDATA[Licensnycklar tillhandahålls även till <a href="%s">Github-sponsorer</a>.]]></string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> behöver tillstånd för att skicka notiser till dig när framtida transaktioner bokas.</string>
-    <string name="notifications_permission_required_webui">Genom att ge tillstånd att skicka notiser kan du kontrollera statusen på webbservern.</string>
     <string name="notifications_permission_required_sync">Genom att ge tillstånd att skicka notiser kan du övervaka framstegen i synkroniseringsoperationerna.</string>
     <string name="notifications_permission_required_auto_backup">Genom att ge tillstånd att skicka aviseringar kommer du att informeras om automatiska säkerhetskopior.</string>
     <string name="notifications_channel_required">Vänligen aktivera kanal %s.</string>
@@ -877,7 +874,6 @@
     <string name="warning_archived_transfer_cannot_be_edited">Överföringen kan inte redigeras eftersom dess andra sida är arkiverad.</string>
     <string name="warning_budget_sync_import">Konfigurationen av denna budget importeras från synkroniseringsbackend. Alla lokala förändringar kommer att gå förlorade.</string>
     <string name="budget_import_cannot_be_imported">Följande budgetar avser konton som inte är synkroniserade:</string>
-    <string name="webui_download_no_data">Efter utskrift, export eller skapande av säkerhetskopior i appen kommer filer att finnas tillgängliga för nedladdning härifrån.</string>
     <string name="filter_dialog_empty">Inga kriterier tillagda än. Tryck på knapparna ovan för att definiera din sökning och förfina dina resultat.</string>
     <string name="enable_automatic_daily_exchange_rate_download">Automatisk daglig nedladdning av växelkurs</string>
     <string name="dynamic_exchange_rate">Dynamisk växelkurs</string>
@@ -940,7 +936,6 @@
     <string name="prioritize_flag_order">Prioritera flaggordningen</string>
     <string name="pref_content_based_colors_title">Kontobaserad dynamisk färg</string>
     <string name="pref_content_based_colors_summary">Härled temafärger från det aktuella kontots färg. Stäng av om texten är svår att läsa.</string>
-    <string name="service_starting">Startar…</string>
     <string name="trade_buy">Köp</string>
     <string name="trade_sell">Sälj</string>
     <string name="trade_price">Pris</string>

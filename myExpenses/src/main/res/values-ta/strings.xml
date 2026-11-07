@@ -776,7 +776,6 @@
     <string name="pref_group_header_show_details_summary">குழு தலைப்பில் விவரமான கூட்டு தொகைகளைக் காட்டு</string>
     <!-- Title of a menu item and a dialogue that allow to adjust the current balance. User can enter the new balance, and transaction form is opened with the amount prefiled to the difference between old and new balance  -->
     <string name="new_balance">புதிய இருப்பு</string>
-    <string name="title_webui">வலை பயனர் இடைமுகம்</string>
     <string name="single_feature_info">மாற்றாக இந்த அம்சத்திற்கு மட்டுமே நீங்கள் வரம்பற்ற அணுகலை வாங்க முடியும்.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
     <string name="recurrence_last_day_of_month">கடைசி நாள்</string>
@@ -844,7 +843,6 @@
     <string name="archive">காப்பகம்</string>
     <string name="menu_reconfigure">மறுகட்டமைக்கவும்</string>
     <string name="contact_us">எங்களை தொடர்புகொள்</string>
-    <string name="webui_warning_move_transaction">பரிவர்த்தனை கணக்கு {account} க்கு நகர்த்தப்படும்.</string>
     <string name="pref_csv_export_split_categories_summary">வகை வரிசைமுறையின் ஒவ்வொரு மட்டத்திற்கும் தனி நெடுவரிசைகளைப் பயன்படுத்தவும்</string>
     <string name="pref_copy_attachments_summary_on">பயன்பாட்டு கோப்புறையில் கோப்புகள் நகலெடுக்கப்படுகின்றன.</string>
     <string name="warning_unlink_transfer">தேர்ந்தெடுக்கப்பட்ட பரிமாற்றம் இணைக்கப்படாதது: இது இரு கணக்குகளிலும் சாதாரண பரிவர்த்தனைகளால் மாற்றப்படும்.</string>
@@ -868,7 +866,6 @@
     <string name="pref_debug_logging_share_summary">பதிவு கோப்புகளைப் பகிரவும்</string>
     <string name="budget_table_header_rollover">ரோல்ஓவர்</string>
     <string name="encrypt_database_info">இந்த சாதனத்திலிருந்து பிரித்தெடுக்க முடியாத ஒரு கடவுச்சொற்றால் தரவுத்தளம் குறியாக்கம் செய்யப்படும். இதன் விளைவாக இது உங்கள் சாதனத்தின் காப்பு சேவையால் ஆதரிக்கப்படாது.</string>
-    <string name="notifications_permission_required_webui">அறிவிப்புகளை அனுப்ப இசைவு வழங்குவதன் மூலம், வலை சேவையகத்தின் நிலையை நீங்கள் கட்டுப்படுத்தலாம்.</string>
     <string name="image_optimize_quality_summary">0 இன் தகுதி என்பது மிகச்சிறிய அளவிற்கு சுருக்க வேண்டும். 100 என்றால் அதிகபட்ச காட்சி தரத்திற்கு சுருக்க.</string>
     <string name="select_template">வார்ப்புருவைத் தேர்ந்தெடுக்கவும்</string>
     <string name="merge_parties_strategy_group">நகல்கள் சார்புடையவர்களாக தொகுக்கப்பட்டுள்ளன.</string>
@@ -963,7 +960,6 @@
     <string name="balance_sheet_section_assets">சொத்துகள்</string>
     <string name="balance_sheet_section_liabilities">கடன்கள்</string>
     <string name="balance_sheet_net_worth">நிகர மதிப்பு</string>
-    <string name="webui_download_no_data">பயன்பாட்டில் அச்சிட்டு, ஏற்றுமதி செய்த அல்லது காப்புப்பிரதிகளை உருவாக்கிய பிறகு, கோப்புகள் பதிவிறக்கம் செய்ய இங்கிருந்து கிடைக்கும்.</string>
     <string name="sort_direction">திசையை வரிசைப்படுத்துங்கள்</string>
     <string name="batch_download_result">%d விலைகள் பதிவிறக்கம் செய்யப்பட்டு தரவுத்தளத்தில் சேமிக்கப்பட்டன.</string>
     <string name="filter_dialog_empty">இதுவரை எந்த அளவுகோல்களும் சேர்க்கப்படவில்லை. உங்கள் வினவலை வரையறுக்கவும், உங்கள் முடிவுகளை செம்மைப்படுத்தவும் மேலே உள்ள பொத்தான்களைத் தட்டவும்.</string>

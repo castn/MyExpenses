@@ -22,7 +22,8 @@ class AcraCrashHandler(prefHandler: PrefHandler) : BaseCrashHandler(prefHandler)
                 prefHandler.getKey(PrefKey.PLANNER_CALENDAR_PATH),
                 prefHandler.getKey(PrefKey.SET_PASSWORD),
                 prefHandler.getKey(PrefKey.EXPORT_PASSWORD),
-                prefHandler.getKey(PrefKey.WEBUI_PASSWORD)
+                // Password of the removed web user interface, still on devices that used it
+                "web_ui_password"
                 )
             dialog {
                 text = application.getString(R.string.crash_dialog_text)

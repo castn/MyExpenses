@@ -795,7 +795,6 @@
     <string name="warning_party_delete_debt">При видаленні цієї сторони також видаляються визначені для неї борги.</string>
     <string name="menu_parent_category_selection">Виберіть головну категорію коротким дотиком</string>
     <string name="template_default_action_without_amount_hint">Шаблон без суми може бути збереженим за замовчуванням \"Редагувати\"</string>
-    <string name="title_webui">Веб-інтерфейс</string>
     <string name="warning_balance_account_delete">Якщо ви продовжите, всі звірені транзакції цього рахунку будуть видалені з бази даних, і ви не зможете їх відновити.</string>
     <string name="confirmation_load_template_discard_data">Існуючі дані форми будуть відкинуті.</string>
     <string name="ocr_download_info">Можливість розпізнавання тексту забезпечується зовнішньою програмою.</string>
@@ -810,7 +809,6 @@
     <string name="object_sealed_debt">Об\'єкт відноситься до закритого боргу.</string>
     <string name="warning_unencrypted_backup">Хоча ваші дані захищені від несанкціонованого доступу на цьому пристрої, резервні копії створюються без шифрування, якщо ви не налаштуєте %s.</string>
     <string name="pref_purge_backup_keep_title">Максимальна кількість файлів останніх резервних копій для збереження</string>
-    <string name="webui_warning_move_transaction">Транзакцію буде перенесено до рахунку {account}.</string>
     <string name="pref_csv_export_split_categories_summary">Використовуйте окремі стовпці для кожного рівня ієрархії категорій</string>
     <string name="pref_purge_backup_require_confirmation_summary">Показати підтвердження перед видаленням файлів</string>
     <string name="pref_csv_export_split_amount_summary">Використовувати окремі колонки для доходів і витрат</string>
@@ -907,7 +905,6 @@
     <string name="subcategories_merged_recursively">Якщо будь-яка з об’єднаних категорій має підкатегорії з однаковою міткою, їх буде об’єднано першими, рекурсивно.</string>
     <string name="budget_only_current_period">Використовувати тільки для %s</string>
     <string name="github_sponsors"><![CDATA[Ліцензійні ключі також надаються <a href="%s">Спонсорам Github</a>.]]></string>
-    <string name="notifications_permission_required_webui">Надавши дозвіл на надсилання сповіщень, ви можете контролювати стан веб-сервера.</string>
     <string name="image_optimize_quality_summary">Якість 0 означає стиснення до найменшого розміру. 100 означає стиснення до максимальної візуальної якості.</string>
     <string name="button_relink_keep_date">Перепривʼязати, але зберегти дату</string>
     <string name="database_is_encrypted">База даних зашифрована.</string>
@@ -949,7 +946,6 @@
     <string name="content_description_exchange_rate">Курс обміну 1 %1$s в %2$s</string>
     <string name="warning_budget_sync_import">Конфігурація цього бюджету буде імпортована з сервера синхронізації. Всі локальні зміни будуть втрачені.</string>
     <string name="pref_sync_frequency_summary_0">Встановіть 0, щоб вимкнути автоматичну синхронізацію.</string>
-    <string name="webui_download_no_data">Після друку, експорту або створення резервних копій у програмі, файли будуть доступні для завантаження звідси.</string>
     <string name="filter_dialog_empty">Критерії ще не додано. Натисніть на кнопки вище, щоб визначити свій запит і уточнити результати.</string>
     <string name="quick_search">Швидкий пошук</string>
     <string name="complex_search">Комплексний пошук</string>
@@ -1054,7 +1050,6 @@
     <string name="prioritize_flag_order">Пріоритет за порядком прапорців</string>
     <string name="pref_content_based_colors_title">Динамічний колір на основі рахунку</string>
     <string name="pref_content_based_colors_summary">Визначати кольори теми на основі кольору поточного рахунку. Вимкніть, якщо текст важко читати.</string>
-    <string name="service_starting">Запуск…</string>
     <string name="trade_buy">Купівля</string>
     <string name="trade_sell">Продаж</string>
     <string name="trade_transfer">Переказ</string>

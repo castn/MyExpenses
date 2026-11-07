@@ -168,14 +168,6 @@ sealed class MenuItem(
         isEnabledByDefault = false
     )
 
-    data object WebUI : MenuItem(
-        R.id.WEB_UI_COMMAND,
-        R.string.title_webui,
-        R.drawable.ic_computer,
-        isEnabledByDefault = false,
-        isCheckable = true
-    )
-
     data object ImportTrades : MenuItem(
         R.id.IMPORT_TRADES_COMMAND,
         R.string.menu_import,
@@ -287,7 +279,6 @@ sealed class MenuItem(
                 Settings,
                 Help,
                 Backup,
-                WebUI,
                 Restore
             )
 

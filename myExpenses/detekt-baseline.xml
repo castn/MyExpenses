@@ -638,7 +638,7 @@
     <ID>TooManyFunctions:ManageCategoriesViewModel.kt:ManageCategoriesViewModel : CategoryViewModel</ID>
     <ID>TooManyFunctions:MoreDbUtils.kt:org.totschnig.myexpenses.provider.MoreDbUtils.kt</ID>
     <ID>TooManyFunctions:MoreUiUtils.kt:org.totschnig.myexpenses.util.ui.MoreUiUtils.kt</ID>
-    <ID>TooManyFunctions:MyApplication.kt:MyApplication : ApplicationOnSharedPreferenceChangeListenerDefaultLifecycleObserver</ID>
+    <ID>TooManyFunctions:MyApplication.kt:MyApplication : ApplicationOnSharedPreferenceChangeListener</ID>
     <ID>TooManyFunctions:MyExpensesV2ViewModel.kt:MyExpensesV2ViewModel : MyExpensesViewModel</ID>
     <ID>TooManyFunctions:MyExpensesViewModel.kt:MyExpensesViewModel : PrintViewModel</ID>
     <ID>TooManyFunctions:PrefHandler.kt:PrefHandler</ID>

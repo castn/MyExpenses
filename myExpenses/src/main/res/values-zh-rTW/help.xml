@@ -139,9 +139,6 @@
     <string name="form_DebtEdit_date_help_text">輸入債務產生的日期。</string>
     <string name="help_SetupSync_info">此畫面允許您選擇要在裝置和後端之間同步的資料。它會列出您裝置上所有尚未同步到其他後端的帳戶，以及儲存在後端的所有帳戶。點選 &lt;img src=ic_hchain_broken&gt; / &lt;img src=ic_hchain&gt; 將會選取或取消選取要同步的帳戶。如果您選取一個在本機和遠端都已存在的帳戶，您需要決定最初是要使用裝置上的資料覆寫後端上的現有資料，還是反過來。</string>
     <string name="cab_ManageCategories_select_help_text">將所選類別對應到交易，然後返回交易表單。</string>
-    <string name="help_WebUI_info_1">從您桌上型電腦上的網頁瀏覽器呼叫副標題中顯示的 URL。</string>
-    <string name="help_WebUI_info_3">您可以設定密碼來保護存取。在網頁瀏覽器顯示的對話方塊中，只會考量密碼，而忽略使用者名稱。</string>
-    <string name="help_WebUI_info_4">顯示所選帳戶的交易時，網頁使用者介面將會使用您在 Android 裝置上的應用程式中設定的相同篩選器。</string>
     <string name="help_DebtOverview_info">點選項目即可展開／收合。</string>
     <string name="menu_show_all_help_text">已結清或償還的債務（餘額為 0）只有在勾選此選項時才會顯示。</string>
     <string name="menu_type_filter_help_text">啟用此選項後，您可以選擇僅顯示支出、收入或轉帳類別。</string>
@@ -184,7 +181,6 @@
     <string name="help_BudgetEdit_info">使用此表單建立新預算或編輯現有預算。</string>
     <string name="form_DebtEdit_amount_help_text">輸入債務的原始金額。與債務相關聯的交易將會減少或增加餘額。使用切換鈕來區分您積欠的債務和您應收的債務。如果您選擇的貨幣不是您的本國貨幣，則該債務只會在使用相同貨幣的帳戶中顯示。</string>
     <string name="menu_parent_category_selection_help_text">使用此選項，您可以自訂點選具有子類別的類別時的動作：如果勾選此選項，輕點將會選取該類別；如果未勾選，輕點將會展開／收合該類別。在後一種情況下，可以從捷徑選單中選取。</string>
-    <string name="help_WebUI_info_2">目前網頁使用者介面不支援轉帳或分割交易。</string>
     <string name="cab_MyExpenses_select_help_text">可以透過選取此指令或長按列表項目來開始多選。</string>
     <string name="debt_help_overflow">對於每筆債務，請使用右上角的選單進行編輯、結清、刪除或分享。外幣債務可以選擇以本國貨幣的等值金額列出。</string>
     <string name="menu_status_handle_help_text">交易狀態以彩色矩形表示：灰色表示未核對，藍色表示已清算，綠色表示已核對。點選矩形可更改狀態。</string>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="help_WebUI_info_2">Atualmente, a interface de utilizador Web não suporta transferências ou transações divididas.</string>
     <string name="menu_status_handle_help_text">O estado da transação é indicado por um rectângulo colorido: cinzento para não reconciliada, azul para liquidada, verde para reconciliada. Clicar no rectângulo, altera o estado.</string>
     <string name="help_ManageCategories_select_filter_info">Clique num item para iniciar a seleção múltipla.</string>
     <string name="menu_categories_setup_default_help_text">Um conjunto de categorias predefinidas será importado.</string>
@@ -14,7 +13,6 @@
     <string name="help_ManageTags_select_mapping_info">Mapeie ou desfaça o mapeamento das etiquetas tocando nelas. Use o botão de ação flutuante para confirmar o mapeamento.</string>
     <string name="form_DebtEdit_date_help_text">Digite a data em que a dívida foi contraída.</string>
     <string name="cab_ManageCategories_select_help_text">Atribuir a categoria selecionada à transação e voltar ao formulário da transação.</string>
-    <string name="help_WebUI_info_1">Chame o URL apresentado na legenda a partir de um navegador Web no seu computador desktop.</string>
     <string name="help_menu_commands">Comandos do menu</string>
     <string name="help_contextual_actions">Ações de contexto</string>
     <string name="help_contextual_actions_help">O menu para ações contextuais é exibido mediante um toque longo numa entrada da lista.</string>
@@ -189,13 +187,11 @@
     <string name="form_DebtEdit_amount_help_text">Digite o montante original da dívida. As transações ligadas à dívida diminuirão ou aumentarão o saldo. Use o controle deslizante para distinguir entre o que deve e o que lhe é devido. Caso selecione uma moeda diferente da sua moeda de origem, a dívida só será visível em contas com a mesma moeda.</string>
     <string name="help_SetupSync_info">Este ecrã permite selecionar os dados que deseja sincronizar entre o aparelho e o backend. Ela lista todas as contas no seu aparelho que ainda não estão sincronizadas com outros backends e todas as contas armazenadas no backend. Clicando em &lt;img src=ic_hchain_broken&gt; / &lt;img src=ic_hchain&gt; selecionará ou desmarcará uma conta para sincronização. Se selecionar uma conta que já existe tanto local como remotamente, precisará decidir se inicialmente os dados noseu aparelho devem substituir os dados existentes no backend, ou o contrário.</string>
     <string name="menu_parent_category_selection_help_text">Com esta opção personaliza o toque numa categoria que tem subcategorias: se estiver marcada, um toque curto selecionará a categoria; se não estiver marcada, um toque curto irá expandir/contrair a categoria. Neste último caso, a seleção estará disponível a partir do menu de contexto.</string>
-    <string name="help_WebUI_info_4">Quando exibe trasacoes de uma conta selecionada, a interface web usa os mesmos filtros criados no app de Android.</string>
     <string name="help_Budget_amount_click_1">A alteração de um montante nunca afetará os períodos passados. A menos que se decida defini-lo apenas para o período atual, afetará os períodos futuros.</string>
     <string name="menu_BudgetActivity_rollover_help_text">Se o orçamento ficar aquém ou além do previsto, é possível transferir a diferença para o período seguinte, de modo a aumentar ou diminuir o montante que pode ser afetado. Existem três opções:</string>
     <string name="menu_BudgetActivity_rollover_total">Apenas o restante do orçamento total é transferido, de modo que apenas o orçamento total do período seguinte seja aumentado ou diminuído.</string>
     <string name="cab_MyExpenses_select_help_text">A seleção múltipla pode ser iniciada através de selecionar este comando ou de tocar longo numa entrada da lista.</string>
     <string name="menu_show_all_help_text">As dívidas que foram fechadas ou pagas (o seu saldo é 0) só serão apresentadas se esta opção estiver selecionada.</string>
-    <string name="help_WebUI_info_3">É possível definir uma palavra-passe para proteger o acesso. No diálogo apresentado pelo navegador Web, apenas a palavra-passe é necessária, o nome de utilizador é ignorado.</string>
     <string name="help_DebtOverview_info">Clique numa entrada para expandir/recolher.</string>
     <string name="debt_help_overflow">Para cada dívida, utilize o menu no canto superior direito para a editar, fechar, eliminar ou partilhar. As dívidas em moeda estrangeira podem, opcionalmente, ser listadas com montantes equivalentes na moeda nacional.</string>
 </resources>
