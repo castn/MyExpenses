@@ -37,7 +37,7 @@ import org.totschnig.myexpenses.db2.loadAccount
 import org.totschnig.myexpenses.db2.loadTagsForTransaction
 import org.totschnig.myexpenses.db2.loadTransaction
 import org.totschnig.myexpenses.db2.loadTransactions
-import org.totschnig.myexpenses.export.qif.QifDateFormat
+import org.totschnig.myexpenses.io.ImportDateFormat
 import org.totschnig.myexpenses.model.ContribFeatureNotAvailableException
 import org.totschnig.myexpenses.model.CrStatus
 import org.totschnig.myexpenses.model.PREDEFINED_NAME_BANK
@@ -108,7 +108,7 @@ class CsvImportViewModelTest : BaseViewModelTest() {
         columnToFieldMap: IntArray,
         accountId: Long = 0,
         currency: String = currencyContext.homeCurrencyString,
-        dateFormat: QifDateFormat = QifDateFormat.EU,
+        dateFormat: ImportDateFormat = ImportDateFormat.EU,
         autoFill: Boolean = false
     ): Result<List<ImportResult>> {
         val uri = file(content)
@@ -340,7 +340,7 @@ class CsvImportViewModelTest : BaseViewModelTest() {
         val result = viewModel.importData(
             selected,
             intArrayOf(R.string.date, R.string.amount),
-            QifDateFormat.EU,
+            ImportDateFormat.EU,
             false,
             AccountConfiguration(accountId, currencyContext.homeCurrencyString, bankType),
             uri
@@ -437,7 +437,7 @@ class CsvImportViewModelTest : BaseViewModelTest() {
             "03/04/2023,1",
             intArrayOf(R.string.date, R.string.amount),
             accountId,
-            dateFormat = QifDateFormat.US
+            dateFormat = ImportDateFormat.US
         ).getOrThrow()
         assertThat(rowsOf(accountId).single().date.toLocalDateTime().toLocalDate())
             .isEqualTo(LocalDate.of(2023, 3, 4))
@@ -626,7 +626,7 @@ class CsvImportViewModelTest : BaseViewModelTest() {
 
     @Test
     fun commentOfUnmatchedTransferIsMangled() {
-        // Looks like a bug: QifUtils.prependMemo has its two cases swapped, so an existing comment
+        // Looks like a bug: ImportUtils.prependMemo has its two cases swapped, so an existing comment
         // is lost, whereas an empty one is kept behind a separator
         val map = intArrayOf(R.string.amount, R.string.category, R.string.notes)
         assertThat(importIntoNewAccount("5,[Savings],Note", map).single().comment)

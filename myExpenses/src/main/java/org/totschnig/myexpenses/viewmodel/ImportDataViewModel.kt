@@ -23,7 +23,7 @@ import org.totschnig.myexpenses.db2.loadAccount
 import org.totschnig.myexpenses.db2.saveTagsForTransaction
 import org.totschnig.myexpenses.dialog.getDisplayName
 import org.totschnig.myexpenses.export.CategoryInfo
-import org.totschnig.myexpenses.export.qif.QifUtils.reduceTransfers
+import org.totschnig.myexpenses.io.ImportUtils.reduceTransfers
 import org.totschnig.myexpenses.io.ImportAccount
 import org.totschnig.myexpenses.io.ImportTransaction
 import org.totschnig.myexpenses.model.ContribFeature

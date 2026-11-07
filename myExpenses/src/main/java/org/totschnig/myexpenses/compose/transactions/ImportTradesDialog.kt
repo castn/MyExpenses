@@ -48,8 +48,8 @@ import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import org.apache.commons.csv.CSVRecord
 import org.totschnig.myexpenses.R
-import org.totschnig.myexpenses.export.qif.QifDateFormat
-import org.totschnig.myexpenses.export.qif.QifUtils
+import org.totschnig.myexpenses.io.ImportDateFormat
+import org.totschnig.myexpenses.io.ImportUtils
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
 import org.totschnig.myexpenses.util.epochMillis2LocalDateTime
@@ -75,7 +75,7 @@ fun ImportTradesDialog(
     var selectedUri by remember { mutableStateOf<Uri?>(null) }
     var fundingSource by remember { mutableStateOf(FundingSource.PORTFOLIO) }
     var fundingAccountId by remember { mutableStateOf<Long?>(null) }
-    var dateFormat by remember { mutableStateOf(QifDateFormat.default) }
+    var dateFormat by remember { mutableStateOf(ImportDateFormat.default) }
     var parseResult by remember { mutableStateOf<ImportTradesParseResult?>(null) }
     var isImporting by remember { mutableStateOf(false) }
     var importProgress by remember { mutableIntStateOf(0) }
@@ -159,13 +159,13 @@ fun ImportTradesDialog(
                     )
 
                     SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-                        QifDateFormat.entries.forEachIndexed { index, format ->
+                        ImportDateFormat.entries.forEachIndexed { index, format ->
                             SegmentedButton(
                                 selected = dateFormat == format,
                                 onClick = { dateFormat = format },
                                 shape = SegmentedButtonDefaults.itemShape(
                                     index = index,
-                                    count = QifDateFormat.entries.size
+                                    count = ImportDateFormat.entries.size
                                 ),
                                 icon = {}
                             ) {
@@ -336,7 +336,7 @@ private suspend fun parseCsv(
     assets: List<CurrencyUnit>,
     fundingSource: FundingSource,
     fundingAccountId: Long?,
-    dateFormat: QifDateFormat,
+    dateFormat: ImportDateFormat,
     roundingMode: RoundingMode,
 ): ImportTradesParseResult = withContext(Dispatchers.IO) {
     val intents = mutableListOf<TradeIntent>()
@@ -377,7 +377,7 @@ private suspend fun parseCsv(
                         continue
                     }
 
-                    val date = QifUtils.parseDate(dateStr, dateFormat)
+                    val date = ImportUtils.parseDate(dateStr, dateFormat)
                     val type = when (typeStr.uppercase()) {
                         "BUY", "B" -> TradeType.AssetTrade.BUY
                         "SELL", "S" -> TradeType.AssetTrade.SELL

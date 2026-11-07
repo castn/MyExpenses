@@ -16,7 +16,7 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
 import org.totschnig.myexpenses.compose.transactions.ImportTradesParseResult
-import org.totschnig.myexpenses.export.qif.QifDateFormat
+import org.totschnig.myexpenses.io.ImportDateFormat
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model.Money
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
@@ -24,7 +24,7 @@ import org.totschnig.myexpenses.viewmodel.data.FundingSource
 import org.totschnig.myexpenses.viewmodel.data.TradeType
 
 /**
- * Pins how a file of trades turns into trade intents, including the use of QifUtils for the dates.
+ * Pins how a file of trades turns into trade intents, including the use of ImportUtils for the dates.
  * The parser is a private function in the file of the dialog, so that the tests reach it by
  * reflection. When it moves, the lookup below is the only thing to change.
  */
@@ -39,7 +39,7 @@ class ImportTradesParseTest : BaseTradeTest() {
         assets: List<CurrencyUnit>,
         fundingSource: FundingSource,
         fundingAccountId: Long?,
-        dateFormat: QifDateFormat,
+        dateFormat: ImportDateFormat,
         roundingMode: RoundingMode
     ): ImportTradesParseResult = suspendCoroutineUninterceptedOrReturn { continuation ->
         Class.forName("org.totschnig.myexpenses.compose.transactions.ImportTradesDialogKt")
@@ -51,7 +51,7 @@ class ImportTradesParseTest : BaseTradeTest() {
                 List::class.java,
                 FundingSource::class.java,
                 java.lang.Long::class.java,
-                QifDateFormat::class.java,
+                ImportDateFormat::class.java,
                 RoundingMode::class.java,
                 Continuation::class.java
             )
@@ -72,7 +72,7 @@ class ImportTradesParseTest : BaseTradeTest() {
 
     private fun parse(
         vararg lines: String,
-        dateFormat: QifDateFormat = QifDateFormat.YMD,
+        dateFormat: ImportDateFormat = ImportDateFormat.YMD,
         assets: List<CurrencyUnit> = listOf(aapl),
         fundingSource: FundingSource = FundingSource.PORTFOLIO,
         fundingAccountId: Long? = null,
@@ -279,7 +279,7 @@ class ImportTradesParseTest : BaseTradeTest() {
                 listOf(aapl),
                 FundingSource.PORTFOLIO,
                 null,
-                QifDateFormat.YMD,
+                ImportDateFormat.YMD,
                 RoundingMode.HALF_UP
             )
         }
@@ -297,7 +297,7 @@ class ImportTradesParseTest : BaseTradeTest() {
 
     // Dates
 
-    private fun dateOf(value: String, format: QifDateFormat) = parse(
+    private fun dateOf(value: String, format: ImportDateFormat) = parse(
         "Date,Type,Asset,Quantity,Price",
         "$value,BUY,AAPL,10,5",
         dateFormat = format
@@ -306,34 +306,35 @@ class ImportTradesParseTest : BaseTradeTest() {
     @Test
     fun dateFollowsTheChosenFormat() {
         val expected = LocalDate.of(2025, 2, 3)
-        assertThat(dateOf("02/03/2025", QifDateFormat.US).toLocalDate()).isEqualTo(expected)
-        assertThat(dateOf("03/02/2025", QifDateFormat.EU).toLocalDate()).isEqualTo(expected)
-        assertThat(dateOf("2025/02/03", QifDateFormat.YMD).toLocalDate()).isEqualTo(expected)
-        assertThat(dateOf("03.02.25", QifDateFormat.EU).toLocalDate()).isEqualTo(expected)
-        assertThat(dateOf("20250203", QifDateFormat.US).toLocalDate()).isEqualTo(expected)
+        assertThat(dateOf("02/03/2025", ImportDateFormat.US).toLocalDate()).isEqualTo(expected)
+        assertThat(dateOf("03/02/2025", ImportDateFormat.EU).toLocalDate()).isEqualTo(expected)
+        assertThat(dateOf("2025/02/03", ImportDateFormat.YMD).toLocalDate()).isEqualTo(expected)
+        assertThat(dateOf("03.02.25", ImportDateFormat.EU).toLocalDate()).isEqualTo(expected)
+        assertThat(dateOf("20250203", ImportDateFormat.US).toLocalDate()).isEqualTo(expected)
     }
 
     @Test
     fun timeOfDayIsKept() {
-        val date = dateOf("2025-02-03T14:30:15", QifDateFormat.YMD)
+        val date = dateOf("2025-02-03T14:30:15", ImportDateFormat.YMD)
         assertThat(date.toLocalDate()).isEqualTo(LocalDate.of(2025, 2, 3))
         assertThat(date.hour).isEqualTo(14)
         assertThat(date.minute).isEqualTo(30)
         assertThat(date.second).isEqualTo(15)
-        assertThat(dateOf("2025-02-03", QifDateFormat.YMD).hour).isEqualTo(0)
+        assertThat(dateOf("2025-02-03", ImportDateFormat.YMD).hour).isEqualTo(0)
     }
 
     @Test
     fun dateThatDoesNotParseBecomesToday() {
-        // Looks like a bug: QifUtils falls back to now, so that the trade lands on the day of the
+        // Looks like a bug: ImportUtils falls back to now, so that the trade lands on the day of the
         // import instead of being reported as a failure.
-        assertThat(dateOf("not a date", QifDateFormat.YMD).toLocalDate()).isEqualTo(LocalDate.now())
+        assertThat(dateOf("not a date", ImportDateFormat.YMD).toLocalDate())
+            .isEqualTo(LocalDate.now())
     }
 
     @Test
     fun dateInTheWrongFormatRollsOver() {
         // Looks like a bug: the calendar is lenient, month 13 of 2025 is January 2026.
-        assertThat(dateOf("13/01/2025", QifDateFormat.US).toLocalDate())
+        assertThat(dateOf("13/01/2025", ImportDateFormat.US).toLocalDate())
             .isEqualTo(LocalDate.of(2026, 1, 1))
     }
 

@@ -15,7 +15,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.export.CategoryInfo
-import org.totschnig.myexpenses.export.qif.QifDateFormat
 import org.totschnig.myexpenses.model.AccountType
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.util.timeFormatter
@@ -36,7 +35,7 @@ class CsvParserCharacterizationTest {
     private fun parse(
         content: String,
         columnToFieldMap: IntArray,
-        dateFormat: QifDateFormat = QifDateFormat.EU
+        dateFormat: ImportDateFormat = ImportDateFormat.EU
     ) = CSVParser(
         context,
         CSVFormat.DEFAULT.parse(content.reader()).records,
@@ -49,18 +48,18 @@ class CsvParserCharacterizationTest {
     private fun transactions(
         content: String,
         columnToFieldMap: IntArray,
-        dateFormat: QifDateFormat = QifDateFormat.EU
+        dateFormat: ImportDateFormat = ImportDateFormat.EU
     ) = parse(content, columnToFieldMap, dateFormat).accounts.single().transactions
 
     private fun single(
         content: String,
         columnToFieldMap: IntArray,
-        dateFormat: QifDateFormat = QifDateFormat.EU
+        dateFormat: ImportDateFormat = ImportDateFormat.EU
     ) = transactions(content, columnToFieldMap, dateFormat).single()
 
     private fun amountOf(raw: String) = single(row(raw), intArrayOf(R.string.amount)).amount
 
-    private fun dateOf(raw: String, format: QifDateFormat) =
+    private fun dateOf(raw: String, format: ImportDateFormat) =
         single(row(raw), intArrayOf(R.string.date), format).date.toLocalDateTime()
 
     private fun Date.toLocalDateTime() =
@@ -202,21 +201,21 @@ class CsvParserCharacterizationTest {
     @Test
     fun parsesDateByFormat() {
         listOf(
-            Triple("12/31/2023", QifDateFormat.US, at(2023, 12, 31)),
-            Triple("12.31.23", QifDateFormat.US, at(2023, 12, 31)),
-            Triple("3/4/2023", QifDateFormat.US, at(2023, 3, 4)),
-            Triple("31.12.2023", QifDateFormat.EU, at(2023, 12, 31)),
-            Triple("31/12/23", QifDateFormat.EU, at(2023, 12, 31)),
-            Triple("31-12-2023", QifDateFormat.EU, at(2023, 12, 31)),
-            Triple("3/4/2023", QifDateFormat.EU, at(2023, 4, 3)),
-            Triple("2023-12-31", QifDateFormat.YMD, at(2023, 12, 31)),
-            Triple("23/12/31", QifDateFormat.YMD, at(2023, 12, 31)),
-            Triple("20231231", QifDateFormat.YMD, at(2023, 12, 31)),
-            Triple("6 Dec 2023", QifDateFormat.EU, at(2023, 12, 6)),
-            Triple("Dec 6, 2023", QifDateFormat.US, at(2023, 12, 6)),
-            Triple("6-Dec-2023", QifDateFormat.EU, at(2023, 12, 6)),
-            Triple("31.12.2023 14:58", QifDateFormat.EU, at(2023, 12, 31, 14, 58)),
-            Triple("2023-12-31T14:58:30", QifDateFormat.YMD, at(2023, 12, 31, 14, 58, 30))
+            Triple("12/31/2023", ImportDateFormat.US, at(2023, 12, 31)),
+            Triple("12.31.23", ImportDateFormat.US, at(2023, 12, 31)),
+            Triple("3/4/2023", ImportDateFormat.US, at(2023, 3, 4)),
+            Triple("31.12.2023", ImportDateFormat.EU, at(2023, 12, 31)),
+            Triple("31/12/23", ImportDateFormat.EU, at(2023, 12, 31)),
+            Triple("31-12-2023", ImportDateFormat.EU, at(2023, 12, 31)),
+            Triple("3/4/2023", ImportDateFormat.EU, at(2023, 4, 3)),
+            Triple("2023-12-31", ImportDateFormat.YMD, at(2023, 12, 31)),
+            Triple("23/12/31", ImportDateFormat.YMD, at(2023, 12, 31)),
+            Triple("20231231", ImportDateFormat.YMD, at(2023, 12, 31)),
+            Triple("6 Dec 2023", ImportDateFormat.EU, at(2023, 12, 6)),
+            Triple("Dec 6, 2023", ImportDateFormat.US, at(2023, 12, 6)),
+            Triple("6-Dec-2023", ImportDateFormat.EU, at(2023, 12, 6)),
+            Triple("31.12.2023 14:58", ImportDateFormat.EU, at(2023, 12, 31, 14, 58)),
+            Triple("2023-12-31T14:58:30", ImportDateFormat.YMD, at(2023, 12, 31, 14, 58, 30))
         ).forEach { (raw, format, expected) ->
             assertWithMessage("$raw as $format").that(dateOf(raw, format)).isEqualTo(expected)
         }
@@ -224,24 +223,24 @@ class CsvParserCharacterizationTest {
 
     @Test
     fun twoDigitYearsPivotAt2029() {
-        assertThat(dateOf("01.02.28", QifDateFormat.EU)).isEqualTo(at(2028, 2, 1))
-        assertThat(dateOf("01.02.29", QifDateFormat.EU)).isEqualTo(at(1929, 2, 1))
+        assertThat(dateOf("01.02.28", ImportDateFormat.EU)).isEqualTo(at(2028, 2, 1))
+        assertThat(dateOf("01.02.29", ImportDateFormat.EU)).isEqualTo(at(1929, 2, 1))
     }
 
     @Test
     fun eightDigitsAreReadAsYearMonthDayInEveryFormat() {
-        assertThat(dateOf("20231231", QifDateFormat.EU)).isEqualTo(at(2023, 12, 31))
-        assertThat(dateOf("20231231", QifDateFormat.US)).isEqualTo(at(2023, 12, 31))
+        assertThat(dateOf("20231231", ImportDateFormat.EU)).isEqualTo(at(2023, 12, 31))
+        assertThat(dateOf("20231231", ImportDateFormat.US)).isEqualTo(at(2023, 12, 31))
         // Looks like a bug: 31122023 in EU format is not 31 Dec 2023, it rolls over to year 3113
-        assertThat(dateOf("31122023", QifDateFormat.EU)).isEqualTo(at(3113, 8, 23))
+        assertThat(dateOf("31122023", ImportDateFormat.EU)).isEqualTo(at(3113, 8, 23))
     }
 
     @Test
     fun dateThatDoesNotFitTheFormatRollsOverSilently() {
         // Looks like a bug: month and day are not validated, the calendar is lenient
-        assertThat(dateOf("25.12.2023", QifDateFormat.US)).isEqualTo(at(2025, 1, 12))
-        assertThat(dateOf("12/25/2023", QifDateFormat.EU)).isEqualTo(at(2025, 1, 12))
-        assertThat(dateOf("31.02.2023", QifDateFormat.EU)).isEqualTo(at(2023, 3, 3))
+        assertThat(dateOf("25.12.2023", ImportDateFormat.US)).isEqualTo(at(2025, 1, 12))
+        assertThat(dateOf("12/25/2023", ImportDateFormat.EU)).isEqualTo(at(2025, 1, 12))
+        assertThat(dateOf("31.02.2023", ImportDateFormat.EU)).isEqualTo(at(2023, 3, 3))
     }
 
     @Test
@@ -309,7 +308,7 @@ class CsvParserCharacterizationTest {
         val map = intArrayOf(R.string.date, R.string.time, R.string.amount)
         val time = deviceTime(14, 58)
         // Looks like a bug: the same date is understood without a time column, but with one it
-        // falls back to today, as only the first parsing attempt of QifUtils.parseDate is used
+        // falls back to today, as only the first parsing attempt of ImportUtils.parseDate is used
         assertThat(single(row("6 Dec 2023", time, "1"), map).date.toLocalDateTime().withNano(0))
             .isEqualTo(LocalDate.now().atTime(14, 58))
         assertThat(single(row("6-Dec-2023", time, "1"), map).date.toLocalDateTime())

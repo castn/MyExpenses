@@ -6,10 +6,8 @@
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 //adapted to My Expenses by Michael Totschnig
-package org.totschnig.myexpenses.export.qif
+package org.totschnig.myexpenses.io
 
-import org.totschnig.myexpenses.io.ImportAccount
-import org.totschnig.myexpenses.io.ImportTransaction
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
 import java.math.BigDecimal
@@ -18,7 +16,7 @@ import java.text.ParseException
 import java.util.*
 import java.util.regex.Pattern
 
-object QifUtils {
+object ImportUtils {
     private val DATE_DELIMITER_PATTERN = Pattern.compile("[/'.\\-]|(?<=\\d)(?=[a-zA-Z])|(?<=[a-zA-Z])(?=\\d)")
     private val WHITESPACE_PATTERN = Pattern.compile("(\\s|,)+")
     private val HOUR_DELIMITER_PATTERN = Pattern.compile(":")
@@ -30,7 +28,7 @@ object QifUtils {
     }
 
     @JvmStatic
-    fun parseDate(sDateTime: String, format: QifDateFormat): Date {
+    fun parseDate(sDateTime: String, format: ImportDateFormat): Date {
         val s = sDateTime.trim().replace(ISO_T_PATTERN, "$1 $2")
         return try {
             parseDateInternal(s, format).time
@@ -69,7 +67,7 @@ object QifUtils {
         }
     }
 
-    fun parseDateInternal(sDateTime: String, format: QifDateFormat): Calendar {
+    fun parseDateInternal(sDateTime: String, format: ImportDateFormat): Calendar {
 
         val s = sDateTime.trim().trim('"') // Also trim quotes for CSV
 
@@ -90,17 +88,17 @@ object QifUtils {
         var year: Int
         val dateChunks = DATE_DELIMITER_PATTERN.split(s)
         when (format) {
-            QifDateFormat.US -> {
+            ImportDateFormat.US -> {
                 month = parseMonth(dateChunks, 0)
                 day = parseInt(dateChunks, 1)
                 year = parseInt(dateChunks, 2)
             }
-            QifDateFormat.EU -> {
+            ImportDateFormat.EU -> {
                 day = parseInt(dateChunks, 0)
                 month = parseMonth(dateChunks, 1)
                 year = parseInt(dateChunks, 2)
             }
-            QifDateFormat.YMD -> {
+            ImportDateFormat.YMD -> {
                 year = parseInt(dateChunks, 0)
                 month = parseMonth(dateChunks, 1)
                 day = parseInt(dateChunks, 2)
@@ -170,7 +168,7 @@ object QifUtils {
     }
 
     /**
-     * Adopted from http://jgnash.svn.sourceforge.net/viewvc/jgnash/jgnash2/trunk/src/jgnash/imports/qif/QifUtils.java
+     * Adopted from http://jgnash.svn.sourceforge.net/viewvc/jgnash/jgnash2/trunk/src/jgnash/imports/qif/ImportUtils.java
      *
      * @param money   String to be parsed
      * @param maxSize maxSize of the result, as calculated by precision - scale, i.e.  the number of digits in front of

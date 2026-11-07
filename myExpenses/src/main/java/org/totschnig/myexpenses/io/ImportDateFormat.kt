@@ -6,7 +6,7 @@
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 //adapted to My Expenses by Michael Totschnig
-package org.totschnig.myexpenses.export.qif
+package org.totschnig.myexpenses.io
 
 import java.time.chrono.IsoChronology
 import java.time.format.DateTimeFormatterBuilder
@@ -18,7 +18,7 @@ import java.util.*
  * User: Denis Solonenko
  * Date: 11/12/11 1:57 AM
  */
-enum class QifDateFormat(private val displayLabel: String) {
+enum class ImportDateFormat(private val displayLabel: String) {
     US("MM/dd/yyyy, MM.dd.yy, …"),
     EU("dd/MM/yyyy, dd.MM.yy, …"),
     YMD("yyyy/MM/dd, yy.MM.dd, …");

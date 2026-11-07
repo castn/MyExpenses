@@ -14,7 +14,7 @@ import org.totschnig.myexpenses.db2.Repository
 import org.totschnig.myexpenses.dialog.ConfirmationDialogFragment
 import org.totschnig.myexpenses.dialog.ConfirmationDialogFragment.ConfirmationDialogListener
 import org.totschnig.myexpenses.dialog.MessageDialogFragment
-import org.totschnig.myexpenses.export.qif.QifDateFormat
+import org.totschnig.myexpenses.io.ImportDateFormat
 import org.totschnig.myexpenses.fragment.CsvImportDataFragment
 import org.totschnig.myexpenses.fragment.CsvImportParseFragment
 import org.totschnig.myexpenses.injector
@@ -220,7 +220,7 @@ class CsvImportActivity : TabbedActivity(), ConfirmationDialogListener {
     val currency: String
         get() = parseFragment!!.getSelectedCurrency()
 
-    val dateFormat: QifDateFormat
+    val dateFormat: ImportDateFormat
         get() {
             return parseFragment!!.dateFormat
         }

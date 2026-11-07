@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.dialog.ProgressDialogFragment
 import org.totschnig.myexpenses.dialog.QifImportDialogFragment
-import org.totschnig.myexpenses.export.qif.QifDateFormat
+import org.totschnig.myexpenses.io.ImportDateFormat
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.model.ContribFeatureNotAvailableException
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
@@ -60,7 +60,7 @@ class QifImport : ProtectedFragmentActivity() {
 
     fun onSourceSelected(
         mUri: Uri,
-        qifDateFormat: QifDateFormat,
+        qifDateFormat: ImportDateFormat,
         accountId: Long,
         currency: String,
         withTransactions: Boolean,

@@ -15,7 +15,7 @@ import eltos.simpledialogfragment.form.SimpleFormDialog
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.adapter.CurrencyAdapter
 import org.totschnig.myexpenses.adapter.GroupedSpinnerAdapter
-import org.totschnig.myexpenses.export.qif.QifDateFormat
+import org.totschnig.myexpenses.io.ImportDateFormat
 import org.totschnig.myexpenses.model.AccountFlag
 import org.totschnig.myexpenses.model.AccountType
 import org.totschnig.myexpenses.preference.PrefHandler
@@ -31,11 +31,11 @@ fun Spinner.configureDateFormat(
     prefName: String,
 ) {
     adapter = ArrayAdapter(
-        context, android.R.layout.simple_spinner_item, QifDateFormat.entries.toTypedArray()
+        context, android.R.layout.simple_spinner_item, ImportDateFormat.entries.toTypedArray()
     ).apply {
         setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
     }
-    setSelection(prefHandler.enumValueOrDefault(prefName, QifDateFormat.default).ordinal)
+    setSelection(prefHandler.enumValueOrDefault(prefName, ImportDateFormat.default).ordinal)
 }
 
 fun buildColorDialog(context: Context, color: Int?): SimpleColorDialog = SimpleColorDialog.build()

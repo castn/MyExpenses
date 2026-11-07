@@ -7,7 +7,7 @@ import androidx.lifecycle.liveData
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.db2.loadAccount
 import org.totschnig.myexpenses.export.qif.QifBufferedReader
-import org.totschnig.myexpenses.export.qif.QifDateFormat
+import org.totschnig.myexpenses.io.ImportDateFormat
 import org.totschnig.myexpenses.export.qif.QifParser
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.provider.TransactionProvider
@@ -20,7 +20,7 @@ class QifImportViewModel(application: Application) : ImportDataViewModel(applica
 
     fun importData(
         uri: Uri,
-        qifDateFormat: QifDateFormat,
+        qifDateFormat: ImportDateFormat,
         accountId: Long,
         currencyUnit: CurrencyUnit,
         withTransactions: Boolean,

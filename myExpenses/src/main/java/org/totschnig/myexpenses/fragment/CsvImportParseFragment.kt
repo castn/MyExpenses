@@ -32,7 +32,7 @@ import org.totschnig.myexpenses.databinding.ImportCsvParseBinding
 import org.totschnig.myexpenses.dialog.DialogUtils
 import org.totschnig.myexpenses.dialog.configureDateFormat
 import org.totschnig.myexpenses.dialog.getDisplayName
-import org.totschnig.myexpenses.export.qif.QifDateFormat
+import org.totschnig.myexpenses.io.ImportDateFormat
 import org.totschnig.myexpenses.preference.PrefHandler
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.util.ImportFileResultHandler
@@ -267,7 +267,7 @@ class CsvImportParseFragment : Fragment(), View.OnClickListener, AdapterView.OnI
 
     @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem) = if (item.itemId == R.id.PARSE_COMMAND) {
-        val format = binding.DateFormatTable.DateFormat.selectedItem as QifDateFormat
+        val format = binding.DateFormatTable.DateFormat.selectedItem as ImportDateFormat
         val encoding = binding.EncodingTable.Encoding.selectedItem as String
         val delimiter =
             resources.getStringArray(R.array.pref_csv_import_delimiter_values)[binding.Delimiter.selectedItemPosition]
@@ -346,8 +346,8 @@ class CsvImportParseFragment : Fragment(), View.OnClickListener, AdapterView.OnI
         return (binding.AccountTable.Currency.selectedItem as Currency).code
     }
 
-    val dateFormat: QifDateFormat
-        get() = binding.DateFormatTable.DateFormat.selectedItem as QifDateFormat
+    val dateFormat: ImportDateFormat
+        get() = binding.DateFormatTable.DateFormat.selectedItem as ImportDateFormat
 
     @Suppress("UNCHECKED_CAST")
     val accountType: AccountType

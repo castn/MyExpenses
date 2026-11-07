@@ -15,7 +15,7 @@ import org.totschnig.myexpenses.CategoryInfoSubject.Companion.assertThat
 import org.totschnig.myexpenses.db2.FLAG_EXPENSE
 import org.totschnig.myexpenses.export.CategoryInfo
 import org.totschnig.myexpenses.export.qif.QifBufferedReader
-import org.totschnig.myexpenses.export.qif.QifDateFormat
+import org.totschnig.myexpenses.io.ImportDateFormat
 import org.totschnig.myexpenses.export.qif.QifParser
 import org.totschnig.myexpenses.io.ImportAccount
 import org.totschnig.myexpenses.model.AccountType
@@ -222,7 +222,7 @@ class QifParserTest {
                 MSome note here...
                 ^
                 
-                """.trimIndent(), QifDateFormat.US
+                """.trimIndent(), ImportDateFormat.US
         )
         Assert.assertEquals(1, p.accounts.size.toLong())
         val a = p.accounts[0]
@@ -263,7 +263,7 @@ class QifParserTest {
                 MSome note here...
                 ^
                 
-                """.trimIndent(), QifDateFormat.YMD
+                """.trimIndent(), ImportDateFormat.YMD
         )
         Assert.assertEquals(1, p.accounts.size.toLong())
         val a = p.accounts[0]
@@ -805,7 +805,7 @@ class QifParserTest {
         )
     }
 
-    private fun parseQif(fileContent: String, dateFormat: QifDateFormat = QifDateFormat.EU) {
+    private fun parseQif(fileContent: String, dateFormat: ImportDateFormat = ImportDateFormat.EU) {
         val r = QifBufferedReader(
             BufferedReader(
                 InputStreamReader(

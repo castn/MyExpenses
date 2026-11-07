@@ -20,7 +20,7 @@ import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.QifImport
 import org.totschnig.myexpenses.adapter.CurrencyAdapter
 import org.totschnig.myexpenses.adapter.IdAdapter
-import org.totschnig.myexpenses.export.qif.QifDateFormat
+import org.totschnig.myexpenses.io.ImportDateFormat
 import org.totschnig.myexpenses.model.ExportFormat
 import org.totschnig.myexpenses.provider.KEY_CURRENCY
 import org.totschnig.myexpenses.util.ui.checkNewAccountLimitation
@@ -81,7 +81,7 @@ class QifImportDialogFragment : TextSourceDialogFragment(), AdapterView.OnItemSe
             return
         }
         if (id == AlertDialog.BUTTON_POSITIVE) {
-            val format = dateFormatSpinner.selectedItem as QifDateFormat
+            val format = dateFormatSpinner.selectedItem as ImportDateFormat
             val encoding = encodingSpinner.selectedItem as String
             maybePersistUri()
             prefHandler.putString(PREF_KEY_IMPORT_ENCODING, encoding)

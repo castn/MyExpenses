@@ -15,7 +15,7 @@ import org.apache.commons.csv.CSVRecord
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.db2.extractTagIds
 import org.totschnig.myexpenses.db2.loadAccount
-import org.totschnig.myexpenses.export.qif.QifDateFormat
+import org.totschnig.myexpenses.io.ImportDateFormat
 import org.totschnig.myexpenses.io.CSVParser
 import org.totschnig.myexpenses.model.AccountType
 import org.totschnig.myexpenses.model2.Account
@@ -143,7 +143,7 @@ class CsvImportViewModel(application: Application, val savedStateHandle: SavedSt
     fun importData(
         data: List<CSVRecord>,
         columnToFieldMap: IntArray,
-        dateFormat: QifDateFormat,
+        dateFormat: ImportDateFormat,
         autoFill: Boolean,
         accountConfiguration: AccountConfiguration,
         uri: Uri,

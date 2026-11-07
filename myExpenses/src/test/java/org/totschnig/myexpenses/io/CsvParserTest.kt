@@ -5,7 +5,6 @@ import org.apache.commons.csv.CSVFormat
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.totschnig.myexpenses.R
-import org.totschnig.myexpenses.export.qif.QifDateFormat
 import org.totschnig.myexpenses.model.AccountType
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.util.DateTime
@@ -85,7 +84,7 @@ class CsvParserTest {
 
     private fun parseCSV(
         fileContent: String,
-        dateFormat: QifDateFormat = QifDateFormat.US,
+        dateFormat: ImportDateFormat = ImportDateFormat.US,
         columnToFieldMap: IntArray = intArrayOf(
             R.string.split_transaction,
             R.string.date,

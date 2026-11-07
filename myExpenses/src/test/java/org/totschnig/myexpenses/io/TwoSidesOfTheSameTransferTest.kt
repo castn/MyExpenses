@@ -1,14 +1,12 @@
-package org.totschnig.myexpenses.export.qif
+package org.totschnig.myexpenses.io
 
 import com.google.common.truth.Truth
 import junit.framework.TestCase
-import org.totschnig.myexpenses.export.qif.QifUtils.twoSidesOfTheSameTransfer
-import org.totschnig.myexpenses.io.ImportAccount
-import org.totschnig.myexpenses.io.ImportTransaction
+import org.totschnig.myexpenses.io.ImportUtils.twoSidesOfTheSameTransfer
 import java.math.BigDecimal
 import java.util.Date
 
-class QifUtilTwoSidesOfTheSameTransferTest : TestCase() {
+class TwoSidesOfTheSameTransferTest : TestCase() {
 
 
     fun testShouldMatchTwoSidesOfSameTransfer() {

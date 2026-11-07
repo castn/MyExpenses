@@ -9,8 +9,10 @@
 package org.totschnig.myexpenses.export.qif
 
 import org.totschnig.myexpenses.export.CategoryInfo
-import org.totschnig.myexpenses.export.qif.QifUtils.trimFirstChar
 import org.totschnig.myexpenses.io.ImportAccount
+import org.totschnig.myexpenses.io.ImportDateFormat
+import org.totschnig.myexpenses.io.ImportUtils
+import org.totschnig.myexpenses.io.ImportUtils.trimFirstChar
 import org.totschnig.myexpenses.io.ImportAccount.Builder
 import org.totschnig.myexpenses.io.ImportTransaction
 import org.totschnig.myexpenses.model.CurrencyUnit
@@ -24,7 +26,7 @@ import java.math.BigDecimal
  */
 class QifParser(
     private val r: QifBufferedReader,
-    private val dateFormat: QifDateFormat,
+    private val dateFormat: ImportDateFormat,
     private val currency: CurrencyUnit
 ) {
     val accounts: MutableList<ImportAccount> = mutableListOf()
@@ -119,7 +121,7 @@ class QifParser(
 
     private fun readTransaction(
         r: QifBufferedReader,
-        dateFormat: QifDateFormat,
+        dateFormat: ImportDateFormat,
         currency: CurrencyUnit
     ): ImportTransaction.Builder {
         val builder = ImportTransaction.Builder()
@@ -132,9 +134,9 @@ class QifParser(
                 break
             }
             if (line.startsWith("D")) {
-                builder.date(QifUtils.parseDate(trimFirstChar(line), dateFormat))
+                builder.date(ImportUtils.parseDate(trimFirstChar(line), dateFormat))
             } else if (line.startsWith("T")) {
-                builder.amount(QifUtils.parseMoney(trimFirstChar(line), currency))
+                builder.amount(ImportUtils.parseMoney(trimFirstChar(line), currency))
             } else if (line.startsWith("P")) {
                 builder.payee(trimFirstChar(line))
             } else if (line.startsWith("M")) {
@@ -150,7 +152,7 @@ class QifParser(
                 split = ImportTransaction.Builder()
                 parseCategory(split, line)
             } else if (line.startsWith("$")) {
-                split?.amount(QifUtils.parseMoney(trimFirstChar(line), currency))
+                split?.amount(ImportUtils.parseMoney(trimFirstChar(line), currency))
             } else if (line.startsWith("E")) {
                 split?.memo(trimFirstChar(line))
             }
@@ -169,7 +171,7 @@ class QifParser(
             builder.categoryClass(category.substring(i + 1))
             category = category.substring(0, i)
         }
-        if (QifUtils.isTransferCategory(category)) {
+        if (ImportUtils.isTransferCategory(category)) {
             builder.toAccount(category.substring(1, category.length - 1))
         } else {
             builder.category(category)

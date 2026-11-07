@@ -1,15 +1,15 @@
-package org.totschnig.myexpenses.export.qif
+package org.totschnig.myexpenses.io
 
 import com.google.common.truth.Truth.assertThat
 import junitparams.JUnitParamsRunner
 import junitparams.Parameters
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.totschnig.myexpenses.export.qif.QifUtils.parseDate
+import org.totschnig.myexpenses.io.ImportUtils.parseDate
 import java.text.SimpleDateFormat
 
 @RunWith(JUnitParamsRunner::class)
-class QifUtilParseDateTest {
+class ImportUtilsParseDateTest {
     private val verificationFormat = SimpleDateFormat("yyyy-MM-dd")
     private val verificationFormatWithTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
@@ -27,7 +27,7 @@ class QifUtilParseDateTest {
         "June 21\\, 2001",
     )
     fun shouldParseUs(dateString: String) {
-        val date = parseDate(dateString, QifDateFormat.US)
+        val date = parseDate(dateString, ImportDateFormat.US)
         assertThat(verificationFormat.format(date)).isEqualTo(VERIFICATION)
     }
 
@@ -48,7 +48,7 @@ class QifUtilParseDateTest {
 
     )
     fun shouldParseEu(dateString: String) {
-        val date = parseDate(dateString, QifDateFormat.EU)
+        val date = parseDate(dateString, ImportDateFormat.EU)
         assertThat(verificationFormat.format(date)).isEqualTo(VERIFICATION)
     }
 
@@ -62,7 +62,7 @@ class QifUtilParseDateTest {
         "\"2001-06-21\"" // Quoted CSV value
     )
     fun shouldParseYMD(dateString: String) {
-        val date = parseDate(dateString, QifDateFormat.YMD)
+        val date = parseDate(dateString, ImportDateFormat.YMD)
         assertThat(verificationFormat.format(date)).isEqualTo(VERIFICATION)
     }
 
@@ -71,7 +71,7 @@ class QifUtilParseDateTest {
         "21.06.2001 14:58"
     )
     fun shouldParseWithTimeEU(dateTimeString: String) {
-        val date = parseDate(dateTimeString, QifDateFormat.EU)
+        val date = parseDate(dateTimeString, ImportDateFormat.EU)
         assertThat(verificationFormatWithTime.format(date)).isEqualTo(VERIFICATION_WITH_TIME)
     }
 
@@ -80,7 +80,7 @@ class QifUtilParseDateTest {
         "2001-06-21T14:58:00"
     )
     fun shouldParseWithTimeYMD(dateTimeString: String) {
-        val date = parseDate(dateTimeString, QifDateFormat.YMD)
+        val date = parseDate(dateTimeString, ImportDateFormat.YMD)
         assertThat(verificationFormatWithTime.format(date)).isEqualTo(VERIFICATION_WITH_TIME)
     }
 

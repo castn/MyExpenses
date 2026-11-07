@@ -8,8 +8,6 @@ import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.export.CSV_INDICATOR
 import org.totschnig.myexpenses.export.CSV_PART_INDICATOR
 import org.totschnig.myexpenses.export.CategoryInfo
-import org.totschnig.myexpenses.export.qif.QifDateFormat
-import org.totschnig.myexpenses.export.qif.QifUtils
 import org.totschnig.myexpenses.model.AccountType
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.util.timeFormatter
@@ -21,7 +19,7 @@ class CSVParser(
     private val context: Context,
     private val data: List<CSVRecord>,
     private val columnToFieldMap: IntArray,
-    private val dateFormat: QifDateFormat,
+    private val dateFormat: ImportDateFormat,
     private val currency: CurrencyUnit,
     private val type: AccountType
 ) {
@@ -78,15 +76,15 @@ class CSVParser(
             transaction.amount(
                 try {
                     if (columnIndexAmount != -1) {
-                        QifUtils.parseMoney(saveGetFromRecord(record, columnIndexAmount), currency)
+                        ImportUtils.parseMoney(saveGetFromRecord(record, columnIndexAmount), currency)
                     } else {
-                        val income = if (columnIndexIncome != -1) QifUtils.parseMoney(
+                        val income = if (columnIndexIncome != -1) ImportUtils.parseMoney(
                             saveGetFromRecord(
                                 record,
                                 columnIndexIncome
                             ), currency
                         ).abs() else BigDecimal(0)
-                        val expense = if (columnIndexExpense != -1) QifUtils.parseMoney(
+                        val expense = if (columnIndexExpense != -1) ImportUtils.parseMoney(
                             saveGetFromRecord(
                                 record,
                                 columnIndexExpense
@@ -108,10 +106,10 @@ class CSVParser(
                     ) else ""
                     if (category == context.getString(R.string.transfer) &&
                         subCategory != "" &&
-                        QifUtils.isTransferCategory(subCategory)
+                        ImportUtils.isTransferCategory(subCategory)
                     ) {
                         transaction.toAccount(subCategory.substring(1, subCategory.length - 1))
-                    } else if (QifUtils.isTransferCategory(category)) {
+                    } else if (ImportUtils.isTransferCategory(category)) {
                         transaction.toAccount(category.substring(1, category.length - 1))
                     } else {
                         val category1 = category +
@@ -128,13 +126,13 @@ class CSVParser(
                 columnIndexTime.takeIf { it != -1 }?.let { saveGetFromRecord(record, it) }
             if (dateRecord != null && timeRecord == null) {
                 transaction.date(
-                    QifUtils.parseDate(dateRecord, dateFormat)
+                    ImportUtils.parseDate(dateRecord, dateFormat)
                 )
             }
             if (timeRecord != null) {
                 val cal = dateRecord?.let {
                     try {
-                        QifUtils.parseDateInternal(dateRecord, dateFormat)
+                        ImportUtils.parseDateInternal(dateRecord, dateFormat)
                     } catch (_: Exception) {
                         null
                     }
@@ -156,7 +154,7 @@ class CSVParser(
             }
             if (columnIndexValueDate != -1) {
                 transaction.valueDate(
-                    QifUtils.parseDate(
+                    ImportUtils.parseDate(
                         saveGetFromRecord(
                             record,
                             columnIndexValueDate
