@@ -1,4 +1,4 @@
-apply plugin: "com.android.dynamic-feature"
+apply plugin: "com.android.library"
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'com.google.devtools.ksp'
 
@@ -38,7 +38,7 @@ android {
 
 dependencies {
     coreLibraryDesugaring libs.android.desugar
-    api project(':app')
+    implementation project(':myExpenses')
     implementation libs.androidx.appcompat
     implementation libs.androidx.lifecycle.viewmodel.ktx
     ksp libs.dagger.compiler

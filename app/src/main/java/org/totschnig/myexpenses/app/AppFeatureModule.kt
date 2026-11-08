@@ -3,8 +3,11 @@ package org.totschnig.myexpenses.app
 import org.totschnig.dropbox.sync.DropboxProviderFactory
 import org.totschnig.myexpenses.di.FeatureModule
 import org.totschnig.myexpenses.di.SqlCryptProvider
+import org.totschnig.myexpenses.feature.OcrFeature
+import org.totschnig.myexpenses.preference.PrefHandler
 import org.totschnig.myexpenses.sync.BackendService
 import org.totschnig.myexpenses.sync.SyncBackendProviderFactory
+import org.totschnig.ocr.OcrFeatureImpl
 import org.totschnig.onedrive.sync.OneDriveProviderFactory
 import org.totschnig.sqlcrypt.SQLiteOpenHelperFactory
 import org.totschnig.webdav.sync.WebDavBackendProviderFactory
@@ -15,6 +18,10 @@ import org.totschnig.webdav.sync.WebDavBackendProviderFactory
  */
 class AppFeatureModule : FeatureModule() {
     private val sqlCryptProvider by lazy { SQLiteOpenHelperFactory() }
+    private var ocrFeature: OcrFeature? = null
+
+    override fun provideOcrFeature(prefHandler: PrefHandler): OcrFeature =
+        ocrFeature ?: OcrFeatureImpl(prefHandler).also { ocrFeature = it }
 
     override fun provideSqlCryptProvider(): SqlCryptProvider = sqlCryptProvider
 
