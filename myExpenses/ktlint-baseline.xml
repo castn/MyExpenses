@@ -6292,21 +6292,8 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/di/FeatureModule.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="38" column="67" source="standard:chain-wrapping" />
-        <error line="39" column="1" source="standard:indent" />
-        <error line="40" column="1" source="standard:indent" />
-        <error line="41" column="1" source="standard:indent" />
-        <error line="41" column="27" source="standard:argument-list-wrapping" />
-        <error line="41" column="67" source="standard:argument-list-wrapping" />
-        <error line="41" column="101" source="standard:max-line-length" />
-        <error line="42" column="1" source="standard:indent" />
-        <error line="43" column="1" source="standard:indent" />
-        <error line="44" column="1" source="standard:indent" />
-        <error line="45" column="1" source="standard:indent" />
-        <error line="46" column="1" source="standard:indent" />
-        <error line="47" column="1" source="standard:indent" />
-        <error line="68" column="1" source="standard:indent" />
-        <error line="69" column="1" source="standard:indent" />
+        <error line="60" column="1" source="standard:indent" />
+        <error line="61" column="1" source="standard:indent" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/di/LicenceModule.kt">
         <error line="3" column="1" source="standard:import-ordering" />

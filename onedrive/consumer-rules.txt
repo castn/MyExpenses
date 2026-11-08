@@ -72,3 +72,6 @@
 
 -dontwarn com.microsoft.device.display.DisplayMask
 -dontwarn com.google.auto.value.AutoValue
+
+# BlockHound is optional for reactor and not on the classpath
+-dontwarn reactor.blockhound.integration.BlockHoundIntegration

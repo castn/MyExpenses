@@ -1,8 +1,10 @@
 package org.totschnig.myexpenses.app
 
 import org.totschnig.dropbox.sync.DropboxProviderFactory
+import org.totschnig.fints.BankingFeatureImpl
 import org.totschnig.myexpenses.di.FeatureModule
 import org.totschnig.myexpenses.di.SqlCryptProvider
+import org.totschnig.myexpenses.feature.BankingFeature
 import org.totschnig.myexpenses.feature.OcrFeature
 import org.totschnig.myexpenses.preference.PrefHandler
 import org.totschnig.myexpenses.sync.BackendService
@@ -19,9 +21,12 @@ import org.totschnig.webdav.sync.WebDavBackendProviderFactory
 class AppFeatureModule : FeatureModule() {
     private val sqlCryptProvider by lazy { SQLiteOpenHelperFactory() }
     private var ocrFeature: OcrFeature? = null
+    private val bankingFeature by lazy { BankingFeatureImpl() }
 
     override fun provideOcrFeature(prefHandler: PrefHandler): OcrFeature =
         ocrFeature ?: OcrFeatureImpl(prefHandler).also { ocrFeature = it }
+
+    override fun provideBankingFeature(): BankingFeature = bankingFeature
 
     override fun provideSqlCryptProvider(): SqlCryptProvider = sqlCryptProvider
 

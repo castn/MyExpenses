@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.dynamic-feature'
+    id 'com.android.library'
     id 'kotlin-parcelize'
     id 'com.google.devtools.ksp'
     alias libs.plugins.compose.compiler
@@ -13,8 +13,7 @@ android {
         missingDimensionStrategy 'textRecognition', 'extern'
         minSdk project.minSdkVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resourceConfigurations = ['en', 'de']
-        proguardFiles 'consumer-rules.txt'
+        consumerProguardFiles 'consumer-rules.txt'
     }
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -25,16 +24,10 @@ android {
         compose true
         buildConfig true
     }
-    packagingOptions {
-        // Add this block to solve the duplicate file error
-        resources {
-            excludes += '/META-INF/*'
-        }
-    }
 }
 
 dependencies {
-    implementation project(':app')
+    implementation project(':myExpenses')
     coreLibraryDesugaring libs.android.desugar
     implementation platform(libs.androidx.compose.bom)
     implementation libs.compose.ui
