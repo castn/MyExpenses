@@ -6,6 +6,7 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import org.totschnig.myexpenses.MyApplication
 import org.totschnig.myexpenses.di.DataModule
+import org.totschnig.myexpenses.di.SqlCryptProvider
 import org.totschnig.myexpenses.preference.PrefHandler
 import org.totschnig.myexpenses.provider.DatabaseVersionPeekHelper
 import org.totschnig.myexpenses.provider.TransactionDatabase
@@ -37,10 +38,16 @@ open class TestDataModule(
     override fun provideSQLiteOpenHelper(
         appContext: MyApplication,
         prefHandler: PrefHandler,
-        provideDatabaseName: (Boolean) -> String
+        provideDatabaseName: (Boolean) -> String,
+        cryptProvider: SqlCryptProvider?
     ): SupportSQLiteOpenHelper {
         if (forceEncrypt) {
-            return super.provideSQLiteOpenHelper(appContext, prefHandler, provideDatabaseName)
+            return super.provideSQLiteOpenHelper(
+                appContext,
+                prefHandler,
+                provideDatabaseName,
+                cryptProvider
+            )
         }
         val encryptDatabase = prefHandler.encryptDatabase
         Timber.w("building SupportSQLiteOpenHelper (encryptDatabase %b)", encryptDatabase)

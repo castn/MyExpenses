@@ -39,7 +39,7 @@ import org.totschnig.myexpenses.db2.FLAG_NEUTRAL
 import org.totschnig.myexpenses.db2.FLAG_TRANSFER
 import org.totschnig.myexpenses.db2.Repository
 import org.totschnig.myexpenses.di.AppComponent
-import org.totschnig.myexpenses.di.DataModule
+import org.totschnig.myexpenses.di.orMissing
 import org.totschnig.myexpenses.model.AccountGrouping
 import org.totschnig.myexpenses.model.CrStatus
 import org.totschnig.myexpenses.model.CurrencyContext
@@ -1039,7 +1039,7 @@ abstract class BaseTransactionProvider : ContentProvider() {
         _helper = null
         try {
             val written = if (encrypt) {
-                DataModule.cryptProvider.encrypt(context!!, backupFile, tempDb)
+                cryptProvider.encrypt(context!!, backupFile, tempDb)
                 true
             } else {
                 FileCopyUtils.copy(backupFile, tempDb) && tempDb.length() == backupFile.length()
@@ -1237,9 +1237,12 @@ abstract class BaseTransactionProvider : ContentProvider() {
         }
     }
 
+    private val cryptProvider
+        get() = MyApplication.instance.appComponent.sqlCryptProvider().orMissing()
+
     private fun decrypt(currentDb: File, backupDir: File): Result<Unit> {
         val backupDb = getBackupDbFile(backupDir)
-        DataModule.cryptProvider.decrypt(context!!, currentDb, backupDb)
+        cryptProvider.decrypt(context!!, currentDb, backupDb)
         return ResultUnit
     }
 

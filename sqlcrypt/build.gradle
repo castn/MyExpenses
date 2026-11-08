@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.dynamic-feature'
+    id 'com.android.library'
 }
 android {
     namespace 'org.totschnig.sqlcrypt'
@@ -10,7 +10,7 @@ android {
         minSdkVersion project.minSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        proguardFiles 'consumer-rules.txt'
+        consumerProguardFiles 'consumer-rules.txt'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    implementation project(":app")
+    implementation project(":myExpenses")
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core

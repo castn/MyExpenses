@@ -39,15 +39,15 @@ interface SqlCryptProvider {
     fun encrypt(context: Context, backupFile: File, currentDb: File)
 }
 
+/**
+ * The implementation lives in :sqlcrypt, which :myExpenses does not know. :app hands it in through
+ * [FeatureModule.provideSqlCryptProvider].
+ */
+fun SqlCryptProvider?.orMissing(): SqlCryptProvider =
+    checkNotNull(this) { "Database encryption requested, but :sqlcrypt is not part of this build" }
+
 @Module
 open class DataModule {
-    companion object {
-        val cryptProvider: SqlCryptProvider by lazy {
-            Class.forName("org.totschnig.sqlcrypt.SQLiteOpenHelperFactory")
-                .getDeclaredConstructor().newInstance() as SqlCryptProvider
-        }
-    }
-
     open val databaseName = "data"
 
     open val uiSettingsName = "UI-Settings"
@@ -99,11 +99,12 @@ open class DataModule {
         appContext: MyApplication,
         prefHandler: PrefHandler,
         @Named(AppComponent.DATABASE_NAME) provideDatabaseName: (@JvmSuppressWildcards Boolean) -> String,
+        cryptProvider: SqlCryptProvider?
     ): SupportSQLiteOpenHelper {
         val encryptDatabase = prefHandler.encryptDatabase
         Timber.w("building SupportSQLiteOpenHelper (encryptDatabase %b)", encryptDatabase)
         return when {
-            encryptDatabase -> cryptProvider.provideEncryptedDatabase(appContext)
+            encryptDatabase -> cryptProvider.orMissing().provideEncryptedDatabase(appContext)
             else -> FrameworkSQLiteOpenHelperFactory()
         }.create(
             SupportSQLiteOpenHelper.Configuration.builder(appContext)

@@ -49,6 +49,12 @@ open class FeatureModule {
         null
     }
 
+    /**
+     * :myExpenses does not know :sqlcrypt, :app overrides this to hand in its implementation.
+     */
+    @Provides
+    open fun provideSqlCryptProvider(): SqlCryptProvider? = null
+
     @Provides
     @Singleton
     open fun provideFeatureManager(prefHandler: PrefHandler): FeatureManager = try {

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Everything of the app is declared in the manifest of :myExpenses. Only what the merger does not
-     take from a library is set here. -->
+     take from a library is set here, and the application class, which hands in the features. -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="internalOnly">
 
-    <application android:localeConfig="@xml/locales_config" />
+    <application
+        android:name="org.totschnig.myexpenses.app.MyExpensesApp"
+        android:localeConfig="@xml/locales_config"
+        tools:replace="android:name" />
 </manifest>

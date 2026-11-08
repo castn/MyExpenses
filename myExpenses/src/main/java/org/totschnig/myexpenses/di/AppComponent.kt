@@ -175,6 +175,8 @@ interface AppComponent {
 
     fun bankingFeature(): BankingFeature?
 
+    fun sqlCryptProvider(): SqlCryptProvider?
+
     fun okHttpClientBuilder(): OkHttpClient.Builder
 
     fun featureManager(): FeatureManager
