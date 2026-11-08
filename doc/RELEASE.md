@@ -11,7 +11,7 @@
   * adb shell settings put global hidden_api_policy 1 # needed for LocaleUtil
   * adb shell settings put global window_animation_scale 0.0; adb shell settings put global transition_animation_scale 0.0;  adb shell settings put global animator_duration_scale 0.0 # needed for reliable Espresso tests
   * ./gradlew :myExpenses:connectedExternDebugAndroidTest
-  * ./gradlew clean :myExpenses:packageExternReleaseUniversalApk
+  * ./gradlew clean :app:packageExternReleaseUniversalApk
 * test upgrade mechanism
 * Run ChangeLogGenerator#generateChangeLogFdroid
 * execute command returned by ./gradlew echoPublishTag

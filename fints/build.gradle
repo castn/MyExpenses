@@ -34,7 +34,7 @@ android {
 }
 
 dependencies {
-    implementation project(':myExpenses')
+    implementation project(':app')
     coreLibraryDesugaring libs.android.desugar
     implementation platform(libs.androidx.compose.bom)
     implementation libs.compose.ui

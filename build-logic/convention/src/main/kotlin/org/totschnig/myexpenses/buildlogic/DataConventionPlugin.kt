@@ -23,7 +23,7 @@ class DataConventionPlugin : Plugin<Project> {
             add("testImplementation", testFixtures(project(":next:core:common")))
         }
         forbidProjectDependencies("mod-data-headless: a data module depends only on core and data modules and on modules without app types") {
-            it.startsWith(":next:feature:") || it == ":next:core:ui" || it == ":ui_next" || it == ":myExpenses" ||
+            it.startsWith(":next:feature:") || it == ":next:core:ui" || it == ":ui_next" || it == ":myExpenses" || it == ":app" ||
                 it == ":designsystem" || it == ":charts"
         }
     }

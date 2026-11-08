@@ -10,7 +10,7 @@ buildscript {
 }
 
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-parcelize'
     id 'com.google.devtools.ksp'
     id 'org.jetbrains.kotlin.plugin.compose'
@@ -32,16 +32,13 @@ android {
     useLibrary 'android.test.base'
 
     defaultConfig {
-        applicationId "org.totschnig.myexpenses"
         minSdkVersion project.minSdkVersion
-        targetSdkVersion project.targetSdkVersion
-        versionCode project.versionCode
-        versionName project.versionName
 
+        // A library has none of these, the app (:app) sets the same values for the package
+        buildConfigField "String", "VERSION_NAME", "\"${project.versionName}\""
+        buildConfigField "int", "VERSION_CODE", "${project.versionCode}"
         buildConfigField "String", "DISTRIBUTION", "\"GITHUB\""
         testInstrumentationRunner "org.totschnig.myexpenses.MyTestRunner"
-
-        resourceConfigurations = resConfig
     }
 
     compileOptions {
@@ -50,28 +47,13 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
-    /*signingConfigs {
-        release {
-            storeFile file(getPropertyIfDefined("RELEASE_STORE_FILE", "unknown"))
-            storePassword getPropertyIfDefined("RELEASE_STORE_PASSWORD", "unknown")
-            keyAlias getPropertyIfDefined("RELEASE_KEY_ALIAS", "unknown")
-            keyPassword getPropertyIfDefined("RELEASE_KEY_PASSWORD", "unknown")
-
-        }
-    }*/
-
+    // Shrinking and signing are set by the app (:app). The label placeholder is set here, because
+    // the unit tests merge the manifest of this module without the app.
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-project.txt'
-            //signingConfig signingConfigs.release
             manifestPlaceholders["appName"] = "@string/app_name"
-            applicationIdSuffix ""
-            //ndk.debugSymbolLevel = 'FULL'
         }
         debug {
-            applicationIdSuffix ".debug"
             manifestPlaceholders["appName"] = "My Expenses Debug"
             // Constant, so that a new commit does not rebuild the module; release gets the real date below
             buildConfigField "java.time.LocalDateTime", "BUILD_DATE", "java.time.LocalDateTime.of(2000, 1, 1, 0, 0)"
@@ -83,8 +65,10 @@ android {
     }
 
     buildTypes.each { type ->
-        type.resValue 'string', 'application_id', defaultConfig.applicationId + type.applicationIdSuffix
-        type.resValue "string", 'sync_account_type', defaultConfig.applicationId + type.applicationIdSuffix + ".sync"
+        def applicationId = project.applicationId + project["${type.name}ApplicationIdSuffix"]
+        type.buildConfigField "String", "APPLICATION_ID", "\"$applicationId\""
+        type.resValue 'string', 'application_id', applicationId
+        type.resValue "string", 'sync_account_type', applicationId + ".sync"
     }
 
     flavorDimensions = [ "textRecognition" ]
@@ -108,6 +92,7 @@ android {
     }
 
     testOptions {
+        targetSdk project.targetSdkVersion
         execution 'ANDROIDX_TEST_ORCHESTRATOR'
         unitTests {
             includeAndroidResources = true
@@ -122,23 +107,11 @@ android {
         compose true
         buildConfig true
     }
-    //It does not seem possible to define dynamicFeatures dependent on variant
-    //If you want to build intern variant, you need to include mlkit (+ at least one of ':mlkit_latn', ':mlkit_han', ':mlkit_deva', ':mlkit_jpan', ':mlkit_kore') and/or tesseract module
-    //drive for Sync with Google Drive
-    dynamicFeatures = [':ocr', ':dropbox', ':webdav', ':sqlcrypt', ':fints', ':onedrive', ':jackson', ':ui_next']
-
     lint {
+        targetSdk project.targetSdkVersion
         abortOnError true
         checkDependencies true
         disable 'InvalidPackage', 'MissingQuantity', 'MissingTranslation', 'ImpliedQuantity', 'Instantiatable'
-    }
-
-    bundle {
-        language {
-            enableSplit = !project.gradle.startParameter.taskNames.any {
-                it.contains("Test") || it.contains("Debug") || it.contains("Connected")
-            }
-        }
     }
 
     namespace 'org.totschnig.myexpenses'
@@ -348,21 +321,6 @@ androidComponents {
 
 //For Drive
 //apply plugin: 'com.google.gms.google-services'
-
-tasks.register('echoPublishTag') {
-    doLast {
-        def currentBranch = 'git branch --show-current'.execute().text.trim()
-
-        if (currentBranch == 'master') {
-            println "git add metadata/*/changelogs/${versionCode}.txt"
-            println "git commit -m \"Release ${versionName}\""
-            println "git push"
-            println "git tag r${versionCode}; git push origin r${versionCode}"
-        } else {
-            println "Release should be built on master, current branch is $currentBranch"
-        }
-    }
-}
 
 configurations.configureEach {
     exclude group: 'com.google.j2objc', module: 'j2objc-annotations'

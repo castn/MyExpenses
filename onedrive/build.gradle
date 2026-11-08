@@ -31,7 +31,7 @@ android {
 
 dependencies {
     coreLibraryDesugaring libs.android.desugar
-    implementation project(":myExpenses")
+    implementation project(":app")
     implementation project(":jackson")
     implementation libs.android.state
     kapt libs.android.state.processor

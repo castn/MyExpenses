@@ -91,7 +91,7 @@ Build with dynamic feature modules, and OCR feature depending on external OCR he
 git clone https://github.com/mtotschnig/MyExpenses.git
 cd MyExpenses
 export ANDROID_HOME={sdk-dir}
-./gradlew myExpenses:packageExternReleaseUniversalApk
+./gradlew app:packageExternReleaseUniversalApk
 ```
 
 Integrate

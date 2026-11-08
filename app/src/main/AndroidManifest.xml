@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Everything of the app is declared in the manifest of :myExpenses. Only what the merger does not
+     take from a library is set here. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:installLocation="internalOnly">
+
+    <application android:localeConfig="@xml/locales_config" />
+</manifest>

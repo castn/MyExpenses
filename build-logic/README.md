@@ -7,7 +7,7 @@ own build files.
 | Plugin | Applies | Sets |
 |---|---|---|
 | `next.android.library` | `com.android.library` | `compileSdk`, `minSdk` from the `ext` block of the root `build.gradle`, Java 17 |
-| `next.android.feature` | `com.android.dynamic-feature` | as above, plus `:myExpenses`, desugaring and the dimension `textRecognition` = `extern` |
+| `next.android.feature` | `com.android.dynamic-feature` | as above, plus `:app` (and through it `:myExpenses`), desugaring and the dimension `textRecognition` = `extern` |
 | `next.android.compose` | `org.jetbrains.kotlin.plugin.compose` | `buildFeatures.compose`, Compose BOM, tooling for previews; after one of the two above |
 | `next.jvm` | `org.jetbrains.kotlin.jvm` | Java and Kotlin target 17 |
 | `next.data` | `next.android.library` | `:next:core:common` as `api`; for tests as `next.feature`. Fails on a dependency on a feature, `:next:core:ui`, `:designsystem`, `:charts`, the shell or the app (rule `mod-data-headless`) |

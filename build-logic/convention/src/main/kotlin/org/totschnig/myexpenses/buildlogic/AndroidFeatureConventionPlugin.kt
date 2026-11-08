@@ -7,8 +7,8 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 
 /**
- * A dynamic feature of the new UI on top of `:myExpenses`, e.g. `:ui_next`. Like the main module it
- * uses java.time through desugaring.
+ * A dynamic feature of the new UI on top of `:app` and through it `:myExpenses`, e.g. `:ui_next`.
+ * Like the main module it uses java.time through desugaring.
  */
 class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = with(target) {
@@ -19,7 +19,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             compileOptions.isCoreLibraryDesugaringEnabled = true
         }
         dependencies {
-            add("implementation", project(":myExpenses"))
+            add("implementation", project(":app"))
             add("coreLibraryDesugaring", libs.findLibrary("android-desugar").get())
         }
     }

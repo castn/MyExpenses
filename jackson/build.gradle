@@ -12,6 +12,6 @@ android {
 }
 
 dependencies {
-    implementation project(":myExpenses")
+    implementation project(":app")
     implementation libs.jackson.core
 }

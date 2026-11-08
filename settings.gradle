@@ -27,6 +27,7 @@ dependencyResolutionManagement {
 //include ':mlkit_jpan'
 //include ':mlkit_kore'
 //include ":tesseract"
+include ':app'
 include ':myExpenses'
 include ':ocr'
 include ':ocr-model'

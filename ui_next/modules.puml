@@ -8,10 +8,10 @@ skinparam linetype ortho
 skinparam ranksep 80
 top to bottom direction
 
+[:app\n(app)] as mApp
 [:charts] as mCharts
 [:designsystem] as mDesignsystem
 [:item-group-model\n(Kotlin JVM)] as mItemGroupModel
-[:myExpenses\n(app)] as mMyExpenses
 [:ocr-model\n(Kotlin JVM)] as mOcrModel
 [:ui_next\n(dynamic feature)] as mUiNext
 
@@ -83,5 +83,5 @@ mNextFeatureMerchants --> mNextDataMerchants
 mNextFeatureReceipts --> mNextDataReceipts
 mNextFeatureTags --> mNextDataTags
 mNextFeatureTips --> mNextDataTips
-mUiNext --> mMyExpenses
+mUiNext --> mApp
 @enduml

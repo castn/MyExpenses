@@ -1,0 +1,124 @@
+// The installable app. It holds only what an application needs: id, version, signing, shrinking,
+// language splits and the dynamic features. Code, resources and the manifest are in :myExpenses.
+plugins {
+    id 'com.android.application'
+}
+
+def getPropertyIfDefined(property, defaultValue) {
+    if (project.hasProperty(property)) {
+        return project.properties[property]
+    }
+    return defaultValue
+}
+
+android {
+    compileSdk project.compileSdkVersion
+
+    defaultConfig {
+        applicationId project.applicationId
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+        versionCode project.versionCode
+        versionName project.versionName
+
+        resourceConfigurations = resConfig
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    /*signingConfigs {
+        release {
+            storeFile file(getPropertyIfDefined("RELEASE_STORE_FILE", "unknown"))
+            storePassword getPropertyIfDefined("RELEASE_STORE_PASSWORD", "unknown")
+            keyAlias getPropertyIfDefined("RELEASE_KEY_ALIAS", "unknown")
+            keyPassword getPropertyIfDefined("RELEASE_KEY_PASSWORD", "unknown")
+
+        }
+    }*/
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), project(':myExpenses').file('proguard-project.txt')
+            //signingConfig signingConfigs.release
+            applicationIdSuffix project.releaseApplicationIdSuffix
+            //ndk.debugSymbolLevel = 'FULL'
+        }
+        debug {
+            applicationIdSuffix project.debugApplicationIdSuffix
+        }
+    }
+
+    flavorDimensions = [ "textRecognition" ]
+
+    productFlavors {
+        intern {
+            dimension "textRecognition"
+        }
+        extern {
+            dimension "textRecognition"
+        }
+    }
+
+    packagingOptions {
+        jniLibs {
+            excludes += ['META-INF/*', 'META-INF/licenses/**']
+        }
+    }
+
+    //It does not seem possible to define dynamicFeatures dependent on variant
+    //If you want to build intern variant, you need to include mlkit (+ at least one of ':mlkit_latn', ':mlkit_han', ':mlkit_deva', ':mlkit_jpan', ':mlkit_kore') and/or tesseract module
+    //drive for Sync with Google Drive
+    dynamicFeatures = [':ocr', ':dropbox', ':webdav', ':sqlcrypt', ':fints', ':onedrive', ':jackson', ':ui_next']
+
+    lint {
+        abortOnError true
+        disable 'InvalidPackage', 'MissingQuantity', 'MissingTranslation', 'ImpliedQuantity', 'Instantiatable'
+    }
+
+    bundle {
+        language {
+            enableSplit = !project.gradle.startParameter.taskNames.any {
+                it.contains("Test") || it.contains("Debug") || it.contains("Connected")
+            }
+        }
+    }
+
+    namespace 'org.totschnig.myexpenses.app'
+}
+
+dependencies {
+    coreLibraryDesugaring libs.android.desugar
+    // api: the dynamic features build on the classes of :myExpenses through this module
+    api project(':myExpenses')
+}
+
+configurations.configureEach {
+    exclude group: 'com.google.j2objc', module: 'j2objc-annotations'
+}
+
+tasks.register('echoPublishTag') {
+    doLast {
+        def currentBranch = 'git branch --show-current'.execute().text.trim()
+
+        if (currentBranch == 'master') {
+            println "git add metadata/*/changelogs/${versionCode}.txt"
+            println "git commit -m \"Release ${versionName}\""
+            println "git push"
+            println "git tag r${versionCode}; git push origin r${versionCode}"
+        } else {
+            println "Release should be built on master, current branch is $currentBranch"
+        }
+    }
+}
+
+tasks.register("r8Version") {
+    doLast {
+        println(com.android.tools.r8.Version.getVersionString())
+    }
+}

@@ -36,7 +36,7 @@ class FeatureConventionPlugin : Plugin<Project> {
             add("testImplementation", testFixtures(project(":next:core:common")))
         }
         forbidProjectDependencies("mod-feature-isolated: a feature depends on no other feature, the shell or the app") {
-            it.startsWith(":next:feature:") || it == ":ui_next" || it == ":myExpenses"
+            it.startsWith(":next:feature:") || it == ":ui_next" || it == ":myExpenses" || it == ":app"
         }
     }
 }
