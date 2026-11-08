@@ -37,7 +37,7 @@ abstract class SyncBackendSetupActivity : RestoreActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        backendProviders = BackendService.allAvailable(this)
+        backendProviders = BackendService.allAvailable()
         injector.inject(syncViewModel)
     }
 
@@ -212,7 +212,7 @@ abstract class SyncBackendSetupActivity : RestoreActivity(),
     protected open val offerEncryption = true
 
     fun addSyncProviderMenuEntries(subMenu: Menu) {
-        for (factory in allAvailable(this)) {
+        for (factory in allAvailable()) {
             subMenu.add(Menu.NONE, factory.id, Menu.NONE, factory.label)
         }
     }
@@ -224,7 +224,7 @@ abstract class SyncBackendSetupActivity : RestoreActivity(),
     }
 
     @Throws(NoSuchElementException::class)
-    fun getBackendServiceByIdOrThrow(id: Int) = allAvailable(this).first { it.id == id }
+    fun getBackendServiceByIdOrThrow(id: Int) = allAvailable().first { it.id == id }
 
     override fun onResult(dialogTag: String, which: Int, extras: Bundle) =
         when {

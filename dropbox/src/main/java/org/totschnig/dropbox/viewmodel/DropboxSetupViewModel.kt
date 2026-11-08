@@ -8,7 +8,7 @@ import com.dropbox.core.v2.DbxClientV2
 import com.dropbox.core.v2.files.FolderMetadata
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.totschnig.dropbox.BuildConfig
+import org.totschnig.myexpenses.BuildConfig
 import org.totschnig.myexpenses.sync.BackendService
 import org.totschnig.myexpenses.viewmodel.AbstractSetupViewModel
 import timber.log.Timber

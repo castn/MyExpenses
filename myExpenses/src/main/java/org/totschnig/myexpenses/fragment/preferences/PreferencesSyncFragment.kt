@@ -20,7 +20,7 @@ class PreferencesSyncFragment : BasePreferenceFragment() {
 
         requirePreference<Preference>(PrefKey.MANAGE_SYNC_BACKENDS).summary = (getString(
             R.string.pref_manage_sync_backends_summary,
-            BackendService.allAvailable(requireContext()).joinToString { it.label }
+            BackendService.allAvailable().joinToString { it.label }
         ) +
                 " " + ContribFeature.SYNCHRONIZATION.buildRequiresString(requireActivity()))
 

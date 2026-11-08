@@ -7,6 +7,9 @@ import org.totschnig.myexpenses.feature.BankingFeature
 import org.totschnig.myexpenses.feature.FeatureManager
 import org.totschnig.myexpenses.feature.OcrFeature
 import org.totschnig.myexpenses.preference.PrefHandler
+import org.totschnig.myexpenses.sync.BackendService
+import org.totschnig.myexpenses.sync.StorageAccessFrameworkBackendProviderFactory
+import org.totschnig.myexpenses.sync.SyncBackendProviderFactory
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
 import org.totschnig.myexpenses.util.distrib.DistributionHelper
 import java.time.Instant
@@ -54,6 +57,15 @@ open class FeatureModule {
      */
     @Provides
     open fun provideSqlCryptProvider(): SqlCryptProvider? = null
+
+    /**
+     * The sync backends built into this app. :myExpenses only brings the local one, :app adds the
+     * cloud backends.
+     */
+    @Provides
+    @Singleton
+    open fun provideSyncBackendFactories(): Map<BackendService, SyncBackendProviderFactory> =
+        mapOf(BackendService.SAF to StorageAccessFrameworkBackendProviderFactory())
 
     @Provides
     @Singleton

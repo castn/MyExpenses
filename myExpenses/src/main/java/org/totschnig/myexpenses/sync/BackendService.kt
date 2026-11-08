@@ -1,61 +1,53 @@
 package org.totschnig.myexpenses.sync
 
-import android.content.Context
+import org.totschnig.myexpenses.MyApplication
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.feature.Feature
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
-import org.totschnig.myexpenses.util.distrib.DistributionHelper
 
 enum class BackendService(
-    private val className: String,
     val id: Int,
     val label: String,
     val feature: Feature?,
     val supportsReconfiguration: Boolean = false
 ) {
     DRIVE(
-        "org.totschnig.drive.sync.GoogleDriveBackendProviderFactory",
         R.id.SYNC_BACKEND_DRIVE,
         "Drive",
         Feature.DRIVE
     ),
     SAF(
-        "org.totschnig.myexpenses.sync.StorageAccessFrameworkBackendProviderFactory",
         R.id.SYNC_BACKEND_LOCAL,
         "SAF",
         null
     ),
     DROPBOX(
-        "org.totschnig.dropbox.sync.DropboxProviderFactory",
         R.id.SYNC_BACKEND_DROPBOX,
         "Dropbox",
         Feature.DROPBOX
     ),
     ONEDRIVE(
-        "org.totschnig.onedrive.sync.OneDriveProviderFactory",
         R.id.SYNC_BACKEND_ONEDRIVE,
         "OneDrive",
         Feature.ONEDRIVE
     ),
     WEBDAV(
-        "org.totschnig.webdav.sync.WebDavBackendProviderFactory",
         R.id.SYNC_BACKEND_WEBDAV,
         "WebDAV",
         Feature.WEBDAV,
         true
     );
 
+    /**
+     * The backends built into this app, see FeatureModule.provideSyncBackendFactories.
+     */
+    private val factory: SyncBackendProviderFactory?
+        get() = MyApplication.instance.appComponent.syncBackendFactories()[this]
 
-    open fun isAvailable(context: Context) = if (DistributionHelper.isGithub) try {
-        Class.forName(className, false, this::class.java.classLoader)
-        true
-    } catch (_: Exception) {
-        false
-    } else true
+    fun isAvailable() = factory != null
 
     fun instantiate(): Result<SyncBackendProviderFactory> = kotlin.runCatching {
-        Class.forName(className).getDeclaredConstructor()
-            .newInstance() as SyncBackendProviderFactory
+        checkNotNull(factory) { "$label is not part of this build" }
     }.onFailure {
         CrashHandler.report(it)
     }
@@ -70,7 +62,7 @@ enum class BackendService(
                 ?: throw IllegalArgumentException("No Backend found for $account")
         }
 
-        fun allAvailable(context: Context) = entries.filter { it.isAvailable(context) }
+        fun allAvailable() = entries.filter { it.isAvailable() }
 
     }
 }

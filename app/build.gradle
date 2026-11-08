@@ -69,12 +69,16 @@ android {
         jniLibs {
             excludes += ['META-INF/*', 'META-INF/licenses/**']
         }
+        resources {
+            // from :onedrive, BlockHound is not on the classpath
+            excludes += ["META-INF/services/reactor.blockhound.integration.BlockHoundIntegration"]
+        }
     }
 
     //It does not seem possible to define dynamicFeatures dependent on variant
     //If you want to build intern variant, you need to include mlkit (+ at least one of ':mlkit_latn', ':mlkit_han', ':mlkit_deva', ':mlkit_jpan', ':mlkit_kore') and/or tesseract module
     //drive for Sync with Google Drive
-    dynamicFeatures = [':ocr', ':dropbox', ':webdav', ':fints', ':onedrive', ':jackson', ':ui_next']
+    dynamicFeatures = [':ocr', ':fints', ':ui_next']
 
     lint {
         abortOnError true
@@ -98,6 +102,12 @@ dependencies {
     api project(':myExpenses')
     // Features built in as libraries, their implementations are handed in by AppFeatureModule
     implementation project(':sqlcrypt')
+    implementation project(':webdav')
+    implementation project(':dropbox')
+    implementation(project(':onedrive')) {
+        // the Microsoft Graph SDK works without it
+        exclude group: 'com.google.guava', module: 'guava'
+    }
 }
 
 configurations.configureEach {

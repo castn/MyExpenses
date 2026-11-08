@@ -179,7 +179,7 @@ class NextOnboarding : OnboardingHostActivity() {
             StartChoice.SYNC -> syncTargets =
                 GenericAccountService.getAccountNames(this).map { name ->
                     SyncTarget(name, isSetUp = true) { fetchAccountData(name) }
-                } + BackendService.allAvailable(this).map { service ->
+                } + BackendService.allAvailable().map { service ->
                     SyncTarget(service.label, isSetUp = false) { startSetup(service.id) }
                 }
 

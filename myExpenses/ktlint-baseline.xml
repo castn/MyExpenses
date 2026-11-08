@@ -6244,9 +6244,9 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/di/AppComponent.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="268" column="16" source="standard:function-signature" />
-        <error line="268" column="100" source="standard:max-line-length" />
-        <error line="268" column="102" source="standard:function-signature" />
+        <error line="272" column="16" source="standard:function-signature" />
+        <error line="272" column="100" source="standard:max-line-length" />
+        <error line="272" column="102" source="standard:function-signature" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/di/AppModule.kt">
         <error line="3" column="1" source="standard:import-ordering" />
@@ -6292,29 +6292,29 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/di/FeatureModule.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="30" column="79" source="standard:chain-wrapping" />
-        <error line="32" column="14" source="standard:wrapping" />
-        <error line="32" column="28" source="standard:argument-list-wrapping" />
-        <error line="32" column="62" source="standard:argument-list-wrapping" />
-        <error line="32" column="79" source="standard:argument-list-wrapping" />
-        <error line="32" column="101" source="standard:max-line-length" />
-        <error line="32" column="102" source="standard:argument-list-wrapping" />
-        <error line="33" column="55" source="standard:wrapping" />
-        <error line="41" column="67" source="standard:chain-wrapping" />
-        <error line="42" column="1" source="standard:indent" />
-        <error line="43" column="1" source="standard:indent" />
-        <error line="44" column="1" source="standard:indent" />
-        <error line="44" column="27" source="standard:argument-list-wrapping" />
-        <error line="44" column="67" source="standard:argument-list-wrapping" />
-        <error line="44" column="101" source="standard:max-line-length" />
+        <error line="33" column="79" source="standard:chain-wrapping" />
+        <error line="35" column="14" source="standard:wrapping" />
+        <error line="35" column="28" source="standard:argument-list-wrapping" />
+        <error line="35" column="62" source="standard:argument-list-wrapping" />
+        <error line="35" column="79" source="standard:argument-list-wrapping" />
+        <error line="35" column="101" source="standard:max-line-length" />
+        <error line="35" column="102" source="standard:argument-list-wrapping" />
+        <error line="36" column="55" source="standard:wrapping" />
+        <error line="44" column="67" source="standard:chain-wrapping" />
         <error line="45" column="1" source="standard:indent" />
         <error line="46" column="1" source="standard:indent" />
         <error line="47" column="1" source="standard:indent" />
+        <error line="47" column="27" source="standard:argument-list-wrapping" />
+        <error line="47" column="67" source="standard:argument-list-wrapping" />
+        <error line="47" column="101" source="standard:max-line-length" />
         <error line="48" column="1" source="standard:indent" />
         <error line="49" column="1" source="standard:indent" />
         <error line="50" column="1" source="standard:indent" />
-        <error line="62" column="1" source="standard:indent" />
-        <error line="63" column="1" source="standard:indent" />
+        <error line="51" column="1" source="standard:indent" />
+        <error line="52" column="1" source="standard:indent" />
+        <error line="53" column="1" source="standard:indent" />
+        <error line="74" column="1" source="standard:indent" />
+        <error line="75" column="1" source="standard:indent" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/di/LicenceModule.kt">
         <error line="3" column="1" source="standard:import-ordering" />
@@ -7584,32 +7584,32 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/feature/FeatureManager.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="72" column="1" source="standard:no-blank-line-before-rbrace" />
-        <error line="76" column="9" source="standard:class-signature" />
-        <error line="81" column="12" source="standard:function-signature" />
-        <error line="94" column="12" source="standard:function-signature" />
-        <error line="104" column="12" source="standard:function-signature" />
-        <error line="106" column="1" source="standard:indent" />
-        <error line="115" column="12" source="standard:function-signature" />
+        <error line="71" column="1" source="standard:no-blank-line-before-rbrace" />
+        <error line="75" column="9" source="standard:class-signature" />
+        <error line="80" column="12" source="standard:function-signature" />
+        <error line="93" column="12" source="standard:function-signature" />
+        <error line="103" column="12" source="standard:function-signature" />
+        <error line="105" column="1" source="standard:indent" />
+        <error line="114" column="12" source="standard:function-signature" />
+        <error line="116" column="1" source="standard:indent" />
         <error line="117" column="1" source="standard:indent" />
-        <error line="118" column="1" source="standard:indent" />
-        <error line="138" column="25" source="standard:colon-spacing" />
-        <error line="143" column="20" source="standard:function-expression-body" />
-        <error line="147" column="22" source="standard:colon-spacing" />
-        <error line="151" column="11" source="standard:enum-wrapping" />
-        <error line="151" column="16" source="standard:enum-wrapping" />
-        <error line="151" column="22" source="standard:enum-wrapping" />
-        <error line="151" column="28" source="standard:enum-wrapping" />
-        <error line="156" column="13" source="standard:keyword-spacing" />
-        <error line="165" column="9" source="standard:keyword-spacing" />
-        <error line="165" column="10" source="standard:paren-spacing" />
-        <error line="176" column="46" source="standard:function-signature" />
-        <error line="195" column="9" source="standard:multiline-if-else" />
-        <error line="195" column="32" source="standard:multiline-if-else" />
-        <error line="207" column="53" source="standard:multiline-if-else" />
-        <error line="208" column="10" source="standard:multiline-if-else" />
-        <error line="223" column="70" source="standard:function-signature" />
-        <error line="227" column="13" source="standard:multiline-if-else" />
+        <error line="137" column="25" source="standard:colon-spacing" />
+        <error line="142" column="20" source="standard:function-expression-body" />
+        <error line="146" column="22" source="standard:colon-spacing" />
+        <error line="150" column="11" source="standard:enum-wrapping" />
+        <error line="150" column="16" source="standard:enum-wrapping" />
+        <error line="150" column="22" source="standard:enum-wrapping" />
+        <error line="150" column="28" source="standard:enum-wrapping" />
+        <error line="155" column="13" source="standard:keyword-spacing" />
+        <error line="164" column="9" source="standard:keyword-spacing" />
+        <error line="164" column="10" source="standard:paren-spacing" />
+        <error line="175" column="46" source="standard:function-signature" />
+        <error line="194" column="9" source="standard:multiline-if-else" />
+        <error line="194" column="32" source="standard:multiline-if-else" />
+        <error line="206" column="53" source="standard:multiline-if-else" />
+        <error line="207" column="10" source="standard:multiline-if-else" />
+        <error line="222" column="70" source="standard:function-signature" />
+        <error line="226" column="13" source="standard:multiline-if-else" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/feature/OcrFeature.kt">
         <error line="3" column="1" source="standard:import-ordering" />
@@ -11347,12 +11347,8 @@
         <error line="596" column="111" source="standard:argument-list-wrapping" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/sync/BackendService.kt">
-        <error line="47" column="1" source="standard:enum-wrapping" />
-        <error line="48" column="1" source="standard:no-consecutive-blank-lines" />
-        <error line="49" column="79" source="standard:multiline-if-else" />
-        <error line="54" column="12" source="standard:multiline-if-else" />
-        <error line="63" column="49" source="standard:function-expression-body" />
-        <error line="74" column="1" source="standard:no-blank-line-before-rbrace" />
+        <error line="55" column="49" source="standard:function-expression-body" />
+        <error line="66" column="1" source="standard:no-blank-line-before-rbrace" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/sync/GenericAccountService.kt">
         <error line="53" column="51" source="standard:function-expression-body" />

@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.dynamic-feature'
+    id 'com.android.library'
     id 'com.google.devtools.ksp'
 }
 android {
@@ -8,7 +8,6 @@ android {
     defaultConfig {
         missingDimensionStrategy 'textRecognition', 'extern'
         minSdk project.minSdkVersion
-        resourceConfigurations = resConfig
     }
 
     compileOptions {
@@ -28,7 +27,7 @@ android {
 }
 
 dependencies {
-    implementation project(":app")
+    implementation project(":myExpenses")
     implementation(libs.dav4android)
     implementation libs.androidx.appcompat
     implementation libs.okhttp

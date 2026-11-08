@@ -59,7 +59,9 @@ import org.totschnig.myexpenses.retrofit.ExchangeRateService
 import org.totschnig.myexpenses.service.DailyExchangeRateDownloadService
 import org.totschnig.myexpenses.service.PlanExecutor
 import org.totschnig.myexpenses.service.PlanNotificationClickHandler
+import org.totschnig.myexpenses.sync.BackendService
 import org.totschnig.myexpenses.sync.SyncAdapter
+import org.totschnig.myexpenses.sync.SyncBackendProviderFactory
 import org.totschnig.myexpenses.util.ExchangeRateHandler
 import org.totschnig.myexpenses.util.ICurrencyFormatter
 import org.totschnig.myexpenses.util.ads.BaseAdHandlerImpl
@@ -176,6 +178,8 @@ interface AppComponent {
     fun bankingFeature(): BankingFeature?
 
     fun sqlCryptProvider(): SqlCryptProvider?
+
+    fun syncBackendFactories(): Map<BackendService, SyncBackendProviderFactory>
 
     fun okHttpClientBuilder(): OkHttpClient.Builder
 

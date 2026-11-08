@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission
@@ -27,13 +26,4 @@
             android:name="com.yubico.yubikit.android.ui.YubiKeyPromptActivity" tools:node="remove"
             tools:ignore="MissingClass" />
     </application>
-
-    <dist:module
-        dist:instant="false"
-        dist:title="@string/title_onedrive">
-        <dist:delivery>
-            <dist:on-demand />
-        </dist:delivery>
-        <dist:fusing dist:include="true" />
-    </dist:module>
 </manifest>

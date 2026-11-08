@@ -32,8 +32,7 @@ enum class Module(@StringRes val labelResId: Int) {
     WEBDAV(R.string.title_webdav),
     ONEDRIVE(R.string.title_onedrive),
     SQLCRYPT(R.string.title_sqlcrypt),
-    FINTS(R.string.title_fints),
-    JACKSON(R.string.title_jackson);
+    FINTS(R.string.title_fints);
 
     val moduleName: String
         get() = name.lowercase(Locale.ROOT)
@@ -132,9 +131,9 @@ sealed class Feature(vararg val requiredModules: Module) {
     data object KORE : MlkitProcessor(Module.MLKIT_KORE)
     data object LATN : MlkitProcessor(Module.MLKIT_LATN)
     data object DRIVE : SyncBackend(Module.DRIVE)
-    data object DROPBOX : SyncBackend(Module.DROPBOX, Module.JACKSON)
+    data object DROPBOX : SyncBackend(Module.DROPBOX)
     data object WEBDAV : SyncBackend(Module.WEBDAV)
-    data object ONEDRIVE : SyncBackend(Module.ONEDRIVE, Module.JACKSON)
+    data object ONEDRIVE : SyncBackend(Module.ONEDRIVE)
     data object SQLCRYPT: Feature(Module.SQLCRYPT) {
         override suspend fun canUninstall(
             context: Context,
