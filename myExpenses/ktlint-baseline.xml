@@ -1508,10 +1508,10 @@
         <error line="61" column="1" source="standard:final-newline" />
     </file>
     <file name="src/androidTest/java/org/totschnig/myexpenses/testutils/TestFeatureModule.kt">
-        <error line="9" column="25" source="standard:colon-spacing" />
-        <error line="13" column="26" source="standard:colon-spacing" />
-        <error line="15" column="101" source="standard:max-line-length" />
-        <error line="18" column="1" source="standard:no-consecutive-blank-lines" />
+        <error line="8" column="25" source="standard:colon-spacing" />
+        <error line="12" column="26" source="standard:colon-spacing" />
+        <error line="14" column="101" source="standard:max-line-length" />
+        <error line="17" column="1" source="standard:no-consecutive-blank-lines" />
     </file>
     <file name="src/androidTest/java/org/totschnig/myexpenses/testutils/TestMain.kt">
         <error line="39" column="1" source="standard:no-consecutive-blank-lines" />
@@ -6292,8 +6292,6 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/di/FeatureModule.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="60" column="1" source="standard:indent" />
-        <error line="61" column="1" source="standard:indent" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/di/LicenceModule.kt">
         <error line="3" column="1" source="standard:import-ordering" />

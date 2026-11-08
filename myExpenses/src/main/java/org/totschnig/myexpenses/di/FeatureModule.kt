@@ -10,8 +10,6 @@ import org.totschnig.myexpenses.preference.PrefHandler
 import org.totschnig.myexpenses.sync.BackendService
 import org.totschnig.myexpenses.sync.StorageAccessFrameworkBackendProviderFactory
 import org.totschnig.myexpenses.sync.SyncBackendProviderFactory
-import org.totschnig.myexpenses.util.crashreporting.CrashHandler
-import org.totschnig.myexpenses.util.distrib.DistributionHelper
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -53,16 +51,10 @@ open class FeatureModule {
     open fun provideSyncBackendFactories(): Map<BackendService, SyncBackendProviderFactory> =
         mapOf(BackendService.SAF to StorageAccessFrameworkBackendProviderFactory())
 
+    /**
+     * All features are built in, so nothing needs to be installed on demand.
+     */
     @Provides
     @Singleton
-    open fun provideFeatureManager(prefHandler: PrefHandler): FeatureManager = try {
-        Class.forName("org.totschnig.myexpenses.util.locale.PlatformSplitManager")
-                .getConstructor(PrefHandler::class.java)
-                .newInstance(prefHandler) as FeatureManager
-    } catch (e: Exception) {
-        if (DistributionHelper.distribution != DistributionHelper.Distribution.GITHUB) {
-            CrashHandler.report(e)
-        }
-        object : FeatureManager() {}
-    }
+    open fun provideFeatureManager(): FeatureManager = object : FeatureManager() {}
 }
