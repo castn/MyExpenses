@@ -5399,9 +5399,9 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/di/LicenceModule.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="82" column="11" source="standard:wrapping" />
-        <error line="82" column="12" source="standard:argument-list-wrapping" />
-        <error line="82" column="37" source="standard:argument-list-wrapping" />
+        <error line="83" column="11" source="standard:wrapping" />
+        <error line="83" column="12" source="standard:argument-list-wrapping" />
+        <error line="83" column="37" source="standard:argument-list-wrapping" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/di/NetworkModule.kt">
         <error line="3" column="1" source="standard:import-ordering" />

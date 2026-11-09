@@ -13,6 +13,7 @@ import org.totschnig.myexpenses.preference.PrefHandler
 import org.totschnig.myexpenses.util.ICurrencyFormatter
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
 import org.totschnig.myexpenses.util.licence.LicenceHandler
+import org.totschnig.myexpenses.util.licence.UnlockedLicenceHandler
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -27,7 +28,7 @@ open class LicenceModule {
         prefHandler: PrefHandler,
         repository: Repository,
         currencyFormatter: ICurrencyFormatter
-    ) = LicenceHandler(
+    ): LicenceHandler = UnlockedLicenceHandler(
         application,
         preferenceObfuscator,
         crashHandler,
