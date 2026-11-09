@@ -23,7 +23,7 @@ import org.totschnig.myexpenses.widget.updateAllWidgets
 /**
  * What every first start of the app does, whatever it looks like: setting up from a backup,
  * from sync accounts or from a bank, and opening the main screen once done.
- * Hook for alternative UIs (module :ui_next) next to [OnboardingActivity].
+ * The new UI (module :ui_next) builds its first start on it.
  */
 abstract class OnboardingHostActivity : SyncBackendSetupActivity() {
 

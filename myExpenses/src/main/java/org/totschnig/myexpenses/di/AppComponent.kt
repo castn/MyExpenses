@@ -41,9 +41,6 @@ import org.totschnig.myexpenses.feature.OcrFeature
 import org.totschnig.myexpenses.fragment.CsvImportDataFragment
 import org.totschnig.myexpenses.fragment.CsvImportParseFragment
 import org.totschnig.myexpenses.fragment.HistoryChart
-import org.totschnig.myexpenses.fragment.OnBoardingPrivacyFragment
-import org.totschnig.myexpenses.fragment.OnboardingDataFragment
-import org.totschnig.myexpenses.fragment.OnboardingUiFragment
 import org.totschnig.myexpenses.fragment.PartiesList
 import org.totschnig.myexpenses.fragment.PlannerFragment.PlanInstanceViewHolder
 import org.totschnig.myexpenses.fragment.StaleImagesList
@@ -238,8 +235,6 @@ interface AppComponent {
 
     fun inject(transactionProvider: BaseTransactionProvider)
 
-    fun inject(onboardingDataFragment: OnboardingDataFragment)
-
     fun inject(budgetViewModel: BudgetViewModel)
 
     fun inject(baseViewModel: BaseViewModel)
@@ -258,8 +253,6 @@ interface AppComponent {
 
     fun inject(selectFromTableDialogFragment: SelectFromTableDialogFragment)
 
-    fun inject(onBoardingPrivacyFragment: OnBoardingPrivacyFragment)
-
     fun inject(remindRateDialogFragment: RemindRateDialogFragment)
 
     fun inject(templateRemoteViewsFactory: TemplateRemoteViewsFactory)
@@ -269,8 +262,6 @@ interface AppComponent {
     fun inject(abstractListWidget: AbstractListWidget)
 
     fun inject(budgetWidget: BudgetWidget)
-
-    fun inject(onboardingUiFragment: OnboardingUiFragment)
 
     fun inject(planInstanceViewHolder: PlanInstanceViewHolder)
 

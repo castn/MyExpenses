@@ -574,22 +574,6 @@
         <error line="212" column="9" source="standard:comment-spacing" />
         <error line="303" column="1" source="standard:final-newline" />
     </file>
-    <file name="src/androidTest/java/org/totschnig/myexpenses/test/espresso/OnboardingTest.kt">
-        <error line="131" column="1" source="standard:no-empty-first-line-in-method-block" />
-        <error line="154" column="1" source="standard:no-blank-line-before-rbrace" />
-        <error line="178" column="40" source="standard:argument-list-wrapping" />
-        <error line="182" column="1" source="standard:blank-line-between-when-conditions" />
-        <error line="192" column="13" source="standard:comment-spacing" />
-        <error line="198" column="1" source="standard:comment-spacing" />
-        <error line="208" column="27" source="standard:wrapping" />
-        <error line="208" column="101" source="standard:max-line-length" />
-        <error line="209" column="1" source="standard:indent" />
-        <error line="209" column="25" source="standard:chain-wrapping" />
-        <error line="209" column="68" source="standard:wrapping" />
-        <error line="218" column="36" source="standard:function-expression-body" />
-        <error line="222" column="39" source="standard:function-expression-body" />
-        <error line="229" column="1" source="standard:final-newline" />
-    </file>
     <file name="src/androidTest/java/org/totschnig/myexpenses/test/espresso/OrientationChangeTest.kt">
         <error line="3" column="1" source="standard:import-ordering" />
         <error line="47" column="1" source="standard:no-consecutive-blank-lines" />
@@ -3237,13 +3221,6 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/activity/OcrLauncher.kt">
         <error line="16" column="18" source="standard:colon-spacing" />
-    </file>
-    <file name="src/main/java/org/totschnig/myexpenses/activity/OnboardingActivity.kt">
-        <error line="39" column="1" source="standard:indent" />
-        <error line="53" column="1" source="standard:no-blank-line-before-rbrace" />
-        <error line="66" column="58" source="standard:comment-spacing" />
-        <error line="93" column="13" source="standard:comment-spacing" />
-        <error line="97" column="1" source="standard:no-consecutive-blank-lines" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/activity/OnboardingHostActivity.kt">
         <error line="52" column="17" source="standard:comment-spacing" />
@@ -6201,9 +6178,9 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/di/AppComponent.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="279" column="16" source="standard:function-signature" />
-        <error line="279" column="100" source="standard:max-line-length" />
-        <error line="279" column="102" source="standard:function-signature" />
+        <error line="270" column="16" source="standard:function-signature" />
+        <error line="270" column="100" source="standard:max-line-length" />
+        <error line="270" column="102" source="standard:function-signature" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/di/AppModule.kt">
         <error line="3" column="1" source="standard:import-ordering" />
@@ -7879,51 +7856,6 @@
         <error line="560" column="9" source="standard:comment-spacing" />
         <error line="565" column="15" source="standard:multiline-if-else" />
         <error line="565" column="22" source="standard:multiline-if-else" />
-    </file>
-    <file name="src/main/java/org/totschnig/myexpenses/fragment/OnBoardingPrivacyFragment.kt">
-        <error line="3" column="1" source="standard:import-ordering" />
-        <error line="53" column="60" source="standard:wrapping" />
-        <error line="70" column="35" source="standard:wrapping" />
-        <error line="70" column="59" source="standard:wrapping" />
-        <error line="72" column="25" source="standard:wrapping" />
-        <error line="73" column="1" source="standard:no-blank-line-before-rbrace" />
-        <error line="74" column="21" source="standard:wrapping" />
-        <error line="77" column="20" source="standard:multiline-if-else" />
-    </file>
-    <file name="src/main/java/org/totschnig/myexpenses/fragment/OnboardingDataFragment.kt">
-        <error line="3" column="1" source="standard:import-ordering" />
-        <error line="43" column="31" source="standard:wrapping" />
-        <error line="43" column="32" source="standard:class-signature" />
-        <error line="43" column="53" source="standard:wrapping" />
-        <error line="43" column="54" source="standard:class-signature" />
-        <error line="118" column="1" source="standard:blank-line-between-when-conditions" />
-        <error line="121" column="1" source="standard:blank-line-between-when-conditions" />
-        <error line="124" column="1" source="standard:blank-line-between-when-conditions" />
-        <error line="150" column="9" source="standard:comment-spacing" />
-        <error line="153" column="9" source="standard:comment-spacing" />
-        <error line="158" column="9" source="standard:comment-spacing" />
-        <error line="168" column="9" source="standard:comment-spacing" />
-        <error line="176" column="9" source="standard:comment-spacing" />
-        <error line="239" column="72" source="standard:binary-expression-wrapping" />
-        <error line="239" column="81" source="standard:binary-expression-wrapping" />
-        <error line="239" column="101" source="standard:max-line-length" />
-        <error line="252" column="51" source="standard:function-expression-body" />
-    </file>
-    <file name="src/main/java/org/totschnig/myexpenses/fragment/OnboardingFragment.kt">
-        <error line="3" column="1" source="standard:import-ordering" />
-    </file>
-    <file name="src/main/java/org/totschnig/myexpenses/fragment/OnboardingUiFragment.kt">
-        <error line="3" column="1" source="standard:import-ordering" />
-        <error line="102" column="9" source="standard:comment-spacing" />
-        <error line="118" column="1" source="standard:indent" />
-        <error line="131" column="29" source="standard:trailing-comma-on-declaration-site" />
-        <error line="190" column="22" source="standard:wrapping" />
-        <error line="195" column="77" source="standard:argument-list-wrapping" />
-        <error line="195" column="84" source="standard:argument-list-wrapping" />
-        <error line="195" column="101" source="standard:max-line-length" />
-        <error line="196" column="1" source="standard:indent" />
-        <error line="209" column="21" source="standard:wrapping" />
-        <error line="268" column="49" source="standard:function-expression-body" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/fragment/PartiesList.kt">
         <error line="17" column="1" source="standard:import-ordering" />
@@ -13540,10 +13472,6 @@
         <error line="35" column="71" source="standard:statement-wrapping" />
         <error line="39" column="22" source="standard:statement-wrapping" />
         <error line="39" column="66" source="standard:statement-wrapping" />
-    </file>
-    <file name="src/main/java/org/totschnig/myexpenses/viewmodel/OnBoardingUiViewModel.kt">
-        <error line="3" column="1" source="standard:import-ordering" />
-        <error line="24" column="31" source="standard:curly-spacing" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/viewmodel/PartyListViewModel.kt">
         <error line="74" column="5" source="standard:class-signature" />

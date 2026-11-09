@@ -38,7 +38,7 @@ import java.time.format.FormatStyle
 import org.totschnig.myexpenses.next.core.common.R as NextR
 
 /**
- * The first start of the app in the new UI: a few pages instead of the forms of [org.totschnig.myexpenses.activity.OnboardingActivity]
+ * The first start of the app in the new UI, a few pages.
  */
 class NextOnboarding : OnboardingHostActivity() {
 

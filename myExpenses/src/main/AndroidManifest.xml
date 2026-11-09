@@ -115,9 +115,6 @@
                 android:resource="@xml/shortcuts" />
         </activity>
         <activity
-            android:name=".activity.OnboardingActivity"
-            android:theme="@style/Onboarding" />
-        <activity
             android:name=".activity.DeepLinkActivity"
             android:excludeFromRecents="true"
             android:exported="true"
