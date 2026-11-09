@@ -9,7 +9,7 @@ import androidx.preference.PreferenceFragmentCompat
 import kotlinx.serialization.json.Json
 import org.totschnig.myexpenses.BuildConfig
 import org.totschnig.myexpenses.R
-import org.totschnig.myexpenses.activity.MyExpensesV2
+import org.totschnig.myexpenses.activity.mainScreenIntent
 import org.totschnig.myexpenses.db2.FLAG_NEUTRAL
 import org.totschnig.myexpenses.db2.FLAG_TRANSFER
 import org.totschnig.myexpenses.db2.entities.Transaction
@@ -181,7 +181,7 @@ interface PrefHandler {
     ): PendingIntent = PendingIntent.getActivity(
         context,
         requestCode,
-        Intent(context, MyExpensesV2::class.java).apply {
+        context.mainScreenIntent().apply {
             putExtra(KEY_ROWID, transaction.accountId)
             putExtra(KEY_TRANSACTIONID, transaction.id)
         },

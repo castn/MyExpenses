@@ -6240,9 +6240,9 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/di/AppComponent.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="272" column="16" source="standard:function-signature" />
-        <error line="272" column="100" source="standard:max-line-length" />
-        <error line="272" column="102" source="standard:function-signature" />
+        <error line="275" column="16" source="standard:function-signature" />
+        <error line="275" column="100" source="standard:max-line-length" />
+        <error line="275" column="102" source="standard:function-signature" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/di/AppModule.kt">
         <error line="3" column="1" source="standard:import-ordering" />

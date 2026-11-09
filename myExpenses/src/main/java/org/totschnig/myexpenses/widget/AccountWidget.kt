@@ -6,8 +6,8 @@ import android.content.Intent
 import android.widget.RemoteViews
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.ExpenseEdit
-import org.totschnig.myexpenses.activity.MyExpensesV2
 import org.totschnig.myexpenses.activity.OcrLauncher
+import org.totschnig.myexpenses.activity.mainScreenIntent
 import org.totschnig.myexpenses.contract.TransactionsContract.Transactions.OPERATION_TYPE
 import org.totschnig.myexpenses.fragment.AccountWidgetConfigurationFragment
 import org.totschnig.myexpenses.fragment.AccountWidgetConfigurationFragment.Button
@@ -103,7 +103,7 @@ class AccountWidget :
         val accountId = intent.getLongExtra(KEY_ROWID, 0)
         val startIntent = when (val clickAction = intent.getStringExtra(KEY_CLICK_ACTION)) {
             null -> {
-                Intent(context, MyExpensesV2::class.java).apply {
+                context.mainScreenIntent().apply {
                     putExtra(KEY_ROWID, accountId)
                     putExtra(KEY_CURRENCY, intent.getStringExtra(KEY_CURRENCY))
                 }
