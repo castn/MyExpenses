@@ -189,6 +189,7 @@ class DebtViewModelTest : BaseDebtTest() {
 
     @Test
     fun exportHtmlWritesATableWithTheLastBalanceInBold() {
+        resetFileProviderCache()
         val id = saveDebt(amount = 10000, label = "Car", description = "For the car")
         insertLinked(accountId, 2500, id, date = day1)
         viewModel.exportHtml(application, displayDebt(id)).await()
