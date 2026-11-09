@@ -23,6 +23,7 @@ import org.totschnig.myexpenses.model2.Account
 import org.totschnig.myexpenses.model2.Category
 import org.totschnig.myexpenses.db2.saveCategory
 import org.totschnig.myexpenses.db2.loadTrades
+import org.totschnig.myexpenses.db2.TradeSaver
 import org.totschnig.myexpenses.provider.PORTFOLIO_CONTAINER
 import org.totschnig.myexpenses.provider.SPLIT_CATID
 import org.totschnig.myexpenses.viewmodel.data.CategoryRef
@@ -38,6 +39,7 @@ import java.time.LocalDateTime
 class TradeTest : BaseViewModelTest() {
 
     private lateinit var viewModel: MainViewModel
+    private lateinit var tradeSaver: TradeSaver
     private lateinit var portfolioA: FullAccount
     private lateinit var portfolioB: FullAccount
     private val aapl = CurrencyUnit("AAPL", "AAPL", 2, "Apple Inc.", CommodityType.SECURITY)
@@ -46,6 +48,7 @@ class TradeTest : BaseViewModelTest() {
     fun setup() {
         viewModel = MainViewModel(ApplicationProvider.getApplicationContext(), SavedStateHandle())
         application.appComponent.inject(viewModel)
+        tradeSaver = TradeSaver(repository, application)
 
         runBlocking {
             repository.insertCurrency(aapl.code, aapl.symbol, aapl.description, aapl.fractionDigits, aapl.commodityType)
@@ -98,7 +101,7 @@ class TradeTest : BaseViewModelTest() {
             fee = Money(usd, 0L)
         )
 
-        viewModel.saveTrades(portfolioA, listOf(intent))
+        tradeSaver.saveTrades(portfolioA, listOf(intent))
 
         // Verify Portfolio A
         val transactionsA = repository.loadTransactions(portfolioA.id)
@@ -165,7 +168,7 @@ class TradeTest : BaseViewModelTest() {
         )
 
         // Recording in Portfolio B, Incoming from Portfolio A
-        viewModel.saveTrades(portfolioB, listOf(intent))
+        tradeSaver.saveTrades(portfolioB, listOf(intent))
 
         // Verify Portfolio B (recipient where created)
         val transactionsB = repository.loadTransactions(portfolioB.id)
@@ -199,7 +202,7 @@ class TradeTest : BaseViewModelTest() {
             fee = Money(usd, 0L)
         )
 
-        viewModel.saveTrades(portfolioA, listOf(intent))
+        tradeSaver.saveTrades(portfolioA, listOf(intent))
         val initialId = repository.loadTransactions(portfolioA.id)[0].id
         val initialPeer = repository.findSiblingParentId(initialId)
 
@@ -256,7 +259,7 @@ class TradeTest : BaseViewModelTest() {
             additionalCosts = listOf(cost1, cost2)
         )
 
-        viewModel.saveTrades(portfolioA, listOf(intent))
+        tradeSaver.saveTrades(portfolioA, listOf(intent))
 
         val trades = repository.loadTrades(listOf(repository.loadTransactions(portfolioA.id)[0].id))
         assertThat(trades).hasSize(1)
@@ -293,7 +296,7 @@ class TradeTest : BaseViewModelTest() {
             fundingSource = FundingSource.EXTERNAL
         )
 
-        viewModel.saveTrades(portfolioA, listOf(intent))
+        tradeSaver.saveTrades(portfolioA, listOf(intent))
 
         val trades = repository.loadTrades(listOf(repository.loadTransactions(portfolioA.id)[0].id))
         assertThat(trades).hasSize(1)
@@ -327,7 +330,7 @@ class TradeTest : BaseViewModelTest() {
             fundingSource = FundingSource.EXTERNAL
         )
 
-        viewModel.saveTrades(portfolioA, listOf(intent))
+        tradeSaver.saveTrades(portfolioA, listOf(intent))
 
         val parentId = repository.loadTransactions(portfolioA.id)[0].id
         val trades = repository.loadTrades(listOf(parentId))
@@ -361,7 +364,7 @@ class TradeTest : BaseViewModelTest() {
             fundingSource = FundingSource.EXTERNAL
         )
 
-        viewModel.saveTrades(portfolioA, listOf(intent))
+        tradeSaver.saveTrades(portfolioA, listOf(intent))
 
         val parentId = repository.loadTransactions(portfolioA.id)[0].id
         val trades = repository.loadTrades(listOf(parentId))

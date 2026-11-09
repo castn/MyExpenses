@@ -44,12 +44,10 @@
     <ID>CyclomaticComplexMethod:Grouping.kt:Grouping$fun getDisplayTitle: String</ID>
     <ID>CyclomaticComplexMethod:HelpDialogFragment.kt:HelpDialogFragment$override fun onCreateDialog: Dialog</ID>
     <ID>CyclomaticComplexMethod:HistoryChart.kt:HistoryChart$override fun onLoadFinished</ID>
-    <ID>CyclomaticComplexMethod:ImportTradesDialog.kt:private suspend fun parseCsv: ImportTradesParseResult</ID>
+    <ID>CyclomaticComplexMethod:ImportTradesParser.kt:ImportTradesParser$suspend fun parse: ImportTradesParseResult</ID>
     <ID>CyclomaticComplexMethod:ImportUtils.kt:ImportUtils$private fun reduceTransfers: List&lt;ImportTransaction&gt;</ID>
     <ID>CyclomaticComplexMethod:LazyFontSelector.kt:LazyFontSelector$@Throws(DocumentException::class, IOException::class) fun processChar: Chunk?</ID>
     <ID>CyclomaticComplexMethod:MainDelegate.kt:MainDelegate$fun setupDebtChangedListener</ID>
-    <ID>CyclomaticComplexMethod:MainViewModel.kt:MainViewModel$private fun saveAssetTransfer</ID>
-    <ID>CyclomaticComplexMethod:MainViewModel.kt:MainViewModel$private fun saveTradeInternal</ID>
     <ID>CyclomaticComplexMethod:ManageBudgets.kt:ManageBudgets$@OptIn(ExperimentalMaterial3Api::class) public override fun onCreate</ID>
     <ID>CyclomaticComplexMethod:ManageCategories.kt:ManageCategories$override fun onCreate</ID>
     <ID>CyclomaticComplexMethod:MoreDbUtils.kt:fun parseCategoriesFromXml: List&lt;CategoryTreeItem&gt;</ID>
@@ -74,6 +72,8 @@
     <ID>CyclomaticComplexMethod:TemplatesList.kt:TemplatesList$override fun onLoadFinished</ID>
     <ID>CyclomaticComplexMethod:TemplatesList.kt:TemplatesList.MyAdapter$@SuppressLint("SetTextI18n") override fun bindView</ID>
     <ID>CyclomaticComplexMethod:TradePagingSource.kt:TradePagingSource$override suspend fun load: LoadResult&lt;Int, Trade&gt;</ID>
+    <ID>CyclomaticComplexMethod:TradeSaver.kt:TradeSaver$private fun saveAssetTransfer</ID>
+    <ID>CyclomaticComplexMethod:TradeSaver.kt:TradeSaver$private fun saveTradeInternal</ID>
     <ID>CyclomaticComplexMethod:Transaction2.kt:Transaction2.Companion$fun fromCursor: Transaction2</ID>
     <ID>CyclomaticComplexMethod:TransactionDelegate.kt:TransactionDelegate$open fun bind</ID>
     <ID>CyclomaticComplexMethod:TransactionDelegate.kt:TransactionDelegate$open fun syncStateAndValidate: TransactionEditData?</ID>
@@ -91,7 +91,6 @@
     <ID>LargeClass:BaseTransactionProvider.kt:BaseTransactionProvider : ContentProvider</ID>
     <ID>LargeClass:ExpenseEdit.kt:ExpenseEdit : AmountActivityContribIFaceConfirmationDialogListenerHostOnCriterionDialogDismissedListener</ID>
     <ID>LargeClass:ExportTest.kt:ExportTest : BaseTestWithRepository</ID>
-    <ID>LargeClass:MainViewModel.kt:MainViewModel : MyExpensesViewModel</ID>
     <ID>LargeClass:ManageCategories.kt:ManageCategories : ProtectedFragmentActivityContribIFace</ID>
     <ID>LargeClass:MyExpensesViewModel.kt:MyExpensesViewModel : PrintViewModel</ID>
     <ID>LargeClass:PdfPrinter.kt:PdfPrinter</ID>
@@ -161,10 +160,8 @@
     <ID>LongMethod:HistoryChart.kt:HistoryChart$override fun onLoadFinished</ID>
     <ID>LongMethod:ImportDataViewModelTest.kt:ImportDataViewModelTest$@Test fun insertSplitTransaction</ID>
     <ID>LongMethod:ImportDataViewModelTest.kt:ImportDataViewModelTest$@Test fun insertTransfer</ID>
-    <ID>LongMethod:ImportTradesDialog.kt:private suspend fun parseCsv: ImportTradesParseResult</ID>
+    <ID>LongMethod:ImportTradesParser.kt:ImportTradesParser$suspend fun parse: ImportTradesParseResult</ID>
     <ID>LongMethod:MainDelegate.kt:MainDelegate$fun setupDebtChangedListener</ID>
-    <ID>LongMethod:MainViewModel.kt:MainViewModel$private fun saveAssetTransfer</ID>
-    <ID>LongMethod:MainViewModel.kt:MainViewModel$private fun saveTradeInternal</ID>
     <ID>LongMethod:ManageBudgets.kt:ManageBudgets$@OptIn(ExperimentalMaterial3Api::class) public override fun onCreate</ID>
     <ID>LongMethod:ManageCategories.kt:ManageCategories$override fun onCreate</ID>
     <ID>LongMethod:ManageCategories.kt:ManageCategories$private fun observeDeleteResult</ID>
@@ -210,6 +207,8 @@
     <ID>LongMethod:TemplateWidgetService.kt:TemplateRemoteViewsFactory$override fun RemoteViews.populate</ID>
     <ID>LongMethod:TemplatesList.kt:TemplatesList$override fun onLoadFinished</ID>
     <ID>LongMethod:TemplatesList.kt:TemplatesList.MyAdapter$@SuppressLint("SetTextI18n") override fun bindView</ID>
+    <ID>LongMethod:TradeSaver.kt:TradeSaver$private fun saveAssetTransfer</ID>
+    <ID>LongMethod:TradeSaver.kt:TradeSaver$private fun saveTradeInternal</ID>
     <ID>LongMethod:Transaction2.kt:Transaction2.Companion$fun fromCursor: Transaction2</ID>
     <ID>LongMethod:TransactionDelegate.kt:TransactionDelegate$open fun bind</ID>
     <ID>LongMethod:TransactionDelegate.kt:TransactionDelegate$open fun syncStateAndValidate: TransactionEditData?</ID>
@@ -221,7 +220,7 @@
     <ID>LongMethod:TransactionTest.kt:BaseTransactionTest$@Test fun testUpdateSplitRemoveTransferPart</ID>
     <ID>LongMethod:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$fun upgrade</ID>
     <ID>LongMethod:VersionInfo.kt:VersionInfo$fun getChanges: Array&lt;String&gt;?</ID>
-    <ID>LoopWithTooManyJumpStatements:ImportTradesDialog.kt:while</ID>
+    <ID>LoopWithTooManyJumpStatements:ImportTradesParser.kt:ImportTradesParser$while</ID>
     <ID>LoopWithTooManyJumpStatements:LazyFontSelector.kt:LazyFontSelector$for</ID>
     <ID>LoopWithTooManyJumpStatements:SyncAdapter.kt:SyncAdapter$do</ID>
     <ID>LoopWithTooManyJumpStatements:TransactionList.kt:while</ID>
@@ -298,7 +297,6 @@
     <ID>MagicNumber:HistoryChart.kt:HistoryChart$2.5f</ID>
     <ID>MagicNumber:HistoryChart.kt:HistoryChart$7</ID>
     <ID>MagicNumber:IconInfo.kt:IconInfo$24</ID>
-    <ID>MagicNumber:ImportTradesDialog.kt:10</ID>
     <ID>MagicNumber:ImportUtils.kt:ImportUtils$100</ID>
     <ID>MagicNumber:ImportUtils.kt:ImportUtils$18</ID>
     <ID>MagicNumber:ImportUtils.kt:ImportUtils$1900</ID>
@@ -525,7 +523,7 @@
     <ID>ReturnCount:Grouping.kt:Grouping$fun getDisplayTitle: String</ID>
     <ID>ReturnCount:HelpDialogFragment.kt:HelpDialogFragment$override fun onCreateDialog: Dialog</ID>
     <ID>ReturnCount:HistoryChart.kt:HistoryChart$@Deprecated("Deprecated in Java") override fun onOptionsItemSelected: Boolean</ID>
-    <ID>ReturnCount:ImportTradesDialog.kt:private fun CSVRecord.getSafe: String?</ID>
+    <ID>ReturnCount:ImportTradesParser.kt:ImportTradesParser$private fun CSVRecord.getSafe: String?</ID>
     <ID>ReturnCount:ImportUtils.kt:ImportUtils$@JvmStatic fun parseDate: Date</ID>
     <ID>ReturnCount:ManageSyncBackends.kt:ManageSyncBackends$override fun dispatchCommand: Boolean</ID>
     <ID>ReturnCount:MoreUiUtils.kt:fun resolveThemeColor: Int</ID>
@@ -564,7 +562,7 @@
     <ID>TooGenericExceptionCaught:Grouping.kt:Grouping$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ImportSourceDialogFragment.kt:ImportSourceDialogFragment$throwable: Exception</ID>
     <ID>TooGenericExceptionCaught:ImportSourceDialogFragment.kt:ImportSourceDialogFragment$throwable: Throwable</ID>
-    <ID>TooGenericExceptionCaught:ImportTradesDialog.kt:e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ImportTradesParser.kt:ImportTradesParser$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ImportUtils.kt:ImportUtils$e: IndexOutOfBoundsException</ID>
     <ID>TooGenericExceptionCaught:LazyFontSelector.kt:LazyFontSelector$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ManageCategoriesViewModel.kt:ManageCategoriesViewModel$e: Exception</ID>

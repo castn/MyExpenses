@@ -13,6 +13,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.robolectric.Shadows.shadowOf
+import org.totschnig.myexpenses.db2.TradeSaver
 import org.totschnig.myexpenses.db2.entities.Transaction
 import org.totschnig.myexpenses.db2.findAccountType
 import org.totschnig.myexpenses.db2.insertCurrency
@@ -49,6 +50,7 @@ import org.totschnig.myexpenses.viewmodel.data.TradeType
 abstract class BaseTradeTest : BaseViewModelTest() {
 
     protected lateinit var viewModel: MainViewModel
+    protected lateinit var tradeSaver: TradeSaver
     protected lateinit var portfolio: FullAccount
 
     protected val home by lazy { currencyContext[HOME] }
@@ -61,6 +63,7 @@ abstract class BaseTradeTest : BaseViewModelTest() {
         viewModel = MainViewModel(application, SavedStateHandle()).also {
             application.appComponent.inject(it)
         }
+        tradeSaver = TradeSaver(repository, application)
         insertAsset(AAPL, "Apple Inc.")
         portfolio = newPortfolio("Portfolio")
     }
@@ -146,7 +149,7 @@ abstract class BaseTradeTest : BaseViewModelTest() {
     )
 
     protected fun save(vararg intents: TradeIntent, account: FullAccount = portfolio) {
-        runBlocking { viewModel.saveTrades(account, intents.toList()) }
+        tradeSaver.saveTrades(account, intents.toList())
     }
 
     /** The ids of the trades in the portfolio, sorted the way the list shows them. */

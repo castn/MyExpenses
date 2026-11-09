@@ -4,10 +4,10 @@ import android.content.ContentUris
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import java.math.BigDecimal
-import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.totschnig.myexpenses.db2.getCategoryPath
 import org.totschnig.myexpenses.db2.insertTransaction
 import org.totschnig.myexpenses.db2.loadSubAccounts
 import org.totschnig.myexpenses.db2.loadTrade
@@ -297,6 +297,39 @@ class TradeSaveTest : BaseTradeTest() {
         assertThat(prefHandler.getString(PrefKey.LAST_TRADE_FEE_CATEGORIES)).isEmpty()
     }
 
+    @Test
+    fun saveReturnsTheFeeCategoriesOfTheLastTrade() {
+        val fees = repository.saveCategory(Category(label = "Fees"))!!
+        val withFee = tradeIntent().copy(
+            additionalCosts = listOf(CostLeg(Money(home, 100), CategoryRef(fees, "Fees")))
+        )
+        assertThat(tradeSaver.saveTrades(portfolio, listOf(withFee)))
+            .containsExactly(CategoryRef(fees, "Fees"))
+        assertThat(tradeSaver.saveTrades(portfolio, listOf(withFee, tradeIntent()))).isEmpty()
+    }
+
+    @Test
+    fun transfersReturnNoFeeCategories() {
+        val other = newPortfolio("Other")
+        save(tradeIntent())
+        assertThat(
+            tradeSaver.saveTrades(
+                portfolio,
+                listOf(tradeIntent(type = TradeType.Transfer(false), peerAccountId = other.id))
+            )
+        ).isNull()
+    }
+
+    @Test
+    fun rememberedFeeCategoriesAreLoadedWithTheirPath() {
+        val fees = repository.saveCategory(Category(label = "Fees"))!!
+        assertThat(tradeSaver.loadLastFeeCategories()).isEmpty()
+        prefHandler.putString(PrefKey.LAST_TRADE_FEE_CATEGORIES, "$fees,x,999999")
+        val loaded = tradeSaver.loadLastFeeCategories()
+        assertThat(loaded.map { it.id }).containsExactly(fees)
+        assertThat(loaded.single().path).isEqualTo(repository.getCategoryPath(fees))
+    }
+
     // Price that comes with a trade
 
     @Test
@@ -361,10 +394,8 @@ class TradeSaveTest : BaseTradeTest() {
     @Test
     fun saveTradesReportsProgressPerIntent() {
         val progress = mutableListOf<Int>()
-        runBlocking {
-            viewModel.saveTrades(portfolio, listOf(tradeIntent(), tradeIntent())) {
-                progress.add(it)
-            }
+        tradeSaver.saveTrades(portfolio, listOf(tradeIntent(), tradeIntent())) {
+            progress.add(it)
         }
         assertThat(progress).containsExactly(1, 2).inOrder()
         assertThat(tradeIds()).hasSize(2)
