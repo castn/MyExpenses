@@ -64,9 +64,9 @@ import org.totschnig.myexpenses.viewmodel.data.Transaction2
  * - [MainScreen]: the main screen ([NextMainScreen])
  * - [dispatchCommand]: navigation to other screens ([NextRouter])
  */
-class MyExpensesNext : MyExpensesV2() {
+class MainActivity : MyExpensesV2() {
 
-    override val mainScreenClass: Class<*> = MyExpensesNext::class.java
+    override val mainScreenClass: Class<*> = MainActivity::class.java
 
     /** Actions on transactions shown outside of the list of an account, e.g. those of a contract */
     private val transactionEvents = object : TransactionEventHandler {

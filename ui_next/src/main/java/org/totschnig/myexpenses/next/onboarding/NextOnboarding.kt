@@ -20,7 +20,7 @@ import org.totschnig.myexpenses.designsystem.PickDialog
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model2.Account
-import org.totschnig.myexpenses.next.MyExpensesNext
+import org.totschnig.myexpenses.next.MainActivity
 import org.totschnig.myexpenses.next.NextTheme
 import org.totschnig.myexpenses.next.NextFeatures
 import org.totschnig.myexpenses.preference.PrefKey
@@ -43,7 +43,7 @@ import org.totschnig.myexpenses.next.core.common.R as NextR
  */
 class NextOnboarding : OnboardingHostActivity() {
 
-    override val mainScreenClass: Class<*> = MyExpensesNext::class.java
+    override val mainScreenClass: Class<*> = MainActivity::class.java
 
     override val snackBarContainerId = android.R.id.content
 

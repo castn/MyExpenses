@@ -159,7 +159,7 @@ without the whole app. Interfaces keep the dependency boundary explicit and let 
 Packages start with the module's namespace: `org.totschnig.myexpenses.next.core.model.ledger`,
 `…next.data.contracts`, `…next.feature.contracts`. No two modules share a package. Only the shell
 keeps `org.totschnig.myexpenses.next` and its sub-packages, since the launcher points at
-`org.totschnig.myexpenses.next.MyExpensesNext`. The texts are
+`org.totschnig.myexpenses.next.MainActivity`. The texts are
 `org.totschnig.myexpenses.next.core.common.R`.
 
 **Why:** Shared packages mean that `import org.totschnig.myexpenses.next.foo.Bar` could refer to
@@ -194,7 +194,7 @@ The shell knows an area only in its own package (`org.totschnig.myexpenses.next.
 the modules of the area): its entry `…Feature` with what it adds to the main screen, its settings
 (`AreaSettings`) and the adapters to the app. Besides them only `NextFeatures`, which lists the
 areas, and `NextData`, which creates their repositories, import `next.feature.*` or `next.data.*`.
-The main screen, overview, list, theme, settings, the first start and `MyExpensesNext` show what
+The main screen, overview, list, theme, settings, the first start and `MainActivity` show what
 the entries give them ([`NextFeature`], [`AreaSettings`]), so that an area is added or left out
 with its modules, its package and its lines in `NextFeatures` and `NextData`. Facts an area reads from an area that may be left out go
 through one value of `NextData` with an empty value, e.g. `receiptFacts`.
@@ -446,7 +446,7 @@ Facts other features read, and what a widget or notification could show (balance
 computed in a repository of the data module (`…Repository`), with the `CoroutineScope` it is given.
 `NextData` in the shell creates the repositories once per process; view models read facts and the
 home currency (`NextData.homeCurrency`, which follows a change by the user) from there, never from
-another view model, so that the order in which `MyExpensesNext` creates them does not matter.
+another view model, so that the order in which `MainActivity` creates them does not matter.
 
 **Why:** A view model is tied to a screen's lifecycle. If facts live in a view model, they vanish
 when the screen is off screen, and another feature cannot read them without importing the view
@@ -462,7 +462,7 @@ model. A repository lives for the process, independent of any screen.
 
 Automatic decisions (decisions about contracts, the rules of tags, certain categories) are made in
 the repository of their area as a shared flow with the side effect, never in a view model.
-`NextData.applyAutomaticDecisions` collects them while `MyExpensesNext` is started and for a
+`NextData.applyAutomaticDecisions` collects them while `MainActivity` is started and for a
 minute after `TransactionImports` tells of an import from the bank or a file, so that nothing is
 analysed in the background otherwise. A replayed result after a restart is not decided on again.
 
@@ -544,7 +544,7 @@ repository that can be tested in isolation.
 
 ### `vm-entry-points` — View models are imported only by entry points
 
-View models are imported only by `MyExpensesNext`, `NextSettings`, the entries of the areas in the
+View models are imported only by `MainActivity`, `NextSettings`, the entries of the areas in the
 shell (`…Feature`) and the entry composables (`…Flow`). A screen below them gets state and actions,
 not the view model.
 

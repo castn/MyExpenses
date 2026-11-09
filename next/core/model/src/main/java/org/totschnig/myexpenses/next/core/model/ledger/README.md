@@ -45,7 +45,7 @@ themselves:
 | `HintsViewModel` (package `guidance`) | ledger, `ReceiptFacts`, the readiness, its closed hints |
 | `FixedTransactionsViewModel` (package `transactions`) | the transactions it is asked to show |
 
-The view models live as long as `MyExpensesNext`. The entry of each area in the shell (`…Feature`,
+The view models live as long as `MainActivity`. The entry of each area in the shell (`…Feature`,
 listed in `NextFeatures`) creates them with `viewModelsOf { … }`
 and hands it everything it needs as constructor parameters: its repository or the `LedgerSource`
 and the facts it reads from `NextData`, its store, and what it takes from the app's dependency graph

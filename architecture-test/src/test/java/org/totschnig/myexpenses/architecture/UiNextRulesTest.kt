@@ -53,7 +53,7 @@ class UiNextRulesTest {
             .filterNot { it.isEntryPoint() }
             .flatMap { it.imports }
             .assertFalse(
-                additionalMessage = "vm-entry-points: only MyExpensesNext, NextSettings, the …Feature entries of the " +
+                additionalMessage = "vm-entry-points: only MainActivity, NextSettings, the …Feature entries of the " +
                     "shell and the …Flow of a feature import view models"
             ) {
                 VIEW_MODEL_OF_NEXT.matches(it.name)
@@ -80,7 +80,7 @@ class UiNextRulesTest {
         name in ENTRY_POINTS || name.endsWith("Flow") || name.endsWith("Feature")
 
     private companion object {
-        val ENTRY_POINTS = setOf("MyExpensesNext", "NextSettings")
+        val ENTRY_POINTS = setOf("MainActivity", "NextSettings")
         val VIEW_MODEL_OF_NEXT = Regex("""org\.totschnig\.myexpenses\.next(\.\w+)+\.\w+ViewModel""")
 
         /** Named like an input, but not the input of an analysis. */

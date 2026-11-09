@@ -13,7 +13,7 @@ database "Database" as db
 
 package "next" {
   [NextAccountScreen] as screen
-  [MyExpensesNext\ntransaction list] as list
+  [MainActivity\ntransaction list] as list
 }
 
 package "search" {
