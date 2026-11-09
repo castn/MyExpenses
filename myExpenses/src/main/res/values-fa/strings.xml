@@ -107,13 +107,11 @@
     <string name="licence_validation_premium">ویژگی‌های نسخه سفارشی فعال شدند.</string>
     <string name="menu_aggregates">مجموع</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">اعمال کردن</string>
     <string name="menu_back">عقب رفتن</string>
     <string name="menu_backup">پشتیبان‌گیری</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">توازن حساب</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">لغو</string>
     <string name="menu_clone_transaction">شبیه</string>
     <string name="menu_contrib">کمک کردن</string>
     <string name="menu_create_account">حساب جدید</string>
@@ -144,7 +142,6 @@
     <string name="menu_help">کمک</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">معکوس</string>
-    <string name="menu_manage_plans">قالب‌ها به‌عنوان برنامه‌ها</string>
     <string name="menu_reset">استخراج و تنظیم مجدد</string>
     <string name="menu_reset_all">استخراج و تنظیم مجدد همه</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -159,7 +156,6 @@
     <string name="no_expenses">هنوز هیچ هزینه‌ای وجود ندارد!</string>
     <string name="no_exportable_expenses">هیچ تراکنشی که تابه‌حال استخراج نشده‌ باشد وجود ندارد.</string>
     <string name="no_filemanager_installed">هیچ فایل‌منیجری نصب نشده است</string>
-    <string name="no_calendar_app_installed">هیچ اپلیکیشنی برای ویرایش کردن رویدادهای تقویم پیدا نشد.</string>
     <string name="no_templates">بدون قالب</string>
     <string name="no_accounts">بدون حساب</string>
     <string name="opening_balance">تراز باز</string>
@@ -175,15 +171,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">برنامه</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">خودکار</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">برنامه‌ریز {app_name}</string>
-    <string name="planner_notification_channel_name">برنامه‌ریز</string>
-    <string name="plan_event_deleted">برنامه اختصاص داده شده به این قالب از تقویم حذف شده است.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">اجرای برنامه لغو شد</string>
-    <string name="planner_create_calendar_failure">ایجاد تقویم برنامه ریز محلی امکان پذیر نیست</string>
-    <string name="planner_create_calendar_success">تقویم برنامه ریز محلی با موفقیت ایجاد شد</string>
     <!-- payment methods -->
     <string name="pm_cheque">چک</string>
     <string name="pm_creditcard">کارت اعتباری</string>
@@ -235,7 +225,6 @@
     <string name="restore_db_success">پایگاه داده از فایل بک‌آپ بازیابی شد.</string>
     <string name="restore_preferences_failure">بازیابی ترجیحات شکست خورد</string>
     <string name="restore_preferences_success">ترجیحات از فایل بک‌آپ بازیابی شدند.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%dبرنامه از فایل بک‌آپ بازیابی شدند</string>
     <string name="save_transaction_and_new_success">با موفقیت دخیره شد</string>
     <string name="save_transaction_template_deleted">قالب حذف شد.</string>
     <string name="select">انتخاب</string>
@@ -331,11 +320,8 @@
     <string name="pref_sort_order_custom">سفارشی</string>
     <string name="content_description_calculator">ماشین‌حساب</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">باز</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">لغو شده</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">اعمال شد</string>
     <string name="crash_dialog_title">{app_name} بسته شد</string>
     <string name="crash_dialog_comment_prompt">اگر مایلید نظرتان را راجع به مشکل در زیر بیان کنید:</string>
     <string name="synchronization">همگام‌سازی</string>
@@ -423,7 +409,6 @@
     <string name="pref_protection_enable_data_entry_from_widget_summary_on">بدون گذرواژه مجاز است.</string>
     <string name="reference_number">شماره مرجع</string>
     <string name="status_reconciled">تطبیق یافته</string>
-    <string name="menu_edit_plan_instance">ویراش رخداد طرح واحد</string>
     <string name="menu_split_transaction">تبدیل به تسهیم</string>
     <string name="no_split_parts">دسته تسهیم وجود ندارد.</string>
     <string name="numbered">شماره گذاری شده</string>
@@ -434,7 +419,6 @@
     <string name="pref_manage_sync_backends_summary">اضافه کردن سرور جهت همگام سازی حساب ها (%s).</string>
     <string name="pref_manage_sync_backends_title">همگام سازی با سرور</string>
     <string name="pref_more_info_dialog_title">مجوز و اعتبار</string>
-    <string name="pref_planning_calendar_summary">تقویمی را انتخاب کنید که در آن برنامه‌ها برای تراکنش‌های آتی و تکراری ذخیره می‌شوند</string>
     <string name="pref_qif_export_file_encoding_title">کدبندی نویسه</string>
     <string name="pref_share_target_summary">اگر می‌خواهید بین برنامه‌های مناسب (ایمیل، دراپباکس، گوگل داکس، …) یکی را انتخاب کنید، یا URL را در یکی از طرح‌های پشتیبانی‌شده ارائه کنید، خالی بگذارید</string>
     <string name="qif_parse_failure_found_multiple_accounts">چندین حساب در فایل %s یافت شد.</string>
@@ -446,7 +430,6 @@
     </plurals>
     <string name="pref_manage_parties_title">اشخاص</string>
     <string name="split_parts_heading">بخش تسهیم</string>
-    <string name="pref_planning_calendar_create_local">ایجاد تقویم برنامه‌ریزی محلی جدید</string>
     <plurals name="save_transaction_from_template_success">
         <item quantity="one">تراکنش جدید از الگو با موفقیت ذخیره شد.</item>
         <item quantity="other">%1$d تراکنش جدید از الگوها با موفقیت ذخیره شد.</item>
@@ -463,7 +446,6 @@
     <string name="csv_import_field_mapped_more_than_once">%s بیش از یک بار نگاشته شده است.</string>
     <string name="csv_import_records_discarded" tools:ignore="PluralsCandidate">"رکوردهای %d  اعمال نشدند."</string>
     <string name="transform_subcategory_to_main">تبدیل به دسته بندی اصلی</string>
-    <string name="pref_sort_order_next_instance">نمونه بعدی</string>
     <string name="paypal_callback_info">تراکنش شما تکمیل شده است و رسید خرید شما برای شما ایمیل شده است. برای مشاهده جزئیات این تراکنش می توانید وارد حساب کاربری خود در www.paypal.com شوید.</string>
     <string name="synchronization_none">بدون همگام سازی</string>
     <string name="dialog_confirm_sync_link_local">داده های روی سرور برای این حساب حذف خواهد شد. مطمئن شوید که هیچ دستگاه دیگری به آن متصل نیست.</string>
@@ -575,7 +557,6 @@
     <string name="split_transaction_not_possible">تنها تراکنش‌هایی که حساب، دریافت‌کننده و وضعیت یکسانی دارند را می توان در یک تراکنش چندبخشی گروه‌بندی کرد.</string>
     <string name="budget_table_header_allocated">اختصاص داده شده</string>
     <string name="budget_allocated_amount">مبلغ اختصاص داده شده</string>
-    <string name="plan_custom_recurrence_info">لطفاً ابتدا قالب را ذخیره کنید. سپس برنامه در برنامهٔ تقویم باز خواهد شد و می‌توانید یک تکرارشوندهٔ سفارشی بسازید.</string>
     <string name="warning_split_transactions">تراکنش‌های انتخاب شده به یک تراکنش چندبخشی گروه‌بندی خواهند شد. اطلاعات تاریخ آنها از دست خواهد رفت (میانگین آنها جایگزین می شود).</string>
     <string name="synchronization_postponed">همگام‌سازی به تعویق افتاد.</string>
     <string name="budget_exceeded_error_2">مقدار بودجه را افزایش دهید یا پول را از دسته‌های دیگر حذف کنید.</string>

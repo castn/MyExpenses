@@ -5,8 +5,6 @@
     <string name="menu">"Meny"</string>
     <string name="action_move_down">"Flytta nedåt"</string>
     <string name="action_move_up">"Flytta uppåt"</string>
-    <string name="calendar_delete">Ta bort kalender</string>
-    <string name="preferences_calendar_delete_message">Vill du verkligen ta bort den här kalendern?</string>
     <string name="default_camera_app_title">"Kameraapp"</string>
     <string name="help_and_feedback">"Hjälp och feedback"</string>
     <string name="currencies_exchange">"Valutor och valutaväxling"</string>
@@ -151,7 +149,6 @@
     <string name="response_no">Nej</string>
     <string name="show_all">Visa alla</string>
     <string name="add_widget">Lägg till widget</string>
-    <string name="calendar">Kalender</string>
     <string name="setup">Inställningar</string>
     <string name="compact">Kompakt</string>
     <string name="write_fail_reason_cannot_write">Fel vid skrivande av innehåll</string>

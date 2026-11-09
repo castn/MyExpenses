@@ -108,13 +108,11 @@
     <string name="licence_validation_premium">Ödemeli işlevlerin kilidi açılmıştır.</string>
     <string name="menu_aggregates">Toplam</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">Uygula</string>
     <string name="menu_back">Önceki</string>
     <string name="menu_backup">Yedekle</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">Hesabı uzlaştır</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">İptal et</string>
     <string name="menu_clone_transaction">Klonla</string>
     <string name="menu_contrib">Katkıda bulun</string>
     <string name="menu_create_account">Yeni hesap oluştur</string>
@@ -140,7 +138,6 @@
     <string name="menu_edit_cat">Kategori düzenle</string>
     <string name="menu_edit_method">Ödeme yöntemini düzenle</string>
     <string name="menu_edit_party">Borçlu/alacaklıyı düzenle</string>
-    <string name="menu_edit_plan_instance">Planlamanın tek oluşumunu düzenle</string>
     <string name="menu_edit_split">Bölünmüş işlemi düzenle</string>
     <string name="menu_edit_split_part_category">Bölünmüş kategoriyi düzenle</string>
     <string name="menu_edit_split_part_transfer">Bölünmüş transferi düzenle</string>
@@ -153,7 +150,6 @@
     <string name="menu_help">Yardım</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">Ters Çevir</string>
-    <string name="menu_manage_plans">Şablonlar ve planlar</string>
     <string name="menu_reset">Dışa aktar ve sıfırla</string>
     <string name="menu_reset_all">Tümünü dışa aktar ve sıfırla</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -170,7 +166,6 @@
     <string name="no_expenses">Henüz hiçbir harcama yok!</string>
     <string name="no_exportable_expenses">Henüz dışa aktarılmamış hiçbir muamele yok.</string>
     <string name="no_filemanager_installed">Hiçbir dosya yöneticisi kurulu değil</string>
-    <string name="no_calendar_app_installed">Takvim olayını düzenlemek için hiçbir uygulama bulunamadı.</string>
     <string name="image_capture_not_installed">Resim çekmek için hiçbir uygulama bulunamadı.</string>
     <string name="no_mapped_transactions">Bu zaman aralığında hiçbir muamele kategoriler ile ilişkilendirilmemiştir.</string>
     <string name="no_methods">Ödeme yöntemi yok.</string>
@@ -201,15 +196,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">Planla</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">otomatik</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">{app_name} planlayıcısı</string>
-    <string name="planner_notification_channel_name">Planlayıcı</string>
-    <string name="plan_event_deleted">Bu şablonla ilişkili planlama takvimden silindi.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">Planı yürütme iptal edildi</string>
-    <string name="planner_create_calendar_failure">Yerel planlama takvimi oluşturulamadı</string>
-    <string name="planner_create_calendar_success">Yerel planlama takvimi başarıyla oluşturuldu</string>
     <!-- payment methods -->
     <string name="pm_cheque">Çek</string>
     <string name="pm_creditcard">Kredi kartı</string>
@@ -249,8 +238,6 @@
     <string name="pref_password_not_equal">Parolalar eşleşmedi</string>
     <string name="pref_perform_share_title">Dışa aktarmaları ve yedeklemeleri paylaş</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">Yeni yerel planlama takvimi oluştur</string>
-    <string name="pref_planning_calendar_summary">Gelecekteki ve tekrar eden muamelelerin saklanacağı takvimi seç</string>
     <string name="pref_protection_delay_seconds_summary">Uygulamanın parola ile kilitlenmesinden önce saniye cinsinden beklenecek süre.</string>
     <string name="pref_protection_delay_seconds_title">Korumanın başlamasından önceki süre</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">Kısayollar ve wigdet\'lardan veri girişi</string>
@@ -282,7 +269,6 @@
     <string name="restore_preferences_failure">Tercihlerin yüklenmesi başarısız oldu</string>
     <string name="restore_backup_file_not_found">\"%2$s\" arşivinde %1$s dosyası bulunamadı</string>
     <string name="restore_preferences_success">Tercihler yedekten geri yüklendi.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d plan yedekten geri yüklendi</string>
     <string name="save_transaction_and_new_success">Başarıyla kaydedildi</string>
     <string name="save_transaction_error">Şablondan muamele kaydedilemedi.</string>
     <plurals name="save_transaction_from_template_success">
@@ -438,17 +424,13 @@
     <string name="pref_sort_order_custom">Özel</string>
     <string name="content_description_calculator">Hesap makinesi</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">açık</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">iptal edildi</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">uygulandı</string>
     <string name="warning_cannot_move_split_transaction">Bu bölünmüş muamele %1$s hesabına taşınamaz çünkü bu hesapla ilişkili transfer parçaları bulunmaktadır.</string>
     <string name="content_description_calculator_delete_button">Son rakamı sil</string>
     <string name="paypal_callback_info">Muameleniz tamamlanmış ve alışverişiniz hakkında bir makbuz e-posta ile size gönderilmiştir. Bu muamelenin ayrıntılarını görüntülemek için hesabınıza www.paypal.com adresinde bağlanabilirsiniz.</string>
     <string name="search_transfer">Transfer için ara</string>
     <!-- Sort plans (recurring transactions) by the next instance  -->
-    <string name="pref_sort_order_next_instance">Sonraki örnekleme</string>
     <string name="crash_dialog_title">{app_name} çöktü</string>
     <string name="crash_dialog_text">Uygulamanın çıkmasının zorlanması sırasında beklenmeyen bir hata meydana geldi. Lütfen bu hatayı düzeltmemize kullanıcı verileri yollayarak yardımcı olun, tüm yapmanız gereken Tamam\'a dokunmaktır.</string>
     <string name="crash_dialog_comment_prompt">Problemle ilgili yorumlarınızı aşağıda ekleyebilirsiniz:</string>
@@ -505,7 +487,6 @@
     <string name="contributed_by">Katkıda bulunan: %s</string>
     <string name="pref_sync_notification_summary">Eşzamanlama ilerlemesi hakkında bildirim göster</string>
     <string name="pref_debug_logging_summary">Hata ayıklama verilerini sistem günlüğüne yaz</string>
-    <string name="plan_custom_recurrence_info">Lütfen önce şablonu kaydedin. O zaman planlama takvim uygulamasında açılacaktır ve burada özel bir tekrarlama seçebilirsiniz.</string>
     <string name="menu_create_template_for_split">Yeni bölünmüş şablon</string>
     <string name="progress_validating_licence">Lisans doğrulanıyor</string>
     <string name="licence_validation_error_expired">Lisans sona ermiş</string>
@@ -641,7 +622,6 @@
     <string name="pref_exchange_rate_provider_summary">Döviz kurlarını indirmek için bir sağlayıcı seçin</string>
     <string name="pref_exchange_rate_provider_title">Döviz Kuru Sağlayıcısı</string>
     <string name="pref_exchange_rates_api_key_summary">Lütfen %s üzerinde ücretsiz bir hesap oluşturun ve Uygulama Kimliğinizi (App ID) girin</string>
-    <string name="pref_plan_executor_time_title">Bildirim saati</string>
     <string name="synchronization_select_folder_dialog_title">Mevcut bir klasör seçin veya yeni bir klasör oluşturun</string>
     <!-- This message is shwon when we highlight the income / expense toogle, to make user aware of this feature  -->
     <string name="discover_feature_expense_income_switch">Gelirleri kaydetmek için bu geçiş düğmesini kullanın.</string>
@@ -696,7 +676,6 @@
     <string name="new_tag_hint">Yeni etiket gir</string>
     <string name="language_download_requested">%s dilinin çevirileri Play Store\'dan isteniyor</string>
     <!-- Title for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
-    <string name="pref_planner_manual_time_title">Elle uygulanan planlanmış muamele zamanı</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
     <string name="pref_planner_manual_time_noon">12:00 (öğlen)</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction (current time at moment of application) -->
@@ -731,14 +710,11 @@
     <!-- Toast message shown if user clicks on Upgrade button before having selected a licence -->
     <string name="select_package">Lütfen bir lisans paketi seçin.</string>
     <!-- Label for a slider control that allows to configure a plan to be executed (added to the ledger) the give number of days in advance -->
-    <string name="advance_exexcution_in_days">Önceden uygulama (gün olarak)</string>
     <string name="warning_balance_account_delete">Devam ederseniz, bu hesabın tüm uzlaşmış işlemleri veri tabanından silinecek ve bunları geri yükleyemeyeceksiniz.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">Mevcut form verileri silinecektir.</string>
     <string name="pref_clone_with_current_date_title">Klonlanmış muamelelerin tarihi</string>
     <string name="template_default_action_without_amount_hint">Meblağı olmayan şablon öntanımlı \'Düzenle\' eylemi ile kaydedilmelidir</string>
-    <string name="plan_automatic_without_amount_hint">Meblağsız planlama otomatik planlama uygulamasıyla kaydedilmemelidir</string>
-    <string name="content_description_edit_plan">Planlamayı takvim uygulamasında düzenle</string>
     <string name="menu_save_and_new_content_description">Verileri kaydet ve aynı verilerle yeni bir muamele oluşturmak için formu açık bırak.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
     <string name="pref_ocr_engine_title">Metin tanıma motoru</string>
@@ -759,7 +735,6 @@
     <string name="new_balance">Yeni bakiye</string>
     <string name="single_feature_info">Alternatif olarak, yalnızca bu özelliğe sınırsız erişim satın alabilirsiniz.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
-    <string name="recurrence_last_day_of_month">Son gün</string>
     <string name="warning_link_transfer">Seçili iki muamele bir transfer olarak ilişkilendirilecektir. Karşı taraf ve kategori bilgileri bırakılacaktır.</string>
     <!-- This is the title of an entry on the configuration screen for the account widget. It allows to decide which number should be displayed for each account: the current balance or the total (which included future transactions) -->
     <string name="account_widget_configuration_sum">Görüntülenen toplam türü</string>
@@ -776,7 +751,6 @@
     <string name="auto_fill_focus">Odağı Alacaklı alanına taşı</string>
     <!-- This warning is shown when a user calls the Reset or Cancel commands on a scheduled transaction, for a date
      where the transaction has already been created.  -->
-    <string name="warning_plan_instance_delete">Seçili tarih için oluşturulmuş muamele silinecektir.</string>
     <string name="crash_reports_user_info">{app_name}, geliştiricilerine problemleri daha çabuk gidermelerine yardımcı olacak uygulama çökmeleri hakkında rapor gönderecektir.</string>
     <string name="pref_enable_acra">Çökme raporlarının otomatik olarak gönderilmelerine izin ver</string>
     <string name="pref_acra_user_email">Kullanıcı e-postası çökme raporlarına dahil edilecek</string>
@@ -864,9 +838,7 @@
     <string name="dialog_contrib_trial_info_play">Bu ücretsiz deneme sürümü hiçbir zaman herhangi bir abonelik türüne dönüşmeyecektir.</string>
     <string name="dialog_contrib_subscription_info_play">Bu abonelik hemen yürürlüğe girer, aylık veya yıllık olarak faturalandırılır ve herhangi bir zamanda iptal edilebilir.</string>
     <string name="pref_unmapped_transaction_as_transfer_title">İlişkilendirilmeyen muameleler</string>
-    <string name="button_relink_keep_date">Yeniden bağla, ancak tarihi koru</string>
     <string name="remove_from_group">Gruptan kaldır</string>
-    <string name="orphaned_transaction_relink">Muamele olay örneklemesi ile %s tarihinde yeniden bağlanabilir.</string>
     <string name="menu_aggregate_neutral_categories">Nötr kategorileri topla</string>
     <string name="notifications_permission_required_auto_backup">Bildirim gönderme iznini vererek, otomatik yedeklemeler hakkında bilgilendirileceksiniz.</string>
     <string name="merge_parties_strategy_delete">Yinelenenler silinir.</string>
@@ -874,7 +846,6 @@
     <string name="pref_unmapped_transaction_as_transfer_summary_on">transfer olarak sayılır</string>
     <string name="warning_delete_default_transfer_category">%s kategorisi öntanımlı transfer kategorisi olarak yapılandırıldı ve silinmemelidir.</string>
     <string name="pref_attachment_mime_types_title">Ekler için izin verilen MIME türleri</string>
-    <string name="button_relink_update_date">Yeniden bağla ve tarihi güncelle</string>
     <string name="widget_title_budget">Bütçem</string>
     <string name="pref_copy_attachments_summary_on">Dosyalar uygulama klasörüne kopyalanır.</string>
     <string name="attachments">Ekler</string>
@@ -882,8 +853,6 @@
     <string name="budget_table_header_overspent">Fazla harcanmış</string>
     <string name="pref_copy_attachments_title">Ekleri uygulama klasörüne kopyala</string>
     <string name="read_from_data">Veriden oku</string>
-    <string name="orphaned_transaction_info">Bu tarih için plana bir muamele bağlandı, ancak bu tarihte herhangi bir olay örneklemesi yok.</string>
-    <string name="orphaned_transaction_align_date">İsteğe bağlı olarak, muameleyle birlikte kaydedilen tarih de örnekleme tarihiyle eşleştirilebilir.</string>
     <string name="pref_unmapped_transaction_as_transfer_summary_off">gider / gelir olarak sayılır</string>
     <string name="merge_parties_strategy_group">Yinelenenler bağımlı olarak gruplandırılır.</string>
     <string name="pref_copy_attachments_summary_off">Dosyalar kopyalanmaz, yalnızca bir referans kaydedilir.</string>

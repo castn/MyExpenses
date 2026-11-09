@@ -102,7 +102,6 @@
     <string name="licence_validation_failure">ไม่สามารถตรวจสอบความถูกต้องของคีย์ลิขสิทธิ์</string>
     <string name="licence_validation_premium">ปลดล็อกคุณสมบัติพรีเมียมแล้ว</string>
     <string name="menu_aggregates">รวม</string>
-    <string name="menu_apply_template">นำไปใช้</string>
     <string name="menu_back">ย้อนกลับ</string>
     <string name="licence_validation_success">ตรวจสอบคีย์ลิขสิทธิ์เรียบร้อยแล้ว:</string>
     <string name="menu_backup">สำรองข้อมูล</string>
@@ -111,7 +110,6 @@
     <string name="menu_create_instance_edit">นำไปใช้และแก้ไข</string>
     <string name="menu_create_instance_save">นำไปใช้และบันทึก</string>
     <string name="menu_create_main_cat">หมวดหมู่หลักใหม่</string>
-    <string name="menu_cancel_plan_instance">ยกเลิก</string>
     <string name="menu_contrib">สนับสนุน</string>
     <string name="menu_create_split_part_transfer">ส่วนแยกการโอนใหม่</string>
     <string name="menu_create_sub_cat">หมวดหมู่ย่อยใหม่</string>
@@ -135,7 +133,6 @@
     <string name="menu_grouping">การจัดกลุ่ม</string>
     <string name="menu_help">ช่วยเหลือ</string>
     <string name="menu_invert_transfer">สลับกลับ</string>
-    <string name="menu_manage_plans">แม่แบบและแผน</string>
     <string name="menu_edit_transfer">แก้ไขการโอน</string>
     <string name="menu_reset">ส่งออกและรีเซ็ต</string>
     <string name="menu_reset_all">ส่งออกและรีเซ็ตทั้งหมด</string>
@@ -148,7 +145,6 @@
     <string name="no_app_handling_email_available">ไม่มีแอปที่สามารถจัดการอีเมลได้</string>
     <string name="no_categories">ไม่มีหมวดหมู่</string>
     <string name="no_expenses">ยังไม่มีค่าใช้จ่าย!</string>
-    <string name="no_calendar_app_installed">ไม่พบแอปสำหรับแก้ไขกิจกรรมในปฏิทิน</string>
     <string name="image_capture_not_installed">ไม่พบแอปสำหรับถ่ายภาพ</string>
     <string name="no_methods">ไม่มีวิธีการชำระเงิน</string>
     <string name="no_exportable_expenses">ไม่มีธุรกรรมที่ยังไม่ได้ส่งออก</string>
@@ -164,9 +160,6 @@
     <string name="password_prompt">ป้อนรหัสผ่านของคุณ</string>
     <string name="payee">ผู้รับเงิน</string>
     <string name="plan">แผน</string>
-    <string name="plan_automatic">อัตโนมัติ</string>
-    <string name="plan_event_deleted">แผนที่เชื่อมโยงกับแม่แบบนี้ถูกลบออกจากปฏิทินแล้ว</string>
-    <string name="planner_notification_channel_name">ตัววางแผน</string>
     <string name="pm_cheque">เช็ค</string>
     <string name="pm_creditcard">บัตรเครดิต</string>
     <string name="pm_type_neutral">เป็นกลาง</string>
@@ -193,23 +186,18 @@
     <plurals name="not_deletable_mapped_transactions">
         <item quantity="other">มีวัตถุ %1$d รายการที่ถูกจับคู่กับธุรกรรมและไม่สามารถลบได้</item>
     </plurals>
-    <string name="menu_edit_plan_instance">แก้ไขการเกิดขึ้นของแผนครั้งเดียว</string>
     <string name="menu_reset_plan_instance">รีเซ็ต</string>
     <string name="menu_forward">ส่งต่อ</string>
     <string name="menu_exclude_from_totals">ไม่รวมในยอดรวม</string>
     <string name="no_mapped_transactions">ไม่มีธุรกรรมที่ถูกจับคู่กับหมวดหมู่ในช่วงเวลานี้</string>
     <string name="password_security_answer_not_valid">คำตอบไม่ถูกต้อง ลองใหม่อีกครั้ง!</string>
-    <string name="plan_execution_canceled">การดำเนินการตามแผนถูกยกเลิก</string>
-    <string name="planner_create_calendar_failure">ไม่สามารถสร้างปฏิทินตัววางแผนภายในเครื่องได้</string>
     <string name="pref_auto_fill_summary">กรอกข้อมูลจากธุรกรรมล่าสุดของผู้รับ/ผู้จ่ายเงินรายเดียวกัน</string>
     <string name="password_disabled_reenable">การป้องกันด้วยรหัสผ่านถูกปิดใช้งานแล้ว คุณสามารถเปิดใช้งานอีกครั้งได้ในการตั้งค่า</string>
     <string name="contrib_feature_category_tree_label">ลำดับชั้นหมวดหมู่ที่ลึกได้อย่างอิสระ</string>
     <string name="no_app_handling_mime_type_available">ไม่มีแอปที่สามารถจัดการไฟล์ %s ได้</string>
-    <string name="planner_create_calendar_success">สร้างปฏิทินตัววางแผนภายในเครื่องเรียบร้อยแล้ว</string>
     <string name="pref_sort_order_usages">จำนวนการใช้งาน</string>
     <string name="pref_import_from_grisbi_title">นำเข้าจาก Grisbi</string>
     <string name="pref_manage_categories_title">หมวดหมู่</string>
-    <string name="pref_planning_calendar_summary">เลือกปฏิทินที่ใช้จัดเก็บแผนสำหรับรายการในอนาคตและรายการ定期</string>
     <string name="pref_protection_enable_data_entry_from_widget_summary_on">อนุญาตให้ใช้ได้โดยไม่ต้องใช้รหัสผ่าน</string>
     <string name="pref_ui_home_screen_shortcuts">ทางลัดหน้าจอหลัก</string>
     <string name="pref_ui_language_title">ภาษา</string>
@@ -232,7 +220,6 @@
     <string name="pref_ui_theme_dark">มืด</string>
     <string name="pref_ui_theme_light">สว่าง</string>
     <string name="pref_manage_methods_summary">สร้างและแก้ไขวิธีการชำระเงิน และเชื่อมโยงกับประเภทบัญชี</string>
-    <string name="pref_planning_calendar_create_local">สร้างปฏิทินวางแผนใหม่ในเครื่อง</string>
     <string name="pref_perform_share_title">แบ่งปันการส่งออกและการสำรองข้อมูล</string>
     <string name="pref_restore_summary">เลือกข้อมูลสำรองเพื่อกู้คืนฐานข้อมูลและการตั้งค่า</string>
     <string name="pref_share_target_summary">ปล่อยว่างไว้หากต้องการเลือกระหว่างแอปที่เหมาะสม (อีเมล, Dropbox, Google Docs, …) หรือระบุ URL ในรูปแบบที่รองรับ</string>
@@ -291,7 +278,6 @@
     <string name="pref_visit_website_title">เยี่ยมชมเว็บไซต์</string>
     <string name="progress_dialog_deleting">กำลังลบวัตถุ</string>
     <string name="restore_preferences_success">กู้คืนการตั้งค่าจากข้อมูลสำรองเรียบร้อยแล้ว</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">กู้คืน %d แผนจากข้อมูลสำรองเรียบร้อยแล้ว</string>
     <string name="save_transaction_and_new_success">บันทึกเรียบร้อยแล้ว</string>
     <string name="warning_delete_category_with_budget">สำหรับอย่างน้อยหนึ่งหมวดหมู่ที่เลือก มีการจัดสรรงบประมาณที่จะถูกลบด้วย</string>
     <string name="reference_number">หมายเลขอ้างอิง</string>
@@ -305,7 +291,6 @@
     <string name="preferences_week_start_day_title">สัปดาห์เริ่มต้นในวัน</string>
     <string name="pref_sort_order_custom">กำหนดเอง</string>
     <string name="content_description_calculator">เครื่องคิดเลข</string>
-    <string name="plan_instance_state_open">เปิด</string>
     <string name="dialog_confirm_sync_link_remote">ข้อมูลท้องถิ่นสำหรับบัญชีนี้จะถูกลบ</string>
     <string name="sync_error_will_try_again_later">จะลองอีกครั้งในภายหลัง</string>
     <string name="pref_protection_device_lock_screen_title">หน้าจอล็อกอุปกรณ์</string>
@@ -388,13 +373,10 @@
     <string name="date_format_hour">ชั่วโมง</string>
     <string name="date_format_minute">นาที</string>
     <string name="pref_sort_order_last_used">ใช้งานล่าสุด</string>
-    <string name="plan_instance_state_cancelled">ถูกยกเลิก</string>
-    <string name="plan_instance_state_applied">นำไปใช้แล้ว</string>
     <string name="content_description_calculator_delete_button">ลบตัวเลขสุดท้าย</string>
     <string name="paypal_callback_info">รายการของคุณเสร็จสมบูรณ์ และได้ส่งใบเสร็จการซื้อของคุณทางอีเมลแล้ว คุณสามารถเข้าสู่ระบบบัญชีของคุณที่ www.paypal.com เพื่อดูรายละเอียดของรายการนี้</string>
     <string name="search_transfer">ค้นหาการโอนเงิน</string>
     <string name="search_account">ค้นหาบัญชี</string>
-    <string name="pref_sort_order_next_instance">ตัวอย่างถัดไป</string>
     <string name="crash_dialog_title">{app_name} เกิดข้อผิดพลาด</string>
     <string name="synchronization">การซิงโครไนซ์</string>
     <string name="synchronization_none">ไม่มีการซิงโครไนซ์</string>
@@ -509,7 +491,6 @@
     <string name="feature_deprecated">เลิกใช้แล้ว</string>
     <string name="pref_backup_cloud_summary">นอกเหนือจากพื้นที่จัดเก็บข้อมูลในเครื่องแล้ว ไฟล์สำรองข้อมูลยังสามารถถูกคัดลอกไปยังแบ็กเอนด์ระยะไกลได้อีกด้วย</string>
     <string name="pref_sync_frequency_summary_0">ตั้งค่าเป็น 0 เพื่อปิดการซิงค์อัตโนมัติ</string>
-    <string name="plan_custom_recurrence_info">กรุณาบันทึกแม่แบบก่อน จากนั้นแผนจะถูกเปิดในแอปปฏิทิน ที่ซึ่งคุณสามารถตั้งค่าการเกิดซ้ำแบบกำหนดเองได้</string>
     <string name="licence_removal_information" tools:ignore="PluralsCandidate">หากคุณไม่ต้องการใช้งานฟังก์ชันพรีเมียมบนอุปกรณ์นี้อีกต่อไป คุณสามารถลบคีย์ลิขสิทธิ์ได้ การดำเนินการนี้จะปลดคีย์เพื่อเปิดใช้งานบนอุปกรณ์อื่นได้อีกหนึ่งเครื่อง (คีย์สามารถเปิดใช้งานได้สูงสุด %d อุปกรณ์)</string>
     <string name="warning_cannot_move_split_transaction">ไม่สามารถย้ายรายการแยกส่วนนี้ไปยังบัญชี %1$s ได้ เนื่องจากมีส่วนการโอนที่อ้างอิงถึงบัญชีนี้</string>
     <string name="dialog_synced_to_other">มีบัญชีที่มี uuid %s อยู่ในฐานข้อมูลท้องถิ่นแล้วและเชื่อมโยงกับแบ็กเอนด์ระยะไกลอื่น</string>
@@ -571,7 +552,6 @@
     <string name="title_activity_debt_overview">ภาพรวมหนี้สิน</string>
     <string name="cb_label_merge_accounts">รวมบัญชี</string>
     <string name="encrypt_database">เข้ารหัสฐานข้อมูล</string>
-    <string name="button_relink_update_date">เชื่อมโยงใหม่และอัปเดตวันที่</string>
     <string name="menu_aggregate_neutral_categories">รวมหมวดหมู่ที่เป็นกลาง</string>
     <string name="warning_delete_default_transfer_category">หมวดหมู่ %s ถูกกำหนดเป็นหมวดหมู่เริ่มต้นสำหรับการโอนเงินและไม่ควรถูกลบ</string>
     <string name="contact_us">ติดต่อเรา</string>
@@ -598,7 +578,6 @@
     <string name="pref_exchange_rate_provider_summary">เลือกผู้ให้บริการเพื่อดาวน์โหลดอัตราแลกเปลี่ยน</string>
     <string name="pref_category_exchange_rates">อัตราแลกเปลี่ยน</string>
     <string name="pref_exchange_rate_provider_title">ผู้ให้บริการอัตราแลกเปลี่ยน</string>
-    <string name="pref_plan_executor_time_title">เวลาแจ้งเตือน</string>
     <string name="synchronization_select_folder_dialog_title">เลือกโฟลเดอร์ที่มีอยู่หรือสร้างใหม่</string>
     <string name="menu_create_budget">งบประมาณใหม่</string>
     <string name="budget_onetime">­ครั้งเดียว</string>
@@ -618,7 +597,6 @@
     <string name="dialog_multi_tag_clear">แท็กทั้งหมดจะถูกลบออกจากรายการที่เลือก</string>
     <string name="dialog_multi_tag">รายการที่เลือกทั้งหมดจะถูกติดแท็กด้วย %s</string>
     <string name="language_download_requested">มีการร้องขอการแปลสำหรับภาษา %s จาก Play Store</string>
-    <string name="pref_planner_manual_time_title">เวลาสำหรับรายการที่กำหนดเวลาที่นำไปใช้ด้วยตนเอง</string>
     <string name="title_scan_receipt_feature">สแกนใบเสร็จ</string>
     <string name="button_scan">สแกน</string>
     <string name="pref_ocr_total_indicators_title">ตัวชี้วัดสำหรับจำนวนเงินรวม</string>
@@ -629,7 +607,6 @@
     <string name="scan_result_no_date">ไม่พบวันที่</string>
     <string name="scan_result_no_payee">ไม่พบผู้รับเงิน/ผู้จ่ายเงิน</string>
     <string name="pref_feature_uninstall_title">ร้องขอการถอนการติดตั้งคุณสมบัติและภาษา</string>
-    <string name="advance_exexcution_in_days">การดำเนินการล่วงหน้า (เป็นวัน)</string>
     <string name="download_completed">การดาวน์โหลด (%s) เสร็จสมบูรณ์แล้ว</string>
     <string name="pref_tesseract_language_title">ภาษาสำหรับ Tesseract</string>
     <string name="ocr_recognition_info">กำลังดำเนินการจดจำข้อความด้วย %s</string>
@@ -697,14 +674,11 @@
     <string name="pref_feature_uninstall_summary">Play Store จะพยายามลบโมดูลเหล่านั้นในพื้นหลังในที่สุด</string>
     <string name="pref_clone_with_current_date_title">วันที่ของรายการที่โคลนมา</string>
     <string name="template_default_action_without_amount_hint">แม่แบบที่ไม่มีจำนวนเงินควรบันทึกด้วยการกระทำเริ่มต้น \'แก้ไข\'</string>
-    <string name="plan_automatic_without_amount_hint">แผนที่ไม่มีจำนวนเงินไม่ควรบันทึกด้วยการดำเนินการแผนอัตโนมัติ</string>
-    <string name="content_description_edit_plan">แก้ไขแผนในแอปปฏิทิน</string>
     <string name="menu_save_and_new_content_description">บันทึกข้อมูล แล้วเปิดฟอร์มไว้เพื่อสร้างรายการใหม่ด้วยข้อมูลเดียวกัน</string>
     <string name="pref_ocr_engine_title">เครื่องมือสำหรับการจดจำข้อความ</string>
     <string name="tesseract_download_confirmation">คุณต้องการดาวน์โหลดข้อมูลการจดจำข้อความสำหรับ %s หรือไม่?</string>
     <string name="pref_group_header_show_details_summary">แสดงผลรวมรายละเอียดในส่วนหัวกลุ่ม</string>
     <string name="new_balance">ยอดคงเหลือใหม่</string>
-    <string name="recurrence_last_day_of_month">วันสุดท้าย</string>
     <string name="warning_link_transfer">รายการทั้งสองที่เลือกจะถูกเชื่อมโยงเป็นการโอนเงิน ข้อมูลผู้รับเงิน/ผู้จ่ายเงินและหมวดหมู่จะถูกยกเลิก</string>
     <string name="budget_widget_configuration">เลือกงบประมาณ</string>
     <string name="merge_parties_select">เลือกชื่อของคู่กรณีที่รวมกัน</string>
@@ -730,10 +704,6 @@
     <string name="image_optimize_quality_summary">คุณภาพ 0 หมายถึงการบีบอัดให้ได้ขนาดเล็กที่สุด 100 หมายถึงการบีบอัดเพื่อคุณภาพภาพสูงสุด</string>
     <string name="template_shortcut">ทางลัดแม่แบบ</string>
     <string name="select_template">เลือกแม่แบบ</string>
-    <string name="orphaned_transaction_info">มีรายการเชื่อมโยงกับแผนสำหรับวันที่นี้ แต่ไม่มีเหตุการณ์เกิดขึ้นในวันที่นี้</string>
-    <string name="orphaned_transaction_relink">รายการสามารถเชื่อมโยงใหม่กับเหตุการณ์ในวันที่ %s ได้</string>
-    <string name="orphaned_transaction_align_date">สามารถปรับวันที่ที่เก็บไว้กับรายการให้ตรงกับวันที่ของเหตุการณ์ได้ด้วย (เป็นทางเลือก)</string>
-    <string name="button_relink_keep_date">เชื่อมโยงใหม่ แต่เก็บวันที่ไว้</string>
     <string name="pref_attachment_mime_types_title">ประเภท MIME ที่อนุญาตสำหรับไฟล์แนบ</string>
     <string name="pref_copy_attachments_title">คัดลอกไฟล์แนบไปยังโฟลเดอร์แอปพลิเคชัน</string>
     <string name="pref_unmapped_transaction_as_transfer_title">รายการที่ยังไม่ได้แมป</string>
@@ -763,7 +733,6 @@
     <string name="discover_feature_expense_income_switch" tools:ignore="UnusedResources">ใช้ปุ่มสวิตช์นี้เพื่อบันทึกรายรับ</string>
     <string name="pref_clone_with_current_date_summary_on">รายการที่โคลนมาจะมีวันที่ปัจจุบัน</string>
     <string name="app_restart_required">การกำหนดค่าใหม่ต้องการให้เริ่มต้นแอปใหม่เพื่อให้มีผล</string>
-    <string name="warning_plan_instance_delete">รายการที่สร้างขึ้นสำหรับวันที่เลือกจะถูกลบ</string>
     <string name="pref_purge_backup_require_confirmation_summary">แสดงข้อความยืนยันก่อนล้างไฟล์</string>
     <string name="warning_party_delete_debt">เมื่อลบคู่กรณีนี้ หนี้สินที่กำหนดไว้จะถูกลบไปด้วย</string>
     <plurals name="import_categories_icons_updated">

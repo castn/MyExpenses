@@ -51,7 +51,6 @@
     <string name="pref_shortcut_create_transaction_key">shortcut_create_transaction</string>
     <string name="pref_shortcut_create_transfer_key">shortcut_create_transfer</string>
     <string name="pref_shortcut_create_split_key">shortcut_create_split</string>
-    <string name="pref_planner_calendar_id_key">planner_calendar_id</string>
     <string name="pref_rate_key">rate</string>
     <string name="pref_ui_language_key">ui_language</string>
     <string name="pref_app_dir_key">app_dir</string>
@@ -106,7 +105,6 @@
     <string name="pref_exchange_rate_provider_key">exchange_rate_providers</string>
     <string name="pref_openexchangerates_app_id_key">openexchangerates_app_id</string>
     <string name="pref_coin_api_api_key_key">coin_api_api_key</string>
-    <string name="pref_plan_executor_time_key">plan_executor_time</string>
     <string name="pref_webdav_allow_unverified_host_key">webdav_allow_unverified_host</string>
     <string name="pref_clone_with_current_date_key">clone_with_current_date</string>
     <string name="pref_feature_uninstall_key">feature_uninstall</string>
@@ -246,7 +244,6 @@
     <string name="reminder_vote_update" tools:ignore="UnusedResources">The list of issues on the roadmap might have changed since you last voted. You might want to update your vote.</string>
     <!-- During onboarding, user can select to restore data from synchronized account-specific data . This is the title for the tab where the accounts are listed -->
     <string name="onboarding_restore_from_cloud_sync_accounts">@string/pref_manage_accounts_title</string>
-    <string name="pref_planner_manual_time_key">planner_manual_time</string>
     <string name="pref_criterion_future_key">criterion_future</string>
     <string name="pref_ocr_total_indicators_key">ocr_total_indicators</string>
     <string name="pref_ocr_time_formats_key">ocr_time_formats</string>
@@ -280,7 +277,6 @@
     <string name="pref_help_key">help</string>
     <string name="pref_customize_main_menu_key">customize_main_menu</string>
     <string name="pref_customize_menu_v2_key">customize_menu_v2</string>
-    <string name="pref_remove_local_calendar_key">remove_local_calendar</string>
     <string name="pref_print_header_left_key">print_header_left</string>
     <string name="pref_print_header_center_key">print_header_center</string>
     <string name="pref_print_header_right_key">print_header_right</string>

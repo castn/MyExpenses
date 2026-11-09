@@ -35,24 +35,11 @@
     <string name="help_ManageParties_floating_action_button">Le bouton d\'action flottant permet d\'ajouter une nouvelle entrée.</string>
     <string name="menu_merge_help_text">Si le même tiers apparaît plusieurs fois dans la liste avec différentes variantes orthographiques, vous pouvez les fusionner.</string>
     <string name="help_ManageParties_mergeMode_info_2">Vous serez invité à sélectionner la variante à conserver.</string>
-    <string name="help_ManageTemplates_plans_title">Calendrier</string>
-    <string name="help_ManageTemplates_planner_title">Echéances à venir</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src=\"ic_menu_template\">Tandis que les modèles peuvent être issus des transactions par le biais de leur menu de contexte, ici vous pouvez créer de nouveaux modèles à partir de rien (pour les transactions ou transferts) en cliquant sur le bouton d\'action. En cliquant sur un modèle, vous créez une nouvelle instance pour elle.<br><img src=\"ic_event\">Une échéance est un modèle pour lequel vous avez créé un événement (unique ou répétitif) dans le calendrier de l\'échéancier. Cliquez sur un échéancier, pour ouvrir un calendrier, qui affichera ses instances passées et futures.]]></string>
-    <string name="help_ManageTemplates_planner_intro">Un appui long sur une instance ouverte démarre la sélection multiple. Taper sur le début ou la fin de la plage de dates permet d\'étendre la plage dans le passé ou le futur.</string>
-    <string name="help_ManageTemplates_plans_intro">Chaque date en surbrillance représente une instance de l\'échéancier.</string>
-    <string name="help_ManageTemplates_plans_info_header">L\'état d\'une instance est indiqué par les icônes suivantes :</string>
-    <string name="help_ManageTemplates_plans_info_open">L\'opération n\'a pas encore été appliquée.</string>
-    <string name="help_ManageTemplates_plans_info_applied">L\'opération a été appliquée.</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">L\'opération a été annulée, c\'est-à-dire que vous avez décidé qu\'aucune ne sera créée à la date indiquée.</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">Appliquer les modèles selectionnés et les sauvegarder immédiatement.</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">Créer le modèle sélectionné et aller dans l\'édition pour le modifier avant de l\'enregistrer.</string>
     <string name="cab_ManageTemplates_delete_help_text">Supprimer le modèle sélectionné et toute échéance associée.</string>
     <string name="cab_ManageTemplates_edit_help_text">Modifier le modèle sélectionné et créer ou modifier une échéance associée.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">Créer une opération à l’échéance sélectionnée et l\'enregistrer immédiatement.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">Créer une opération à l\'échéance sélectionnée et entrer en édition afin de la modifier avant enregistrement.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">Indique que pour l\'échéance sélectionnée, aucune opération ne devra être créée. Si une opération a été créée pour l\'événement sélectionné, elle sera supprimée.</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">Si une opération a été créée pour l\'événement sélectionné, elle sera supprimée, si elle a été signalée comme annulée, l\'indicateur sera enlevé.</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">Modifier l\'opération qui a été créée pour l\'échéance choisie.</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">La liste des modèles peut être triée par titre (ordre alphabétique), par montant, par la fréquence des utilisations ou de la date de dernière création d\'une opération.
 </string>
     <string name="help_ManageCategories_distribution_info">Cet écran indique la répartition des dépenses et des revenus par catégories, pour toutes les opérations sur un compte ou un groupe spécifique. Si vous développez une catégorie principale dans la liste, le graphique à secteurs affiche la distribution de ses sous-catégories. Si vous sélectionnez une catégorie dans la liste, il sera mis en évidence dans le diagramme circulaire et vice versa. Appui long sur une catégorie pour afficher une liste agrégée des transactions sélectionnées.</string>

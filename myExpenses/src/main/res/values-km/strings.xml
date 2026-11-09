@@ -110,11 +110,9 @@
     <string name="licence_validation_success">កូនសោអាជ្ញាប័ណ្ណត្រូវបានបញ្ជាក់ភាពត្រឹមត្រូវដោយជោគជ័យ៖</string>
     <string name="licence_validation_premium">មុខងារពិសេសត្រូវបានដោះសោ។</string>
     <string name="menu_aggregates">សរុប</string>
-    <string name="menu_apply_template">ដាក់ទៅ</string>
     <string name="menu_back">ត្រឡប់​ក្រោយ</string>
     <string name="menu_backup">ការ​បម្រុង​ទុក</string>
     <string name="menu_balance">គណនីសមតុល្យ</string>
-    <string name="menu_cancel_plan_instance">បោះបង់</string>
     <string name="menu_clone_transaction">ក្លូន</string>
     <string name="menu_contrib">រួមចំណែក</string>
     <string name="menu_create_account">គណនីថ្មី</string>
@@ -140,7 +138,6 @@
     <string name="menu_edit_cat">កែ​ចំណាត់ថ្នាក់</string>
     <string name="menu_edit_method">កែ​វិធីសាស្ត្រ​ទូទាត់ប្រាក់</string>
     <string name="menu_edit_party">កែ​ភាគី</string>
-    <string name="menu_edit_plan_instance">កែសម្រួលផែនការកើតឡើងតែមួយ</string>
     <string name="menu_edit_split">កែសម្រួលប្រតិបត្តិការបំបែក</string>
     <string name="menu_edit_split_part_category">កែចំណាត់ថ្នាក់​​បែង​ចែក​ជាផ្នែក</string>
     <string name="menu_edit_split_part_transfer">កែ​ផ្នែក​ញែក​​ការផ្ទេរ​</string>
@@ -152,7 +149,6 @@
     <string name="menu_grouping">ដាក់​ជាក្រុម</string>
     <string name="menu_help">ជំនួយ</string>
     <string name="menu_invert_transfer">ត្រឡប់មកវិញ</string>
-    <string name="menu_manage_plans">ទិន្នន័យ​គំរូ និងផែនការ</string>
     <string name="menu_reset">ការនាំចេញនិងការកំណត់ឡើងវិញ</string>
     <string name="menu_reset_all">ការនាំចេញនិងការកំណត់ឡើងវិញទាំងអស់</string>
     <string name="menu_reset_plan_instance">សារដើម</string>
@@ -168,7 +164,6 @@
     <string name="no_expenses">គ្មាន​ទិន្នន័យចំណាយ​នៅឡើយទេ។</string>
     <string name="no_exportable_expenses">មិនមានប្រតិបត្តិការដែលមិនទាន់ត្រូវបាននាំចេញទេ។</string>
     <string name="no_filemanager_installed">គ្មាន​កម្មវិធី​គ្រប់គ្រងឯកសារបញ្ចូលទេ</string>
-    <string name="no_calendar_app_installed">រកមិនឃើញកម្មវិធីសម្រាប់កែសម្រួលព្រឹត្តិការណ៍ប្រតិទិនទេ។</string>
     <string name="image_capture_not_installed">រកមិនឃើញកម្មវិធីសម្រាប់ថតរូបទេ។</string>
     <string name="no_mapped_transactions">គ្មាន​ប្រតិបត្តិ​ការ​ណាមួយ​ត្រូវបាន​ភ្ជាប់ទៅ​ចំណាត់ថ្នាក់ណា​ក្នុង​រយៈពេលនេះទេ</string>
     <string name="no_methods">គ្មានវិធីសាស្ត្រទូទាត់​ប្រាក់</string>
@@ -196,13 +191,7 @@
     <string name="payer">អ្នកចេញការចំណាយ</string>
     <string name="payer_or_payee">ភាគីផ្ទុយ</string>
     <string name="plan">ផែនការ</string>
-    <string name="plan_automatic">ដោយ​ស្វ័យ​ប្រវត្តិ</string>
     <string name="plan_calendar_name">កម្មវិធី​ផែនការរបស់ {app_name}</string>
-    <string name="planner_notification_channel_name">កម្មវិធី​ផែនការរបស់</string>
-    <string name="plan_event_deleted">គម្រោងនេះ​ភ្ជាប់នឹង​ពុម្ពនេះ​ ត្រូវបាន​លុបចេញ​ពី​ប្រតិទិន</string>
-    <string name="plan_execution_canceled">គម្រោង​ដំណើរការ​បាន​​បោះបង់ហើយ</string>
-    <string name="planner_create_calendar_failure">មិន​អាច​​បង្កើត​​ប្រតិទិន​​ផែនការ​មូលដ្ឋាន​ទេ</string>
-    <string name="planner_create_calendar_success">ប្រតិទិន​ផែនការ​មូលដ្ឋាន​បាន​បង្កើត​ដោយជោគជ័យ</string>
     <string name="pm_cheque">មូលប្បទានប័ត្រ</string>
     <string name="pm_creditcard">កាតឥណទាន</string>
     <string name="pm_deposit">ប្រាក់បញ្ញើ</string>
@@ -238,8 +227,6 @@
     <string name="pref_more_info_dialog_title">អាជ្ញាប័ណ្ណ &amp; ក្រេឌីត</string>
     <string name="pref_password_not_equal">ពាក្យសម្ងាត់មិនត្រូវគ្នា</string>
     <string name="pref_perform_share_title">ការចែករំលែកឯកសារនាំចេញ</string>
-    <string name="pref_planning_calendar_create_local">បង្កើតប្រតិទិន​ផែន​ការ​​មូលដ្ឋាន​ថ្មី</string>
-    <string name="pref_planning_calendar_summary">ជ្រើស​រើស​ប្រតិទិន​ ដែល​មាន​ផែនការអនាគត និង​មាន​ប្រតិបត្តិការវិលជុំ ត្រូវបាន​ផ្ទុក</string>
     <string name="pref_protection_delay_seconds_summary">ប៉ុន្មាននាទីមុនពេលកម្មវិធីទំនេរ​ នឹងត្រូវបានចាក់សោដោយពាក្យសម្ងាត់។</string>
     <string name="pref_protection_delay_seconds_title">ពន្យាពេលរហូតដល់ការការពារ</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">ការបញ្ចូលទិន្នន័យពីធាតុក្រាហ្វិក និងផ្លូវកាត់</string>
@@ -270,7 +257,6 @@
     <string name="restore_preferences_failure">ការស្តារចំណង់ចំណូលចិត្តបានបរាជ័យ</string>
     <string name="restore_backup_file_not_found">គ្មាន​ឯកសារ %1$s នៅក្នុងថត \"%2$s\" ទេ</string>
     <string name="restore_preferences_success">ចំណង់ចំណូលចិត្តត្រូវបានស្តារឡើងវិញពីការបម្រុងទុក។</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">ផែនការ %d ត្រូវបានស្ដារឡើងវិញពីការបម្រុងទុក</string>
     <string name="save_transaction_and_new_success">រក្សាទុក​ដោយជោគជ័យ</string>
     <string name="save_transaction_error">មិន​អាច​រក្សា​ទុក​ ប្រតិបត្តិការ​ថ្មី​យក​ចេញ​ពី​ពុម្ព​បានទេ</string>
     <plurals name="save_transaction_from_template_success">
@@ -412,16 +398,12 @@
     <string name="pref_sort_order_last_used">ប្រើប្រាស់ចុងក្រោយ</string>
     <string name="pref_sort_order_custom">តាមបំណង</string>
     <string name="content_description_calculator">ម៉ាស៊ីនគិតលេខ</string>
-    <string name="plan_instance_state_open">បើក</string>
-    <string name="plan_instance_state_cancelled">បានបោះបង់</string>
-    <string name="plan_instance_state_applied">បានអនុវត្ត</string>
     <string name="warning_cannot_move_split_transaction">ប្រតិបត្តិការបំបែកនេះមិនអាចផ្លាស់ទីទៅគណនី %1$s បានទេ ព្រោះមានផ្នែកផ្ទេរប្រាក់ដែលយោងទៅគណនីនេះ។</string>
     <string name="content_description_calculator_delete_button">លុបខ្ទង់ចុងក្រោយ</string>
     <string name="paypal_callback_info">ប្រតិបត្តិការរបស់អ្នកត្រូវបានបញ្ចប់ ហើយបង្កាន់ដៃសម្រាប់ការទិញរបស់អ្នកត្រូវបានផ្ញើតាមអ៊ីម៉ែលទៅអ្នក។ អ្នកអាចចូលទៅក្នុងគណនីរបស់អ្នកនៅ www.paypal.com ដើម្បីមើលព័ត៌មានលម្អិតនៃប្រតិបត្តិការនេះ។</string>
     <string name="search_transfer">ស្វែងរកការផ្ទេរ</string>
     <string name="search_account">ស្វែងរកគណនី</string>
     <string name="search_asset">ស្វែងរកទ្រព្យសកម្ម</string>
-    <string name="pref_sort_order_next_instance">ករណីបន្ទាប់</string>
     <string name="crash_dialog_title">{app_name} បានគាំង</string>
     <string name="crash_dialog_text">កំហុសដែលមិនបានរំពឹងទុកបានកើតឡើងបង្ខំឱ្យកម្មវិធីឈប់។ សូមជួយយើងដោះស្រាយបញ្ហានេះដោយការផ្ញើទិន្នន័យកំហុសមកយើង អ្នកគ្រាន់តែចុច យល់ព្រម។</string>
     <string name="crash_dialog_comment_prompt">អ្នកអាចបន្ថែមមតិយោបល់របស់អ្នកអំពីបញ្ហានៅខាងក្រោម៖</string>
@@ -479,7 +461,6 @@
     <string name="contributed_by">រួមចំណែកដោយ %s</string>
     <string name="pref_sync_notification_summary">ជូនដំណឹងអំពីដំណើរកើនឡើងនៃការធ្វើសមកាលកម្ម</string>
     <string name="pref_debug_logging_summary">សរសេរព័ត៌មានបំបាត់កំហុសទៅក្នុងកំណត់ហេតុប្រព័ន្ធ</string>
-    <string name="plan_custom_recurrence_info">សូមរក្សាទុកពុម្ពជាមុនសិន។ បន្ទាប់មកផែនការនឹងត្រូវបើកនៅក្នុងកម្មវិធីប្រតិទិន ដែលអ្នកអាចកំណត់ការកើតឡើងឡើងវិញតាមបំណង។</string>
     <string name="menu_create_template_for_split">ពុម្ពបំបែកថ្មី</string>
     <string name="progress_validating_licence">កំពុងផ្ទៀងផ្ទាត់អាជ្ញាប័ណ្ណ</string>
     <string name="licence_validation_error_expired">អាជ្ញាប័ណ្ណបានផុតកំណត់</string>
@@ -602,7 +583,6 @@
     <string name="pref_exchange_rate_provider_summary">ជ្រើសរើសអ្នកផ្តល់សេវាដើម្បីទាញយកអត្រាប្តូរប្រាក់</string>
     <string name="pref_exchange_rate_provider_title">អ្នកផ្តល់អត្រាប្តូរប្រាក់</string>
     <string name="pref_exchange_rates_api_key_summary">សូមចុះឈ្មោះគណនីឥតគិតថ្លៃនៅលើ %s ហើយផ្តល់លេខសម្គាល់កម្មវិធី (App ID) របស់អ្នក</string>
-    <string name="pref_plan_executor_time_title">ម៉ោងជូនដំណឹង</string>
     <string name="synchronization_select_folder_dialog_title">ជ្រើសរើសថតដែលមានស្រាប់ ឬបង្កើតថតថ្មី</string>
     <string name="discover_feature_expense_income_switch" tools:ignore="UnusedResources">ប្រើប៊ូតុងប្តូរនេះដើម្បីកត់ត្រាចំណូល។</string>
     <string name="menu_create_budget">ថវិកាថ្មី</string>
@@ -647,7 +627,6 @@
     <string name="dialog_multi_tag_replace">ជំនួសស្លាកដែលមានស្រាប់ដោយស្លាកថ្មី</string>
     <string name="new_tag_hint">បញ្ចូលស្លាកថ្មី</string>
     <string name="language_download_requested">ការបកប្រែសម្រាប់ភាសា %s ត្រូវបានស្នើសុំពី Play Store</string>
-    <string name="pref_planner_manual_time_title">ម៉ោងសម្រាប់ប្រតិបត្តិការដែលបានកំណត់ពេលអនុវត្តដោយផ្ទាល់ដៃ</string>
     <string name="pref_planner_manual_time_noon">ម៉ោង 12 ថ្ងៃត្រង់</string>
     <string name="pref_planner_manual_time_current">ម៉ោងនៃការអនុវត្ត</string>
     <string name="title_scan_receipt_feature">ស្កេនបង្កាន់ដៃ</string>
@@ -670,13 +649,10 @@
     <string name="pref_feature_uninstall_title">ស្នើសុំការលុបមុខងារ និងភាសា</string>
     <string name="pref_feature_uninstall_summary">Play Store ព្យាយាមលុបម៉ូឌុលទាំងនោះនៅផ្ទៃខាងក្រោយ។</string>
     <string name="select_package">សូមជ្រើសរើសកញ្ចប់អាជ្ញាប័ណ្ណ។</string>
-    <string name="advance_exexcution_in_days">ការអនុវត្តមុន (គិតជាថ្ងៃ)</string>
     <string name="warning_balance_account_delete">ប្រសិនបើអ្នកបន្ត ប្រតិបត្តិការស្រុះស្រួលទាំងអស់នៃគណនីនេះនឹងត្រូវលុបចេញពីមូលដ្ឋានទិន្នន័យ ហើយអ្នកនឹងមិនអាចស្ដារពួកវាឡើងវិញបានទេ។</string>
     <string name="confirmation_load_template_discard_data">ទិន្នន័យសំណុំបែបបទដែលមានស្រាប់នឹងត្រូវបោះបង់។</string>
     <string name="pref_clone_with_current_date_title">កាលបរិច្ឆេទនៃប្រតិបត្តិការដែលបានក្លូន</string>
     <string name="template_default_action_without_amount_hint">ពុម្ពដែលគ្មានចំនួនទឹកប្រាក់គួរត្រូវបានរក្សាទុកជាមួយនឹងសកម្មភាពលំនាំដើម \'កែសម្រួល\'</string>
-    <string name="plan_automatic_without_amount_hint">ផែនការដែលគ្មានចំនួនទឹកប្រាក់មិនគួរត្រូវបានរក្សាទុកជាមួយនឹងការអនុវត្តផែនការស្វ័យប្រវត្តិនោះទេ</string>
-    <string name="content_description_edit_plan">កែសម្រួលផែនការនៅក្នុងកម្មវិធីប្រតិទិន</string>
     <string name="menu_save_and_new_content_description">រក្សាទុកទិន្នន័យ ទុកសំណុំបែបបទឱ្យបើកសម្រាប់បង្កើតប្រតិបត្តិការថ្មីដែលមានទិន្នន័យដូចគ្នា។</string>
     <string name="pref_ocr_engine_title">ម៉ាស៊ីនសម្រាប់ការទទួលស្គាល់អត្ថបទ</string>
     <string name="pref_tesseract_language_title">ភាសាសម្រាប់ Tesseract</string>
@@ -688,7 +664,6 @@
     <string name="pref_group_header_show_details_summary">បង្ហាញសរុបលម្អិតនៅក្នុងបឋមកថាថ្នាក់</string>
     <string name="new_balance">សមតុល្យថ្មី</string>
     <string name="single_feature_info">ផ្ទុយទៅវិញ អ្នកអាចទិញការចូលប្រើប្រាស់ដោយគ្មានដែនកំណត់ចំពោះតែមុខងារនេះប៉ុណ្ណោះ។</string>
-    <string name="recurrence_last_day_of_month">ថ្ងៃចុងក្រោយ</string>
     <string name="warning_link_transfer">ប្រតិបត្តិការទាំងពីរដែលបានជ្រើសរើសនឹងត្រូវភ្ជាប់ជាការផ្ទេរ។ ព័ត៌មានភាគីផ្ទុយ និងចំណាត់ថ្នាក់នឹងត្រូវបោះបង់។</string>
     <string name="account_widget_configuration_sum">ប្រភេទនៃសរុបដែលបានបង្ហាញ</string>
     <string name="account_widget_configuration_sum_total">រាប់បញ្ចូលប្រតិបត្តិការនាពេលអនាគត</string>
@@ -698,7 +673,6 @@
     <string name="active_tags">ស្លាកសកម្ម</string>
     <string name="request_for_invoice">ការស្នើសុំវិក្កយបត្រ</string>
     <string name="auto_fill_focus">កំណត់ការផ្តោតលើអ្នកទទួលប្រាក់</string>
-    <string name="warning_plan_instance_delete">ប្រតិបត្តិការដែលបានបង្កើតសម្រាប់កាលបរិច្ឆេទដែលបានជ្រើសរើសនឹងត្រូវលុបចោល។</string>
     <string name="crash_reports_user_info">{app_name} នឹងផ្ញើរបាយការណ៍អំពីការគាំងកម្មវិធីដោយស្វ័យប្រវត្តិទៅកាន់អ្នកអភិវឌ្ឍន៍របស់ខ្លួន ដែលអនុញ្ញាតឱ្យពួកគេដោះស្រាយបញ្ហាកាន់តែរហ័ស។</string>
     <string name="pref_enable_acra">អនុញ្ញាតិ​ផ្ញើ​របាយការណ៍​សាច់​ប្រាក់​ដោយ​ស្វ័យ​ប្រវត្តិ</string>
     <string name="pref_acra_user_email">អ៊ីម៉ែល​អ្នក​ប្រើ​ប្រាស់ ត្រូវ​បាន​ដាក់បញ្ចូល​ក្នុង របាយការណ៍​ជាប់គាំង</string>
@@ -773,11 +747,6 @@
     <string name="template_shortcut">ផ្លូវកាត់ពុម្ព</string>
     <string name="select_template">ជ្រើសរើសពុម្ព</string>
     <string name="add_shortcut">បន្ថែមផ្លូវកាត់</string>
-    <string name="orphaned_transaction_info">ប្រតិបត្តិការមួយត្រូវបានភ្ជាប់ទៅនឹងផែនការសម្រាប់កាលបរិច្ឆេទនេះ ប៉ុន្តែមិនមានករណីព្រឹត្តិការណ៍នៅកាលបរិច្ឆេទនេះទេ។</string>
-    <string name="orphaned_transaction_relink">ប្រតិបត្តិការអាចត្រូវបានភ្ជាប់ឡើងវិញជាមួយករណីព្រឹត្តិការណ៍នៅលើ %s។</string>
-    <string name="orphaned_transaction_align_date">ជម្រើសបន្ថែម កាលបរិច្ឆេទដែលបានរក្សាទុកជាមួយប្រតិបត្តិការអាចត្រូវបានតម្រឹមជាមួយកាលបរិច្ឆេទករណី។</string>
-    <string name="button_relink_keep_date">ភ្ជាប់ឡើងវិញ ប៉ុន្តែរក្សាកាលបរិច្ឆេទ</string>
-    <string name="button_relink_update_date">ភ្ជាប់ឡើងវិញ និងធ្វើបច្ចុប្បន្នភាពកាលបរិច្ឆេទ</string>
     <string name="read_from_data">អានពីទិន្នន័យ</string>
     <string name="merge_parties_strategy_delete">ទិន្នន័យស្ទួនត្រូវបានលុបចោល។</string>
     <string name="merge_parties_strategy_group">ទិន្នន័យស្ទួនត្រូវបានដាក់ជាក្រុមជាអ្នករងគ្រោះ។</string>

@@ -59,10 +59,8 @@
     <string name="import_select_transactions">Operacijos</string>
     <string name="income">Pajamos</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">Taikyti</string>
     <string name="menu_back">Atgal</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">Atsisakyti</string>
     <string name="menu_clone_transaction">Klonuoti</string>
     <string name="menu_create_account">Nauja sąskaita</string>
     <string name="menu_create_template">Naujas šablonas</string>

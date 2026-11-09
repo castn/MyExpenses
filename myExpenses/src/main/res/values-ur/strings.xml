@@ -66,7 +66,6 @@
     <string name="grouping_this_week">اس ہفتے</string>
     <string name="help_heading_whats_new">نیا کیا ہے</string>
     <string name="menu_aggregates">کل</string>
-    <string name="menu_cancel_plan_instance">منسوخ کریں</string>
     <string name="dialog_title_warning_delete_category">زمرہ حذف کریں؟</string>
     <string name="dialog_title_warning_delete_account">اکاؤنٹ حذف کریں؟</string>
     <string name="dialog_title_warning_delete_template">ٹیمپلیٹ کو حذف کریں؟</string>
@@ -90,7 +89,6 @@
     <string name="licence_validation_success">لائسنس کلید کی کامیابی سے توثیق ہو گئی:</string>
     <string name="licence_validation_premium">پریمیم خصوصیات کو غیر مقفل کردیا گیا ہے۔</string>
     <string name="menu_back">پیچھے</string>
-    <string name="menu_apply_template">لگائیں</string>
     <string name="menu_backup">بیک اپ</string>
     <string name="menu_balance">بیلنس اکاؤنٹ</string>
     <string name="menu_clone_transaction">کلون</string>
@@ -100,7 +98,6 @@
     <string name="menu_create_instance_save">اپلائی کریں اور محفوظ کریں</string>
     <string name="menu_create_main_cat">نیا مرکزی زمر</string>
     <string name="menu_edit_party">پارٹی میں ترمیم کریں</string>
-    <string name="menu_edit_plan_instance">سنگل پلان کی موجودگی میں ترمیم کریں</string>
     <string name="menu_edit_split">تقسیم کے لین دین میں ترمیم کریں۔</string>
     <string name="menu_edit_transfer">منتقلی میں ترمیم کریں</string>
     <string name="menu_edit_template">ٹیمپلیٹ میں ترمیم کریں</string>
@@ -132,7 +129,6 @@
     <string name="menu_edit_cat">زمرہ میں ترمیم کریں</string>
     <string name="menu_edit_method">ادائیگی کے طریقہ کار میں ترمیم کریں</string>
     <string name="menu_invert_transfer">الٹا</string>
-    <string name="menu_manage_plans">ٹیمپلیٹس اور منصوبے</string>
     <string name="menu_reset">ایکسپورٹ اور ری سیٹ کریں</string>
     <string name="menu_reset_all">سب کو ایکسپورٹ اور ری سیٹ کریں</string>
     <string name="menu_reset_plan_instance">دوبارہ ترتیب دیں</string>
@@ -148,7 +144,6 @@
     <string name="no_expenses">ابھی تک کوئی اخراجات نہیں!</string>
     <string name="no_exportable_expenses">ایسا کوئی لین دین نہیں ہے جو ابھی تک برآمد نہیں کیا گیا ہے.</string>
     <string name="no_filemanager_installed">کوئی فائل مینیجر انسٹال نہیں ہے</string>
-    <string name="no_calendar_app_installed">کیلنڈر ایونٹ میں ترمیم کرنے کے لیے کوئی ایپ نہیں ملی.</string>
     <string name="image_capture_not_installed">تصویر لینے کے لیے کوئی ایپ نہیں ملی.</string>
     <string name="no_mapped_transactions">اس مدت کے دوران کسی بھی لین دین کو زمروں میں نقشہ نہیں بنایا گیا ہے.</string>
     <string name="no_methods">ادائیگی کے طریقے نہیں ہیں.</string>
@@ -177,13 +172,7 @@
     <string name="payer">ادا کرنے والا</string>
     <string name="payer_or_payee">دوسرا فریق</string>
     <string name="plan">منصوبہ</string>
-    <string name="plan_automatic">خودکار</string>
     <string name="plan_calendar_name">{app_name} منصوبہ ساز</string>
-    <string name="planner_notification_channel_name">منصوبہ ساز</string>
-    <string name="plan_event_deleted">اس سانچے سے وابستہ منصوبہ کیلنڈر سے حذف کر دیا گیا ہے.</string>
-    <string name="plan_execution_canceled">پلان پر عمل درآمد منسوخ کر دیا گیا</string>
-    <string name="planner_create_calendar_failure">مقامی منصوبہ ساز کیلنڈر بنانے سے قاصر</string>
-    <string name="planner_create_calendar_success">مقامی منصوبہ ساز کیلنڈر کامیابی کے ساتھ بنایا گیا</string>
     <string name="pm_cheque">چیک</string>
     <string name="pm_creditcard">کریڈٹ کارڈ</string>
     <string name="pm_deposit">جمع</string>
@@ -215,7 +204,6 @@
     <string name="pref_manage_sync_backends_summary">اکاؤنٹس (%s) کی مطابقت پذیری کے لیے بیک اینڈ شامل کریں.</string>
     <string name="pref_more_info_dialog_title">لائسنس اور کریڈٹس</string>
     <string name="pref_password_not_equal">پاس ورڈ میچ نہیں کرتے</string>
-    <string name="pref_planning_calendar_create_local">نیا مقامی منصوبہ بندی کیلنڈر بنائیں</string>
     <string name="pref_protection_delay_seconds_summary">ایپ کو پاس ورڈ کے ذریعے لاک کر دیا جائے گا اس سے پہلے کے بیکار سیکنڈ.</string>
     <string name="pref_protection_delay_seconds_title">تحفظ تک تاخیر</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">وجیٹس اور شارٹ کٹس سے ڈیٹا انٹری</string>
@@ -243,7 +231,6 @@
     <string name="reference_number">حوالہ نمبر</string>
     <string name="pref_protection_enable_data_entry_from_widget_summary_on">پاس ورڈ کے بغیر اجازت ہے.</string>
     <string name="pref_news_title">خبریں</string>
-    <string name="pref_planning_calendar_summary">وہ کیلنڈر منتخب کریں جہاں مستقبل کے منصوبے اور بار بار چلنے والے لین دین کو محفوظ کیا جاتا ہے</string>
     <string name="pref_perform_share_title">برآمدات اور بیک اپ کا اشتراک کریں</string>
     <string name="pref_share_target_summary">اگر آپ مناسب ایپس (ای میل، ڈراپ باکس، گوگل ڈاکس، …) میں سے کسی ایک کا انتخاب کرنا چاہتے ہیں تو خالی چھوڑ دیں، یا معاون سکیموں میں سے کسی ایک میں URL فراہم کریں</string>
     <string name="pref_manage_methods_summary">ادائیگی کے طریقے بنائیں اور ان میں ترمیم کریں اور انہیں اکاؤنٹ کی اقسام کے ساتھ منسلک کریں.</string>
@@ -254,7 +241,6 @@
     <string name="select_payee">ادا کنندہ / وصول کنندہ کو منتخب کریں</string>
     <string name="restore_backup_file_not_found">آرکائیو \"%2$s\" میں کوئی فائل %1$s نہیں ملی</string>
     <string name="restore_preferences_success">ترجیحات کو بیک اپ سے بحال کر دیا گیا ہے.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d پلان بیک اپ سے بحال کر دیے گئے ہیں</string>
     <string name="save_transaction_and_new_success">کامیابی کے ساتھ محفوظ ہو گیا</string>
     <string name="save_transaction_error">ٹیمپلیٹ سے نیا ٹرانزیکشن محفوظ نہیں کیا جا سکا.</string>
     <plurals name="save_transaction_from_template_success">
@@ -379,7 +365,6 @@
     <string name="button_request_calendar_access" tools:ignore="UnusedResources">رسائی فراہم کریں</string>
     <string name="content_description_calculator">کیلکولیٹر</string>
     <string name="search_transfer">منتقلی کی تلاش کریں</string>
-    <string name="pref_sort_order_next_instance">اگلی مثال</string>
     <string name="crash_dialog_title">{app_name} کریش ہو گیا ہے۔</string>
     <string name="crash_dialog_text">ایپلیکیشن کو رکنے پر مجبور کرنے میں ایک غیر متوقع خرابی پیش آگئی۔ براہ کرم ہمیں غلطی کا ڈیٹا بھیج کر اسے ٹھیک کرنے میں ہماری مدد کریں، آپ کو بس ٹھیک پر کلک کرنا ہے.</string>
     <string name="crash_dialog_comment_prompt">آپ ذیل میں مسئلہ کے بارے میں اپنے تبصرے شامل کر سکتے ہیں:</string>
@@ -466,7 +451,6 @@
     <string name="pref_exchange_rate_provider_summary">ایکسچینج ریٹ ڈاؤن لوڈ کرنے کے لیے فراہم کنندہ کو منتخب کریں</string>
     <string name="pref_exchange_rate_provider_title">ایکسچینج ریٹ فراہم کرنے والا</string>
     <string name="pref_exchange_rates_api_key_summary">براہ کرم %s پر ایک مفت اکاؤنٹ رجسٹر کریں اور اپنی App ID فراہم کریں</string>
-    <string name="pref_plan_executor_time_title">اطلاع کا وقت</string>
     <string name="synchronization_select_folder_dialog_title">ایک موجودہ فولڈر منتخب کریں یا نیا بنائیں</string>
     <string name="budget_onetime">ایک بار</string>
     <string name="dialog_multi_tag_append">موجودہ ٹیگز میں نئے ٹیگز شامل کریں</string>
@@ -499,12 +483,9 @@
     <string name="pref_feature_uninstall_title">خصوصیات اور زبانوں کی انسٹالیشن کی درخواست کریں</string>
     <string name="pref_feature_uninstall_summary">Play Store آخر کار پس منظر میں ان ماڈیولز کو ہٹانے کی کوشش کرتا ہے.</string>
     <string name="select_package">براہ کرم لائسنس پیکج منتخب کریں.</string>
-    <string name="advance_exexcution_in_days">پیشگی عملدرآمد (دنوں میں)</string>
     <string name="warning_balance_account_delete">اگر آپ آگے بڑھتے ہیں، تو اس اکاؤنٹ کے تمام مصالحت شدہ لین دین کو ڈیٹا بیس سے حذف کر دیا جائے گا اور آپ انہیں بحال نہیں کر سکیں گے.</string>
     <string name="pref_clone_with_current_date_title">کلون شدہ لین دین کی تاریخ</string>
     <string name="template_default_action_without_amount_hint">رقم کے بغیر ٹیمپلیٹ کو ڈیفالٹ ایکشن \'ترمیم\' کے ساتھ محفوظ کیا جانا چاہیے</string>
-    <string name="plan_automatic_without_amount_hint">بغیر رقم کے پلان کو خودکار پلان پر عمل درآمد کے ساتھ محفوظ نہیں کیا جانا چاہیے</string>
-    <string name="content_description_edit_plan">کیلنڈر ایپ میں پلان میں ترمیم کریں</string>
     <string name="pref_ocr_engine_title">متن کی شناخت کے لیے انجن</string>
     <string name="pref_tesseract_language_title">ٹیسریکٹ کے لیے زبان</string>
     <string name="tesseract_download_confirmation">کیا آپ %s کے لیے ٹیکسٹ ریکگنیشن ڈیٹا ڈاؤن لوڈ کرنا چاہتے ہیں؟</string>
@@ -557,18 +538,14 @@
     <string name="pref_sort_order_custom">اپنی مرضی کے مطابق</string>
     <string name="menu_move">اقدام</string>
     <string name="dialog_title_select_target">ہدف منتخب کریں</string>
-    <string name="plan_instance_state_open">کھلا</string>
-    <string name="plan_instance_state_applied">لاگو</string>
     <string name="warning_cannot_move_split_transaction">اس تقسیم شدہ ٹرانزیکشن کو اکاؤنٹ %1$s میں منتقل نہیں کیا جا سکتا ہے کیونکہ اس اکاؤنٹ کا حوالہ دینے والے ٹرانسفر پارٹس ہیں.</string>
     <string name="content_description_calculator_delete_button">آخری ہندسہ حذف کریں</string>
-    <string name="plan_instance_state_cancelled">منسوخ</string>
     <string name="no_sync_backends">کوئی مطابقت پذیری بیک اینڈ نہیں ہے</string>
     <string name="validate_error_not_empty">خالی نہیں ہونا چاہیے</string>
     <string name="menu_sync_unlink">تماشہ بند کرو</string>
     <string name="menu_sync_link">مطابقت پذیری شروع کریں</string>
     <string name="menu_create_sync_backend">نیا سنکرونائزیشن پسدید</string>
     <string name="pref_debug_logging_summary">سسٹم لاگ میں ڈیبگنگ کی معلومات لکھیں</string>
-    <string name="plan_custom_recurrence_info">براہ کرم پہلے ٹیمپلیٹ کو محفوظ کریں. اس کے بعد منصوبہ کیلنڈر ایپ میں کھولا جائے گا، جہاں آپ حسب ضرورت تکرار سیٹ کر سکتے ہیں.</string>
     <string name="progress_validating_licence">لائسنس کی توثیق کرنا</string>
     <string name="licence_validation_error_expired">لائسنس کی میعاد ختم ہوگئی</string>
     <string name="licence_validation_error_device_limit_exceeded">ڈیوائس کی حد سے تجاوز کر گیا. براہ کرم کسی دوسرے آلے سے لائسنس ہٹا دیں.</string>
@@ -640,7 +617,6 @@
     <string name="pref_planner_manual_time_current">درخواست کا وقت</string>
     <string name="title_scan_receipt_feature">اسکین رسید</string>
     <string name="feature_download_requested">پلے اسٹور سے فیچر %s کی درخواست کی گئی ہے.</string>
-    <string name="pref_planner_manual_time_title">دستی طور پر لاگو طے شدہ لین دین کا وقت</string>
     <string name="pref_planner_manual_time_noon">12 بجے (دوپہر)</string>
     <string name="feature_downloaded">فیچر %s انسٹال ہو گیا ہے.</string>
     <string name="pref_ocr_total_indicators_title">کل رقم کے اشارے</string>
@@ -648,12 +624,10 @@
     <string name="pref_group_header_show_details_summary">گروپ ہیڈر میں تفصیلی رقم دکھائیں</string>
     <string name="new_balance">نیا بیلنس</string>
     <string name="single_feature_info">متبادل طور پر آپ صرف اس خصوصیت تک لامحدود رسائی خرید سکتے ہیں.</string>
-    <string name="recurrence_last_day_of_month">آخری دن</string>
     <string name="download_completed">ڈاؤن لوڈ (%s) مکمل ہو گیا ہے.</string>
     <string name="ocr_recognition_info">%s کے ساتھ ٹیکسٹ ریکگنیشن چل رہا ہے</string>
     <string name="ocr_download_info">متن کی شناخت کی صلاحیت ایک بیرونی ایپلیکیشن کے ذریعہ فراہم کی جاتی ہے.</string>
     <string name="warning_unencrypted_backup">جب کہ آپ کا ڈیٹا اس ڈیوائس پر غیر مجاز رسائی سے محفوظ ہے، بیک اپ انکرپشن کے بغیر بنائے جاتے ہیں، جب تک کہ آپ %s کو کنفیگر نہ کریں.</string>
-    <string name="warning_plan_instance_delete">منتخب تاریخ کے لیے تخلیق کردہ لین دین کو حذف کر دیا جائے گا.</string>
     <string name="merge_parties_select">ضم شدہ پارٹی کا نام منتخب کریں</string>
     <string name="active_tags">ایکٹو ٹیگز</string>
     <string name="request_for_invoice">انوائس کی درخواست</string>

@@ -108,13 +108,11 @@
     <string name="licence_validation_premium">Premium ezaugarriak desblokeatu dira.</string>
     <string name="menu_aggregates">Guztira</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">Aplikatu</string>
     <string name="menu_back">Atzera</string>
     <string name="menu_backup">Babeskopia</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">Kontuaren saldoa</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">Utzi</string>
     <string name="menu_clone_transaction">Klonatu</string>
     <string name="menu_contrib">Egin kontribuzioa</string>
     <string name="menu_create_account">Kontu berria</string>
@@ -140,7 +138,6 @@
     <string name="menu_edit_cat">Editatu kategoria</string>
     <string name="menu_edit_method">Editatu ordainketa metodoa</string>
     <string name="menu_edit_party">Editatu onuradun/ordaintzailea</string>
-    <string name="menu_edit_plan_instance">Editatu planaren gertakari bakarra</string>
     <string name="menu_edit_split">Editatu zatiketa transakzioa</string>
     <string name="menu_edit_split_part_category">Editatu kategoriaren banaketaren zatia</string>
     <string name="menu_edit_split_part_transfer">Editatu transferentziaren banaketaren zatia</string>
@@ -153,7 +150,6 @@
     <string name="menu_help">Laguntza</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">Alderantzikatu</string>
-    <string name="menu_manage_plans">Txantiloiak eta planak</string>
     <string name="menu_reset">Esportatu eta berrezarri</string>
     <string name="menu_reset_all">Esportatu eta berrezarri guztiak </string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -170,7 +166,6 @@
     <string name="no_expenses">Ez dago gasturik oraindik!</string>
     <string name="no_exportable_expenses">Ez dago jada esportatu ez den transakziorik.</string>
     <string name="no_filemanager_installed">Ez dago fitxategi kudeatzailerik instalatuta</string>
-    <string name="no_calendar_app_installed">Ez da aplikaziorik aurkitu egutegiko gertaera aldatzeko.</string>
     <string name="no_mapped_transactions">Ez da transakziorik lotu kategorietara denbora tarte honetan.</string>
     <string name="no_methods">Ordainketa metodorik ez.</string>
     <string name="no_parties">Onuradun/ordaintzailerik ez</string>
@@ -200,15 +195,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">Plana</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">automatikoa</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">{app_name} planifikatzailea</string>
-    <string name="planner_notification_channel_name">Planifikatzailea</string>
-    <string name="plan_event_deleted">Txantiloi honi lotutako plana egutegitik ezabatu da.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">Planaren exekuzioa bertan behera utzi da</string>
-    <string name="planner_create_calendar_failure">Ezin izan da planifikatzailearen tokiko egutegia sortu</string>
-    <string name="planner_create_calendar_success">Planifikatzailearen tokiko egutegia ondo sortu da</string>
     <!-- payment methods -->
     <string name="pm_cheque">Txekea</string>
     <string name="pm_creditcard">Kreditu txartela</string>
@@ -247,8 +236,6 @@
     <string name="pref_password_not_equal">Pasahitzak ez datoz bat</string>
     <string name="pref_perform_share_title">Elkarbanatu esportazioak eta babeskopiak</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">Sortu tokiko planifikazio egutegi berria</string>
-    <string name="pref_planning_calendar_summary">Aukeratu etorkizuneko gastuak eta gastu errepikakorrak gordetzeko egutegia</string>
     <string name="pref_protection_delay_seconds_summary">Itxaronaldi segundoak aplikazioa pasahitz bidez blokeatu aurretik.</string>
     <string name="pref_protection_delay_seconds_title">Babes aurreko itxaronaldia</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">Datuen sarrera trepeta eta laster-bideetatik</string>
@@ -280,7 +267,6 @@
     <string name="restore_preferences_failure">Huts egin du hobespenak berreskuratzean</string>
     <string name="restore_backup_file_not_found">Ez da %1$s fitxategia aurkitu \"%2$s\" artxiboan</string>
     <string name="restore_preferences_success">Hobespenak berreskuratu dira babeskopiatik.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d plan berreskuratu dira babeskopiatik</string>
     <string name="save_transaction_and_new_success">Ondo gorde da</string>
     <string name="save_transaction_error">Ezin izan da transakzio berria gorde txantiloitik</string>
     <plurals name="save_transaction_from_template_success">
@@ -433,17 +419,13 @@
     <string name="pref_sort_order_custom">Pertsonalizatua</string>
     <string name="content_description_calculator">Kalkulagailua</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">ireki</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">ezeztatuta</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">aplikatuta</string>
     <string name="warning_cannot_move_split_transaction">Banatutako transakzio hau ezin da %1$s kontura mugitu kontu honi erreferentzia egiten dioten transferentzia parteak daudelako.</string>
     <string name="content_description_calculator_delete_button">Ezabatu azken digitoa</string>
     <string name="paypal_callback_info">Zure transakzioa burutu da, eta zure erosketaren egiaztagiri bat bidali da zure e-postara. Zure kontura sartu zaitezke www.paypal.com helbidean eta transakzioaren xehetasunak ikusi.</string>
     <string name="search_transfer">Bilatu transferentzia</string>
     <!-- Sort plans (recurring transactions) by the next instance  -->
-    <string name="pref_sort_order_next_instance">Hurrengo gertaera</string>
     <string name="crash_dialog_title">{app_name} kraskatu da</string>
     <string name="crash_dialog_text">Ustekabeko errore bat gertatu da eta aplikazioa itxi behar izan da. Lagundu gaitzazu arazoa konpontzen errorearen datuak bidaliz, egin behar duzun guztia Ados sakatzea da.</string>
     <string name="crash_dialog_comment_prompt">Zure iruzkinak gehitu ditzakezu hemen:</string>
@@ -498,7 +480,6 @@
     <string name="contributed_by">%s-(r)en laguntzaz</string>
     <string name="pref_sync_notification_summary">Jakinarazi sinkronizazioaren aurreratzeari buruz</string>
     <string name="pref_debug_logging_summary">Idatzi arazketa informazioa sistemaren egunkarian</string>
-    <string name="plan_custom_recurrence_info">Gorde txantiloia aurrena. plana egutegi aplikazioan irekiko da, errepikatze pertsonalizatu bat ezartzen duzunean. </string>
     <string name="menu_create_template_for_split">Banaketa txantiloi berria</string>
     <string name="progress_validating_licence">Lizentzia balioesten</string>
     <string name="licence_validation_error_expired">Lizentzia iraungita</string>
@@ -567,7 +548,6 @@
     <string name="price_history">Prezioen historia</string>
     <string name="pref_account_list_display_configuration_title">Kontuen zerrenda</string>
     <string name="menu_templates">Txantiloiak</string>
-    <string name="pref_plan_executor_time_title">Jakinarazpen-ordua</string>
     <string name="important_upgrade_information_heading">Informazio garrantzitsua</string>
     <string name="dialog_title_warning_delete_tag">Etiketa ezabatu?</string>
     <plurals name="warning_delete_tag">

@@ -15,84 +15,10 @@
      android-source/packages/apps/Calendar/res/values
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="does_not_repeat">"එක්-වරක් වන සිදුවීමක්"</string>
-    <string name="endByDate">"; <xliff:g id="DATE">%s</xliff:g> තෙක්"</string>
-    <plurals name="endByCount">
-        <item quantity="one">"; එක් වරක් සඳහා"</item>
-        <item quantity="other">"; වාර <xliff:g id="NUMBER">%d</xliff:g> සඳහා"</item>
-    </plurals>
-    <plurals name="daily">
-        <item quantity="one">"දිනපතා"</item>
-        <item quantity="other">"සෑම දින <xliff:g id="NUMBER">%d</xliff:g> කට"</item>
-    </plurals>
-    <string name="every_weekday">"සෑම සතියේ දිනකම (සඳු–සිකු)"</string>
-    <plurals name="weekly">
-        <item quantity="one">"සතිපතාම <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g> දින"</item>
-        <item quantity="other">"සෑම සති <xliff:g id="NUMBER">%1$d</xliff:g> කට වරක් <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g> දින"</item>
-    </plurals>
-    <plurals name="monthly">
-        <item quantity="one">මාසිකව</item>
-        <item quantity="other">"සෑම මාස <xliff:g id="COUNT">%d</xliff:g> කට"</item>
-    </plurals>
-    <plurals name="yearly">
-        <item quantity="one">වාර්ෂිකව</item>
-        <item quantity="other">"සෑම වසර <xliff:g id="COUNT">%d</xliff:g> කට"</item>
-    </plurals>
     <string name="monthly_plain">"මාසිකව"</string>
     <string name="yearly_plain">"වාර්ෂිකව"</string>
-    <string name="monthly_on_day">" (<xliff:g id="DAY_OF_MONTH">%s</xliff:g> දින)"</string>
-    <string name="yearly_on_day">" (<xliff:g id="DATES">%s</xliff:g> දින)"</string>
 
     <string name="daily_plain">දිනපතා</string>
     <string name="weekly_plain">සතිපතාම</string>
 
-    <string-array name="repeat_by_nth_sun">
-        <item>"සෑම පළමු ඉරිදාවකම"</item>
-        <item>"සෑම දෙවන ඉරිදාවකම"</item>
-        <item>"සෑම තෙවන ඉරිදාවකම"</item>
-        <item>"සෑම සිව්වන ඉරිදාවකම"</item>
-        <item>"සෑම අවසන් ඉරිදාවකම"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_mon">
-        <item>"සෑම පළමු සඳුදාවකම"</item>
-        <item>"සෑම දෙවන සඳුදාවකම"</item>
-        <item>"සෑම තෙවන සඳුදාවකම"</item>
-        <item>"සෑම සිව්වන සඳුදාවකම"</item>
-        <item>"සෑම අවසන් සඳුදාවකම"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_tues">
-        <item>"සෑම පළමු අඟහරුවාදාකම"</item>
-        <item>"සෑම දෙවන අඟහරුවාදාකම"</item>
-        <item>"සෑම තෙවන අඟහරුවාදාකම"</item>
-        <item>"සෑම සිව්වන අඟහරුවාදාකම"</item>
-        <item>"සෑම අවසන් අඟහරුවාදාකම"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_wed">
-        <item>"සෑම පළමු බදාදාවකම"</item>
-        <item>"සෑම දෙවන බදාදාවකම"</item>
-        <item>"සෑම තෙවන බදාදාවකම"</item>
-        <item>"සෑම සිව්වන බදාදාවකම"</item>
-        <item>"සෑම අවසන් බදාදාවකම"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_thurs">
-        <item>"සෑම පළමු බ්‍රහස්පතින්දාවකම"</item>
-        <item>"සෑම දෙවන බ්‍රහස්පතින්දාවකම"</item>
-        <item>"සෑම තෙවන බ්‍රහස්පතින්දාවකම"</item>
-        <item>"සෑම සිව්වන බ්‍රහස්පතින්දාවකම"</item>
-        <item>"සෑම අවසන් බ්‍රහස්පතින්දාවකම"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_fri">
-        <item>"සෑම පළමු සිකුරාදාවකම"</item>
-        <item>"සෑම දෙවන සිකුරාදාවකම"</item>
-        <item>"සෑම තෙවන සිකුරාදාවකම"</item>
-        <item>"සෑම සිව්වන සිකුරාදාවකම"</item>
-        <item>"සෑම අවසන් සිකුරාදාවකම"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_sat">
-        <item>"සෑම පළමු සෙනසුරාදාවකම"</item>
-        <item>"සෑම දෙවන සෙනසුරාදාවකම"</item>
-        <item>"සෑම තෙවන සෙනසුරාදාවකම"</item>
-        <item>"සෑම සිව්වන සෙනසුරාදාවකම"</item>
-        <item>"සෑම අවසන් සෙනසුරාදාවකම"</item>
-    </string-array>
 </resources>

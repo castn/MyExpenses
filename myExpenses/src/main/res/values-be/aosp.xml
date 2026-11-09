@@ -41,7 +41,6 @@
     <string name="response_no">Не</string>
     <string name="show_all">Паказаць усё</string>
     <string name="add_widget">Дадаць віджэт</string>
-    <string name="calendar">Каляндар</string>
     <string name="setup">"Наладзіць"</string>
     <string name="customize">Наладзіць</string>
     <string name="compact">кампактная</string>
@@ -148,8 +147,6 @@
     <string name="options">"Параметры"</string>
     <string name="actions">"Дзеянні"</string>
     <string name="action_download">Загрузіць</string>
-    <string name="calendar_delete">Выдаліць каляндар</string>
-    <string name="preferences_calendar_delete_message">Вы сапраўды хочаце выдаліць гэты каляндар?</string>
     <string name="cannot_be_undone">Гэта дзеянне нельга адмяніць.</string>
     <string name="header_footer">Загаловак</string>
     <string name="top_left">Уверх і налева</string>

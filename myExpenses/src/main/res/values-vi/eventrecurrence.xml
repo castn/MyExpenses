@@ -13,83 +13,9 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="does_not_repeat">"Sự kiện diễn ra một lần"</string>
-    <string name="endByDate">"; cho đến <xliff:g id="DATE">%s</xliff:g>"</string>
-    <plurals name="endByCount">
-        <item quantity="one">"; một lần"</item>
-        <item quantity="other">"; <xliff:g id="NUMBER">%d</xliff:g> lần"</item>
-    </plurals>
-    <plurals name="daily">
-        <item quantity="one">"Hàng ngày"</item>
-        <item quantity="other">"Định kỳ <xliff:g id="NUMBER">%d</xliff:g> ngày"</item>
-    </plurals>
-    <string name="every_weekday">"Ngày trong tuần (Thứ Hai - Thứ Sáu)"</string>
-    <plurals name="weekly">
-        <item quantity="one">"Hàng tuần vào <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>"</item>
-        <item quantity="other">"Định kỳ <xliff:g id="NUMBER">%1$d</xliff:g> tuần vào <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>"</item>
-    </plurals>
-    <plurals name="monthly">
-        <item quantity="one">Hàng tháng</item>
-        <item quantity="other">Cứ <xliff:g id="COUNT">%d</xliff:g> tháng một lần</item>
-    </plurals>
-    <plurals name="yearly">
-        <item quantity="one">Hàng năm</item>
-        <item quantity="other">Cứ <xliff:g id="COUNT">%d</xliff:g> năm một lần</item>
-    </plurals>
     <string name="monthly_plain">"Hàng tháng"</string>
-    <string name="monthly_on_day">" (vào ngày <xliff:g id="DAY_OF_MONTH">%s</xliff:g>)"</string>
-    <string name="yearly_on_day">" (vào <xliff:g id="DATES">%s</xliff:g>)"</string>
     <string name="yearly_plain">Hàng năm</string>
     <string name="daily_plain">Hàng ngày</string>
     <string name="weekly_plain">Hàng tuần</string>
 
-    <string-array name="repeat_by_nth_sun">
-        <item>"vào mọi Chủ Nhật đầu tiên"</item>
-        <item>"vào mọi Chủ Nhật thứ hai"</item>
-        <item>"vào mọi Chủ Nhật thứ ba"</item>
-        <item>"vào mọi Chủ Nhật thứ tư"</item>
-        <item>"vào mọi Chủ Nhật cuối cùng"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_mon">
-        <item>"vào mọi Thứ Hai đầu tiên"</item>
-        <item>"vào mọi Thứ Hai thứ hai"</item>
-        <item>"vào mọi Thứ Hai thứ ba"</item>
-        <item>"vào mọi Thứ Hai thứ tư"</item>
-        <item>"vào mọi Thứ Hai cuối cùng"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_tues">
-        <item>"vào mọi Thứ Ba đầu tiên"</item>
-        <item>"vào mọi Thứ Ba thứ hai"</item>
-        <item>"vào mọi Thứ Ba thứ ba"</item>
-        <item>"vào mọi Thứ Ba thứ tư"</item>
-        <item>"vào mọi Thứ Ba cuối cùng"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_wed">
-        <item>"vào mọi Thứ Tư đầu tiên"</item>
-        <item>"vào mọi Thứ Tư thứ hai"</item>
-        <item>"vào mọi Thứ Tư thứ ba"</item>
-        <item>"vào mọi Thứ Tư thứ tư"</item>
-        <item>"vào mọi Thứ Tư cuối cùng"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_thurs">
-        <item>"vào mọi Thứ Năm đầu tiên"</item>
-        <item>"vào mọi Thứ Năm thứ hai"</item>
-        <item>"vào mọi Thứ Năm thứ ba"</item>
-        <item>"vào mọi Thứ Năm thứ tư"</item>
-        <item>"vào mọi Thứ Năm cuối cùng"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_fri">
-        <item>"vào mọi Thứ Sáu đầu tiên"</item>
-        <item>"vào mọi Thứ Sáu thứ hai"</item>
-        <item>"vào mọi Thứ Sáu thứ ba"</item>
-        <item>"vào mọi Thứ Sáu thứ tư"</item>
-        <item>"vào mọi Thứ Sáu cuối cùng"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_sat">
-        <item>"vào mọi Thứ Bảy đầu tiên"</item>
-        <item>"vào mọi Thứ Bảy thứ hai"</item>
-        <item>"vào mọi Thứ Bảy thứ ba"</item>
-        <item>"vào mọi Thứ Bảy thứ tư"</item>
-        <item>"vào mọi Thứ Bảy cuối cùng"</item>
-    </string-array>
 </resources>

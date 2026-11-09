@@ -87,13 +87,11 @@
     <string name="licence_validation_success">Licencni ključ je uspješno provjeren:</string>
     <string name="menu_aggregates">Ukupno</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">Primijeni</string>
     <string name="menu_back">Natrag</string>
     <string name="menu_backup">Sigurnosna kopija</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">Uskladi račun</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">Odustani</string>
     <string name="menu_clone_transaction">Dupliciraj</string>
     <string name="menu_contrib">Doprinesi</string>
     <string name="menu_create_account">Novi račun</string>
@@ -119,7 +117,6 @@
     <string name="menu_edit_cat">Uredi kategoriju</string>
     <string name="menu_edit_method">Uredi način plaćanja</string>
     <string name="menu_edit_party">Uredi sudionika</string>
-    <string name="menu_edit_plan_instance">Uredi planirano pojavljivanje</string>
     <string name="menu_edit_split">Uredi višedjelnu transakciju</string>
     <string name="menu_edit_split_part_category">Uredi kategoriju za dijelove višedjelne transakcije</string>
     <string name="menu_edit_split_part_transfer">Uredi dio transakcije</string>
@@ -132,7 +129,6 @@
     <string name="menu_help">Pomoć</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">Preokreni smjer</string>
-    <string name="menu_manage_plans">Predlošci i planovi</string>
     <string name="menu_reset">Izvezi i obnovi</string>
     <string name="menu_reset_all">Izvezi i obnovi sve</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -177,15 +173,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">Plan</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">automatski</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">{app_name} planer</string>
-    <string name="planner_notification_channel_name">Planer</string>
-    <string name="plan_event_deleted">Plan povezan s ovim predloškom je izbrisan iz kalendara.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">Izvedba plana je prekinuta</string>
-    <string name="planner_create_calendar_failure">Neuspjela izrada lokalnog kalendara planova</string>
-    <string name="planner_create_calendar_success">Lokalni kalendar planova uspješno stvoren</string>
     <!-- payment methods -->
     <string name="pm_cheque">Ček</string>
     <string name="pm_creditcard">Kreditna kartica</string>
@@ -220,8 +210,6 @@
     <string name="pref_password_not_equal">Lozinke se ne poklapaju</string>
     <string name="pref_perform_share_title">Dijeli izvoze i sigurnosne kopije</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">Stvori novi kalendar planiranja</string>
-    <string name="pref_planning_calendar_summary">Odaberi kalendar gdje se spremaju planovi za buduće i ponavljajuće transakcije</string>
     <string name="pref_protection_delay_seconds_summary">Vrijeme mirovanja u sekundama, nakon kojeg se program zaključava te zahtijeva lozinku za ponovno otključavanje.</string>
     <string name="pref_protection_delay_seconds_title">Odgoda do zaštite</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">Unos podataka putem widgeta i prečaci</string>
@@ -253,7 +241,6 @@
     <string name="restore_preferences_failure">Obnavljanje osobnih postavaka nije uspjelo</string>
     <string name="restore_backup_file_not_found">U arhivi „%2$s” nije pronađena nijedna datoteka %1$s</string>
     <string name="restore_preferences_success">Osobne postavke su obnovljene iz sigurnosne kopije.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d planovi su obnovljeni iz sigurnosne kopije</string>
     <string name="save_transaction_and_new_success">Uspješno spremljeno</string>
     <string name="save_transaction_error">Nije bilo moguće spremiti novu transakciju iz predloška.</string>
     <plurals name="save_transaction_from_template_success">
@@ -425,7 +412,6 @@
     <string name="licence_validation_error_expired">Licenca je istekla</string>
     <string name="progress_validating_licence">Provjeravanje valjanosti licence</string>
     <string name="menu_create_template_for_split">Predložak za novu višedjelnu transakciju</string>
-    <string name="plan_custom_recurrence_info">Najprije spremi predložak. Nakon toga će se otvoriti plan u programu kalendara gdje možeš postaviti prilagođeno ponavljanje.</string>
     <string name="pref_debug_logging_summary">Piši podatke o otklanjanju grešaka u dnevnik sustava</string>
     <string name="pref_sync_notification_summary">Obavijesti o napretku sinkronizacije</string>
     <string name="contributed_by">Doprinositelj: %s</string>
@@ -478,14 +464,10 @@
     <string name="synchronization_none">Bez sinkronizacije</string>
     <string name="synchronization">Sinkronizacija</string>
     <string name="crash_dialog_comment_prompt">Niže dolje dodaj svoje komentare o problemu:</string>
-    <string name="pref_sort_order_next_instance">Sljedeći slućaj</string>
     <string name="search_transfer">Traži prijenos</string>
     <string name="paypal_callback_info">Tvoja je transakcija gotova, a račun za kupnju poslan ti je putem emaila. Za prikaz detalja ove transakcije prijavi se na svoj račun na www.paypal.com.</string>
     <string name="content_description_calculator_delete_button">Izbriši zadnju znamenku</string>
     <string name="warning_cannot_move_split_transaction">Ova se višedjelna transakcija ne može premjestiti na račun %1$s, jer postoje dijelovi prijenosa koji se odnose na ovaj račun.</string>
-    <string name="plan_instance_state_applied">primijenjeno</string>
-    <string name="plan_instance_state_cancelled">prekinuto</string>
-    <string name="plan_instance_state_open">otvoreno</string>
     <string name="pref_sort_order_custom">Prilagođeno</string>
     <string name="pref_sort_order_last_used">Zadnje korišteno</string>
     <string name="date_format_minute">Minuta</string>
@@ -540,7 +522,6 @@
     <string name="contrib_feature_attach_picture_label">Priloži sliku transakciji</string>
     <string name="contrib_feature_ad_free_label">Bez oglasa</string>
     <string name="account_types">Vrste računa</string>
-    <string name="warning_plan_instance_delete">Stvorena transakcija za odabrani datum će se izbrisati.</string>
     <string name="auto_fill_focus">Postavi polje primaoca aktivnim</string>
     <string name="request_for_invoice">Zahtjev za račun</string>
     <string name="active_tags">Aktivne oznake</string>
@@ -549,7 +530,6 @@
     <string name="account_widget_configuration_sum_total">Uključi buduće transakcije</string>
     <string name="account_widget_configuration_sum">Vrsta prikazanog zbroja</string>
     <string name="warning_link_transfer">Dvije odabrane transakcije će se povezati kao prijenos. Informacije o protustranci i kategoriji se neće koristiti.</string>
-    <string name="recurrence_last_day_of_month">Zadnji dan</string>
     <string name="single_feature_info">Alternativno možeš kupiti neograničeni pristup samo ovoj funkciji.</string>
     <string name="new_balance">Novi saldo</string>
     <string name="pref_group_header_show_details_summary">Prikaži zbrojeve u zaglavlju grupe</string>
@@ -561,13 +541,10 @@
     <string name="pref_tesseract_language_title">Jezik za Tesseract</string>
     <string name="pref_ocr_engine_title">Pogon za prepoznavanje teksta</string>
     <string name="menu_save_and_new_content_description">Spremi podatke, ostavi obrazac otvorenim za stvaranje nove transakcije s istim podacima.</string>
-    <string name="content_description_edit_plan">Uredi plan u programu kalendara</string>
-    <string name="plan_automatic_without_amount_hint">Plan bez iznosa se ne treba spremati s automatskom izvedbom plana</string>
     <string name="template_default_action_without_amount_hint">Predložak bez iznosa trebao bi se spremiti sa zadanom radnjom „Uredi”</string>
     <string name="pref_clone_with_current_date_title">Datum kopija transakcija</string>
     <string name="confirmation_load_template_discard_data">Postojeći podaci obrasca će se odbaciti.</string>
     <string name="warning_balance_account_delete">Ako nastaviš, sve usklađene transakcije ovog računa će se nepovratno izbrisati iz baze podataka.</string>
-    <string name="advance_exexcution_in_days">Prijevremeno izvršavanje (u danima)</string>
     <string name="select_package">Odaberi paket licence.</string>
     <string name="pref_feature_uninstall_summary">Play Store pokušava na kraju ukloniti te module u pozadini.</string>
     <string name="pref_feature_uninstall_title">Zatraži deinstaliranje funkcija i jezika</string>
@@ -589,7 +566,6 @@
     <string name="title_scan_receipt_feature">Snimi račun</string>
     <string name="pref_planner_manual_time_current">Vrijeme primjene</string>
     <string name="pref_planner_manual_time_noon">12 h (podne)</string>
-    <string name="pref_planner_manual_time_title">Vrijeme za ručno primijenjenu zakazanu transakciju</string>
     <string name="language_download_requested">Prijevodi za %s jezik su zatraženi na Play Store</string>
     <string name="new_tag_hint">Upiši novu oznaku</string>
     <string name="dialog_multi_tag_replace">Zamijeni postojeće oznake s novim oznakama</string>
@@ -635,7 +611,6 @@
     <string name="menu_create_budget">Novi budžet</string>
     <string name="discover_feature_expense_income_switch">Koristi ovaj gumb za zapisivanje prihoda.</string>
     <string name="synchronization_select_folder_dialog_title">Odaberi postojeću mapu ili stvori novu</string>
-    <string name="pref_plan_executor_time_title">Vrijeme obavijesti</string>
     <string name="pref_exchange_rates_api_key_summary">Registriraj besplatni račun na %s i navedi tvoj ID programa</string>
     <string name="pref_exchange_rate_provider_title">Pružatelj tečajeva</string>
     <string name="pref_exchange_rate_provider_summary">Odaberi uslugu za preuzimanje tečajeva</string>
@@ -718,7 +693,6 @@
     <string name="pref_auto_fill_summary">Ispuni podatke iz zadnje transakcije za istu protustranku</string>
     <string name="no_accounts">Nema računa.</string>
     <string name="image_capture_not_installed">Nijedan program za slikanje nije pronađen.</string>
-    <string name="no_calendar_app_installed">Nijedan program za uređivanje kalendarskog događaja nije pronađen.</string>
     <string name="menu_split_transaction">Pretvori u višedjelnu transakciju</string>
     <string name="button_label_close">Zatvori</string>
     <string name="crash_reports_user_info">{app_name} automatski šalje izvještaje o prestanku rada programa svojim programerima kako bi brže ispravili greške.</string>
@@ -806,12 +780,7 @@
     <string name="pref_backup_file_prefix_title">Prefiks datoteke</string>
     <string name="content_description_remove_icon">Ukloni ikonu</string>
     <string name="maximum_size">Maksimalna veličina</string>
-    <string name="orphaned_transaction_align_date">S transakcijom spremljeni datum se opcionalno može uskladiti i s datumom instance.</string>
-    <string name="orphaned_transaction_info">Transakcija je povezana s planom za ovaj datum, ali na ovaj datum ne postoji nijedna instanca događaja.</string>
     <string name="notifications_permission_required_auto_backup">Davanjem dozvole za slanje obavijesti dobivat ćeš obavijesti o automatskom spremanju sigurnosnih kopija.</string>
-    <string name="orphaned_transaction_relink">Transakcija se može ponovo povezati s instancom događaja na %s.</string>
-    <string name="button_relink_keep_date">Poveži ponovo, ali zadrži datum</string>
-    <string name="button_relink_update_date">Poveži ponovo i aktualiziraj datum</string>
     <string name="image_optimize_quality_summary">Kvaliteta 0 znači komprimiranje za najmanju veličinu. 100 znači komprimiranje za maksimalnu vizualnu kvalitetu.</string>
     <string name="remove_from_group">Ukloni iz grupe</string>
     <string name="merge_parties_strategy_delete">Duplikati su izbrisani.</string>

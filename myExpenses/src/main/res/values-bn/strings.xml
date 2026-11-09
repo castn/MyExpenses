@@ -115,13 +115,11 @@
     <string name="licence_validation_premium">প্রিমিয়াম ফিচার আনলক করা হয়েছে।</string>
     <string name="menu_aggregates">মোট</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">অ্যাপ্লাই করুন</string>
     <string name="menu_back">পিছনে যান</string>
     <string name="menu_backup">ব্যাকআপ</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">অ্যাকাউন্ট ব্যালেন্স</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">বাতিল</string>
     <string name="menu_clone_transaction">ক্লোন</string>
     <string name="menu_contrib">কনট্রিবিউট</string>
     <string name="menu_create_account">নতুন অ্যাকাউন্ট</string>
@@ -147,7 +145,6 @@
     <string name="menu_edit_cat">ক্যাটাগরি এডিট</string>
     <string name="menu_edit_method">পেমেন্ট মেথড এডিট</string>
     <string name="menu_edit_party">পার্টি এডিট</string>
-    <string name="menu_edit_plan_instance">একক প্লান এডিট</string>
     <string name="menu_edit_split">স্প্লিট লেনদেন সম্পাদনা করুন</string>
     <string name="menu_edit_split_part_category">ক্যাটাগরি স্প্লিট সম্পাদনা করুন</string>
     <string name="menu_edit_split_part_transfer">ট্রান্সফার স্প্লিট সম্পাদনা করুন</string>
@@ -160,7 +157,6 @@
     <string name="menu_help">হেল্প</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">ইনভার্ট</string>
-    <string name="menu_manage_plans">টেমপ্লেট এবং প্লানসমূহ</string>
     <string name="menu_reset">এক্সপোর্ট এবং রিসেট</string>
     <string name="menu_reset_all">এক্সপোর্ট এবং সবকিছু রিসেট</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -178,7 +174,6 @@
     <string name="no_expenses">এখনও কোন ব্যয় নেই!</string>
     <string name="no_exportable_expenses">এমন কোন লেনদেন নেই যা এখনও এক্সপোর্ট করা হয়নি।</string>
     <string name="no_filemanager_installed">কোন ফাইল ম্যানেজার ইনস্টল করা নেই</string>
-    <string name="no_calendar_app_installed">ক্যালেন্ডার ইভেন্ট এডিটর জন্য কোন অ্যাপ পাওয়া যায়নি।</string>
     <string name="image_capture_not_installed">ছবি তোলার জন্য কোন অ্যাপ পাওয়া যায়নি।</string>
     <string name="no_mapped_transactions">এই সময়কালে কোন লেনদেন ক্যাটাগরির সাথে ম্যাপ করা হয়নি।</string>
     <string name="no_methods">কোন পেমেন্ট মেথড নেই।</string>
@@ -209,15 +204,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">প্লান</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">অটোমেটিক</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">{app_name} প্লানার</string>
-    <string name="planner_notification_channel_name">প্লানার</string>
-    <string name="plan_event_deleted">এই টেমপ্লেটের সাথে সম্পর্কিত প্লান ক্যালেন্ডার থেকে মুছে ফেলা হয়েছে।</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">প্লান কার্যকর করা বাতিল করা হয়েছে</string>
-    <string name="planner_create_calendar_failure">লোকাল প্লানার ক্যালেন্ডার তৈরি করা যায়নি</string>
-    <string name="planner_create_calendar_success">লোকাল প্লানার ক্যালেন্ডার সফলভাবে তৈরি করা হয়েছে</string>
     <!-- payment methods -->
     <string name="pm_cheque">চেক</string>
     <string name="pm_creditcard">ক্রেডিট কার্ড</string>
@@ -259,8 +248,6 @@
     <string name="pref_password_not_equal">পাসওয়ার্ড মেলে না</string>
     <string name="pref_perform_share_title">এক্সপোর্ট এবং ব্যাকআপ শেয়ার করুন</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">নতুন লোকালপ্লান ক্যালেন্ডার তৈরি করুন</string>
-    <string name="pref_planning_calendar_summary">ক্যালেন্ডার নির্বাচন করুন যেখানে ভবিষ্যত এবং পুনরাবৃত্তি লেনদেনের প্লান সেভ করা হয়</string>
     <string name="pref_protection_delay_seconds_summary">অ্যাপটি পাসওয়ার্ড দ্বারা লক হওয়ার আগে আইডেল সেকেন্ড।</string>
     <string name="pref_protection_delay_seconds_title">প্রটেকশন পর্যন্ত বিলম্ব</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">উইজেট এবং শর্টকাট থেকে ডাটা এন্ট্রি</string>
@@ -294,7 +281,6 @@
     <string name="restore_preferences_failure">পছন্দসমূহ পুনরুদ্ধার ব্যর্থ হয়েছে</string>
     <string name="restore_backup_file_not_found">\"%2$s\" আর্কাইভে %1$s ফাইল পাওয়া যায়নি</string>
     <string name="restore_preferences_success">পছন্দসমূহ ব্যাকআপ থেকে পুনরুদ্ধার করা হয়েছে।</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d প্লান ব্যাকআপ থেকে পুনরুদ্ধার করা হয়েছে</string>
     <string name="save_transaction_and_new_success">সফলভাবে সেভ</string>
     <string name="save_transaction_error">টেমপ্লেট থেকে নতুন লেনদেন সেভ করতে পারেনি।</string>
     <plurals name="save_transaction_from_template_success">
@@ -452,18 +438,14 @@
     <string name="pref_sort_order_custom">কাস্টম</string>
     <string name="content_description_calculator">ক্যালকুলেটর</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">খোলা</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">বাতিল করা হয়েছে</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">অ্যাপ্লাই করা হয়েছে</string>
     <string name="warning_cannot_move_split_transaction">এই স্প্লিট লেনদেনটি %1$s অ্যাকাউন্টে সরানো যাবে না কারণ এমন ট্রান্সফার পার্ট আছে যা এই অ্যাকাউন্টকে উল্লেখ করে।</string>
     <string name="content_description_calculator_delete_button">শেষ সংখ্যা মুছুন</string>
     <string name="paypal_callback_info">আপনার লেনদেন সম্পন্ন হয়েছে, এবং আপনাকে একটি রসিদ ইমেল করা হয়েছে। আপনি এই লেনদেনের বিবরণ দেখতে www.paypal.com এ আপনার অ্যাকাউন্টে লগইন করতে পারেন।</string>
     <string name="search_transfer">ট্রান্সফার সার্চ করুন</string>
     <string name="search_account">অ্যাকাউন্টে সার্চ করুন</string>
     <!-- Sort plans (recurring transactions) by the next instance  -->
-    <string name="pref_sort_order_next_instance">পরবর্তী ঘটনা</string>
     <string name="crash_dialog_title">{app_name} ক্র্যাশ করেছে</string>
     <string name="crash_dialog_text">অপ্রত্যাশিত এরর ঘটেছে যা অ্যাপ্লিকেশনকে বন্ধ করেছে। অনুগ্রহ করে এররর তথ্য পাঠিয়ে আমাদের এটি সমাধান করতে সাহায্য করুন, আপনাকে শুধুমাত্র ঠিক আছে ক্লিক করতে হবে।</string>
     <string name="crash_dialog_comment_prompt">আপনি নিচে সমস্যা সম্পর্কে আপনার মন্তব্য যোগ করতে পারেন:</string>
@@ -522,7 +504,6 @@
     <string name="contributed_by">অবদান রেখেছেন %s</string>
     <string name="pref_sync_notification_summary">সিঙ্ক্রোনাইজেশন অগ্রগতি সম্পর্কে অবহিত করুন</string>
     <string name="pref_debug_logging_summary">ডিবাগিং তথ্য সিস্টেম লগে লিখুন</string>
-    <string name="plan_custom_recurrence_info">অনুগ্রহ করে প্রথমে টেমপ্লেট সেভ করুন। তারপর প্লানটি ক্যালেন্ডার অ্যাপে খোলা হবে, যেখানে আপনি একটি কাস্টম পুনরাবৃত্তি সেট করতে পারেন।</string>
     <string name="menu_create_template_for_split">নতুন স্প্লিট টেমপ্লেট</string>
     <string name="progress_validating_licence">লাইসেন্স যাচাই করা হচ্ছে</string>
     <string name="licence_validation_error_expired">লাইসেন্স মেয়াদ উত্তীর্ণ হয়েছে</string>
@@ -665,7 +646,6 @@
     <string name="pref_exchange_rate_provider_title">এক্সচেঞ্জ রেট প্রদানকারী</string>
     <!-- %s is replaced with exchange rate provider URL (openexchangerates.org or coinapi.io) -->
     <string name="pref_exchange_rates_api_key_summary">অনুগ্রহ করে %s এ একটি বিনামূল্যে অ্যাকাউন্ট নিবন্ধন করুন এবং আপনার অ্যাপ আইডি প্রদান করুন</string>
-    <string name="pref_plan_executor_time_title">বিজ্ঞপ্তির সময়</string>
     <string name="synchronization_select_folder_dialog_title">একটি ফোল্ডার নির্বাচন করুন বা একটি নতুন তৈরি করুন</string>
     <!-- This message is shwon when we highlight the income / expense toogle, to make user aware of this feature  -->
     <string name="discover_feature_expense_income_switch" tools:ignore="UnusedResources">আয় রেকর্ড করতে এই বাটন ব্যবহার করুন।</string>
@@ -720,7 +700,6 @@
     <string name="new_tag_hint">নতুন ট্যাগ লিখুন</string>
     <string name="language_download_requested">ভাষা %s এর জন্য অনুবাদ প্লে স্টোর থেকে অনুরোধ করা হয়েছে</string>
     <!-- Title for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
-    <string name="pref_planner_manual_time_title">ম্যানুয়ালি অ্যাপ্লাই করা নির্ধারিত লেনদেনের জন্য সময়</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
     <string name="pref_planner_manual_time_noon">দুপুর ১২টা</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction (current time at moment of application) -->
@@ -755,14 +734,11 @@
     <!-- Toast message shown if user clicks on Upgrade button before having selected a licence -->
     <string name="select_package">অনুগ্রহ করে একটি লাইসেন্স প্যাকেজ নির্বাচন করুন।</string>
     <!-- Label for a slider control that allows to configure a plan to be executed (added to the ledger) the give number of days in advance -->
-    <string name="advance_exexcution_in_days">অগ্রিম নির্বাহ (দিনে)</string>
     <string name="warning_balance_account_delete">আপনি যদি চালিয়ে যান, এই অ্যাকাউন্টের সমস্ত মিলিত লেনদেন ডাটাবেস থেকে মুছে ফেলা হবে এবং আপনি সেগুলি পুনরুদ্ধার করতে পারবেন না।</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">বিদ্যমান ফর্ম ডেটা বাতিল করা হবে।</string>
     <string name="pref_clone_with_current_date_title">ক্লোন করা লেনদেনের তারিখ</string>
     <string name="template_default_action_without_amount_hint">পরিমাণ ছাড়া টেমপ্লেট ডিফল্ট অ্যাকশন \'এডিট\' দিয়ে সেভ করা উচিত</string>
-    <string name="plan_automatic_without_amount_hint">পরিমাণ ছাড়া প্লান অটোমেটিক প্লান নির্বাহের সাথে সেভ করা উচিত নয়</string>
-    <string name="content_description_edit_plan">ক্যালেন্ডার অ্যাপে প্লান এডিট করুন</string>
     <string name="menu_save_and_new_content_description">ডেটা সেভ করুন, একই ডেটা দিয়ে নতুন লেনদেন তৈরি করার জন্য ফর্মটি খোলা রাখুন।</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
     <string name="pref_ocr_engine_title">টেক্সট রেকগনেশনের জন্য ইঞ্জিন</string>
@@ -783,7 +759,6 @@
     <string name="new_balance">নতুন ব্যালেন্স</string>
     <string name="single_feature_info">বিকল্পভাবে আপনি শুধুমাত্র এই ফিচারের জন্য আনলিমিটেড অ্যাকসেস কিনতে পারেন।</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
-    <string name="recurrence_last_day_of_month">শেষ দিন</string>
     <string name="warning_link_transfer">নির্বাচিত দুটি লেনদেন ট্রান্সফার অ্যাকাউন্টে লিঙ্ক করা হবে। প্রাপক/প্রদানকারী এবং ক্যাটাগরি সম্পর্কিত তথ্য বাদ দেওয়া হবে।</string>
     <!-- This is the title of an entry on the configuration screen for the account widget. It allows to decide which number should be displayed for each account: the current balance or the total (which included future transactions) -->
     <string name="account_widget_configuration_sum">প্রদর্শিত যোগফলের ধরন</string>
@@ -802,7 +777,6 @@
     <string name="auto_fill_focus">প্রাপক ফোকাস করুন</string>
     <!-- This warning is shown when a user calls the Reset or Cancel commands on a scheduled transaction, for a date
     where the transaction has already been created.  -->
-    <string name="warning_plan_instance_delete">নির্বাচিত তারিখের জন্য তৈরি করা লেনদেন মুছে ফেলা হবে।</string>
     <string name="crash_reports_user_info">{app_name} অ্যাপ্লিকেশনের ক্র্যাশ রিপোর্ট অটোমেটিকভাবে ডেভেলপারদের কাছে পাঠাবে, যা তাদের দ্রুত সমস্যার সমাধান করতে সাহায্য করে।</string>
     <string name="pref_enable_acra">ক্র্যাশ রিপোর্ট অটোমেটিক পাঠানোর অনুমতি দিন</string>
     <string name="pref_acra_user_email">ক্র্যাশ রিপোর্টে অন্তর্ভুক্ত করার জন্য ইউজার ইমেল</string>
@@ -907,12 +881,7 @@
     <!-- Title of the screen where user selects a template as target for a shortcut -->
     <string name="select_template">টেমপ্লেট নির্বাচন করুন</string>
     <string name="add_shortcut">শর্টকাট যোগ করুন</string>
-    <string name="orphaned_transaction_info">একটি লেনদেন এই তারিখের প্লানের সাথে লিঙ্ক করা আছে, কিন্তু এই তারিখে কোন ইভেন্ট ইনস্ট্যান্স নেই।</string>
     <!-- %s is replaced by the date of the event instance this transaction can be relinked with. -->
-    <string name="orphaned_transaction_relink">লেনদেনটি %s তারিখে ইভেন্ট ইনস্ট্যান্সের সাথে পুনরায় লিঙ্ক করা যেতে পারে।</string>
-    <string name="orphaned_transaction_align_date">বিকল্পভাবে লেনদেনে সেভ তারিখটিও ইনস্ট্যান্স তারিখের সাথে সারিবদ্ধ করা যেতে পারে।</string>
-    <string name="button_relink_keep_date">পুনরায় লিঙ্ক করুন, কিন্তু তারিখ রাখুন</string>
-    <string name="button_relink_update_date">পুনরায় লিঙ্ক করুন এবং তারিখ আপডেট করুন</string>
     <!-- This is an option in the configuration of CSV and QIF imports which means that the account label(s) found in the data will be used to locate account(s) into which transactions are imported  -->
     <string name="read_from_data">ডেটা থেকে রিড করুন</string>
     <string name="merge_parties_strategy_delete">ডুপ্লিকেট মুছে ফেলা হয়।</string>

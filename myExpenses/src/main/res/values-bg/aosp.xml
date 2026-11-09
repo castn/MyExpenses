@@ -22,7 +22,6 @@
     <string name="response_no">"Не"</string>
     <string name="experimental">"Експериментални"</string>
     <string name="add_widget">"Добавяне на приспособление"</string>
-    <string name="calendar">"Календар"</string>
     <string name="permissions_label">"Разрешения"</string>
     <string name="time_format">"Формат за часа"</string>
     <string name="setup">"Настройване"</string>
@@ -64,8 +63,6 @@
     <string name="menu">"Меню"</string>
     <string name="action_move_down">"Преместване надолу"</string>
     <string name="action_move_up">"Преместване нагоре"</string>
-    <string name="calendar_delete">Изтрий календара</string>
-    <string name="preferences_calendar_delete_message">Наистина ли искате да изтриете този календар?</string>
     <string name="default_camera_app_title">"Приложение за камера"</string>
     <string name="help_and_feedback">"Помощ и отзиви"</string>
     <string name="currencies_exchange">"Валути и обмен на валута"</string>

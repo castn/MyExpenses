@@ -106,13 +106,11 @@
     <string name="licence_validation_premium">Преміум-функції розблоковано.</string>
     <string name="menu_aggregates">Усього</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">Застосувати</string>
     <string name="menu_back">Назад</string>
     <string name="menu_backup">Резервна копія</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">Звірити рахунок</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">Скасувати</string>
     <string name="menu_clone_transaction">Клонувати</string>
     <string name="menu_contrib">Зробити внесок</string>
     <string name="menu_create_account">Новий рахунок</string>
@@ -138,7 +136,6 @@
     <string name="menu_edit_cat">Редагувати категорію</string>
     <string name="menu_edit_method">Редагувати спосіб оплати</string>
     <string name="menu_edit_party">Редагування учасника</string>
-    <string name="menu_edit_plan_instance">Редагування єдиного плану виникнення</string>
     <string name="menu_edit_split">Редагувати розділену транзакцію</string>
     <string name="menu_edit_split_part_category">Редагувати частину поділу категорії</string>
     <string name="menu_edit_split_part_transfer">Редагувати частину поділу переказу</string>
@@ -151,7 +148,6 @@
     <string name="menu_help">Допомога</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">Інвертувати</string>
-    <string name="menu_manage_plans">Шаблони та плани</string>
     <string name="menu_reset">Експортувати та скинути</string>
     <string name="menu_reset_all">Експортувати та скинути все</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -168,7 +164,6 @@
     <string name="no_expenses">Ще немає витрат!</string>
     <string name="no_exportable_expenses">Немає транзакцій, які ще не були експортовані.</string>
     <string name="no_filemanager_installed">Немає встановленого файлового менеджера</string>
-    <string name="no_calendar_app_installed">Відсутня програма для редагування подій календаря.</string>
     <string name="no_mapped_transactions">Протягом цього періоду жодній транзакції не було присвоєно категорію.</string>
     <string name="no_methods">Немає способів оплати.</string>
     <string name="no_parties">Немає учасників.</string>
@@ -201,15 +196,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">План</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">автоматично</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">Планувальник {app_name}</string>
-    <string name="planner_notification_channel_name">Планувальник</string>
-    <string name="plan_event_deleted">План, пов\'язаний із цим шаблоном, видалено з календаря.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">Виконання плану скасовано</string>
-    <string name="planner_create_calendar_failure">Неможливо створити локальний календар планів</string>
-    <string name="planner_create_calendar_success">Локальний календар планів успішно створено</string>
     <!-- payment methods -->
     <string name="pm_cheque">Розрахунковий чек</string>
     <string name="pm_creditcard">Кредитна картка</string>
@@ -249,8 +238,6 @@
     <string name="pref_password_not_equal">Паролі не збігаються</string>
     <string name="pref_perform_share_title">Поділитися експортом та резервними копіями</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">Створити новий локальний календар планів</string>
-    <string name="pref_planning_calendar_summary">Виберіть календар, в якому зберігаються плани для майбутніх та повторюваних транзакцій</string>
     <string name="pref_protection_delay_seconds_summary">Чекати секунд до того, як програму буде заблоковано паролем.</string>
     <string name="pref_protection_delay_seconds_title">Затримка до захисту</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">Введення даних із віджетів та ярликів</string>
@@ -282,7 +269,6 @@
     <string name="restore_preferences_failure">Помилка відновлення налаштувань</string>
     <string name="restore_backup_file_not_found">Не знайдено файлу %1$s в архіві \"%2$s\"</string>
     <string name="restore_preferences_success">Налаштування відновлено з резервної копії.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d плани було відновлено з резервної копії</string>
     <string name="save_transaction_and_new_success">Успішно збережено</string>
     <string name="save_transaction_error">Не вдалося зберегти нову транзакцію з шаблону.</string>
     <plurals name="save_transaction_from_template_success">
@@ -446,17 +432,13 @@
     <string name="pref_sort_order_custom">Персоналізований</string>
     <string name="content_description_calculator">Калькулятор</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">відкритий</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">відхилений</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">застосований</string>
     <string name="warning_cannot_move_split_transaction">Ця розділена транзакція не може бути переміщена до рахунку %1$s, оскільки є частини переказу, які стосуються поточного рахунку.</string>
     <string name="content_description_calculator_delete_button">Видалити останню цифру</string>
     <string name="paypal_callback_info">Ваша транзакція була успішно завершена, а квитанція про вашу покупку була надіслана вам електронною поштою. Ви можете увійти до свого облікового запису на сайті www.paypal.com, щоб переглянути деталі цієї покупки.</string>
     <string name="search_transfer">Шукати переказ</string>
     <!-- Sort plans (recurring transactions) by the next instance  -->
-    <string name="pref_sort_order_next_instance">Наступний екземпляр</string>
     <string name="crash_dialog_title">{app_name} завершилась аварійно</string>
     <string name="crash_dialog_text">Виникла неочікувана помилка, яка примусила програму завершитись. Будь ласка, допоможіть нам виправити цю проблему, надіславши нам дані про помилку. Все, що вам потрібно зробити, це натиснути кнопку ОК.</string>
     <string name="crash_dialog_comment_prompt">Ви можете додати свої коментарі про проблему нижче:</string>
@@ -513,7 +495,6 @@
     <string name="contributed_by">Внесок зроблено %s</string>
     <string name="pref_sync_notification_summary">Повідомляти про хід синхронізації</string>
     <string name="pref_debug_logging_summary">Записувати інформацію налагоджування в системний журнал</string>
-    <string name="plan_custom_recurrence_info">Спочатку збережіть шаблон. План буде відкрито у програмі календаря, де ви зможете встановити бажану частоту повторень.</string>
     <string name="menu_create_template_for_split">Новий шаблон розділення</string>
     <string name="progress_validating_licence">Перевірка ліцензії</string>
     <string name="licence_validation_error_expired">Термін дії ліцензії закінчився</string>
@@ -699,7 +680,6 @@
     <string name="account_deleted">Рахунок видалено</string>
     <string name="account_widget_configuration_sum">Тип відображуваної суми</string>
     <string name="auto_fill_focus">Фокусуватися на полі одержувача</string>
-    <string name="warning_plan_instance_delete">Транзакцію, створену на вибрану дату, буде видалено.</string>
     <string name="account_widget_configuration_sum_total">Включіть майбутні транзакції</string>
     <string name="merge_parties_select">Виберіть назву об\'єднаного учасника</string>
     <string name="active_tags">Активні теги</string>
@@ -722,7 +702,6 @@
     <string name="scan_result_multiple_candidates_dialog_title">Знайдено кілька кандидатів. Будь ласка, виберіть:</string>
     <string name="scan_result_no_date">Дата не знайдена</string>
     <string name="scan_result_no_payee">Одержувача не знайдено</string>
-    <string name="pref_plan_executor_time_title">Час сповіщення</string>
     <string name="discover_feature_expense_income_switch" tools:ignore="UnusedResources">Використовуйте цю кнопку перемикача для запису доходів.</string>
     <string name="pref_feature_uninstall_summary">Play Маркет намагається зрештою видалити ці модулі у фоновому режимі.</string>
     <string name="remap_account">Усі вибрані транзакції буде зіставлено з рахунком %s.</string>
@@ -758,12 +737,10 @@
     <string name="dialog_multi_tag">Усі вибрані транзакції будуть позначені міткою %s.</string>
     <string name="pref_ocr_total_indicators_summary">Список рядків, які визначають загальну вартість у квитанції. Помістіть кожне значення в новий рядок. Залиште порожнім, щоб відновити значення за замовчуванням.</string>
     <string name="budget_table_header_overspent">Перевитрачено</string>
-    <string name="pref_planner_manual_time_title">Час для запланованої транзакції, застосованої вручну</string>
     <string name="title_activity_debt_overview">Огляд заборгованості</string>
     <string name="setup_completed">Налаштування завершено</string>
     <string name="purge_backups">Наступні старі файли резервних копій будуть видалені:</string>
     <string name="new_balance">Новий баланс</string>
-    <string name="advance_exexcution_in_days">Дострокове виконання (у днях)</string>
     <string name="pref_clone_with_current_date_title">Дата клонованих транзакцій</string>
     <string name="single_feature_info">Крім того, ви можете придбати необмежений доступ тільки до цієї функції.</string>
     <string name="cb_label_merge_accounts">Обʼєднати рахунки</string>
@@ -774,10 +751,7 @@
     <string name="warning_balance_account_delete">Якщо ви продовжите, всі звірені транзакції цього рахунку будуть видалені з бази даних, і ви не зможете їх відновити.</string>
     <string name="confirmation_load_template_discard_data">Існуючі дані форми будуть відкинуті.</string>
     <string name="ocr_download_info">Можливість розпізнавання тексту забезпечується зовнішньою програмою.</string>
-    <string name="plan_automatic_without_amount_hint">План без суми не повинен зберігатися при автоматичному виконанні плану</string>
-    <string name="content_description_edit_plan">Редагувати план у програмі календаря</string>
     <string name="pref_group_header_show_details_summary">Показувати детальні суми в заголовку групи</string>
-    <string name="recurrence_last_day_of_month">Останній день</string>
     <string name="warning_link_transfer">Дві вибрані транзакції будуть пов’язані як переказ. Інформацію про контрагента та категорію буде вилучено.</string>
     <string name="account_widget_configuration">Налаштування віджету рахунку</string>
     <string name="budget_widget_configuration">Виберіть бюджет</string>
@@ -808,7 +782,6 @@
     <string name="debt_paid_off_other">Борг %s погашено.</string>
     <string name="encrypt_database">Зашифрувати базу даних</string>
     <string name="maximum_size">Максимальний розмір</string>
-    <string name="orphaned_transaction_info">Транзакція пов’язана з планом на цю дату, але на цю дату не існує події.</string>
     <string name="notifications_channel_required">Будь ласка, увімкніть канал %s.</string>
     <string name="template_shortcut">Ярлик шаблону</string>
     <string name="content_description_attachment">Вкладення</string>
@@ -822,7 +795,6 @@
     <string name="debt_installment_receive">Я отримую розстрочку %s.</string>
     <string name="debt_balance_they_owe">%1$s тепер винен %2$s.</string>
     <string name="select_template">Оберіть шаблон</string>
-    <string name="orphaned_transaction_relink">Транзакцію можна повторно пов’язати з подією на %s.</string>
     <string name="select_all_list_too_large">Команда %s недоступна, оскільки список завантажено лише частково. Скористайтеся функцією пошуку, щоб зменшити розмір списку.</string>
     <plurals name="purge_backup_success">
         <item quantity="one">Видалено %d файл старої резервної копії.</item>
@@ -834,7 +806,6 @@
     <string name="budget_onetime">Одноразова</string>
     <string name="remap_date">Для всіх вибраних транзакцій буде встановлено дату %s.</string>
     <string name="warning_transform_to_transfer">Обрана транзакція буде замінена переказом з %1$s на %2$s.</string>
-    <string name="button_relink_update_date">Перепривʼязати та оновити дату</string>
     <string name="show_duplicates">Показати дублікати</string>
     <string name="pref_unmapped_transaction_as_transfer_summary_on">зараховуються як переказ</string>
     <string name="warning_delete_default_transfer_category">Категорія %s налаштована як категорія передачі за замовчуванням і не повинна видалятися.</string>
@@ -882,11 +853,9 @@
     <string name="budget_only_current_period">Використовувати тільки для %s</string>
     <string name="github_sponsors"><![CDATA[Ліцензійні ключі також надаються <a href="%s">Спонсорам Github</a>.]]></string>
     <string name="image_optimize_quality_summary">Якість 0 означає стиснення до найменшого розміру. 100 означає стиснення до максимальної візуальної якості.</string>
-    <string name="button_relink_keep_date">Перепривʼязати, але зберегти дату</string>
     <string name="database_is_encrypted">База даних зашифрована.</string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> потребує дозволу, щоб надсилати вам сповіщення про майбутні транзакції.</string>
     <string name="budget_table_header_rollover">Перенесення бюджету</string>
-    <string name="orphaned_transaction_align_date">За бажанням дату, збережену в транзакції, також можна узгодити з датою екземпляра.</string>
     <string name="rollover_edit_invalid">Сума перенесення, запланована для категорії, та суми перенесення, заплановані для підкатегорій, не можуть перевищувати залишок.</string>
     <string name="dialog_confirm_rollover_delete">Усі суми перенесення на цей період будуть видалені.</string>
     <string name="not_enough_data">Недостатньо даних</string>

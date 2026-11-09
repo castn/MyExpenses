@@ -5,8 +5,6 @@
     <string name="menu">"Menyja"</string>
     <string name="action_move_down">"Lëvize poshtë"</string>
     <string name="action_move_up">"Lëvize lart"</string>
-    <string name="calendar_delete">Fshi kalendarin</string>
-    <string name="preferences_calendar_delete_message">Vërtet doni ta fshini këtë kalendar?</string>
     <string name="default_camera_app_title">"Aplikacioni i kamerës"</string>
     <string name="help_and_feedback">"Ndihmë dhe komente"</string>
     <string name="currencies_exchange">"Valuta dhe këmbim valutor"</string>

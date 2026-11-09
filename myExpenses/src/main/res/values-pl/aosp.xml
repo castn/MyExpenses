@@ -22,7 +22,6 @@
     <string name="response_no">"Nie"</string>
     <string name="experimental">"Eksperymentalny"</string>
     <string name="add_widget">"Dodaj widżet"</string>
-    <string name="calendar">"Kalendarz"</string>
     <string name="permissions_label">"Uprawnienia"</string>
     <string name="time_format">"Format godziny"</string>
     <string name="setup">"Konfiguracja"</string>
@@ -66,8 +65,6 @@
     <string name="menu">"Menu"</string>
     <string name="action_move_down">"Przesuń w dół"</string>
     <string name="action_move_up">"Przesuń w górę"</string>
-    <string name="calendar_delete">Usuń kalendarz</string>
-    <string name="preferences_calendar_delete_message">Czy na pewno chcesz usunąć ten kalendarz?</string>
     <string name="default_camera_app_title">"Aplikacja aparatu"</string>
     <string name="help_and_feedback">"Pomoc i opinie"</string>
     <string name="currencies_exchange">"Waluty i wymiana walut"</string>

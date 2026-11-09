@@ -50,14 +50,12 @@
     <ID>CyclomaticComplexMethod:MoreDbUtils.kt:fun parseCategoriesFromXml: List&lt;CategoryTreeItem&gt;</ID>
     <ID>CyclomaticComplexMethod:PartiesList.kt:PartiesList.PayeeAdapter$override fun onItemClick</ID>
     <ID>CyclomaticComplexMethod:PdfPrinter.kt:PdfPrinter$@Throws(DocumentException::class, IOException::class) private fun addTransactionList</ID>
-    <ID>CyclomaticComplexMethod:PlanExecutor.kt:PlanExecutor$@RequiresPermission(allOf = [Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR]) @SuppressLint("InlinedApi") override suspend fun doWork: Result</ID>
     <ID>CyclomaticComplexMethod:PreferenceActivity.kt:PreferenceActivity$override fun onSharedPreferenceChanged</ID>
     <ID>CyclomaticComplexMethod:ProviderUtils.kt:ProviderUtils$fun buildFromExtras: TransactionEditData?</ID>
     <ID>CyclomaticComplexMethod:RepositoryBudget.kt:suspend fun Repository.importBudget: Long</ID>
     <ID>CyclomaticComplexMethod:RepositoryTransaction.kt:fun Repository.loadTrades: List&lt;Trade&gt;</ID>
     <ID>CyclomaticComplexMethod:RepositoryTransaction.kt:fun Repository.updateDualSplitTransaction: Array&lt;ContentProviderResult&gt;</ID>
     <ID>CyclomaticComplexMethod:RestoreViewModel.kt:RestoreViewModel$fun startRestore</ID>
-    <ID>CyclomaticComplexMethod:RestoreViewModel.kt:RestoreViewModel$private fun restorePlanner: Int</ID>
     <ID>CyclomaticComplexMethod:RoadmapVoteActivity.kt:RoadmapVoteActivity$override fun dispatchCommand: Boolean</ID>
     <ID>CyclomaticComplexMethod:SplitPartRVAdapter.kt:SplitPartRVAdapter.ViewHolder$fun bind</ID>
     <ID>CyclomaticComplexMethod:SyncAdapter.kt:SyncAdapter$@SuppressLint("MissingPermission") override fun onPerformSync</ID>
@@ -65,17 +63,13 @@
     <ID>CyclomaticComplexMethod:SyncDelegate.kt:SyncDelegate$private fun mergeUpdate: TransactionChange</ID>
     <ID>CyclomaticComplexMethod:SyncHandler.kt:SyncHandler$fun collectOperations: ArrayList&lt;ContentProviderOperation&gt;</ID>
     <ID>CyclomaticComplexMethod:SyncHandler.kt:SyncHandler$private fun TransactionChange.toContentValues: ContentValues</ID>
-    <ID>CyclomaticComplexMethod:TemplatesList.kt:TemplatesList$override fun onLoadFinished</ID>
-    <ID>CyclomaticComplexMethod:TemplatesList.kt:TemplatesList.MyAdapter$@SuppressLint("SetTextI18n") override fun bindView</ID>
     <ID>CyclomaticComplexMethod:TradePagingSource.kt:TradePagingSource$override suspend fun load: LoadResult&lt;Int, Trade&gt;</ID>
     <ID>CyclomaticComplexMethod:TradeSaver.kt:TradeSaver$private fun saveAssetTransfer</ID>
     <ID>CyclomaticComplexMethod:TradeSaver.kt:TradeSaver$private fun saveTradeInternal</ID>
     <ID>CyclomaticComplexMethod:Transaction2.kt:Transaction2.Companion$fun fromCursor: Transaction2</ID>
-    <ID>CyclomaticComplexMethod:TransactionDelegate.kt:TransactionDelegate$open fun bind</ID>
     <ID>CyclomaticComplexMethod:TransactionDelegate.kt:TransactionDelegate$open fun syncStateAndValidate: TransactionEditData?</ID>
-    <ID>CyclomaticComplexMethod:TransactionDelegate.kt:TransactionDelegate$override fun onItemSelected</ID>
-    <ID>CyclomaticComplexMethod:TransactionEditViewModel.kt:TransactionEditViewModel$@SuppressLint("MissingPermission") private suspend fun save: Result&lt;TransactionEditResult&gt;</ID>
     <ID>CyclomaticComplexMethod:TransactionEditViewModel.kt:TransactionEditViewModel$fun startAutoFill</ID>
+    <ID>CyclomaticComplexMethod:TransactionEditViewModel.kt:TransactionEditViewModel$private suspend fun save: Result&lt;TransactionEditResult&gt;</ID>
     <ID>CyclomaticComplexMethod:TransactionList.kt:fun transactionMenu</ID>
     <ID>CyclomaticComplexMethod:TransactionPagingSource.kt:TransactionPagingSource$@SuppressLint("InlinedApi") override suspend fun load: LoadResult&lt;Int, Transaction2&gt;</ID>
     <ID>CyclomaticComplexMethod:TransactionRenderer.kt:ItemRenderer$fun Transaction2.buildPrimaryInfo</ID>
@@ -91,7 +85,6 @@
     <ID>LargeClass:MyExpensesViewModel.kt:MyExpensesViewModel : PrintViewModel</ID>
     <ID>LargeClass:PdfPrinter.kt:PdfPrinter</ID>
     <ID>LargeClass:SyncAdapter.kt:SyncAdapter : AbstractThreadedSyncAdapter</ID>
-    <ID>LargeClass:TemplatesList.kt:TemplatesList : SortableListFragmentLoaderCallbacksOnDialogResultListener</ID>
     <ID>LargeClass:TransactionDelegate.kt:TransactionDelegate : OnItemSelectedListener</ID>
     <ID>LongMethod:AbstractExporter.kt:AbstractExporter$@Throws(IOException::class) open fun export: Result&lt;DocumentFile&gt;</ID>
     <ID>LongMethod:AbstractExporter.kt:AbstractExporter$fun Cursor.toDTO: TransactionDTO</ID>
@@ -126,7 +119,6 @@
     <ID>LongMethod:BudgetWidgetConfigure.kt:BudgetWidgetConfigure$override fun onCreate</ID>
     <ID>LongMethod:CSVParser.kt:CSVParser$fun parse</ID>
     <ID>LongMethod:CalculatorInput.kt:CalculatorInput$override fun onCreate</ID>
-    <ID>LongMethod:CalendarListPreferenceDialogFragmentCompat.kt:CalendarListPreferenceDialogFragmentCompat$override fun onPrepareDialogBuilder</ID>
     <ID>LongMethod:CategoryViewModelTest.kt:CategoryViewModelTest$@Test fun buildCatTree</ID>
     <ID>LongMethod:ChangeLogGenerator.kt:ChangeLogGenerator$@Test fun generateChangeLogYaml</ID>
     <ID>LongMethod:ConfirmationDialogFragment.kt:ConfirmationDialogFragment$override fun onCreateDialog: Dialog</ID>
@@ -169,11 +161,6 @@
     <ID>LongMethod:PartyListViewModel.kt:PartyListViewModel$fun mergeParties</ID>
     <ID>LongMethod:PdfPrinter.kt:PdfPrinter$@Throws(DocumentException::class, IOException::class) private fun addTransactionList</ID>
     <ID>LongMethod:PdfPrinter.kt:PdfPrinter$@Throws(IOException::class, DocumentException::class) fun print: Pair&lt;Uri, String&gt;</ID>
-    <ID>LongMethod:PlanExecutor.kt:PlanExecutor$@RequiresPermission(allOf = [Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR]) @SuppressLint("InlinedApi") override suspend fun doWork: Result</ID>
-    <ID>LongMethod:PlanMonthFragment.kt:PlanMonthFragment.CaldroidCustomAdapter$override fun getView: View</ID>
-    <ID>LongMethod:PlanNotificationClickHandler.kt:PlanNotificationClickHandler$@Deprecated("Deprecated in Java") override fun onHandleIntent</ID>
-    <ID>LongMethod:PlannerFragment.kt:PlannerFragment.PlanInstanceViewHolder$fun bind</ID>
-    <ID>LongMethod:PlannerUtils.kt:PlannerUtils$@RequiresPermission(Manifest.permission.READ_CALENDAR, conditional = true) fun onPlannerCalendarIdChanged</ID>
     <ID>LongMethod:PreferenceActivity.kt:PreferenceActivity$override fun onSharedPreferenceChanged</ID>
     <ID>LongMethod:PreferenceDataFragment.kt:PreferenceDataFragment$override fun onCreatePreferences</ID>
     <ID>LongMethod:PreferenceUiFragment.kt:PreferenceUiFragment$override fun onCreatePreferences</ID>
@@ -190,7 +177,6 @@
     <ID>LongMethod:RepositoryTransaction.kt:fun Repository.updateSplitTransaction: Array&lt;ContentProviderResult&gt;</ID>
     <ID>LongMethod:RepositoryTransaction.kt:fun addOps</ID>
     <ID>LongMethod:RestoreViewModel.kt:RestoreViewModel$fun startRestore</ID>
-    <ID>LongMethod:RestoreViewModel.kt:RestoreViewModel$private fun restorePlanner: Int</ID>
     <ID>LongMethod:RoadmapVoteActivity.kt:RoadmapVoteActivity$override fun dispatchCommand: Boolean</ID>
     <ID>LongMethod:SyncAdapter.kt:SyncAdapter$@SuppressLint("MissingPermission") override fun onPerformSync</ID>
     <ID>LongMethod:SyncAdapter.kt:SyncAdapter$@Throws(RemoteException::class) private fun getLocalChanges: List&lt;TransactionChange&gt;</ID>
@@ -199,15 +185,12 @@
     <ID>LongMethod:SyncHandler.kt:SyncHandler$fun collectOperations: ArrayList&lt;ContentProviderOperation&gt;</ID>
     <ID>LongMethod:SyncHandler.kt:SyncHandler$private fun TransactionChange.toContentValues: ContentValues</ID>
     <ID>LongMethod:TemplateWidgetService.kt:TemplateRemoteViewsFactory$override fun RemoteViews.populate</ID>
-    <ID>LongMethod:TemplatesList.kt:TemplatesList$override fun onLoadFinished</ID>
     <ID>LongMethod:TemplatesList.kt:TemplatesList.MyAdapter$@SuppressLint("SetTextI18n") override fun bindView</ID>
     <ID>LongMethod:TradeSaver.kt:TradeSaver$private fun saveAssetTransfer</ID>
     <ID>LongMethod:TradeSaver.kt:TradeSaver$private fun saveTradeInternal</ID>
     <ID>LongMethod:Transaction2.kt:Transaction2.Companion$fun fromCursor: Transaction2</ID>
-    <ID>LongMethod:TransactionDelegate.kt:TransactionDelegate$open fun bind</ID>
     <ID>LongMethod:TransactionDelegate.kt:TransactionDelegate$open fun syncStateAndValidate: TransactionEditData?</ID>
-    <ID>LongMethod:TransactionDelegate.kt:TransactionDelegate$override fun onItemSelected</ID>
-    <ID>LongMethod:TransactionEditViewModel.kt:TransactionEditViewModel$@SuppressLint("MissingPermission") private suspend fun save: Result&lt;TransactionEditResult&gt;</ID>
+    <ID>LongMethod:TransactionEditViewModel.kt:TransactionEditViewModel$private suspend fun save: Result&lt;TransactionEditResult&gt;</ID>
     <ID>LongMethod:TransactionList.kt:fun transactionMenu</ID>
     <ID>LongMethod:TransactionPagingSource.kt:TransactionPagingSource$@SuppressLint("InlinedApi") override suspend fun load: LoadResult&lt;Int, Transaction2&gt;</ID>
     <ID>LongMethod:TransactionTest.kt:BaseTransactionTest$@Test fun testUpdateSplitAddTransferPart</ID>
@@ -241,7 +224,6 @@
     <ID>MagicNumber:BudgetActivity.kt:BudgetActivity$5</ID>
     <ID>MagicNumber:BudgetActivity.kt:BudgetActivity$8f</ID>
     <ID>MagicNumber:BudgetActivity.kt:BudgetActivity$9f</ID>
-    <ID>MagicNumber:CalendarListPreferenceDialogFragmentCompat.kt:CalendarListPreferenceDialogFragmentCompat$3</ID>
     <ID>MagicNumber:ColorUtils.kt:ColorUtils$0.5</ID>
     <ID>MagicNumber:ColorUtils.kt:ColorUtils$0.5f</ID>
     <ID>MagicNumber:ColorUtils.kt:ColorUtils$255</ID>
@@ -343,7 +325,6 @@
     <ID>MagicNumber:MyApplication.kt:MyApplication$1000000</ID>
     <ID>MagicNumber:NetworkUtils.kt:3</ID>
     <ID>MagicNumber:OnboardingHostActivity.kt:OnboardingHostActivity$4</ID>
-    <ID>MagicNumber:OrphanedTransactionDialog.kt:OrphanedTransactionDialog$1000</ID>
     <ID>MagicNumber:Package.kt:AddOnPackage$590</ID>
     <ID>MagicNumber:Package.kt:Package.Contrib$1540</ID>
     <ID>MagicNumber:Package.kt:Package.Extended$1990</ID>
@@ -365,16 +346,6 @@
     <ID>MagicNumber:PdfPrinter.kt:PdfPrinter$5f</ID>
     <ID>MagicNumber:PdfPrinter.kt:PdfPrinter$8f</ID>
     <ID>MagicNumber:PieChart.kt:0.1f</ID>
-    <ID>MagicNumber:Plan.kt:Plan$12</ID>
-    <ID>MagicNumber:PlanExecutor.kt:PlanExecutor$1000</ID>
-    <ID>MagicNumber:PlannerUtils.kt:PlannerUtils.Companion$3</ID>
-    <ID>MagicNumber:PlannerUtils.kt:PlannerUtils.Companion$4</ID>
-    <ID>MagicNumber:PlannerUtils.kt:PlannerUtils.Companion$5</ID>
-    <ID>MagicNumber:PlannerUtils.kt:PlannerUtils.Companion$6</ID>
-    <ID>MagicNumber:PlannerUtils.kt:PlannerUtils.Companion$7</ID>
-    <ID>MagicNumber:PlannerUtils.kt:PlannerUtils.Companion$8</ID>
-    <ID>MagicNumber:PlannerUtils.kt:PlannerUtils.Companion$9</ID>
-    <ID>MagicNumber:PlannerViewModel.kt:PlannerViewModel.Month$12</ID>
     <ID>MagicNumber:PreferenceUiFragment.kt:PreferenceUiFragment$31</ID>
     <ID>MagicNumber:PreferenceUiFragment.kt:PreferenceUiFragment$7</ID>
     <ID>MagicNumber:PreferencesContribFragment.kt:PreferencesContribFragment$5</ID>
@@ -401,13 +372,9 @@
     <ID>MagicNumber:SyncAdapter.kt:SyncAdapter.Companion$1000</ID>
     <ID>MagicNumber:TagFilterFileLoggingTree.kt:TagFilterFileLoggingTree$5</ID>
     <ID>MagicNumber:TemplateWidgetService.kt:TemplateRemoteViewsFactory$48</ID>
-    <ID>MagicNumber:TemplatesList.kt:TemplatesList$1000</ID>
-    <ID>MagicNumber:TemplatesListViewModel.kt:TemplatesListViewModel$1000</ID>
-    <ID>MagicNumber:TemplatesListViewModel.kt:TemplatesListViewModel$3</ID>
     <ID>MagicNumber:TradeList.kt:4f</ID>
     <ID>MagicNumber:TradeScreen.kt:0.95f</ID>
     <ID>MagicNumber:Transaction.kt:Transaction$1000</ID>
-    <ID>MagicNumber:TransactionDelegate.kt:TransactionDelegate$31</ID>
     <ID>MagicNumber:TransactionDetailFragment.kt:TransactionDetailFragment$4.6f</ID>
     <ID>MagicNumber:TransactionRenderer.kt:ItemRenderer$0.5f</ID>
     <ID>MagicNumber:TransactionRenderer.kt:ItemRenderer$100</ID>
@@ -438,7 +405,6 @@
     <ID>MagicNumber:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$563</ID>
     <ID>MagicNumber:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$567</ID>
     <ID>MagicNumber:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$576</ID>
-    <ID>MagicNumber:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$583</ID>
     <ID>MagicNumber:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$586</ID>
     <ID>MagicNumber:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$604</ID>
     <ID>MagicNumber:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$615</ID>
@@ -464,7 +430,6 @@
     <ID>MatchingDeclarationName:FilterHandler.kt:FilterHandlerScope</ID>
     <ID>MatchingDeclarationName:ImportsourceViewModel.kt:ImportSourceViewModel : BaseViewModel</ID>
     <ID>MatchingDeclarationName:MoreUiUtils.kt:Itag</ID>
-    <ID>MatchingDeclarationName:RepositoryPlan.kt:CalendarIntegrationNotAvailableException : IllegalStateException</ID>
     <ID>MatchingDeclarationName:TradeList.kt:TradeEvent</ID>
     <ID>MatchingDeclarationName:TradeScreen.kt:CostLegUiState : Parcelable</ID>
     <ID>MatchingDeclarationName:prefHandler.kt:MyAbstractClass : PrefHandler</ID>
@@ -482,26 +447,18 @@
     <ID>NestedBlockDepth:HistoryChart.kt:HistoryChart$override fun onLoadFinished</ID>
     <ID>NestedBlockDepth:LaunchActivity.kt:LaunchActivity$override fun onPostCreate</ID>
     <ID>NestedBlockDepth:LazyFontSelector.kt:LazyFontSelector$@Throws(DocumentException::class, IOException::class) fun processChar: Chunk?</ID>
-    <ID>NestedBlockDepth:MoreDbUtils.kt:fun cacheEventData</ID>
     <ID>NestedBlockDepth:MoreDbUtils.kt:fun insertUuidsForDefaultCategories</ID>
     <ID>NestedBlockDepth:MoreDbUtils.kt:private fun setupCategoriesInternal: Pair&lt;Int, Int&gt;</ID>
     <ID>NestedBlockDepth:NewDialogUtils.kt:fun ContentResolver.getDisplayName: String</ID>
     <ID>NestedBlockDepth:PdfPrinter.kt:PdfPrinter$@Throws(DocumentException::class, IOException::class) private fun addTransactionList</ID>
-    <ID>NestedBlockDepth:PlanExecutor.kt:PlanExecutor$@RequiresPermission(allOf = [Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR]) @SuppressLint("InlinedApi") override suspend fun doWork: Result</ID>
-    <ID>NestedBlockDepth:PlannerUtils.kt:PlannerUtils$@RequiresPermission(Manifest.permission.READ_CALENDAR) private fun checkPlannerInternal</ID>
-    <ID>NestedBlockDepth:PlannerUtils.kt:PlannerUtils$@RequiresPermission(Manifest.permission.READ_CALENDAR, conditional = true) fun onPlannerCalendarIdChanged</ID>
     <ID>NestedBlockDepth:Receipts.kt:fun saveReceipt: Bundle</ID>
-    <ID>NestedBlockDepth:RepositoryTemplate.kt:fun Repository.loadTemplate</ID>
-    <ID>NestedBlockDepth:RestoreViewModel.kt:RestoreViewModel$private fun restorePlanner: Int</ID>
     <ID>NestedBlockDepth:SyncAdapter.kt:SyncAdapter$@Throws(RemoteException::class) private fun getLocalChanges: List&lt;TransactionChange&gt;</ID>
-    <ID>NestedBlockDepth:TemplatesList.kt:TemplatesList$override fun onLoadFinished</ID>
     <ID>NestedBlockDepth:TransactionDelegate.kt:TransactionDelegate$open fun syncStateAndValidate: TransactionEditData?</ID>
     <ID>NestedBlockDepth:TransactionDelegate.kt:TransactionDelegate$override fun onItemSelected</ID>
     <ID>ReturnCount:AbstractSyncSetup.kt:AbstractSyncSetup$override fun onResult: Boolean</ID>
     <ID>ReturnCount:AmountInputViewHolder.kt:AmountInputViewHolder$override fun validate: Boolean</ID>
     <ID>ReturnCount:BalanceSheet.kt:fun lookup: Int</ID>
     <ID>ReturnCount:BaseMyExpenses.kt:BaseMyExpenses$override fun dispatchCommand: Boolean</ID>
-    <ID>ReturnCount:BasePreferenceFragment.kt:BasePreferenceFragment$override fun onDisplayPreferenceDialog</ID>
     <ID>ReturnCount:BaseTransactionProvider.kt:BaseTransactionProvider$private fun backupDb: Result&lt;Unit&gt;</ID>
     <ID>ReturnCount:BaseTransactionProvider.kt:BaseTransactionProvider$private fun ensureCategoryInternal: Pair&lt;Long, Boolean&gt;</ID>
     <ID>ReturnCount:CsvImportDataFragment.kt:CsvImportDataFragment$private fun validateMapping: Boolean</ID>
@@ -516,7 +473,6 @@
     <ID>ReturnCount:ManageSyncBackends.kt:ManageSyncBackends$override fun dispatchCommand: Boolean</ID>
     <ID>ReturnCount:MoreUiUtils.kt:fun resolveThemeColor: Int</ID>
     <ID>ReturnCount:PermissionHelper.kt:PermissionHelper$@JvmStatic fun canReadUri: Boolean</ID>
-    <ID>ReturnCount:PlanExecutor.kt:PlanExecutor$@RequiresPermission(allOf = [Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR]) @SuppressLint("InlinedApi") override suspend fun doWork: Result</ID>
     <ID>ReturnCount:RoadmapVoteActivity.kt:RoadmapVoteActivity$override fun onContextItemSelected: Boolean</ID>
     <ID>ReturnCount:RoadmapVoteActivity.kt:RoadmapVoteActivity$override fun onResult: Boolean</ID>
     <ID>ReturnCount:SyncBackendList.kt:SyncBackendList$override fun onContextItemSelected: Boolean</ID>
@@ -554,13 +510,11 @@
     <ID>TooGenericExceptionCaught:ImportUtils.kt:ImportUtils$e: IndexOutOfBoundsException</ID>
     <ID>TooGenericExceptionCaught:LazyFontSelector.kt:LazyFontSelector$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ManageCategoriesViewModel.kt:ManageCategoriesViewModel$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:ManageTemplates.kt:ManageTemplates$e: Exception</ID>
     <ID>TooGenericExceptionCaught:MoreDbUtils.kt:e: Exception</ID>
     <ID>TooGenericExceptionCaught:MyApplication.kt:MyApplication$e: Exception</ID>
     <ID>TooGenericExceptionCaught:OnboardingHostActivity.kt:OnboardingHostActivity$e: Exception</ID>
     <ID>TooGenericExceptionCaught:PartyListViewModel.kt:PartyListViewModel$e: Exception</ID>
     <ID>TooGenericExceptionCaught:PdfHelper.kt:PdfHelper$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:PlanExecutor.kt:PlanExecutor$e: Exception</ID>
     <ID>TooGenericExceptionCaught:PriceHistory.kt:PriceHistory$e: Exception</ID>
     <ID>TooGenericExceptionCaught:PriceHistoryViewModel.kt:PriceHistoryViewModel$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ProtectedCursorLoader.kt:ProtectedCursorLoader$e: Exception</ID>
@@ -630,14 +584,12 @@
     <ID>TooManyFunctions:RepositoryTransaction.kt:org.totschnig.myexpenses.db2.RepositoryTransaction.kt</ID>
     <ID>TooManyFunctions:ResourceStorage.kt:ResourceStorage&lt;Res&gt;</ID>
     <ID>TooManyFunctions:RoadmapRepository.kt:RoadmapRepository</ID>
-    <ID>TooManyFunctions:SettingsViewModel.kt:SettingsViewModel : ContentResolvingAndroidViewModel</ID>
     <ID>TooManyFunctions:SyncAdapter.kt:SyncAdapter : AbstractThreadedSyncAdapter</ID>
     <ID>TooManyFunctions:SyncBackendAdapter.kt:SyncBackendAdapter : BaseExpandableListAdapter</ID>
     <ID>TooManyFunctions:SyncBackendProvider.kt:SyncBackendProvider</ID>
     <ID>TooManyFunctions:SyncBackendSetupActivity.kt:SyncBackendSetupActivity : RestoreActivityOnDialogResultListener</ID>
     <ID>TooManyFunctions:SyncDelegate.kt:SyncDelegate</ID>
     <ID>TooManyFunctions:SyncViewModel.kt:SyncViewModel : ContentResolvingAndroidViewModel</ID>
-    <ID>TooManyFunctions:TemplatesList.kt:TemplatesList : SortableListFragmentLoaderCallbacksOnDialogResultListener</ID>
     <ID>TooManyFunctions:TransactionDelegate.kt:TransactionDelegate : OnItemSelectedListener</ID>
     <ID>TooManyFunctions:TransactionEditViewModel.kt:TransactionEditViewModel : TagHandlingViewModel</ID>
   </CurrentIssues>

@@ -23,7 +23,6 @@
     <string name="account_types">Konto-typer</string>
     <string name="menu_create_transfer">Ny Överföring</string>
     <string name="contrib_feature_ad_free_label">Inga annonser</string>
-    <string name="menu_cancel_plan_instance">Avbryt</string>
     <string name="description">Beskrivning</string>
     <string name="contrib_feature_csv_import_label">CSV-importering</string>
     <string name="menu_delete">Ta bort</string>
@@ -41,7 +40,6 @@
     <string name="contrib_feature_synchronization_label">Molnsynkronisering</string>
     <string name="menu_create_instance_edit">Verkställ och redigera</string>
     <string name="dialog_remind_later">Senare</string>
-    <string name="menu_apply_template">Verkställ</string>
     <string name="menu_distribution">Distribution</string>
     <string name="expense">Utgift</string>
     <string name="dialog_title_warning_delete_template">Ta bort mall?</string>
@@ -90,7 +88,6 @@
     <string name="menu_create_main_cat">Ny huvudkategori</string>
     <string name="dialog_remind_rate_2">Dina kommentarer tillåter oss att fortsättningsvis lägga till förbättringar och utökningar.</string>
     <string name="button_label_close">Stäng</string>
-    <string name="menu_manage_plans">Mallar och abbonemang</string>
     <string name="menu_contrib">Bidra</string>
     <string name="export_sdcard_failure">Exporteringen till filen \"%1$s\" misslyckades: %2$s</string>
     <string name="grouping_none">Ogrupperad</string>
@@ -117,7 +114,6 @@
     <string name="select_payee">Välj motpart</string>
     <string name="menu_reset_all">Exportera och återställ allihopa</string>
     <string name="sum_transfer">Överföringar</string>
-    <string name="plan_event_deleted">Abonnemanget som associeras med den här mallen har tagits bort från kalendern.</string>
     <string name="restore_db_success">Databasen har återställts från säkerhetskopia.</string>
     <string name="password_lost">Glömt lösenordet</string>
     <string name="menu_invert_transfer">Invertera</string>
@@ -170,7 +166,6 @@
     </plurals>
     <string name="dialog_contrib_text_1"><i>{app_name}</i> erbjuds som öppen källkod.</string>
     <string name="pref_manage_accounts_title">Konton</string>
-    <string name="plan_automatic">automatiskt</string>
     <string name="pref_send_feedback_title">Skicka återkoppling</string>
     <string name="method">Betalningsmetod</string>
     <string name="pref_restore_title">Återställ</string>
@@ -182,7 +177,6 @@
     <string name="warning_password_protected">Appen är lösenordsskyddad.</string>
     <string name="password_not_valid">Ogiltigt lösenord. Försök igen!</string>
     <string name="menu_create_template_for_transaction">Ny mall för transaktion</string>
-    <string name="no_calendar_app_installed">Ingen app hittades för redigering av kalender-händelser.</string>
     <string name="dialog_contrib_reminder_remove_limitation">Ta bort den här begränsningen och kom åt fler funktioner genom att uppgradera <i>{app_name}</i>.</string>
     <string name="status">Status</string>
     <string name="menu_save_and_new">Spara och ny</string>
@@ -230,9 +224,7 @@
     <string name="transaction">Transaktion</string>
     <string name="menu_edit_account">Redigera konto</string>
     <string name="pref_visit_website_title">Besök hemsida</string>
-    <string name="pref_planning_calendar_create_local">Skapa ny lokal planeringskalender</string>
     <string name="pref_auto_fill_summary">Fyll i datan från senaste transaktionen med samma motpart</string>
-    <string name="planner_notification_channel_name">Planerare</string>
     <string name="thank_you">Tack för ditt stöd!</string>
     <string name="pref_manage_methods_summary">Skapa och redigera betalningsmetoder och associera dem med kontotyper.</string>
     <string name="pref_export_format_title">Dataformat</string>
@@ -350,7 +342,6 @@
     <string name="pref_ocr_time_formats_title">Tidsformat</string>
     <string name="pref_criterion_future_current">Aktuell tid</string>
     <string name="new_balance">Nytt saldo</string>
-    <string name="recurrence_last_day_of_month">Sista dagen</string>
     <string name="active_tags">Aktiva etiketter</string>
     <string name="stability_improvements" tools:ignore="UnusedResources">Stabilitetsförbättringar</string>
     <string name="menu_new_debt">Ny skuld</string>
@@ -447,7 +438,6 @@
     <string name="dialog_contrib_usage_limit_with_dialog">Med din nuvarande licensstatus (%1$s), visas denna dialog vid varje användning.</string>
     <string name="menu_create_split_part_category">Ny kategoriuppdelning</string>
     <string name="menu_create_split_part_transfer">Ny överföringsuppdelning</string>
-    <string name="menu_edit_plan_instance">Redigera enskild planförekomst</string>
     <string name="menu_edit_split">Redigera delad transaktion</string>
     <string name="menu_edit_split_part_category">Redigera kategoriuppdelning</string>
     <string name="menu_edit_split_part_transfer">Redigera uppdelad överföring</string>
@@ -463,14 +453,10 @@
     </plurals>
     <string name="numbered">numrerad</string>
     <string name="opening_balance">Ingående saldo</string>
-    <string name="plan_execution_canceled">Utförandet av planen avbrutet</string>
-    <string name="planner_create_calendar_failure">Kan inte skapa lokal planerarkalender</string>
-    <string name="planner_create_calendar_success">Lokal planerarkalender framgångsrikt skapad</string>
     <string name="pref_backup_summary">Skapa en säkerhetskopia av databasen och inställningarna.</string>
     <string name="pref_sort_order_usages">Antal användningar</string>
     <string name="pref_manage_sync_backends_title">Synkroniseringsbackends</string>
     <string name="pref_manage_sync_backends_summary">Lägg till backends för att synkronisera konton (%s).</string>
-    <string name="pref_planning_calendar_summary">Välj kalendern där planer för framtida och återkommande transaktioner sparas</string>
     <string name="pref_protection_delay_seconds_summary">Sekunder i overksamhet innan appen låses med lösenord.</string>
     <string name="pref_protection_delay_seconds_title">Fördröjning innan skydd</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">Datainmatning från widgetar och genvägar</string>
@@ -478,7 +464,6 @@
     <string name="pref_restore_summary">Välj en säkerhetskopia att återställa databas och inställningar ifrån.</string>
     <string name="pref_share_target_summary">Lämna det tomt om du vill välja mellan lämpliga appar (e-post, Dropbox, Google Docs, …), eller ange URL i någon av de stödda systemen</string>
     <string name="restore_backup_file_not_found">Ingen fil %1$s hittad i arkivet \"%2$s\"</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d planer har återställts från säkerhetskopia</string>
     <plurals name="save_transaction_from_template_success">
         <item quantity="one">Ny transaktion sparades framgångsrikt från mallen.</item>
         <item quantity="other">%1$d nya transaktioner sparades framgångsrikt från mallar.</item>
@@ -551,14 +536,10 @@
     <string name="pref_auto_backup_summary">Säkerhetskopiera databasen dagligen vid angiven tidpunkt (endast om data har ändrats).</string>
     <string name="calendar_permission_required"><i>{app_name}</i> behöver behörighet att komma åt din kalender för att kunna skapa planer för framtida och återkommande transaktioner.</string>
     <string name="pref_sort_order_custom">Anpassad</string>
-    <string name="plan_instance_state_open">öppen</string>
-    <string name="plan_instance_state_cancelled">inställd</string>
-    <string name="plan_instance_state_applied">tillämpad</string>
     <string name="warning_cannot_move_split_transaction">Denna uppdelade transaktion kan inte flyttas till konto %1$s eftersom det finns överföringsdelar som hänvisar till denna konto.</string>
     <string name="content_description_calculator_delete_button">Ta bort senaste siffran</string>
     <string name="paypal_callback_info">Din transaktion har slutförts och ett kvitto på ditt köp har skickats till dig via e-post. Du kan logga in på ditt konto på www.paypal.com för att se detaljer om denna transaktion.</string>
     <string name="search_transfer">Sök efter överföring</string>
-    <string name="pref_sort_order_next_instance">Nästa instans</string>
     <string name="crash_dialog_title">{app_name} har kraschat</string>
     <string name="crash_dialog_text">Ett oväntat fel uppstod vilket tvingade applikationen att stanna. Hjälp oss att åtgärda detta genom att skicka feldata, allt du behöver göra är att klicka OK.</string>
     <string name="crash_dialog_comment_prompt">Du kan lägga till dina kommentarer om problemet nedan:</string>
@@ -587,7 +568,6 @@
     <string name="contributed_by">Bidrag från %s</string>
     <string name="pref_sync_notification_summary">Meddela om synkroniseringsframsteg</string>
     <string name="pref_debug_logging_summary">Skriv felsökningsinformation i systemloggen</string>
-    <string name="plan_custom_recurrence_info">Vänligen spara mallen först. Planen öppnas sedan i kalenderappen, där du kan ställa in en anpassad återkomst.</string>
     <string name="menu_create_template_for_split">Ny delningsmall</string>
     <string name="licence_validation_error_device_limit_exceeded">Gränsen för antal enheter överskriden. Vänligen ta bort licensen från en annan enhet.</string>
     <string name="button_validate">Validera</string>
@@ -691,7 +671,6 @@
     <string name="pref_exchange_rate_provider_summary">Välj leverantör för att ladda ner växelkurser</string>
     <string name="pref_exchange_rate_provider_title">Leverantör av växelkurs</string>
     <string name="pref_exchange_rates_api_key_summary">Vänligen registrera ett gratis konto på %s och ange ditt app-ID</string>
-    <string name="pref_plan_executor_time_title">Aviseringstid</string>
     <string name="synchronization_select_folder_dialog_title">Välj en befintlig mapp eller skapa en ny</string>
     <string name="discover_feature_expense_income_switch" tools:ignore="UnusedResources">Använd denna brytknapp för att registrera inkomst.</string>
     <string name="no_budgets">Definiera din första budget genom att trycka på +-knappen.</string>
@@ -724,7 +703,6 @@
     <string name="dialog_multi_tag_append">Lägg till nya etiketter till befintliga</string>
     <string name="dialog_multi_tag_replace">Ersätt befintliga etiketter med nya</string>
     <string name="language_download_requested">Översättningar för %s språket begärs från Play Store</string>
-    <string name="pref_planner_manual_time_title">Tid för manuellt applicerad schemalagd transaktion</string>
     <string name="pref_planner_manual_time_noon">12:00 (middag)</string>
     <string name="pref_planner_manual_time_current">Appliceringstid</string>
     <string name="feature_download_requested">Feature %s efterfrågas från Play Store.</string>
@@ -737,13 +715,10 @@
     <string name="pref_feature_uninstall_title">Begär avinstallation av funktioner och språk</string>
     <string name="pref_feature_uninstall_summary">Play Store försöker så småningom ta bort dessa moduler i bakgrunden.</string>
     <string name="select_package">Välj ett licenspaket.</string>
-    <string name="advance_exexcution_in_days">Utför i förväg (antal dagar)</string>
     <string name="warning_balance_account_delete">Om du fortsätter kommer alla avstämda transaktioner på detta konto att raderas från databasen och du kommer inte kunna återställa dem.</string>
     <string name="confirmation_load_template_discard_data">Befintlig formulärdata kommer att kasseras.</string>
     <string name="pref_clone_with_current_date_title">Datum för duplicerade transaktioner</string>
     <string name="template_default_action_without_amount_hint">Mall utan belopp ska sparas med standardåtgärden \'Redigera\'</string>
-    <string name="plan_automatic_without_amount_hint">Plan utan belopp bör inte sparas med automatisk plangenomförande</string>
-    <string name="content_description_edit_plan">Redigera plan i kalenderappen</string>
     <string name="menu_save_and_new_content_description">Spara datan, lämna formuläret öppet för att skapa en ny transaktion med samma data.</string>
     <string name="pref_ocr_engine_title">Motor för textigenkänning</string>
     <string name="pref_tesseract_language_title">Språk för tesserakt</string>
@@ -759,7 +734,6 @@
     <string name="merge_parties_select">Välj namn på sammanslagen part</string>
     <string name="request_for_invoice">Begäran om faktura</string>
     <string name="auto_fill_focus">Fokusera på Betalningsmottagare</string>
-    <string name="warning_plan_instance_delete">Transaktionen som skapats för det valda datumet kommer att raderas.</string>
     <string name="crash_reports_user_info">{app_name} skickar automatiskt rapporter om applikationskrascher till sina utvecklare, vilket gör att de kan åtgärda problem snabbare.</string>
     <string name="pref_enable_acra">Tillåt automatisk sändning av kraschrapporter</string>
     <string name="pref_acra_user_email">Användarens e-postadress som ska inkluderas i kraschrapporten</string>
@@ -809,11 +783,6 @@
     <string name="debt_balance_they_owe">%1$s är nu skyldig %2$s.</string>
     <string name="optimize_image_file_size">Optimera bildfilstorlek</string>
     <string name="image_optimize_quality_summary">Kvalitet 0 innebär komprimering för minsta möjliga storlek. 100 innebär komprimering för maximal visuell kvalitet.</string>
-    <string name="orphaned_transaction_info">En transaktion är kopplad till planen för detta datum, men ingen händelseinstans existerar vid detta datum.</string>
-    <string name="orphaned_transaction_relink">Transaktionen kan kopplas om till händelseinstansen på %s.</string>
-    <string name="orphaned_transaction_align_date">Valfritt kan datumet som lagras med transaktionen också justeras med instansdatumet.</string>
-    <string name="button_relink_keep_date">Länka igen, men behåll datumet</string>
-    <string name="button_relink_update_date">Omlänkning och uppdateringsdatum</string>
     <string name="merge_parties_strategy_group">Dubbletter grupperas som beroende.</string>
     <string name="show_duplicates">Visa dubbletter</string>
     <string name="pref_attachment_mime_types_title">Tillåtna MIME-typer för bilagor</string>

@@ -13,83 +13,9 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="does_not_repeat">"Evento único"</string>
-    <string name="endByDate">"; hasta <xliff:g id="DATE">%s</xliff:g>"</string>
-    <plurals name="endByCount">
-        <item quantity="one">"; una vez"</item>
-        <item quantity="other">"; <xliff:g id="NUMBER">%d</xliff:g> veces"</item>
-    </plurals>
-    <plurals name="daily">
-        <item quantity="one">"Diariamente"</item>
-        <item quantity="other">"Cada <xliff:g id="NUMBER">%d</xliff:g> días"</item>
-    </plurals>
-    <string name="every_weekday">"Cada día laborable (lunes-viernes)"</string>
-    <plurals name="weekly">
-        <item quantity="one">"Semanalmente el <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>"</item>
-        <item quantity="other">"Cada <xliff:g id="NUMBER">%1$d</xliff:g> semanas el <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>"</item>
-    </plurals>
-    <plurals name="monthly">
-        <item quantity="one">Mensualmente</item>
-        <item quantity="other">Cada <xliff:g id="COUNT">%d</xliff:g> meses</item>
-    </plurals>
-    <plurals name="yearly">
-        <item quantity="one">Anualmente</item>
-        <item quantity="other">Cada <xliff:g id="COUNT">%d</xliff:g> años</item>
-    </plurals>
-    <string name="monthly_on_day">" (el día <xliff:g id="DAY_OF_MONTH">%s</xliff:g>)"</string>
-    <string name="yearly_on_day">" (el <xliff:g id="DATES">%s</xliff:g>)"</string>
     <string name="yearly_plain">"Anualmente"</string>
     <string name="daily_plain">Diariamente</string>
     <string name="weekly_plain">Semanalmente</string>
     <string name="monthly_plain">"Mensualmente"</string>
 
-    <string-array name="repeat_by_nth_sun">
-        <item>"cada primer domingo del mes"</item>
-        <item>"cada segundo domingo del mes"</item>
-        <item>"cada tercer domingo del mes"</item>
-        <item>"cada cuarto domingo del mes"</item>
-        <item>"cada último domingo del mes"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_mon">
-        <item>"cada primer lunes del mes"</item>
-        <item>"cada segundo lunes del mes"</item>
-        <item>"cada tercer lunes del mes"</item>
-        <item>"cada cuarto lunes del mes"</item>
-        <item>"cada último lunes del mes"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_tues">
-        <item>"cada primer martes del mes"</item>
-        <item>"cada segundo martes del mes"</item>
-        <item>"cada tercer martes del mes"</item>
-        <item>"cada cuarto martes del mes"</item>
-        <item>"cada último martes del mes"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_wed">
-        <item>"cada primer miércoles del mes"</item>
-        <item>"cada segundo miércoles del mes"</item>
-        <item>"cada tercer miércoles del mes"</item>
-        <item>"cada cuarto miércoles del mes"</item>
-        <item>"cada último miércoles del mes"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_thurs">
-        <item>"cada primer jueves del mes"</item>
-        <item>"cada segundo jueves del mes"</item>
-        <item>"cada tercer jueves del mes"</item>
-        <item>"cada cuarto jueves del mes"</item>
-        <item>"cada último jueves del mes"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_fri">
-        <item>"cada primer viernes del mes"</item>
-        <item>"cada segundo viernes del mes"</item>
-        <item>"cada tercer viernes del mes"</item>
-        <item>"cada cuarto viernes del mes"</item>
-        <item>"cada último viernes del mes"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_sat">
-        <item>"cada primer sábado del mes"</item>
-        <item>"cada segundo sábado del mes"</item>
-        <item>"cada tercer sábado del mes"</item>
-        <item>"cada cuarto sábado del mes"</item>
-        <item>"cada último sábado del mes"</item>
-    </string-array>
 </resources>

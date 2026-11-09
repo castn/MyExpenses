@@ -108,13 +108,11 @@
     <string name="licence_validation_premium">תכונות פרימיום פתוחות.</string>
     <string name="menu_aggregates">סה\"כ</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">ישם</string>
     <string name="menu_back">חזרה </string>
     <string name="menu_backup">גיבוי</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">מאזן את החשבון</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">בטל</string>
     <string name="menu_clone_transaction">שכפל</string>
     <string name="menu_contrib">לתרום</string>
     <string name="menu_create_account">חשבון חדש</string>
@@ -140,7 +138,6 @@
     <string name="menu_edit_cat">ערוך קטגוריה</string>
     <string name="menu_edit_method">ערוך שיטת תשלום</string>
     <string name="menu_edit_party">ערוך חלק</string>
-    <string name="menu_edit_plan_instance">ערוך אירוע חד פעמי</string>
     <string name="menu_edit_split">עריכת עסקה מפוצלת</string>
     <string name="menu_edit_split_part_category">ערוך חלק מפוצל בקטגוריה</string>
     <string name="menu_edit_split_part_transfer">ערוך חלק מפוצל בהעברה</string>
@@ -153,7 +150,6 @@
     <string name="menu_help">עזרה</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">הפוך</string>
-    <string name="menu_manage_plans">תבניות ותוכניות</string>
     <string name="menu_reset">יצא ואפס</string>
     <string name="menu_reset_all">יצא ואפס הכול</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -170,7 +166,6 @@
     <string name="no_expenses">אין עדין הוצאות!</string>
     <string name="no_exportable_expenses">אין עסקאות שטרם יוצאו.</string>
     <string name="no_filemanager_installed">לא נמצאה אפליקציה לניהול קבצים</string>
-    <string name="no_calendar_app_installed">לא נמצאה אפליקציה לעריכת אירוע ביומן.</string>
     <string name="image_capture_not_installed">לא נמצא יישומון לצילום.</string>
     <string name="no_mapped_transactions">במהלך תקופה זו לא היו עסקאות ממופות לקטגוריות.</string>
     <string name="no_methods">אין שיטות תשלום.</string>
@@ -203,15 +198,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">מחזוריות</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">אוטומטי</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">מתכנן {app_name}</string>
-    <string name="planner_notification_channel_name">מתכנן</string>
-    <string name="plan_event_deleted">התוכנית המשויכת לתבנית זו נמחקה מהיומן.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">ביצוע התוכנית בוטל</string>
-    <string name="planner_create_calendar_failure">לא ניתן ליצור יומן תכנון מקומי</string>
-    <string name="planner_create_calendar_success">יומן תכנון מקומי יוצר בהצלחה</string>
     <!-- payment methods -->
     <string name="pm_cheque">המחאה</string>
     <string name="pm_creditcard">כרטיס אשראי</string>
@@ -251,8 +240,6 @@
     <string name="pref_password_not_equal">סיסמאות אינן תואמות</string>
     <string name="pref_perform_share_title">שתף את היצוא ואת הגיבויים</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">צור יומן תכנון מקומי חדש</string>
-    <string name="pref_planning_calendar_summary">בחר את היומן שבו מאוחסנות תוכניות לעסקאות עתידיות וחוזרות</string>
     <string name="pref_protection_delay_seconds_summary">שניות ללא פעילות לפני שהיישום יינעל על ידי סיסמה.</string>
     <string name="pref_protection_delay_seconds_title">עיכוב ללא פעילות עד להגנה</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">הזנת נתונים מווידג\'טים וקיצורי דרך</string>
@@ -284,7 +271,6 @@
     <string name="restore_preferences_failure">שחזור ההעדפות נכשל</string>
     <string name="restore_backup_file_not_found">קובץ %1$sלא נמצא בארכיון \"%2$s\"</string>
     <string name="restore_preferences_success">ההעדפות שוחזרו מהגיבוי.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d התוכניות שוחזרו מהגיבוי</string>
     <string name="save_transaction_and_new_success">נשמר בהצלחה</string>
     <string name="save_transaction_error">לא ניתן היה לשמור עסקה חדשה מהתבנית.</string>
     <plurals name="save_transaction_from_template_success">
@@ -446,17 +432,13 @@
     <string name="pref_sort_order_custom">מותאם אישית</string>
     <string name="content_description_calculator">מחשבון</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">פתח</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">מבוטל</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">הוחל</string>
     <string name="warning_cannot_move_split_transaction">לא ניתן להעביר את העסקה המפוצלת הזו לחשבון %1$s משום שישנם חלקי העברה המתייחסים לחשבון זה.</string>
     <string name="content_description_calculator_delete_button">מחק את הסיפרה האחרונה</string>
     <string name="paypal_callback_info">העסקה שלך הושלמה, וקבלה עבור הרכישה שלך נשלחה אליך בדוא\"ל. תוכל להיכנס לחשבון שלך בכתובת www.paypal.com כדי להציג פרטים על עסקה זו.</string>
     <string name="search_transfer">חפש עסקה</string>
     <!-- Sort plans (recurring transactions) by the next instance  -->
-    <string name="pref_sort_order_next_instance">המקרה הבא</string>
     <string name="crash_dialog_title">האפליקציה {app_name} קרסה</string>
     <string name="crash_dialog_text">אירעה שגיאה בלתי צפויה ביישום שגרמה לסגירתו. אנא עזור לנו לתקן זאת על ידי שליחת נתוני שגיאה, כל שעליך לעשות הוא ללחוץ על אישור.</string>
     <string name="crash_dialog_comment_prompt">תוכל להוסיף את הערותיך לגבי הבעיה שבהמשך:</string>
@@ -513,7 +495,6 @@
     <string name="contributed_by">נתרם על ידי %s</string>
     <string name="pref_sync_notification_summary">הודע על התקדמות הסנכרון</string>
     <string name="pref_debug_logging_summary">כתוב מידע לצורך פתרון באגים ביומן המערכת</string>
-    <string name="plan_custom_recurrence_info">שמור תחילה את התבנית. לאחר מכן, התוכנית תיפתח באפליקציית היומן, שבה תוכל להגדיר הישנות מותאמת אישית.</string>
     <string name="menu_create_template_for_split">תבנית חדשה מפוצלת</string>
     <string name="progress_validating_licence">אימות רשיון</string>
     <string name="licence_validation_error_expired">רשיון פג תוקף</string>
@@ -652,7 +633,6 @@
     <string name="pref_exchange_rate_provider_summary">בחר ספק כדי להוריד שערי חליפין</string>
     <string name="pref_exchange_rate_provider_title">בחר לספק להוריד שערי חליפין</string>
     <string name="pref_exchange_rates_api_key_summary">אנא הרשמו לחשבון בחינם ב- %s וספקו את מזהה האפליקציה שלכם</string>
-    <string name="pref_plan_executor_time_title">זמן התראה למתכנן</string>
     <string name="synchronization_select_folder_dialog_title">בחר תיקיה קיימת או צור תיקיה חדשה</string>
     <!-- This message is shwon when we highlight the income / expense toogle, to make user aware of this feature  -->
     <string name="discover_feature_expense_income_switch">השתמש בלחצן זה כדי לרשום הכנסה.</string>
@@ -708,7 +688,6 @@
     <string name="new_tag_hint">הכנס תג חדש</string>
     <string name="language_download_requested">תרגום משפה %s נדרש מחנות האפליקציות</string>
     <!-- Title for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
-    <string name="pref_planner_manual_time_title">זמן לביצוע עסקה מתוזמנת המיושמת ידנית</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
     <string name="pref_planner_manual_time_noon">12 בערב (צהריים)</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction (current time at moment of application) -->
@@ -743,14 +722,11 @@
     <!-- Toast message shown if user clicks on Upgrade button before having selected a licence -->
     <string name="select_package">אנא בחר חבילת רישיון.</string>
     <!-- Label for a slider control that allows to configure a plan to be executed (added to the ledger) the give number of days in advance -->
-    <string name="advance_exexcution_in_days">ביצוע מראש (בימים)</string>
     <string name="warning_balance_account_delete">אם תמשיך, כל העסקאות המתואמות של חשבון זה יימחקו ממסד הנתונים ולא תוכל לשחזר אותן.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">נתוני הטופס הקיימים יימחקו.</string>
     <string name="pref_clone_with_current_date_title">תאריך העסקאות המשובטות</string>
     <string name="template_default_action_without_amount_hint">יש לשמור תבנית ללא סכום עם פעולת ברירת המחדל \'ערוך\'</string>
-    <string name="plan_automatic_without_amount_hint">אין לשמור תוכנית ללא סכום עם ביצוע תוכנית אוטומטית</string>
-    <string name="content_description_edit_plan">עריכת התכנית ביישומון לוח שנה</string>
     <string name="menu_save_and_new_content_description">שמור את הנתונים, השאר את הטופס פתוח ליצירת עסקה חדשה עם אותם נתונים.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
     <string name="pref_ocr_engine_title">מנוע לזיהוי טקסט</string>
@@ -771,7 +747,6 @@
     <string name="new_balance">איזון חדש</string>
     <string name="single_feature_info">לחלופין ניתן לרכוש גישה בלתי מוגבלת ליכולת זו בלבד.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
-    <string name="recurrence_last_day_of_month">יום אחרון</string>
     <string name="warning_link_transfer">שתי העסקאות שנבחרו יקושרו כהעברה. מידע על מקבל / משלם וקטגוריה יימחק.</string>
     <!-- This is the title of an entry on the configuration screen for the account widget. It allows to decide which number should be displayed for each account: the current balance or the total (which included future transactions) -->
     <string name="account_widget_configuration_sum">סוג הסכום המוצג</string>
@@ -788,7 +763,6 @@
     <string name="auto_fill_focus">הגדר מיקוד על מקבל התשלום</string>
     <!-- This warning is shown when a user calls the Reset or Cancel commands on a scheduled transaction, for a date
      where the transaction has already been created.  -->
-    <string name="warning_plan_instance_delete">העסקה שנוצרה עבור התאריך שנבחר תימחק.</string>
     <string name="crash_reports_user_info">{app_name}  ישלחו באופן אוטומטי למפתחים את הדיווחים על קריסת יישומים, דבר שיאפשר להם לתקן בעיות במהירות רבה יותר.</string>
     <string name="pref_enable_acra">אפשר שליחה אוטומטית של דוחות קריסה</string>
     <string name="pref_acra_user_email">כתובת האימייל של המשתמש תיכלל בדוח הקריסה</string>
@@ -875,11 +849,6 @@
     <string name="select_template">בחירת תבנית</string>
     <string name="content_description_remove_icon">הסרת סמל</string>
     <string name="search_account">חיפוש חשבון</string>
-    <string name="orphaned_transaction_info">עסקה מקושרת לתוכנית לתאריך זה, אך לא קיים אירוע בתאריך זה.</string>
-    <string name="button_relink_keep_date">קישור מחדש, תוך שמירה על התאריך</string>
-    <string name="button_relink_update_date">קישור מחדש ועדכון התאריך</string>
-    <string name="orphaned_transaction_align_date">לחלופין, ניתן גם לתאם את התאריך המאוחסן עם העסקה לתאריך המופע.</string>
-    <string name="orphaned_transaction_relink">ניתן לקשר מחדש את העסקה עם האירוע ב־%s.</string>
     <string name="notifications_permission_required_auto_backup">הענקת ההרשאה לשליחת התראות תאפשר משלוח התראות על גיבויים אוטומטיים.</string>
     <string name="remove_from_group">הסרה מקבוצה</string>
     <string name="merge_parties_strategy_delete">כפילויות נמחקות.</string>

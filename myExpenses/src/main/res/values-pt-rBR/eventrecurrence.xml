@@ -16,83 +16,9 @@
 
 <resources
     xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="does_not_repeat">"Evento único"</string>
-    <string name="endByDate">"; até <xliff:g id="DATE">%s</xliff:g>"</string>
-  <plurals name="endByCount">
-    <item quantity="one">"; uma vez"</item>
-    <item quantity="other">"; <xliff:g id="NUMBER">%d</xliff:g> vezes"</item>
-  </plurals>
-  <plurals name="daily">
-    <item quantity="one">"Diariamente"</item>
-    <item quantity="other">"A cada <xliff:g id="NUMBER">%d</xliff:g> dias"</item>
-  </plurals>
-    <string name="every_weekday">"Todos os dias da semana (de segunda a sexta)"</string>
-  <plurals name="weekly">
-    <item quantity="one">"A cada <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>"</item>
-    <item quantity="other">"<xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g> a cada <xliff:g id="NUMBER">%1$d</xliff:g> semanas"</item>
-  </plurals>
-  <plurals name="monthly">
-    <item quantity="one">Mensalmente</item>
-    <item quantity="other">A cada <xliff:g id="COUNT">%d</xliff:g> meses</item>
-  </plurals>
-  <plurals name="yearly">
-    <item quantity="one">Anualmente</item>
-    <item quantity="other">A cada <xliff:g id="COUNT">%d</xliff:g> anos</item>
-  </plurals>
     <string name="monthly_plain">"Mensalmente"</string>
-    <string name="monthly_on_day">" (no dia <xliff:g id="DAY_OF_MONTH">%s</xliff:g>)"</string>
-    <string name="yearly_on_day">" (em <xliff:g id="DATES">%s</xliff:g>)"</string>
   <string name="yearly_plain">Anualmente</string>
   <string name="daily_plain">Diariamente</string>
   <string name="weekly_plain">Semanalmente</string>
 
-  <string-array name="repeat_by_nth_sun">
-    <item>"primeiro domingo do mês"</item>
-    <item>"segundo domingo do mês"</item>
-    <item>"terceiro domingo do mês"</item>
-    <item>"quarto domingo do mês"</item>
-    <item>"último domingo do mês"</item>
-  </string-array>
-  <string-array name="repeat_by_nth_mon">
-    <item>"primeira segunda-feira do mês"</item>
-    <item tools:ignore="Typos">"segunda segunda-feira do mês"</item>
-    <item>"terceira segunda-feira do mês"</item>
-    <item>"quarta segunda-feira do mês"</item>
-    <item>"última segunda-feira do mês"</item>
-  </string-array>
-  <string-array name="repeat_by_nth_tues">
-    <item>"primeira terça-feira do mês"</item>
-    <item>"segunda terça-feira do mês"</item>
-    <item>"terceira terça-feira do mês"</item>
-    <item>"quarta terça-feira do mês"</item>
-    <item>"última terça-feira do mês"</item>
-  </string-array>
-  <string-array name="repeat_by_nth_wed">
-    <item>"primeira quarta-feira do mês"</item>
-    <item>"segunda quarta-feira do mês"</item>
-    <item>"terceira quarta-feira do mês"</item>
-    <item tools:ignore="Typos">"quarta quarta-feira do mês"</item>
-    <item>"última quarta-feira do mês"</item>
-  </string-array>
-  <string-array name="repeat_by_nth_thurs">
-    <item>"primeira quinta-feira do mês"</item>
-    <item>"segunda quinta-feira do mês"</item>
-    <item>"terceira quinta-feira do mês"</item>
-    <item>"quarta quinta-feira do mês"</item>
-    <item>"última quinta-feira do mês"</item>
-  </string-array>
-  <string-array name="repeat_by_nth_fri">
-    <item>"primeira sexta-feira do mês"</item>
-    <item>"segunda sexta-feira do mês"</item>
-    <item>"terceira sexta-feira do mês"</item>
-    <item>"quarta sexta-feira do mês"</item>
-    <item>"última sexta-feira do mês"</item>
-  </string-array>
-  <string-array name="repeat_by_nth_sat">
-    <item>"primeiro sábado do mês"</item>
-    <item>"segundo sábado do mês"</item>
-    <item>"terceiro sábado do mês"</item>
-    <item>"quarto sábado do mês"</item>
-    <item>"último sábado do mês"</item>
-  </string-array>
 </resources>

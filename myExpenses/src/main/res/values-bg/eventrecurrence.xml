@@ -14,83 +14,9 @@
  -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="does_not_repeat">"Еднократно събитие"</string>
-    <string name="endByDate">"– до <xliff:g id="DATE">%s</xliff:g>"</string>
-    <plurals name="endByCount">
-        <item quantity="one">"– по един път"</item>
-        <item quantity="other">"– по <xliff:g id="NUMBER">%d</xliff:g> пъти"</item>
-    </plurals>
-    <plurals name="daily">
-        <item quantity="one">"Ежедневно"</item>
-        <item quantity="other">"На всеки <xliff:g id="NUMBER">%d</xliff:g> дни"</item>
-    </plurals>
-    <string name="every_weekday">"Всеки делничен ден (пн – пт)"</string>
-    <plurals name="weekly">
-        <item quantity="one">"Ежеседмично в/ъв <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>"</item>
-        <item quantity="other">"На всеки <xliff:g id="NUMBER">%1$d</xliff:g> седмици в/ъв <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>"</item>
-    </plurals>
-    <plurals name="monthly">
-        <item quantity="one">Всеки месец</item>
-        <item quantity="other">На <xliff:g id="COUNT">%d</xliff:g> месеца</item>
-    </plurals>
-    <plurals name="yearly">
-        <item quantity="one">Всяка година</item>
-        <item quantity="other">На <xliff:g id="COUNT">%d</xliff:g> години</item>
-    </plurals>
 
-    <string name="monthly_on_day">" (на <xliff:g id="DAY_OF_MONTH">%s</xliff:g>)"</string>
-    <string name="yearly_on_day">" (на <xliff:g id="DATES">%s</xliff:g>)"</string>
     <string name="yearly_plain">"Всяка година"</string>
     <string name="daily_plain">"Ежедневно"</string>
     <string name="weekly_plain">"Ежеседмично"</string>
     <string name="monthly_plain">"Всеки месец"</string>
-    <string-array name="repeat_by_nth_sun">
-        <item>"всяка първа неделя"</item>
-        <item>"всяка втора неделя"</item>
-        <item>"всяка трета неделя"</item>
-        <item>"всяка четвърта неделя"</item>
-        <item>"всяка последна неделя"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_mon">
-        <item>"всеки първи понеделник"</item>
-        <item>"всеки втори понеделник"</item>
-        <item>"всеки трети понеделник"</item>
-        <item>"всеки четвърти понеделник"</item>
-        <item>"всеки последен понеделник"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_tues">
-        <item>"всеки първи вторник"</item>
-        <item>"всеки втори вторник"</item>
-        <item>"всеки трети вторник"</item>
-        <item>"всеки четвърти вторник"</item>
-        <item>"всеки последен вторник"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_wed">
-        <item>"всяка първа сряда"</item>
-        <item>"всяка втора сряда"</item>
-        <item>"всяка трета сряда"</item>
-        <item>"всяка четвърта сряда"</item>
-        <item>"всяка последна сряда"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_thurs">
-        <item>"всеки първи четвъртък"</item>
-        <item>"всеки втори четвъртък"</item>
-        <item>"всеки трети четвъртък"</item>
-        <item>"всеки четвърти четвъртък"</item>
-        <item>"всеки последен четвъртък"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_fri">
-        <item>"всеки първи петък"</item>
-        <item>"всеки втори петък"</item>
-        <item>"всеки трети петък"</item>
-        <item>"всеки четвърти петък"</item>
-        <item>"всеки последен петък"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_sat">
-        <item>"всяка първа събота"</item>
-        <item>"всяка втора събота"</item>
-        <item>"всяка трета събота"</item>
-        <item>"всяка четвърта събота"</item>
-        <item>"всяка последна събота"</item>
-    </string-array>
 </resources>

@@ -21,7 +21,6 @@
     <string name="response_no">"No"</string>
     <string name="experimental">"Experimental"</string>
     <string name="add_widget">"Añadir widget"</string>
-    <string name="calendar">"Calendario"</string>
     <string name="permissions_label">"Permisos"</string>
     <string name="time_format">"Formato de hora"</string>
     <string name="setup">"Configuración"</string>
@@ -63,8 +62,6 @@
     <string name="menu">"Menú"</string>
     <string name="action_move_down">"Mover hacia abajo"</string>
     <string name="action_move_up">"Mover hacia arriba"</string>
-    <string name="calendar_delete">Borrar calendario</string>
-    <string name="preferences_calendar_delete_message">¿Realmente quieres eliminar este calendario?</string>
     <string name="default_camera_app_title">"Aplicación de cámara"</string>
     <string name="help_and_feedback">"Ayuda y sugerencias"</string>
     <string name="currencies_exchange">"Divisas y cambio de moneda extranjera"</string>

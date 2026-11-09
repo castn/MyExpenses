@@ -35,24 +35,11 @@
     <string name="help_ManageParties_floating_action_button">Use o botão de ação flutuante para adicionar uma nova entrada.</string>
     <string name="menu_merge_help_text">Se o mesmo parceiro aparecer várias vezes na lista com diferentes variações de grafia, você pode mesclá-los.</string>
     <string name="help_ManageParties_mergeMode_info_2">Você será solicitado a selecionar qual variante manter.</string>
-    <string name="help_ManageTemplates_plans_title">Visualização do calendário de planos</string>
-    <string name="help_ManageTemplates_planner_title">Próximas recorrências</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src="ic_menu_template">Embora os modelos possam ser derivados de transações por meio de seu menu de contexto, aqui você pode criar novos modelos do zero (para transações ou transferências) clicando no botão de ação flutuante. Clicar em um modelo criará uma instância para ele.<br><img src="ic_event"> Um plano é um modelo para o qual você criou um evento (único ou recorrente) no calendário de planejamento. Clicar em um plano abre uma visualização do calendário, que exibe as instâncias anteriores e futuras de um plano.]]></string>
-    <string name="help_ManageTemplates_planner_intro">Um toque longo em uma instância aberta inicia a seleção múltipla. Tocar no início ou no final do intervalo de datas permite estender o intervalo para o passado ou o futuro.</string>
-    <string name="help_ManageTemplates_plans_intro">Cada data destacada representa uma instância do plano.</string>
-    <string name="help_ManageTemplates_plans_info_header">O estado de uma instância é indicado pelos seguintes ícones:</string>
-    <string name="help_ManageTemplates_plans_info_open">A instância ainda não foi gerada.</string>
-    <string name="help_ManageTemplates_plans_info_applied">A instância foi gerada.</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">A instância foi cancelada, ou seja, você marcou-a para ser ignorada. Nenhuma transação será criada para esta instância.</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">Instancia os modelos selecionados e os salva imediatamente.</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">Instancia o modelo selecionado e entra em sua tela de edição, onde você pode modificá-lo antes de salvar.</string>
     <string name="cab_ManageTemplates_delete_help_text">Exclui os modelos selecionados e todos os planos associados.</string>
     <string name="cab_ManageTemplates_edit_help_text">Edita o modelo selecionado e cria ou edita um plano associado.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">Crie transações no momento das instâncias do evento selecionado e as salva imediatamente.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">Crie uma transação no momento da instância de evento selecionada e entre em seu formulário de edição, onde você poderá modificá-la antes de salvar.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">Indica que, nas instâncias dos eventos selecionados, nenhuma transação deve ser criada. Se foram criadas transações para as instâncias do evento selecionado, elas serão excluídas.</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">Se foram criadas transações para as instâncias do evento selecionado, elas serão excluídas. Se elas foram sinalizadas como canceladas, os sinalizadores serão removidos.</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">Edite a transação que foi criada para a instância do plano selecionada.</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">A lista de modelos pode ser ordenada por título (em ordem alfabética), por quantia, por frequência de uso ou pela última vez que uma transação foi gerada a partir dela.</string>
     <string name="help_ManageCategories_distribution_info">Esta tela exibe a distribuição de suas despesas e receitas por categorias, para todas as transações em uma conta ou para um grupo específico. Se você expandir uma categoria principal na lista, o gráfico de pizza exibirá a distribuição de suas subcategorias. Se você selecionar uma categoria na lista, ela será destacada no gráfico de pizza e vice-versa. Pressione e segure uma categoria para exibir uma lista agregada das transações mapeadas para ela.</string>
     <string name="help_ManageCategories_select_mapping_info">Além das ações que você pode executar ao gerenciar categorias a partir da tela de Preferências (criar, editar, excluir), nesta tela você mapeia uma transação para uma categoria selecionada, simplesmente clicando sobre ela.</string>

@@ -22,7 +22,6 @@
     <string name="response_no">"Ні"</string>
     <string name="experimental">"Експериментальна функція"</string>
     <string name="add_widget">"Додати віджет"</string>
-    <string name="calendar">"Календар"</string>
     <string name="permissions_label">"Дозволи"</string>
     <string name="time_format">"Формат часу"</string>
     <string name="setup">"Налаштування"</string>
@@ -66,7 +65,6 @@
     <string name="menu">"Меню"</string>
     <string name="action_move_down">"Перемістити вниз"</string>
     <string name="action_move_up">"Перемістити вгору"</string>
-    <string name="calendar_delete">Видалити календар</string>
     <string name="default_camera_app_title">"Додаток для камери"</string>
     <string name="help_and_feedback">"Довідка й відгуки"</string>
     <string name="currencies_exchange">"Валюти й курси валют"</string>
@@ -169,7 +167,6 @@
     <string name="empty">"Порожньо"</string>
     <string name="options">"Параметри"</string>
     <string name="actions">"Дії"</string>
-    <string name="preferences_calendar_delete_message">Ви справді бажаєте видалити цей календар?</string>
     <string name="buttons">Кнопки</string>
     <string name="negation">Заперечення</string>
 </resources>

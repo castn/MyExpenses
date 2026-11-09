@@ -37,24 +37,11 @@
     <string name="help_ManageParties_mergeMode_info_1">Pilih pihak duplikat yang ingin Anda gabungkan.</string>
     <string name="help_ManageParties_mergeMode_info_2">Anda akan diminta untuk memilih varian mana yang akan dipertahankan.</string>
     <string name="menu_merge_help_text">Jika pihak yang sama muncul beberapa kali dalam daftar dengan variasi ejaan yang berbeda, Anda dapat menggabungkannya.</string>
-    <string name="help_ManageTemplates_plans_title">Tampilan kalender rencana</string>
-    <string name="help_ManageTemplates_planner_title">Pengulangan mendatang</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src=\"ic_menu_template\">Meskipun templat dapat dibuat dari transaksi melalui menu konteksnya, di sini Anda dapat membuat templat baru dari awal (untuk transaksi atau transfer) dengan mengetuk tombol aksi mengambang. Mengetuk sebuah templat akan membuat instansinya.<br><img src=\"ic_event\">Rencana adalah templat yang telah Anda buatkan sebuah acara (satu kali atau berulang) di kalender perencana. Mengetuk sebuah rencana akan membuka tampilan kalender yang menampilkan instansi masa lalu dan mendatang dari rencana tersebut.]]></string>
-    <string name="help_ManageTemplates_planner_intro">Mengetuk panjang pada instansi yang terbuka akan memulai pemilihan multi-item. Mengetuk awal atau akhir rentang tanggal memungkinkan Anda memperluas rentang ke masa lalu atau masa depan.</string>
-    <string name="help_ManageTemplates_plans_intro">Setiap tanggal yang disorot mewakili sebuah instansi dari rencana tersebut.</string>
-    <string name="help_ManageTemplates_plans_info_header">Status sebuah instansi ditunjukkan oleh ikon-ikon berikut:</string>
-    <string name="help_ManageTemplates_plans_info_open">Instansi ini belum diterapkan.</string>
-    <string name="help_ManageTemplates_plans_info_applied">Instansi ini telah diterapkan.</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">Instansi ini telah dibatalkan, artinya Anda telah menandainya untuk dilewati. Tidak ada transaksi yang akan dibuat untuk instansi ini.</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">Buat instansi dari templat yang dipilih dan simpan segera.</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">Buat instansi dari templat yang dipilih dan buka formulir pengeditannya di mana Anda dapat mengubahnya sebelum menyimpan.</string>
     <string name="cab_ManageTemplates_delete_help_text">Hapus templat yang dipilih beserta semua rencana yang terkait.</string>
     <string name="cab_ManageTemplates_edit_help_text">Edit templat yang dipilih dan buat atau edit rencana yang terkait.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">Buat transaksi pada waktu instansi acara yang dipilih dan simpan segera.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">Buat transaksi pada waktu instansi acara yang dipilih dan buka formulir pengeditannya di mana Anda dapat mengubahnya sebelum menyimpan.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">Tandai bahwa pada instansi acara yang dipilih, tidak ada transaksi yang perlu dibuat. Jika transaksi telah dibuat untuk instansi acara yang dipilih, transaksi tersebut akan dihapus.</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">Jika transaksi telah dibuat untuk instansi acara yang dipilih, transaksi tersebut akan dihapus; jika transaksi tersebut telah ditandai sebagai dibatalkan, tanda tersebut akan dihapus.</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">Edit transaksi yang telah dibuat untuk instansi rencana yang dipilih.</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">Daftar templat dapat diurutkan berdasarkan judul (secara alfabetis), berdasarkan jumlah, berdasarkan frekuensi penggunaan, atau berdasarkan waktu terakhir sebuah transaksi diinstansiasi darinya.</string>
     <string name="help_ManageCategories_distribution_info">Layar ini menampilkan distribusi pengeluaran dan pemasukan Anda per kategori, untuk semua transaksi dalam sebuah akun, atau untuk kelompok tertentu. Jika Anda membuka kategori utama dalam daftar, diagram lingkaran akan menampilkan distribusi subkategorinya. Jika Anda memilih kategori dalam daftar, kategori tersebut akan disorot dalam diagram lingkaran, dan sebaliknya. Ketuk panjang pada sebuah kategori untuk menampilkan daftar gabungan transaksi yang dipetakan ke kategori tersebut.</string>
     <string name="help_ManageCategories_select_mapping_info">Selain tindakan yang dapat Anda lakukan saat mengelola kategori dari layar Preferensi (buat, edit, hapus), di layar ini Anda dapat memetakan transaksi ke kategori yang dipilih hanya dengan mengetuknya.</string>

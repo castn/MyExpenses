@@ -708,7 +708,6 @@
     <string name="next_settings_section_entry_receipts">Kassenzettel</string>
     <string name="next_settings_section_data_manage">Verwalten</string>
     <string name="next_settings_section_data_currencies">Währungen &amp; Kurse</string>
-    <string name="next_settings_section_data_planner">Planer</string>
     <string name="next_settings_section_backup_backup">Sichern &amp; Wiederherstellen</string>
     <string name="next_settings_section_backup_auto">Automatische Sicherung</string>
     <string name="next_settings_section_backup_purge">Aufräumen &amp; Teilen</string>
@@ -730,14 +729,11 @@
     <string name="next_settings_title_share_target">Senden an</string>
     <string name="next_settings_title_uninstall_features">Funktionen entfernen</string>
     <string name="next_settings_title_uninstall_languages">Sprachen entfernen</string>
-    <string name="next_settings_title_planner_execution_time">Uhrzeit geplanter Buchungen</string>
-    <string name="next_settings_title_planner_manual_time">Uhrzeit beim Anwenden von Hand</string>
     <string name="next_settings_title_criterion_future">Zukünftige Buchungen beginnen</string>
     <string name="next_settings_title_equivalent_amounts_update">Beträge in Hauptwährung aktualisieren</string>
     <string name="next_settings_title_original_amount">Originalbetrag anzeigen</string>
     <string name="next_settings_explain_home_currency">Summen über Konten in verschiedenen Währungen werden in dieser Währung angezeigt. Bei einem Wechsel werden Preise und Beträge neu umgerechnet.</string>
     <string name="next_settings_explain_criterion_future">Zukünftige Buchungen zählen noch nicht zum aktuellen Kontostand. Entweder ab Ende des heutigen Tages oder schon ab der aktuellen Uhrzeit.</string>
-    <string name="next_settings_explain_planner_manual_time">Die Uhrzeit, die eine geplante Buchung bekommt, wenn Sie sie selbst anwenden.</string>
     <string name="next_settings_explain_equivalent_amounts_update">Ändert sich ein Wechselkurs, werden die Beträge früherer Buchungen in Hauptwährung neu berechnet.</string>
     <string name="next_settings_explain_original_amount">Buchungen in einer anderen Währung zeigen zusätzlich den Betrag in dieser Währung.</string>
     <string name="next_settings_explain_ocr_engine">Liest Betrag, Datum und Geschäft aus dem Foto eines Kassenzettels.</string>
@@ -795,7 +791,6 @@
     <string name="next_settings_explain_debug_ads">Zeigt Werbung auch dort, wo sie sonst ausgeschaltet ist.</string>
     <string name="next_settings_explain_db_safe_mode">Summiert sehr große Beträge ohne Überlauf. Die App schlägt ihn vor, wenn ein solcher Fehler auftritt.</string>
     <string name="next_settings_explain_repair_987">Zeigt Buchungen, die ein bekannter Fehler (#987) beschädigt hat.</string>
-    <string name="next_settings_explain_remove_local_calendar">Löscht den Kalender, den die App auf diesem Gerät für geplante Buchungen angelegt hat.</string>
     <string name="next_settings_consent">Buchungen auswerten</string>
     <string name="next_settings_category_rules">Kategorieregeln</string>
     <string name="next_settings_tag_rules">Tag-Regeln</string>

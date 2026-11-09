@@ -98,11 +98,9 @@
     <string name="licence_validation_success">授权密钥验证成功:</string>
     <string name="licence_validation_premium">高级功能已经解锁。</string>
     <string name="menu_aggregates">总计</string>
-    <string name="menu_apply_template">应用</string>
     <string name="menu_back">时间向前(过去)</string>
     <string name="menu_backup">备份</string>
     <string name="menu_balance">结平账户</string>
-    <string name="menu_cancel_plan_instance">取消</string>
     <string name="menu_clone_transaction">复制</string>
     <string name="menu_contrib">贡献</string>
     <string name="menu_create_account">新建账户</string>
@@ -128,7 +126,6 @@
     <string name="menu_edit_cat">编辑类别</string>
     <string name="menu_edit_method">编辑付款方法</string>
     <string name="menu_edit_party">编辑交易对象</string>
-    <string name="menu_edit_plan_instance">仅编辑单个计划实例</string>
     <string name="menu_edit_split">编辑款项拆分交易</string>
     <string name="menu_edit_split_part_category">编辑拆分款项类别</string>
     <string name="menu_edit_split_part_transfer">编辑拆分款项转账</string>
@@ -140,7 +137,6 @@
     <string name="menu_grouping">分组</string>
     <string name="menu_help">帮助</string>
     <string name="menu_invert_transfer">倒置</string>
-    <string name="menu_manage_plans">模板与计划</string>
     <string name="menu_reset">导出和重置</string>
     <string name="menu_reset_all">导出和重置所有</string>
     <string name="menu_reset_plan_instance">重置</string>
@@ -156,7 +152,6 @@
     <string name="no_expenses">未有开支!</string>
     <string name="no_exportable_expenses">没有尚未导出的交易数据。</string>
     <string name="no_filemanager_installed">未安装文件管理应用程序</string>
-    <string name="no_calendar_app_installed">找不到用于编辑日历事件的应用程序。</string>
     <string name="image_capture_not_installed">找不到用于拍照的应用程序。</string>
     <string name="no_mapped_transactions">在此期间，没有交易映射到此类别。</string>
     <string name="no_methods">没有付款方法。</string>
@@ -184,13 +179,7 @@
     <string name="payer">付款人</string>
     <string name="payer_or_payee">交易对手</string>
     <string name="plan">计划</string>
-    <string name="plan_automatic">自动应用</string>
     <string name="plan_calendar_name">{app_name} 规划日历</string>
-    <string name="planner_notification_channel_name">规划日历</string>
-    <string name="plan_event_deleted">与此模板关联的计划已从日历中删除。</string>
-    <string name="plan_execution_canceled">计划执行已取消</string>
-    <string name="planner_create_calendar_failure">无法创建本地规划日历</string>
-    <string name="planner_create_calendar_success">本地规划日历已成功创建</string>
     <string name="pm_cheque">支票</string>
     <string name="pm_creditcard">信用卡</string>
     <string name="pm_deposit">存款</string>
@@ -226,8 +215,6 @@
     <string name="pref_more_info_dialog_title">许可 &amp; 鸣谢</string>
     <string name="pref_password_not_equal">密码不匹配</string>
     <string name="pref_perform_share_title">分享导出的备份文件</string>
-    <string name="pref_planning_calendar_create_local">创建新的本地计划日历</string>
-    <string name="pref_planning_calendar_summary">选择存储未来和定期交易计划的日历</string>
     <string name="pref_protection_delay_seconds_summary">在应用程序被密码锁定之前的闲置秒数。</string>
     <string name="pref_protection_delay_seconds_title">延迟保护</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">从小部件和快捷方式输入数据</string>
@@ -258,7 +245,6 @@
     <string name="restore_preferences_failure">首选项还原失败</string>
     <string name="restore_backup_file_not_found">文件 %1$s 未在压缩文件 \"%2$s\\ 内被找到</string>
     <string name="restore_preferences_success">首选项已通过备份恢复</string>
-    <string name="restore_calendar_success" ns0:ignore="PluralsCandidate">%d计划已从备份中还原</string>
     <string name="save_transaction_and_new_success">保存成功</string>
     <string name="save_transaction_error">无法从模板保存新的交易。</string>
     <plurals name="save_transaction_from_template_success">
@@ -401,16 +387,12 @@
     <string name="pref_sort_order_last_used">最后使用的</string>
     <string name="pref_sort_order_custom">自定义</string>
     <string name="content_description_calculator">计算器</string>
-    <string name="plan_instance_state_open">尚未被应用过</string>
-    <string name="plan_instance_state_cancelled">已取消</string>
-    <string name="plan_instance_state_applied">已应用</string>
     <string name="warning_cannot_move_split_transaction">此拆分交易无法移动到账户%1$s中，因为有部分转账已经引用到此账户。</string>
     <string name="content_description_calculator_delete_button">删除上一个数字</string>
     <string name="paypal_callback_info">您的交易已经完成，购买收据已经通过电子邮件发送给您。您可以从www.paypal.com登录您的账户以查看该交易的详细信息。</string>
     <string name="search_transfer">搜索转账</string>
     <string name="search_account">搜索账户</string>
     <string name="search_asset">搜索资产</string>
-    <string name="pref_sort_order_next_instance">下一个实例</string>
     <string name="crash_dialog_title">{app_name}已故障崩溃</string>
     <string name="crash_dialog_text">一个意外错误的发生，导致应用程序被强制停止。请通过向我们发送错误数据来帮助我们解决此问题，您所要做的就是单击“确定”。</string>
     <string name="crash_dialog_comment_prompt">您可以在下面添加有关故障问题的说明：</string>
@@ -468,7 +450,6 @@
     <string name="contributed_by">由%s贡献</string>
     <string name="pref_sync_notification_summary">通知同步进度</string>
     <string name="pref_debug_logging_summary">将调试信息写入系统日志</string>
-    <string name="plan_custom_recurrence_info">请先保存模板。然后，该计划将可以在日历应用程序中打开，您便能在其中设置自定义重复周期。</string>
     <string name="menu_create_template_for_split">新建拆分款项模板</string>
     <string name="progress_validating_licence">验证许可证</string>
     <string name="licence_validation_error_expired">许可证已过期</string>
@@ -591,7 +572,6 @@
     <string name="pref_exchange_rate_provider_summary">选择提供者以下载汇率</string>
     <string name="pref_exchange_rate_provider_title">汇率提供者</string>
     <string name="pref_exchange_rates_api_key_summary">请在 %s 注册免费帐号后，在此输入注册后的 App ID</string>
-    <string name="pref_plan_executor_time_title">通知时间</string>
     <string name="synchronization_select_folder_dialog_title">选择一个现有文件夹或创建一个新文件夹</string>
     <string name="discover_feature_expense_income_switch">可以使用此开关钮切换记录支出或收入。</string>
     <string name="menu_create_budget">新建预算</string>
@@ -636,7 +616,6 @@
     <string name="dialog_multi_tag_replace">用新标签替换现有的标签</string>
     <string name="new_tag_hint">输入新标签</string>
     <string name="language_download_requested">要求 Google Play 商店 翻译%s语言</string>
-    <string name="pref_planner_manual_time_title">定期交易应用的时间</string>
     <string name="pref_planner_manual_time_noon">中午12时</string>
     <string name="pref_planner_manual_time_current">当初创建定期交易的时间</string>
     <string name="title_scan_receipt_feature">扫描收据</string>
@@ -659,13 +638,10 @@
     <string name="pref_feature_uninstall_title">要求卸载\"功能\"和\"语言\"</string>
     <string name="pref_feature_uninstall_summary">Google Play 商店 尝试在后台删除这些模块。</string>
     <string name="select_package">请选择一个许可证包。</string>
-    <string name="advance_exexcution_in_days">提前执行（以天为单位）</string>
     <string name="warning_balance_account_delete">如果继续，此账户的所有已对账交易将从数据库中删除，并且您将无法还原它们。</string>
     <string name="confirmation_load_template_discard_data">现有的表格数据将被丢弃。</string>
     <string name="pref_clone_with_current_date_title">复制交易使用的日期</string>
     <string name="template_default_action_without_amount_hint">应该使用默认操作“编辑”来保存没有金额的模板</string>
-    <string name="plan_automatic_without_amount_hint">没有金额的计划不应该将其储存成自动执行模式</string>
-    <string name="content_description_edit_plan">在日历应用程序中编辑计划</string>
     <string name="menu_save_and_new_content_description">交易保存后，表单仍维持打开状态并保留相同的数据内容，方便多次新建类似的交易。</string>
     <string name="pref_ocr_engine_title">文字识别引擎</string>
     <string name="pref_tesseract_language_title">Tesseract 的语言</string>
@@ -677,7 +653,6 @@
     <string name="pref_group_header_show_details_summary">在分组标题中显示明细总和</string>
     <string name="new_balance">更新账户余额</string>
     <string name="single_feature_info">或者，您可以购买仅此功能的无限制访问权限。</string>
-    <string name="recurrence_last_day_of_month">每月的最后一天</string>
     <string name="warning_link_transfer">选定的两笔交易将连接为转账。交易对手方和类别信息将被删除。</string>
     <string name="account_widget_configuration_sum">显示总金额的类型</string>
     <string name="account_widget_configuration_sum_total">包括未来交易</string>
@@ -687,7 +662,6 @@
     <string name="active_tags">活跃标签</string>
     <string name="request_for_invoice">请求发票</string>
     <string name="auto_fill_focus">设置聚焦收款人字段</string>
-    <string name="warning_plan_instance_delete">为选定日期创建的交易将被删除。</string>
     <string name="crash_reports_user_info">{app_name} 将会自动向开发者发送应用程序崩溃报告，以便开发者可以快速解决问题。</string>
     <string name="pref_enable_acra">允许自动发送崩溃报告</string>
     <string name="pref_acra_user_email">用户电子信箱地址将被包含在崩溃报告中</string>
@@ -763,11 +737,6 @@
     <string name="template_shortcut">模板快捷方式</string>
     <string name="select_template">选择模板</string>
     <string name="add_shortcut">添加快捷方式</string>
-    <string name="orphaned_transaction_info">有一笔交易关联至此日期的计划，但该日期不存在事件实例。</string>
-    <string name="orphaned_transaction_relink">此交易可以重新关联至 %s 的事件实例。</string>
-    <string name="orphaned_transaction_align_date">可选择将交易中保存的日期与实例日期对齐。</string>
-    <string name="button_relink_keep_date">重新关联，但保留日期</string>
-    <string name="button_relink_update_date">重新关联并更新日期</string>
     <string name="read_from_data">从数据读取</string>
     <string name="merge_parties_strategy_delete">重复项已被删除。</string>
     <string name="merge_parties_strategy_group">重复项已分组为附属项。</string>

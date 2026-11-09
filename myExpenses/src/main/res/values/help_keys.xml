@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
     <string name="help_ManageMethods_title">@string/pref_manage_methods_title</string>
-    <string name="help_ManageTemplates_templates_title">@string/menu_manage_plans</string>
+    <string name="help_ManageTemplates_templates_title">@string/menu_templates</string>
     <string name="help_ManageCategories_manage_title">@string/pref_manage_categories_title</string>
     <string name="help_ManageParties_manage_title">@string/pref_manage_parties_title</string>
     <string name="help_DistributionActivity_title">@string/menu_distribution</string>
@@ -14,7 +14,6 @@
     <string name="help_ManageStaleImages_title">@string/pref_manage_stale_images_title</string>
     <string name="help_CsvImportActivity_title">@string/contrib_feature_csv_import_label</string>
     <string name="help_ManageSyncBackends_title">@string/pref_manage_sync_backends_title</string>
-    <string name="help_ExpenseEdit_plans_title">@string/help_ManageTemplates_plans_title</string>
     <string name="help_ExpenseEdit_templateTransfer_info">@string/help_ExpenseEdit_templateCategory_info</string>
     <string name="help_ExpenseEdit_templateSplit_info">@string/help_ExpenseEdit_templateCategory_info</string>
     <string name="help_HistoryActivity_title">@string/menu_history</string>
@@ -44,11 +43,6 @@
     <string name="menu_link">@string/menu_create_transfer</string>
     <string name="menu_parties">@string/pref_manage_parties_title</string>
     <string name="menu_debts">@string/debts</string>
-    <string name="cab_ManageTemplates_planner_create_instance_save_help_text">@string/cab_ManageTemplates_plans_create_instance_save_help_text</string>
-    <string name="cab_ManageTemplates_planner_create_instance_edit_help_text">@string/cab_ManageTemplates_plans_create_instance_edit_help_text</string>
-    <string name="cab_ManageTemplates_planner_cancel_plan_instance_help_text">@string/cab_ManageTemplates_plans_cancel_plan_instance_help_text</string>
-    <string name="cab_ManageTemplates_planner_reset_plan_instance_help_text">@string/cab_ManageTemplates_plans_reset_plan_instance_help_text</string>
-    <string name="cab_ManageTemplates_planner_edit_plan_instance_help_text">@string/cab_ManageTemplates_plans_edit_plan_instance_help_text</string>
     <string name="help_ManageSyncBackends_webdav_title">@string/title_webdav</string>
     <string name="help_ManageSyncBackends_drive_title">@string/title_drive</string>
     <string name="help_ManageSyncBackends_saf_title">SAF</string>

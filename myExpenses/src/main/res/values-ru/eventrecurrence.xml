@@ -14,83 +14,9 @@
  -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="does_not_repeat">"Однократное мероприятие"</string>
-    <string name="endByDate">"до <xliff:g id="DATE">%s</xliff:g>"</string>
-    <plurals name="endByCount">
-        <item quantity="one">"; 1 раз"</item>
-        <item quantity="other">"; <xliff:g id="NUMBER">%d</xliff:g> раз(-а)"</item>
-    </plurals>
-    <plurals name="daily">
-        <item quantity="one">"Ежедневно"</item>
-        <item quantity="other">"Раз в <xliff:g id="NUMBER">%d</xliff:g> дн."</item>
-    </plurals>
-    <string name="every_weekday">"Каждый будний день (пн–пт)"</string>
-    <plurals name="weekly">
-        <item quantity="one">"Еженедельно (<xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>)"</item>
-        <item quantity="other">"Кажд. <xliff:g id="NUMBER">%1$d</xliff:g> нед. (<xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>)"</item>
-    </plurals>
-    <plurals name="monthly">
-        <item quantity="one">Ежемесячно</item>
-        <item quantity="other"><xliff:g id="COUNT">%d</xliff:g> мес</item>
-    </plurals>
-    <plurals name="yearly">
-        <item quantity="one">Ежегодно</item>
-        <item quantity="other"><xliff:g id="COUNT">%d</xliff:g> гг./лет</item>
-    </plurals>
     <string name="monthly_plain">"Ежемесячно"</string>
-    <string name="monthly_on_day">" (<xliff:g id="DAY_OF_MONTH">%s</xliff:g> числа)"</string>
-    <string name="yearly_on_day">" (<xliff:g id="DATES">%s</xliff:g>)"</string>
     <string name="yearly_plain">Ежегодно</string>
     <string name="daily_plain">Ежедневно</string>
     <string name="weekly_plain">Еженедельно</string>
 
-    <string-array name="repeat_by_nth_sun">
-        <item>"первое воскресенье месяца"</item>
-        <item>"второе воскресенье месяца"</item>
-        <item>"третье воскресенье месяца"</item>
-        <item>"четвертое воскресенье месяца"</item>
-        <item>"последнее воскресенье месяца"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_mon">
-        <item>"первый понедельник месяца"</item>
-        <item>"второй понедельник месяца"</item>
-        <item>"третий понедельник месяца"</item>
-        <item>"четвертый понедельник месяца"</item>
-        <item>"последний понедельник месяца"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_tues">
-        <item>"первый вторник месяца"</item>
-        <item>"второй вторник месяца"</item>
-        <item>"третий вторник месяца"</item>
-        <item>"четвертый вторник месяца"</item>
-        <item>"последний вторник месяца"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_wed">
-        <item>"первая среда месяца"</item>
-        <item>"вторая среда месяца"</item>
-        <item>"третья среда месяца"</item>
-        <item>"четвертая среда месяца"</item>
-        <item>"последняя среда месяца"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_thurs">
-        <item>"первый четверг месяца"</item>
-        <item>"второй четверг месяца"</item>
-        <item>"третий четверг месяца"</item>
-        <item>"четвертый четверг месяца"</item>
-        <item>"последний четверг месяца"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_fri">
-        <item>"первая пятница месяца"</item>
-        <item>"вторая пятница месяца"</item>
-        <item>"третья пятница месяца"</item>
-        <item>"четвертая пятница месяца"</item>
-        <item>"последняя пятница месяца"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_sat">
-        <item>"первая суббота месяца"</item>
-        <item>"вторая суббота месяца"</item>
-        <item>"третья суббота месяца"</item>
-        <item>"четвертая суббота месяца"</item>
-        <item>"последняя суббота месяца"</item>
-    </string-array>
 </resources>

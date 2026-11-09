@@ -31,10 +31,8 @@
     <string name="menu_history_help_text">顯示現金流量圖：您的支出和收入如何隨著日、週、月或年而變化？</string>
     <string name="menu_print_help_text">產生目前顯示交易的可列印檢視。</string>
     <string name="help_ManageParties_manage_info">此畫面列出用於自動完成「付款人／收款人」欄位的交易對象。</string>
-    <string name="help_ManageTemplates_planner_title">即將發生的循環項目</string>
     <string name="help_ManageParties_select_filter_info">選擇您要用於篩選交易列表的所有交易對象。</string>
     <string name="help_ManageParties_floating_action_button">使用浮動動作按鈕新增項目。</string>
-    <string name="help_ManageTemplates_planner_intro">長按已開啟的實例會開始多選。點選日期範圍的開始或結束可以將範圍延伸到過去或未來。</string>
     <string name="help_ExpenseEdit_templateTransfer_title">轉帳範本表單</string>
     <string name="help_ExpenseEdit_templateSplit_title">分割範本表單</string>
     <string name="help_ExpenseEdit_transaction_info">使用此表單輸入新交易或編輯現有交易。使用動作列中的下拉式選單切換至新增轉帳或分割交易的表單。</string>
@@ -44,7 +42,6 @@
     <string name="form_ExpenseEdit_splitPartCategory_category_help_text">為此分割部分選擇一個類別。</string>
     <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">如果「來源」和「目的地」帳戶的貨幣不同，您只需指定其中一個的金額。另一個金額將在您從範本建立實例時計算。</string>
     <string name="form_synchronization_help_text_add">可以從「設定」畫面新增後端。</string>
-    <string name="help_ManageTemplates_plans_title">計畫行事曆檢視</string>
     <string name="help_form_fields">表單欄位</string>
     <string name="help_MyExpenses_info">此畫面列出目前帳戶的所有交易。使用浮動動作按鈕開啟新增交易的表單。</string>
     <string name="help_MyExpenses_fab_long_press">長按浮動動作按鈕會開啟選單，讓您準備轉帳、分割交易或收入的表單。</string>
@@ -67,14 +64,8 @@
     <string name="help_ManageParties_mergeMode_info_2">系統會提示您選擇要保留哪個版本。</string>
     <string name="menu_merge_help_text">如果同一個交易對象在列表中以不同的拼寫方式出現多次，您可以將它們合併。</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src=ic_menu_template>雖然範本可以透過交易的捷徑選單衍生而來，但您也可以在這裡點選浮動動作按鈕從頭開始建立新範本（適用於交易或轉帳）。點選範本將會建立一個實例。<br><img src=ic_event>計畫是您在規劃行事曆中建立的事件（單次或循環）的範本。點選計畫將會開啟行事曆檢視，其中會顯示計畫過去和即將發生的實例。]]></string>
-    <string name="help_ManageTemplates_plans_intro">每個醒目提示的日期代表計畫的一個實例。</string>
-    <string name="help_ManageTemplates_plans_info_header">實例的狀態由以下圖示指示：</string>
-    <string name="help_ManageTemplates_plans_info_open">該實例尚未套用。</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">該實例已取消，也就是說，您已將其標記為略過。將不會為此實例建立交易。</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">將所選範本實例化並立即儲存。</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">將所選範本實例化並進入其編輯表單，您可以在儲存之前修改它。</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">在所選事件實例的時間建立交易並進入其編輯表單，您可以在儲存之前修改它。</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">如果已為所選事件實例建立交易，則它們將被刪除；如果它們已被標記為取消，則標記將被移除。</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">範本列表可以按標題（字母順序）、金額、使用頻率或最後一次從中實例化交易的時間排序。</string>
     <string name="help_ManageCategories_distribution_info">此畫面顯示您各類別的支出和收入分佈，可以顯示帳戶中的所有交易，或特定群組的交易。如果您展開列表中的主類別，圓餅圖將會顯示其子類別的分佈。如果您在列表中選擇一個類別，它會在圓餅圖中醒目顯示，反之亦然。長按一個類別可以顯示對應到該類別的交易彙總列表。</string>
     <string name="help_ManageCategories_select_mapping_info">除了您在「偏好設定」畫面中管理類別時可以執行的動作（建立、編輯、刪除）之外，您也可以在此畫面上透過點選，將交易對應到所選類別。</string>
@@ -144,12 +135,8 @@
     <string name="menu_type_filter_help_text">啟用此選項後，您可以選擇僅顯示支出、收入或轉帳類別。</string>
     <string name="form_BudgetEdit_amount_help_text">在此預算範圍內有多少可用資金。</string>
     <string name="menu_archive_help_text">選取日期範圍後，此期間的所有交易將會彙總成摘要封存交易。這將會清除交易列表，但仍可以檢查封存中的交易，如果需要，還可以再次解除封存。</string>
-    <string name="help_ManageTemplates_plans_info_applied">該實例已套用。</string>
     <string name="cab_ManageTemplates_delete_help_text">刪除所選範本和任何關聯的計畫。</string>
     <string name="cab_ManageTemplates_edit_help_text">編輯所選範本並建立或編輯關聯的計畫。</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">在所選事件實例的時間建立交易並立即儲存。</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">指示在所選事件實例中，不應建立任何交易。如果已為所選事件實例建立交易，則它們將被刪除。</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">編輯已為所選計畫實例建立的交易。</string>
     <string name="menu_forward_help_text">瀏覽至下一個群組。也可以透過從右向左滑動手勢來完成。</string>
     <string name="menu_ManageCategories_search_help_text">只會顯示符合您查詢的主類別和子類別。</string>
     <string name="menu_categories_setup_default_help_text">將會匯入一組預設類別。</string>

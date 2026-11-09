@@ -32,24 +32,11 @@
     <string name="help_ManageParties_select_mapping_info">حدد طرفًا بالنقر عليه.</string>
     <string name="help_ManageParties_select_filter_info">حدد جميع الأطراف التي تريد استخدامها لتصفية قائمة المعاملات.</string>
     <string name="help_ManageParties_floating_action_button">استخدم زر الإجراء العائم لإضافة إدخال جديد.</string>
-    <string name="help_ManageTemplates_plans_title">عرض تقويم الخطة</string>
-    <string name="help_ManageTemplates_planner_title">التكرارات القادمة</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src="ic_menu_template"> بينما يمكن إنشاء القوالب من المعاملات عبر قائمة السياق الخاصة بها، يمكنك هنا إنشاء قوالب جديدة من البداية (للمعاملات أو التحويلات) بالنقر على زر الإجراء العائم. النقر على قالب ينشئ مثيلًا له.<br><img src="ic_event"> الخطة هي قالب أنشأت له حدثًا (مرة واحدة أو متكرر) في تقويم المخطط. النقر على خطة يفتح عرض التقويم، الذي يعرض الحالات السابقة والقادمة للخطة.]]></string>
-    <string name="help_ManageTemplates_planner_intro">الضغط المطول على مثيل مفتوح يبدأ التحديد المتعدد. النقر على بداية أو نهاية النطاق الزمني يتيح توسيع النطاق إلى الماضي أو المستقبل.</string>
-    <string name="help_ManageTemplates_plans_intro">يمثل كل تاريخ مميز مثيلًا للخطة.</string>
-    <string name="help_ManageTemplates_plans_info_header">تُشار إلى حالة المثيل بالرموز التالية:</string>
-    <string name="help_ManageTemplates_plans_info_open">لم يتم تطبيق المثيل بعد.</string>
-    <string name="help_ManageTemplates_plans_info_applied">تم تطبيق المثيل.</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">تم إلغاء المثيل، أي أنك أشرت إلى تخطيه. لن يتم إنشاء معاملة لهذا المثيل.</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">إنشاء القوالب المحددة وحفظها فورًا.</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">إنشاء القالب المحدد وفتح نموذج التحرير الخاص به لتعديله قبل الحفظ.</string>
     <string name="cab_ManageTemplates_delete_help_text">حذف القوالب المحددة وأي خطط مرتبطة بها.</string>
     <string name="cab_ManageTemplates_edit_help_text">تعديل القالب المحدد وإنشاء أو تعديل خطة مرتبطة.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">إنشاء معاملات في توقيت مثيلات الحدث المحددة وحفظها فورًا.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">إنشاء معاملة في توقيت مثيل الحدث المحدد وفتح نموذج التحرير الخاص بها لتعديلها قبل الحفظ.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">الإشارة إلى أنه في مثيلات الحدث المحددة، لا يجب إنشاء معاملات. إذا أُنشئت معاملات لهذه المثيلات، ستُحذف.</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">إذا أُنشئت معاملات لمثيلات الحدث المحددة، ستُحذف، وإذا أُشير إليها على أنها ملغاة، ستُزال الإشارة.</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">تعديل المعاملة التي أُنشئت لمثيل الخطة المحدد.</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">يمكن فرز قائمة القوالب حسب العنوان (أبجديًا)، المبلغ، تكرار الاستخدام، أو آخر مرة أُنشئت فيها معاملة منها.</string>
     <string name="help_ManageCategories_distribution_info">تعرض هذه الشاشة توزيع مصروفاتك وإيراداتك حسب الفئات، لجميع المعاملات في الحساب أو لمجموعة محددة. عند توسيع فئة رئيسية في القائمة، يعرض المخطط الدائري توزيع فئاتها الفرعية. عند تحديد فئة في القائمة، تُبرز في المخطط الدائري، والعكس صحيح. اضغط مطولًا على فئة لعرض قائمة مجمعة بالمعاملات المرتبطة بها.</string>
     <string name="help_ManageCategories_select_mapping_info">بالإضافة إلى الإجراءات المتاحة عند إدارة الفئات من شاشة التفضيلات (إنشاء، تعديل، حذف)، يمكنك في هذه الشاشة ربط معاملة بفئة محددة بالنقر عليها.</string>

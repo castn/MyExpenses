@@ -115,24 +115,11 @@
     <string name="help_ManageCategories_select_mapping_info">ప్రాధాన్యతల స్క్రీన్ నుండి వర్గాలను నిర్వహించేటప్పుడు మీరు చేయగలిగే చర్యలతో పాటు (సృష్టించండి, సవరించండి, తొలగించండి), ఈ తెరపై మీరు ఎంచుకున్న వర్గానికి లావాదేవీని మ్యాప్ చేస్తారు.</string>
     <string name="help_ManageCategories_distribution_info">ఈ స్క్రీన్ మీ ఖర్చులు మరియు వర్గాల ఆదాయాల పంపిణీని, ఖాతాలోని అన్ని లావాదేవీల కోసం లేదా ఒక నిర్దిష్ట సమూహం కోసం ప్రదర్శిస్తుంది. మీరు జాబితాలో ఒక ప్రధాన వర్గాన్ని విస్తరిస్తే, పై చార్ట్ దాని ఉపవర్గాల పంపిణీని ప్రదర్శిస్తుంది. మీరు జాబితాలో ఒక వర్గాన్ని ఎంచుకుంటే, అది పై చార్టులో హైలైట్ అవుతుంది మరియు దీనికి విరుద్ధంగా ఉంటుంది. లావాదేవీల యొక్క సమగ్ర జాబితాను ప్రదర్శించడానికి ఒక వర్గంలో ఎక్కువసేపు నొక్కండి.</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">టెంప్లేట్ జాబితాను శీర్షిక ద్వారా (అక్షరక్రమంగా), మొత్తం ద్వారా, ఉపయోగాల పౌన frequency పున్యం ద్వారా లేదా చివరిసారిగా లావాదేవీ దాని నుండి తక్షణం ద్వారా క్రమబద్ధీకరించబడుతుంది.</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">ఎంచుకున్న ప్రణాళిక ఉదాహరణ కోసం సృష్టించబడిన లావాదేవీని సవరించండి.</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">ఎంచుకున్న ఈవెంట్ ఉదంతాల కోసం లావాదేవీలు సృష్టించబడితే, అవి తొలగించబడతాయి, అవి రద్దు చేసినట్లు ఫ్లాగ్ చేయబడితే, జెండాలు తొలగించబడతాయి.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">ఎంచుకున్న ఈవెంట్ సందర్భాల్లో, లావాదేవీలు సృష్టించరాదని సూచించండి. ఎంచుకున్న ఈవెంట్ ఉదంతాల కోసం లావాదేవీలు సృష్టించబడితే, అవి తొలగించబడతాయి.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">ఎంచుకున్న ఈవెంట్ ఉదాహరణ సమయంలో లావాదేవీని సృష్టించండి మరియు దాని ఎడిటింగ్ ఫారమ్‌ను నమోదు చేయండి, అక్కడ మీరు దాన్ని సేవ్ చేసే ముందు సవరించవచ్చు.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">ఎంచుకున్న ఈవెంట్ ఉదంతాల సమయంలో లావాదేవీలను సృష్టించండి మరియు వాటిని వెంటనే సేవ్ చేయండి.</string>
     <string name="cab_ManageTemplates_edit_help_text">ఎంచుకున్న టెంప్లేట్‌ను సవరించండి మరియు అనుబంధ ప్రణాళికను సృష్టించండి లేదా సవరించండి.</string>
     <string name="cab_ManageTemplates_delete_help_text">ఎంచుకున్న టెంప్లేట్లు మరియు ఏదైనా అనుబంధ ప్రణాళికలను తొలగించండి.</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">ఎంచుకున్న టెంప్లేట్‌ను తక్షణం చేసి, దాని ఎడిటింగ్ ఫారమ్‌ను నమోదు చేయండి, అక్కడ మీరు దాన్ని సేవ్ చేసే ముందు సవరించవచ్చు.</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">ఎంచుకున్న టెంప్లేట్‌లను తక్షణం ఏర్పాటు చేసి వాటిని వెంటనే సేవ్ చేయండి.</string>
-    <string name="help_ManageTemplates_plans_info_header">ఒక ఉదాహరణ యొక్క స్థితి క్రింది చిహ్నాల ద్వారా సూచించబడుతుంది:</string>
-    <string name="help_ManageTemplates_plans_info_open">ఉదాహరణ ఇంకా వర్తించబడలేదు.</string>
-    <string name="help_ManageTemplates_plans_info_applied">ఉదాహరణ వర్తించబడింది.</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">ఉదాహరణ రద్దు చేయబడింది, అనగా మీరు దానిని దాటవేయాలని ఫ్లాగ్ చేసారు. ఈ ఉదాహరణ కోసం లావాదేవీలు సృష్టించబడవు.</string>
-    <string name="help_ManageTemplates_plans_intro">ప్రతి హైలైట్ చేసిన తేదీ ప్రణాళిక యొక్క ఉదాహరణను సూచిస్తుంది.</string>
-    <string name="help_ManageTemplates_planner_intro">బహిరంగ ఉదాహరణలో ఎక్కువసేపు నొక్కడం బహుళ ఎంపికను ప్రారంభిస్తుంది. తేదీ పరిధి యొక్క ప్రారంభ లేదా ముగింపులో నొక్కడం పరిధిని గత లేదా భవిష్యత్తులో విస్తరించడానికి అనుమతిస్తుంది.</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src = ic_menu_template> టెంప్లేట్లు వాటి కాంటెక్స్ట్ మెనూ ద్వారా లావాదేవీల నుండి పొందవచ్చు, ఇక్కడ మీరు ఫ్లోటింగ్ యాక్షన్ బటన్ పై క్లిక్ చేయడం ద్వారా మొదటి నుండి (లావాదేవీలు లేదా బదిలీల కోసం) క్రొత్త టెంప్లేట్లను సృష్టించవచ్చు. ఒక టెంప్లేట్‌పై క్లిక్ చేస్తే, దాని కోసం ఒక ఉదాహరణను సృష్టిస్తుంది. <br> <img src = ic_event> ప్రణాళిక అనేది మీరు ప్లానర్ క్యాలెండర్‌లో ఒక సంఘటనను (ఒక-సమయం లేదా పునరావృత) సృష్టించిన ఒక టెంప్లేట్. ప్రణాళికపై క్లిక్ చేస్తే, క్యాలెండర్ వీక్షణను తెరుస్తుంది, ఇది ప్రణాళిక యొక్క గత మరియు రాబోయే సందర్భాలను ప్రదర్శిస్తుంది.]]></string>
-    <string name="help_ManageTemplates_planner_title">రాబోయే పునరావృత్తులు</string>
-    <string name="help_ManageTemplates_plans_title">క్యాలెండర్ వీక్షణను ప్లాన్ చేయండి</string>
     <string name="menu_merge_help_text">ఒకే పార్టీ విభిన్న స్పెల్లింగ్ వైవిధ్యాలతో జాబితాలో అనేకసార్లు కనిపిస్తే, మీరు వాటిని కలిసి విలీనం చేయవచ్చు.</string>
     <string name="help_ManageParties_mergeMode_info_2"> ఏ వేరియంట్‌ను ఉంచాలో ఎంచుకోమని మీరు ప్రాంప్ట్ చేయబడతారు.</string>
     <string name="help_ManageParties_floating_action_button">క్రొత్త ఎంట్రీని జోడించడానికి ఫ్లోటింగ్ యాక్షన్ బటన్‌ను ఉపయోగించండి.</string>

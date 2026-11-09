@@ -35,24 +35,11 @@
     <string name="help_ManageParties_floating_action_button">Utilice el botón de acción flotante para añadir una nueva entrada.</string>
     <string name="menu_merge_help_text">Si el mismo grupo aparece varias veces en la lista con diferentes variantes ortográficas, puede fusionarlas.</string>
     <string name="help_ManageParties_mergeMode_info_2">Se le pedirá que seleccione la variante que desea conservar.</string>
-    <string name="help_ManageTemplates_plans_title">Vista en calendario</string>
-    <string name="help_ManageTemplates_planner_title">Nuevas actualizaciones</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src=\"ic_menu_template\">Mientras que las plantillas pueden derivarse por las transacciones a través de su menú contextual, aquí puede crear nuevas plantillas desde cero (para transacciones o transferencias) haciendo clic en el botón de acción flotante. Al hacer clic en una plantilla, se crea una instancia para ello.<br><img src=\"ic_event\">Un proyecto es una plantilla con un evento (único o recurrente) en el planificador de calendario. Haga clic en un proyecto para abrir una vista de calendario, mostrando las pasadas y las próximas instancias de un proyecto.]]></string>
-    <string name="help_ManageTemplates_planner_intro">Una pulsación larga en una instancia abierta comienza una multi-selección. Pulsando al comienzo o al final del rango de fechas permite aumentar ese rango hacia atrás o hacia adelante.</string>
-    <string name="help_ManageTemplates_plans_intro">Cada fecha señalada representa una instancia del proyecto.</string>
-    <string name="help_ManageTemplates_plans_info_header">El estado de una instancia es indicado por los siguientes iconos:</string>
-    <string name="help_ManageTemplates_plans_info_open">Aún no se ha aplicado la instancia.</string>
-    <string name="help_ManageTemplates_plans_info_applied">La instancia ha sido aplicada.</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">La instancia ha sido cancelada, por ejemplo, la ha señalado para ser omitida. Ninguna transacción será creada para esta instancia.</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">Crear una instancia de la plantilla seleccionada y guardar inmediatamente.</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">Crear una instancia de la plantilla seleccionada e introducir un formulario de edición, donde pueda modificarla antes de guardarla.</string>
     <string name="cab_ManageTemplates_delete_help_text">Eliminar la plantilla seleccionada y cualquier proyecto asociado.</string>
     <string name="cab_ManageTemplates_edit_help_text">Editar la plantilla seleccionada y crear o editar un proyecto asociado.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">Crear una transacción en el momento de la instancia de este evento y guardar inmediatamente.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">Crear una transacción en el momento de la instancia de este evento y entrar en su formulario de edición, donde poder modificarla antes de guardarla.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">Indicar que en el caso del evento seleccionado, no debe crearse ninguna transacción. Si una transacción es creada para el momento de la instancia seleccionada, será eliminada.</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">Si una transacción es creada para el momento de esta instancia, será eliminada. Si ha sido marcada como cancelada, se eliminará la bandera.</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">Editar la transacción que ha sido creada para la instancia del proyecto seleccionado.</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">La lista de plantillas se puede ordenar por título (alfabéticamente), cantidad, frecuencia de uso o la última vez en que una transacción es creada en ella.</string>
     <string name="help_ManageCategories_distribution_info">Esta pantalla muestra la distribución de sus gastos e ingresos por categorías, para todas las transacciones en una cuenta o para un grupo específico. Si expande una categoría principal en la lista, el gráfico muestra la distribución de sus subcategorías. Si selecciona una categoría en la lista, se resaltará en el gráfico y viceversa. Una pulsación prolongada sobre una categoría, mostrará una lista agregada de las transacciones asignadas a él.</string>
     <string name="help_ManageCategories_select_mapping_info">Además de las acciones que se pueden realizar en la gestión de categorías desde Preferencias (crear, editar, borrar), en esta pantalla se puede asignar una transacción a una categoría seleccionada a través de un breve clic.</string>

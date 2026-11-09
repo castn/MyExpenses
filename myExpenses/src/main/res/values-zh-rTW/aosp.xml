@@ -21,7 +21,6 @@
     <string name="response_no">"否"</string>
     <string name="experimental">"實驗性"</string>
     <string name="add_widget">"新增小工具"</string>
-    <string name="calendar">"日曆"</string>
     <string name="permissions_label">"權限"</string>
     <string name="time_format">"時間格式"</string>
     <string name="setup">"設定"</string>
@@ -62,8 +61,6 @@
     <string name="menu">"選單"</string>
     <string name="action_move_down">"向下移"</string>
     <string name="action_move_up">"向上移"</string>
-    <string name="calendar_delete">刪除日曆</string>
-    <string name="preferences_calendar_delete_message">你確定要刪除此日曆嗎？</string>
     <string name="default_camera_app_title">"相機應用程式"</string>
     <string name="help_and_feedback">"說明與意見回饋"</string>
     <string name="currencies_exchange">"貨幣和外匯交易"</string>

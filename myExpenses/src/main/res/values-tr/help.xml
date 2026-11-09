@@ -35,24 +35,11 @@
     <string name="help_ManageParties_floating_action_button">Yeni bir unsur eklemek için kayan eylem düğmesini kullanın.</string>
     <string name="menu_merge_help_text">Şayet aynı taraf listede imla değişiklikleriyle birden fazla defa mevcutsa, bunları birleştirebilirsiniz.</string>
     <string name="help_ManageParties_mergeMode_info_2">Hangisinin muhafaza edileceğini seçmeniz istenecektir.</string>
-    <string name="help_ManageTemplates_plans_title">Planlama takvim görünümü</string>
-    <string name="help_ManageTemplates_planner_title">Gelecek tekrarlamalar</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src=\"ic_menu_template\">Şablonlar muamelelerin bağlam menülerinden elde edilebilir olsa da, burada yeni şablonları (muameleler ya da transferler için) eylem düğmesine tıklayarak sıfırdan oluşturabilirsiniz. Şablona tıklamak onun bir örneklendirmesini oluşturacaktır.<br><img src=\"ic_event\">Bir planlama, planlama takviminde (bir seferlik ya da tekrarlanan) bir olay oluşturduğunuz bir şablondur. Herhangi bir planlamaya tıklamanız planlamanın geçmiş ve gelecekteki örneklemelerini gösteren takvim görünümünü açacaktır.]]></string>
-    <string name="help_ManageTemplates_planner_intro">Açık bir örneklemeye uzun dokunmak çoklu seçimi başlatır. Tarih aralığının başına veya sonuna dokunmak, bu aralığı geçmişe veya geleceğe doğru genişletmeye imkân sağlar.</string>
-    <string name="help_ManageTemplates_plans_intro">Her vurgulanan tarih planlamanın bir örneklemesini temsil eder.</string>
-    <string name="help_ManageTemplates_plans_info_header">Örneklemelerin durumu aşağıdaki simgelerle gösterilir:</string>
-    <string name="help_ManageTemplates_plans_info_open">Örnekleme henüz uygulanmamıştır.</string>
-    <string name="help_ManageTemplates_plans_info_applied">Örnekleme uygulanmıştır.</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">Örnekleme iptal edilmiştir, yani onu atlanması için işaretlemişsinizdir. Bu örnekleme için hiçbir muamele oluşturulmayacaktır.</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">Seçilen şablonları örneklendir ve derhal kaydet.</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">Seçilen şablonu örneklendir ve onu kaydetmeden değiştirmeye imkân veren düzenleme formuna gir.</string>
     <string name="cab_ManageTemplates_delete_help_text">Seçilen şablonları ve ilişkili planlamaları sil.</string>
     <string name="cab_ManageTemplates_edit_help_text">Seçilen şablonu düzenle ve ilişkili bir planlama oluştur ya da düzenle.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">Seçilen olay örneklemeleri tarihinde muameleler oluştur ve onları derhal kaydet.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">Seçilen olay örneklemesi tarihinde bir muamele oluştur ve onu kaydetmeden önce değiştirebileceğiniz düzenleme formuna gir.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">Seçilen olay örneklemelerinde hiçbir muamele oluşturulmayacağını göster. Eğer seçilen olay örneklemeleri için muamele oluşturulduysa, bu muameleler silinece.</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">Eğer seçilen olay örneklemeleri için muamele oluşturulduysa, bu muameleler silinecek, eğer iptal edilmiş olarak işaretlendiler ise bu işaretler kaldırılacaktır.</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">Seçilen planlama örneklemesi için oluşturulan muameleyi düzenle.</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">Şablon listesi başlıklara göre (alfabetik olarak), meblağa göre, kullanma sıklığına göre ya da son muamele örneklendirme tarihine göre sıralanabilir.</string>
     <string name="help_ManageCategories_distribution_info">Bu ekran harcamalarınızın ve gelirlerinizin ya bir hesaptaki tüm muameleler için ya da özel bir grup için kategorilere göre dağılımını gösterir. Eğer listedki bir ana kategoriyi genişletirseniz, yuvarlak diyagram alt kategorilerin dağılımını gösterir. Listedeki bir kategoriyi seçerseniz yuvarlak diyagramda vurgulanacaktır ve bunun tersi de geçerlidir. Kendisine eşlenen işlemlerin toplu bir listesini görüntülemek için bir kategoriye uzun süre dokunun.</string>
     <string name="help_ManageCategories_select_mapping_info">Kategorileri yönetirken tercihler ekranında yapabileceğiniz işlemlere (oluşturma, düzenleme, silme) ek olarak bu ekranda herhangi bir muameleyi belli bir kategoriyle ilişkilendirebilirsiniz için tıklamanız yeterlidir.</string>

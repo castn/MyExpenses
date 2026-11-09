@@ -5,8 +5,6 @@
     <string name="menu">"Menu"</string>
     <string name="action_move_down">Pindah ke bawah</string>
     <string name="action_move_up">Pindah ke atas</string>
-    <string name="calendar_delete">Hapus kalender</string>
-    <string name="preferences_calendar_delete_message">Apakah Anda benar-benar ingin menghapus kalender ini?</string>
     <string name="default_camera_app_title">"Aplikasi kamera"</string>
     <string name="help_and_feedback">"Bantuan &amp; masukan"</string>
     <string name="currencies_exchange">Mata Uang &amp; Nilai Tukar Asing</string>
@@ -149,7 +147,6 @@
     <string name="response_no">Tidak</string>
     <string name="show_all">Tampilkan semua</string>
     <string name="add_widget">Tambahkan widget</string>
-    <string name="calendar">Kalender</string>
     <string name="setup">Penyiapan</string>
     <string name="compact">Ringkas</string>
     <string name="write_fail_reason_cannot_write">Kesalahan saat menulis konten</string>

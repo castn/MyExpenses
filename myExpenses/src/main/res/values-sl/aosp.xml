@@ -5,8 +5,6 @@
     <string name="menu">"Meni"</string>
     <string name="action_move_down">"Premakni navzdol"</string>
     <string name="action_move_up">"Premakni navzgor"</string>
-    <string name="calendar_delete">Izbriši koledar</string>
-    <string name="preferences_calendar_delete_message">Ste prepričani, da želite izbrisati ta koledar?</string>
     <string name="default_camera_app_title">"Fotografska aplikacija"</string>
     <string name="help_and_feedback">"Pomoč in povratne informacije"</string>
     <string name="currencies_exchange">"Valute in devizno poslovanje"</string>

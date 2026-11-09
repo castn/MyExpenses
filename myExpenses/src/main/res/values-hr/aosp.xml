@@ -22,7 +22,6 @@
     <string name="response_no">"Ne"</string>
     <string name="experimental">"Eksperimentalno"</string>
     <string name="add_widget">"Dodavanje widgeta"</string>
-    <string name="calendar">"Kalendar"</string>
     <string name="permissions_label">"Dozvole"</string>
     <string name="time_format">"Format vremena"</string>
     <string name="setup">"Postavljanje"</string>
@@ -65,8 +64,6 @@
     <string name="menu">"Izbornik"</string>
     <string name="action_move_down">"Premjesti prema dolje"</string>
     <string name="action_move_up">"Premjesti prema gore"</string>
-    <string name="calendar_delete">"Izbriši kalendar"</string>
-    <string name="preferences_calendar_delete_message">"Stvarno želiš izbrisati ovaj kalendar?"</string>
     <string name="default_camera_app_title">"Aplikacija kamere"</string>
     <string name="help_and_feedback">"Pomoć i povratne informacije"</string>
     <string name="currencies_exchange">"Valute i strani tečajevi"</string>

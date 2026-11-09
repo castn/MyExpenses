@@ -106,13 +106,11 @@
     <string name="licence_validation_premium">Các tính năng trả phí đã được mở khoá.</string>
     <string name="menu_aggregates">Tổng</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">Áp dụng</string>
     <string name="menu_back">Trước</string>
     <string name="menu_backup">Sao lưu</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">Đối chiếu số dư</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">Huỷ bỏ</string>
     <string name="menu_clone_transaction">Sao y</string>
     <string name="menu_contrib">Đóng góp</string>
     <string name="menu_create_account">Tài khoản mới</string>
@@ -138,7 +136,6 @@
     <string name="menu_edit_cat">Chỉnh sửa phân loại</string>
     <string name="menu_edit_method">Chỉnh sửa phương thức thanh toán</string>
     <string name="menu_edit_party">Chỉnh sửa bên</string>
-    <string name="menu_edit_plan_instance">Chỉnh sửa sự xuất hiện của kế hoạch một lần</string>
     <string name="menu_edit_split">Chỉnh sửa giao dịch chia nhỏ</string>
     <string name="menu_edit_split_part_category">Chỉnh sửa phần phân loại phân tách</string>
     <string name="menu_edit_split_part_transfer">Chỉnh sửa phần tách của giao dịch chuyển khoản</string>
@@ -151,7 +148,6 @@
     <string name="menu_help">Trợ giúp</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">Đảo lại</string>
-    <string name="menu_manage_plans">Bản mẫu và kế hoạch</string>
     <string name="menu_reset">Xuất dữ liệu và cài đặt lại</string>
     <string name="menu_reset_all">Xuất dữ liệu và cài đặt lại tất cả</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -168,7 +164,6 @@
     <string name="no_expenses">Chưa có giao dịch nào!</string>
     <string name="no_exportable_expenses">Hiện không có giao dịch nào mà vẫn chưa được xuất ra.</string>
     <string name="no_filemanager_installed">Không có trình quản lý tập tin nào được cài đặt</string>
-    <string name="no_calendar_app_installed">Không có ứng dụng để chỉnh sửa sự kiện trong lịch.</string>
     <string name="no_mapped_transactions">Không có giao dịch nào được cho vào phần phân loại trong suốt giai đoạn này.</string>
     <string name="no_methods">Không có phương thức thanh toán nào.</string>
     <string name="no_parties">Không có bên giao dịch nào</string>
@@ -195,15 +190,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">Kế hoạch</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">tự động</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">Bộ lập kế hoạch của {app_name}</string>
-    <string name="planner_notification_channel_name">Bộ lập kế hoạch</string>
-    <string name="plan_event_deleted">Kế hoạch gắn với bản mẫu này đã bị xoá khỏi lịch.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">Đã hủy bỏ việc thực thi kế hoạch</string>
-    <string name="planner_create_calendar_failure">Không thể tạo một lịch kế hoạch trên máy</string>
-    <string name="planner_create_calendar_success">Lịch kế hoạch trên máy đã được tạo thành công</string>
     <!-- payment methods -->
     <string name="pm_cheque">Séc</string>
     <string name="pm_creditcard">Thẻ</string>
@@ -243,8 +232,6 @@
     <string name="pref_password_not_equal">Mật khẩu không khớp</string>
     <string name="pref_perform_share_title">Chia sẻ tập tin xuất dữ liệu</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">Tạo lịch kế hoạch trên máy</string>
-    <string name="pref_planning_calendar_summary">Chọn lịch để lưu trữ các kế hoạch trong tương lai và các giao dịch lặp lại</string>
     <string name="pref_protection_delay_seconds_summary">Số giây hiển thị trước khi ứng dụng bị khóa bởi mật khẩu</string>
     <string name="pref_protection_delay_seconds_title">Độ trễ cho đến khi bật chế độ bảo vệ</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">Các mục dữ liệu từ các tiện ích và phím tắt</string>
@@ -276,7 +263,6 @@
     <string name="restore_preferences_failure">Xảy ra lỗi khi khôi phục phần tùy biến</string>
     <string name="restore_backup_file_not_found">Không tìm thấy tập tin %1$s trong tập lưu trữ \"%2$s\"</string>
     <string name="restore_preferences_success">Tùy biến đã được phục hồi từ phần sao lưu.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d kế hoạch đã được khôi phục từ bản sao lưu</string>
     <string name="save_transaction_and_new_success">Đã lưu thành công giao dịch</string>
     <string name="save_transaction_error">Không thể lưu giao dịch mới từ mẫu</string>
     <plurals name="save_transaction_from_template_success">
@@ -422,17 +408,13 @@
     <string name="pref_sort_order_custom">Tuỳ ch</string>
     <string name="content_description_calculator">Máy tính hỗ trợ</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">hoạt động</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">bị huỷ</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">được áp dụng</string>
     <string name="warning_cannot_move_split_transaction">Giao dịch chia tách này không thể được dời tới tài khoản %1$s bởi vì có một khoản chuyển đã chỉ tới tài khoản này.</string>
     <string name="content_description_calculator_delete_button">Xoá chữ số cuối cùng</string>
     <string name="paypal_callback_info">Giao dịch của bạn đã hoàn tất và biên lai mua hàng của bạn đã được gửi qua email cho bạn. Bạn có thể đăng nhập vào tài khoản của bạn tại www.paypal.com để xem chi tiết giao dịch này.</string>
     <string name="search_transfer">Tìm các khoản chuyển</string>
     <!-- Sort plans (recurring transactions) by the next instance  -->
-    <string name="pref_sort_order_next_instance">Lần tiếp theo</string>
     <string name="crash_dialog_title">{app_name} đã dừng đột ngột</string>
     <string name="crash_dialog_text">Đã xảy ra lỗi không mong muốn buộc ứng dụng phải ngừng. Xin hãy giúp chúng tôi khắc phục sự cố này bằng cách gửi dữ liệu lỗi, tất cả những gì bạn cần làm là nhấn OK.</string>
     <string name="crash_dialog_comment_prompt">Bạn có thể thêm ý kiến ​​của bạn về vấn đề vừa rồi dưới đây:</string>
@@ -487,7 +469,6 @@
     <string name="contributed_by">Đóng góp bởi %s</string>
     <string name="pref_sync_notification_summary">Thông báo về quá trình đồng bộ hoá</string>
     <string name="pref_debug_logging_summary">Ghi thông tin gỡ lỗi vào nhật ký hệ thống</string>
-    <string name="plan_custom_recurrence_info">Vui lòng lưu bản mẫu trước. Bản kế hoạch sẽ được mở trong ứng dụng lịch, và trong đó bạn có thể đặt một lịch biểu lặp lại.</string>
     <string name="menu_create_template_for_split">Bản mẫu chia tách mới</string>
     <string name="progress_validating_licence">Đang xác minh bản quyền</string>
     <string name="licence_validation_error_expired">Bản quyền đã hết hạn</string>
@@ -600,7 +581,6 @@
     <string name="dialog_contrib_trial_info">Trạng thái giấy phép hiện tại của bạn (%1$s) cho phép bạn dùng thử %2$s trong %3$d ngày (cho đến %4$s).</string>
     <string name="dialog_contrib_trial_info_play">Bản dùng thử miễn phí này sẽ không bao giờ chuyển đổi sang bất kỳ loại đăng ký nào.</string>
     <string name="dialog_contrib_subscription_info_play">Đăng ký này có hiệu lực ngay lập tức, được lập hóa đơn hàng tháng hoặc hàng năm và có thể bị hủy bất kỳ lúc nào.</string>
-    <string name="button_relink_update_date">Ngày liên kết lại và cập nhật</string>
     <string name="search_tag">Tìm kiếm thẻ</string>
     <string name="object_sealed_debt">Đối tượng đề cập đến một khoản nợ đã đóng.</string>
     <string name="pref_csv_export_split_categories_summary">Sử dụng các cột riêng biệt cho mỗi cấp phân cấp danh mục</string>
@@ -681,7 +661,6 @@
     <string name="template_default_action_without_amount_hint">Mẫu không có số lượng sẽ được lưu với hành động mặc định \'Chỉnh sửa\'</string>
     <string name="template_shortcut">Lối tắt mẫu</string>
     <string name="add_shortcut">Thêm phím tắt</string>
-    <string name="orphaned_transaction_relink">Giao dịch có thể được liên kết lại với phiên bản sự kiện trên %s.</string>
     <string name="menu_aggregate_neutral_categories">Tổng hợp các danh mục trung tính</string>
     <string name="roadmap_vote">Lộ trình bỏ phiếu</string>
     <string name="warning_delete_category_with_budget">Đối với ít nhất một danh mục được chọn, có phân bổ ngân sách, cũng sẽ bị xóa.</string>
@@ -693,7 +672,6 @@
     <string name="warning_account_for_transaction_is_closed">Ít nhất một trong các giao dịch đã chọn không thể chỉnh sửa được:</string>
     <string name="dialog_multi_tag">Tất cả các giao dịch đã chọn sẽ được gắn thẻ %s.</string>
     <string name="pref_criterion_future_end_of_day">Cuối ngày</string>
-    <string name="warning_plan_instance_delete">Giao dịch được tạo cho ngày đã chọn sẽ bị xóa.</string>
     <string name="budget_only_current_period">Chỉ đặt cho %s</string>
     <string name="rollover_edit_invalid">Tổng số tái đầu tư được gán cho một danh mục và các khoản tái đầu tư được gán cho các danh mục con không được vượt quá số dư còn lại.</string>
     <string name="content_description_attachment">Đính kèm</string>
@@ -755,14 +733,12 @@
     <string name="redesign">Thiết kế lại</string>
     <string name="maximum_size">Kích thước tối đa</string>
     <string name="notifications_permission_required_sync">Bằng cách cấp quyền gửi thông báo, bạn có thể theo dõi tiến trình của các hoạt động đồng bộ hóa.</string>
-    <string name="orphaned_transaction_align_date">Theo tùy chọn, ngày được lưu trữ với giao dịch cũng có thể được căn chỉnh với ngày phiên bản.</string>
     <string name="pref_unmapped_transaction_as_transfer_summary_on">được tính là chuyển khoản</string>
     <string name="budget_filter_all_categories">Tất cả danh mục</string>
     <string name="menu_scan_mode">Chế độ quét</string>
     <string name="select_package">Vui lòng chọn gói giấy phép.</string>
     <string name="pref_planner_manual_time_noon">12 giờ trưa (trưa)</string>
     <string name="pref_planner_manual_time_current">Thời gian áp dụng</string>
-    <string name="advance_exexcution_in_days">Thực hiện trước (theo ngày)</string>
     <string name="warning_balance_account_delete">Nếu bạn tiếp tục, tất cả các giao dịch đã đối chiếu của tài khoản này sẽ bị xóa khỏi cơ sở dữ liệu và bạn sẽ không thể khôi phục chúng.</string>
     <string name="warning_link_transfer">Hai giao dịch được chọn sẽ được liên kết dưới dạng chuyển khoản. Thông tin về Người nhận thanh toán/Người thanh toán và danh mục sẽ bị loại bỏ.</string>
     <string name="image_optimize_quality_summary">Chất lượng 0 có nghĩa là nén cho kích thước nhỏ nhất. 100 có nghĩa là nén để có chất lượng hình ảnh tối đa.</string>
@@ -778,21 +754,17 @@
     <string name="dialog_multi_tag_append">Thêm thẻ mới vào thẻ hiện có</string>
     <string name="new_tag_hint">Nhập thẻ mới</string>
     <string name="language_download_requested">Bản dịch cho ngôn ngữ %s được yêu cầu từ Cửa hàng Play</string>
-    <string name="pref_planner_manual_time_title">Thời gian áp dụng giao dịch theo lịch trình thủ công</string>
-    <string name="content_description_edit_plan">Chỉnh sửa kế hoạch trong ứng dụng lịch</string>
     <string name="pref_ocr_time_formats_title">Định dạng thời gian</string>
     <string name="pref_criterion_futur_title">Tiêu chí cho các giao dịch trong tương lai</string>
     <string name="pref_criterion_future_current">Thời gian hiện tại</string>
     <string name="scan_result_multiple_candidates_dialog_title">Nhiều ứng cử viên được tìm thấy. Vui lòng chọn:</string>
     <string name="scan_result_no_payee">Không tìm thấy người nhận thanh toán</string>
-    <string name="plan_automatic_without_amount_hint">Kế hoạch không có số tiền không nên được lưu với thực hiện kế hoạch tự động</string>
     <string name="pref_ocr_engine_title">Công cụ nhận dạng văn bản</string>
     <string name="pref_tesseract_language_title">Ngôn ngữ cho Tesseract</string>
     <string name="tesseract_download_confirmation">Bạn có muốn tải xuống dữ liệu nhận dạng văn bản cho %s không?</string>
     <string name="download_completed">Tải xuống (%s) đã hoàn tất.</string>
     <string name="new_balance">Cân bằng mới</string>
     <string name="single_feature_info">Ngoài ra, bạn có thể mua quyền truy cập không giới hạn vào tính năng này.</string>
-    <string name="recurrence_last_day_of_month">Ngày cuối</string>
     <string name="account_widget_configuration">Cấu hình tiện ích tài khoản</string>
     <string name="budget_widget_configuration">Chọn ngân sách</string>
     <string name="merge_parties_select">Chọn tên bên sáp nhập</string>
@@ -804,7 +776,6 @@
     <string name="debt_installment_receive">Tôi nhận được một khoản trả góp %s.</string>
     <string name="debt_paid_off_self">Nợ của tôi đã được trả hết.</string>
     <string name="select_template">Chọn mẫu</string>
-    <string name="orphaned_transaction_info">Một giao dịch được liên kết với kế hoạch cho ngày này, nhưng không có trường hợp sự kiện nào tồn tại vào ngày này.</string>
     <string name="read_from_data">Đọc từ dữ liệu</string>
     <string name="show_duplicates">Hiển thị bản sao</string>
     <string name="remove_from_group">Xóa khỏi nhóm</string>
@@ -833,7 +804,6 @@
     <string name="exchange_rate_not_supported">Nhà cung cấp tỷ giá hối đoái được cấu hình không cung cấp tỷ giá %1$s : %2$s. Bạn có thể thử chọn một cái khác trong cài đặt.</string>
     <string name="pref_exchange_rate_provider_summary">Chọn nhà cung cấp để tải xuống tỷ giá hối đoái</string>
     <string name="pref_exchange_rate_provider_title">Nhà cung cấp tỷ giá hối đoái</string>
-    <string name="pref_plan_executor_time_title">Thời gian thông báo</string>
     <string name="no_budgets">Xác định ngân sách đầu tiên của bạn bằng cách nhấn vào nút +.</string>
     <string name="budget_filter_all_tags">Tất cả các thẻ</string>
     <string name="budget_filter_all_accounts">Tất cả tài khoản</string>
@@ -845,7 +815,6 @@
     <string name="clone_and_remap_result">Các giao dịch được chọn đã được nhân bản và ánh xạ lại.</string>
     <string name="dialog_title_warning_delete_category">Xóa thể loại?</string>
     <string name="budget_filter_all_states">Tất cả trạng thái</string>
-    <string name="button_relink_keep_date">Liên kết lại, nhưng vẫn giữ ngày</string>
     <string name="setup_completed">Thiết lập hoàn tất</string>
     <string name="archive">Lưu trữ</string>
     <string name="quick_search">Tìm kiếm nhanh</string>

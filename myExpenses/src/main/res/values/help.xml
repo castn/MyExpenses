@@ -56,24 +56,11 @@
     <string name="help_ManageParties_mergeMode_info_1">Select the duplicate parties that you want to merge.</string>
     <string name="help_ManageParties_mergeMode_info_2">You will be prompted to select which variant to keep.</string>
     <string name="menu_merge_help_text">If the same party appears multiple times in the list with different spelling variations, you can merge them together.</string>
-    <string name="help_ManageTemplates_plans_title">Plan calendar view</string>
-    <string name="help_ManageTemplates_planner_title">Upcoming recurrences</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src="ic_menu_template">While templates can be derived from transactions through their context menu, here you can create new templates from scratch (for transactions or transfers) by clicking on the floating action button. Clicking on a template, will create an instance for it.<br><img src="ic_event">A plan is a template for which you have created an event (one-time or recurring) in the planner calendar. Clicking on a plan, will open a calendar view, which displays past and upcoming instances of a plan.]]></string>
-    <string name="help_ManageTemplates_planner_intro">Long tapping on an open instance starts multi-selection. Tapping on the start or end of the date range allows to extend the range into the past or the future.</string>
-    <string name="help_ManageTemplates_plans_intro">Each highlighted date represents an instance of the plan.</string>
-    <string name="help_ManageTemplates_plans_info_header">The state of an instance is indicated by the following icons:</string>
-    <string name="help_ManageTemplates_plans_info_open">The instance has not yet been applied.</string>
-    <string name="help_ManageTemplates_plans_info_applied">The instance has been applied.</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">The instance has been cancelled, i.e. you have flagged it to be skipped. No transaction will be created for this instance.</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">Instantiate the selected templates and save them immediately.</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">Instantiate the selected template and enter its editing form where you can modify it before saving.</string>
     <string name="cab_ManageTemplates_delete_help_text">Delete the selected templates and any associated plans.</string>
     <string name="cab_ManageTemplates_edit_help_text">Edit the selected template and create or edit an associated plan.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">Create transactions at the time of the selected event instances and save them immediately.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">Create a transaction at the time of the selected event instance and enter its editing form where you can modify it before saving.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">Indicate that at the selected event instances, no transactions should be created. If transactions have been created for the selected event instances, they will be deleted.</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">If transactions have been created for the selected event instances, they will be deleted, if they have been flagged as cancelled, the flags are removed.</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">Edit the transaction that has been created for the selected plan instance.</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">The template list can be sorted by title (alphabetically), by amount, by frequency of usages, or by the last time a transaction was instantiated from it.</string>
     <string name="help_ManageCategories_distribution_info">This screen displays the distribution of your expenses and incomes per categories, for all transactions in an account, or for a specific group. If you expand a main category in the list, the pie chart will display the distribution of its subcategories. If you select a category in the list, it will be highlighted in the pie chart, and vice-versa. Long press on a category in order to display an aggregated list of the transactions mapped to it.</string>
     <string name="help_ManageCategories_select_mapping_info">In addition to the actions that you can perform when managing categories from the Preferences screen (create, edit, delete), on this screen you map a transaction to a selected category by simply clicking on it.</string>

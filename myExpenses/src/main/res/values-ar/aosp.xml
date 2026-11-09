@@ -21,7 +21,6 @@
     <string name="response_no">"لا"</string>
     <string name="experimental">"إصدار تجريبي"</string>
     <string name="add_widget">"إضافة أداة"</string>
-    <string name="calendar">"التقويم"</string>
     <string name="permissions_label">"الأذونات"</string>
     <string name="time_format">"تنسيق الوقت"</string>
     <string name="setup">"الإعداد"</string>
@@ -67,8 +66,6 @@
     <string name="menu">"قائمة"</string>
     <string name="action_move_down">"نقل لأسفل"</string>
     <string name="action_move_up">"نقل لأعلى"</string>
-    <string name="calendar_delete">حذف التقويم</string>
-    <string name="preferences_calendar_delete_message">أمتأكد من حذف هذا التقويم؟</string>
     <string name="default_camera_app_title">تطبيق الكاميرا</string>
     <string name="help_and_feedback">"المساعدة والتعليقات"</string>
     <string name="currencies_exchange">"عملات وصرف أجنبي"</string>

@@ -14,83 +14,9 @@
      android-source/packages/apps/Calendar/res/values
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="does_not_repeat">"없음"</string>
-    <string name="endByDate">", <xliff:g id="DATE">%s</xliff:g>까지"</string>
-    <plurals name="endByCount">
-        <item quantity="one">", 일회성"</item>
-        <item quantity="other">", <xliff:g id="NUMBER">%d</xliff:g>회"</item>
-    </plurals>
-    <plurals name="daily">
-        <item quantity="one">"매일"</item>
-        <item quantity="other">"<xliff:g id="NUMBER">%d</xliff:g>일에 한 번"</item>
-    </plurals>
-    <string name="every_weekday">"주중 매일(월-금)"</string>
-    <plurals name="weekly">
-        <item quantity="one">"매주 <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>"</item>
-        <item quantity="other">"<xliff:g id="NUMBER">%1$d</xliff:g>주에 한 번 <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>"</item>
-    </plurals>
-    <plurals name="monthly">
-        <item quantity="one">매월</item>
-        <item quantity="other">"<xliff:g id="COUNT">%d</xliff:g>개월에 한 번"</item>
-    </plurals>
-    <plurals name="yearly">
-        <item quantity="one">매년</item>
-        <item quantity="other">"<xliff:g id="COUNT">%d</xliff:g>년에 한 번"</item>
-    </plurals>
     <string name="monthly_plain">"매월"</string>
-    <string name="monthly_on_day">"(<xliff:g id="DAY_OF_MONTH">%s</xliff:g>일)"</string>
-    <string name="yearly_on_day">"(<xliff:g id="DATES">%s</xliff:g>)"</string>
     <string name="yearly_plain">매년</string>
     <string name="daily_plain">매일</string>
     <string name="weekly_plain">매주</string>
 
-    <string-array name="repeat_by_nth_sun">
-        <item>"매월 첫 번째 일요일"</item>
-        <item>"매월 두 번째 일요일"</item>
-        <item>"매월 세 번째 일요일"</item>
-        <item>"매월 네 번째 일요일"</item>
-        <item>"매월 마지막 일요일"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_mon">
-        <item>"매월 첫 번째 월요일"</item>
-        <item>"매월 두 번째 월요일"</item>
-        <item>"매월 세 번째 월요일"</item>
-        <item>"매월 네 번째 월요일"</item>
-        <item>"매월 마지막 월요일"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_tues">
-        <item>"매월 첫 번째 화요일"</item>
-        <item>"매월 두 번째 화요일"</item>
-        <item>"매월 세 번째 화요일"</item>
-        <item>"매월 네 번째 화요일"</item>
-        <item>"매월 마지막 화요일"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_wed">
-        <item>"매월 첫 번째 수요일"</item>
-        <item>"매월 두 번째 수요일"</item>
-        <item>"매월 세 번째 수요일"</item>
-        <item>"매월 네 번째 수요일"</item>
-        <item>"매월 마지막 수요일"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_thurs">
-        <item>"매월 첫 번째 목요일"</item>
-        <item>"매월 두 번째 목요일"</item>
-        <item>"매월 세 번째 목요일"</item>
-        <item>"매월 네 번째 목요일"</item>
-        <item>"매월 마지막 목요일"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_fri">
-        <item>"매월 첫 번째 금요일"</item>
-        <item>"매월 두 번째 금요일"</item>
-        <item>"매월 세 번째 금요일"</item>
-        <item>"매월 네 번째 금요일"</item>
-        <item>"매월 마지막 금요일"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_sat">
-        <item>"매월 첫 번째 토요일"</item>
-        <item>"매월 두 번째 토요일"</item>
-        <item>"매월 세 번째 토요일"</item>
-        <item>"매월 네 번째 토요일"</item>
-        <item>"매월 마지막 토요일"</item>
-    </string-array>
 </resources>

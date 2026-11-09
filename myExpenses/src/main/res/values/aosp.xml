@@ -72,7 +72,6 @@
     <!-- platform_frameworks_base/core/res/res/values/strings.xml name="keyguard_accessibility_add_widget"-->
     <string name="add_widget">Add widget</string>
     <!-- platform_packages_providers_calendarprovider/res/values/string.xml name="provider_label"-->
-    <string name="calendar">Calendar</string>
     <!-- MusicFX -->
     <string name="setup">"Setup"</string>
     <!-- inputmethods/LatinIME/java/res/values/string.xml name="subtype_generic_compact" -->
@@ -112,9 +111,7 @@
     <!-- /opt/extra/AOSP/packages/apps/Settings$ grep -ri  action_drag_label_move_top | sed 's/drag_label_//' |  sed 's/ msgid="[[:digit:]]*"//' | aosp_helper -->
     <string name="action_move_top">"Move to top"</string>
     <!-- /opt/extra/lineage/packages/apps/Etar/app/src/main$ grep -ri preferences_calendar_delete_delete | sed 's/preferences_calendar_delete_delete/calendar_delete/' | aosp_helper -->
-    <string name="calendar_delete">Delete calendar</string>
     <!-- /opt/extra/lineage/packages/apps/Etar/app/src/main grep -ri preferences_calendar_delete_message | aosp_helper -->
-    <string name="preferences_calendar_delete_message">Do you really want to delete this calendar?</string>
     <!-- /opt/extra/AOSP/packages/apps/Settings$ grep -ri default_camera_app_title |  sed 's/ msgid="[[:digit:]]*"//' | aosp_helper  -->
     <string name="default_camera_app_title">Camera app</string>
     <!-- /opt/extra/AOSP/packages/inputmethods/LatinIME/java grep -ri help_and_feedback |  sed 's/ msgid="[[:digit:]]*"//' | aosp_helper -->

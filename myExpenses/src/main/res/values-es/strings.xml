@@ -108,13 +108,11 @@
     <string name="licence_validation_premium">Opciones Premium desbloqueadas.</string>
     <string name="menu_aggregates">Total</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">Aplicar</string>
     <string name="menu_back">Atrás</string>
     <string name="menu_backup">Copia de seguridad</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">Balance de la cuenta</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">Cancelar</string>
     <string name="menu_clone_transaction">Clonar</string>
     <string name="menu_contrib">Contribuir</string>
     <string name="menu_create_account">Nueva cuenta</string>
@@ -140,7 +138,6 @@
     <string name="menu_edit_cat">Modificar categoría</string>
     <string name="menu_edit_method">Modificar método de pago</string>
     <string name="menu_edit_party">Modificar grupo</string>
-    <string name="menu_edit_plan_instance">Modificar incidencia de un único proyecto</string>
     <string name="menu_edit_split">Editar transacción dividida</string>
     <string name="menu_edit_split_part_category">Modificar parte de una categoría dividida</string>
     <string name="menu_edit_split_part_transfer">Modificar parte de una transferencia dividida</string>
@@ -153,7 +150,6 @@
     <string name="menu_help">Ayuda</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">Invertir</string>
-    <string name="menu_manage_plans">Plantillas y proyectos</string>
     <string name="menu_reset">Exportar y reiniciar</string>
     <string name="menu_reset_all">Exportar y reiniciar todo</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -170,7 +166,6 @@
     <string name="no_expenses">¡Todavía no hay gastos!</string>
     <string name="no_exportable_expenses">No existen transacción que no hayan sido exportadas.</string>
     <string name="no_filemanager_installed">No hay instalado ningún administrador de archivos</string>
-    <string name="no_calendar_app_installed">No se ha encontrado una aplicación para editar evento en el calendario.</string>
     <string name="image_capture_not_installed">No se ha encontrado una aplicación para realizar una captura.</string>
     <string name="no_mapped_transactions">Ninguna transacción se ha asignado a las categorías durante este período.</string>
     <string name="no_methods">No hay métodos de pago.</string>
@@ -203,15 +198,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">Proyección</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">Automático</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">Planificador {app_name}</string>
-    <string name="planner_notification_channel_name">Planificador</string>
-    <string name="plan_event_deleted">El proyecto asociada a esta plantilla ha sido eliminado desde el calendario.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">Ejecución del proyecto cancelada</string>
-    <string name="planner_create_calendar_failure">No se pudo crear un calendario de planificación local</string>
-    <string name="planner_create_calendar_success">Calendario de planificación local creado con éxito</string>
     <!-- payment methods -->
     <string name="pm_cheque">Cheque bancario</string>
     <string name="pm_creditcard">Tarjeta de crédito</string>
@@ -251,8 +240,6 @@
     <string name="pref_password_not_equal">Las contraseñas no coinciden</string>
     <string name="pref_perform_share_title">Enviar exportaciones y copias de seguridad</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">Crear nuevo calendario de planificación local</string>
-    <string name="pref_planning_calendar_summary">Seleccione el calendario que almacena los proyectos para transacciones futuras y recurrentes</string>
     <string name="pref_protection_delay_seconds_summary">Segundos de inactividad antes de que la aplicación sea protegida por contraseña.</string>
     <string name="pref_protection_delay_seconds_title">Demora hasta la protección por contraseña</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">Entrada de datos desde widgets y accesos directos</string>
@@ -284,7 +271,6 @@
     <string name="restore_preferences_failure">La restauración de preferencias ha fallado</string>
     <string name="restore_backup_file_not_found">No se ha encontrado el fichero %1$s en el archivo «%2$s»</string>
     <string name="restore_preferences_success">Preferencias restauradas desde la copia de seguridad.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d proyectos han sido restaurados desde la copia de seguridad</string>
     <string name="save_transaction_and_new_success">Guardado con éxito</string>
     <string name="save_transaction_error">No se pudo guardar la nueva transacción desde la plantilla.</string>
     <plurals name="save_transaction_from_template_success">
@@ -444,17 +430,13 @@
     <string name="pref_sort_order_custom">Personalizado</string>
     <string name="content_description_calculator">Calculadora</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">abierto</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">cancelado</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">aplicado</string>
     <string name="warning_cannot_move_split_transaction">Esta transacción dividida no se pudo mover a la cuenta %1$s porque hay partes de transferencias referidas a esta cuenta.</string>
     <string name="content_description_calculator_delete_button">Borrar el último dígito</string>
     <string name="paypal_callback_info">La transacción se ha completado y el recibo de compra ha sido enviado a su correo electrónico. Puede iniciar sesión en su cuenta en www.paypal.com para ver los detalles de la transacción.</string>
     <string name="search_transfer">Búsqueda para transferencia</string>
     <!-- Sort plans (recurring transactions) by the next instance  -->
-    <string name="pref_sort_order_next_instance">Siguiente instancia</string>
     <string name="crash_dialog_title">{app_name} se ha cerrado inesperadamente</string>
     <string name="crash_dialog_text">Un error inesperado ha forzado el cese de la aplicación. Por favor, para enviar información sobre el mismo y poder arreglarlo, sólo tiene que pulsar Aceptar.</string>
     <string name="crash_dialog_comment_prompt">Puede añadir comentarios sobre el problema a continuación:</string>
@@ -511,7 +493,6 @@
     <string name="contributed_by">Contribución de %s</string>
     <string name="pref_sync_notification_summary">Notificar sobre progreso de sincronización</string>
     <string name="pref_debug_logging_summary">Escribir información de depuración en el registro de sistema</string>
-    <string name="plan_custom_recurrence_info">Por favor, guarde la plantilla primero. Se abrirá el proyecto en la aplicación de calendario, desde donde podrá configurar una reaparición personalizada.</string>
     <string name="menu_create_template_for_split">Nueva plantilla dividida</string>
     <string name="progress_validating_licence">Validando licencia</string>
     <string name="licence_validation_error_expired">Licencia caducada</string>
@@ -648,7 +629,6 @@
     <string name="pref_exchange_rate_provider_summary">Seleccionar proveedor para descargar tipo de cambio</string>
     <string name="pref_exchange_rate_provider_title">Proveedor de tipo de cambio</string>
     <string name="pref_exchange_rates_api_key_summary">Por favor, ingrese en una cuenta gratuita en %s e introduzca su App ID</string>
-    <string name="pref_plan_executor_time_title">Hora de notificación</string>
     <string name="synchronization_select_folder_dialog_title">Seleccionar una carpeta existente o crear una nueva</string>
     <!-- This message is shwon when we highlight the income / expense toogle, to make user aware of this feature  -->
     <string name="discover_feature_expense_income_switch">Utilizar este botón de intercambio para guardar ingresos.</string>
@@ -704,7 +684,6 @@
     <string name="new_tag_hint">Introducir nueva etiqueta</string>
     <string name="language_download_requested">Se han solicitado las traducciones para %s desde la Play Store</string>
     <!-- Title for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
-    <string name="pref_planner_manual_time_title">Hora para la transacción programada aplicada manualmente</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
     <string name="pref_planner_manual_time_noon">12 pm (mediodía)</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction (current time at moment of application) -->
@@ -739,14 +718,11 @@
     <!-- Toast message shown if user clicks on Upgrade button before having selected a licence -->
     <string name="select_package">Por favor, seleccione un paquete de licencia.</string>
     <!-- Label for a slider control that allows to configure a plan to be executed (added to the ledger) the give number of days in advance -->
-    <string name="advance_exexcution_in_days">Ejecución anticipada (en días)</string>
     <string name="warning_balance_account_delete">Si procede, todas las transacciones reconciliadas en esta cuenta se eliminarán de la base de datos y no podrá restaurarlas.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">Los datos de formulario existentes serán descartados.</string>
     <string name="pref_clone_with_current_date_title">Fecha de las transacciones clonadas</string>
     <string name="template_default_action_without_amount_hint">La plantilla sin importe debe guardarse con la acción predeterminada «Editar»</string>
-    <string name="plan_automatic_without_amount_hint">No se guardar el plan sin cantidad con la ejecución automática del plan</string>
-    <string name="content_description_edit_plan">Editar planificación en la aplicación del calendario</string>
     <string name="menu_save_and_new_content_description">Guardar los datos, dejando abierto el formulario para crear una nueva transacción con los mismos datos.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
     <string name="pref_ocr_engine_title">Sistema de reconocimiento de texto</string>
@@ -767,7 +743,6 @@
     <string name="new_balance">Nuevo balance</string>
     <string name="single_feature_info">Alternativamente, puede comprar acceso ilimitado solo a esta función.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
-    <string name="recurrence_last_day_of_month">Último día</string>
     <string name="warning_link_transfer">Las dos transacciones seleccionadas se vincularán como transferencia. Se eliminará la información sobre el acreedor/ordenante y la categoría.</string>
     <!-- This is the title of an entry on the configuration screen for the account widget. It allows to decide which number should be displayed for each account: the current balance or the total (which included future transactions) -->
     <string name="account_widget_configuration_sum">Tipo de suma mostrada</string>
@@ -784,7 +759,6 @@
     <string name="auto_fill_focus">Fijar el seguimiento en un acreedor</string>
     <!-- This warning is shown when a user calls the Reset or Cancel commands on a scheduled transaction, for a date
      where the transaction has already been created.  -->
-    <string name="warning_plan_instance_delete">Se eliminará la transacción creada para la fecha seleccionada.</string>
     <string name="crash_reports_user_info">{app_name} enviará informes sobre errores de la aplicación automáticamente a sus desarrolladores, permitiendo solucionar problemas más rápidamente.</string>
     <string name="pref_enable_acra">Permite el envío automático de reportes de accidente</string>
     <string name="pref_acra_user_email">Correo electrónico del usuario para ser incluidos en el informe de accidente</string>
@@ -871,11 +845,6 @@
     <string name="select_template">Seleccionar una plantilla</string>
     <string name="content_description_remove_icon">Eliminar el icono</string>
     <string name="search_account">Buscar por cuenta</string>
-    <string name="orphaned_transaction_align_date">Opcionalmente, la fecha almacenada con la transacción también puede alinearse con la fecha de la instancia.</string>
-    <string name="orphaned_transaction_info">Una transacción está vinculada al plan para esta fecha, pero no existe ninguna instancia de este evento en esta fecha.</string>
-    <string name="orphaned_transaction_relink">La transacción se puede volver a vincular con la instancia del evento en %s.</string>
-    <string name="button_relink_keep_date">Volver a vincular, manteniendo la fecha</string>
-    <string name="button_relink_update_date">Volver a vincular y actualizar la fecha</string>
     <string name="notifications_permission_required_auto_backup">Al conceder el permiso para enviar notificaciones, se te informará sobre las copias de seguridad automáticas.</string>
     <string name="remove_from_group">Retirar del grupo</string>
     <string name="merge_parties_strategy_delete">Se eliminan los duplicados.</string>

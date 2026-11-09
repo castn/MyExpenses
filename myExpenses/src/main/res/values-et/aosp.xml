@@ -5,8 +5,6 @@
     <string name="menu">"Menüü"</string>
     <string name="action_move_down">"Teisalda alla"</string>
     <string name="action_move_up">"Teisalda üles"</string>
-    <string name="calendar_delete">Kustuta kalender</string>
-    <string name="preferences_calendar_delete_message">Kas olete kindel, et soovite seda kalendrit kustutada?</string>
     <string name="default_camera_app_title">"Kaamerarakendus"</string>
     <string name="help_and_feedback">"Abi ja tagasiside"</string>
     <string name="currencies_exchange">"Valuutad ja välisbörsid"</string>

@@ -7,7 +7,6 @@
     <string name="cab_edit_help_text">Επεξεργασία επιλεγμένου αντικειμένου.</string>
     <string name="help_MyExpenses_title">Λίστα συναλλαγών</string>
     <string name="help_MyExpenses_info">Αυτή η οθόνη εμφανίζει όλες τις συναλλαγές για τον τρέχοντα λογαριασμό. Χρησιμοποιήστε το αναδυώμενο κουμπί ενεργειών για να ανοίξετε την φόρμα δημιουργίας νέας συναλλαγής.</string>
-    <string name="help_ManageTemplates_plans_title">Προβολή ημερολογίου σχεδίου</string>
     <string name="cab_MyExpenses_filter_help_text">Αναζήτηση συναλλαγών με ίδιες ιδιότητες.</string>
     <string name="help_contextual_actions_help">Το μενού ενεργειών εμφανίζεται πατώντας παρατεταμένα σε μια καταχώριση της λίστας.</string>
     <string name="help_MyExpenses_fab_long_press">Πατώντας παρατεταμένα το πλωτό κουμπί δράσης ανοίγει ένα μενού που επιτρέπει την προετοιμασία της φόρμας για μεταφορά, διαχωρισμό συναλλαγής ή εισόδημα.</string>
@@ -37,7 +36,6 @@
     <string name="help_ManageParties_mergeMode_info_1">Επιλέξτε τις διπλότυπες ομάδες που θέλετε να συγχωνεύσετε.</string>
     <string name="cab_ManageTemplates_delete_help_text">Διαγράψτε τα επιλεγμένα πρότυπα και τυχόν σχετικά σχέδια.</string>
     <string name="cab_ManageTemplates_edit_help_text">Επεξεργαστείτε το επιλεγμένο πρότυπο και δημιουργήστε ή επεξεργαστείτε ένα συσχετισμένο σχέδιο.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">Δηλώστε ότι στις επιλεγμένες περιπτώσεις γεγονότων δεν θα πρέπει να δημιουργούνται συναλλαγές. Εάν έχουν δημιουργηθεί συναλλαγές για τις επιλεγμένες περιπτώσεις γεγονότων, θα διαγραφούν.</string>
     <string name="help_ManageCategories_select_filter_info">Κάντε κλικ σε μια καταχώρηση για να ξεκινήσετε την πολλαπλή επιλογή.</string>
     <string name="help_ManageCategories_manage_info">Αυτή η οθόνη επιτρέπει τη δημιουργία, επεξεργασία και διαγραφή κατηγοριών. Από προεπιλογή, το κύριο κριτήριο ταξινόμησης στη λίστα κατηγοριών είναι πόσες φορές χρησιμοποιείτε μια κατηγορία (το δευτερεύον κριτήριο είναι η αλφαβητική σειρά). Αυτό σας παρέχει γρήγορη πρόσβαση στις κατηγορίες που χρησιμοποιείτε πιο συχνά.</string>
     <string name="help_ManageCategories_expand_collapse"><![CDATA[Κάντε κλικ στο εικονίδιο <img src="ic_expand_more">/<img src="ic_expand_less"> για να επεκτείνετε ή να συμπτύξετε μια κατηγορία.]]></string>

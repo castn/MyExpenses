@@ -40,7 +40,6 @@
     <string name="response_no">ไม่ไป</string>
     <string name="show_all">แสดงทั้งหมด</string>
     <string name="add_widget">เพิ่มวิดเจ็ต</string>
-    <string name="calendar">ปฏิทิน</string>
     <string name="setup">"ตั้งค่า"</string>
     <string name="compact">แบบกะทัดรัด</string>
     <string name="write_fail_reason_cannot_write">ข้อผิดพลาดในการเขียนเนื้อหา</string>
@@ -59,8 +58,6 @@
     <string name="menu">"เมนู"</string>
     <string name="action_move_down">"เลื่อนลง"</string>
     <string name="action_move_up">"เลื่อนขึ้น"</string>
-    <string name="calendar_delete">ลบปฏิทิน</string>
-    <string name="preferences_calendar_delete_message">คุณต้องการลบปฏิทินนี้หรือไม่</string>
     <string name="default_camera_app_title">"แอปกล้องถ่ายรูป"</string>
     <string name="help_and_feedback">"ความช่วยเหลือและความคิดเห็น"</string>
     <string name="currencies_exchange">"สกุลเงินและการแลกเปลี่ยนเงินตราต่างประเทศ"</string>

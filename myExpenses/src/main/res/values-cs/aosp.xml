@@ -22,7 +22,6 @@
     <string name="response_no">"Ne"</string>
     <string name="experimental">"Experimentální"</string>
     <string name="add_widget">"Přidat widget"</string>
-    <string name="calendar">"Kalendář"</string>
     <string name="permissions_label">"Oprávnění"</string>
     <string name="time_format">"Formát času"</string>
     <string name="setup">"Nastavit"</string>
@@ -66,8 +65,6 @@
     <string name="menu">"Nabídka"</string>
     <string name="action_move_down">"Přesunout dolů"</string>
     <string name="action_move_up">"Přesunout nahoru"</string>
-    <string name="calendar_delete">Odstranit kalendář</string>
-    <string name="preferences_calendar_delete_message">Opravdu si přejete odstranit tento kalendář?</string>
     <string name="default_camera_app_title">"Aplikace kfocení anatáčení"</string>
     <string name="help_and_feedback">"Nápověda a zpětná vazba"</string>
     <string name="currencies_exchange">"Měny a kurzy měn"</string>

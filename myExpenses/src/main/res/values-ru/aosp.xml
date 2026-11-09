@@ -21,7 +21,6 @@
     <string name="response_no">"Нет"</string>
     <string name="experimental">"Экспериментальная версия"</string>
     <string name="add_widget">"Добавить виджет"</string>
-    <string name="calendar">"Календарь"</string>
     <string name="permissions_label">"Разрешения"</string>
     <string name="time_format">"Формат времени"</string>
     <string name="setup">"Настройка"</string>
@@ -65,8 +64,6 @@
     <string name="menu">"Меню"</string>
     <string name="action_move_down">"Опустить"</string>
     <string name="action_move_up">"Поднять"</string>
-    <string name="calendar_delete">Удалить календарь</string>
-    <string name="preferences_calendar_delete_message">Вы действительно хотите удалить этот календарь?</string>
     <string name="default_camera_app_title">"Приложение камеры"</string>
     <string name="help_and_feedback">"Справка/отзыв"</string>
     <string name="currencies_exchange">"Валютный рынок"</string>

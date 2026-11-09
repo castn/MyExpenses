@@ -23,22 +23,11 @@
     <string name="help_ManageMethods_info">To okno pokazuje wszystkie zdefiniowane metody płatności (czek, karta kredytowa, depozyt, karta debetowa) oraz pozwala dodawać nowe. Uzyj pływającego przycisku akcji aby utworzyć nową metodę płatności.</string>
     <string name="help_ManageParties_manage_info">Na tym ekranie wyszczególniono strony używane do autouzupełniania pola Płatnik/Odbiorca płatności.</string>
     <string name="help_ManageParties_floating_action_button">Użyj pływającego przycisku akcji, aby dodać nowy wpis.</string>
-    <string name="help_ManageTemplates_plans_title">Widok planu kalendarza</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src=\"ic_menu_template\">Podczas gdy szablony można wyprowadzać z transakcji za pośrednictwem menu kontekstowego, tutaj możesz tworzyć nowe szablony od podstaw (w przypadku transakcji lub przelewów), klikając pływający przycisk akcji. Kliknięcie szablonu stworzy dla niego instancję.<br><img src=\"ic_event\"> Plan to szablon, dla którego utworzyłeś wydarzenie (jednorazowe lub cykliczne) w kalendarzu terminarza. Klikając plan, otworzy się widok kalendarza, który wyświetla poprzednie i nadchodzące wystąpienia planu.]]></string>
-    <string name="help_ManageTemplates_plans_intro">Każda wyróżniona data reprezentuje instancję planu.</string>
-    <string name="help_ManageTemplates_plans_info_header">Stan instancji jest oznaczony następującymi ikonami:</string>
-    <string name="help_ManageTemplates_plans_info_open">Instancja nie została jeszcze zastosowana.</string>
-    <string name="help_ManageTemplates_plans_info_applied">Instancja została zastosowana.</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">Instancja została anulowana, tj. opuściłeś ją, aby pominąć. Dla tej instancji nie zostanie utworzona żadna transakcja.</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">Utwórz instancję wybranego szablonu i zapisz go natychmiastowo.</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">Utwórz instancję wybranego szablonu i wejdź do jego pola edycyjnego gdzie możesz modyfikować go przed zapisem. </string>
     <string name="cab_ManageTemplates_delete_help_text">Usuń zaznaczone szablony i wszystkie powiązane plany.</string>
     <string name="cab_ManageTemplates_edit_help_text">Edytuj zaznaczony szablon i utwórz lub edytuj powiązany plan.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">Utwórz transakcje w momencie wystąpienia wybranych zdarzeń i natychmiast je zapisz.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">Utwórz transakcję w momencie wybranego zdarzenia i wprowadź jej formularz edycji, w którym możesz go zmodyfikować przed zapisaniem.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">Wskaż, że w wybranych zdarzeniach nie należy tworzyć żadnych transakcji. Jeśli zostały utworzone transakcje dla wybranych zdarzeń, zostaną one usunięte.</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">Jeżeli transakcje zostały utworzone dla wybranych instancji zdarzenia, zostaną one usunięte, jeżeli zostały one oflagowane jako anulowane, flagi te zostaną usunięte.</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">Edytuj transakcję która została utworzona dla wybranej instancji planu.</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">Lista szablonów może być sortowana według tytułu (alfabetycznie), według ilości, częstotliwości użycia lub ostatniego czasu utworzenia transakcji.</string>
     <string name="help_ManageCategories_distribution_info">Na tym ekranie wyświetla się rozkład wydatków i dochodów w kategoriach dla wszystkich transakcji na koncie lub dla określonej grupy. Po rozwinięciu głównej kategorii na liście wykres kołowy wyświetli rozkład podkategorii. Jeśli wybierzesz kategorię z listy, zostanie ona podświetlona na wykresie kołowym i odwrotnie. Naciśnij długo kategorię, aby wyświetlić zagregowaną listę mapowanych do niej transakcji.</string>
     <string name="help_ManageCategories_select_mapping_info">Oprócz akcji które możesz dokonać podczas zarządzania kategoriami z ekranu Preferencji (utwórz, edytuj, usuń), na tym ekranie możesz zmapować transakcję do wybranej kategorii przez kliknięcie na niej.</string>
@@ -129,11 +118,9 @@
     <string name="popup_MyExpenses_toolbar_copy_text">Kopiowanie bieżącego salda do schowka.</string>
     <string name="menu_BudgetActivity_delete_help_text">Aktualnie wyświetlany budżet zostanie usunięty.</string>
     <string name="menu_BudgetActivity_rollover_total">Przenoszona jest tylko pozostała część budżetu całkowitego, w związku z czym zwiększany lub zmniejszany jest wyłącznie budżet całkowity następnego okresu.</string>
-    <string name="help_ManageTemplates_planner_intro">Długie dotknięcie otwartej instancji uruchamia wybór wielokrotny. Stuknięcie początku lub końca zakresu dat pozwala rozszerzyć zakres na przeszłość lub przyszłość.</string>
     <string name="menu_budget_allocated_only_help_text">Włączenie tej opcji powoduje wyświetlenie tylko kategorii, dla których została przydzielona kwota.</string>
     <string name="form_default_action_help_text">Dla każdego szablonu możesz skonfigurować, czy krótkie dotknięcie go na liście szablonów spowoduje natychmiastowe zapisanie instancji, czy też przejście do jej formularza edycji, w którym możesz ją zmodyfikować przed zapisaniem. Zawsze możesz uzyskać dostęp do obu akcji za pomocą długiego dotknięcia.</string>
     <string name="form_BudgetEdit_title_help_text">Tytuł budżetu ułatwia jego identyfikację na liście budżetu.</string>
-    <string name="help_ManageTemplates_planner_title">Nadchodzące cykle</string>
     <string name="popup_MyExpenses_toolbar_intro">Dotknięcie paska narzędzi (etykiety konta lub bieżącego salda) powoduje wyświetlenie menu z następującymi pozycjami:</string>
     <string name="help_ManageCategories_expand_collapse"><![CDATA[Kliknij ikonę <img src=ic_expand_more>/<img src=ic_expand_less>, aby rozwinąć lub zwinąć kategorię.]]></string>
     <string name="cab_ManageCategories_color_help_text">Do głównych kategorii można przypisać kolor. Ten kolor będzie używany do reprezentowania kategorii na wykresach. Podkategorie będą używać odcieni koloru ich głównej kategorii.</string>

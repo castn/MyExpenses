@@ -90,13 +90,11 @@
     <string name="licence_validation_premium">Premiumfunktioner er blevet oplåst.</string>
     <string name="menu_aggregates">I alt</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">Anvend</string>
     <string name="menu_back">Tilbage</string>
     <string name="menu_backup">Sikkerhedskopiering</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">Saldokonto</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">Annuller</string>
     <string name="menu_clone_transaction">Klon</string>
     <string name="menu_contrib">Bidrag</string>
     <string name="menu_create_account">Ny konto</string>
@@ -122,7 +120,6 @@
     <string name="menu_edit_cat">Rediger kategori</string>
     <string name="menu_edit_method">Rediger betalingsmetode</string>
     <string name="menu_edit_party">Rediger part</string>
-    <string name="menu_edit_plan_instance">Rediger enkelt planforekomst</string>
     <string name="menu_edit_split">Rediger opdelt transaktion</string>
     <string name="menu_edit_split_part_category">Rediger kategoriopdelt del</string>
     <string name="menu_edit_split_part_transfer">Rediger overførselsopdelt del</string>
@@ -135,7 +132,6 @@
     <string name="menu_help">Hjælp</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">Inverter</string>
-    <string name="menu_manage_plans">Skabeloner og planer</string>
     <string name="menu_reset">Eksportér og nulstil</string>
     <string name="menu_reset_all">Eksportér og nulstil alt</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -179,15 +175,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">Plan</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">automatisk</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">{app_name}-planlægning</string>
-    <string name="planner_notification_channel_name">Planlægning</string>
-    <string name="plan_event_deleted">Planen, der er knyttet til denne skabelon, blev slettet fra kalenderen.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">Planudførsel annulleret</string>
-    <string name="planner_create_calendar_failure">Kunne ikke oprette lokal planlægningskalender</string>
-    <string name="planner_create_calendar_success">Lokal planlægningskalender oprettet</string>
     <!-- payment methods -->
     <string name="pm_cheque">Check</string>
     <string name="pm_creditcard">Kreditkort</string>
@@ -223,8 +213,6 @@
     <string name="pref_password_not_equal">Adgangskoderne er ikke ens</string>
     <string name="pref_perform_share_title">Del sikkerhedskopier og eksportfiler</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">Opret ny lokal planlægningskalender</string>
-    <string name="pref_planning_calendar_summary">Vælg kalenderen, hvor planer for fremtidige og tilbagevendende transaktioner gemmes</string>
     <string name="pref_protection_delay_seconds_summary">Antal sekunder uden aktivitet, før appen låses med adgangskode.</string>
     <string name="pref_protection_delay_seconds_title">Forsinkelse indtil beskyttelse</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">Dataindtastning fra widgets og genveje</string>
@@ -256,7 +244,6 @@
     <string name="restore_preferences_failure">Gendannelse af indstillinger mislykkedes.</string>
     <string name="restore_backup_file_not_found">Filen %1$s findes ikke i arkivet \"%2$s\"</string>
     <string name="restore_preferences_success">Indstillinger blev gendannet fra sikkerhedskopi.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d planer blev gendannet fra sikkerhedskopi</string>
     <string name="save_transaction_and_new_success">Gemt</string>
     <string name="save_transaction_error">Kunne ikke gemme ny transaktion fra skabelon.</string>
     <plurals name="save_transaction_from_template_success">
@@ -414,7 +401,6 @@
     <string name="dialog_contrib_trial_info" tools:ignore="PluralsCandidate">Din nuværende licensstatus (%1$s) lader dig prøve %2$s i %3$d dage (indtil %4$s).</string>
     <string name="dialog_contrib_usage_limit_with_dialog">Med din nuværende licensstatus (%1$s) vises denne dialog ved hvert brug.</string>
     <string name="button_label_close">Luk</string>
-    <string name="no_calendar_app_installed">Ingen app til redigering af kalenderbegivenhed.</string>
     <string name="dialog_title_warning_delete_account">Slet konto?</string>
     <string name="dialog_contrib_trial_info_play">Denne gratis prøveperiode konverteres aldrig til nogen form for abonnement.</string>
     <string name="dialog_contrib_subscription_info_play">Dette abonnement træder i kraft med det samme, faktureres månedligt eller årligt og kan opsiges når som helst.</string>
@@ -438,7 +424,6 @@
     <string name="dialog_command_sync_link_remote">Hent fra ekstern</string>
     <string name="dialog_confirm_sync_unlink">Hvis du fjerner denne konto fra %s, går synkroniseringsstatus tabt. Hvis du senere forbinder dem igen, kræver det en fuld synkronisering igen.</string>
     <string name="warning_change_fraction_digits_checkbox_label">Opdater beløb i database</string>
-    <string name="plan_instance_state_cancelled">annulleret</string>
     <string name="preferences_month_start_date_title">Måneden starter på</string>
     <string name="dialog_command_sync_link_local">Upload fra lokal</string>
     <string name="pref_auto_backup_time_title">Auto-sikkerhedskopieringstidspunkt</string>
@@ -452,12 +437,9 @@
     <string name="pref_grouping_periods">Grupperingsperioder</string>
     <string name="pref_sort_order_last_used">Sidst brugt</string>
     <string name="pref_sort_order_custom">Tilpasset</string>
-    <string name="plan_instance_state_open">åben</string>
-    <string name="plan_instance_state_applied">anvendt</string>
     <string name="content_description_calculator_delete_button">Slet sidste ciffer</string>
     <string name="paypal_callback_info">Din transaktion blev fuldført, og en kvittering for dit køb er blevet sendt til din e-mail. Du kan logge ind på din konto på www.paypal.com for at se detaljer om denne transaktion.</string>
     <string name="search_transfer">Søg efter overførsel</string>
-    <string name="pref_sort_order_next_instance">Næste forekomst</string>
     <string name="crash_dialog_title">{app_name} gik ned</string>
     <string name="crash_dialog_text">Der opstod en uventet fejl, som tvang applikationen til at stoppe. Hjælp os med at rette det ved at sende os fejldata. Du skal bare klikke OK.</string>
     <string name="crash_dialog_comment_prompt">Du kan tilføje kommentarer om problemet nedenfor:</string>
@@ -594,7 +576,6 @@
     <string name="sync_io_exception_reset_account_data">Fejl under nulstilling af fjernkonto.</string>
     <string name="sync_success_reset_account_data">Fjerndata for kontoen %s blev slettet.</string>
     <string name="onboarding_restore_from_cloud">Gendan fra cloud-synkronisering</string>
-    <string name="plan_custom_recurrence_info">Gem venligst skabelonen først. Planen åbnes derefter i kalenderappen, hvor du kan angive en tilpasset gentagelse.</string>
     <string name="pref_warning_only_one_protection">Før du kan bruge beskyttelse af %1$s, skal du slå beskyttelse af %2$s fra.</string>
     <string name="menu_history">Historik</string>
     <string name="warning_split_transactions">De valgte transaktioner grupperes i én delt transaktion. Deres datooplysninger går tabt og erstattes af deres gennemsnit.</string>
@@ -620,7 +601,6 @@
     <string name="dialog_multi_tag_clear">Alle etiketter fjernes fra de valgte transaktioner.</string>
     <string name="scan_result_no_payee">Ingen modtager fundet</string>
     <string name="menu_edit_tag">Rediger etiket</string>
-    <string name="pref_planner_manual_time_title">Tidspunkt for manuelt anvendt planlagt transaktion</string>
     <string name="pref_clone_with_current_date_title">Dato for klonede transaktioner</string>
     <string name="template_default_action_without_amount_hint">Skabeloner uden beløb bør gemmes med standardhandlingen \'Rediger\'</string>
     <string name="ocr_recognition_info">Kører tekstgenkendelse med %s</string>
@@ -659,7 +639,6 @@
     <string name="pref_criterion_future_current">Nuværende tid</string>
     <string name="pref_ocr_total_indicators_summary">En liste over strenge, der angiver det samlede beløb på en kvittering. Placér hvert beløb på en ny linje. Lad det være tomt for at gendanne standardværdien.</string>
     <string name="select_package">Vælg venligst en licenspakke.</string>
-    <string name="plan_automatic_without_amount_hint">Planer uden beløb bør ikke gemmes med automatisk planudførelse</string>
     <string name="new_balance">Ny saldo</string>
     <string name="translated_by">Oversat af</string>
     <string name="pref_exchange_rate_provider_title">Valutakursudbyder</string>
@@ -697,22 +676,18 @@
     <string name="scan_result_multiple_candidates_dialog_title">Flere kandidater fundet. Vælg venligst:</string>
     <string name="scan_result_no_date">Ingen dato fundet</string>
     <string name="pref_feature_uninstall_summary">Play Butik forsøger med tiden at fjerne disse moduler i baggrunden.</string>
-    <string name="advance_exexcution_in_days">Udførsel forud (i dage)</string>
     <string name="warning_balance_account_delete">Hvis du fortsætter, slettes alle afstemte transaktioner for denne konto fra databasen, og du ville ikke kunne gendanne dem.</string>
     <string name="confirmation_load_template_discard_data">Eksisterende formulardata kasseres.</string>
-    <string name="content_description_edit_plan">Rediger plan i kalender-app</string>
     <string name="menu_save_and_new_content_description">Gem dataene, og hold formularen åben for at oprette en ny transaktion med de samme data.</string>
     <string name="pref_ocr_engine_title">System til tekstgenkendelse</string>
     <string name="pref_tesseract_language_title">Sprog til Tesseract</string>
     <string name="download_completed">Hentningen (%s) er fuldført.</string>
     <string name="ocr_download_info">Tekstgenkendelsesfunktionen leveres af en ekstern applikation.</string>
     <string name="pref_group_header_show_details_summary">Vis detaljerede summer i gruppeoverskriften</string>
-    <string name="recurrence_last_day_of_month">Sidste dag</string>
     <string name="request_for_invoice">Anmodning om faktura</string>
     <string name="active_tags">Aktive etiketter</string>
     <string name="budget_widget_configuration">Vælg budget</string>
     <string name="account_widget_configuration_sum_total">Inkluder fremtidige transaktioner</string>
-    <string name="warning_plan_instance_delete">Transaktionen oprettet for den valgte dato slettes.</string>
     <string name="debt">Gæld</string>
     <string name="stability_improvements" tools:ignore="UnusedResources">Forbedringer af stabiliteten</string>
     <string name="menu_new_debt">Ny gæld</string>
@@ -749,7 +724,6 @@
     <string name="pref_planner_manual_time_current">Tidspunkt for oprettelse</string>
     <string name="content_description_attachment">Vedhæftning</string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> skal have tilladelse til at sende dig notifikationer, når fremtidige transaktioner bogføres.</string>
-    <string name="button_relink_keep_date">Tilknyt igen, men behold dato</string>
     <string name="pref_attachment_mime_types_title">Tilladte MIME-typer til vedhæftninger</string>
     <string name="debt_balance_i_owe">Jeg skylder nu %s.</string>
     <string name="read_from_data">Læs fra data</string>
@@ -762,12 +736,10 @@
     <string name="pref_transaction_amount_color_source_title">Farver til beløb</string>
     <string name="warning_unlink_transfer">Den valgte overførsel frakobles og erstattes af almindelige transaktioner på begge konti.</string>
     <string name="remap_date">På alle valgte transaktioner sættes datoen til %s.</string>
-    <string name="orphaned_transaction_align_date">Eventuelt kan datoen gemt med transaktionen også tilpasses instansdatoen.</string>
     <string name="ungroup_split_transaction_success">Opdelt transaktion blev afgrupperet.</string>
     <string name="backup_wrong_password">Sikkerhedskopifilen ser ud til at være krypteret med en anden adgangssætning.</string>
     <string name="pref_security_export_passphrase_title">Adgangssætning til sikkerhedskopier</string>
     <string name="backup_is_encrypted">Sikkerhedskopifilen er krypteret. For at dekryptere den skal du angive adgangssætningen.</string>
-    <string name="pref_plan_executor_time_title">Notifikationstid</string>
     <string name="auto_fill_focus">Sæt fokus på modtager</string>
     <string name="menu_parent_category_selection">Vælg overordnet kategori ved kort tryk</string>
     <string name="purge_backups">Følgende gamle sikkerhedskopier slettes:</string>
@@ -778,7 +750,6 @@
     <string name="dialog_confirm_rollover_delete">Alle fremførelsesbeløb for denne periode slettes.</string>
     <string name="image_optimize_quality_summary">Kvalitet 0 betyder komprimering for minimal størrelse. 100 betyder komprimering for maksimal visuel kvalitet.</string>
     <string name="template_shortcut">Genvej til skabelon</string>
-    <string name="button_relink_update_date">Tilknyt igen, og opdater dato</string>
     <string name="pref_unmapped_transaction_as_transfer_summary_on">tælles som overførsel</string>
     <string name="pref_sync_now_all_summary">%s synkroniserer alle konti for den samme backend</string>
     <string name="roadmap_intro">Afstemningen i %d Udviklingsplan er nu åben! Stem på de funktioner og forbedringer, der betyder mest for dig.</string>
@@ -837,8 +808,6 @@
     <string name="menu_transform_to_transfer">Konverter til overførsel</string>
     <string name="warning_transform_to_transfer">Den valgte transaktion erstattes af en overførsel fra %1$s til %2$s.</string>
     <string name="pref_csv_export_category_separator_summary">Separator mellem niveauer i kategorihierarkiet</string>
-    <string name="orphaned_transaction_relink">Transaktionen kan tilknyttes begivenhedsinstansen på %s igen.</string>
-    <string name="orphaned_transaction_info">En transaktion er knyttet til planen for denne dato, men ingen begivenhedsinstans eksisterer på denne dato.</string>
     <string name="not_enough_data">Ikke nok data</string>
     <string name="buy">Køb</string>
     <string name="pref_scroll_to_current_date_title">Rul transaktionslisten til dags dato</string>

@@ -59,7 +59,6 @@
     <string name="dialog_remind_rate_how_many_stars">Hoeveel sterren zou je geven aan {app_name}?</string>
     <string name="dialog_title_warning_delete_category">Categorie verwijderen\?</string>
     <string name="menu_balance">Saldo rekening</string>
-    <string name="menu_cancel_plan_instance">Annuleren</string>
     <string name="label">Tag</string>
     <string name="licence_validation_failure">Kan licentiesleutel niet valideren.</string>
     <string name="licence_validation_success">Licentiesleutel succesvol gevalideerd:</string>
@@ -77,7 +76,6 @@
     <string name="expense">Onkosten</string>
     <string name="menu_back">Terug</string>
     <string name="menu_backup">Back-up</string>
-    <string name="menu_apply_template">Toepassen</string>
     <string name="menu_contrib">Draag bij</string>
     <string name="menu_clone_transaction">Kloon</string>
     <string name="menu_create_instance_edit">Toepassen en bewerken</string>
@@ -132,19 +130,15 @@
     <string name="no_app_handling_mime_type_available">Geen app die %s-bestanden verwerkt beschikbaar.</string>
     <string name="image_capture_not_installed">Geen app gevonden voor het maken van foto\'s.</string>
     <string name="no_exportable_expenses">Er zijn geen transacties die nog niet geëxporteerd zijn.</string>
-    <string name="plan_event_deleted">Het plan dat bij dit sjabloon hoort, is uit de kalender verwijderd.</string>
     <string name="parse_error_file_not_found">Kan bestand %1$s niet vinden</string>
     <string name="password_disabled_reenable">De wachtwoordbeveiliging is uitgeschakeld. Je kunt het opnieuw inschakelen in de instellingen.</string>
     <string name="password_not_valid">Wachtwoord ongeldig. Probeer het opnieuw!</string>
-    <string name="planner_create_calendar_failure">Kan lokale planner-kalender niet maken</string>
     <string name="password_security_answer_not_valid">Fout antwoord. Probeer het opnieuw!</string>
-    <string name="planner_create_calendar_success">Lokale planner-kalender met succes aangemaakt</string>
     <string name="pref_backup_summary">Maak een back-up van de database en voorkeuren.</string>
     <string name="pref_category_title_import">Importeren</string>
     <string name="pref_share_target_title">Upload-URL</string>
     <string name="pref_manage_sync_backends_summary">Voeg backends toe voor het synchroniseren van rekeningen (%s).</string>
     <string name="pref_perform_share_title">Deel exports en back-ups</string>
-    <string name="pref_planning_calendar_summary">Selecteer de kalender waar plannen voor toekomstige en terugkerende transacties worden opgeslagen</string>
     <string name="pref_security_question_summary">Hiermee kun je de app ontgrendelen als je het wachtwoord bent vergeten.</string>
     <string name="qif_parse_failure_found_multiple_accounts">Meerdere rekeningen gevonden in %s-bestand.</string>
     <string name="pref_ui_theme_title">Thema</string>
@@ -161,7 +155,6 @@
     <string name="menu_create_transaction">Nieuwe Transactie</string>
     <string name="menu_edit_method">Bewerk betaalwijze</string>
     <string name="menu_edit_party">Bewerk partij</string>
-    <string name="menu_edit_plan_instance">Bewerk enkel plan exemplaar</string>
     <string name="menu_edit_split">Gesplitste transactie bewerken</string>
     <string name="menu_grouping">Groepering</string>
     <string name="menu_help">Help</string>
@@ -177,7 +170,6 @@
     <string name="no_methods">Geen betaalmethoden.</string>
     <string name="no_parties">Geen partijen.</string>
     <string name="password_lost">Wachtwoord vergeten</string>
-    <string name="plan_execution_canceled">Uitvoering van plan geannuleerd</string>
     <string name="pm_deposit">Storting</string>
     <string name="menu_create_split_part_transfer">Nieuw transfersplitsingsgedeelte</string>
     <string name="menu_create_sub_cat">Nieuwe subcategorie</string>
@@ -200,7 +192,6 @@
     <string name="no_categories">Geen categorieën.</string>
     <string name="no_expenses">Nog Geen Uitgaven!</string>
     <string name="no_filemanager_installed">Geen bestandsbeheerder geïnstalleerd</string>
-    <string name="no_calendar_app_installed">Geen app gevonden voor het bewerken van agenda-afspraken.</string>
     <string name="no_mapped_transactions">Gedurende deze periode zijn er geen transacties toegewezen aan categorieën.</string>
     <string name="no_split_parts">Geen gesplitste onderdelen.</string>
     <string name="no_templates">Geen sjablonen.</string>
@@ -229,7 +220,6 @@
     <string name="pref_manage_parties_summary" tools:ignore="UnusedResources">Partijen toevoegen, bewerken, verwijderen (betalers en begunstigden).</string>
     <string name="pref_more_info_dialog_title">Licentie &amp; Tegoeden</string>
     <string name="pref_password_not_equal">Wachtwoorden komen niet overeen</string>
-    <string name="pref_planning_calendar_create_local">Maak een nieuwe lokale planningskalender</string>
     <string name="pref_protection_delay_seconds_summary">Inactieve seconden voordat de app wordt vergrendeld met een wachtwoord.</string>
     <string name="pref_qif_export_file_encoding_title">Karaktercodering</string>
     <string name="pref_share_target_summary">Laat leeg als je wilt kiezen tussen geschikte apps (E-mail, Dropbox, Google Docs, …), of geef een URL op in een van de ondersteunde schema\'s</string>
@@ -243,7 +233,6 @@
     <string name="restore_db_failure">Databaseherstel is mislukt.</string>
     <string name="restore_db_success">Database is hersteld vanaf back-up.</string>
     <string name="restore_preferences_success">Voorkeuren zijn hersteld vanaf back-up.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d abonnementen zijn hersteld vanaf een back-up</string>
     <string name="save_transaction_template_deleted">Sjabloon is verwijderd</string>
     <string name="select_category">Selecteer categorie</string>
     <string name="select_payee">Selecteer betaler/begunstigde</string>
@@ -276,7 +265,6 @@
     <string name="warning_delete_account">Rekening \"%1$s\" wordt verwijderd met al zijn transacties.</string>
     <string name="pref_news_title">Nieuws</string>
     <string name="menu_invert_transfer">Omkeren</string>
-    <string name="menu_manage_plans">Sjablonen en plannen</string>
     <string name="pref_protection_enable_data_entry_from_widget_summary_off">Wachtwoord is vereist.</string>
     <string name="pm_type_neutral">Neutraal</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">Gegevensinvoer via widgets en sneltoetsen</string>
@@ -291,9 +279,7 @@
     <string name="menu_reset">Exporteren en opnieuw instellen</string>
     <string name="menu_reset_all">Alles exporteren en opnieuw instellen</string>
     <string name="menu_reset_plan_instance">Opnieuw instellen</string>
-    <string name="plan_automatic">automatisch</string>
     <string name="plan_calendar_name">{app_name} planner</string>
-    <string name="planner_notification_channel_name">Planner</string>
     <string name="pm_cheque">Cheque</string>
     <string name="pref_category_title_export">Exporteren</string>
     <string name="pref_category_title_manage">Beheren</string>
@@ -380,7 +366,6 @@
     <string name="pref_grouping_periods">Groepering van perioden</string>
     <string name="exchange_rate">Wisselkoers</string>
     <string name="date_format_minute">Minuut</string>
-    <string name="plan_instance_state_open">open</string>
     <string name="search_transfer">Zoek naar overdracht</string>
     <string name="crash_dialog_comment_prompt">Je kunt hieronder je opmerkingen over het probleem toevoegen:</string>
     <string name="synchronization">Synchronisatie</string>
@@ -400,7 +385,6 @@
     <string name="pref_webdav_timeout_title">WebDAV-time-out (in seconden)</string>
     <string name="onboarding_ui_title">{app_name} past zich aan je voorkeur aan</string>
     <string name="onboarding_restore_from_cloud">Herstel vanuit cloudsynchronisatie</string>
-    <string name="plan_custom_recurrence_info">Sla eerst het sjabloon op. Het plan wordt vervolgens geopend in de kalender-app, waar je een aangepast herhalingspatroon kunt instellen.</string>
     <string name="progress_validating_licence">Licentie valideren</string>
     <string name="button_validate">Valideren</string>
     <string name="progress_removing_licence">Verwijderen van licentie</string>
@@ -461,7 +445,6 @@
     <string name="pref_ocr_total_indicators_title">Indicatoren voor totaalbedrag</string>
     <string name="pref_criterion_future_end_of_day">Einde van de dag</string>
     <string name="scan_result_no_payee">Geen begunstigde gevonden</string>
-    <string name="content_description_edit_plan">Bewerk plan in kalender-app</string>
     <string name="tesseract_download_confirmation">Wil je tekstherkenningsgegevens downloaden voor %s?</string>
     <string name="single_feature_info">Als alternatief kun je onbeperkte toegang kopen tot alleen deze functie.</string>
     <string name="account_widget_configuration">Configuratie van rekeningwidget</string>
@@ -583,7 +566,6 @@
     <string name="content_description_calculator">Rekenmachine</string>
     <string name="warning_cannot_move_split_transaction">Deze gesplitste transactie kan niet worden verplaatst naar rekening %1$s omdat er overboekingen zijn die verwijzen naar deze rekening.</string>
     <string name="content_description_calculator_delete_button">Verwijder laatste cijfer</string>
-    <string name="pref_sort_order_next_instance">Volgende instantie</string>
     <string name="crash_dialog_title">{app_name} is gecrasht</string>
     <string name="crash_dialog_text">Er is een onverwachte fout opgetreden waardoor de toepassing moest stoppen. Help ons dit op te lossen door ons foutgegevens te sturen. Je hoeft alleen maar op OK te klikken.</string>
     <string name="menu_sync_download">Downloaden en synchroniseren</string>
@@ -623,7 +605,6 @@
     <string name="menu_edit_budget">Budget bewerken</string>
     <string name="budget_onetime">Eenmalig</string>
     <string name="dialog_multi_tag_replace">Vervang bestaande tags door nieuwe tags</string>
-    <string name="advance_exexcution_in_days">Uitvoering vooraf (in dagen)</string>
     <string name="pref_feature_uninstall_title">Verzoek tot verwijdering van functies en talen</string>
     <string name="warning_balance_account_delete">Als je doorgaat, worden alle afgestemde transacties van deze rekening uit de database verwijderd en kun je deze niet meer herstellen.</string>
     <string name="pref_feature_uninstall_summary">Play Store probeert die modules uiteindelijk op de achtergrond te verwijderen.</string>
@@ -672,7 +653,6 @@
     <string name="warning_change_fraction_digits_2_multiplied" tools:ignore="PluralsCandidate">Als bedragen niet worden bijgewerkt, worden ze weergegeven als vermenigvuldigd met %d na de wijziging.</string>
     <string name="comparison_operator_greater_than">groter dan</string>
     <string name="search_category">Zoek op categorie</string>
-    <string name="plan_instance_state_applied">toegepast</string>
     <string name="contributed_by">Bijgedragen door %s</string>
     <string name="pref_sync_notification_summary">Informeren over synchronisatievoortgang</string>
     <string name="switch_to_monthly" tools:ignore="UnusedResources">Overstappen naar een maandabonnement</string>
@@ -685,7 +665,6 @@
     <string name="budget_allocated_amount">Toegewezen bedrag</string>
     <string name="currency_code">Code</string>
     <string name="content_description_closed">Gesloten</string>
-    <string name="pref_plan_executor_time_title">Meldingstijd</string>
     <string name="synchronization_select_folder_dialog_title">Selecteer een bestaande map of maak een nieuwe aan</string>
     <string name="budget_filter_all_accounts">Alle rekeningen</string>
     <string name="remap_payee">Alle geselecteerde transacties worden toegewezen aan betaler/begunstigde %s.</string>
@@ -696,15 +675,12 @@
     <string name="pref_manage_tags_summary">Tags toevoegen, bewerken en verwijderen.</string>
     <string name="dialog_title_warning_delete_tag">Tag verwijderen\?</string>
     <string name="menu_edit_tag">Tag bewerken</string>
-    <string name="pref_planner_manual_time_title">Tijd voor handmatig toegepaste geplande transactie</string>
     <string name="language_download_requested">Vertalingen voor taal %s worden aangevraagd in de Play Store</string>
     <string name="pref_planner_manual_time_noon">12 uur (middag)</string>
     <string name="feature_downloaded">Functie %s is geïnstalleerd.</string>
     <string name="scan_result_multiple_candidates_dialog_title">Meerdere kandidaten gevonden. Selecteer:</string>
     <string name="select_package">Selecteer een licentiepakket.</string>
-    <string name="recurrence_last_day_of_month">Laatste dag</string>
     <string name="auto_fill_focus">Zet Focus op Begunstigde</string>
-    <string name="warning_plan_instance_delete">De transactie die voor de geselecteerde datum is aangemaakt, wordt verwijderd.</string>
     <string name="bug_fixes" tools:ignore="UnusedResources">Foutoplossingen</string>
     <string name="performance_enhancement" tools:ignore="UnusedResources">Prestatieverbetering</string>
     <string name="menu_new_debt">Nieuwe schuld</string>
@@ -716,13 +692,11 @@
     <string name="dialog_title_new_currency">Nieuwe munteenheid</string>
     <string name="currency_code_already_definded">Valutacode is al gedefinieerd.</string>
     <string name="remap_category">Alle geselecteerde transacties worden toegewezen aan categorie %s.</string>
-    <string name="plan_automatic_without_amount_hint">Plan zonder bedrag mag niet worden opgeslagen met automatische planuitvoering</string>
     <string name="menu_save_and_new_content_description">Sla de gegevens op, laat het formulier openstaan voor het aanmaken van een nieuwe transactie met dezelfde gegevens.</string>
     <string name="pref_ocr_engine_title">Motor voor tekstherkenning</string>
     <string name="object_sealed_debt">Object verwijst naar een afgesloten schuld.</string>
     <string name="menu_parent_category_selection">Selecteer de bovenliggende categorie met een korte tik</string>
     <string name="account_widget_configuration_sum_total">Inclusief toekomstige transacties</string>
-    <string name="plan_instance_state_cancelled">geannuleerd</string>
     <string name="dialog_confirm_sync_link_remote">Lokale gegevens voor deze rekening worden verwijderd.</string>
     <string name="synchronization_end_success_none">Geen wijzigingen om te synchroniseren.</string>
     <string name="sync_state_restored">De synchronisatiestatus is hersteld voor %d-rekeningen.</string>
@@ -757,9 +731,7 @@
     <string name="pref_unmapped_transaction_as_transfer_title">Niet-toegewezen transacties</string>
     <string name="github_sponsors"><![CDATA[Licentiesleutels worden ook verstrekt aan <a href="%s">Github Sponsors</a>.]]></string>
     <string name="select_template">Selecteer sjabloon</string>
-    <string name="button_relink_keep_date">Opnieuw koppelen, maar datum behouden</string>
     <string name="remove_from_group">Verwijderen uit groep</string>
-    <string name="orphaned_transaction_relink">De transactie kan opnieuw worden gekoppeld aan het gebeurtenisexemplaar op %s.</string>
     <string name="menu_aggregate_neutral_categories">Verzamel neutrale categorieën</string>
     <string name="pref_backup_file_prefix_title">Voorvoegsel van bestand</string>
     <string name="notifications_permission_required_auto_backup">Door toestemming te geven voor het versturen van notificaties wordt je op de hoogte gehouden van automatische back-ups.</string>
@@ -770,7 +742,6 @@
     <string name="pref_unmapped_transaction_as_transfer_summary_on">worden geteld als overdracht</string>
     <string name="warning_delete_default_transfer_category">Categorie %s is geconfigureerd als standaard overdrachtscategorie en mag niet verwijderd worden.</string>
     <string name="pref_attachment_mime_types_title">Toegestane MIME-typen voor bijlagen</string>
-    <string name="button_relink_update_date">Opnieuw koppelen en datum bijwerken</string>
     <string name="widget_title_budget">Mijn budget</string>
     <string name="pref_copy_attachments_summary_on">Bestanden worden gekopieerd naar de toepassingsmap.</string>
     <string name="attachments">Bijlagen</string>
@@ -786,8 +757,6 @@
     <string name="debt_lend_additional">Ik leende %s.</string>
     <string name="default_transfer_category">Standaard overdrachtscategorie</string>
     <string name="optimize_image_file_size">Optimaliseer de bestandsgrootte van afbeeldingen</string>
-    <string name="orphaned_transaction_info">Er is een transactie gekoppeld aan het plan voor deze datum, maar er is op deze datum geen gebeurtenisinstantie aanwezig.</string>
-    <string name="orphaned_transaction_align_date">Optioneel kan de datum die bij de transactie wordt opgeslagen ook worden afgestemd op de exemplaardatum.</string>
     <string name="debt_balance_they_owe">%1$s is nu %2$s verschuldigd.</string>
     <string name="debt_installment_pay">Ik betaal een termijn van %s.</string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> heeft toestemming nodig om je meldingen te sturen wanneer toekomstige transacties worden gepost.</string>

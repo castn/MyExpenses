@@ -108,13 +108,11 @@
     <string name="licence_validation_premium">Допълнителните функции са отключени.</string>
     <string name="menu_aggregates">Общо</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">Приложи</string>
     <string name="menu_back">Назад</string>
     <string name="menu_backup">Архивиране</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">Баланс на сметка</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">Отмени</string>
     <string name="menu_clone_transaction">Клонирай</string>
     <string name="menu_contrib">Допринесете</string>
     <string name="menu_create_account">Нова сметка</string>
@@ -140,7 +138,6 @@
     <string name="menu_edit_cat">Редактирай категория</string>
     <string name="menu_edit_method">Редактирай начина на плащане</string>
     <string name="menu_edit_party">Редактирай страна</string>
-    <string name="menu_edit_plan_instance">Редактирай плана</string>
     <string name="menu_edit_split">Редактиране на разделена транзакция</string>
     <string name="menu_edit_split_part_category">Редактирай разпределяне по категория</string>
     <string name="menu_edit_split_part_transfer">Редактирай разпределяне с превод</string>
@@ -153,7 +150,6 @@
     <string name="menu_help">Помощ</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">Размяна</string>
-    <string name="menu_manage_plans">Шаблони и планове</string>
     <string name="menu_reset">Експорт и нулиране</string>
     <string name="menu_reset_all">Експорт и нулиране на всичко</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -170,7 +166,6 @@
     <string name="no_expenses">Все още без разходи!</string>
     <string name="no_exportable_expenses">Няма транзакции, които да не са експортирани.</string>
     <string name="no_filemanager_installed">Няма инсталиран файлов менажер</string>
-    <string name="no_calendar_app_installed">Не е намерено приложение за редактиране на събития от календара.</string>
     <string name="image_capture_not_installed">Не е намерено приложение за снимане.</string>
     <string name="no_mapped_transactions">За този период няма транзакции, свързани с категорията.</string>
     <string name="no_methods">Няма начини на плащане.</string>
@@ -201,15 +196,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">План</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">автоматично</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">Планиране в {app_name}</string>
-    <string name="planner_notification_channel_name">Планиране</string>
-    <string name="plan_event_deleted">Планът, свързан с този шаблон, е изтрит от календара.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">Изпълнението на плана е отменено</string>
-    <string name="planner_create_calendar_failure">Не може да се зададе локален календарен план</string>
-    <string name="planner_create_calendar_success">Успешно зададен локален календарен план</string>
     <!-- payment methods -->
     <string name="pm_cheque">Чек</string>
     <string name="pm_creditcard">Кредитна карта</string>
@@ -249,8 +238,6 @@
     <string name="pref_password_not_equal">Паролите не съвпадат</string>
     <string name="pref_perform_share_title">Споделяне на експорт и архив</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">Създай нов локален план-календар </string>
-    <string name="pref_planning_calendar_summary">Изберете календар, където да се съхраняват планове за бъдещи и повтарящи се транзакции</string>
     <string name="pref_protection_delay_seconds_summary">Оставащи секунди преди приложението да бъде заключено с парола.</string>
     <string name="pref_protection_delay_seconds_title">Забавяне до защита</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">Въвеждане на данни от уиджети и шорткъти</string>
@@ -282,7 +269,6 @@
     <string name="restore_preferences_failure">Неуспешно възстановяване на предпочитания</string>
     <string name="restore_backup_file_not_found">Няма файл %1$s в архива „%2$s“</string>
     <string name="restore_preferences_success">Предпочитанията са възстановени успешно.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">Успешно възстановени %d плана</string>
     <string name="save_transaction_and_new_success">Успешно запаметено</string>
     <string name="save_transaction_error">Неуспешен запис на превод от шаблон.</string>
     <plurals name="save_transaction_from_template_success">
@@ -438,17 +424,13 @@
     <string name="pref_sort_order_custom">Ръчно</string>
     <string name="content_description_calculator">Калкулатор</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">неизползван</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">отменен</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">приложен</string>
     <string name="warning_cannot_move_split_transaction">Тази разпределена транзакция не може да бъде преместена в сметка %1$s, защото има отнесени към сметката нейни части.</string>
     <string name="content_description_calculator_delete_button">Изтрии последната цифра</string>
     <string name="paypal_callback_info">Транзакцията е завършена и квитанцията за покупката Ви е изпратена на електронната поща. За подробности по транзакцията вижте профила си във www.paypal.com.</string>
     <string name="search_transfer">Търсене на превод</string>
     <!-- Sort plans (recurring transactions) by the next instance  -->
-    <string name="pref_sort_order_next_instance">Следваща инстанция</string>
     <string name="crash_dialog_title">{app_name} спря</string>
     <string name="crash_dialog_text">Възникна неочаквана грешка, която принуди приложението да спре. Моля, помогнете ни да отстраним грешката, като ни изпратите данни за нея. Всичко, което трябва да направите, е да натиснете ОК.</string>
     <string name="crash_dialog_comment_prompt">По-долу може да добавите коментар относно този проблем:</string>
@@ -505,7 +487,6 @@
     <string name="contributed_by">Принос чрез %s</string>
     <string name="pref_sync_notification_summary">Уведомяване за хода на синхронизацията</string>
     <string name="pref_debug_logging_summary">Запис на информация за отстраняване на грешки в системния дневник</string>
-    <string name="plan_custom_recurrence_info">Моля, първо запишете шаблона. Планът ще бъде отворен в приложението Календар, където можете да персонализирате повторенията.</string>
     <string name="menu_create_template_for_split">Нов шаблон за разпределяне</string>
     <string name="progress_validating_licence">Валидиране на лиценза</string>
     <string name="licence_validation_error_expired">Лицензът изтече</string>
@@ -641,7 +622,6 @@
     <string name="pref_exchange_rate_provider_summary">Изберете доставчик, за да изтеглите валутни курсове</string>
     <string name="pref_exchange_rate_provider_title">Доставчик на валутни курсове</string>
     <string name="pref_exchange_rates_api_key_summary">Моля, регистрирайте безплатен акаунт в %s и предоставете идентификационния номер на своето приложение</string>
-    <string name="pref_plan_executor_time_title">Час за известие</string>
     <string name="synchronization_select_folder_dialog_title">Изберете съществуваща папка или създайте нова</string>
     <!-- This message is shwon when we highlight the income / expense toogle, to make user aware of this feature  -->
     <string name="discover_feature_expense_income_switch">Използвайте този превключвател, за да запишете приход.</string>
@@ -696,7 +676,6 @@
     <string name="new_tag_hint">Въведете нов маркер</string>
     <string name="language_download_requested">Превод от %s език е заявен в Play Store</string>
     <!-- Title for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
-    <string name="pref_planner_manual_time_title">Време за ръчно приложена планирана транзакция</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
     <string name="pref_planner_manual_time_noon">12:00</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction (current time at moment of application) -->
@@ -731,14 +710,11 @@
     <!-- Toast message shown if user clicks on Upgrade button before having selected a licence -->
     <string name="select_package">Моля, изберете лицензен пакет.</string>
     <!-- Label for a slider control that allows to configure a plan to be executed (added to the ledger) the give number of days in advance -->
-    <string name="advance_exexcution_in_days">Предварително действие (в дни)</string>
     <string name="warning_balance_account_delete">Ако продължите, всички съгласувани транзакции от тази сметка ще бъдат изтрити от базата данни и няма да можете да ги възстановите.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">Сегашните данни на страницата ще бъдат премахнати.</string>
     <string name="pref_clone_with_current_date_title">Дата на клонирани транзакции</string>
     <string name="template_default_action_without_amount_hint">Шаблон без сума трябва да бъде запазен с действие по подразбиране „Редактиране“</string>
-    <string name="plan_automatic_without_amount_hint">План без сума не трябва да се записва при автоматично изпълнение на плана</string>
-    <string name="content_description_edit_plan">Редактиране на план в приложението календар</string>
     <string name="menu_save_and_new_content_description">Запазва данните, но оставя отворена бланката - за създаване на нова транзакция със същите данни.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
     <string name="pref_ocr_engine_title">Софтуер за разпознаване на текст</string>
@@ -759,7 +735,6 @@
     <string name="new_balance">Ново салдо</string>
     <string name="single_feature_info">Като алтернатива може да закупите неограничен достъп само за тази функция.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
-    <string name="recurrence_last_day_of_month">Последния ден</string>
     <string name="warning_link_transfer">Двете избрани транзакции ще бъдат свързани като превод. Информацията за контрагент и категория ще бъде премахната.</string>
     <!-- This is the title of an entry on the configuration screen for the account widget. It allows to decide which number should be displayed for each account: the current balance or the total (which included future transactions) -->
     <string name="account_widget_configuration_sum">Показвана сума</string>
@@ -776,7 +751,6 @@
     <string name="auto_fill_focus">Задайте фокуса да бъде върху полето за получател</string>
     <!-- This warning is shown when a user calls the Reset or Cancel commands on a scheduled transaction, for a date
      where the transaction has already been created.  -->
-    <string name="warning_plan_instance_delete">Създадената вече транзакция за избраната дата, ще бъде изтрита.</string>
     <string name="crash_reports_user_info">{app_name} ще изпраща доклад за срив на приложението до програмистите, което позволява по-бързо отстраняване на проблемите.</string>
     <string name="pref_enable_acra">Разрешeние за автоматично изпращане</string>
     <string name="pref_acra_user_email">Електронна поща на потребителя</string>
@@ -859,11 +833,6 @@
     <string name="add_shortcut">Добави пряк път</string>
     <string name="content_description_remove_icon">Премахни иконата</string>
     <string name="search_account">Търсене на сметка</string>
-    <string name="orphaned_transaction_info">В плана за тази дата има свързана транзакция, обаче липсва инстанция за същата дата.</string>
-    <string name="orphaned_transaction_relink">Транзакцията може да бъде свързана с инстанцията от %s.</string>
-    <string name="orphaned_transaction_align_date">При желание може да запазите за дата на транзакцията датата на инстанцията.</string>
-    <string name="button_relink_update_date">Свържи и обнови датата</string>
-    <string name="button_relink_keep_date">Свържи, но запази датата</string>
     <string name="notifications_permission_required_auto_backup">Като предоставите разрешение за изпращане на известия, ще бъдете информирани за автоматичното архивиране.</string>
     <string name="remove_from_group">Премахни от група</string>
     <string name="merge_parties_strategy_delete">Дублиранията се изтриват.</string>

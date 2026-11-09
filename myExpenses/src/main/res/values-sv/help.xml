@@ -9,7 +9,6 @@
     <string name="help_MyExpenses_info">Den här skärmen listar alla transaktioner för det aktuella kontot. Använd den flytande åtgärdsknappen för att öppna formuläret för att skapa en ny transaktion.</string>
     <string name="help_form_fields">Formulärfält</string>
     <string name="help_MyExpenses_fab_long_press">Att trycka länge på den flytande åtgärdsknappen öppnar en meny som tillåter förberedelsen av formuläret för överföring, uppdelad transaktion eller inkomst.</string>
-    <string name="help_ManageTemplates_plans_title">Planera kalendervy</string>
     <string name="menu_sort_direction_help_text">Transaktionerna kan sorteras i stigande (äldst överst) eller fallande (senaste överst) ordning.</string>
     <string name="help_contextual_actions_help">Menyn för sammanhängande åtgärder visas genom att knacka länge på post i listan.</string>
     <string name="menu_status_handle_help_text">Transaktionens status visas med en färglagd rektangel: grå för oavstämd, blå för bokförd, grön för avstämd. Statusen ändras vid tryck på rektangeln.</string>
@@ -41,11 +40,9 @@
     <string name="form_calculator_help_text"><![CDATA[Knappen <img src="?calcIcon"> öppnar kalkylatorn.]]></string>
     <string name="menu_save_help_text">Spara datan och stäng formuläret.</string>
     <string name="help_ExpenseEdit_templateSplit_title">Formulär för delade mallar</string>
-    <string name="help_ManageTemplates_plans_info_applied">Instansen har verkställts.</string>
     <string name="form_comment_help_text">Ange eventuella anteckningar om objektet.</string>
     <string name="form_synchronization_help_text_select">Välj en bakände för moln-synkronisering.</string>
     <string name="menu_HistoryActivity_history_show_balance_help_text">Växla synligheten för saldot.</string>
-    <string name="help_ManageTemplates_planner_title">Kommande återkommande händelser</string>
     <string name="help_ExpenseEdit_templateCategory_title">Formulär för transaktionsmallar</string>
     <string name="help_ExpenseEdit_templateTransfer_title">Formulär för överföringsmallar</string>
     <string name="help_ExpenseEdit_splitPartCategory_title">Formulär för kategorisering av delar</string>
@@ -55,7 +52,6 @@
     <string name="form_description_help_text">Beskrivningen har endast ett informativt syfte.</string>
     <string name="cab_sync_now_help_text">Starta omedelbar synkronisering med den valda bakänden.</string>
     <string name="menu_BudgetActivity_delete_help_text">Den budget som visas för närvarande kommer att raderas.</string>
-    <string name="help_ManageTemplates_plans_info_open">Instansen har ännu inte tillämpats.</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">Instansiera de valda mallarna och spara dem omedelbart.</string>
     <string name="cab_ManageTemplates_delete_help_text">Radera de valda mallarna och alla associerade planer.</string>
     <string name="menu_categories_setup_default_help_text">En uppsättning av standard-kategorier kommer att importeras.</string>

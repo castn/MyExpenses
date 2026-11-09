@@ -36,7 +36,6 @@
     <string name="response_no">"না"</string>
     <string name="show_all">"সবকিছু দেখান"</string>
     <string name="add_widget">"উইজেট যোগ করুন"</string>
-    <string name="calendar">"ক্যালেন্ডার"</string>
     <string name="setup">"সেটআপ"</string>
     <string name="customize">"বকাস্টমাইজ করুন"</string>
     <string name="compact">"কম্প্যাক্ট"</string>
@@ -140,8 +139,6 @@
     <string name="options">"বিকল্প"</string>
     <string name="actions">"কাজ"</string>
     <string name="screenshot">স্ক্রীনশট</string>
-    <string name="calendar_delete">ক্যালেন্ডার মুছুন</string>
-    <string name="preferences_calendar_delete_message">আপনি কি সত্যিই এই ক্যালেন্ডারটি মুছে ফেলতে চান?</string>
     <string name="header_footer">হেডার এবং ফুটার</string>
     <string name="top_left">উপরে বামে</string>
     <string name="top_center">উপরের মাঝখানে</string>

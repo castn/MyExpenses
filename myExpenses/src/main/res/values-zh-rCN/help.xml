@@ -7,9 +7,6 @@
     <string name="cab_create_template_from_transaction_help_text">根据所选交易定义一个新模板.会提示你交易标题。</string>
     <string name="cab_ManageTemplates_delete_help_text">删除所选模板及其关联的计划。</string>
     <string name="cab_ManageTemplates_edit_help_text">编辑所选模板并创建或编辑一个关联的计划。</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">在选定事件实例时创建交易并立即保存它们。</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">在选定事件实例时创建交易并进入其编辑表格，你可在表格中进行编辑然后保存。</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">表明在选定的事件实例中，不应该创建任何交易。如果已为所选事件实例创建了交易，则将删除它们。</string>
     <string name="menu_back_help_text">导航到前一组。也可以通过从左到右的滑动手势来实现。</string>
     <string name="menu_categories_setup_default_help_text">将导入一组默认类别。</string>
     <string name="menu_categories_export_help_text">类别会被导出到QIF文件。</string>
@@ -51,9 +48,6 @@
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">以实例应用所选模板并输入编辑表单，您可以在保存之前进行修改。</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">以实例运用选定的模板并立即保存。</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">该模板列表可按标题（按字母顺序）、金额、使用频率排序，也可按以模板为示例的交易最后操作时间排序。</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">编辑已为选定计划示例创建的交易。</string>
-    <string name="help_ManageTemplates_planner_title">即将发生的经常项目</string>
-    <string name="help_ManageTemplates_plans_title">计划日历视图</string>
     <string name="menu_merge_help_text">如果同一交易方在表单中多次出现但写法不同，您可以将其合并。</string>
     <string name="help_ManageParties_mergeMode_info_2">您需按提示选择所要保存写法。</string>
     <string name="cab_clone_transaction_help_text">复制选定交易并将其设置当前日期和时间。您可在保存之前进行更改。</string>
@@ -95,9 +89,6 @@
     <string name="menu_history_help_text">显示现金流图表：你在数日、数周、数月或数年的开支和收入情况如何？</string>
     <string name="menu_budget_help_text">对当前显示的账户，按日、周、月或年进行预算管理。</string>
     <string name="menu_sort_direction_help_text">交易可按升序(旧交易在先)或降序（新交易在先）排列。</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">如果就已选定的事件实例创建交易，则该等交易将被删除，如果该等交易已标注为已取消，则该标记将被删除。</string>
-    <string name="help_ManageTemplates_plans_intro">每个高亮日期代表计划的一个实例。</string>
-    <string name="help_ManageTemplates_planner_intro">长按open instance可进行多选。点按开始日期或结束日期可以将时间范围向后或向前延展。</string>
     <string name="menu_balance_help_text">通过此项命令可打开对话框，显示上一次已对账的余额和已清算的余额。您可以将后者与您的银行接单进行比较，然后将所有已清算的交易标记为已对账。您也可以选择删除已对账的交易。</string>
     <string name="menu_reset_help_text">通过此项命令，可将当前账户内的所有交易以QIF或CSV格式导出，放入SD卡内的文件。您可以决定删除已导出的交易，届时期初余额会自动调整。或者，如果交易未删除，则标注为已导出。My Expenses 可以通过FTP、电子邮件或任何其他文件共享应用共享已导出的文件，前提是您已在设置中做好相应配置。如果启用搜索筛选设定，则仅包含该符合该筛选设定的交易。</string>
     <string name="form_BudgetEdit_title_help_text">预算标题有助于在预算列表中识别它。</string>

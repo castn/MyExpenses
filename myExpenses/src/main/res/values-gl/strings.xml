@@ -71,11 +71,9 @@
     <string name="licence_validation_failure">Non se pode validar a clave da licenza.</string>
     <string name="menu_aggregates">Total</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">Aplicar</string>
     <string name="menu_back">Volver</string>
     <string name="menu_backup">Copia de seguranza</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">Cancelar</string>
     <string name="menu_clone_transaction">Clonar</string>
     <string name="menu_contrib">Contribuír</string>
     <string name="menu_create_account">Nova conta</string>
@@ -101,7 +99,6 @@
     <string name="menu_edit_transfer">Editar transferencia</string>
     <string name="menu_exclude_from_totals">Excluír dos totais</string>
     <string name="menu_help">Axuda</string>
-    <string name="menu_manage_plans">Modelos e plans</string>
     <string name="menu_reset">Exportar e restablecer</string>
     <string name="menu_reset_all">Exportar e restablecer todo</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -122,9 +119,7 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">Plan</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">automático</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">Execución do plan cancelada</string>
     <!-- payment methods -->
     <string name="pm_cheque">Cheque</string>
     <string name="pm_creditcard">Tarxeta de crédito</string>
@@ -220,7 +215,6 @@
     <string name="pref_sort_order_custom">Personalizar</string>
     <string name="content_description_calculator">Calculadora</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">abrir</string>
     <string name="content_description_calculator_delete_button">Borrar último díxito</string>
     <string name="template">Modelo</string>
     <!-- Title of a section on the Settings screen where each entry corresponds to a subsection dedicated to one feature (functionality)  -->

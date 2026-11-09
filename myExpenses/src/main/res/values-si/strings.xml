@@ -75,11 +75,9 @@
     <string name="licence_validation_premium">උසස් දීමනා ලබා දී තිබේ.</string>
     <string name="menu_aggregates">මුළු එකතුව </string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">යොමු කරනවා</string>
     <string name="menu_back">පිටුපස </string>
     <string name="menu_backup">උපස්ථ </string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">අවලංගු කරනවා</string>
     <string name="menu_clone_transaction">ක්ලෝනය</string>
     <string name="menu_contrib">දායක වීම </string>
     <string name="menu_create_account">නව ගිණුම </string>
@@ -105,7 +103,6 @@
     <string name="menu_edit_cat">ප්‍රබේදය සංස්කරනය කරන්න </string>
     <string name="menu_edit_method">මිලදී ගන්නා ක්‍රමය සන්ස්කරණය කරන්න </string>
     <string name="menu_edit_party">පක්ෂය සංස්කරණය කිරීම </string>
-    <string name="menu_edit_plan_instance">එක් සැලසුමක් සිදුවීම සංස්කරණය කරන්න </string>
     <string name="menu_edit_split">බෙදීම් ගනුදෙනුව සංස්කරණය කරන්න</string>
     <string name="menu_edit_split_part_category">ප්‍රබේධ කොටස් බෙදීම සංස්කරණය කරන්න</string>
     <string name="menu_edit_split_part_transfer">හුවමාරු කොටස් බෙදීම සංස්කරණය කරන්න</string>
@@ -117,7 +114,6 @@
     <string name="menu_help">උදව් </string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">යටිකුරු කරනවා</string>
-    <string name="menu_manage_plans">අච්චු සහ සැලසුම් </string>
     <string name="menu_reset">අපනයන සහ යලිපිහිටුවීම </string>
     <string name="menu_reset_all">සියල්ල අපනයන කර නැවත පිහිටුවන්න </string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -158,12 +154,7 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">සැලැස්ම</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">ස්වයංක්‍රිය</string>
-    <string name="plan_event_deleted">මෙම අච්චුව සමග සම්බන්ද වී තිබු සැලසුම දිනදර්ශනයෙන් ඉවත් කර ඇත </string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">සැලසුම ක්‍රියාවෙහි යෙදවීම අසාර්තකයි </string>
-    <string name="planner_create_calendar_failure">පරිස්ථානීය සැලසුම් කිරීමේ දිනදර්ශනයක් නිර්මාණය කිරිමට නොහැකි විය </string>
-    <string name="planner_create_calendar_success">පරිස්ථානීය සැලසුම්  දින දර්ශනයක් නිර්මාණය කිරීම සාර්ථකයි </string>
     <!-- payment methods -->
     <string name="pm_cheque">චෙක් පත </string>
     <string name="pm_creditcard">ණය කාඩ් පත </string>
@@ -199,8 +190,6 @@
     <string name="pref_password_not_equal">මුර පද නොගැලපේ </string>
     <string name="pref_perform_share_title">අපනයන සහ උපස්ථා බෙදා හරින්න </string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">නව පරිස්ථානීය සැලසුම්  දින දර්ශනයක් නිර්මාණය කරන්න  </string>
-    <string name="pref_planning_calendar_summary">අනාගත සැලසුම් සහ නැවත ඇතිවන ගනුදෙනු තැන්පත් කිරීම සදහා දින දර්ශනයක් තෝරාගන්න </string>
     <string name="pref_protection_delay_seconds_summary">අක්‍රිය තත්පර ගණනකට  පෙර  ඇපය මුරපදයෙන් හිරවෙ </string>
     <string name="pref_protection_delay_seconds_title">ආරක්ෂාව එනතුරු පරක්කු කරන්න </string>
     <string name="pref_protection_enable_data_entry_from_widget_title">විජටයන්ගෙන් දත්ත ඇතුලත් කිරීම </string>
@@ -329,7 +318,6 @@
     <string name="price_history">මිල ඉතිහාසය</string>
     <string name="pref_account_list_display_configuration_title">ගිණුම් ලැයිස්තුව</string>
     <string name="menu_templates">සැකිලි</string>
-    <string name="pref_plan_executor_time_title">දැනුම්දීමේ වේලාව</string>
     <string name="payer_or_payee">අනෙක් පාර්ශවය</string>
     <string name="dialog_title_warning_delete_tag">ටැගය මකාදමන්නද?</string>
     <plurals name="warning_delete_tag">

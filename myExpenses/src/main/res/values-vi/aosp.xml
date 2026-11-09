@@ -21,7 +21,6 @@
     <string name="response_no">"Không"</string>
     <string name="experimental">"Thử nghiệm"</string>
     <string name="add_widget">"Thêm tiện ích"</string>
-    <string name="calendar">"Lịch"</string>
     <string name="permissions_label">"Quyền"</string>
     <string name="time_format">"Định dạng thời gian"</string>
     <string name="setup">"Thiết lập"</string>
@@ -62,8 +61,6 @@
     <string name="menu">"Trình đơn"</string>
     <string name="action_move_down">"Chuyển xuống"</string>
     <string name="action_move_up">"Chuyển lên"</string>
-    <string name="calendar_delete">Xóa lịch</string>
-    <string name="preferences_calendar_delete_message">Bạn có thực sự muốn xóa lịch này không?</string>
     <string name="default_camera_app_title">"Ứng dụng máy ảnh"</string>
     <string name="help_and_feedback">"Trợ giúp và phản hồi"</string>
     <string name="currencies_exchange">"Tiền tệ &amp; Ngoại hối"</string>

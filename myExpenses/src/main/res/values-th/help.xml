@@ -18,15 +18,8 @@
     <string name="help_ManageParties_floating_action_button">ใช้ปุ่มการดำเนินการลอยเพื่อเพิ่มรายการใหม่</string>
     <string name="help_fab_confirm_selection">ใช้ปุ่มการดำเนินการลอยเพื่อยืนยันการเลือก</string>
     <string name="help_ManageParties_mergeMode_info_2">ระบบจะขอให้คุณเลือกรูปแบบที่ต้องการเก็บไว้</string>
-    <string name="help_ManageTemplates_plans_title">มุมมองปฏิทินแผน</string>
-    <string name="help_ManageTemplates_planner_title">รายการที่เกิดขึ้นซ้ำในอนาคต</string>
-    <string name="help_ManageTemplates_planner_intro">การกดค้างที่อินสแตนซ์ที่เปิดอยู่จะเริ่มการเลือกหลายรายการ การแตะที่จุดเริ่มต้นหรือสิ้นสุดของช่วงวันที่ช่วยให้ขยายช่วงเวลาไปยังอดีตหรืออนาคตได้</string>
-    <string name="help_ManageTemplates_plans_info_open">อินสแตนซ์ยังไม่ได้ถูกนำไปใช้</string>
-    <string name="help_ManageTemplates_plans_info_applied">อินสแตนซ์ถูกนำไปใช้แล้ว</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">สร้างอินสแตนซ์จากเทมเพลตที่เลือกและบันทึกทันที</string>
     <string name="cab_ManageTemplates_edit_help_text">แก้ไขเทมเพลตที่เลือกและสร้างหรือแก้ไขแผนที่เกี่ยวข้อง</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">สร้างธุรกรรมตามเวลาของอินสแตนซ์กิจกรรมที่เลือกและเข้าสู่แบบฟอร์มแก้ไขซึ่งคุณสามารถปรับเปลี่ยนก่อนบันทึก</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">แก้ไขธุรกรรมที่ถูกสร้างขึ้นสำหรับอินสแตนซ์แผนที่เลือก</string>
     <string name="help_ManageCategories_select_mapping_info">นอกเหนือจากการดำเนินการที่คุณสามารถทำได้เมื่อจัดการหมวดหมู่จากหน้าจอการตั้งค่า (สร้าง, แก้ไข, ลบ) ในหน้าจอนี้คุณสามารถเชื่อมโยงธุรกรรมกับหมวดหมู่ที่เลือกได้โดยเพียงคลิกที่หมวดหมู่นั้น</string>
     <string name="help_ManageCategories_select_filter_info">คลิกที่รายการเพื่อเริ่มการเลือกหลายรายการ</string>
     <string name="menu_ManageCategories_distribution_grouping_help_text">ตั้งค่าประเภทการจัดกลุ่มและแสดงการกระจายต่อวัน เดือน สัปดาห์ หรือปี</string>
@@ -107,9 +100,6 @@
     <string name="menu_history_help_text">แสดงแผนภาพกระแสเงินสด: ค่าใช้จ่ายและรายได้ของคุณเปลี่ยนแปลงอย่างไรในแต่ละวัน สัปดาห์ เดือน หรือปี?</string>
     <string name="menu_balance_help_text">คำสั่งนี้จะเปิดกล่องโต้ตอบแสดงยอดกระทบยอดล่าสุดและยอดชำระแล้ว คุณสามารถเปรียบเทียบยอดหลังกับใบแจ้งยอดธนาคาร และทำเครื่องหมายธุรกรรมที่ชำระแล้วทั้งหมดว่ากระทบยอดแล้ว นอกจากนี้คุณยังสามารถเลือกที่จะลบธุรกรรมที่กระทบยอดแล้วได้</string>
     <string name="menu_search_help_text">รายการนี้จะเปิดเมนูย่อยที่ช่วยให้คุณกำหนดเกณฑ์การค้นหาตามหมวดหมู่ จำนวนเงิน หมายเหตุ สถานะ ผู้จ่าย/ผู้รับ และวิธีการชำระเงิน</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">อินสแตนซ์ถูกยกเลิก นั่นคือคุณได้ทำเครื่องหมายให้ข้ามไป จะไม่มีการสร้างธุรกรรมสำหรับอินสแตนซ์นี้</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">สร้างธุรกรรมตามเวลาของอินสแตนซ์กิจกรรมที่เลือกและบันทึกทันที</string>
-    <string name="help_ManageTemplates_plans_intro">แต่ละวันที่ไฮไลต์แสดงถึงอินสแตนซ์ของแผน</string>
     <string name="cab_ManageTemplates_delete_help_text">ลบเทมเพลตที่เลือกและแผนที่เกี่ยวข้องทั้งหมด</string>
     <string name="cab_ManageCategories_select_filter_select_help_text">จะใช้หมวดหมู่ที่เลือกเพื่อกรองรายการธุรกรรม</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">รายการเทมเพลตสามารถจัดเรียงตามชื่อ (ตามลำดับตัวอักษร) ตามจำนวนเงิน ตามความถี่ในการใช้งาน หรือตามเวลาล่าสุดที่มีการสร้างธุรกรรมจากเทมเพลตนั้น</string>
@@ -126,11 +116,8 @@
     <string name="help_ManageMethods_info">หน้าจอนี้แสดงวิธีการชำระเงินที่กำหนดไว้ล่วงหน้า (เช็ค บัตรเครดิต เงินฝาก หักบัญชีอัตโนมัติ) และอนุญาตให้คุณกำหนดวิธีใหม่ ใช้ปุ่มการดำเนินการลอยเพื่อเปิดฟอร์มสำหรับสร้างวิธีการใหม่</string>
     <string name="help_ManageParties_mergeMode_info_1">เลือกผู้เกี่ยวข้องที่ซ้ำกันที่ต้องการรวมเข้าด้วยกัน</string>
     <string name="menu_merge_help_text">หากมีผู้เกี่ยวข้องเดียวกันปรากฏหลายครั้งในรายการด้วยการสะกดที่ต่างกัน คุณสามารถรวมเข้าด้วยกันได้</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">หากมีธุรกรรมที่ถูกสร้างไว้สำหรับอินสแตนซ์กิจกรรมที่เลือกอยู่แล้ว ธุรกรรมเหล่านั้นจะถูกลบ หากถูกทำเครื่องหมายว่ายกเลิกไว้แล้ว เครื่องหมายจะถูกยกเลิก</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src="ic_menu_template">ในขณะที่เทมเพลตสามารถสร้างจากธุรกรรมผ่านเมนูบริบทของธุรกรรมได้ ที่นี่คุณสามารถสร้างเทมเพลตใหม่ตั้งแต่เริ่มต้น (สำหรับธุรกรรมหรือการโอนเงิน) โดยคลิกที่ปุ่มการดำเนินการลอย การคลิกที่เทมเพลตจะสร้างอินสแตนซ์ของเทมเพลตนั้น<br><img src="ic_event">แผนคือเทมเพลตที่คุณได้สร้างกิจกรรม (ครั้งเดียวหรือเกิดขึ้นซ้ำ) ในปฏิทินแผน การคลิกที่แผนจะเปิดมุมมองปฏิทิน ซึ่งแสดงอินสแตนซ์ของแผนในอดีตและที่กำลังจะเกิดขึ้น]]></string>
-    <string name="help_ManageTemplates_plans_info_header">สถานะของอินสแตนซ์จะแสดงด้วยไอคอนดังต่อไปนี้:</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">สร้างอินสแตนซ์จากเทมเพลตที่เลือกและเข้าสู่แบบฟอร์มแก้ไขซึ่งคุณสามารถปรับเปลี่ยนก่อนบันทึก</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">ระบุว่าไม่ควรสร้างธุรกรรมสำหรับอินสแตนซ์กิจกรรมที่เลือก หากมีธุรกรรมที่ถูกสร้างไว้สำหรับอินสแตนซ์กิจกรรมที่เลือกอยู่แล้ว ธุรกรรมเหล่านั้นจะถูกลบ</string>
     <string name="help_ManageCategories_distribution_info">หน้าจอนี้แสดงการกระจายของค่าใช้จ่ายและรายได้ตามหมวดหมู่ สำหรับธุรกรรมทั้งหมดในบัญชี หรือสำหรับกลุ่มที่เฉพาะเจาะจง หากคุณขยายหมวดหมู่หลักในรายการ แผนภูมิวงกลมจะแสดงการกระจายของหมวดหมู่ย่อย หากคุณเลือกหมวดหมู่ในรายการ หมวดหมู่นั้นจะถูกเน้นในแผนภูมิวงกลม และในทางกลับกัน กดค้างที่หมวดหมู่เพื่อแสดงรายการธุรกรรมที่เกี่ยวข้องแบบรวม</string>
     <string name="help_ManageCategories_manage_context">คลิกที่รายการเพื่อแสดงเมนูบริบท กดค้างเพื่อเริ่มการเลือกหลายรายการ</string>
     <string name="help_ManageCategories_expand_collapse"><![CDATA[คลิกที่ไอคอน <img src="ic_expand_more">/<img src="ic_expand_less"> เพื่อขยายหรือยุบหมวดหมู่]]></string>

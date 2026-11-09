@@ -97,13 +97,11 @@
     <string name="licence_validation_premium">프리미엄 기능이 잠금 해제되었습니다.</string>
     <string name="menu_aggregates">총계</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">적용</string>
     <string name="menu_back">뒤로</string>
     <string name="menu_backup">백업</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">잔고 계좌</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">취소</string>
     <string name="menu_clone_transaction">복제</string>
     <string name="menu_contrib">공헌하기</string>
     <string name="menu_create_account">새 계좌</string>
@@ -129,7 +127,6 @@
     <string name="menu_edit_cat">카테고리 편집</string>
     <string name="menu_edit_method">지불 방식 편집</string>
     <string name="menu_edit_party">구성원 편집</string>
-    <string name="menu_edit_plan_instance">단일 재무 계획의 발생 사실 편집</string>
     <string name="menu_edit_split">분할 거래 편집</string>
     <string name="menu_edit_split_part_category">카테고리 분할 거래의 일부분 편집</string>
     <string name="menu_edit_split_part_transfer">이체 분할 거래의 일부분 편집</string>
@@ -142,7 +139,6 @@
     <string name="menu_help">도움말</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">반전</string>
-    <string name="menu_manage_plans">템플릿과 재무 계획</string>
     <string name="menu_reset">내보내기 및 초기화</string>
     <string name="menu_reset_all">내보내기 및 전체 초기화</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -158,7 +154,6 @@
     <string name="no_expenses">지출이 아직 없습니다!</string>
     <string name="no_exportable_expenses">아직 내보내지 않은 거래 내역이 없습니다.</string>
     <string name="no_filemanager_installed">설치된 파일 탐색기가 없습니다</string>
-    <string name="no_calendar_app_installed">캘린더 일정 편집을 위한 앱이 발견되지 않았습니다.</string>
     <string name="no_mapped_transactions">이 기간동안 카테고리에 배치된 거래 내역이 없습니다.</string>
     <string name="no_methods">지불 방식이 없습니다.</string>
     <string name="no_parties">구성원이 없습니다.</string>
@@ -185,15 +180,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">재무 계획</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">자동</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">{app_name} 플래너</string>
-    <string name="planner_notification_channel_name">플래너</string>
-    <string name="plan_event_deleted">이 템플릿과 연관된 재무 계획이 캘린더에서 삭제되었습니다.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">재무 계획 실행 취소됨</string>
-    <string name="planner_create_calendar_failure">로컬 플래너 캘린더를 만들 수 없습니다</string>
-    <string name="planner_create_calendar_success">로컬 플래너 캘린더를 만들었습니다</string>
     <!-- payment methods -->
     <string name="pm_cheque">수표</string>
     <string name="pm_creditcard">신용카드</string>
@@ -230,8 +219,6 @@
     <string name="pref_password_not_equal">암호가 일치하지 않습니다</string>
     <string name="pref_perform_share_title">내보낸 파일과 백업을 공유</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">새 로컬 플래닝 캘린더 만들기</string>
-    <string name="pref_planning_calendar_summary">향후의 재무 계획과 반복 거래가 저장될 캘린더 선택</string>
     <string name="pref_protection_delay_seconds_summary">앱이 암호로 잠기기 전의 유휴 시간을 초 단위로 설정합니다.</string>
     <string name="pref_protection_delay_seconds_title">지연된 보안</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">위젯과 바로가기로부터의 데이터 입력</string>
@@ -263,7 +250,6 @@
     <string name="restore_preferences_failure">환경설정 복원에 실패했습니다</string>
     <string name="restore_backup_file_not_found">%1$s 파일을 압축 파일 \"%2$s\"에서 찾을 수 없습니다</string>
     <string name="restore_preferences_success">환경설정이 백업에서 복원되었습니다.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d 재무 계획이 백업 파일으로부터 복원되었습니다.</string>
     <string name="save_transaction_and_new_success">성공적으로 저장됨</string>
     <string name="save_transaction_error">템플릿으로부터 새 거래 내역을 저장할 수 없습니다.</string>
     <plurals name="save_transaction_from_template_success">
@@ -415,15 +401,11 @@
     <string name="date_format_hour">시간</string>
     <string name="date_format_minute">분</string>
     <string name="pref_sort_order_last_used">마지막으로 사용한 날짜</string>
-    <string name="plan_instance_state_cancelled">취소됨</string>
-    <string name="plan_instance_state_applied">적용됨</string>
-    <string name="pref_sort_order_next_instance">다음 인스턴스</string>
     <string name="pref_grouping_periods">그룹화 기간</string>
     <string name="exchange_rate">환율</string>
     <string name="preferences_month_start_date_title">월 시작일</string>
     <string name="pref_sort_order_custom">사용자 지정</string>
     <string name="crash_dialog_title">{app_name}이(가) 충돌했습니다</string>
-    <string name="plan_instance_state_open">열기</string>
     <string name="one_time_payment">일회성 결제</string>
     <string name="archive">보관</string>
     <string name="contrib_feature_category_tree_label">임의의 깊은 범주 계층 구조</string>
@@ -436,7 +418,6 @@
     <string name="price_history">가격 내역</string>
     <string name="pref_account_list_display_configuration_title">계정 목록</string>
     <string name="menu_templates">템플렛들</string>
-    <string name="pref_plan_executor_time_title">알림 시간</string>
     <string name="rounding">반올림</string>
     <string name="important_upgrade_information_heading">중요한 정보</string>
     <string name="dialog_title_warning_delete_tag">태그를 삭제하시겠습니까?</string>

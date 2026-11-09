@@ -88,13 +88,11 @@
     <string name="licence_validation_premium">प्रीमियम सुविधाओं को अनलॉक किया गया है</string>
     <string name="menu_aggregates">कुल</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">लागू करें</string>
     <string name="menu_back">वापस</string>
     <string name="menu_backup">बैकअप</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">बकाया खाता</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">रद्द</string>
     <string name="menu_clone_transaction">क्लोन</string>
     <string name="menu_contrib">योगदान</string>
     <string name="menu_create_account">नया खाता</string>
@@ -127,7 +125,6 @@
     <string name="menu_help">सहायता</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">उलटें</string>
-    <string name="menu_manage_plans">टेम्पलेट और योजनाएं</string>
     <string name="menu_reset">निर्यात और रीसेट करें</string>
     <string name="menu_reset_all">सभी को निर्यात और रीसेट करें</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -140,7 +137,6 @@
     <string name="no_categories">कोई श्रेणी नहीं</string>
     <string name="no_expenses">कोई खर्चें नहीं!</string>
     <string name="no_filemanager_installed">कोई फाइल मैनेजर इंस्टाल्ड नहीं है</string>
-    <string name="no_calendar_app_installed">कैलेंडर ईवेंट को संपादित करने के लिए कोई ऐप नहीं मिली</string>
     <string name="no_methods">कोई भुगतान विधियां नहीं</string>
     <string name="no_parties">कोई पार्टियां नहीं</string>
     <string name="no_templates">कोई टेम्पलेट नहीं</string>
@@ -158,7 +154,6 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">नियोजन</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">स्वचालित</string>
     <!-- payment methods -->
     <string name="pm_cheque">चेक</string>
     <string name="pm_creditcard">क्रेडिट कार्ड</string>
@@ -245,7 +240,6 @@
     <string name="pref_app_dir_title">बैकअप और निर्यात के लिए फ़ोल्डर</string>
     <string name="image_capture_not_installed">तस्वीर लेने के लिए कोई ऐप नहीं मिला।</string>
     <string name="no_mapped_transactions">इस अवधि के दौरान श्रेणियों के लिए कोई लेन-देन मैप नहीं किया गया है।</string>
-    <string name="plan_execution_canceled">योजना का क्रियान्वयन रद्द कर दिया गया</string>
     <string name="contrib_feature_category_tree_label">श्रेणी वृक्ष</string>
     <string name="dialog_command_disabled_balance">समाधान किए जाने के लिए कोई समाशोधित लेन-देन नहीं।</string>
     <string name="dialog_title_warning_delete_account">खाता हटा दो\?</string>
@@ -259,27 +253,22 @@
     <string name="dialog_contrib_usage_limit_plans" tools:ignore="PluralsCandidate">आपकी वर्तमान लाइसेंस स्थिति (%2$s) आपको %1$d योजनाएँ बनाने की अनुमति देती है।</string>
     <string name="dialog_contrib_usage_limit_with_dialog">आपकी वर्तमान लाइसेंस स्थिति (%1$s) के साथ, यह डायलॉग प्रत्येक उपयोग पर प्रदर्शित होगा।</string>
     <string name="dialog_remind_rate_1_suggest_improvement">सुधार के लिए हमें अपने सुझाव भेजने के लिए कृपया कुछ समय दें।</string>
-    <string name="menu_edit_plan_instance">एकल योजना घटना संपादित करें</string>
     <string name="menu_edit_split_part_category">श्रेणी विभाजित भाग संपादित करें</string>
     <string name="button_label_close">बंद करना</string>
     <string name="menu_edit_split_part_transfer">स्थानांतरण विभाजन भाग संपादित करें</string>
     <string name="menu_split_transaction">विभाजित करने के लिए रूपांतरित करें</string>
     <string name="no_split_parts">कोई विभाजित भाग नहीं।</string>
     <string name="no_accounts">कोई खाता नहीं।</string>
-    <string name="plan_event_deleted">इस टेम्पलेट से संबद्ध योजना को कैलेंडर से हटा दिया गया है।</string>
     <plurals name="not_deletable_mapped_templates">
         <item quantity="one">चयनित ऑब्जेक्ट को एक टेम्प्लेट में मैप किया गया है और इसे हटाया नहीं जा सकता।</item>
         <item quantity="other">%1$d ऑब्जेक्ट टेम्प्लेट में मैप किए गए हैं और हटाए नहीं जा सकते।</item>
     </plurals>
-    <string name="planner_create_calendar_failure">स्थानीय योजनाकार कैलेंडर बनाने में असमर्थ</string>
     <string name="dialog_contrib_usage_limit_split_templates">आपकी वर्तमान लाइसेंस स्थिति (%1$s) आपको 1 स्प्लिट टेम्प्लेट बनाने की अनुमति देती है।</string>
     <string name="dialog_remind_rate_how_many_stars">आप {app_name} को कितने स्टार देंगे\?</string>
     <string name="dialog_remind_rate_1">कृपया रेट करने के लिए कुछ समय दें और {app_name} की समीक्षा करें।</string>
     <string name="dialog_title_warning_delete_category">श्रेणी मिटाएं\?</string>
     <string name="export_sdcard_success">\"%1$s\" फ़ाइल में डेटा सफलतापूर्वक निर्यात किया गया</string>
     <string name="plan_calendar_name">{app_name} योजनाकार</string>
-    <string name="planner_notification_channel_name">योजनाकार</string>
-    <string name="planner_create_calendar_success">स्थानीय योजनाकार कैलेंडर सफलतापूर्वक बनाया गया</string>
     <string name="pref_backup_summary">डेटाबेस और प्राथमिकता का बैकअप बनाएं।</string>
     <string name="pref_news_title">समाचार</string>
     <string name="pref_import_title">%s आयात</string>
@@ -287,7 +276,6 @@
     <string name="pref_import_from_grisbi_title">ग्रिस्बी से आयात करें</string>
     <string name="pref_manage_parties_summary" tools:ignore="UnusedResources">पार्टियों को जोड़ें, संपादित करें, हटाएं (भुगतानकर्ता और भुगतानकर्ता)।</string>
     <string name="pref_manage_categories_summary">श्रेणियां जोड़ें, संपादित करें, हटाएं।</string>
-    <string name="pref_planning_calendar_create_local">नया स्थानीय नियोजन कैलेंडर बनाएँ</string>
     <string name="save_transaction_error">टेम्पलेट से नया लेनदेन सहेजा नहीं जा सका।</string>
     <string name="save_transaction_template_deleted">टेम्प्लेट हटा दिया गया है</string>
     <string name="pref_protection_delay_seconds_summary">ऐप को पासवर्ड से लॉक करने से पहले निष्क्रिय सेकंड।</string>
@@ -306,7 +294,6 @@
         <item quantity="one">नया लेनदेन टेम्पलेट से सफलतापूर्वक सहेजा गया।</item>
         <item quantity="other">%1$d नए लेन-देन टेम्प्लेट से सफलतापूर्वक सहेजे गए।</item>
     </plurals>
-    <string name="pref_planning_calendar_summary">उस कैलेंडर का चयन करें जहां भविष्य और आवर्ती लेनदेन की योजनाएं संग्रहीत हैं</string>
     <string name="pref_protection_delay_seconds_title">सुरक्षा तक विलंब</string>
     <string name="pref_protection_enable_data_entry_from_widget_summary_on">बिना पासवर्ड के अनुमति है।</string>
     <string name="pref_security_question_summary">यदि आप अपना पासवर्ड भूल गए हैं तो आपको ऐप को अनलॉक करने की अनुमति देता है।</string>
@@ -314,7 +301,6 @@
     <string name="pref_ui_theme_dark">अँधेरा</string>
     <string name="pref_ui_theme_light">रोशनी</string>
     <string name="restore_db_success">डेटाबेस को बैकअप से पुनर्स्थापित कर दिया गया है।</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d योजनाएँ बैकअप से पुनर्स्थापित कर दी गई हैं</string>
     <plurals name="import_categories_result">
         <item quantity="one">%1$d श्रेणियाँ सफलतापूर्वक आयात की गईं।</item>
         <item quantity="other">%1$d श्रेणियाँ सफलतापूर्वक आयात की गईं।</item>

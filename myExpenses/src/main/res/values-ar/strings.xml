@@ -108,13 +108,11 @@
     <string name="licence_validation_premium">تم إلغاء قفل الميزات المتميزة.</string>
     <string name="menu_aggregates">المجموع</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">تطبيق</string>
     <string name="menu_back">رجوع</string>
     <string name="menu_backup">نسخة احتياطية</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">رصيد الحساب</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">إلغاء</string>
     <string name="menu_clone_transaction">استنساخ</string>
     <string name="menu_contrib">المساهمة</string>
     <string name="menu_create_account">حساب جديد</string>
@@ -140,7 +138,6 @@
     <string name="menu_edit_cat">تعديل تصنيف</string>
     <string name="menu_edit_method">تعديل طريقة الدفع</string>
     <string name="menu_edit_party">تعديل طرف</string>
-    <string name="menu_edit_plan_instance">تحرير مدى ورود خطة واحدة</string>
     <string name="menu_edit_split">تعديل المعاملة المجزأة</string>
     <string name="menu_edit_split_part_category">تعديل التقسيم الفئوي</string>
     <string name="menu_edit_split_part_transfer">تعديل تقسيم التحويلات</string>
@@ -153,7 +150,6 @@
     <string name="menu_help">مساعدة</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">عكس</string>
-    <string name="menu_manage_plans">النماذج والخطط</string>
     <string name="menu_reset">تصدير وإعادة تعيين</string>
     <string name="menu_reset_all">تصدير وإعادة تعيين الكل</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -170,7 +166,6 @@
     <string name="no_expenses">لا يوجد مصروفات حتى الأن!</string>
     <string name="no_exportable_expenses">لا يوجد عمليات لم يتم تصديرها بعد.</string>
     <string name="no_filemanager_installed">لم يتم تثبيت مدير ملفات</string>
-    <string name="no_calendar_app_installed">لم يتم العثور على تطبيق لتحرير حدث التقويم.</string>
     <string name="image_capture_not_installed">لم يتم العثور على تطبيق لالتقاط الصورة.</string>
     <string name="no_mapped_transactions">لا يوجد عمليات لهذا التصنيف خلال هذه الفترة.</string>
     <string name="no_methods">لا يوجد طرق دفع.</string>
@@ -209,15 +204,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">خطة</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">تلقائي</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">مخطط {app_name}</string>
-    <string name="planner_notification_channel_name">مخطط</string>
-    <string name="plan_event_deleted">تم حذف الخطة المتعلقة بهذا النموذج من التقويم.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">تم إلغاء تنفيذ الخطة</string>
-    <string name="planner_create_calendar_failure">غير قادر على انشاء مخطِط تقويم محلي</string>
-    <string name="planner_create_calendar_success">تم انشاء مخطِط تقويم محلي بنجاح</string>
     <!-- payment methods -->
     <string name="pm_cheque">شيك</string>
     <string name="pm_creditcard">بطاقة ائتمانية</string>
@@ -257,8 +246,6 @@
     <string name="pref_password_not_equal">كلمات المرور لا تتطابق</string>
     <string name="pref_perform_share_title">مشاركة النسخ الاحتياطية والملفات المصدّرة</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">انشاء مخطِط تقويم محلي جديد</string>
-    <string name="pref_planning_calendar_summary">حدد التقويم الذي تم تخزين الخطط المستقبلية والمعاملات المتكررة فيه</string>
     <string name="pref_protection_delay_seconds_summary">ثواني دون تفاعل قبل أن يتم قفل التطبيق بكلمة مرور.</string>
     <string name="pref_protection_delay_seconds_title">مهلة الحماية</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">إدخال البيانات عبر الحاجيات والاختصارات</string>
@@ -290,7 +277,6 @@
     <string name="restore_preferences_failure">فشلت عملية استعادة التفضيلات</string>
     <string name="restore_backup_file_not_found">لم يتم إيجاد الملف %1$s في أرشيف \"%2$s\"</string>
     <string name="restore_preferences_success">تم استعادة التفضيلات من النسخة الاحتياطية.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d خطط تم استعادتها من النسخة الإحتياطية</string>
     <string name="save_transaction_and_new_success">تم حفظ العملية بنجاح</string>
     <string name="save_transaction_error">لا يمكن حفظ عملية جديدة من نموذج.</string>
     <plurals name="save_transaction_from_template_success">
@@ -469,17 +455,13 @@
     <string name="pref_sort_order_custom">تخصيص</string>
     <string name="content_description_calculator">الحاسبة</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">فتح</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">تم الإلغاء</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">تم التطبيق</string>
     <string name="warning_cannot_move_split_transaction">لا يمكن نقل هذه المعاملة المجزأة إلى الحساب %1$s نظراً لوجود أجزاء نقل تشير إلى هذا الحساب.</string>
     <string name="content_description_calculator_delete_button">احذف الرقم الأخير</string>
     <string name="paypal_callback_info">تم إتمام معاملتك، وتم إرسال إيصال الشراء عبر البريد الإلكتروني إليك. يمكنك تسجيل الدخول إلى حسابك على www.paypal.com لعرض تفاصيل هذه المعاملة.</string>
     <string name="search_transfer">البحث عن التحويل</string>
     <!-- Sort plans (recurring transactions) by the next instance  -->
-    <string name="pref_sort_order_next_instance">المثال التالي</string>
     <string name="crash_dialog_title">لقد تعطل تطبيق {app_name}</string>
     <string name="crash_dialog_text">حدث خطأ غير متوقع أجبر التطبيق على التوقف. يُرجى مساعدتنا في إصلاح هذا عن طريق إرسال بيانات الخطأ إلينا، كل ما عليك فعله هو النقر فوق \"موافق\".</string>
     <string name="crash_dialog_comment_prompt">يمكنك إضافة تعليقاتك حول المشكلة أدناه:</string>
@@ -536,7 +518,6 @@
     <string name="contributed_by">تمت المساهمة بواسطة %s</string>
     <string name="pref_sync_notification_summary">قم بالإخطار حول تقدم المزامنة المُحرز</string>
     <string name="pref_debug_logging_summary">اكتب معلومات التصحيح في سجل النظام</string>
-    <string name="plan_custom_recurrence_info">يُرجى حفظ النموذج أولاً. سيتم بعد ذلك فتح الخطة في تطبيق التقويم، حيث يمكنك تعيين تكرار مخصص.</string>
     <string name="menu_create_template_for_split">نموذج مجزأ جديد</string>
     <string name="progress_validating_licence">جارِ التحقق من صحة الترخيص</string>
     <string name="licence_validation_error_expired">انتهت صلاحية الترخيص</string>
@@ -676,7 +657,6 @@
     <string name="pref_exchange_rate_provider_summary">حدد مزوداً لتنزيل أسعار الصرف</string>
     <string name="pref_exchange_rate_provider_title">مزود سعر الصرف</string>
     <string name="pref_exchange_rates_api_key_summary">يُرجى تسجيل حساب مجاني على %s وتقديم معرف التطبيق الخاص بك</string>
-    <string name="pref_plan_executor_time_title">وقت الإشعار</string>
     <string name="synchronization_select_folder_dialog_title">حدد مجلداً موجوداً أو أنشئ مجلداً جديداً</string>
     <!-- This message is shwon when we highlight the income / expense toogle, to make user aware of this feature  -->
     <string name="discover_feature_expense_income_switch">استخدم زر التبديل هذا لتسجيل الدخل.</string>
@@ -735,7 +715,6 @@
     <string name="new_tag_hint">أدخل علامة جديدة</string>
     <string name="language_download_requested">ترجمات اللغة %s مطلوبة من متجر بلاي</string>
     <!-- Title for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
-    <string name="pref_planner_manual_time_title">وقت المعاملة المجدولة المطبقة يدوياً</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
     <string name="pref_planner_manual_time_noon">12 ظهراً (فترة الظهيرة)</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction (current time at moment of application) -->
@@ -770,14 +749,11 @@
     <!-- Toast message shown if user clicks on Upgrade button before having selected a licence -->
     <string name="select_package">يُرجى تحديد حزمة الترخيص.</string>
     <!-- Label for a slider control that allows to configure a plan to be executed (added to the ledger) the give number of days in advance -->
-    <string name="advance_exexcution_in_days">التنفيذ المسبق (بالأيام)</string>
     <string name="warning_balance_account_delete">إذا قمت بالمتابعة ، فسيتم حذف جميع المعاملات التي تمت تسويتها لهذا الحساب من قاعدة البيانات ولن تتمكن من استعادتها.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">سيتم تجاهل بيانات النموذج الموجودة.</string>
     <string name="pref_clone_with_current_date_title">تاريخ المعاملات المستنسخة</string>
     <string name="template_default_action_without_amount_hint">يجب حفظ النموذج الذي لا يحتوى على مبلغ بالإجراء الافتراضي \"تحرير\"</string>
-    <string name="plan_automatic_without_amount_hint">لا يجب حفظ الخطة بدون مبلغ مع تنفيذ الخطة تلقائياً</string>
-    <string name="content_description_edit_plan">تحرير الخطة في تطبيق التقويم</string>
     <string name="menu_save_and_new_content_description">حفظ البيانات، مع ترك النموذج مفتوح لإنشاء عملية جديدة بنفس البيانات.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
     <string name="pref_ocr_engine_title">محرك التعرف على النص</string>
@@ -808,7 +784,6 @@
     <string name="pref_news_title">الأخبار</string>
     <string name="account_widget_configuration">إعدادات أداة ويدجيت الحساب</string>
     <string name="backup_save_to_sync_backend">حفظ إلى %s</string>
-    <string name="warning_plan_instance_delete">سيتم حذف المعاملة التي تم إنشاؤها للتاريخ المحدد.</string>
     <string name="auto_fill_focus">تعيين التركيز على المستفيد</string>
     <string name="request_for_invoice">طلب فاتورة</string>
     <string name="active_tags">علامات نشطة</string>
@@ -816,7 +791,6 @@
     <string name="account_widget_configuration_sum_total">قم بتضمين المعاملات المستقبلية</string>
     <string name="account_widget_configuration_sum">نوع المبلغ المعروض</string>
     <string name="warning_link_transfer">سيتم ربط المعاملتين المحددتين كتحويل. سيتم تجاهل معلومات المدفوع له/ الدافع والفئة.</string>
-    <string name="recurrence_last_day_of_month">اليوم الأخير</string>
     <string name="single_feature_info">بدلاً من ذلك ، يمكنك شراء وصول غير محدود إلى هذه الميزة فقط.</string>
     <string name="account_deleted">تم حذف الحساب</string>
     <string name="debt_managment">إدارة الديون</string>
@@ -872,9 +846,7 @@
     <string name="github_sponsors"><![CDATA[تُقدم مفاتيح الترخيص أيضًا لـ <a href="%s">رعاة جيثب</a>.]]></string>
     <string name="select_template">حدد قالب</string>
     <string name="budget_only_current_period">تعيين لـ %s فقط</string>
-    <string name="button_relink_keep_date">أعد الارتباط، لكن احتفظ بالتاريخ</string>
     <string name="remove_from_group">إزالة من المجموعة</string>
-    <string name="orphaned_transaction_relink">يمكن إعادة ربط المعاملة بمثيل الحدث الموجود على %s.</string>
     <string name="pref_backup_file_prefix_title">بادئة الملف</string>
     <string name="notifications_permission_required_auto_backup">من خلال منح الإذن بإرسال الإشعارات، سيتم إعلامك بشأن عمليات النسخ الاحتياطي التلقائي.</string>
     <string name="encrypt_database">تشفير قاعدة البيانات</string>
@@ -884,7 +856,6 @@
     <string name="debt_paid_off_other">تم سداد دين %s.</string>
     <string name="pref_unmapped_transaction_as_transfer_summary_on">يتم احتسابها على أنها تحويل</string>
     <string name="pref_attachment_mime_types_title">أنواع MIME المسموح بها للمرفقات</string>
-    <string name="button_relink_update_date">إعادة الارتباط وتحديث التاريخ</string>
     <string name="widget_title_budget">ميزانيتي</string>
     <string name="pref_copy_attachments_summary_on">يتم نسخ الملفات إلى مجلد التطبيق.</string>
     <string name="database_is_encrypted">قاعدة البيانات مشفرة.</string>
@@ -912,8 +883,6 @@
     <string name="debt_lend_additional">أنا أقرض %s.</string>
     <string name="rollover_edit_invalid">لا يمكن أن يتجاوز مجموع عمليات التمرير المخصصة لفئة ما وعمليات التمرير المخصصة للفئات الفرعية الباقي.</string>
     <string name="optimize_image_file_size">تحسين حجم ملف الصورة</string>
-    <string name="orphaned_transaction_info">ترتبط المعاملة بالخطة لهذا التاريخ، ولكن لا يوجد مثيل للحدث في هذا التاريخ.</string>
-    <string name="orphaned_transaction_align_date">اختياريًا، يمكن أيضًا محاذاة التاريخ المخزن مع المعاملة مع تاريخ المثيل.</string>
     <string name="debt_balance_they_owe">%1$s مدين الآن لـ %2$s.</string>
     <string name="pref_debug_logging_share_summary">توضيح المطالبة قبل حذف الملفات</string>
     <string name="debt_installment_pay">أدفع قسطًا قدره %s.</string>

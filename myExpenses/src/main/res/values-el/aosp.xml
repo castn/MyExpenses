@@ -21,7 +21,6 @@
     <string name="response_no">"Όχι"</string>
     <string name="experimental">"Σε πειραματικό στάδιο"</string>
     <string name="add_widget">"Προσθήκη γραφικού στοιχείου"</string>
-    <string name="calendar">"Ημερολόγιο"</string>
     <string name="permissions_label">"Άδειες"</string>
     <string name="time_format">"Μορφή ώρας"</string>
     <string name="setup">"Ρύθμιση"</string>
@@ -63,8 +62,6 @@
     <string name="menu">"Μενού"</string>
     <string name="action_move_down">"Μετακίνηση κάτω"</string>
     <string name="action_move_up">"Μετακίνηση επάνω"</string>
-    <string name="calendar_delete">Διαγραφή ημερολογίου</string>
-    <string name="preferences_calendar_delete_message">Θέλετε σίγουρα να διαγράψετε το ημερολόγιο;</string>
     <string name="default_camera_app_title">"Εφαρμογή κάμερας"</string>
     <string name="help_and_feedback">"Βοήθεια και σχόλια"</string>
     <string name="currencies_exchange">"Νομίσματα και συνάλλαγμα"</string>

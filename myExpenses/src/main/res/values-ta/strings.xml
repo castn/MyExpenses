@@ -108,13 +108,11 @@
     <string name="licence_validation_premium">மதிப்பு அம்சங்கள் திறக்கப்பட்டுள்ளன.</string>
     <string name="menu_aggregates">மொத்தம்</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">பயன்படுத்து</string>
     <string name="menu_back">பின்</string>
     <string name="menu_backup">காப்புப்பிரதி</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">கணக்கை நேர்செய்</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">ரத்து</string>
     <string name="menu_clone_transaction">நகல் எடு</string>
     <string name="menu_contrib">பங்களி</string>
     <string name="menu_create_account">புதிய கணக்கு</string>
@@ -140,7 +138,6 @@
     <string name="menu_edit_cat">வகையைத் திருத்து</string>
     <string name="menu_edit_method">கட்டண முறையைத் திருத்து</string>
     <string name="menu_edit_party">தரப்பைத் திருத்து</string>
-    <string name="menu_edit_plan_instance">ஒற்றைத் திட்டத்தின் நிகழ்வை திருத்து</string>
     <string name="menu_edit_split">பிளவு பரிவர்த்தனையைத் திருத்து</string>
     <string name="menu_edit_split_part_category">வகை பிரிவு பகுதியைத் திருத்து</string>
     <string name="menu_edit_split_part_transfer">பரிமாற்ற பிரிவு பகுதியைத் திருத்து</string>
@@ -153,7 +150,6 @@
     <string name="menu_help">உதவி</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">புரட்டு</string>
-    <string name="menu_manage_plans">வார்ப்புரு மற்றும் திட்டங்கள்</string>
     <string name="menu_reset">ஏற்றுமதி செய் மற்றும் நிலை கொணர்</string>
     <string name="menu_reset_all">அனைத்தையும் ஏற்றுமதி செய் மற்றும்  நிலை கொணர்</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -170,7 +166,6 @@
     <string name="no_expenses">இன்னும் செலவுகள் ஏதுமில்லை!</string>
     <string name="no_exportable_expenses">இதுவரை ஏற்றுமதி செய்யப்படாத பரிமாற்றங்கள் எதுவும் இல்லை.</string>
     <string name="no_filemanager_installed">எந்த கோப்பு மேலாளரும் நிறுவப்படவில்லை</string>
-    <string name="no_calendar_app_installed">நாட்காட்டி நிகழ்வைத் திருத்துவதற்கு எந்த செயலியும் இல்லை.</string>
     <string name="image_capture_not_installed">படம் எடுப்பதற்கான செயலி எதுவும் கிடைக்கவில்லை.</string>
     <string name="no_mapped_transactions">இந்த காலகட்டத்தில் எந்த பரிமாற்றங்களும் வகைப்படுத்தப்படவில்லை.</string>
     <string name="no_methods">கட்டண முறைகள் ஏதும் இல்லை.</string>
@@ -201,15 +196,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">திட்டம்</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">தன்னியக்கமாக</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">{app_name} இழைப்புளி</string>
-    <string name="planner_notification_channel_name">இழைப்புளி</string>
-    <string name="plan_event_deleted">இந்த வார்ப்புருவுடன் தொடர்புடைய திட்டம் நாட்காட்டியிலிருந்து நீக்கப்பட்டது.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">திட்ட செயல்பாடு ரத்து செய்யப்ப்பட்டது</string>
-    <string name="planner_create_calendar_failure">உள்  திட்டக் நாட்காட்டியை உருவாக்க முடியவில்லை</string>
-    <string name="planner_create_calendar_success">உள் திட்ட நாட்காட்டி வெற்றிகரமாக உருவாக்கப்பட்டது</string>
     <!-- payment methods -->
     <string name="pm_cheque">காசோலை</string>
     <string name="pm_creditcard">கடன் அட்டை</string>
@@ -249,8 +238,6 @@
     <string name="pref_password_not_equal">கடவுச்சொற்கள் பொருந்தவில்லை</string>
     <string name="pref_perform_share_title">ஏற்றுமதி மற்றும் காப்புப்பிரதிகளை பகிர்</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">புதிய உள் திட்டக் நாட்காட்டியை உருவாக்கவும்</string>
-    <string name="pref_planning_calendar_summary">எதிர்காலத்திற்கான திட்டங்கள் மற்றும் மீண்டும் நிகழ்கின்ற பரிவர்த்தனைகள் சேமிக்கப்படும் நாட்காட்டியைத் தேர்ந்தெடுக்கவும்</string>
     <string name="pref_protection_delay_seconds_summary">கடவுச்சொல் மூலம் செயலி பூட்டப்படுவதற்கு முன் செயலற்று இருக்க வேண்டிய விநாடிகள்.</string>
     <string name="pref_protection_delay_seconds_title">பாதுகாப்பிற்கு முன் இருக்க வேண்டிய தாமதம்</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">நிரல் பலகைகள் மற்றும் குறுக்குவழிகளில் இருந்து தரவு உள்ளீடு</string>
@@ -282,7 +269,6 @@
     <string name="restore_preferences_failure">விருப்பத்தேர்வுகளின் மீட்டமைப்பு தோல்வியடைந்தது</string>
     <string name="restore_backup_file_not_found">\"%2$s\" ஆவணக்கிடங்கில் %1$s எனும் கோப்பு இல்லை</string>
     <string name="restore_preferences_success">காப்புப்பிரதியில் இருந்து விருப்பத்தேர்வுகள் மீட்டமைக்கப்பட்டன.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d திட்டங்கள் காப்புப்பிரதியிலிருந்து மீட்டமைக்கப்பட்டன</string>
     <string name="save_transaction_and_new_success">வெற்றிகரமாக சேமிக்கப்பட்டது</string>
     <string name="save_transaction_error">வார்ப்புருவிலிருந்து புதிய பரிவர்த்தனையை சேமிக்க முடியவில்லை.</string>
     <plurals name="save_transaction_from_template_success">
@@ -438,17 +424,13 @@
     <string name="pref_sort_order_custom">தனி விருப்பம்</string>
     <string name="content_description_calculator">கணக்கிடு கருவி</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">திறந்துள்ளது</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">ரத்துசெய்யப்பட்டது</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">பயன்படுத்தப்பட்டது</string>
     <string name="warning_cannot_move_split_transaction">இந்த பிரிவு பரிவர்த்தனையை %1$s கணக்கிற்கு நகர்த்த முடியாது, ஏனெனில் இதில் இந்த கணக்கை தொடர்புபடுத்தும் பரிமாற்ற பிரிவுகள் உள்ளன.</string>
     <string name="content_description_calculator_delete_button">கடைசி இலக்கத்தை நீக்கு</string>
     <string name="paypal_callback_info">உங்கள் பரிவர்த்தனை முடிக்கப்பட்டது, மேலும் நீங்கள் வாங்கியதற்கான ரசீது உங்களுக்கு மின்னஞ்சல் மூலம் அனுப்பப்பட்டது. நீங்கள் www.paypal.com இல் உங்கள் கணக்கில் உள்நுழைந்து இந்த பரிவர்த்தனை விவரங்களைப் பார்வையிடலாம். </string>
     <string name="search_transfer">பரிமாற்றத்தைத் தேடு</string>
     <!-- Sort plans (recurring transactions) by the next instance  -->
-    <string name="pref_sort_order_next_instance">அடுத்த நிகழ்வு</string>
     <string name="crash_dialog_title">{app_name} செயலிழந்தது</string>
     <string name="crash_dialog_text">எதிர்பாராத பிழை ஏற்பட்டு செயலியின் நிறுத்தத்தை கட்டாயப்படுத்தியது. இதை சரிசெய்ய தயவு செய்து எங்களுக்கு பிழை தொடர்பான தரவுகளை அனுப்பி உதவவும், நீங்கள் செய்ய வேண்டியது எல்லாம் சரி என்பதை சொடுக்குதல் மட்டுமே.</string>
     <string name="crash_dialog_comment_prompt">சிக்கலைப் பற்றிய உங்கள் கருத்துகளை நீங்கள் சேர்க்கலாம்:</string>
@@ -505,7 +487,6 @@
     <string name="contributed_by">%s-ஆல் பங்களிக்கப்பட்டது</string>
     <string name="pref_sync_notification_summary">ஒத்திசைவின் முன்னேற்றம் பற்றி தெரிவிக்கவும்</string>
     <string name="pref_debug_logging_summary">கணினி குறிப்பில் பிழைத்திருத்த உதவும் தகவல்களை எழுதவும்</string>
-    <string name="plan_custom_recurrence_info">முதலில் வார்ப்புருவை சேமியுங்கள். நாட்காட்டி செயலியில் திட்டம் திறக்கப்படும், அங்கு நீங்கள் தனி விருப்ப மறுநிகழ்வை அமைக்கலாம்.</string>
     <string name="menu_create_template_for_split">புதிய பிரிவு வார்ப்புரு</string>
     <string name="progress_validating_licence">உரிமம் சரிபார்க்கப்படுகிறது</string>
     <string name="licence_validation_error_expired">உரிமம் காலாவதியானது</string>
@@ -641,7 +622,6 @@
     <string name="pref_exchange_rate_provider_summary">மாற்று விகிதங்களைப் பதிவிறக்க வழங்குநரைத் தேர்ந்தெடுக்கவும்</string>
     <string name="pref_exchange_rate_provider_title">மாற்று விகித வழங்குநர்</string>
     <string name="pref_exchange_rates_api_key_summary">%s இல் இலவச கணக்கைப் பதிவுசெய்து உங்களுடைய பயன்பாட்டு ஐடியை வழங்கவும்</string>
-    <string name="pref_plan_executor_time_title">அறிவிப்பு நேரம்</string>
     <string name="synchronization_select_folder_dialog_title">ஏற்கனவே உள்ள கோப்புறையைத் தேர்ந்தெடுக்கவும் அல்லது புதியதை உருவாக்கவும்</string>
     <!-- This message is shwon when we highlight the income / expense toogle, to make user aware of this feature  -->
     <string name="discover_feature_expense_income_switch">வருமானத்தை பதிவு செய்ய இந்த நிலைமாற்றியை பயன்படுத்தவும்.</string>
@@ -696,7 +676,6 @@
     <string name="new_tag_hint">புதிய குறிச்சொல்லை உள்ளிடவும்</string>
     <string name="language_download_requested">%s மொழிக்கான மொழிபெயர்ப்புகள் Play Store-ல் இருந்து கோரப்படுகின்றன</string>
     <!-- Title for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
-    <string name="pref_planner_manual_time_title">கைமுறையாக பயன்படுத்தப்படும் திட்டமிடப்பட்ட பரிவர்த்தனைக்கான நேரம்</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
     <string name="pref_planner_manual_time_noon">12 pm (நண்பகல்)</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction (current time at moment of application) -->
@@ -731,14 +710,11 @@
     <!-- Toast message shown if user clicks on Upgrade button before having selected a licence -->
     <string name="select_package">உரிமத் தொகுப்பு ஒன்றைத் தேர்ந்தெடுக்கவும்.</string>
     <!-- Label for a slider control that allows to configure a plan to be executed (added to the ledger) the give number of days in advance -->
-    <string name="advance_exexcution_in_days">முன்னதாக செயல்படுத்து (நாட்களில்)</string>
     <string name="warning_balance_account_delete">நீங்கள் தொடர்ந்தால், இந்த கணக்கின் அனைத்து நல்லிணக்கம் செய்யப்பட்ட பரிவர்த்தனைகளும் தரவுத்தளத்திலிருந்து நீக்கப்படும், மேலும் அவற்றை நீங்கள் மீட்டெடுக்க முடியாது.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">இருக்கும் படிவத் தரவு நிராகரிக்கப்படும்.</string>
     <string name="pref_clone_with_current_date_title">நகல் எடுக்கப்பட்ட பரிவர்த்தனைகளின் தேதி</string>
     <string name="template_default_action_without_amount_hint">தொகை இல்லாத வார்ப்புருக்கள் இயல்புநிலை நடவடிக்கை \'திருத்து\' உடன் சேமிக்கப்பட வேண்டும்</string>
-    <string name="plan_automatic_without_amount_hint">தொகை இல்லாத திட்டம் தன்னியக்க திட்ட செயல்படுத்தலுடன் சேமிக்கப்படக்கூடாது</string>
-    <string name="content_description_edit_plan">நாட்காட்டி செயலியில் திட்டத்தைத் திருத்து</string>
     <string name="menu_save_and_new_content_description">தரவைச் சேமிக்கவும், அதே தரவுடன் புதிய பரிவர்த்தனையை உருவாக்க படிவத்தைத் திறந்து விடவும்.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
     <string name="pref_ocr_engine_title">உரை அறிதலுக்கான இயந்திரம்</string>
@@ -759,7 +735,6 @@
     <string name="new_balance">புதிய இருப்பு</string>
     <string name="single_feature_info">மாற்றாக இந்த அம்சத்திற்கு மட்டுமே நீங்கள் வரம்பற்ற அணுகலை வாங்க முடியும்.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
-    <string name="recurrence_last_day_of_month">கடைசி நாள்</string>
     <string name="warning_link_transfer">தேர்ந்தெடுக்கப்பட்ட இரண்டு பரிவர்த்தனைகளும் பரிமாற்றமாக இணைக்கப்படும். பணம் பெறுபவர் / செலுத்துபவர் மற்றும் வகை விவரங்கள் கைவிடப்படும்.</string>
     <!-- This is the title of an entry on the configuration screen for the account widget. It allows to decide which number should be displayed for each account: the current balance or the total (which included future transactions) -->
     <string name="account_widget_configuration_sum">காட்டப்படும் கூட்டு தொகையின் வகை</string>
@@ -776,7 +751,6 @@
     <string name="auto_fill_focus">பணம் பெறுபவர் உள்ளீட்டில் கவனம் செலுத்து</string>
     <!-- This warning is shown when a user calls the Reset or Cancel commands on a scheduled transaction, for a date
      where the transaction has already been created.  -->
-    <string name="warning_plan_instance_delete">தேர்ந்தெடுக்கப்பட்ட தேதிக்கு உருவாக்கப்பட்ட பரிவர்த்தனை நீக்கப்படும்.</string>
     <string name="crash_reports_user_info">\"{app_name}\" செயலியின் செயலிழப்புகளைப் பற்றிய அறிக்கையை தானாகவே உருவாக்குனருக்கு அனுப்புகிறது. இது சிக்கல்களை விரைவாக சரிசெய்ய அனுமதிக்கிறது.</string>
     <string name="pref_enable_acra">தன்னியக்கமாக செயலிழப்பு அறிக்கைகளை அனுப்ப அனுமதி</string>
     <string name="pref_acra_user_email">செயலிழப்பு அறிக்கையில் பயனர் மின்னஞ்சல் உள்ளடக்கப்பட்டுள்ளது</string>
@@ -857,13 +831,11 @@
     <string name="notifications_channel_required">தயவுசெய்து சேனல் %s ஐ இயக்கவும்.</string>
     <string name="pref_unmapped_transaction_as_transfer_title">தடையற்ற பரிவர்த்தனைகள்</string>
     <string name="redesign">மறுவடிவமைப்பு</string>
-    <string name="button_relink_keep_date">மறுபரிசீலனை செய்யுங்கள், ஆனால் தேதியை வைத்திருங்கள்</string>
     <string name="show_duplicates">நகல்களைக் காட்டு</string>
     <string name="debt_paid_off_other">%s இன் கடன் செலுத்தப்படுகிறது.</string>
     <string name="debt_balance_they_owe">%1$s இப்போது %2$s கடன்பட்டுள்ளன.</string>
     <string name="debt_installment_pay">நான் %s தவணையை செலுத்துகிறேன்.</string>
     <string name="debt_installment_receive">நான் %s இன் தவணையைப் பெறுகிறேன்.</string>
-    <string name="button_relink_update_date">தேதியை மறுபரிசீலனை செய்து புதுப்பிக்கவும்</string>
     <string name="buy">வாங்க</string>
     <string name="purge_backups">பின்வரும் பழைய காப்புப்பிரதி கோப்புகள் நீக்கப்படும்:</string>
     <string name="notifications_permission_required_auto_backup">அறிவிப்புகளை அனுப்ப இசைவு வழங்குவதன் மூலம், ஆட்டோ-பின் பற்றி உங்களுக்குத் தெரிவிக்கப்படும்.</string>
@@ -881,7 +853,6 @@
     <string name="pref_copy_attachments_title">பயன்பாட்டு கோப்புறையில் இணைப்புகளை நகலெடுக்கவும்</string>
     <string name="pref_csv_export_category_separator_summary">வகை வரிசைக்கு இடையில் பிரிப்பான்</string>
     <string name="dialog_title_purge_backups">பழைய காப்புப்பிரதிகளை தூய்மைப்படுத்துங்கள்</string>
-    <string name="orphaned_transaction_info">இந்தத் தேதிக்கான திட்டத்துடன் ஒரு பரிவர்த்தனை இணைக்கப்பட்டுள்ளது, ஆனால் இந்தத் தேதியில் நிகழ்வு எதுவும் இல்லை.</string>
     <string name="add_shortcut">குறுக்குவழியைச் சேர்க்கவும்</string>
     <string name="maximum_size">அதிகபட்ச அளவு</string>
     <string name="menu_parent_category_selection">குறுகிய தட்டில் பெற்றோர் வகையைத் தேர்ந்தெடுக்கவும்</string>
@@ -900,8 +871,6 @@
     <string name="database_is_encrypted">தரவுத்தளம் குறியாக்கம் செய்யப்பட்டுள்ளது.</string>
     <string name="github_sponsors"><![CDATA[<a href="%s">அறிவிலிமையம் ஆதரவாளர்களுக்கு</a> உரிம விசைகளும் வழங்கப்படுகின்றன.]]></string>
     <string name="pref_backup_file_prefix_title">கோப்பு முன்னொட்டு</string>
-    <string name="orphaned_transaction_relink">பரிவர்த்தனையை %s இல் நிகழ்வு நிகழ்வுடன் மறுபரிசீலனை செய்யலாம்.</string>
-    <string name="orphaned_transaction_align_date">விருப்பமாக பரிவர்த்தனையுடன் சேமிக்கப்பட்ட தேதியும் நிகழ்வு தேதியுடன் சீரமைக்கப்படலாம்.</string>
     <string name="notifications_permission_required_sync">அறிவிப்புகளை அனுப்ப இசைவு வழங்குவதன் மூலம், ஒத்திசைவு நடவடிக்கைகளின் முன்னேற்றத்தை நீங்கள் கண்காணிக்க முடியும்.</string>
     <string name="debt_lend_additional">நான் %s கடன் வழங்குகிறேன்.</string>
     <string name="debt_borrow_additional">நான் %s கடன் வாங்குகிறேன்.</string>

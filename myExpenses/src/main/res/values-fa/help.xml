@@ -25,17 +25,11 @@
     <string name="cab_clone_transaction_help_text">معاملات انتخاب شده با تاریخ و زمان فعلی تکمیل خواهد شد. قبل از ذخیره کپی، می توانید تغییرات ایجاد کنید.</string>
     <string name="cab_split_help_text">بعدا می توانید معامله را برای ایجاد قسمت های اضافی در صورت لزوم ویرایش کنید.</string>
     <string name="help_ManageMethods_info">این صفحه لیست روشهای پرداخت از پیش تعیین شده (چک، کارت اعتباری، سپرده، بدهی مستقیم) را می دهد و به شما اجازه می دهد تا موارد جدید را تعریف کنید. برای باز کردن فرم برای ایجاد یک روش جدید از دکمه عمل شناور استفاده کنید.</string>
-    <string name="help_ManageTemplates_plans_title">برنامه نمایش تقویم</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src="ic_menu_template"> درحالیکه قالبها را از طریق معاملات از طریق منوی زمینه خود استخراج می شوند، در اینجا میتوانید با کلیک کردن بر روی دکمه عمل شناور، میتوانید قالبهای جدید را از ابتدا (برای معاملات یا انتقال) ایجاد کنید. با کلیک بر روی یک الگو، نمونه ای برای آن ایجاد می شود. <br><img src="ic_event"> یک طرح یک الگو است که شما یک رویداد (یک بار یا تکراری) را در تقویم برنامه ریز ایجاد کرده اید. با کلیک بر روی یک برنامه، یک نمای تقویم باز می شود که نمونه های گذشته و آینده یک برنامه را نشان می دهد.]]></string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">نمونه اولیه قالب را انتخاب کنید و بلافاصله آن را ذخیره کنید.</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">نمونه اولیه قالب را انتخاب کنید و فرم ویرایش آن را وارد کنید تا بتوانید آن را قبل از صرفه جویی تغییر دهید.</string>
     <string name="cab_ManageTemplates_delete_help_text">قالب های انتخاب شده و برنامه های مربوطه را حذف کنید.</string>
     <string name="cab_ManageTemplates_edit_help_text">قالب انتخاب شده را ویرایش کنید و برنامه مربوطه ایجاد یا ویرایش کنید.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">در زمان رویداد انتخاب شده، معاملات را ایجاد کنید و بلافاصله آنها را ذخیره کنید.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">در زمان رویداد انتخاب شده، یک معامله ایجاد کنید و فرم ویرایش آن را وارد کنید تا بتوانید آن را قبل از صرفه جویی تغییر دهید.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">نشان می دهد که در موارد رویداد انتخاب شده، هیچ معاملاتی نباید ایجاد شود. اگر معاملات برای نمونه های رویداد انتخاب شده ایجاد شده اند، آنها حذف خواهند شد.</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">اگر معاملات برای نمونه های رویداد انتخاب شده ایجاد شده باشند، اگر آنها لغو شده اند، پرچم ها حذف خواهند شد.</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">معامله ای را که برای نمونه مورد نظر ایجاد شده است، ویرایش کنید.</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">لیست قالب را می توان بر اساس عنوان (به ترتیب حروف الفبا)، بر اساس مقدار، فرکانس استفاده، و یا آخرین بار که یک معامله از آن نمونه اشیاء مرتب شده است.</string>
     <string name="help_ManageCategories_distribution_info">در این صفحه توزیع هزینه ها و درآمد خود را در هر دسته، برای همه معاملات در یک حساب و یا برای یک گروه خاص نمایش می دهد. اگر دسته اصلی را در لیست گسترش دهید، نمودار پایه توزیع زیر شاخه های آن را نمایش می دهد. اگر یک دسته را در لیست انتخاب کنید، در نمودار دایره ای برجسته می شود و بالعکس. برای نمایش یک لیست جمع شده از معاملات که به آن اشاره شده است، یک دسته را به مدت طولانی فشار دهید.</string>
     <string name="help_ManageCategories_select_mapping_info">علاوه بر اقداماتی که می توانید در هنگام مدیریت دسته ها از روی صفحه تنظیمات (ایجاد، ویرایش، حذف) انجام دهید، در این صفحه شما یک معامله را به یک دسته انتخابی می دهید.</string>
@@ -67,11 +61,6 @@
     <string name="help_ManageParties_floating_action_button">از دکمه شناور برای افزودن ورودی جدید استفاده کنید.</string>
     <string name="menu_merge_help_text">اگر یک فرد چندین بار در لیست با تغییرات املایی متفاوت ظاهر شود، می توانید آنها را با هم ادغام کنید.</string>
     <string name="help_ManageParties_mergeMode_info_2">از شما خواسته می شود که کدام نوع را انتخاب کنید.</string>
-    <string name="help_ManageTemplates_planner_intro">ضربه زدن طولانی بر روی یک نمونه باز، انتخاب چندگانه را آغاز می کند. ضربه زدن روی شروع یا پایان محدوده تاریخ به شما امکان می دهد محدوده را به گذشته یا آینده گسترش دهید.</string>
-    <string name="help_ManageTemplates_plans_info_header">وضعیت یک نمونه با نمادهای زیر نشان داده می شود:</string>
-    <string name="help_ManageTemplates_plans_info_open">نمونه هنوز اعمال نشده است.</string>
-    <string name="help_ManageTemplates_plans_info_applied">نمونه اعمال شده است.</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">نمونه لغو شده است، یعنی شما آن را علامت گذاری کرده اید تا رد شود. هیچ معامله ای برای این مثال ایجاد نخواهد شد.</string>
     <string name="menu_ManageCategories_sort_help_text">فهرست دسته ها را می توان بر اساس عنوان (الفبایی)، تعداد دفعات استفاده، یا آخرین باری که تراکنش به آن نگاشت شده است مرتب کرد.</string>
     <string name="help_ExpenseEdit_templateSplit_title">فرم برای تقسیم الگوها</string>
     <string name="help_ExpenseEdit_templateCategory_info">از این فرم برای وارد کردن یک الگوی جدید یا ویرایش یک الگوی موجود استفاده کنید. از منوی کشویی در نوار عمل برای جابه‌جایی بین قالب‌های تراکنش، انتقال و تقسیم استفاده کنید.</string>
@@ -87,8 +76,6 @@
     <string name="help_ManageParties_manage_info">این صفحه، طرف هایی را که برای تکمیل خودکار فیلد پرداخت کننده/ گیرنده وجه استفاده شده اند، فهرست می کند.</string>
     <string name="help_ManageParties_select_mapping_info">یک فرد را با ضربه زدن روی آن انتخاب کنید.</string>
     <string name="help_ManageParties_select_filter_info"/>
-    <string name="help_ManageTemplates_planner_title">بازرخدادهای آتی</string>
-    <string name="help_ManageTemplates_plans_intro">هر تاریخ برجسته شده نمونه ای از طرح را نشان می دهد.</string>
     <string name="form_attach_image_help_text"><![CDATA[دکمه <img src=android:ic_menu_camera> به شما امکان می دهد یک تصویر (مثلاً از گالری یا دوربین) را به موضوع متصل کنید.]]></string>
     <string name="help_ExpenseEdit_templateCategory_title">فرم الگوهای تراکنش</string>
     <string name="help_ExpenseEdit_templateTransfer_title">فرم الگوهای انتقال</string>

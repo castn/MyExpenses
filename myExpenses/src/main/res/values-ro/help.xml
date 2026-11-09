@@ -31,11 +31,6 @@
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">Instanţiaţi  şablonul selectat şi introduceţi formularul de editare unde se pot modifica înainte de salvare.</string>
     <string name="cab_ManageTemplates_delete_help_text">Ştergeţi şabloanele selectate şi orice scadenţe  asociate.</string>
     <string name="cab_ManageTemplates_edit_help_text">Editaţi şablonul selectat şi creaţi sau editaţi o scadenţă asociată.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">Crează tranzacţii la momentul instanţei de eveniment selectat şi le salvează imediat.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">Creaţi o tranzacţie la momentul instanţei de eveniment selectat şi introduceţi formularul de editare  de unde se poate modifica înainte de salvare.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">Indică faptul că la   instanţele evenimentului selectat, tranzacţiile nu ar trebui să fie create. Dacă tranzacţiile au fost create pentru evenimentele selectate , acestea vor fi şterse.</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">Dacă tranzacţiile au fost create pentru evenimentele selectate , acestea vor fi şterse, dacă acestea au fost marcate ca anulate, steagurile sunt eliminate.</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">Editarea tranzacţiei care a fost creată pentru scadenţa selectată.</string>
     <string name="help_ManageCategories_distribution_info">Acest ecran afișează distribuția cheltuielilor și veniturilor dvs. pentru ori ce categorie, pentru toate tranzacțiile dintr-un cont sau pentru un anumit grup. Dacă extindeți o categorie principală din listă, graficul va afișa distribuția subcategoriilor sale. Dacă selectați o categorie din listă, aceasta va fi evidențiată în grafic și invers. Apăsați lung pe o categorie pentru a afișa o listă agregată a tranzacțiilor mapate pe acea categorie.</string>
     <string name="help_ManageCategories_select_mapping_info">Pe lângă acţiunile pe care puteţi efectua gestionarea categoriilor din ecranul  Preferinţe (creare, editare, ştergere) de pe acest ecran mapaţi o tranzacţie la o categorie selectată pur şi simplu făcând clic pe ea.</string>
     <string name="help_ManageCategories_manage_info">Acest ecran vă permite să creaţi, editaţi şi şterge categorii. În mod implicit, criteriu de sortare primar în lista  categoriilor este frecvenţa lor de utilizare (criteriul secundar este ordine alfabetică). Acest lucru vă oferă acces rapid la categoriile pe care le utilizaţi cel mai frecvent.</string>
@@ -70,6 +65,5 @@
     <string name="help_ManageCurrencies_info">Pentru fiecare valută, aveţi posibilitatea să modificaţi numărul de zecimale utilizate. De exemplu, dacă pentru Euro, trebuie să mânuiti  1/10 din un  ¢, adică 1/1000 din Euro, ar trebui setat numărul la trei. Conturile existente care utilizează moneda, vor folosi noua setare.</string>
     <string name="menu_create_account_help_text">Creaza un cont nou. Versiunea gratuită este limitată la cinci conturi.</string>
     <string name="cab_ManageCategories_select_help_text">Mapează categoria selectată la tranzacţie şi a revine la formularul de tranzacţie.</string>
-    <string name="help_ManageTemplates_plans_title">Vizualizarea calendarului planului</string>
     <string name="cab_MyExpenses_filter_help_text">Căutați tranzacții cu aceleași proprietăți.</string>
 </resources>

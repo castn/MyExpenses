@@ -52,7 +52,6 @@
     <string name="warning_reset_account_matched">Калі вы працягнеце, транзакцыі, якія адпавядаюць бягучаму фільтру, будуць выдалены з базы дадзеных і не могуць быць адноўлены.</string>
     <string name="warning_delete_category_with_budget">Як мінімум для адной выбранай катэгорыі ёсць бюджэтныя размеркаванні, якія таксама будуць выдалены.</string>
     <string name="warning_change_fraction_digits_2_divided" tools:ignore="PluralsCandidate">Калі сумы не абнаўляюцца, пасля змены яны будуць адлюстроўвацца як падзеленыя на %d.</string>
-    <string name="menu_cancel_plan_instance">Адмяніць</string>
     <string name="ftp_uri_malformed">Няправільнае ўражанне URI %1$s</string>
     <string name="grouping_last_week">На мінулым тыдні</string>
     <string name="grouping_month">Месяц</string>
@@ -68,7 +67,6 @@
     <string name="dialog_balance_delete">Выдаліць узгодненыя транзакцыі</string>
     <string name="search_transfer">Пошук перакладу</string>
     <string name="app_dir_not_accessible">Выбраная папка для рэзервовых копій і экспарту (%1$s) недаступная. Калі ласка, выберыце іншую.</string>
-    <string name="pref_planning_calendar_summary">Выберыце каляндар, у якім захоўваюцца планы будучых і перыядычных транзакцый</string>
     <string name="warning_instantiate_template_from_widget_password_protected">Хуткае стварэнне шаблонаў з гэтага віджэта працуе толькі ў тым выпадку, калі ў наладах праграмы дазволены ўвод дадзеных з віджэтаў без пароля.</string>
     <string name="pref_restore_title">Аднавіць</string>
     <string name="warning_reset_account">Калі вы працягнеце, усе транзакцыі гэтага рахунку будуць выдалены з базы дадзеных і не могуць быць адноўлены.</string>
@@ -80,7 +78,6 @@
         <item quantity="many">%1$d новыя аперацыі паспяхова захаваны з шаблонаў.</item>
         <item quantity="other">%1$d новыя аперацыі паспяхова захаваны з шаблонаў.</item>
     </plurals>
-    <string name="menu_manage_plans">Шаблоны і планы</string>
     <string name="menu_split_transaction">Пераўтварэнне ў \"падзяліць\"</string>
     <string name="split_parts_heading">Падзелы</string>
     <string name="warning_password_protected">Прыкладанне абаронена паролем.</string>
@@ -91,7 +88,6 @@
     <string name="expense">Выдаткі</string>
     <string name="export_sdcard_failure">Экспарт у файл \"%1$s\" не атрымаўся: %2$s</string>
     <string name="export_sdcard_success">Дадзеныя паспяхова экспартаваныя ў файл \"%1$s\"</string>
-    <string name="menu_apply_template">Ужыць</string>
     <string name="menu_edit_split">Рэдагаваць падзеленую транзакцыю</string>
     <string name="menu_edit_split_part_transfer">Рэдагаваць пераклад раздзела</string>
     <string name="menu_edit_transaction">Рэдагаваць транзакцыю</string>
@@ -129,8 +125,6 @@
     <string name="pref_auto_backup_time_title">Час аўтаматычнага рэзервовага капіравання</string>
     <string name="date_format_minute">Хвіліна</string>
     <string name="pref_grouping_periods">Групоўка перыядаў</string>
-    <string name="plan_instance_state_cancelled">адменены</string>
-    <string name="plan_instance_state_open">адкрыць</string>
     <string name="pref_tracking_summary">Дазвольце нам збіраць ананімныя дадзеныя аб мадэлях выкарыстання, якія дапамагаюць нам планаваць паляпшэнні.</string>
     <string name="sync_error_will_try_again_later">Паспрабуйце пазней.</string>
     <string name="contributed_by">Уклад унесены %s</string>
@@ -252,7 +246,6 @@
     <string name="pref_protection_delay_seconds_title">Затрымка да абароны</string>
     <string name="pref_send_feedback_title">Адправіць водгук</string>
     <string name="time">Час</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d планы адноўлены з рэзервовай копіі</string>
     <string name="save_transaction_and_new_success">Паспяхова захавана</string>
     <string name="save_transaction_error">Не атрымалася захаваць новую транзакцыю з шаблону.</string>
     <string name="move_category_failure">Адна катэгорыя не была перамешчаная, паколькі той жа ярлык ужо існуе ў мэтавым аб\'екце.</string>
@@ -322,8 +315,6 @@
     <string name="menu_edit_cat">Рэдагаваць катэгорыю</string>
     <string name="numbered">пранумараваны</string>
     <string name="image_capture_not_installed">Праграма для фатаграфавання не знойдзена.</string>
-    <string name="planner_create_calendar_success">Лакальны каляндар планавання паспяхова створаны</string>
-    <string name="plan_execution_canceled">Выкананне плана адменена</string>
     <string name="pref_protection_enable_data_entry_from_widget_summary_on">Дазволена без пароля.</string>
     <string name="pref_security_question_summary">Дазваляе разблакіраваць праграму, калі вы забыліся пароль.</string>
     <string name="pref_security_question_title">Сакрэтнае пытанне</string>
@@ -362,13 +353,11 @@
     </plurals>
     <string name="menu_edit_split_part_category">Рэдагаваць падзел катэгорыі</string>
     <string name="menu_edit_template">Рэдагаваць шаблон</string>
-    <string name="menu_edit_plan_instance">Рэдагаваць асобны выпадак плана</string>
     <string name="dialog_contrib_text_1"><i>{app_name}</i> прапануецца з адкрытым зыходным кодам.</string>
     <string name="dialog_contrib_text_2">Калі ласка, далучайцеся да праграмы, абнавіўшы яе <i>{app_name}</i>, і атрымайце неабмежаваны доступ да наступных функцый:</string>
     <string name="dialog_remind_rate_yes">Ацаніць зараз</string>
     <string name="pref_import_from_grisbi_title">Імпарт з Grisbi</string>
     <string name="method">Спосаб аплаты</string>
-    <string name="no_calendar_app_installed">Не знойдзена праграма для рэдагавання падзей календара.</string>
     <string name="sync_io_exception_unlocking">Памылка пры зняцці блакіроўкі з аддаленага сервера.</string>
     <string name="sync_io_exception_locking">Аддалены бэкэнд заблакіраваны або не можа быць заблакіраваны.</string>
     <string name="pref_webdav_timeout_title">Час чакання WebDAV (у секундах)</string>
@@ -385,7 +374,6 @@
     <string name="menu_save_and_new">Захаваць і стварыць новы</string>
     <string name="button_label_close">Закрыць</string>
     <string name="parse_error_file_not_found">Немагчыма знайсці файл %1$s</string>
-    <string name="plan_automatic">аўтаматычнa</string>
     <string name="buy">Купля</string>
     <string name="pref_backup_cloud_summary">У дадатак да лакальнага сховішча на прыладзе, файл рэзервовай копіі можна скапіяваць на аддалены бэкэнд.</string>
     <string name="no_categories">Ніякіх катэгорый.</string>
@@ -400,14 +388,12 @@
     <string name="income">Прыбытак</string>
     <string name="plan_calendar_name">{app_name} планіроўшчык</string>
     <string name="pm_cheque">Чэк</string>
-    <string name="planner_notification_channel_name">Планіроўшчык</string>
     <string name="pref_auto_fill_summary">Запоўніце дадзеныя з апошняй транзакцыі для таго ж контрагента</string>
     <string name="pref_app_dir_title">Папка для рэзервовых копій і экспарту</string>
     <string name="pref_backup_summary">Стварыце рэзервовую копію базы дадзеных і налад.</string>
     <string name="pref_sort_order_usages">Колькасць выкарыстанняў</string>
     <string name="pref_category_title_export">Экспарт</string>
     <string name="pref_more_info_dialog_title">Ліцэнзія і стваральнікі</string>
-    <string name="pref_planning_calendar_create_local">Стварыць новы каляндар мясцовага планавання</string>
     <string name="pref_protection_enable_data_entry_from_widget_summary_off">Патрабуецца пароль.</string>
     <string name="pref_qif_export_file_encoding_title">Кадаванне сімвалаў</string>
     <string name="pref_restore_summary">Выберыце рэзервовую копію для аднаўлення базы дадзеных і налад.</string>
@@ -423,12 +409,10 @@
     <string name="number_of_fraction_digits">Колькасць лічбаў дробу</string>
     <string name="warning_auto_backup_deactivated">Аўтаматычнае рэзервовае капіраванне адключана. Вы можаце зноў уключыць яго ў наладах пасля вырашэння праблемы (напрыклад, выбару іншай тэчкі для рэзервовых копій).</string>
     <string name="sync_success_reset_account_data">Аддаленыя даныя для акаўнта %s былі выдалены.</string>
-    <string name="planner_create_calendar_failure">Немагчыма стварыць лакальны каляндар планавання</string>
     <string name="password_not_valid">Пароль няправільны. Паўтарыце!</string>
     <string name="payer">Плацельшчык</string>
     <string name="payer_or_payee">Кантрагент</string>
     <string name="plan">План</string>
-    <string name="plan_event_deleted">План, звязаны з гэтым шаблонам, быў выдалены з календара.</string>
     <string name="dialog_confirm_sync_link_remote">Лакальныя даныя гэтага акаўнта будуць выдалены.</string>
     <string name="warning_trial_limit_reached">Выпрабавальны перыяд для тэставай функцыі %s скончыўся.</string>
     <string name="dialog_confirm_sync_remove_backend">Аддалены бэкэнд %s будзе выдалены. Гэта не паўплывае на дадзеныя, якія захоўваюцца лакальна або аддалена, але стан сінхранізацыі будзе страчаны.</string>
@@ -436,7 +420,6 @@
     <string name="pref_enter_licence_title">Увесці ключ</string>
     <string name="pref_export_format_title">Фармат дадзеных</string>
     <string name="pref_import_summary">Імпартаваць транзакцыі, катэгорыі і ўдзельнікаў з файла %s</string>
-    <string name="pref_sort_order_next_instance">Наступны асобнік</string>
     <string name="crash_dialog_text">Адбылася нечаканая памылка, якая прымусіла прыкладанне спыніцца. Калі ласка, дапамажыце нам выправіць гэта, даслаўшы нам дадзеныя пра памылку, усё, што вам трэба зрабіць, гэта націснуць OK.</string>
     <plurals name="not_deletable_mapped_transactions">
         <item quantity="one">Выбраны аб\'ект звязаны з транзакцыяй і не можа быць выдалены.</item>
@@ -573,7 +556,6 @@
     <string name="menu_reopen">Пераадкрыць</string>
     <string name="content_description_closed">Зачынен</string>
     <string name="pref_category_exchange_rates">Абменныя курсы</string>
-    <string name="pref_plan_executor_time_title">Час апавяшчэння</string>
     <string name="menu_budget_allocated_only">Паказаць толькі катэгорыі з размеркаваннем</string>
     <string name="budget_filter_all_categories">Усе катэгорыі</string>
     <string name="budget_filter_all_parties">Усе ўдзельнікі</string>
@@ -594,7 +576,6 @@
     <string name="budget_date_end_after_start">Дата заканчэння бюджэту павінна быць пасля даты яго пачатку.</string>
     <string name="menu_create_budget">Новы бюджэт</string>
     <string name="licence_key">Ліцэнзійны ключ</string>
-    <string name="plan_custom_recurrence_info">Спачатку захавайце шаблон. Затым план адкрыецца ў дадатку календара, дзе вы зможаце наладзіць паўтарэнне.</string>
     <string name="menu_history_totals">Паказаць вынікі</string>
     <string name="licence_removal_information" tools:ignore="PluralsCandidate">Калі вам больш не патрэбныя прэміум-функцыяналы на гэтай прыладзе, вы можаце выдаліць ліцэнзійны ключ. Гэта вызваліць ключ для актывацыі на яшчэ адной прыладзе. Ключ можна актываваць на максімум %d прыладах.</string>
     <plurals name="delete_success">
@@ -668,7 +649,6 @@
     <string name="dialog_multi_tag_replace">Замяніць існуючыя тэгі новымі тэгамі</string>
     <string name="dialog_title_warning_delete_tag">Выдаліць тэг?</string>
     <string name="feature_downloaded">Функцыя %s была ўсталяваная.</string>
-    <string name="advance_exexcution_in_days">Датэрміновае выкананне (у днях)</string>
     <string name="bug_fixes" tools:ignore="UnusedResources">Выпраўленне памылак</string>
     <string name="debt_managment">Кіраванне доўгам</string>
     <string name="dialog_multi_tag">Усе выбраныя транзакцыі будуць пазначаны тэгам %s.</string>
@@ -708,7 +688,6 @@
     <string name="debt_paid_off_self">Я цалкам разлічыўся з абавязкам.</string>
     <string name="maximum_size">Максімальны памер</string>
     <string name="select_template">Выберыце шаблон</string>
-    <string name="orphaned_transaction_align_date">Пры жаданні дата транзакцыі таксама можа быць сінхранізаваная з датай экзэмпляра.</string>
     <string name="feature_download_requested">Функцыя %s запытана з Play Store.</string>
     <string name="pref_criterion_future_end_of_day">Канец дня</string>
     <string name="pref_category_title_features">Асаблівасці</string>
@@ -750,7 +729,6 @@
     <string name="pref_csv_export_split_amount_summary">Выкарыстоўвайце асобныя слупкі для даходаў і выдаткаў</string>
     <string name="icons_for_categories">Значкі для катэгорый</string>
     <string name="debt_installment_pay">Я аплачваю чарговы плацёж у памеры %s.</string>
-    <string name="orphaned_transaction_relink">Транзакцыю можна паўторна прывязаць да экзэмпляра падзеі на %s.</string>
     <string name="new_tag_hint">Увядзіце новы тэг</string>
     <string name="template_shortcut">Шаблон хуткага доступу</string>
     <string name="scan_result_no_amount">Сума не знойдзена</string>
@@ -763,25 +741,20 @@
     <string name="pref_planner_manual_time_noon">12 вечара (поўдзень)</string>
     <string name="warning_unencrypted_backup">Нягледзячы на тое, што вашы даныя абаронены ад несанкцыянаванага доступу на гэтай прыладзе, рэзервовыя копіі ствараюцца без шыфравання, калі вы не наладзіце %s.</string>
     <string name="warning_balance_account_delete">Калі вы працягнеце, усе ўзгодненыя аперацыі гэтага рахунку будуць выдаленыя з базы дадзеных, і вы не зможаце іх аднавіць.</string>
-    <string name="plan_automatic_without_amount_hint">План без сумы нельга захоўваць з аўтаматычным выкананнем плана</string>
-    <string name="content_description_edit_plan">Рэдагаваць план у дадатку \"Каляндар\"</string>
     <string name="request_for_invoice">Запыт на рахунак-фактуру</string>
     <string name="pref_debug_logging_share_summary">Падзяліцца файламі журнала</string>
     <string name="dialog_confirm_rollover_delete">Усе сумы пераводу за гэты перыяд будуць выдалены.</string>
     <string name="tesseract_download_confirmation">Вы хочаце спампаваць дадзеныя распазнавання тэксту для %s?</string>
     <string name="content_description_attachment">Далучаны файл</string>
-    <string name="pref_planner_manual_time_title">Час для ручнога прымянення запланаванай транзакцыі</string>
     <string name="pref_criterion_future_current">Цяперашні час</string>
     <string name="redesign">Рэдызайн</string>
     <string name="notifications_channel_required">Калі ласка, уключыце канал %s.</string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> патрабуе дазволу на адпраўку вам апавяшчэнняў, калі будуць дададзены новыя транзакцыі.</string>
     <string name="debt_balance_i_owe">Мой абавязак складае %s.</string>
-    <string name="orphaned_transaction_info">Транзакцыя звязана з планам на гэтую дату, але на гэтую дату не існуе экзэмпляра падзеі.</string>
     <string name="image_optimize_quality_summary">Якасць 0 азначае сцісканне для найменшага памеру. 100 азначае сцісканне для максімальнай візуальнай якасці.</string>
     <string name="debt_installment_receive">Я атрымліваю частку %s.</string>
     <string name="debt_paid_off_other">%s цалкам разьлічыўся з абавязкам.</string>
     <string name="stability_improvements" tools:ignore="UnusedResources">Паляпшэнне стабільнасці</string>
-    <string name="warning_plan_instance_delete">Транзакцыя, створаная для выбранай даты, будзе выдалена.</string>
     <string name="menu_new_debt">Новы доўг</string>
     <string name="pref_ocr_time_formats_title">Фарматы часу</string>
     <string name="budget_widget_configuration">Выберыце бюджэт</string>
@@ -809,7 +782,6 @@
     <string name="pref_ocr_total_indicators_summary">Спіс радкоў, якія вызначаюць агульную суму ў чэку. Кожную значэнне ўводзьце ў новым радку. Пакіньце поле пустым, каб аднавіць значэнне па змаўчанні.</string>
     <string name="new_balance">Новы баланс</string>
     <string name="single_feature_info">Акрамя таго, вы можаце набыць неабмежаваны доступ толькі да гэтай функцыі.</string>
-    <string name="recurrence_last_day_of_month">Апошні дзень</string>
     <string name="warning_link_transfer">Дзве выбраныя транзакцыі будуць звязаныя як перавод. Інфармацыя пра контрагента і катэгорыю будзе выдалена.</string>
     <string name="pref_acra_user_email_summary">Калі ласка, увядзіце свой адрас электроннай пошты, калі вы жадаеце дапамагчы з адладкай і дазволіць нам звязацца з вамі.</string>
     <string name="pref_copy_attachments_summary_on">Файлы скапіяваны ў тэчку праграмы.</string>
@@ -818,7 +790,6 @@
     <string name="warning_unarchive">Архіў будзе распакаваны. Усе транзакцыі, якія ў ім знаходзяцца, будуць зноў устаўлены ў спіс.</string>
     <string name="dialog_title_warning_delete_archive">Выдаліць архіў?</string>
     <string name="budget_import_none_found">Бюджэты не знойдзены.</string>
-    <string name="button_relink_keep_date">Змяніць спасылку, але захаваць дату</string>
     <string name="merge_categories_prompt">Выберыце катэгорыю, якую вы хочаце захаваць</string>
     <string name="remap_date">Для ўсіх выбраных транзакцый будзе ўсталявана дата %s.</string>
     <string name="pref_transaction_amount_color_source_title">Колеры для сум</string>
@@ -845,7 +816,6 @@
     <string name="balance_sheet_section_assets">Актывы</string>
     <string name="balance_sheet_section_liabilities">Пасівы</string>
     <string name="balance_sheet">Балансавая справаздача</string>
-    <string name="button_relink_update_date">Паўторная прывязка і дата абнаўлення</string>
     <string name="read_from_data">Чытаць даныя</string>
     <string name="pref_copy_attachments_title">Капіяваць укладанні ў тэчку прыкладання</string>
     <string name="pref_unmapped_transaction_as_transfer_summary_off">ўлічваюцца як выдаткі / даходы</string>
@@ -884,7 +854,6 @@
     <string name="show_duplicates">Паказаць дублікаты</string>
     <string name="pref_unmapped_transaction_as_transfer_title">Непрывязаныя транзакцыі</string>
     <string name="merge_categories_dialog_title">Аб\'яднаць катэгорыі</string>
-    <string name="plan_instance_state_applied">ужыты</string>
     <string name="one_time_payment">Разавы плацёж</string>
     <string name="widget_title_budget">Мой бюджэт</string>
     <string name="warning_nested_archives">Укладзеныя архівы не падтрымліваюцца.</string>

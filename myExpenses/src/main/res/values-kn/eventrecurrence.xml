@@ -14,83 +14,9 @@
  -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="does_not_repeat">"ಒಂದು ಬಾರಿ ಈವೆಂಟ್"</string>
-    <string name="endByDate">";<xliff:g id="DATE">%s</xliff:g> ವರೆಗೆ"</string>
-    <plurals name="endByCount">
-        <item quantity="one">"; ಒಂದು ಬಾರಿಗೆ"</item>
-        <item quantity="other">";  <xliff:g id="NUMBER">%d</xliff:g> ಬಾರಿಗೆ"</item>
-    </plurals>
-    <plurals name="daily">
-        <item quantity="one">"ಪ್ರತಿದಿನ"</item>
-        <item quantity="other">"ಪ್ರತಿ <xliff:g id="NUMBER">%d</xliff:g> ದಿನಗಳು"</item>
-    </plurals>
-    <string name="every_weekday">"ಪ್ರತಿ ವಾರದ ದಿನ (ಸೋಮ–ಶುಕ್ರವಾರ)"</string>
-    <plurals name="weekly">
-        <item quantity="one">"<xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g> ರಂದು ಪ್ರತಿ ವಾರ"</item>
-        <item quantity="other">"<xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g> ರಂದು ಪ್ರತಿ <xliff:g id="NUMBER">%1$d</xliff:g> ವಾರಗಳು"</item>
-    </plurals>
-    <plurals name="monthly">
-        <item quantity="one">ಮಾಸಿಕ</item>
-        <item quantity="other">"ಪ್ರತಿ <xliff:g id="COUNT">%d</xliff:g> ತಿಂಗಳು"</item>
-    </plurals>
-    <plurals name="yearly">
-        <item quantity="one">ವಾರ್ಷಿಕ</item>
-        <item quantity="other">"ಪ್ರತಿ <xliff:g id="COUNT">%d</xliff:g> ವರ್ಷಗಳು"</item>
-    </plurals>
     <string name="monthly_plain">"ಮಾಸಿಕ"</string>
     <string name="yearly_plain">"ವಾರ್ಷಿಕ"</string>
-    <string name="monthly_on_day">" (<xliff:g id="DAY_OF_MONTH">%s</xliff:g> ದಿನದಂದು)"</string>
-    <string name="yearly_on_day">" (<xliff:g id="DATES">%s</xliff:g> ರಂದು)"</string>
 
     <string name="daily_plain">ಪ್ರತಿದಿನ</string>
     <string name="weekly_plain">ರಂದು ಪ್ರತಿ ವಾರ</string>
-    <string-array name="repeat_by_nth_sun">
-        <item>"ಪ್ರತಿ ಮೊದಲ ಭಾನುವಾರ"</item>
-        <item>"ಪ್ರತಿ ಎರಡನೇ ಭಾನುವಾರ"</item>
-        <item>"ಪ್ರತಿ ಮೂರನೇ ಭಾನುವಾರ"</item>
-        <item>"ಪ್ರತಿ ನಾಲ್ಕನೇ ಭಾನುವಾರ"</item>
-        <item>"ಪ್ರತಿ ಕೊನೆಯ ಭಾನುವಾರ"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_mon">
-        <item>"ಪ್ರತಿ ಮೊದಲ ಸೋಮವಾರ"</item>
-        <item>"ಪ್ರತಿ ಎರಡನೇ ಸೋಮವಾರ"</item>
-        <item>"ಪ್ರತಿ ಮೂರನೇ ಸೋಮವಾರ"</item>
-        <item>"ಪ್ರತಿ ನಾಲ್ಕನೇ ಸೋಮವಾರ"</item>
-        <item>"ಪ್ರತಿ ಕೊನೆಯ ಸೋಮವಾರ"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_tues">
-        <item>"ಪ್ರತಿ ಮೊದಲ ಮಂಗಳವಾರ"</item>
-        <item>"ಪ್ರತಿ ಎರಡನೇ ಮಂಗಳವಾರ"</item>
-        <item>"ಪ್ರತಿ ಮೂರನೇ ಮಂಗಳವಾರ"</item>
-        <item>"ಪ್ರತಿ ನಾಲ್ಕನೇ ಮಂಗಳವಾರ"</item>
-        <item>"ಪ್ರತಿ ಕೊನೆಯ ಮಂಗಳವಾರ"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_wed">
-        <item>"ಪ್ರತಿ ಮೊದಲ ಬುಧವಾರ"</item>
-        <item>"ಪ್ರತಿ ಎರಡನೇ ಬುಧವಾರ"</item>
-        <item>"ಪ್ರತಿ ಮೂರನೇ ಬುಧವಾರ"</item>
-        <item>"ಪ್ರತಿ ನಾಲ್ಕನೇ ಬುಧವಾರ"</item>
-        <item>"ಪ್ರತಿ ಕೊನೆಯ ಬುಧವಾರ"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_thurs">
-        <item>"ಪ್ರತಿ ಮೊದಲ ಗುರುವಾರ"</item>
-        <item>"ಪ್ರತಿ ಎರಡನೇ ಗುರುವಾರ"</item>
-        <item>"ಪ್ರತಿ ಮೂರನೇ ಗುರುವಾರ"</item>
-        <item>"ಪ್ರತಿ ನಾಲ್ಕನೇ ಗುರುವಾರ"</item>
-        <item>"ಪ್ರತಿ ಕೊನೆಯ ಗುರುವಾರ"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_fri">
-        <item>"ಪ್ರತಿ ಮೊದಲ ಶುಕ್ರವಾರ"</item>
-        <item>"ಪ್ರತಿ ಎರಡನೇ ಶುಕ್ರವಾರ"</item>
-        <item>"ಪ್ರತಿ ಮೂರನೇ ಶುಕ್ರವಾರ"</item>
-        <item>"ಪ್ರತಿ ನಾಲ್ಕನೇ ಶುಕ್ರವಾರ"</item>
-        <item>"ಪ್ರತಿ ಕೊನೆಯ ಶುಕ್ರವಾರ"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_sat">
-        <item>"ಪ್ರತಿ ಮೊದಲ ಶನಿವಾರ"</item>
-        <item>"ಪ್ರತಿ ಎರಡನೇ ಶನಿವಾರ"</item>
-        <item>"ಪ್ರತಿ ಮೂರನೇ ಶನಿವಾರ"</item>
-        <item>"ಪ್ರತಿ ನಾಲ್ಕನೇ ಶನಿವಾರ"</item>
-        <item>"ಪ್ರತಿ ಕೊನೆಯ ಶನಿವಾರ"</item>
-    </string-array>
 </resources>

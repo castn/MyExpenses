@@ -22,7 +22,6 @@
     <string name="response_no">"いいえ"</string>
     <string name="experimental">"試験運用版"</string>
     <string name="add_widget">"ウィジェットを追加します"</string>
-    <string name="calendar">"カレンダー"</string>
     <string name="permissions_label">"権限"</string>
     <string name="time_format">"時刻の表示形式"</string>
     <string name="setup">"設定"</string>
@@ -63,8 +62,6 @@
     <string name="menu">"メニュー"</string>
     <string name="action_move_down">"下に移動します"</string>
     <string name="action_move_up">"上に移動します"</string>
-    <string name="calendar_delete">カレンダーの削除</string>
-    <string name="preferences_calendar_delete_message">本当にこのカレンダーを削除しますか?</string>
     <string name="default_camera_app_title">"カメラアプリ"</string>
     <string name="help_and_feedback">"ヘルプとフィードバック"</string>
     <string name="currencies_exchange">"通貨、為替"</string>

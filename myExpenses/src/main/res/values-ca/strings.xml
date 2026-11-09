@@ -86,11 +86,9 @@
     <string name="licence_validation_premium">S\'han afegit les característiques Premium.</string>
     <string name="menu_aggregates">Total</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">Aplica</string>
     <string name="menu_back">Torna</string>
     <string name="menu_backup">Còpia de seguretat</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">Anul·la</string>
     <string name="menu_clone_transaction">Clona</string>
     <string name="menu_contrib">Contribuïu</string>
     <string name="menu_create_account">Nou compte</string>
@@ -116,7 +114,6 @@
     <string name="menu_edit_cat">Modifica la categoria</string>
     <string name="menu_edit_method">Edita la forma de pagament</string>
     <string name="menu_edit_party">Modifica el tercer</string>
-    <string name="menu_edit_plan_instance">Edita aquest element de la planificació</string>
     <string name="menu_edit_split">Edita la transacció dividida</string>
     <string name="menu_edit_split_part_category">Edita la partició de la categoria</string>
     <string name="menu_edit_split_part_transfer">Modifica la partició de la transferència</string>
@@ -128,7 +125,6 @@
     <string name="menu_help">Ajuda</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">Inverteix</string>
-    <string name="menu_manage_plans">Plantilles i planificacions</string>
     <string name="menu_reset">Exporta i reinicia</string>
     <string name="menu_reset_all">Exporta i reinicia-ho tot</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -162,15 +158,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">Planificació</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">automàtic</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">Planificador {app_name}</string>
-    <string name="planner_notification_channel_name">Planificador</string>
-    <string name="plan_event_deleted">S\'ha suprimit la planificació del calendari associada amb aquesta plantilla.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">S\'ha anul·lat la planificació</string>
-    <string name="planner_create_calendar_failure">No ha estat possible generar l\'agenda de planificació local</string>
-    <string name="planner_create_calendar_success">L\'agenda  de planificació s\'ha generat correctament</string>
     <!-- payment methods -->
     <string name="pm_cheque">Xec</string>
     <string name="pm_creditcard">Targeta de crèdit</string>
@@ -201,8 +191,6 @@
     <string name="pref_password_not_equal">Les contrasenyes no coincideixen</string>
     <string name="pref_perform_share_title">Envia l\'exportació</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">Nova agenda de planificació local</string>
-    <string name="pref_planning_calendar_summary">Trieu el calendari per desar les planificacions d\'operacions futures i recurrents</string>
     <string name="pref_protection_delay_seconds_summary">Els segons d\'inactivitat que hauran de transcorre abans que l\'aplicació sigui blocada amb la contrasenya.</string>
     <string name="pref_protection_delay_seconds_title">Retard de la protecció</string>
     <string name="pref_qif_export_file_encoding_title">Codificació de caràcters</string>
@@ -313,7 +301,6 @@
     <string name="no_accounts">Sense comptes.</string>
     <string name="payer_or_payee">Contrapart</string>
     <string name="pref_protection_enable_data_entry_from_widget_summary_off">Cal contrasenya.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d projectes han estat restaurats de la còpia de seguretat</string>
     <string name="dialog_title_warning_delete_account">Eliminar compte?</string>
     <string name="dialog_command_disabled_insert_transfer">Les transaccions requereixen un segon compte.</string>
     <string name="dialog_contrib_usage_limit_split_templates">L\'estat actual de la vostra llicència (%1$s) permet crear 1 plantilla dividida.</string>
@@ -325,7 +312,6 @@
     <string name="menu_exclude_from_totals">Excloure dels totals</string>
     <string name="menu_split_transaction">Divideix</string>
     <string name="no_app_handling_mime_type_available">No hi ha cap aplicació que gestioni fitxers %s disponible.</string>
-    <string name="no_calendar_app_installed">No hi ha cap aplicació que editi esdeveniments al calendari disponible.</string>
     <string name="image_capture_not_installed">No hi ha cap aplicació per fotografiar disponible.</string>
     <string name="pref_app_dir_title">Carpeta per còpia de seguretat i exportar</string>
     <string name="pref_auto_fill_summary">Omplir amb dades de l\'última transacció del mateix beneficiari/pagador</string>
@@ -364,7 +350,6 @@
     <string name="mark_void_instead_of_delete">No eliminis la transacció, marca-la com a invàlida.</string>
     <string name="pref_grouping_periods">Períodes d\'agrupació</string>
     <string name="date_format_minute">Minut</string>
-    <string name="plan_instance_state_open">obert</string>
     <string name="content_description_calculator_delete_button">Elimina últim digit</string>
     <string name="crash_dialog_comment_prompt">Pot afegir comentaris sobre el problema aquí:</string>
     <string name="no_sync_backends">Sense serveis de sincronització</string>
@@ -376,7 +361,6 @@
     <string name="sync_io_error_cannot_connect">Impossible connectar amb la sincronització a sistema de servei.</string>
     <string name="synchronization_end_success_none">No hi ha canvis per sincronitzar.</string>
     <string name="contributed_by">Contribució de %s</string>
-    <string name="plan_custom_recurrence_info">Siuplau desi la plantilla. abans. S\'obrirà el projecte a l\'aplicació de calendari on podrà configurar una reaparició personalitzada.</string>
     <string name="button_validate">Valida</string>
     <string name="menu_history">Històric</string>
     <plurals name="warning_delete_transaction">
@@ -467,9 +451,7 @@
     <string name="date_format_hour">Hora</string>
     <string name="pref_sort_order_last_used">Últim ús</string>
     <string name="pref_sort_order_custom">Personalitzat</string>
-    <string name="plan_instance_state_cancelled">cancel·lat</string>
     <string name="warning_cannot_move_split_transaction">La transacció dividida no s\'ha pogut moure al compte %1$s atès que hi ha parts de la transferència referides a aquest compte.</string>
-    <string name="pref_sort_order_next_instance">Següent instància</string>
     <string name="menu_create_sync_backend">Nou servei de sincronització</string>
     <string name="menu_sync_link">Arrenca la sincronització</string>
     <string name="validate_error_not_empty">No pot quedar buit</string>
@@ -517,7 +499,6 @@
     <string name="pref_manage_stale_images_summary">Gestiona imatges sobrants de transaccions eleminades</string>
     <string name="dialog_export_applied_to_filter">Només les transaccions que coincideixen amb el filtre actual es tenen en compte.</string>
     <string name="folder_name">Nom de la carpeta</string>
-    <string name="plan_instance_state_applied">aplicat</string>
     <string name="pref_custom_decimal_format_summary">Si no us satisfà el format per defecte de la llengua, el podeu adaptar. Deixi en blanc per restaurar el format per defecte.</string>
     <string name="calendar_permission_required"><i>{app_name}</i> necessita permís per accedir al vostre calendari per tal de crear-hi projectes en un futur o bé transaccions recurrents.</string>
     <string name="preferences_month_start_date_title">El mes comença en</string>
@@ -630,7 +611,6 @@
     <string name="warning_synced_account_cannot_be_closed">Un compte vinculat a la sincronització al sistema de servei no es pot tancar</string>
     <string name="content_description_dates_are_linked">La data de reserva i la data valor s\'actualitzen conjuntament</string>
     <string name="content_description_dates_are_not_linked">La data de reserva i la data valor no s\'actualitzen conjuntament</string>
-    <string name="pref_plan_executor_time_title">Hora de notificació</string>
     <string name="menu_create_budget">Nou pressupost</string>
     <string name="remap_category">S\'assignaran a la categoria %s totes les transaccions seleccionades.</string>
     <string name="dialog_title_confirm_remap">Canviar assignació (%s) \?</string>
@@ -692,7 +672,6 @@
     <string name="pref_purge_backup_require_confirmation_summary">Mostra l\'indicador de confirmació abans de purgar els fitxers</string>
     <string name="pref_csv_export_split_categories_summary">Usa columnes separades per a cada nivell de jerarquia de categories</string>
     <string name="budget_only_current_period">Estableix només per a %s</string>
-    <string name="pref_planner_manual_time_title">Hora per a l\'operació planificada aplicada manualment</string>
     <string name="warning_link_transfer">Les dues operacions seleccionades s\'enllaçaran com a transferència. S\'eliminarà la informació del beneficiari/pagador i de la categoria.</string>
     <string name="object_sealed_debt">L\'objecte es refereix a un deute tancat.</string>
     <string name="cb_label_merge_accounts">Fusiona els comptes</string>
@@ -704,7 +683,6 @@
     <string name="encrypt_database">Encripta la base de dades</string>
     <string name="maximum_size">Mida màxima</string>
     <string name="request_for_invoice">Sol·licitud de factura</string>
-    <string name="button_relink_keep_date">Torna a enllaçar, però mantingues la data</string>
     <string name="pref_unmapped_transaction_as_transfer_summary_off">es comptabilitzen com a despesa / ingrés</string>
     <string name="pref_unmapped_transaction_as_transfer_summary_on">es comptabilitza com a transferència</string>
     <string name="pref_transaction_amount_color_source_title">Colors per quantitats</string>
@@ -723,7 +701,6 @@
     <string name="feature_downloaded">S\'ha instal·lat la característica %s.</string>
     <string name="scan_result_no_amount">No s\'ha trobat cap import</string>
     <string name="pref_csv_export_split_date_time_summary">Usa columnes separades per data i hora</string>
-    <string name="orphaned_transaction_align_date">Opcionalment, la data emmagatzemada amb l\'operació també es pot alinear amb la data d\'instància.</string>
     <string name="debt_I_owe">Dec %s</string>
     <string name="dialog_confirm_rollover_delete">S\'eliminaran tots els imports transferits per a aquest període.</string>
     <string name="scan_result_no_payee">No s\'ha trobat cap beneficiari</string>
@@ -751,12 +728,10 @@
     <string name="pref_criterion_futur_title">Criteri per a futures transaccions</string>
     <string name="pref_feature_uninstall_title">Sol·licita la desinstal·lació de característiques i idiomes</string>
     <string name="select_package">Seleccioneu un paquet de llicència.</string>
-    <string name="plan_automatic_without_amount_hint">El pla sense import no es desa amb l\'execució automàtica del pla</string>
     <string name="pref_tesseract_language_title">Idioma per al Tesseract</string>
     <string name="warning_balance_account_delete">Si continueu, totes les operacions conciliades d\'aquest compte s\'eliminaran de la base de dades i no podreu restaurar-les.</string>
     <string name="confirmation_load_template_discard_data">Es descartaran les dades de formulari existents.</string>
     <string name="account_widget_configuration">Configuració del giny del compte</string>
-    <string name="warning_plan_instance_delete">Se suprimirà l\'assentament creat per a la data seleccionada.</string>
     <string name="stability_improvements" tools:ignore="UnusedResources">Millores d\'estabilitat</string>
     <string name="pref_csv_export_split_amount_summary">Usa columnes separades per ingressos i despeses</string>
     <string name="debt_paid_off_other">El deute de %s s\'ha satisfet.</string>
@@ -765,7 +740,6 @@
     <string name="pref_copy_attachments_summary_off">Els fitxers no es copien, només s\'emmagatzema una referència.</string>
     <string name="merge_parties_select">Seleccioneu el nom del partit fusionat</string>
     <string name="performance_enhancement" tools:ignore="UnusedResources">Millora el rendiment</string>
-    <string name="orphaned_transaction_info">Una transacció està vinculada al pla per a aquesta data, però no existeix cap instància d\'esdeveniment en aquesta data.</string>
     <string name="pref_ocr_engine_title">Motor per al reconeixement de text</string>
     <string name="content_description_attachment">Adjunt</string>
     <string name="notifications_permission_required_auto_backup">En concedir el permís per enviar notificacions, se us informarà de les còpies de seguretat automàtiques.</string>
@@ -777,7 +751,6 @@
     <string name="button_scan">Escaneja</string>
     <string name="pref_ocr_total_indicators_summary">Una llista de cadenes, que identifiquen el valor total en un rebut. Poseu cada valor en una línia nova. Deixeu-lo buit per a restaurar el valor per defecte.</string>
     <string name="debts">Deutes</string>
-    <string name="button_relink_update_date">Torna a enllaçar i actualitza la data</string>
     <string name="pref_attachment_mime_types_title">Tipus MIME permesos per als adjunts</string>
     <string name="pref_copy_attachments_summary_on">Els fitxers es copien a la carpeta de l\'aplicació.</string>
     <string name="merge_categories_dialog_title">Fusiona categories</string>
@@ -786,14 +759,12 @@
     <string name="account_widget_configuration_sum">Tipus de suma mostrada</string>
     <string name="scan_result_no_date">No s\'ha trobat cap data</string>
     <string name="pref_feature_uninstall_summary">Play Store intenta eliminar eventualment els mòduls en segon pla.</string>
-    <string name="advance_exexcution_in_days">Execució anticipada (en dies)</string>
     <string name="tesseract_download_confirmation">Voleu baixar les dades de reconeixement de text per a %s?</string>
     <string name="ocr_download_info">La capacitat de reconeixement de text ve proporcionada per una aplicació externa.</string>
     <string name="button_label_clone_and_remap">Clona i reassigna</string>
     <string name="dialog_title_warning_delete_tag">Eliminar etiqueta?</string>
     <string name="menu_edit_tag">Edita l\'etiqueta</string>
     <string name="pref_criterion_future_end_of_day">Fi de la jornada</string>
-    <string name="content_description_edit_plan">Edita el pla a l\'aplicació de calendari</string>
     <string name="merge_parties_strategy_group">Els duplicats estan agrupats com a dependents.</string>
     <string name="single_feature_info">Alternativament, podeu comprar accés il·limitat només a aquesta característica.</string>
     <string name="active_tags">Etiquetes actives</string>
@@ -810,7 +781,6 @@
     <string name="pref_backup_file_prefix_title">Prefix del fitxer</string>
     <string name="template_shortcut">Drecera a la plantilla</string>
     <string name="select_template">Seleccioneu una plantilla</string>
-    <string name="orphaned_transaction_relink">La transacció es pot tornar a enllaçar amb la instància de l\'esdeveniment a %s.</string>
     <string name="merge_parties_strategy_delete">S\'eliminen els duplicats.</string>
     <string name="show_duplicates">Mostra els duplicats</string>
     <string name="pref_copy_attachments_title">Copia els adjunts a la carpeta de l\'aplicació</string>
@@ -836,7 +806,6 @@
     <string name="ocr_recognition_info">S\'està executant el reconeixement de text amb %s</string>
     <string name="warning_unencrypted_backup">Tot i que les vostres dades estan protegides d\'accés no autoritzat en aquest dispositiu, les còpies de seguretat es creen sense encriptació, llevat que configureu %s.</string>
     <string name="pref_group_header_show_details_summary">Mostra les sumes de detall a la capçalera del grup</string>
-    <string name="recurrence_last_day_of_month">Últim dia</string>
     <string name="archive">Arxiu</string>
     <string name="quick_search">Cerca ràpida</string>
     <string name="complex_search">Cerca complexa</string>

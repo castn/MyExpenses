@@ -15,83 +15,9 @@
  -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="does_not_repeat">"單次活動"</string>
-  <string name="endByDate">"；直到 <xliff:g id="DATE">%s</xliff:g>"</string>
-  <plurals name="endByCount">
-    <item quantity="one">"；1 次"</item>
-    <item quantity="other">"；<xliff:g id="NUMBER">%d</xliff:g> 次"</item>
-  </plurals>
-  <plurals name="daily">
-    <item quantity="one">"每天"</item>
-    <item quantity="other">"每 <xliff:g id="NUMBER">%d</xliff:g> 天"</item>
-  </plurals>
-  <string name="every_weekday">"平日 (週一至週五)"</string>
-  <plurals name="weekly">
-    <item quantity="one">"每週 (每<xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>)"</item>
-    <item quantity="other">"每 <xliff:g id="NUMBER">%1$d</xliff:g> 週 (每<xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>)"</item>
-  </plurals>
-  <plurals name="monthly">
-    <item quantity="one">每月</item>
-    <item quantity="other">每 <xliff:g id="COUNT">%d</xliff:g> 個月</item>
-  </plurals>
-  <plurals name="yearly">
-    <item quantity="one">每年</item>
-    <item quantity="other">每 <xliff:g id="COUNT">%d</xliff:g> 年</item>
-  </plurals>
   <string name="monthly_plain">"每月"</string>
-  <string name="monthly_on_day">" (<xliff:g id="DAY_OF_MONTH">%s</xliff:g> 日)"</string>
-  <string name="yearly_on_day">" (<xliff:g id="DATES">%s</xliff:g>)"</string>
   <string name="yearly_plain">每年</string>
   <string name="daily_plain">每天</string>
   <string name="weekly_plain">每週</string>
 
-  <string-array name="repeat_by_nth_sun">
-    <item>"每月第一個週日"</item>
-    <item>"每月第二個週日"</item>
-    <item>"每月第三個週日"</item>
-    <item>"每月第四個週日"</item>
-    <item>"每月最後一個週日"</item>
-  </string-array>
-  <string-array name="repeat_by_nth_mon">
-    <item>"每月第一個週一"</item>
-    <item>"每月第二個週一"</item>
-    <item>"每月第三個週一"</item>
-    <item>"每月第四個週一"</item>
-    <item>"每月最後一個週一"</item>
-  </string-array>
-  <string-array name="repeat_by_nth_tues">
-    <item>"每月第一個週二"</item>
-    <item>"每月第二個週二"</item>
-    <item>"每月第三個週二"</item>
-    <item>"每月第四個週二"</item>
-    <item>"每月最後一個週二"</item>
-  </string-array>
-  <string-array name="repeat_by_nth_wed">
-    <item>"每月第一個週三"</item>
-    <item>"每月第二個週三"</item>
-    <item>"每月第三個週三"</item>
-    <item>"每月第四個週三"</item>
-    <item>"每月最後一個週三"</item>
-  </string-array>
-  <string-array name="repeat_by_nth_thurs">
-    <item>"每月第一個週四"</item>
-    <item>"每月第二個週四"</item>
-    <item>"每月第三個週四"</item>
-    <item>"每月第四個週四"</item>
-    <item>"每月最後一個週四"</item>
-  </string-array>
-  <string-array name="repeat_by_nth_fri">
-    <item>"每月第一個週五"</item>
-    <item>"每月第二個週五"</item>
-    <item>"每月第三個週五"</item>
-    <item>"每月第四個週五"</item>
-    <item>"每月最後一個週五"</item>
-  </string-array>
-  <string-array name="repeat_by_nth_sat">
-    <item>"每月第一個週六"</item>
-    <item>"每月第二個週六"</item>
-    <item>"每月第三個週六"</item>
-    <item>"每月第四個週六"</item>
-    <item>"每月最後一個週六"</item>
-  </string-array>
 </resources>

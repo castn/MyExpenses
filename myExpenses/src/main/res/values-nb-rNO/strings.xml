@@ -55,9 +55,6 @@
     <string name="synchronization_none">Ingen synkronisering</string>
     <string name="synchronization">Synkronisering</string>
     <string name="content_description_calculator_delete_button">Slett siste siffer</string>
-    <string name="plan_instance_state_applied">anvendt</string>
-    <string name="plan_instance_state_cancelled">avbrutt</string>
-    <string name="plan_instance_state_open">åpen</string>
     <string name="content_description_calculator">Kalkulator</string>
     <string name="pref_sort_order_custom">Egendefinert</string>
     <string name="pref_sort_order_last_used">Sist brukt</string>
@@ -161,7 +158,6 @@
     <string name="pm_type_neutral">Nøytral</string>
     <string name="pm_type_debit">Debet</string>
     <string name="pm_cheque">Sjekk</string>
-    <string name="plan_automatic">automatisk</string>
     <string name="plan">Plan</string>
     <string name="password_security_answer_not_valid">Feil svar. Prøv igjen.</string>
     <string name="password_prompt">Skriv inn passordet ditt</string>
@@ -182,7 +178,6 @@
     <string name="menu_reset_plan_instance">Tilbakestill</string>
     <string name="menu_reset_all">Eksporter og tilbakestill alt</string>
     <string name="menu_reset">Eksporter og tilbakestill</string>
-    <string name="menu_manage_plans">Maler og planer</string>
     <string name="menu_invert_transfer">Inverter</string>
     <string name="menu_help">Hjelp</string>
     <string name="menu_grouping">Gruppering</string>
@@ -203,9 +198,7 @@
     <string name="menu_create_account">Ny konto</string>
     <string name="menu_contrib">Bidra</string>
     <string name="menu_clone_transaction">Klon</string>
-    <string name="menu_cancel_plan_instance">Avbryt</string>
     <string name="menu_back">Tilbake</string>
-    <string name="menu_apply_template">Bruk</string>
     <string name="licence_validation_failure">Kunne ikke bekrefte lisensnøkkel.</string>
     <string name="label">Etikett</string>
     <string name="income">Inntekt</string>

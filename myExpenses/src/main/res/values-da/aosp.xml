@@ -22,7 +22,6 @@
     <string name="response_no">"Nej"</string>
     <string name="experimental">"Eksperimenterende"</string>
     <string name="add_widget">"Tilføj widget."</string>
-    <string name="calendar">"Kalender"</string>
     <string name="permissions_label">"Tilladelser"</string>
     <string name="time_format">"Tidsformat"</string>
     <string name="setup">"Konfiguration"</string>
@@ -64,8 +63,6 @@
     <string name="menu">"Menu"</string>
     <string name="action_move_down">"Flyt ned"</string>
     <string name="action_move_up">"Flyt op"</string>
-    <string name="calendar_delete">Slet kalender</string>
-    <string name="preferences_calendar_delete_message">Sikker på, at du vil slette denne kalender?</string>
     <string name="default_camera_app_title">"Kameraapp"</string>
     <string name="help_and_feedback">"Hjælp og feedback"</string>
     <string name="currencies_exchange">"Valutaer og valutakurser"</string>

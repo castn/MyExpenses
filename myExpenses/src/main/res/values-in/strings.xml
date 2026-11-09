@@ -62,9 +62,6 @@
     <string name="export_to_format">Ekspor ke %s</string>
     <string name="pref_custom_decimal_format_title">Format angka</string>
     <string name="dialog_title_select_target">Pilih tujuan</string>
-    <string name="plan_instance_state_applied">diterapkan</string>
-    <string name="plan_instance_state_cancelled">dibatalkan</string>
-    <string name="plan_instance_state_open">terbuka</string>
     <string name="content_description_calculator">Kalkulator</string>
     <string name="pref_sort_order_custom">Kustom</string>
     <string name="pref_sort_order_last_used">Terakhir digunakan</string>
@@ -181,7 +178,6 @@
     <string name="licence_validation_success">Kunci lisensi berhasil divalidasi:</string>
     <string name="menu_balance">Saldo akun</string>
     <string name="menu_backup">Cadangan</string>
-    <string name="menu_cancel_plan_instance">Batal</string>
     <string name="menu_clone_transaction">Klon</string>
     <string name="dialog_contrib_trial_info_play">Uji coba gratis ini tidak akan pernah berubah menjadi jenis langganan apa pun.</string>
     <string name="menu_create_main_cat">Kategori utama baru</string>
@@ -189,7 +185,6 @@
     <string name="dialog_contrib_trial_info" tools:ignore="PluralsCandidate">Status lisensi Anda saat ini (%1$s) memungkinkan Anda mencoba %2$s selama %3$d hari (hingga %4$s).</string>
     <string name="menu_create_account">Akun baru</string>
     <string name="menu_create_instance_edit">Terapkan dan edit</string>
-    <string name="menu_apply_template">Terapkan</string>
     <string name="menu_contrib">Berkontribusi</string>
     <string name="menu_create_instance_save">Terapkan dan simpan</string>
     <string name="label">Label</string>
@@ -214,7 +209,6 @@
     <string name="menu_edit">Edit</string>
     <string name="menu_edit_account">Edit Akun</string>
     <string name="menu_edit_method">Edit metode pembayaran</string>
-    <string name="menu_edit_plan_instance">Edit satu kejadian rencana</string>
     <string name="account_type_investment">Investasi</string>
     <string name="menu_edit_split">Edit transaksi pembagian</string>
     <string name="menu_edit_split_part_category">Edit pembagian kategori</string>
@@ -227,7 +221,6 @@
     <string name="menu_grouping">Pengelompokan</string>
     <string name="menu_help">Bantuan</string>
     <string name="menu_invert_transfer">Balikkan</string>
-    <string name="menu_manage_plans">Templat dan rencana</string>
     <string name="menu_reset">Ekspor dan reset</string>
     <string name="menu_reset_all">Ekspor dan reset semua</string>
     <string name="menu_reset_plan_instance">Reset</string>
@@ -243,7 +236,6 @@
     <string name="no_expenses">Belum Ada Pengeluaran!</string>
     <string name="no_exportable_expenses">Tidak ada transaksi yang belum diekspor.</string>
     <string name="no_filemanager_installed">Tidak ada pengelola file yang terpasang</string>
-    <string name="no_calendar_app_installed">Tidak ditemukan aplikasi untuk mengedit acara kalender.</string>
     <string name="image_capture_not_installed">Tidak ditemukan aplikasi untuk mengambil gambar.</string>
     <string name="no_mapped_transactions">Tidak ada transaksi yang telah dipetakan ke kategori selama periode ini.</string>
     <string name="no_methods">Tidak ada metode pembayaran.</string>
@@ -270,13 +262,7 @@
     <string name="payer">Pembayar</string>
     <string name="payer_or_payee">Pihak lawan</string>
     <string name="plan">Rencana</string>
-    <string name="plan_automatic">otomatis</string>
     <string name="plan_calendar_name">Perencana {app_name}</string>
-    <string name="planner_notification_channel_name">Perencana</string>
-    <string name="plan_event_deleted">Rencana yang terkait dengan templat ini telah dihapus dari kalender.</string>
-    <string name="plan_execution_canceled">Eksekusi rencana dibatalkan</string>
-    <string name="planner_create_calendar_failure">Tidak dapat membuat kalender perencana lokal</string>
-    <string name="planner_create_calendar_success">Kalender perencana lokal berhasil dibuat</string>
     <string name="pm_cheque">Cek</string>
     <string name="pm_creditcard">Kartu kredit</string>
     <string name="pm_deposit">Setoran</string>
@@ -312,8 +298,6 @@
     <string name="pref_more_info_dialog_title">Lisensi &amp; Kredit</string>
     <string name="pref_password_not_equal">Kata sandi tidak cocok</string>
     <string name="pref_perform_share_title">Bagikan ekspor dan cadangan</string>
-    <string name="pref_planning_calendar_create_local">Buat kalender perencanaan lokal baru</string>
-    <string name="pref_planning_calendar_summary">Pilih kalender tempat rencana untuk transaksi masa depan dan berulang disimpan</string>
     <string name="pref_protection_delay_seconds_summary">Detik diam sebelum aplikasi dikunci dengan kata sandi.</string>
     <string name="pref_protection_delay_seconds_title">Penundaan hingga perlindungan aktif</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">Entri data dari widget dan pintasan</string>
@@ -344,7 +328,6 @@
     <string name="restore_preferences_failure">Pemulihan preferensi gagal</string>
     <string name="restore_backup_file_not_found">File %1$s tidak ditemukan dalam arsip \"%2$s\"</string>
     <string name="restore_preferences_success">Preferensi telah dipulihkan dari cadangan.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d rencana telah dipulihkan dari cadangan</string>
     <string name="save_transaction_and_new_success">Berhasil disimpan</string>
     <string name="save_transaction_error">Tidak dapat menyimpan transaksi baru dari templat.</string>
     <plurals name="save_transaction_from_template_success">
@@ -480,7 +463,6 @@
     <string name="warning_cannot_move_split_transaction">Transaksi pembagian ini tidak dapat dipindahkan ke akun %1$s karena ada bagian transfer yang merujuk ke akun ini.</string>
     <string name="paypal_callback_info">Transaksi Anda telah selesai, dan tanda terima untuk pembelian Anda telah dikirim melalui email. Anda dapat masuk ke akun Anda di [www.paypal.com](https://www.paypal.com) untuk melihat detail transaksi ini.</string>
     <string name="search_account">Cari akun</string>
-    <string name="pref_sort_order_next_instance">Instans berikutnya</string>
     <string name="crash_dialog_title">{app_name} mengalami crash</string>
     <string name="crash_dialog_text">Terjadi kesalahan tak terduga yang memaksa aplikasi berhenti. Tolong bantu kami memperbaikinya dengan mengirimkan data kesalahan; yang perlu Anda lakukan hanyalah mengeklik OK.</string>
     <string name="crash_dialog_comment_prompt">Anda dapat menambahkan komentar Anda tentang masalah di bawah ini:</string>
@@ -526,7 +508,6 @@
     <string name="sync_state_could_not_be_restored" tools:ignore="PluralsCandidate">Status sinkronisasi tidak dapat dipulihkan untuk %d akun.</string>
     <string name="onboarding_ui_title">{app_name} menyesuaikan dengan preferensi Anda</string>
     <string name="pref_debug_logging_summary">Tulis informasi debug ke log sistem</string>
-    <string name="plan_custom_recurrence_info">Harap simpan templat terlebih dahulu. Rencana kemudian akan dibuka di aplikasi kalender, tempat Anda dapat menetapkan pengulangan kustom.</string>
     <string name="menu_create_template_for_split">Templat pembagian baru</string>
     <string name="progress_validating_licence">Memvalidasi lisensi</string>
     <string name="licence_validation_error_device_limit_exceeded">Batas perangkat terlampaui. Harap hapus lisensi dari perangkat lain.</string>
@@ -638,7 +619,6 @@
     <string name="pref_exchange_rate_provider_summary">Pilih penyedia untuk mengunduh nilai tukar</string>
     <string name="pref_exchange_rate_provider_title">Penyedia Nilai Tukar</string>
     <string name="pref_exchange_rates_api_key_summary">Harap daftarkan akun gratis di %s dan berikan App ID Anda</string>
-    <string name="pref_plan_executor_time_title">Waktu notifikasi</string>
     <string name="synchronization_select_folder_dialog_title">Pilih folder yang ada atau buat yang baru</string>
     <string name="discover_feature_expense_income_switch" tools:ignore="UnusedResources">Gunakan tombol sakelar ini untuk mencatat pemasukan.</string>
     <string name="menu_create_budget">Anggaran baru</string>
@@ -683,16 +663,12 @@
     <string name="dialog_multi_tag_replace">Ganti tag yang sudah ada dengan tag baru</string>
     <string name="new_tag_hint">Masukkan tag baru</string>
     <string name="language_download_requested">Terjemahan untuk bahasa %s diminta dari Play Store</string>
-    <string name="pref_planner_manual_time_title">Waktu untuk transaksi terjadwal yang diterapkan secara manual</string>
     <string name="pref_ocr_total_indicators_summary">Daftar string yang mengidentifikasi nilai total pada struk. Letakkan setiap nilai pada baris baru. Biarkan kosong untuk memulihkan nilai bawaan.</string>
     <string name="pref_feature_uninstall_summary">Play Store akan mencoba menghapus modul-modul tersebut di latar belakang.</string>
-    <string name="advance_exexcution_in_days">Pelaksanaan lebih awal (dalam hari)</string>
     <string name="warning_balance_account_delete">Jika Anda melanjutkan, semua transaksi yang telah direkonsiliasi dari akun ini akan dihapus dari database dan Anda tidak akan dapat memulihkannya.</string>
     <string name="confirmation_load_template_discard_data">Data formulir yang ada akan dibuang.</string>
     <string name="pref_clone_with_current_date_title">Tanggal transaksi hasil kloning</string>
     <string name="template_default_action_without_amount_hint">Templat tanpa jumlah harus disimpan dengan tindakan bawaan \'Edit\'</string>
-    <string name="plan_automatic_without_amount_hint">Rencana tanpa jumlah tidak boleh disimpan dengan eksekusi rencana otomatis</string>
-    <string name="content_description_edit_plan">Edit rencana di aplikasi kalender</string>
     <string name="menu_save_and_new_content_description">Simpan data, biarkan formulir tetap terbuka untuk membuat transaksi baru dengan data yang sama.</string>
     <string name="pref_ocr_engine_title">Mesin untuk pengenalan teks</string>
     <string name="tesseract_download_confirmation">Apakah Anda ingin mengunduh data pengenalan teks untuk %s?</string>
@@ -701,7 +677,6 @@
     <string name="pref_group_header_show_details_summary">Tampilkan jumlah detail di header grup</string>
     <string name="new_balance">Saldo baru</string>
     <string name="single_feature_info">Sebagai alternatif, Anda dapat membeli akses tanpa batas hanya untuk fitur ini.</string>
-    <string name="recurrence_last_day_of_month">Hari terakhir</string>
     <string name="warning_link_transfer">Dua transaksi yang dipilih akan ditautkan sebagai transfer. Informasi pihak lawan dan kategori akan dihapus.</string>
     <string name="account_widget_configuration_sum">Jenis jumlah yang ditampilkan</string>
     <string name="account_widget_configuration_sum_total">Sertakan transaksi masa depan</string>
@@ -711,7 +686,6 @@
     <string name="active_tags">Tag Aktif</string>
     <string name="request_for_invoice">Permintaan Faktur</string>
     <string name="auto_fill_focus">Atur Fokus pada Penerima Pembayaran</string>
-    <string name="warning_plan_instance_delete">Transaksi yang dibuat untuk tanggal yang dipilih akan dihapus.</string>
     <string name="crash_reports_user_info">{app_name} akan mengirim laporan tentang crash aplikasi secara otomatis kepada pengembangnya, yang memungkinkan mereka memperbaiki masalah dengan lebih cepat.</string>
     <string name="pref_enable_acra">Izinkan pengiriman otomatis laporan crash</string>
     <string name="pref_acra_user_email">Email pengguna yang akan disertakan dalam laporan crash</string>
@@ -756,11 +730,6 @@
     <string name="template_shortcut">Pintasan templat</string>
     <string name="select_template">Pilih templat</string>
     <string name="add_shortcut">Tambahkan Pintasan</string>
-    <string name="orphaned_transaction_info">Sebuah transaksi ditautkan ke rencana untuk tanggal ini, tetapi tidak ada instans acara pada tanggal ini.</string>
-    <string name="orphaned_transaction_relink">Transaksi dapat ditautkan kembali dengan instans acara pada %s.</string>
-    <string name="orphaned_transaction_align_date">Secara opsional, tanggal yang disimpan pada transaksi juga dapat diselaraskan dengan tanggal instans.</string>
-    <string name="button_relink_keep_date">Tautkan kembali, tetapi pertahankan tanggal</string>
-    <string name="button_relink_update_date">Tautkan kembali dan perbarui tanggal</string>
     <string name="read_from_data">Baca dari data</string>
     <string name="merge_parties_strategy_delete">Duplikat dihapus.</string>
     <string name="merge_parties_strategy_group">Duplikat dikelompokkan sebagai dependensi.</string>

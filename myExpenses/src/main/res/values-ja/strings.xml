@@ -107,13 +107,11 @@
     <string name="licence_validation_premium">プレミアムの機能はロック解除されています。</string>
     <string name="menu_aggregates">合計</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">適用</string>
     <string name="menu_back">戻る</string>
     <string name="menu_backup">バックアップ</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">口座決算</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">キャンセル</string>
     <string name="menu_clone_transaction">複製</string>
     <string name="menu_contrib">貢献</string>
     <string name="menu_create_account">新しい勘定</string>
@@ -139,7 +137,6 @@
     <string name="menu_edit_cat">分類を編集</string>
     <string name="menu_edit_method">支払方法を編集</string>
     <string name="menu_edit_party">取引先を編集</string>
-    <string name="menu_edit_plan_instance">単一計画発生を編集</string>
     <string name="menu_edit_split">分割取引を編集</string>
     <string name="menu_edit_split_part_category">分類分割パートを編集</string>
     <string name="menu_edit_split_part_transfer">振替分割パートを編集</string>
@@ -152,7 +149,6 @@
     <string name="menu_help">ヘルプ</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">反転</string>
-    <string name="menu_manage_plans">テンプレートと計画</string>
     <string name="menu_reset">エクスポートおよびリセット</string>
     <string name="menu_reset_all">エクスポートおよびすべてリセット</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -169,7 +165,6 @@
     <string name="no_expenses">まだ支出がありません!</string>
     <string name="no_exportable_expenses">まだエクスポートしていない取引はありません。</string>
     <string name="no_filemanager_installed">ファイルマネージャーがインストールされていません</string>
-    <string name="no_calendar_app_installed">カレンダーのイベントを編集するアプリが見つかりません。</string>
     <string name="no_mapped_transactions">この期間に、分類に配置する取引はありません。</string>
     <string name="no_methods">支払方法がありません。</string>
     <string name="no_parties">取引先がありません。</string>
@@ -197,15 +192,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">計画</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">自動</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">{app_name} プランナー</string>
-    <string name="planner_notification_channel_name">プランナー</string>
-    <string name="plan_event_deleted">このテンプレートに関連付けられた計画は予定表から削除されました。</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">計画の実行がキャンセルされました</string>
-    <string name="planner_create_calendar_failure">ローカル プランナー カレンダーを作成できません</string>
-    <string name="planner_create_calendar_success">ローカル プランナー カレンダーが正常に作成されました</string>
     <!-- payment methods -->
     <string name="pm_cheque">小切手/手形</string>
     <string name="pm_creditcard">クレジットカード</string>
@@ -245,8 +234,6 @@
     <string name="pref_password_not_equal">パスワードが一致しません</string>
     <string name="pref_perform_share_title">エクスポートとバックアップを共有</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">新しいローカル プランニング カレンダーを作成</string>
-    <string name="pref_planning_calendar_summary">将来の計画および繰り返しの取引が保存されるカレンダーを選択します。</string>
     <string name="pref_protection_delay_seconds_summary">アプリをパスワードでロックするまでの、アイドル秒数。</string>
     <string name="pref_protection_delay_seconds_title">保護までの遅延時間</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">ウィジェットやショートカットからのデータエントリー</string>
@@ -278,7 +265,6 @@
     <string name="restore_preferences_failure">プリファレンスの復元に失敗しました。</string>
     <string name="restore_backup_file_not_found">アーカイブ \"%2$s\" に、ファイル %1$s が見つかりません</string>
     <string name="restore_preferences_success">バックアップからプリファレンスが復元されました。</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d の計画がバックアップから復元されました</string>
     <string name="save_transaction_and_new_success">正常に保存されました。</string>
     <string name="save_transaction_error">テンプレートから新しい取引を保存することができません。</string>
     <plurals name="save_transaction_from_template_success">
@@ -427,17 +413,13 @@
     <string name="pref_sort_order_custom">カスタム</string>
     <string name="content_description_calculator">電卓</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">未適用</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">キャンセル</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">適用済</string>
     <string name="warning_cannot_move_split_transaction">この分割取引は、この勘定を参照する振替パートがあるため、勘定 %1$s に移動できません。</string>
     <string name="content_description_calculator_delete_button">最後の数字を削除</string>
     <string name="paypal_callback_info">取引は完了しました。ご購入の領収書をメールで送信しました。www.paypal.com にあなたのアカウントでログインして、この取引の詳細を表示することができます。</string>
     <string name="search_transfer">振替の検索</string>
     <!-- Sort plans (recurring transactions) by the next instance  -->
-    <string name="pref_sort_order_next_instance">次のインスタンス</string>
     <string name="crash_dialog_title">{app_name} がクラッシュしました</string>
     <string name="crash_dialog_text">予期しないエラーが発生しました。アプリケーションを強制的に停止します。私たちにエラーデータを送信して、この問題の解決を助けてください。あなたがする必要があるのは OK をクリックするだけです。</string>
     <string name="crash_dialog_comment_prompt">以下に問題についてのコメントを追加できます:</string>
@@ -494,7 +476,6 @@
     <string name="contributed_by">貢献者 %s</string>
     <string name="pref_sync_notification_summary">同期の進行状況を通知する</string>
     <string name="pref_debug_logging_summary">システムログにデバッグ情報を書き込む</string>
-    <string name="plan_custom_recurrence_info">まずテンプレートを保存してください。 予定はその後カレンダーアプリで開かれ、カスタムの繰り返しを設定できます。</string>
     <string name="menu_create_template_for_split">新しい分割テンプレート</string>
     <string name="progress_validating_licence">ライセンスの検証中</string>
     <string name="licence_validation_error_expired">ライセンスの期限が切れました</string>
@@ -629,7 +610,6 @@
     <string name="pref_exchange_rate_provider_summary">為替レートをダウンロードするプロバイダーを選択</string>
     <string name="pref_exchange_rate_provider_title">為替レートプロバイダー</string>
     <string name="pref_exchange_rates_api_key_summary">%sで無料アカウントを登録して、アプリIDを入力してください</string>
-    <string name="pref_plan_executor_time_title">通知時刻</string>
     <string name="synchronization_select_folder_dialog_title">既存のフォルダーを選択するか新しく作成</string>
     <!-- This message is shwon when we highlight the income / expense toogle, to make user aware of this feature  -->
     <string name="discover_feature_expense_income_switch">この切り替えボタンを使用して収入を記録します。</string>
@@ -682,7 +662,6 @@
     <string name="new_tag_hint">新しいタグを入力</string>
     <string name="language_download_requested">言語 %s の翻訳が Play ストアからリクエストされました</string>
     <!-- Title for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
-    <string name="pref_planner_manual_time_title">手動で適用する、予定された取引の時間</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
     <string name="pref_planner_manual_time_noon">12 PM (正午)</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction (current time at moment of application) -->

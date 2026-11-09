@@ -21,7 +21,6 @@
     <string name="response_no">"Non"</string>
     <string name="experimental">"Expérimental"</string>
     <string name="add_widget">"Ajouter un widget"</string>
-    <string name="calendar">"Agenda"</string>
     <string name="permissions_label">"Autorisations"</string>
     <string name="time_format">"Format de l\'heure"</string>
     <string name="setup">"Configurer"</string>
@@ -64,8 +63,6 @@
     <string name="menu">"Menu"</string>
     <string name="action_move_down">"Déplacer vers le bas"</string>
     <string name="action_move_up">"Déplacer vers haut"</string>
-    <string name="calendar_delete">Supprimer le calendrier</string>
-    <string name="preferences_calendar_delete_message">Voulez-vous vraiment supprimer ce compteur ?</string>
     <string name="default_camera_app_title">"Appli d'appareil photo"</string>
     <string name="help_and_feedback">"Aide et commentaires"</string>
     <string name="currencies_exchange">"Change et devises"</string>

@@ -14,83 +14,9 @@
  -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="does_not_repeat">"Eveniment unic"</string>
-    <string name="endByDate">"; până la <xliff:g id="DATE">%s</xliff:g>"</string>
-    <plurals name="endByCount">
-        <item quantity="one">"; o dată"</item>
-        <item quantity="other">"; de <xliff:g id="NUMBER">%d</xliff:g> ori"</item>
-    </plurals>
-    <plurals name="daily">
-        <item quantity="one">"Zilnic"</item>
-        <item quantity="other">"O dată la <xliff:g id="NUMBER">%d</xliff:g> zile"</item>
-    </plurals>
-    <string name="every_weekday">"În fiecare zi lucrătoare (Luni – Vineri)"</string>
-    <plurals name="weekly">
-        <item quantity="one">"Săptămânal, <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>"</item>
-        <item quantity="other">"La fiecare <xliff:g id="NUMBER">%1$d</xliff:g> săpt., <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>"</item>
-    </plurals>
-    <plurals name="monthly">
-        <item quantity="one">Lunar</item>
-        <item quantity="other">O dată la <xliff:g id="COUNT">%d</xliff:g> luni</item>
-    </plurals>
-    <plurals name="yearly">
-        <item quantity="one">Anual</item>
-        <item quantity="other">O dată la <xliff:g id="COUNT">%d</xliff:g> ani</item>
-    </plurals>
     <string name="monthly_plain">"Lunar"</string>
-    <string name="monthly_on_day">" (în zile de <xliff:g id="DAY_OF_MONTH">%s</xliff:g>)"</string>
-    <string name="yearly_on_day">" (pe <xliff:g id="DATES">%s</xliff:g>)"</string>
     <string name="yearly_plain">Anual</string>
     <string name="daily_plain">Zilnic</string>
     <string name="weekly_plain">Săptămânal</string>
 
-    <string-array name="repeat_by_nth_sun">
-        <item>"în prima duminică din lună"</item>
-        <item>"în a doua duminică din lună"</item>
-        <item>"în a treia duminică din lună"</item>
-        <item>"în a patra duminică din lună"</item>
-        <item>"în ultima duminică din lună"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_mon">
-        <item>"în prima luni din lună"</item>
-        <item>"în a doua luni din lună"</item>
-        <item>"în a treia luni din lună"</item>
-        <item>"în a patra luni din lună"</item>
-        <item>"în ultima luni din lună"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_tues">
-        <item>"în prima marți din lună"</item>
-        <item>"în a doua marți din lună"</item>
-        <item>"în a treia marți din lună"</item>
-        <item>"în a patra marți din lună"</item>
-        <item>"în ultima marți din lună"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_wed">
-        <item>"în prima miercuri din lună"</item>
-        <item>"în a doua miercuri din lună"</item>
-        <item>"în a treia miercuri din lună"</item>
-        <item>"în a patra miercuri din lună"</item>
-        <item>"în ultima miercuri din lună"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_thurs">
-        <item>"în prima joi din lună"</item>
-        <item>"în a doua joi din lună"</item>
-        <item>"în a treia joi din lună"</item>
-        <item>"în a patra joi din lună"</item>
-        <item>"în ultima joi din lună"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_fri">
-        <item>"în prima vineri din lună"</item>
-        <item>"în a doua vineri din lună"</item>
-        <item>"în a treia vineri din lună"</item>
-        <item>"în a patra vineri din lună"</item>
-        <item>"în ultima vineri din lună"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_sat">
-        <item>"în prima sâmbătă din lună"</item>
-        <item>"în a doua sâmbătă din lună"</item>
-        <item>"în a treia sâmbătă din lună"</item>
-        <item>"în a patra sâmbătă din lună"</item>
-        <item>"în ultima sâmbătă din lună"</item>
-    </string-array>
 </resources>

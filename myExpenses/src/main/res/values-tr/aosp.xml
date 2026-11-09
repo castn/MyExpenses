@@ -21,7 +21,6 @@
     <string name="response_no">"Hayır"</string>
     <string name="experimental">"Deneysel"</string>
     <string name="add_widget">"Widget ekleyin"</string>
-    <string name="calendar">"Takvim"</string>
     <string name="permissions_label">"İzinler"</string>
     <string name="time_format">"Saat biçimi"</string>
     <string name="setup">"Kur"</string>
@@ -63,8 +62,6 @@
     <string name="menu">"Menü"</string>
     <string name="action_move_down">"Aşağı taşı"</string>
     <string name="action_move_up">"Yukarı taşı"</string>
-    <string name="calendar_delete">Takvimi sil</string>
-    <string name="preferences_calendar_delete_message">Bu takvimi gerçekten silmek istiyor musunuz?</string>
     <string name="default_camera_app_title">"Kamera uygulaması"</string>
     <string name="help_and_feedback">"Yardım ve geri bildirim"</string>
     <string name="currencies_exchange">"Para Birimleri ve Döviz"</string>

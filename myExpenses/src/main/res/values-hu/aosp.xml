@@ -22,7 +22,6 @@
     <string name="response_no">"Nem"</string>
     <string name="experimental">"Kísérleti"</string>
     <string name="add_widget">"Modul hozzáadása"</string>
-    <string name="calendar">"Naptár"</string>
     <string name="permissions_label">"Engedélyek"</string>
     <string name="time_format">"Időformátum"</string>
     <string name="setup">"Beállítás"</string>
@@ -65,8 +64,6 @@
     <string name="menu">"Menü"</string>
     <string name="action_move_down">"Mozgatás lefelé"</string>
     <string name="action_move_up">"Mozgatás felfelé"</string>
-    <string name="calendar_delete">Naptár törlése</string>
-    <string name="preferences_calendar_delete_message">Valóban törölni akarja ezt a naptárat?</string>
     <string name="default_camera_app_title">"Kameraalkalmazás"</string>
     <string name="help_and_feedback">"Súgó és visszajelzés"</string>
     <string name="currencies_exchange">"Pénznemek és deviza"</string>

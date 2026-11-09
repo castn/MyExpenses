@@ -91,27 +91,14 @@
     <string name="menu_original_amount_help_text">Vis et felt, der lader dig definere et ekstra beløb. Hvis du fx betaler med dit kreditkort i en udenlandsk valuta, kan du huske den oprindelige pris ud over det beløb, der trækkes fra dit kort. Det oprindelige beløb ignoreres ved beregning af totaler.</string>
     <string name="menu_equivalent_amount_help_text">For at beregne en samlet sum på tværs af alle konti, ganges transaktioner på udenlandsk valutakonti med en valutakurs, som du indstiller for kontoen.</string>
     <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Hvis valutaerne på \'Fra\'- og \'Til\'-kontoen er forskellige, angiver du kun beløbet for en af dem. Det andet beregnes, når du opretter instanser fra skabelonen.</string>
-    <string name="help_ManageTemplates_planner_title">Kommende gentagelser</string>
-    <string name="help_ManageTemplates_plans_intro">Hver fremhævet dato repræsenterer en instans af planen.</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">Instansen blev annulleret; dvs. du har markeret, at den skal springes over. Ingen transaktion oprettes for denne instans.</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">Instantiér de valgte skabeloner, og gem dem øjeblikkeligt.</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">Instantiér den valgte skabelon og gå ind i dens redigeringsform, hvor du kan ændre den før du gemmer.</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img "src=ic_menu_template">Mens skabeloner kan udledes fra transaktioner gennem deres kontekstmenu, kan du her oprette nye skabeloner fra bunden (for transaktioner eller overførsler) ved at klikke på den flydende handlingsknap. Ved at klikke på en skabelon oprettes en instans for den.<br><img src="ic_event">En plan er en skabelon, som du har oprettet en begivenhed for (engangs eller tilbagevendende) i planlægningskalenderen. Klik på en plan for at åbne en kalendervisning, som viser tidligere og kommende instanser af en plan.]]></string>
-    <string name="help_ManageTemplates_planner_intro">Hold nede på en åben instans for at starte multivalg. Tryk på starten eller slutningen af datointervallet for at udvide intervallet ind i fortiden eller fremtiden.</string>
-    <string name="help_ManageTemplates_plans_info_header">En instans\' tilstand angives med følgende ikoner:</string>
-    <string name="help_ManageTemplates_plans_info_open">Instansen er endnu ikke anvendt.</string>
-    <string name="help_ManageTemplates_plans_info_applied">Instansen er anvendt.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">Opret transaktioner på tidspunktet for de valgte begivenhedsinstanser, og gem dem øjeblikkeligt.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">Opret en transaktion på tidspunktet for den valgte begivenhedsinstans og gå ind i dens redigeringsform, hvor du kan ændre den før du gemmer.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">Angiv, at der ikke skal oprettes transaktioner for de valgte begivenhedsinstanser. Hvis der er oprettet transaktioner for de valgte begivenhedsinstanser, slettes de.</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">Hvis der er oprettet transaktioner for de valgte begivenhedsinstaner, slettes de. Hvis de er markeret som annulleret, fjernes markeringerne.</string>
     <string name="help_AccountEdit_title">Formular til konti</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">Redigér transaktionen, der er oprettet for den valgte planinstans.</string>
     <string name="menu_templates_help_text">Åbn en menu, der viser alle skabeloner, så du hurtigt kan indlæse dem i formularen.</string>
     <string name="form_AccountEdit_label_help_text">Mærkatet identificerer kontoen i kontolisten.</string>
     <string name="menu_chart_help_text">Skift synligheden af diagrammet.</string>
     <string name="menu_status_handle_help_text">Transaktionens status angives med et farvet rektangel: grå for ikke afstemt, blå for afklaret, grøn for afstemt. Klik på rektanglet for at ændre statussen.</string>
-    <string name="help_ManageTemplates_plans_title">Plan kalendervisning</string>
     <string name="popup_MyExpenses_toolbar_intro">Tryk på værktøjslinjen (kontomærkat eller aktuel saldo) for at åbne en menu med følgende punkter:</string>
     <string name="help_ManageCategories_expand_collapse"><![CDATA[Klik på <img src="ic_expand_more">/<img src="ic_expand_less"> ikonet for at udvide eller minimere en kategori.]]></string>
     <string name="menu_ManageTemplates_templates_sort_help_text">Skabelonlisten kan sorteres efter titel (alfabetisk), beløb, brugsfrekvens eller sidste gang en transaktion blev oprettet fra den.</string>

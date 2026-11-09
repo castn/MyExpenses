@@ -14,84 +14,10 @@
  -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="does_not_repeat">"Aldi bakarreko gertaera"</string>
-    <string name="endByDate">"; <xliff:g id="DATE">%s</xliff:g> arte"</string>
-    <plurals name="endByCount">
-        <item quantity="one">"; behin"</item>
-        <item quantity="other">"; <xliff:g id="NUMBER">%d</xliff:g> aldiz"</item>
-    </plurals>
-    <plurals name="daily">
-        <item quantity="one">"Egunero"</item>
-        <item quantity="other">"<xliff:g id="NUMBER">%d</xliff:g> egunez behin"</item>
-    </plurals>
-    <string name="every_weekday">"Astegun guztietan (al.-ol.)"</string>
-    <plurals name="weekly">
-        <item quantity="one">"Astero, egun honetan: <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>"</item>
-        <item quantity="other">"<xliff:g id="NUMBER">%1$d</xliff:g> astez behin, egun honetan: <xliff:g id="DAYS_OF_WEEK">%2$s</xliff:g>"</item>
-    </plurals>
-    <plurals name="monthly">
-        <item quantity="one">Hilero</item>
-        <item quantity="other"><xliff:g id="COUNT">%d</xliff:g> hilabetez behin</item>
-    </plurals>
-    <plurals name="yearly">
-        <item quantity="one">Urtero</item>
-        <item quantity="other"><xliff:g id="COUNT">%d</xliff:g> urtez behin</item>
-    </plurals>
-    <string name="monthly_on_day">" (<xliff:g id="DAY_OF_MONTH">%s</xliff:g>. egunean)"</string>
-    <string name="yearly_on_day">" (data honetan: <xliff:g id="DATES">%s</xliff:g>)"</string>
     <string name="yearly_plain">"Urtero"</string>
     <string name="daily_plain">Egunero</string>
     <string name="weekly_plain">Astero</string>
     <string name="monthly_plain">"Hilero"</string>
 
-    <string-array name="repeat_by_nth_sun">
-        <item>"hilaren lehen igandean"</item>
-        <item>"hilaren bigarren igandean"</item>
-        <item>"hilaren hirugarren igandean"</item>
-        <item>"hilaren laugarren igandean"</item>
-        <item>"hilaren azken igandean"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_mon">
-        <item>"hilaren lehen astelehenean"</item>
-        <item>"hilaren bigarren astelehenean"</item>
-        <item>"hilaren hirugarren astelehenean"</item>
-        <item>"hilaren laugarren astelehenean"</item>
-        <item>"hilaren azken astelehenean"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_tues">
-        <item>"hilaren lehen asteartean"</item>
-        <item>"hilaren bigarren asteartean"</item>
-        <item>"hilaren hirugarren asteartean"</item>
-        <item>"hilaren laugarren asteartean"</item>
-        <item>"hilaren azken asteartean"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_wed">
-        <item>"hilaren lehen asteazkenean"</item>
-        <item>"hilaren bigarren asteazkenean"</item>
-        <item>"hilaren hirugarren asteazkenean"</item>
-        <item>"hilaren laugarren asteazkenean"</item>
-        <item>"hilaren azken asteazkenean"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_thurs">
-        <item>"hilaren lehen ostegunean"</item>
-        <item>"hilaren bigarren ostegunean"</item>
-        <item>"hilaren hirugarren ostegunean"</item>
-        <item>"hilaren laugarren ostegunean"</item>
-        <item>"hilaren azken ostegunean"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_fri">
-        <item>"hilaren lehen ostiralean"</item>
-        <item>"hilaren bigarren ostiralean"</item>
-        <item>"hilaren hirugarren ostiralean"</item>
-        <item>"hilaren laugarren ostiralean"</item>
-        <item>"hilaren azken ostiralean"</item>
-    </string-array>
-    <string-array name="repeat_by_nth_sat">
-        <item>"hilaren lehen larunbatean"</item>
-        <item>"hilaren bigarren larunbatean"</item>
-        <item>"hilaren hirugarren larunbatean"</item>
-        <item>"hilaren laugarren larunbatean"</item>
-        <item>"hilaren azken larunbatean"</item>
-    </string-array>
 
 </resources>

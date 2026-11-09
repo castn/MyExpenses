@@ -42,12 +42,6 @@
     <string name="help_ManageParties_manage_info">Aquesta pantalla propociona un llistat de parts utilitzades per autocompletar el camp Pagador/Beneficiari.</string>
     <string name="help_ManageParties_select_mapping_info">Seleccioni una part tocant-la.</string>
     <string name="help_ManageParties_floating_action_button">Per afegir una nova entrada utilitzi el botó d\'acció flotant.</string>
-    <string name="help_ManageTemplates_plans_title">Vista de calendari</string>
-    <string name="help_ManageTemplates_planner_title">Properes recurrències</string>
-    <string name="help_ManageTemplates_planner_intro">Tocar prolongadament una operació oberta iniciarà la selecció múltiple. Tocar al principi o al final d\'un rang de dates permet extendre el rang cap al passat o futur.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">Indiqui que per a les operacions triades no es creïn transaccions. Si les transaccions han estat creades per les operacions triades, s\'eliminaran.</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">Si les transaccions han estat creades per a les operacions triades, s\'eliminaran, si s\'han marcat com a cancel·lades, les marques es retiren.</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">Editi una transacció que ha estat creada pel pla d\'una operació.</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">El llistat de plantilles es pot ordenar per títol (alfabèticament), per quantitat, freqüència d\'usos, o per últim cop que s\'hi ha efectuat una transacció.</string>
     <string name="cab_ManageCategories_create_sub_cat_help_text">Obre un diàleg per crear noves subcategories depenents de la categoria seleccionada. Les subcategories es poden jerarquitzar.</string>
     <string name="cab_ManageCategories_move_help_text">Qualsevol categoria (juntament amb les seves subcategories) pot ser moguda a una nova categoria. Les subcategories es poden transormar en categories principals.</string>
@@ -67,14 +61,7 @@
     <string name="help_ManageParties_select_filter_info">Seleccioneu totes les parts que vulgueu utilitzar per filtrar la llista de transaccions.</string>
     <string name="menu_merge_help_text">Si la mateixa entrada apareix vàries vegades al llistat amb variacions d\'escriptura, pot fusionar-les.</string>
     <string name="help_ManageParties_mergeMode_info_2">Se li demanarà que seleccioni una de les variants com a definitiva.</string>
-    <string name="help_ManageTemplates_plans_info_header">L\'estat de l\'operació s\'indica amb les icones següents:</string>
-    <string name="help_ManageTemplates_plans_info_open">L\'operació encara no s\'ha implementat.</string>
-    <string name="help_ManageTemplates_plans_info_applied">L\'operació s\'ha implementat.</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">L\'operació cancel·lada, és a dir l\'heu marcat per a que s\'ometi. No es crearà cap transacció per a aquesta operació.</string>
-    <string name="help_ManageTemplates_plans_intro">Cada data destacada representa una operació del pla.</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src=ic_menu_template>Les plantilles poden ser derivades de transaccions en el seu menú, des d\'aquí es poden crear noves plantilles de zero (per transaccions o transferències) clicant el botó flotant d\'acció. Tocar una plantilla crearà una operació per fer-ho.<br><img src=ic_event>Un pla és una plantilla per a la qual s\'ha definit un esdeveniment (únic o recurrent) al calendari. Tocant el pla s\'obrirà una vista de calendari, en la qual podrà visualitzar oepracions futures i anteriors.]]></string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">Crei transaccions en el moment de l\'operació seleccionada i guardi-les immediatament.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">Crei transaccions en el moment de l\'operació seleccionada i editi-les abans de desar-les.</string>
     <string name="help_ManageCategories_select_filter_info">Cliqui una entrada per iniciar una selecció múltiple.</string>
     <string name="menu_ManageCategories_sort_help_text">La llista de categories es pot ordenar per títol (alfabèticament), freqüència d\'ús o per l\'última transacció que s\'hi va realitzar.</string>
     <string name="menu_categories_setup_default_help_text">S\'importarà un conjunt de categories per defecte.</string>

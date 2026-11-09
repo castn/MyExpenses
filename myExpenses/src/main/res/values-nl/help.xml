@@ -13,12 +13,6 @@
     <string name="help_ManageMethods_info">Dit scherm geeft een overzicht van de vooraf gedefinieerde betalingsmethoden (cheque, kredietkaart, storting, automatische incasso) en laat je nieuwe definiëren. Gebruik de zwevende actieknop om het formulier te openen voor het maken van een nieuwe methode.</string>
     <string name="help_ManageParties_manage_info">Dit scherm geeft een overzicht van de partijen die zijn gebruikt voor het automatisch aanvullen van het veld Betaler/Begunstigde.</string>
     <string name="help_ManageParties_floating_action_button">Gebruik de zwevende actieknop om een nieuw item toe te voegen.</string>
-    <string name="help_ManageTemplates_plans_title">Plan kalenderweergave</string>
-    <string name="help_ManageTemplates_planner_title">Aankomende recidieven</string>
-    <string name="cab_ManageTemplates_plans_create_instance_edit_help_text">Maak een transactie aan op het moment van de geselecteerde gebeurtenis en voer het bewerkingsformulier in waar je deze kunt wijzigen voordat je deze opslaat.</string>
-    <string name="cab_ManageTemplates_plans_cancel_plan_instance_help_text">Geef aan dat er bij de geselecteerde gebeurtenisinstanties geen transacties mogen worden aangemaakt. Als er transacties zijn gemaakt voor de geselecteerde gebeurtenisexemplaren, worden deze verwijderd.</string>
-    <string name="cab_ManageTemplates_plans_reset_plan_instance_help_text">Als er transacties zijn gemaakt voor de geselecteerde gebeurtenisinstanties, worden deze verwijderd. Als ze zijn gemarkeerd als geannuleerd, worden de vlaggen verwijderd.</string>
-    <string name="cab_ManageTemplates_plans_edit_plan_instance_help_text">Bewerk de transactie die is gemaakt voor de geselecteerde abonnementsinstantie.</string>
     <string name="help_menu_commands">Menu-opdrachten</string>
     <string name="help_contextual_actions">Contextuele acties</string>
     <string name="cab_delete_help_text">Verwijder de geselecteerde items.</string>
@@ -39,21 +33,14 @@
     <string name="cab_split_help_text">Je kunt de transactie later bewerken om indien nodig extra onderdelen te maken.</string>
     <string name="menu_scan_mode_help_text">Activeer de scanmodus om snel ontvangstbewijzen te scannen.</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src="ic_menu_template">Terwijl sjablonen kunnen worden afgeleid van transacties via hun contextmenu, kunt je hier nieuwe sjablonen vanaf nul maken (voor transacties of overboekingen) door te klikken op de zwevende actieknop. Als je op een sjabloon klikt, wordt er een exemplaar voor gemaakt.<br><img src="ic_event">Een plan is een sjabloon waarvoor je een gebeurtenis (eenmalig of terugkerend) hebt gemaakt in de plannerkalender. Als je op een plan klikt, wordt er een kalenderweergave geopend, waarin eerdere en toekomstige exemplaren van een plan worden weergegeven.]]></string>
-    <string name="help_ManageTemplates_planner_intro">Als je lang op een open exemplaar tikt, wordt meervoudige selectie gestart. Door op het begin of einde van het datumbereik te tikken, kun je het bereik uitbreiden naar het verleden of de toekomst.</string>
     <string name="help_ManageParties_select_mapping_info">Selecteer een partij door erop te tikken.</string>
     <string name="menu_merge_help_text">Als dezelfde partij meerdere keren in de lijst voorkomt met verschillende spellingsvarianten, kun je ze samenvoegen.</string>
     <string name="help_ManageParties_mergeMode_info_2">Je wordt gevraagd om te selecteren welke variant je wilt behouden.</string>
-    <string name="help_ManageTemplates_plans_intro">Elke gemarkeerde datum vertegenwoordigt een instantie van het plan.</string>
-    <string name="help_ManageTemplates_plans_info_header">De status van een instantie wordt aangegeven door de volgende iconen:</string>
-    <string name="help_ManageTemplates_plans_info_open">De instantie is nog niet toegepast.</string>
-    <string name="help_ManageTemplates_plans_info_applied">De instantie is toegepast.</string>
-    <string name="help_ManageTemplates_plans_info_cancelled">De instantie is geannuleerd, d.w.z. je hebt gemarkeerd dat deze moet worden overgeslagen. Er wordt geen transactie gemaakt voor deze instantie.</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">Instantieer de geselecteerde sjabloon en voer het bewerkingsformulier in, waar je het kunt wijzigen voordat je het opslaat.</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">De sjabloonlijst kan worden gesorteerd op titel (alfabetisch), op hoeveelheid, op gebruiksfrequentie of op de laatste keer dat er een transactie van is gemaakt.</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">Instantiseer de geselecteerde sjablonen en sla ze onmiddellijk op.</string>
     <string name="cab_ManageTemplates_edit_help_text">Bewerk de geselecteerde sjabloon en maak of bewerk een bijbehorend plan.</string>
     <string name="cab_ManageTemplates_delete_help_text">Verwijder de geselecteerde sjablonen en eventuele bijbehorende plannen.</string>
-    <string name="cab_ManageTemplates_plans_create_instance_save_help_text">Maak transacties aan op het moment van de geselecteerde gebeurtenisinstanties en sla ze onmiddellijk op.</string>
     <string name="help_ManageCategories_select_mapping_info">Naast de acties die je kunt uitvoeren bij het beheren van categorieën vanuit het scherm Voorkeuren (aanmaken, bewerken, verwijderen), koppel je op dit scherm een transactie aan een geselecteerde categorie door er eenvoudig op te klikken.</string>
     <string name="help_ManageCategories_select_filter_info">Klik op een invoer om meervoudige selectie te starten.</string>
     <string name="help_ManageCategories_expand_collapse"><![CDATA[Klik op het <img src="ic_expand_more">/<img src="ic_expand_less"> pictogram om een categorie uit te vouwen of in te vouwen.]]></string>

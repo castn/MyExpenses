@@ -108,13 +108,11 @@
     <string name="licence_validation_premium">Prémium szolgáltatások engedélyezve.</string>
     <string name="menu_aggregates">Összesen</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">Alkalmaz</string>
     <string name="menu_back">Vissza</string>
     <string name="menu_backup">Mentés</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">Egyenlegszámla</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">Mégse</string>
     <string name="menu_clone_transaction">Másolás</string>
     <string name="menu_contrib">Támogatás</string>
     <string name="menu_create_account">Új számla</string>
@@ -140,7 +138,6 @@
     <string name="menu_edit_cat">Kategória szerkesztése</string>
     <string name="menu_edit_method">Fizetési mód szerkesztése</string>
     <string name="menu_edit_party">Résztvevő szerkesztése</string>
-    <string name="menu_edit_plan_instance">Egyetlen előfordulási terv szerkesztése</string>
     <string name="menu_edit_split">Felosztott tranzakció szerkesztése</string>
     <string name="menu_edit_split_part_category">A részletösszeg kategóriájának szerkesztése</string>
     <string name="menu_edit_split_part_transfer">Az átutalás részletösszegének szerkesztése</string>
@@ -153,7 +150,6 @@
     <string name="menu_help">Súgó</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">Inverz</string>
-    <string name="menu_manage_plans">Sablonok és tervek</string>
     <string name="menu_reset">Export és alap állapotra visszaállítás</string>
     <string name="menu_reset_all">Export és teljes reset</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -170,7 +166,6 @@
     <string name="no_expenses">Még nincsenek kiadások!</string>
     <string name="no_exportable_expenses">Nincs olyan tranzakció, amely ne került volna exportálásra.</string>
     <string name="no_filemanager_installed">Nincs fájlkezelő telepítve</string>
-    <string name="no_calendar_app_installed">Nem található alkalmazás a naptári esemény módosításához.</string>
     <string name="image_capture_not_installed">Nem található alkalmazás kép készítéséhez.</string>
     <string name="no_mapped_transactions">A megadott időszakban nincs ehhez a kategóriához rendelt tranzakció.</string>
     <string name="no_methods">Nincs fizetési mód.</string>
@@ -201,15 +196,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">Terv</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">automatikus</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">{app_name} tervezője</string>
-    <string name="planner_notification_channel_name">Tervezője</string>
-    <string name="plan_event_deleted">A sablonhoz kapcsolt tervet töröltük a naptárból.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">Terv futtatása leállítva</string>
-    <string name="planner_create_calendar_failure">Helyi terv-naptár készítése nem sikerült</string>
-    <string name="planner_create_calendar_success">Helyi terv-naptár készítése sikeres</string>
     <!-- payment methods -->
     <string name="pm_cheque">Csekk</string>
     <string name="pm_creditcard">Hitelkártya</string>
@@ -249,8 +238,6 @@
     <string name="pref_password_not_equal">A jelszavak nem egyeznek</string>
     <string name="pref_perform_share_title">Az exportált állomány megosztása</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">Helyi terv-naptár létrehozása</string>
-    <string name="pref_planning_calendar_summary">Válassza ki azt a naptárt, amelyben az ismétlődő tranzakciókat kívánja tárolni</string>
     <string name="pref_protection_delay_seconds_summary">Várakozási idő (másodperc) a jelszóval feloldható zárolás előtt.</string>
     <string name="pref_protection_delay_seconds_title">Késleltetés a védelemig</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">Adatbevitel widgetekből és hivatkozásokból</string>
@@ -282,7 +269,6 @@
     <string name="restore_preferences_failure">Beállítások visszaállítása sikertelen</string>
     <string name="restore_backup_file_not_found">Nincs %1$s fájl a(z) \"%2$s\" archívumban</string>
     <string name="restore_preferences_success">Beállítások sikeresen visszaállítva a korábbi mentésből.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d terv visszaállításra került a biztonsági másolatból</string>
     <string name="save_transaction_and_new_success">Sikeresen mentve</string>
     <string name="save_transaction_error">Nem sikerült a sablonból létrehozott tranzakciót menteni</string>
     <plurals name="save_transaction_from_template_success">
@@ -438,17 +424,13 @@
     <string name="pref_sort_order_custom">Egyéni</string>
     <string name="content_description_calculator">Számológép</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">nyitott</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">törölve</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">alkalmazva</string>
     <string name="warning_cannot_move_split_transaction">A felosztott tranzakció nem helyeztető át %1$s fiókra, mert az átutalás egyes részei erre a fiókra hivatkoznak.</string>
     <string name="content_description_calculator_delete_button">Törölje az utolsó számjegyet</string>
     <string name="paypal_callback_info">Az ön tranzakciója befejeződött, és a vásárlási nyugtát elküldtük önnek e-mailben. A tranzakció részleteinek megtekintéséhez bejelentkezhet fiókjába a www.paypal.com oldalon.</string>
     <string name="search_transfer">Átutalás keresése:</string>
     <!-- Sort plans (recurring transactions) by the next instance  -->
-    <string name="pref_sort_order_next_instance">Következő példány</string>
     <string name="crash_dialog_title">{app_name} összeomlott</string>
     <string name="crash_dialog_text">Váratlan hiba történt, ami leállásra kényszerítette az alkalmazást. Küldje el nekünk a hiba adatait, hogy segítsen nekünk kijavítani ezt a problémát. Csak annyit kell tennie, hogy az OK-ra kattint.</string>
     <string name="crash_dialog_comment_prompt">Megjegyzéseket fűzhet a problémához alább:</string>
@@ -505,7 +487,6 @@
     <string name="contributed_by">%s közreműködésével</string>
     <string name="pref_sync_notification_summary">Értesítés a szinkronizálás állapotáról</string>
     <string name="pref_debug_logging_summary">Írjon hibakeresési információt a rendszernaplóba</string>
-    <string name="plan_custom_recurrence_info">Előbb mentse el a sablont. A terv ekkor megnyílik egy naptáralkalmazásban, ahol beállíthatja az egyéni ismétlődést.</string>
     <string name="menu_create_template_for_split">Új osztott sablon</string>
     <string name="progress_validating_licence">Engedély érvényesítése</string>
     <string name="licence_validation_error_expired">A licenc lejárt</string>
@@ -643,7 +624,6 @@
     <string name="pref_exchange_rate_provider_summary">Válasszon szolgáltatót az árfolyamok letöltéséhez</string>
     <string name="pref_exchange_rate_provider_title">Árfolyamszolgáltató</string>
     <string name="pref_exchange_rates_api_key_summary">Kérjük, regisztráljon egy ingyenes fiókot az %s webhelyen, és adja meg az alkalmazásazonosítóját</string>
-    <string name="pref_plan_executor_time_title">Értesítés időpontja</string>
     <string name="synchronization_select_folder_dialog_title">Válasszon egy meglévő mappát vagy készítsen újat</string>
     <!-- This message is shwon when we highlight the income / expense toogle, to make user aware of this feature  -->
     <string name="discover_feature_expense_income_switch">Ezzel a váltógombbal rögzítheti a jövedelmet.</string>
@@ -698,7 +678,6 @@
     <string name="new_tag_hint">Írjon be új címkét</string>
     <string name="language_download_requested">A(z) %s nyelvi fordítások a Play Áruházból vannak igényelve</string>
     <!-- Title for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
-    <string name="pref_planner_manual_time_title">A manuálisan alkalmazott ütemezett tranzakció ideje</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction -->
     <string name="pref_planner_manual_time_noon">du. 12 (dél)</string>
     <!-- Option for a preference that allows to decide how the time will be set for a new instance of a recurring transaction (current time at moment of application) -->
@@ -733,14 +712,11 @@
     <!-- Toast message shown if user clicks on Upgrade button before having selected a licence -->
     <string name="select_package">Válasszon egy licenccsomagot.</string>
     <!-- Label for a slider control that allows to configure a plan to be executed (added to the ledger) the give number of days in advance -->
-    <string name="advance_exexcution_in_days">Előzetes végrehajtás (napokban)</string>
     <string name="warning_balance_account_delete">Ha folytatja, a fiók minden érvényesített tranzakcióját töröljük az adatbázisból, és nem lehet majd visszaállítani őket.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">A meglévő űrlapadatok elvetésre kerülnek.</string>
     <string name="pref_clone_with_current_date_title">Klónozott tranzakció dátuma</string>
     <string name="template_default_action_without_amount_hint">Az összeg nélküli sablont el kell menteni az alapértelmezett \"Szerkesztés\" művelettel</string>
-    <string name="plan_automatic_without_amount_hint">Az összeg nélküli terveket ne mentse el automatikus végrehajtással</string>
-    <string name="content_description_edit_plan">Terv szerkesztése a naptár alkalmazásban</string>
     <string name="menu_save_and_new_content_description">Mentse el az adatokat, hagyja nyitva az űrlapot, hogy új tranzakciót készíthessen ugyanazokkal az adatokkal.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
     <string name="pref_ocr_engine_title">Motor a szövegfelismeréshez</string>
@@ -761,7 +737,6 @@
     <string name="new_balance">Új egyenleg</string>
     <string name="single_feature_info">Másik lehetőségként korlátlan hozzáférést vásárolhat csak ehhez a funkcióhoz.</string>
     <!-- This refers to a plan that recurs every last day of the month. It is shown next to a checkbox allowing user to select this type of recurrence. -->
-    <string name="recurrence_last_day_of_month">Utolsó nap</string>
     <string name="warning_link_transfer">A két megjelölt tranzakció átutalásként lesz linkelve. A kedvezményezett/fizető és a kategória információkat elvetjük.</string>
     <!-- This is the title of an entry on the configuration screen for the account widget. It allows to decide which number should be displayed for each account: the current balance or the total (which included future transactions) -->
     <string name="account_widget_configuration_sum">A kijelzett összeg típusa</string>
@@ -786,7 +761,6 @@
     <string name="dialog_contrib_subscription_info_play">Ez az előfizetés azonnal hatályba lép, havonta vagy évente kerül számlázásra, és bármikor lemondható.</string>
     <string name="stability_improvements" tools:ignore="UnusedResources">Stabilitási fejlesztések</string>
     <string name="auto_fill_focus">Fókusz beállítása a kedvezményezettre</string>
-    <string name="warning_plan_instance_delete">A kiválasztott dátumra létrehozott tranzakció törlődik.</string>
     <string name="performance_enhancement" tools:ignore="UnusedResources">Teljesítménynövelés</string>
     <string name="debt_owes_me">%s tartozik nekem</string>
     <string name="debt_I_owe">Tartozom %s</string>
@@ -879,9 +853,6 @@
     <string name="pref_csv_export_category_separator_summary">A kategóriahierarchia szintjei közötti elválasztó</string>
     <string name="template_shortcut">Sablon parancsikonja</string>
     <string name="select_template">Válasszon sablont</string>
-    <string name="orphaned_transaction_info">Egy tranzakció kapcsolódik a tervhez erre a dátumra, de ezen a napon nem létezik eseménypéldány.</string>
-    <string name="button_relink_keep_date">Újracsatolás, de a dátum megtartása</string>
-    <string name="button_relink_update_date">Újracsatolás és frissítés dátuma</string>
     <string name="read_from_data">Adatokból olvasni</string>
     <string name="merge_parties_strategy_group">A másolatok eltartottakként vannak csoportosítva.</string>
     <string name="remove_from_group">Eltávolítás a csoportból</string>
@@ -897,8 +868,6 @@
     <string name="pref_unmapped_transaction_as_transfer_title">Nem leképezett tranzakciók</string>
     <string name="menu_aggregate_neutral_categories">Összesített semleges kategóriák</string>
     <string name="menu_transform_to_transfer">Konvertálás átvitelre</string>
-    <string name="orphaned_transaction_relink">A tranzakció újrakapcsolható az eseménypéldányhoz a %s.</string>
-    <string name="orphaned_transaction_align_date">Opcionálisan a tranzakcióval tárolt dátum is igazítható a példány dátumához.</string>
     <string name="pref_attachment_mime_types_title">Mellékletekhez engedélyezett MIME-típusok</string>
     <string name="archive">Archívum</string>
     <string name="quick_search">Gyors keresés</string>

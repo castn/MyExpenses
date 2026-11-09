@@ -96,13 +96,11 @@
     <string name="licence_validation_premium">Funcţionalităţile Premium au fost deblocate.</string>
     <string name="menu_aggregates">Total</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">Aplică</string>
     <string name="menu_back">Înapoi</string>
     <string name="menu_backup">Backup</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">Sold acont</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">Anulează</string>
     <string name="menu_clone_transaction">Clonează</string>
     <string name="menu_contrib">Contribuie</string>
     <string name="menu_create_account">Cont nou</string>
@@ -128,7 +126,6 @@
     <string name="menu_edit_cat">Editează categorie</string>
     <string name="menu_edit_method">Editează metodă plată</string>
     <string name="menu_edit_party">Editează terţ</string>
-    <string name="menu_edit_plan_instance">Editează scadenţa</string>
     <string name="menu_edit_split">Editați tranzacția repartizată</string>
     <string name="menu_edit_split_part_category">Editează categoria repartizare</string>
     <string name="menu_edit_split_part_transfer">Editează transfer repartizare</string>
@@ -141,7 +138,6 @@
     <string name="menu_help">Ajutor</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">Inversează</string>
-    <string name="menu_manage_plans">Şabloane şi scadenţe</string>
     <string name="menu_reset">Export şi resetare</string>
     <string name="menu_reset_all">Export şi a resetează toate</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -188,15 +184,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">Scadenţă</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">automatic</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">Scadenţar {app_name}</string>
-    <string name="planner_notification_channel_name">Scadenţar</string>
-    <string name="plan_event_deleted">Scadenţa asociată acestui șablon a fost şters din calendar.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">Executarea planului anulată</string>
-    <string name="planner_create_calendar_failure">Imposibil de creat calendar local scadenţă </string>
-    <string name="planner_create_calendar_success">Calendar local scadenţă creat </string>
     <!-- payment methods -->
     <string name="pm_cheque">Cec</string>
     <string name="pm_creditcard">Carte de credit</string>
@@ -233,8 +223,6 @@
     <string name="pref_password_not_equal">Parolele nu se potrivesc</string>
     <string name="pref_perform_share_title">Partajaţi exporturile şi backup-urile</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">Creare calendar scadenţar local nou</string>
-    <string name="pref_planning_calendar_summary">Selectaţi calendarul unde scadenţele pentru tranzacţiile viitoare si periodice sunt memorate</string>
     <string name="pref_protection_delay_seconds_summary">Durata în secunde de inactivitate înaintea protejării app prin parolă.</string>
     <string name="pref_protection_delay_seconds_title">Întârziere până la protecţie</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">Introducere date din widget-uri şi shortcut-uri</string>
@@ -266,7 +254,6 @@
     <string name="restore_preferences_failure">Restaurare preferinţe eşuată</string>
     <string name="restore_backup_file_not_found">Nici un fişier %1$s  găsit în arhiva \"%2$s\"</string>
     <string name="restore_preferences_success">Preferinţele au fost restaurate din backup.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d  scadenţe au fost restaurate din backup</string>
     <string name="save_transaction_and_new_success">Salvată</string>
     <string name="save_transaction_error">Noua tranzacţia din şablon nu afost salvată</string>
     <plurals name="save_transaction_from_template_success">
@@ -400,13 +387,9 @@
     <string name="pref_sort_order_custom">Custom</string>
     <string name="content_description_calculator">Calculator</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">deschis</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">Anulat</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">aplicat</string>
     <!-- Sort plans (recurring transactions) by the next instance  -->
-    <string name="pref_sort_order_next_instance">Instanță următoare</string>
     <string name="synchronization">Sincronizare</string>
     <string name="synchronization_none">Fără sincronizare</string>
     <string name="template">Şablon</string>
@@ -440,7 +423,6 @@
     <string name="dialog_contrib_trial_info_play">Această încercare gratuită nu va niciodata converti la niciun tip de abonament.</string>
     <string name="dialog_contrib_subscription_info_play">Acest abonament are efect imediat, este facturat lunar sau anual și poate fi anulat oricând.</string>
     <string name="stability_improvements" tools:ignore="UnusedResources">Îmbunătățiri ale stabilității</string>
-    <string name="no_calendar_app_installed">Nu a fost găsită nicio aplicație pentru editarea evenimentului din calendar.</string>
     <string name="pref_manage_stale_images_title">Imagini vechi</string>
     <string name="contrib_feature_split_template_label">Număr nelimitat de șabloane divizate</string>
     <string name="contrib_feature_distribution_label">Diagramă circulară (Distribuție pe categorie)</string>
@@ -541,7 +523,6 @@
     <string name="sync_database_error">A apărut o eroare a bazei de date în timpul sincronizării.</string>
     <string name="sync_auth_exception">Autorizatia a esuat.</string>
     <string name="progress_removing_licence">Eliminarea licenței</string>
-    <string name="plan_custom_recurrence_info">Vă rugăm să salvați mai întâi șablonul. Planul va fi apoi deschis în aplicația calendar, unde puteți seta o recurență personalizată.</string>
     <string name="licence_key">Cheie de licență</string>
     <string name="licence_removal_success">Cheia de licență a fost eliberată cu succes de pe acest dispozitiv.</string>
     <string name="extend_validity">Prelungiți valabilitatea</string>
@@ -654,8 +635,6 @@
     <string name="menu_reopen">Redeschide</string>
     <string name="content_description_closed">Inchisa</string>
     <string name="content_description_dates_are_linked">Data rezervării și data valutei sunt actualizate împreună</string>
-    <string name="button_relink_keep_date">Reconectați, dar păstrați data</string>
-    <string name="button_relink_update_date">Reconectați și actualizați data</string>
     <string name="roadmap_vote">Vot pentru foaia de parcurs</string>
     <string name="language_download_requested">Traducerile pentru limba %s sunt solicitate din Magazin Play</string>
     <string name="feature_download_requested">Caracteristica %s este solicitată din Magazinul Play.</string>
@@ -674,7 +653,6 @@
     <string name="pref_copy_attachments_summary_on">Fișierele sunt copiate în folderul aplicației.</string>
     <string name="object_sealed">Obiect se referă la un cont închis.</string>
     <string name="budget_date_end_after_start">Data de încheiere a bugetului trebuie să fie ulterioară datei de începere a acestuia.</string>
-    <string name="recurrence_last_day_of_month">Ultima zi</string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> are nevoie de permisiune pentru a vă trimite notificări, atunci când sunt postate tranzacții viitoare.</string>
     <string name="ocr_download_info">Capacitatea de recunoaștere a textului este oferită de o aplicație externă.</string>
     <string name="budget_filter_all_tags">Toate etichetele</string>
@@ -688,7 +666,6 @@
     <string name="menu_scan_mode">Modul de scanare</string>
     <string name="pref_feature_uninstall_title">Solicitați dezinstalarea caracteristicilor și limbilor</string>
     <string name="template_default_action_without_amount_hint">Șablonul fără sumă ar trebui salvat cu acțiunea implicită „Editare”</string>
-    <string name="plan_automatic_without_amount_hint">Planul fără sumă nu trebuie salvat cu execuția automată a planului</string>
     <string name="github_sponsors"><![CDATA[Cheile de licență sunt, de asemenea, furnizate <unui href=%s>Sponsorilor Github</a>.]]></string>
     <string name="menu_tag">Etichetă</string>
     <string name="pref_ocr_time_formats_title">Formate de timp</string>
@@ -714,7 +691,6 @@
     <string name="select_all_list_too_large">Comanda %s nu este disponibilă deoarece lista este încărcată doar parțial. Vă rugăm să utilizați funcția de căutare pentru a reduce dimensiunea listei.</string>
     <string name="widget_title_budget">Bugetul meu</string>
     <string name="pref_attachment_mime_types_title">Tipuri MIME permise pentru atașări</string>
-    <string name="content_description_edit_plan">Editați planul în aplicația calendar</string>
     <string name="pref_group_header_show_details_summary">Afișați sumele detaliate în antetul grupului</string>
     <string name="debt_borrow_additional">Împrumut %s.</string>
     <string name="budget_filter_all_accounts">Toate conturile</string>
@@ -723,7 +699,6 @@
     <string name="menu_edit_tag">Editați eticheta</string>
     <string name="warning_balance_account_delete">Dacă continuați, toate tranzacțiile reconciliate ale acestui cont vor fi șterse din baza de date și nu le veți putea restaura.</string>
     <string name="pref_clone_with_current_date_title">Data tranzacțiilor clonate</string>
-    <string name="warning_plan_instance_delete">Tranzacția creată pentru data selectată va fi ștearsă.</string>
     <string name="debt_installment_pay">Plătesc o rată de %s.</string>
     <string name="pref_backup_file_prefix_title">Prefixul fișierului</string>
     <string name="feature_downloaded">Caracteristica %s a fost instalată.</string>
@@ -745,11 +720,9 @@
     <string name="budget_filter_all_parties">Toate părțile</string>
     <string name="warning_delete_budget">Bugetul „%1$s” va fi șters.</string>
     <string name="select_package">Vă rugăm să selectați un pachet de licențe.</string>
-    <string name="advance_exexcution_in_days">Execuție în avans (în zile)</string>
     <string name="account_widget_configuration_sum">Tipul sumei afișate</string>
     <string name="account_widget_configuration_sum_total">Includeți tranzacțiile viitoare</string>
     <string name="pref_exchange_rate_provider_summary">Selectați furnizorul pentru a descărca ratele de schimb</string>
-    <string name="pref_plan_executor_time_title">Ora de notificare</string>
     <string name="button_label_clone_and_remap">Clonați și remapați</string>
     <string name="pref_feature_uninstall_summary">Magazinul Play încearcă în cele din urmă să elimine acele module din fundal.</string>
     <string name="tesseract_download_confirmation">Doriți să descărcați date de recunoaștere a textului pentru %s?</string>
@@ -799,7 +772,6 @@
         <item quantity="other">Eticheta %1$s este mapată la %2$d de tranzacții. Ar trebui șters?</item>
     </plurals>
     <string name="dialog_multi_tag_append">Adăugați etichete noi la etichetele existente</string>
-    <string name="pref_planner_manual_time_title">Timpul pentru tranzacția programată aplicată manual</string>
     <string name="scan_result_no_amount">Nu a fost găsită nicio sumă</string>
     <string name="ocr_recognition_info">Rularea recunoașterii textului cu %s</string>
     <string name="warning_unencrypted_backup">În timp ce datele dvs. sunt protejate împotriva accesului neautorizat pe acest dispozitiv, copiile de rezervă sunt create fără criptare, cu excepția cazului în care configurați %s.</string>
@@ -835,10 +807,7 @@
     <string name="debt_balance_i_owe">Acum %sdatorez .</string>
     <string name="optimize_image_file_size">Optimizați dimensiunea fișierului imagine</string>
     <string name="image_optimize_quality_summary">Calitatea 0 înseamnă comprimare pentru cea mai mică dimensiune. 100 înseamnă comprimare pentru o calitate vizuală maximă.</string>
-    <string name="orphaned_transaction_info">O tranzacție este legată de planul pentru această dată, dar nu există nicio instanță de eveniment la această dată.</string>
-    <string name="orphaned_transaction_align_date">Opțional, data stocată cu tranzacția poate fi, de asemenea, aliniată cu data instanței.</string>
     <string name="remove_from_group">Eliminarea din grup</string>
-    <string name="orphaned_transaction_relink">Tranzacția poate fi reconectată cu instanța evenimentului pe %s.</string>
     <string name="button_scan">Scanează</string>
     <string name="pref_tesseract_language_title">Limbajul pentru Tesseract</string>
     <string name="debt_I_owe">Îi datorez %s</string>

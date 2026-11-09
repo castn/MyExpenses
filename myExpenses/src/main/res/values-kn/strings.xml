@@ -108,13 +108,11 @@
     <string name="licence_validation_premium">ಪ್ರೀಮಿಯಂ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಅನ್‌ಲಾಕ್ ಮಾಡಲಾಗಿದೆ.</string>
     <string name="menu_aggregates">ಒಟ್ಟು</string>
     <!-- Shown in a notification; allows to apply a template (instantiate a new transaction from it) -->
-    <string name="menu_apply_template">ಅನ್ವಯಿಸು</string>
     <string name="menu_back">ಹಿಂದೆ</string>
     <string name="menu_backup">ಬ್ಯಾಕಪ್</string>
     <!-- Balance: compare cleared balance in app with balance on statement received from bank -->
     <string name="menu_balance">ಬಾಕಿ ಮೊತ್ತ ಖಾತೆ</string>
     <!-- Cancelling a plan instance means setting a flag so that this instance will not trigger the creation of a new transaction -->
-    <string name="menu_cancel_plan_instance">ರದ್ದುಮಾಡಿ</string>
     <string name="menu_clone_transaction">ಕ್ಲೋನ್</string>
     <string name="menu_contrib">ಕೊಡುಗೆ ನೀಡಿ</string>
     <string name="menu_create_account">ಹೊಸ ಖಾತೆ</string>
@@ -140,7 +138,6 @@
     <string name="menu_edit_cat">ವರ್ಗವನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="menu_edit_method">ಪಾವತಿ ವಿಧಾನವನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="menu_edit_party">ಪಕ್ಷವನ್ನು ಸಂಪಾದಿಸಿ</string>
-    <string name="menu_edit_plan_instance">ಒಂದೇ ಯೋಜನೆ ಸಂಭವಿಸುವಿಕೆಯನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="menu_edit_split">ವಿಭಜನೆ ವಹಿವಾಟನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="menu_edit_split_part_category">ವರ್ಗ ವಿಭಜಿತ ಭಾಗವನ್ನು ಸಂಪಾದಿಸಿ</string>
     <string name="menu_edit_split_part_transfer">ವರ್ಗಾವಣೆ ವಿಭಜಿತ ಭಾಗವನ್ನು ಸಂಪಾದಿಸಿ</string>
@@ -153,7 +150,6 @@
     <string name="menu_help">ಸಹಾಯ</string>
     <!-- This command inverts the direction of a transfer -->
     <string name="menu_invert_transfer">ತಲೆಕೆಳಗು</string>
-    <string name="menu_manage_plans">ಟೆಂಪ್ಲೇಟ್‌ಗಳು ಮತ್ತು ಯೋಜನೆಗಳು</string>
     <string name="menu_reset">ರಫ್ತು ಮತ್ತು ಮರುಹೊಂದಿಸಿ</string>
     <string name="menu_reset_all">ಎಲ್ಲವನ್ನೂ ರಫ್ತು ಮಾಡಿ ಮತ್ತು ಮರುಹೊಂದಿಸಿ</string>
     <!-- Resetting a plan instance means deleting a transaction that has been created for this instances, or removing the cancel flag -->
@@ -170,7 +166,6 @@
     <string name="no_expenses">ಇನ್ನೂ ವೆಚ್ಚಗಳಿಲ್ಲ!</string>
     <string name="no_exportable_expenses">ಇನ್ನೂ ರಫ್ತು ಮಾಡದ ಯಾವುದೇ ವಹಿವಾಟುಗಳಿಲ್ಲ.</string>
     <string name="no_filemanager_installed">ಯಾವುದೇ ಫೈಲ್ ಮ್ಯಾನೇಜರ್ ಅನ್ನು ಸ್ಥಾಪಿಸಲಾಗಿಲ್ಲ</string>
-    <string name="no_calendar_app_installed">ಕ್ಯಾಲೆಂಡರ್ ಈವೆಂಟ್ ಸಂಪಾದಿಸಲು ಯಾವುದೇ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ.</string>
     <string name="no_mapped_transactions">ಈ ಅವಧಿಯಲ್ಲಿ ಯಾವುದೇ ವಹಿವಾಟುಗಳನ್ನು ವರ್ಗಗಳಿಗೆ ಮ್ಯಾಪ್ ಮಾಡಲಾಗಿಲ್ಲ.</string>
     <string name="no_methods">ಪಾವತಿ ವಿಧಾನಗಳಿಲ್ಲ.</string>
     <string name="no_parties">ಯಾವುದೇ ಪಕ್ಷಗಳಿಲ್ಲ.</string>
@@ -200,15 +195,9 @@
     <!-- Plan for future and recurring transactions -->
     <string name="plan">ಯೋಜನೆ</string>
     <!-- Label on the switch, where user decides if a plan should be executed automatically, or manually (i.e. user gets notification where he can cancel the execution or edit the instance -->
-    <string name="plan_automatic">ಸ್ವಯಂಚಾಲಿತ</string>
     <!-- this is the label for the calendar where plans for future and recurrent transactions are stored -->
     <string name="plan_calendar_name">{app_name} ಯೋಜಕ</string>
-    <string name="planner_notification_channel_name">ಯೋಜಕ</string>
-    <string name="plan_event_deleted">ಈ ಟೆಂಪ್ಲೇಟ್‌ಗೆ ಸಂಬಂಧಿಸಿದ ಯೋಜನೆಯನ್ನು ಕ್ಯಾಲೆಂಡರ್‌ನಿಂದ ಅಳಿಸಲಾಗಿದೆ.</string>
     <!-- This message is shown, after a user decides to not apply a manual plan -->
-    <string name="plan_execution_canceled">ಯೋಜನೆ ಕಾರ್ಯಗತಗೊಳಿಸುವಿಕೆಯನ್ನು ರದ್ದುಪಡಿಸಲಾಗಿದೆ</string>
-    <string name="planner_create_calendar_failure">ಸ್ಥಳೀಯ ಯೋಜಕ ಕ್ಯಾಲೆಂಡರ್ ರಚಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ</string>
-    <string name="planner_create_calendar_success">ಸ್ಥಳೀಯ ಯೋಜಕ ಕ್ಯಾಲೆಂಡರ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ರಚಿಸಲಾಗಿದೆ</string>
     <!-- payment methods -->
     <string name="pm_cheque">ಪರಿಶೀಲಿಸಿ</string>
     <string name="pm_creditcard">ಕ್ರೆಡಿಟ್ ಕಾರ್ಡ್</string>
@@ -248,8 +237,6 @@
     <string name="pref_password_not_equal">ಗುಪ್ತಪದಗಳುತಾಳೆಯಾಗುತ್ತಿಲ್ಲ</string>
     <string name="pref_perform_share_title">ರಫ್ತು ಮತ್ತು ಬ್ಯಾಕಪ್‌ಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
     <!-- This entry is added to the list of available calendars, if no local calendar has been set up yet -->
-    <string name="pref_planning_calendar_create_local">ಹೊಸ ಸ್ಥಳೀಯ ಯೋಜನೆ ಕ್ಯಾಲೆಂಡರ್ ರಚಿಸಿ</string>
-    <string name="pref_planning_calendar_summary">ಭವಿಷ್ಯದ ಮತ್ತು ಮರುಕಳಿಸುವ ವಹಿವಾಟಿನ ಯೋಜನೆಗಳನ್ನು ಸಂಗ್ರಹಿಸಿರುವ ಕ್ಯಾಲೆಂಡರ್ ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="pref_protection_delay_seconds_summary">ಪಾಸ್ವರ್ಡ್ ಮೂಲಕ ಅಪ್ಲಿಕೇಶನ್ ಲಾಕ್ ಆಗುವ ಮೊದಲು ನಿಷ್ಕ್ರಿಯ ಸೆಕೆಂಡುಗಳು.</string>
     <string name="pref_protection_delay_seconds_title">ರಕ್ಷಣೆಯವರೆಗೆ ವಿಳಂಬ</string>
     <string name="pref_protection_enable_data_entry_from_widget_title">ವಿಜೆಟ್‌ಗಳು ಮತ್ತು ಶಾರ್ಟ್‌ಕಟ್‌ಗಳಿಂದ ಡೇಟಾ ನಮೂದು</string>
@@ -281,7 +268,6 @@
     <string name="restore_preferences_failure">ಆದ್ಯತೆಗಳ ಮರುಸ್ಥಾಪನೆ ವಿಫಲವಾಗಿದೆ</string>
     <string name="restore_backup_file_not_found">%2$s ಆರ್ಕೈವ್‌ನಲ್ಲಿ %1$s ಫೈಲ್ ಕಂಡುಬಂದಿಲ್ಲ</string>
     <string name="restore_preferences_success">ಆದ್ಯತೆಗಳನ್ನು ಬ್ಯಾಕಪ್‌ನಿಂದ ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ.</string>
-    <string name="restore_calendar_success" tools:ignore="PluralsCandidate">%d ಯೋಜನೆಗಳನ್ನು ಬ್ಯಾಕಪ್‌ನಿಂದ ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ</string>
     <string name="save_transaction_and_new_success">ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ</string>
     <string name="save_transaction_error">ಟೆಂಪ್ಲೇಟ್‌ನಿಂದ ಹೊಸ ವಹಿವಾಟನ್ನು ಉಳಿಸಲಾಗಲಿಲ್ಲ.</string>
     <plurals name="save_transaction_from_template_success">
@@ -436,17 +422,13 @@
     <string name="pref_sort_order_custom">ಕಸ್ಟಮ್</string>
     <string name="content_description_calculator">ಕ್ಯಾಲ್ಕುಲೇಟರ್</string>
     <!-- describes the state of a plan instance that has not yet been applied, i.e. no transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_open">ತೆರೆದಿರುತ್ತದೆ</string>
     <!-- describes the state of a plan instance that has been cancelled, i.e. it has been flagged it to be skipped. Used as content description for icon in list. -->
-    <string name="plan_instance_state_cancelled">ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ</string>
     <!-- describes the state of a plan instance that has been applied, i.e. a transaction has been entered into the database for it. Used as content description for icon in list. -->
-    <string name="plan_instance_state_applied">ಅನ್ವಯಿಸಲಾಗಿದೆ</string>
     <string name="warning_cannot_move_split_transaction">ಈ ವಿಭಜಿತ ವಹಿವಾಟನ್ನು %1$s ಖಾತೆಗೆ ಸರಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ ಏಕೆಂದರೆ ಈ ಖಾತೆಯನ್ನು ಉಲ್ಲೇಖಿಸುವ ವರ್ಗಾವಣೆ ಭಾಗಗಳಿವೆ.</string>
     <string name="content_description_calculator_delete_button">ಕೊನೆಯ ಅಂಕಿಯನ್ನು ಅಳಿಸಿ</string>
     <string name="paypal_callback_info">ನಿಮ್ಮ ವಹಿವಾಟು ಪೂರ್ಣಗೊಂಡಿದೆ, ಮತ್ತು ನಿಮ್ಮ ಖರೀದಿಗೆ ರಶೀದಿಯನ್ನು ನಿಮಗೆ ಇಮೇಲ್ ಮಾಡಲಾಗಿದೆ. ಈ ವಹಿವಾಟಿನ ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಲು ನೀವು www.paypal.com ನಲ್ಲಿ ನಿಮ್ಮ ಖಾತೆಗೆ ಲಾಗ್ ಇನ್ ಮಾಡಬಹುದು.</string>
     <string name="search_transfer">ವರ್ಗಾವಣೆಗಾಗಿ ಹುಡುಕಿ</string>
     <!-- Sort plans (recurring transactions) by the next instance  -->
-    <string name="pref_sort_order_next_instance">ಮುಂದಿನ ನಿದರ್ಶನ</string>
     <string name="crash_dialog_title">{app_name} ಕ್ರ್ಯಾಶ್ ಆಗಿದೆ</string>
     <string name="crash_dialog_text">ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ನಿಲ್ಲಿಸುವಂತೆ ಒತ್ತಾಯಿಸಿ ಅನಿರೀಕ್ಷಿತ ದೋಷ ಸಂಭವಿಸಿದೆ. ದೋಷ ಡೇಟಾವನ್ನು ಕಳುಹಿಸುವ ಮೂಲಕ ದಯವಿಟ್ಟು ಇದನ್ನು ಸರಿಪಡಿಸಲು ನಮಗೆ ಸಹಾಯ ಮಾಡಿ, ನೀವು ಮಾಡಬೇಕಾಗಿರುವುದು ಸರಿ ಕ್ಲಿಕ್ ಮಾಡಿ.</string>
     <string name="crash_dialog_comment_prompt">ಕೆಳಗಿನ ಸಮಸ್ಯೆಯ ಕುರಿತು ನಿಮ್ಮ ಕಾಮೆಂಟ್‌ಗಳನ್ನು ನೀವು ಸೇರಿಸಬಹುದು:</string>
@@ -503,7 +485,6 @@
     <string name="contributed_by">%s ಕೊಡುಗೆ ನೀಡಿದೆ</string>
     <string name="pref_sync_notification_summary">ಸಿಂಕ್ರೊನೈಸೇಶನ್ ಪ್ರಗತಿಯ ಬಗ್ಗೆ ತಿಳಿಸಿ</string>
     <string name="pref_debug_logging_summary">ಡೀಬಗ್ ಮಾಡುವ ಮಾಹಿತಿಯನ್ನು ಸಿಸ್ಟಮ್ ಲಾಗ್‌ಗೆ ಬರೆಯಿರಿ</string>
-    <string name="plan_custom_recurrence_info">ದಯವಿಟ್ಟು ಮೊದಲು ಟೆಂಪ್ಲೇಟ್ ಅನ್ನು ಉಳಿಸಿ. ನಂತರ ಕ್ಯಾಲೆಂಡರ್ ಅಪ್ಲಿಕೇಶನ್‌ನಲ್ಲಿ ಯೋಜನೆಯನ್ನು ತೆರೆಯಲಾಗುತ್ತದೆ, ಅಲ್ಲಿ ನೀವು ಕಸ್ಟಮ್ ಮರುಕಳಿಕೆಯನ್ನು ಹೊಂದಿಸಬಹುದು.</string>
     <string name="menu_create_template_for_split">ಹೊಸ ವಿಭಜಿತ ಟೆಂಪ್ಲೇಟ್</string>
     <string name="progress_validating_licence">ಪರವಾನಗಿ ಮೌಲ್ಯೀಕರಿಸಲಾಗುತ್ತಿದೆ</string>
     <string name="licence_validation_error_expired">ಪರವಾನಗಿ ಅವಧಿ ಮೀರಿದೆ</string>
@@ -638,7 +619,6 @@
     <string name="pref_category_exchange_rates">ವಿನಿಮಯ ದರಗಳು</string>
     <string name="pref_exchange_rate_provider_summary">ವಿನಿಮಯ ದರಗಳನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ಒದಗಿಸುವವರನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="pref_exchange_rate_provider_title">ವಿನಿಮಯ ದರ ಒದಗಿಸುವವರು</string>
-    <string name="pref_plan_executor_time_title">ಅಧಿಸೂಚನೆಯ ಸಮಯ</string>
     <string name="synchronization_select_folder_dialog_title">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಫೋಲ್ಡರ್ ಆಯ್ಕೆಮಾಡಿ ಅಥವಾ ಹೊಸದನ್ನು ರಚಿಸಿ</string>
     <!-- This message is shwon when we highlight the income / expense toogle, to make user aware of this feature  -->
     <string name="discover_feature_expense_income_switch">ಆದಾಯವನ್ನು ದಾಖಲಿಸಲು ಈ ಸ್ವಿಚ್ ಬಟನ್ ಬಳಸಿ.</string>
@@ -695,7 +675,6 @@
     <string name="pref_category_title_features">ವೈಶಿಷ್ಟ್ಯಗಳು</string>
     <string name="menu_save_and_new_content_description">ಡೇಟಾವನ್ನು ಉಳಿಸಿ, ಅದೇ ಡೇಟಾದೊಂದಿಗೆ ಹೊಸ ವಹಿವಾಟನ್ನು ರಚಿಸಲು ಫಾರ್ಮ್ ಅನ್ನು ಮುಕ್ತವಾಗಿ ಬಿಡಿ.</string>
     <string name="warning_balance_account_delete">ನೀವು ಮುಂದುವರಿದರೆ, ಈ ಖಾತೆಯ ಎಲ್ಲಾ ರಾಜಿ ವ್ಯವಹಾರಗಳನ್ನು ಡೇಟಾಬೇಸ್‌ನಿಂದ ಅಳಿಸಲಾಗುತ್ತದೆ ಮತ್ತು ಅವುಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಲು ನಿಮಗೆ ಸಾಧ್ಯವಾಗುವುದಿಲ್ಲ.</string>
-    <string name="advance_exexcution_in_days">ಮುಂಗಡ ಮರಣದಂಡನೆ (ದಿನಗಳಲ್ಲಿ)</string>
     <string name="select_package">ದಯವಿಟ್ಟು ಪರವಾನಗಿ ಪ್ಯಾಕೇಜ್ ಆಯ್ಕೆಮಾಡಿ.</string>
     <string name="pref_feature_uninstall_summary">ಪ್ಲೇ ಸ್ಟೋರ್ ಅಂತಿಮವಾಗಿ ಆ ಮಾಡ್ಯೂಲ್‌ಗಳನ್ನು ಹಿನ್ನೆಲೆಯಲ್ಲಿ ತೆಗೆದುಹಾಕಲು ಪ್ರಯತ್ನಿಸುತ್ತದೆ.</string>
     <string name="pref_ocr_time_formats_title">ಸಮಯ ಸ್ವರೂಪಗಳು</string>
@@ -717,7 +696,6 @@
     <string name="title_scan_receipt_feature">ರಶೀದಿಯನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
     <string name="pref_planner_manual_time_current">ಅರ್ಜಿಯ ಸಮಯ</string>
     <string name="pref_planner_manual_time_noon">ಮಧ್ಯಾಹ್ನ 12 (ಮಧ್ಯಾಹ್ನ)</string>
-    <string name="pref_planner_manual_time_title">ಹಸ್ತಚಾಲಿತವಾಗಿ ಅನ್ವಯಿಸಲಾದ ನಿಗದಿತ ವಹಿವಾಟಿನ ಸಮಯ</string>
     <string name="budget_filter_all_accounts">ಎಲ್ಲಾ ಖಾತೆಗಳು</string>
     <string name="account_deleted">ಖಾತೆಯನ್ನು ಅಳಿಸಲಾಗಿದೆ</string>
     <string name="image_capture_not_installed">ಚಿತ್ರ ತೆಗೆದುಕೊಳ್ಳಲು ಯಾವುದೇ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ.</string>
@@ -725,7 +703,6 @@
     <string name="ocr_recognition_info">%s ನೊಂದಿಗೆ ಪಠ್ಯ ಗುರುತಿಸುವಿಕೆಯನ್ನು ನಡೆಸಲಾಗುತ್ತಿದೆ</string>
     <string name="warning_link_transfer">ಆಯ್ದ ಎರಡು ವಹಿವಾಟುಗಳನ್ನು ವರ್ಗಾವಣೆಯಂತೆ ಲಿಂಕ್ ಮಾಡಲಾಗುತ್ತದೆ. ಪಾವತಿಸುವವರು / ಪಾವತಿಸಿದವರು ಮತ್ತು ವರ್ಗದ ಮಾಹಿತಿಯನ್ನು ಕೈಬಿಡಲಾಗುತ್ತದೆ.</string>
     <string name="download_completed">ಡೌನ್‌ಲೋಡ್ (%s) ಪೂರ್ಣಗೊಂಡಿದೆ.</string>
-    <string name="warning_plan_instance_delete">ಆಯ್ದ ದಿನಾಂಕಕ್ಕಾಗಿ ರಚಿಸಲಾದ ವಹಿವಾಟನ್ನು ಅಳಿಸಲಾಗುತ್ತದೆ.</string>
     <string name="auto_fill_focus">ಪಾವತಿಸುವವರ ಮೇಲೆ ಕೇಂದ್ರೀಕರಿಸಿ</string>
     <string name="request_for_invoice">ಸರಕುಪಟ್ಟಿಗಾಗಿ ವಿನಂತಿ</string>
     <string name="active_tags">ಸಕ್ರಿಯ ಟ್ಯಾಗ್‌ಗಳು</string>
@@ -733,7 +710,6 @@
     <string name="account_widget_configuration">ಖಾತೆ ವಿಜೆಟ್ ಕಾನ್ಫಿಗರೇಶನ್</string>
     <string name="account_widget_configuration_sum_total">ಭವಿಷ್ಯದ ವಹಿವಾಟುಗಳನ್ನು ಸೇರಿಸಿ</string>
     <string name="account_widget_configuration_sum">ಪ್ರದರ್ಶಿತ ಮೊತ್ತದ ಪ್ರಕಾರ</string>
-    <string name="recurrence_last_day_of_month">ಕೊನೆಯ ದಿನ</string>
     <string name="single_feature_info">ಪರ್ಯಾಯವಾಗಿ ನೀವು ಈ ವೈಶಿಷ್ಟ್ಯಕ್ಕೆ ಮಾತ್ರ ಅನಿಯಮಿತ ಪ್ರವೇಶವನ್ನು ಖರೀದಿಸಬಹುದು.</string>
     <string name="new_balance">ಹೊಸ ಸಮತೋಲನ</string>
     <string name="pref_group_header_show_details_summary">ಗುಂಪು ಹೆಡರ್ನಲ್ಲಿ ವಿವರ ಮೊತ್ತವನ್ನು ತೋರಿಸಿ</string>
@@ -741,8 +717,6 @@
     <string name="ocr_download_info">ಪಠ್ಯ ಗುರುತಿಸುವ ಸಾಮರ್ಥ್ಯವನ್ನು ಬಾಹ್ಯ ಅಪ್ಲಿಕೇಶನ್‌ನಿಂದ ಒದಗಿಸಲಾಗಿದೆ.</string>
     <string name="pref_tesseract_language_title">ಟೆಸ್ಸೆರಾಕ್ಟ್ ಭಾಷೆ</string>
     <string name="pref_ocr_engine_title">ಪಠ್ಯ ಗುರುತಿಸುವಿಕೆಗಾಗಿ ಎಂಜಿನ್</string>
-    <string name="content_description_edit_plan">ಕ್ಯಾಲೆಂಡರ್ ಅಪ್ಲಿಕೇಶನ್‌ನಲ್ಲಿ ಯೋಜನೆಯನ್ನು ಸಂಪಾದಿಸಿ</string>
-    <string name="plan_automatic_without_amount_hint">ಮೊತ್ತವಿಲ್ಲದ ಯೋಜನೆಯನ್ನು ಸ್ವಯಂಚಾಲಿತ ಯೋಜನೆ ಕಾರ್ಯಗತಗೊಳಿಸುವಿಕೆಯೊಂದಿಗೆ ಉಳಿಸಬಾರದು</string>
     <string name="template_default_action_without_amount_hint">ಮೊತ್ತವಿಲ್ಲದ ಟೆಂಪ್ಲೇಟ್ ಅನ್ನು ಡೀಫಾಲ್ಟ್ ಕ್ರಿಯೆಯೊಂದಿಗೆ ಉಳಿಸಬೇಕು \'ಸಂಪಾದಿಸು\'</string>
     <string name="pref_clone_with_current_date_title">ಅಬೀಜ ವಹಿವಾಟಿನ ದಿನಾಂಕ</string>
     <string name="confirmation_load_template_discard_data">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಫಾರ್ಮ್ ಡೇಟಾವನ್ನು ತ್ಯಜಿಸಲಾಗುತ್ತದೆ.</string>

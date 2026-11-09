@@ -708,7 +708,6 @@
     <string name="next_settings_section_entry_receipts">Receipts</string>
     <string name="next_settings_section_data_manage">Manage</string>
     <string name="next_settings_section_data_currencies">Currencies &amp; exchange rates</string>
-    <string name="next_settings_section_data_planner">Planner</string>
     <string name="next_settings_section_backup_backup">Back up &amp; restore</string>
     <string name="next_settings_section_backup_auto">Automatic backup</string>
     <string name="next_settings_section_backup_purge">Clean up &amp; share</string>
@@ -730,14 +729,11 @@
     <string name="next_settings_title_share_target">Send to</string>
     <string name="next_settings_title_uninstall_features">Remove features</string>
     <string name="next_settings_title_uninstall_languages">Remove languages</string>
-    <string name="next_settings_title_planner_execution_time">Time of planned transactions</string>
-    <string name="next_settings_title_planner_manual_time">Time when applied by hand</string>
     <string name="next_settings_title_criterion_future">Future transactions start</string>
     <string name="next_settings_title_equivalent_amounts_update">Update amounts in main currency</string>
     <string name="next_settings_title_original_amount">Show original amount</string>
     <string name="next_settings_explain_home_currency">Totals of accounts in different currencies are shown in this currency. When it changes, prices and amounts are converted anew.</string>
     <string name="next_settings_explain_criterion_future">Future transactions do not count for the current balance yet. Either from the end of today or already from the current time on.</string>
-    <string name="next_settings_explain_planner_manual_time">The time a planned transaction gets when you apply it yourself.</string>
     <string name="next_settings_explain_equivalent_amounts_update">When an exchange rate changes, the amounts in main currency of earlier transactions are calculated anew.</string>
     <string name="next_settings_explain_original_amount">Transactions in another currency also show the amount in that currency.</string>
     <string name="next_settings_explain_ocr_engine">Reads amount, date and shop from the photo of a receipt.</string>
@@ -795,7 +791,6 @@
     <string name="next_settings_explain_debug_ads">Shows ads even where they are turned off otherwise.</string>
     <string name="next_settings_explain_db_safe_mode">Adds up very large amounts without overflow. The app offers it when such an error occurs.</string>
     <string name="next_settings_explain_repair_987">Shows transactions damaged by a known error (#987).</string>
-    <string name="next_settings_explain_remove_local_calendar">Deletes the calendar the app created on this device for planned transactions.</string>
     <string name="next_settings_consent">Analyse transactions</string>
     <string name="next_settings_category_rules">Category rules</string>
     <string name="next_settings_tag_rules">Tag rules</string>
