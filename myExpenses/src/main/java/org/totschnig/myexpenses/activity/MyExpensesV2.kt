@@ -621,7 +621,7 @@ open class MyExpensesV2 : BaseMyExpenses<MainViewModel>(),
         }
     )
 
-    fun editTrade(transactionId: Long) {
+    override fun editTrade(transactionId: Long) {
         viewModel.loadTrade(transactionId)
     }
 

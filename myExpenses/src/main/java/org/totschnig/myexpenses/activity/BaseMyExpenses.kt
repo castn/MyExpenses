@@ -198,6 +198,9 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
 
     abstract suspend fun accountForNewTransaction(): Optional<FullAccount>?
 
+    /** Opens the trade with this transaction, which belongs to a portfolio */
+    abstract fun editTrade(transactionId: Long)
+
     var selectionState
         get() = viewModel.selectionState.value
         set(value) {
@@ -1014,7 +1017,7 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
                     }
 
                     transaction.isPortfolio || transaction.transferPeerIsPortfolio == true -> {
-                        (this@BaseMyExpenses as? MyExpensesV2)?.editTrade(
+                        editTrade(
                             transaction.transferPeerParent ?: transaction.id
                         )
                     }

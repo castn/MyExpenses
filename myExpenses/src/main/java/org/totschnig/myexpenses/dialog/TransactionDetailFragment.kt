@@ -79,8 +79,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.BaseActivity
+import org.totschnig.myexpenses.activity.BaseMyExpenses
 import org.totschnig.myexpenses.activity.ExpenseEdit
-import org.totschnig.myexpenses.activity.MyExpensesV2
 import org.totschnig.myexpenses.activity.ViewIntentProvider
 import org.totschnig.myexpenses.compose.ButtonRow
 import org.totschnig.myexpenses.compose.ColoredAmountText
@@ -322,7 +322,7 @@ class TransactionDetailFragment : ComposeBaseDialogFragment3() {
                             }
                             transaction.isPortfolio || transaction.transferPeerIsPortfolio -> {
                                 dismiss()
-                                (requireActivity() as? MyExpensesV2)?.editTrade(
+                                (requireActivity() as? BaseMyExpenses<*>)?.editTrade(
                                     transaction.transferPeerParent ?: transaction.id
                                 )
                             }
