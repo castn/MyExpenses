@@ -721,11 +721,9 @@ fun computeWhere(vararg parts: CharSequence?) = parts
 fun backup(
     backupDir: File,
     context: Context,
-    prefHandler: PrefHandler,
     lenientMode: Boolean,
 ): Result<Unit> {
     try {
-        cacheEventData(context, prefHandler)
         cacheSyncState(context)
     } catch (e: Exception) {
         if (!lenientMode) throw e

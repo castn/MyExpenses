@@ -2,20 +2,15 @@ package org.totschnig.myexpenses.viewmodel
 
 import android.accounts.AccountManager
 import android.app.Application
-import android.content.ContentUris
 import android.content.ContentValues
 import android.database.sqlite.SQLiteException
 import android.net.Uri
 import android.os.Bundle
-import android.provider.CalendarContract
 import android.text.TextUtils
 import androidx.core.os.BundleCompat
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.edit
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -28,33 +23,22 @@ import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.provider.BACKUP_DB_FILE_NAME
 import org.totschnig.myexpenses.provider.BACKUP_PREF_FILE_NAME
-import org.totschnig.myexpenses.provider.CALENDAR_FULL_PATH_PROJECTION
 import org.totschnig.myexpenses.provider.KEY_URI
 import org.totschnig.myexpenses.provider.DatabaseVersionPeekHelper
 import org.totschnig.myexpenses.provider.DbUtils
-import org.totschnig.myexpenses.provider.INVALID_CALENDAR_ID
-import org.totschnig.myexpenses.provider.KEY_PLANID
 import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.provider.KEY_SYNC_ACCOUNT_NAME
-import org.totschnig.myexpenses.provider.KEY_UUID
-import org.totschnig.myexpenses.provider.PlannerUtils
-import org.totschnig.myexpenses.provider.PlannerUtils.Companion.copyEventData
 import org.totschnig.myexpenses.provider.TransactionProvider
-import org.totschnig.myexpenses.provider.TransactionProvider.TEMPLATES_URI
 import org.totschnig.myexpenses.provider.asSequence
 import org.totschnig.myexpenses.provider.checkSyncAccounts
 import org.totschnig.myexpenses.provider.getBackupDataStoreFile
 import org.totschnig.myexpenses.provider.getBackupDbFile
 import org.totschnig.myexpenses.provider.getBackupPrefFile
-import org.totschnig.myexpenses.provider.getCalendarPath
-import org.totschnig.myexpenses.provider.insertEventAndUpdatePlan
 import org.totschnig.myexpenses.sync.GenericAccountService
 import org.totschnig.myexpenses.sync.SyncAdapter
 import org.totschnig.myexpenses.sync.SyncBackendProviderFactory
 import org.totschnig.myexpenses.util.AppDirHelper
-import org.totschnig.myexpenses.util.PermissionHelper
 import org.totschnig.myexpenses.util.PictureDirHelper
-import org.totschnig.myexpenses.util.Utils
 import org.totschnig.myexpenses.util.ZipUtils
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
 import org.totschnig.myexpenses.util.crypt.EncryptionHelper
@@ -78,18 +62,8 @@ class RestoreViewModel(application: Application) : ContentResolvingAndroidViewMo
     val publishProgress: SharedFlow<String?> = _publishProgress
     val result: StateFlow<Result<Unit>?> = _result
 
-    private val _permissionRequested = MutableLiveData<Unit?>(null)
-    val permissionRequested: LiveData<Unit?> = _permissionRequested
-    var permissionRequestFuture: CompletableDeferred<Boolean>? = null
-    fun submitPermissionRequestResult(granted: Boolean) {
-        permissionRequestFuture?.complete(granted)
-    }
-
     @Inject
     lateinit var versionPeekHelper: DatabaseVersionPeekHelper
-
-    @Inject
-    lateinit var plannerUtils: PlannerUtils
 
     private fun failureResult(throwable: Throwable) {
         _result.update {
@@ -127,8 +101,6 @@ class RestoreViewModel(application: Application) : ContentResolvingAndroidViewMo
             val backupFromSync: String? =
                 if (fileUri == null) args.getString(KEY_BACKUP_FROM_SYNC) else null
             val password: String? = args.getString(KEY_PASSWORD)
-            var currentPlannerId: String? = null
-            var currentPlannerPath: String? = null
             val application = getApplication<MyApplication>()
 
             val workingDir = AppDirHelper.newWorkingDirectory(application, "restore").getOrElse {
@@ -204,7 +176,7 @@ class RestoreViewModel(application: Application) : ContentResolvingAndroidViewMo
                     return@launch
                 }
 
-                //peek into preferences to see if there is a calendar configured
+                //copy the preferences of the backup to the private data directory, where they can be read
                 val internalAppDir = application.filesDir.parentFile!!
                 val sharedPrefsDir = File(internalAppDir.path + "/shared_prefs/")
                 sharedPrefsDir.mkdir()
@@ -229,56 +201,6 @@ class RestoreViewModel(application: Application) : ContentResolvingAndroidViewMo
                     return@launch
                 }
                 val backupPref = application.getSharedPreferences(TEMP_PREFS, 0)
-                val calendarId = backupPref
-                    .getString(prefHandler.getKey(PrefKey.PLANNER_CALENDAR_ID), "-1")
-                val calendarPath = backupPref
-                    .getString(prefHandler.getKey(PrefKey.PLANNER_CALENDAR_PATH), "")
-                if (!(calendarId == "-1" || calendarPath == "")) {
-                    if (!PermissionHelper.hasCalendarPermission(getApplication())) {
-                        _permissionRequested.postValue(Unit)
-                        val granted = CompletableDeferred<Boolean>().also {
-                            permissionRequestFuture = it
-                        }.await()
-                        _permissionRequested.postValue(null)
-                        if (!granted) {
-                            failureResult(
-                                Utils.getTextWithAppName(
-                                    getApplication(),
-                                    R.string.notifications_permission_required_planner
-                                ).toString()
-                            )
-                            return@launch
-                        }
-                    }
-                    if (try {
-                            contentResolver.query(
-                                CalendarContract.Calendars.CONTENT_URI,
-                                arrayOf(CalendarContract.Calendars._ID),
-                                "$CALENDAR_FULL_PATH_PROJECTION = ?",
-                                arrayOf(calendarPath),
-                                null
-                            )?.use {
-                                it.moveToFirst()
-                            }
-                        } catch (e: SecurityException) {
-                            failureResult(e)
-                            return@launch
-                        } == false
-                    ) {
-                        //the calendar configured in the backup does not exist
-                        currentPlannerId = plannerUtils.checkPlanner()
-                        currentPlannerPath =
-                            prefHandler.getString(PrefKey.PLANNER_CALENDAR_PATH, "")
-                        if (INVALID_CALENDAR_ID == currentPlannerId) {
-                            //there is no locally configured calendar, we create a new one
-                            //noinspection MissingPermission
-                            currentPlannerId = plannerUtils.createPlanner(false)
-                            currentPlannerPath =
-                                getCalendarPath(contentResolver, currentPlannerId)
-                        }
-                    }
-                }
-
                 val dataStoreBackup =
                     getBackupDataStoreFile(workingDir).takeIf { it.exists() }?.let {
                         PreferenceDataStoreFactory.create(
@@ -356,35 +278,11 @@ class RestoreViewModel(application: Application) : ContentResolvingAndroidViewMo
                             }
                         }
                     }
-                    if (currentPlannerId != null) {
-                        edit.putString(
-                            prefHandler.getKey(PrefKey.PLANNER_CALENDAR_PATH),
-                            currentPlannerPath
-                        )
-                        edit.putString(
-                            prefHandler.getKey(PrefKey.PLANNER_CALENDAR_ID),
-                            currentPlannerId
-                        )
-                    }
                     edit.putBoolean(prefHandler.getKey(PrefKey.ENCRYPT_DATABASE), encrypt)
                     edit.apply()
                     publishProgress(R.string.restore_preferences_success)
-                    //if a user restores a backup we do not want past plan instances to flood the database
-                    prefHandler.putLong(
-                        PrefKey.PLANNER_LAST_EXECUTION_TIMESTAMP,
-                        System.currentTimeMillis()
-                    )
-                    publishProgress(
-                        R.string.restore_calendar_success,
-                        restorePlanner()
-                    )
                     application.settings
                         .registerOnSharedPreferenceChangeListener(application)
-                    Timber.i("now emptying event cache")
-                    contentResolver.delete(
-                        TransactionProvider.EVENT_CACHE_URI, null, null
-                    )
-
                     //now handling pictures
                     //1.stale uris in the backup can be ignored1
                     //delete from db
@@ -548,146 +446,6 @@ class RestoreViewModel(application: Application) : ContentResolvingAndroidViewMo
             )
             contentResolver.insert(TransactionProvider.ATTACHMENTS_URI, values)
         }
-    }
-
-    /**
-     * 1.check if a planner is configured. If no, nothing to do 2.check if the
-     * configured planner exists on the device 2.1 if yes go through all events
-     * and look for them based on UUID added to description recreate events that
-     * we did not find (2.2 if no, user should have been asked to select a target
-     * calendar where we will store the recreated events)
-     *
-     * @return number of restored plans
-     */
-    private fun restorePlanner(): Int {
-        val calendarIdFromBackup = prefHandler.getString(
-            PrefKey.PLANNER_CALENDAR_ID,
-            INVALID_CALENDAR_ID
-        )
-        val calendarPath = prefHandler.getString(PrefKey.PLANNER_CALENDAR_PATH, "")
-        Timber.d(
-            "restore plans to calendar with id %s and path %s", calendarIdFromBackup,
-            calendarPath
-        )
-        var restoredPlansCount = 0
-        if (!(calendarIdFromBackup == INVALID_CALENDAR_ID || calendarPath == "")) {
-            contentResolver.query(
-                CalendarContract.Calendars.CONTENT_URI,
-                arrayOf(CalendarContract.Calendars._ID),
-                CALENDAR_FULL_PATH_PROJECTION
-                        + " = ?",
-                arrayOf(calendarPath),
-                null
-            )?.use {
-                if (it.moveToFirst()) {
-                    val calendarId = it.getLong(0)
-                    Timber.d("restorePlaner: found calendar with id %d", calendarId)
-                    prefHandler.putString(PrefKey.PLANNER_CALENDAR_ID, calendarId.toString())
-                    val planValues = ContentValues()
-                    val eventValues = ContentValues()
-                    eventValues.put(
-                        CalendarContract.Events.CALENDAR_ID,
-                        calendarId
-                    )
-                    contentResolver.query(
-                        TEMPLATES_URI, arrayOf(
-                            KEY_ROWID, KEY_PLANID,
-                            KEY_UUID
-                        ), "$KEY_PLANID IS NOT null", null, null
-                    )?.use { plan ->
-                        if (plan.moveToFirst()) {
-                            do {
-                                val templateId = plan.getLong(0)
-                                val oldPlanId = plan.getLong(1)
-                                val uuid = plan.getString(2)
-                                if (contentResolver.query(
-                                        CalendarContract.Events.CONTENT_URI,
-                                        arrayOf(CalendarContract.Events._ID),
-                                        CalendarContract.Events.CALENDAR_ID +
-                                            " = ? AND " +
-                                            CalendarContract.Events.DESCRIPTION
-                                                + " LIKE ?",
-                                        arrayOf(calendarId.toString(), "%$uuid%"),
-                                        null
-                                    )?.use { event ->
-                                        if (event.moveToFirst()) {
-                                            val newPlanId = event.getLong(0)
-                                            Timber.d(
-                                                "Looking for event with uuid %s: found id %d. Original event had id %d",
-                                                uuid, newPlanId, oldPlanId
-                                            )
-                                            if (newPlanId != oldPlanId) {
-                                                planValues.put(
-                                                    KEY_PLANID,
-                                                    newPlanId
-                                                )
-                                                val updated = contentResolver.update(
-                                                    ContentUris.withAppendedId(
-                                                        TEMPLATES_URI, templateId
-                                                    ), planValues, null,
-                                                    null
-                                                )
-                                                if (updated > 0) {
-                                                    Timber.i(
-                                                        "updated plan id in template: %d",
-                                                        templateId
-                                                    )
-                                                    restoredPlansCount++
-                                                }
-                                            } else {
-                                                restoredPlansCount++
-                                            }
-                                            true
-                                        } else false
-                                    } == false
-                                ) {
-                                    Timber.d(
-                                        "Looking for event with uuid %s did not find, now reconstructing from cache",
-                                        uuid
-                                    )
-                                    if (contentResolver.query(
-                                            TransactionProvider.EVENT_CACHE_URI,
-                                            PlannerUtils.eventProjection,
-                                            CalendarContract.Events.DESCRIPTION + " LIKE ?",
-                                            arrayOf("%$uuid%"),
-                                            null
-                                        )?.use { event ->
-                                            if (event.moveToFirst()) {
-                                                eventValues.copyEventData(event)
-                                                if (insertEventAndUpdatePlan(
-                                                        contentResolver,
-                                                        eventValues,
-                                                        templateId
-                                                    )
-                                                ) {
-                                                    Timber.i(
-                                                        "updated plan id in template %d",
-                                                        templateId
-                                                    )
-                                                    restoredPlansCount++
-                                                }
-                                                true
-                                            } else false
-                                        } == false
-                                    ) {
-                                        //need to set eventId to null
-                                        planValues.putNull(KEY_PLANID)
-                                        contentResolver.update(
-                                            ContentUris.withAppendedId(
-                                                TEMPLATES_URI,
-                                                templateId
-                                            ),
-                                            planValues, null, null
-                                        )
-                                    }
-                                }
-                            } while (plan.moveToNext())
-                        }
-                    }
-                }
-            }
-        }
-        return restoredPlansCount
     }
 
     companion object {

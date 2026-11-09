@@ -11,7 +11,6 @@ import org.totschnig.myexpenses.dialog.MessageDialogFragment
 import org.totschnig.myexpenses.dialog.ProgressDialogFragment
 import org.totschnig.myexpenses.feature.Feature
 import org.totschnig.myexpenses.injector
-import org.totschnig.myexpenses.util.PermissionHelper
 import org.totschnig.myexpenses.util.safeMessage
 import org.totschnig.myexpenses.viewmodel.RestoreViewModel
 
@@ -43,19 +42,6 @@ abstract class RestoreActivity: ProtectedFragmentActivity() {
                     }
                 }
             }
-        }
-
-        restoreViewModel.permissionRequested.observe(this) {
-            if (it != null) {
-                checkPermissionsForPlaner()
-            }
-        }
-    }
-
-    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
-        super.onPermissionsGranted(requestCode, perms)
-        if (requestCode == PermissionHelper.PERMISSIONS_REQUEST_WRITE_CALENDAR) {
-            restoreViewModel.submitPermissionRequestResult(true)
         }
     }
 
@@ -111,13 +97,6 @@ abstract class RestoreActivity: ProtectedFragmentActivity() {
             if (myApplication.shouldLock(this)) {
                 myApplication.lock()
             }
-        }
-    }
-
-    override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
-        super.onPermissionsDenied(requestCode, perms)
-        if (requestCode == PermissionHelper.PERMISSIONS_REQUEST_WRITE_CALENDAR) {
-           restoreViewModel.submitPermissionRequestResult(false)
         }
     }
 

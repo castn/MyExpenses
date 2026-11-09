@@ -38,7 +38,7 @@ fun doBackup(
             requireBackupFile(appDir, prefHandler.backupFilePrefix, encrypted)
                 ?: throw localizedThrowable(context, R.string.io_error_backupdir_null)
         val cacheDir = AppDirHelper.newWorkingDirectory(context, "backup").getOrThrow()
-        backup(cacheDir, context, prefHandler, lenientMode).getOrThrow()
+        backup(cacheDir, context, lenientMode).getOrThrow()
         try {
             ZipUtils.zipBackup(context, cacheDir, backupFile, password, lenientMode)
             try {
