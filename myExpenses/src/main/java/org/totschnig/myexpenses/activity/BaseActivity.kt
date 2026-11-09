@@ -1468,7 +1468,8 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
         get() = requireApplication().appComponent.bankingFeature() ?: BankingFeature
 
     /** The main screen opened once the app is set up and after a restore */
-    protected open val mainScreenClass: Class<*> = MyExpensesV2::class.java
+    protected val mainScreenClass: Class<*>
+        get() = injector.mainScreen().activityClass
 
     protected open fun restartAfterRestore() {
         (application as MyApplication).invalidateHomeCurrency()

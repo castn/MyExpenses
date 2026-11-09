@@ -11,7 +11,7 @@ import org.totschnig.myexpenses.next.settings.NextSettings
  *
  * Commands are the menu ids dispatched by the main screen (e.g. `R.id.MANAGE_TEMPLATES_COMMAND`).
  * Return `true` if the command was handled by a screen of the new UI; return `false` to fall
- * back to the old screen (handled by `MyExpensesV2` / `BaseMyExpenses`).
+ * back to the old screen (handled by `BaseMyExpenses`).
  *
  * To replace an old screen: build the new screen in this module, then add its command here, e.g.
  *

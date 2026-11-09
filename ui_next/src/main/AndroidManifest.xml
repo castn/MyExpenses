@@ -10,26 +10,23 @@
     </queries>
 
     <application tools:ignore="MissingApplicationIcon">
-        <!-- Own task affinity, so that the old (V2) and the new UI live in separate tasks
-             and switching launcher icons does not stack one UI on top of the other. -->
+        <!-- The main screen. The launcher starts it through SplashActivity of :myExpenses. -->
         <activity
             android:name="org.totschnig.myexpenses.next.MainActivity"
-            android:exported="true"
-            android:label="MyExpenses Next"
-            tools:ignore="HardcodedText"
-            android:launchMode="singleTop"
-            android:taskAffinity="org.totschnig.myexpenses.next">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:launchMode="singleTop" />
         <activity
             android:name="org.totschnig.myexpenses.next.settings.NextSettings"
             android:label="@string/settings_label" />
+        <activity android:name="org.totschnig.myexpenses.next.onboarding.NextOnboarding" />
+
+        <!-- Up from the editors of :myExpenses leads to the main screen -->
         <activity
-            android:name="org.totschnig.myexpenses.next.onboarding.NextOnboarding"
-            android:taskAffinity="org.totschnig.myexpenses.next" />
+            android:name="org.totschnig.myexpenses.activity.ExpenseEdit"
+            android:parentActivityName="org.totschnig.myexpenses.next.MainActivity"
+            tools:replace="android:parentActivityName" />
+        <activity
+            android:name="org.totschnig.myexpenses.activity.ManageTemplates"
+            android:parentActivityName="org.totschnig.myexpenses.next.MainActivity"
+            tools:replace="android:parentActivityName" />
     </application>
 </manifest>

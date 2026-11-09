@@ -20,7 +20,6 @@ import org.totschnig.myexpenses.designsystem.PickDialog
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model2.Account
-import org.totschnig.myexpenses.next.MainActivity
 import org.totschnig.myexpenses.next.NextTheme
 import org.totschnig.myexpenses.next.NextFeatures
 import org.totschnig.myexpenses.preference.PrefKey
@@ -42,8 +41,6 @@ import org.totschnig.myexpenses.next.core.common.R as NextR
  * The first start of the app in the new UI: a few pages instead of the forms of [org.totschnig.myexpenses.activity.OnboardingActivity]
  */
 class NextOnboarding : OnboardingHostActivity() {
-
-    override val mainScreenClass: Class<*> = MainActivity::class.java
 
     override val snackBarContainerId = android.R.id.content
 

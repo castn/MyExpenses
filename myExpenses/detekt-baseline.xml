@@ -48,12 +48,12 @@
     <ID>CyclomaticComplexMethod:ImportUtils.kt:ImportUtils$private fun reduceTransfers: List&lt;ImportTransaction&gt;</ID>
     <ID>CyclomaticComplexMethod:LazyFontSelector.kt:LazyFontSelector$@Throws(DocumentException::class, IOException::class) fun processChar: Chunk?</ID>
     <ID>CyclomaticComplexMethod:MainDelegate.kt:MainDelegate$fun setupDebtChangedListener</ID>
+    <ID>CyclomaticComplexMethod:MainViewModel.kt:MainViewModel$private fun saveAssetTransfer</ID>
+    <ID>CyclomaticComplexMethod:MainViewModel.kt:MainViewModel$private fun saveTradeInternal</ID>
     <ID>CyclomaticComplexMethod:ManageBudgets.kt:ManageBudgets$@OptIn(ExperimentalMaterial3Api::class) public override fun onCreate</ID>
     <ID>CyclomaticComplexMethod:ManageCategories.kt:ManageCategories$override fun onCreate</ID>
     <ID>CyclomaticComplexMethod:MoreDbUtils.kt:fun parseCategoriesFromXml: List&lt;CategoryTreeItem&gt;</ID>
     <ID>CyclomaticComplexMethod:MyExpensesV2.kt:MyExpensesV2$@OptIn(ExperimentalMaterial3Api::class) override fun onCreate</ID>
-    <ID>CyclomaticComplexMethod:MainViewModel.kt:MainViewModel$private fun saveAssetTransfer</ID>
-    <ID>CyclomaticComplexMethod:MainViewModel.kt:MainViewModel$private fun saveTradeInternal</ID>
     <ID>CyclomaticComplexMethod:PartiesList.kt:PartiesList.PayeeAdapter$override fun onItemClick</ID>
     <ID>CyclomaticComplexMethod:PdfPrinter.kt:PdfPrinter$@Throws(DocumentException::class, IOException::class) private fun addTransactionList</ID>
     <ID>CyclomaticComplexMethod:PlanExecutor.kt:PlanExecutor$@RequiresPermission(allOf = [Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR]) @SuppressLint("InlinedApi") override suspend fun doWork: Result</ID>
@@ -91,8 +91,8 @@
     <ID>LargeClass:BaseTransactionProvider.kt:BaseTransactionProvider : ContentProvider</ID>
     <ID>LargeClass:ExpenseEdit.kt:ExpenseEdit : AmountActivityContribIFaceConfirmationDialogListenerHostOnCriterionDialogDismissedListener</ID>
     <ID>LargeClass:ExportTest.kt:ExportTest : BaseTestWithRepository</ID>
-    <ID>LargeClass:ManageCategories.kt:ManageCategories : ProtectedFragmentActivityContribIFace</ID>
     <ID>LargeClass:MainViewModel.kt:MainViewModel : MyExpensesViewModel</ID>
+    <ID>LargeClass:ManageCategories.kt:ManageCategories : ProtectedFragmentActivityContribIFace</ID>
     <ID>LargeClass:MyExpensesViewModel.kt:MyExpensesViewModel : PrintViewModel</ID>
     <ID>LargeClass:PdfPrinter.kt:PdfPrinter</ID>
     <ID>LargeClass:SyncAdapter.kt:SyncAdapter : AbstractThreadedSyncAdapter</ID>
@@ -163,6 +163,8 @@
     <ID>LongMethod:ImportDataViewModelTest.kt:ImportDataViewModelTest$@Test fun insertTransfer</ID>
     <ID>LongMethod:ImportTradesDialog.kt:private suspend fun parseCsv: ImportTradesParseResult</ID>
     <ID>LongMethod:MainDelegate.kt:MainDelegate$fun setupDebtChangedListener</ID>
+    <ID>LongMethod:MainViewModel.kt:MainViewModel$private fun saveAssetTransfer</ID>
+    <ID>LongMethod:MainViewModel.kt:MainViewModel$private fun saveTradeInternal</ID>
     <ID>LongMethod:ManageBudgets.kt:ManageBudgets$@OptIn(ExperimentalMaterial3Api::class) public override fun onCreate</ID>
     <ID>LongMethod:ManageCategories.kt:ManageCategories$override fun onCreate</ID>
     <ID>LongMethod:ManageCategories.kt:ManageCategories$private fun observeDeleteResult</ID>
@@ -171,8 +173,6 @@
     <ID>LongMethod:MoreDbUtils.kt:private fun setupCategoriesInternal: Pair&lt;Int, Int&gt;</ID>
     <ID>LongMethod:MoreUiUtils.kt:fun attachmentInfoMap: Map&lt;Uri, AttachmentInfo&gt;</ID>
     <ID>LongMethod:MyExpensesV2.kt:MyExpensesV2$@OptIn(ExperimentalMaterial3Api::class) override fun onCreate</ID>
-    <ID>LongMethod:MainViewModel.kt:MainViewModel$private fun saveAssetTransfer</ID>
-    <ID>LongMethod:MainViewModel.kt:MainViewModel$private fun saveTradeInternal</ID>
     <ID>LongMethod:OnboardingUiFragment.kt:OnboardingUiFragment$override fun configureView</ID>
     <ID>LongMethod:PartiesList.kt:PartiesList.PayeeAdapter$override fun onItemClick</ID>
     <ID>LongMethod:PartyListViewModel.kt:PartyListViewModel$fun mergeParties</ID>
@@ -561,7 +561,6 @@
     <ID>TooGenericExceptionCaught:DbUtils.kt:DbUtils$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ExchangeRateService.kt:ExchangeRateService$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ExportViewModel.kt:ExportViewModel$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:FeatureModule.kt:FeatureModule$e: Exception</ID>
     <ID>TooGenericExceptionCaught:Grouping.kt:Grouping$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ImportSourceDialogFragment.kt:ImportSourceDialogFragment$throwable: Exception</ID>
     <ID>TooGenericExceptionCaught:ImportSourceDialogFragment.kt:ImportSourceDialogFragment$throwable: Throwable</ID>
@@ -625,12 +624,12 @@
     <ID>TooManyFunctions:ImportUtils.kt:ImportUtils</ID>
     <ID>TooManyFunctions:LicenceHandler.kt:LicenceHandler</ID>
     <ID>TooManyFunctions:MainDelegate.kt:MainDelegate : TransactionDelegate</ID>
+    <ID>TooManyFunctions:MainViewModel.kt:MainViewModel : MyExpensesViewModel</ID>
     <ID>TooManyFunctions:ManageCategories.kt:ManageCategories : ProtectedFragmentActivityContribIFace</ID>
     <ID>TooManyFunctions:ManageCategoriesViewModel.kt:ManageCategoriesViewModel : CategoryViewModel</ID>
     <ID>TooManyFunctions:MoreDbUtils.kt:org.totschnig.myexpenses.provider.MoreDbUtils.kt</ID>
     <ID>TooManyFunctions:MoreUiUtils.kt:org.totschnig.myexpenses.util.ui.MoreUiUtils.kt</ID>
     <ID>TooManyFunctions:MyApplication.kt:MyApplication : ApplicationOnSharedPreferenceChangeListener</ID>
-    <ID>TooManyFunctions:MainViewModel.kt:MainViewModel : MyExpensesViewModel</ID>
     <ID>TooManyFunctions:MyExpensesViewModel.kt:MyExpensesViewModel : PrintViewModel</ID>
     <ID>TooManyFunctions:PrefHandler.kt:PrefHandler</ID>
     <ID>TooManyFunctions:PrintLayoutConfigurationViewModel.kt:PrintLayoutConfigurationViewModel : AndroidViewModel</ID>

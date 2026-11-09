@@ -158,8 +158,8 @@ without the whole app. Interfaces keep the dependency boundary explicit and let 
 
 Packages start with the module's namespace: `org.totschnig.myexpenses.next.core.model.ledger`,
 `…next.data.contracts`, `…next.feature.contracts`. No two modules share a package. Only the shell
-keeps `org.totschnig.myexpenses.next` and its sub-packages, since the launcher points at
-`org.totschnig.myexpenses.next.MainActivity`. The texts are
+keeps `org.totschnig.myexpenses.next` and its sub-packages, since :app hands the main screen
+`org.totschnig.myexpenses.next.MainActivity` to :myExpenses. The texts are
 `org.totschnig.myexpenses.next.core.common.R`.
 
 **Why:** Shared packages mean that `import org.totschnig.myexpenses.next.foo.Bar` could refer to

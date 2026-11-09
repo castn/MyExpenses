@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import okhttp3.OkHttpClient
 import org.totschnig.myexpenses.MyApplication
 import org.totschnig.myexpenses.activity.BaseActivity
+import org.totschnig.myexpenses.activity.BaseMyExpenses
 import org.totschnig.myexpenses.activity.CsvImportActivity
 import org.totschnig.myexpenses.activity.EditActivity
 import org.totschnig.myexpenses.activity.ExpenseEdit
@@ -82,6 +83,7 @@ import org.totschnig.myexpenses.viewmodel.DistributionViewModel
 import org.totschnig.myexpenses.viewmodel.ExportViewModel
 import org.totschnig.myexpenses.viewmodel.FeatureViewModel
 import org.totschnig.myexpenses.viewmodel.LicenceValidationViewModel
+import org.totschnig.myexpenses.viewmodel.MainViewModel
 import org.totschnig.myexpenses.viewmodel.MyExpensesViewModel
 import org.totschnig.myexpenses.viewmodel.OcrViewModel
 import org.totschnig.myexpenses.viewmodel.PlannerViewModel
@@ -205,6 +207,8 @@ interface AppComponent {
     fun inject(expenseEdit: ExpenseEdit)
 
     fun inject(myExpenses: MyExpensesV2)
+
+    fun inject(mainActivity: BaseMyExpenses<MainViewModel>)
 
     fun inject(preferenceActivity: PreferenceActivity)
 

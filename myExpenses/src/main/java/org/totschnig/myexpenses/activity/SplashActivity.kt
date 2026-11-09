@@ -18,18 +18,16 @@ class SplashActivity : Activity() {
         super.onCreate(savedInstanceState)
         (application as? MyApplication)?.also {
             val prefHandler = it.appComponent.prefHandler()
-            val targetIntent = if (prefHandler.isOnboardingCompleted) {
-                if (intent.getBooleanExtra(EXTRA_START_FROM_WIDGET_DATA_ENTRY, false)) {
-                    Intent(this, ExpenseEdit::class.java).apply {
-                        putExtra(ExpenseEdit.KEY_AUTOFILL_MAY_SET_ACCOUNT, true)
-                        putExtra(EXTRA_START_FROM_WIDGET, true)
-                        putExtra(EXTRA_START_FROM_WIDGET_DATA_ENTRY, true)
-                    }
-                } else {
-                    Intent(this, MyExpensesV2::class.java)
+            val isDataEntry = intent.getBooleanExtra(EXTRA_START_FROM_WIDGET_DATA_ENTRY, false)
+            // The main screen starts the first start itself, when the app is not set up yet
+            val targetIntent = if (prefHandler.isOnboardingCompleted && isDataEntry) {
+                Intent(this, ExpenseEdit::class.java).apply {
+                    putExtra(ExpenseEdit.KEY_AUTOFILL_MAY_SET_ACCOUNT, true)
+                    putExtra(EXTRA_START_FROM_WIDGET, true)
+                    putExtra(EXTRA_START_FROM_WIDGET_DATA_ENTRY, true)
                 }
             } else {
-                Intent(this, OnboardingActivity::class.java)
+                mainScreenIntent()
             }
             startActivity(targetIntent.apply {
                 flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
