@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeout
 import org.junit.After
 import org.junit.Before
 import org.robolectric.Shadows.shadowOf
@@ -144,7 +145,9 @@ abstract class BaseDebtTest : BaseViewModelTest() {
         showSealed: Boolean = false,
         showZero: Boolean = true
     ): List<DisplayDebt> = runBlocking {
-        viewModel.loadDebts(rowId, date, showSealed, showZero).first()
+        withTimeout(TIMEOUT_MILLIS) {
+            viewModel.loadDebts(rowId, date, showSealed, showZero).first()
+        }
     }
 
     /** The debt as the list queries return it, that is with its sums. */
