@@ -29,7 +29,7 @@
     </project>
     <project>
         <name>Android Open Source Project</name>
-        <extra_info>SetupWizardLib, EventRecurrenceFormatter, Licencing Verification</extra_info>
+        <extra_info>EventRecurrenceFormatter, Licencing Verification</extra_info>
         <url>https://source.android.com/</url>
         <licence>Apache License, Version 2.0</licence>
     </project>

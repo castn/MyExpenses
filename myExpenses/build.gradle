@@ -198,8 +198,6 @@ dependencies {
 
     implementation libs.flexbox
 
-    implementation project(path: ':setupwizard')
-
     //licence validation
     implementation libs.retrofit
     implementation libs.converter.gson

@@ -236,29 +236,11 @@
         <item name="android:textColor">?android:textColorTertiary</item>
     </style>
 
-    <style name="OnboardingInputLabel">
-        <item name="android:textAppearance">@style/AdaptiveLabelTextAppearance</item>
-        <item name="android:layout_marginTop">@dimen/suw_description_margin_top</item>
-        <item name="android:layout_marginBottom">@dimen/suw_description_margin_bottom</item>
-    </style>
-
     <style name="AdaptiveLabelTextAppearance" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textSize">@dimen/textSizeLabel</item>
     </style>
 
     <style name="MyTextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox" />
-
-    <style name="OnBoardingDisplayProperty">
-        <item name="android:textAppearance">?android:textAppearanceSmall</item>
-        <item name="android:textColor">?android:textColorPrimary</item>
-    </style>
-
-    <style name="OnboardingSpinner">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:minHeight">@dimen/accessibility_clickable_minimum</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">-8dp</item>
-    </style>
 
     <style name="RecurrenceRowRecurrence">
         <item name="layout_constraintEnd_toStartOf">@id/LastDay</item>

@@ -72,13 +72,6 @@ along with My Expenses.  If not, see <http://www.gnu.org/licenses/>.
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="Onboarding" parent="@style/SuwThemeMaterial">
-        <item name="colorPrimaryDark">?colorSurface</item>
-        <item name="textInputStyle">@style/MyTextInputLayout</item>
-        <item name="simpleDialogTheme">@style/SimpleDialog</item>
-        <item name="android:windowLightStatusBar">?isLightTheme</item>
-    </style>
-
     <style name="Calculator" parent="Theme.Material3.DayNight.Dialog">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
