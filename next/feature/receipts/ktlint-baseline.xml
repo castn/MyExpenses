@@ -821,39 +821,29 @@
         <error line="365" column="24" source="standard:multiline-if-else" />
     </file>
     <file name="src/test/java/org/totschnig/myexpenses/next/feature/receipts/ItemGroupModelSettingsViewModelTest.kt">
-        <error line="26" column="44" source="standard:function-signature" />
-        <error line="26" column="66" source="standard:argument-list-wrapping" />
-        <error line="26" column="72" source="standard:argument-list-wrapping" />
-        <error line="26" column="81" source="standard:argument-list-wrapping" />
-        <error line="26" column="84" source="standard:argument-list-wrapping" />
-        <error line="26" column="100" source="standard:max-line-length" />
-        <error line="26" column="113" source="standard:argument-list-wrapping" />
-        <error line="26" column="117" source="standard:argument-list-wrapping" />
-        <error line="26" column="118" source="standard:argument-list-wrapping" />
-        <error line="31" column="43" source="standard:trailing-comma-on-declaration-site" />
-        <error line="57" column="65" source="standard:trailing-comma-on-declaration-site" />
-        <error line="60" column="19" source="standard:argument-list-wrapping" />
-        <error line="60" column="51" source="standard:argument-list-wrapping" />
-        <error line="60" column="59" source="standard:argument-list-wrapping" />
-        <error line="60" column="84" source="standard:argument-list-wrapping" />
-        <error line="60" column="93" source="standard:argument-list-wrapping" />
-        <error line="60" column="96" source="standard:argument-list-wrapping" />
-        <error line="60" column="101" source="standard:max-line-length" />
-        <error line="60" column="106" source="standard:argument-list-wrapping" />
-        <error line="60" column="107" source="standard:argument-list-wrapping" />
-        <error line="95" column="26" source="standard:argument-list-wrapping" />
-        <error line="95" column="38" source="standard:argument-list-wrapping" />
-        <error line="95" column="43" source="standard:argument-list-wrapping" />
-        <error line="95" column="83" source="standard:argument-list-wrapping" />
-        <error line="95" column="86" source="standard:argument-list-wrapping" />
-        <error line="95" column="101" source="standard:max-line-length" />
-        <error line="95" column="110" source="standard:argument-list-wrapping" />
-        <error line="102" column="22" source="standard:argument-list-wrapping" />
-        <error line="102" column="40" source="standard:argument-list-wrapping" />
-        <error line="102" column="67" source="standard:argument-list-wrapping" />
-        <error line="102" column="70" source="standard:argument-list-wrapping" />
-        <error line="102" column="101" source="standard:argument-list-wrapping" />
-        <error line="102" column="101" source="standard:max-line-length" />
+        <error line="33" column="44" source="standard:function-signature" />
+        <error line="33" column="66" source="standard:argument-list-wrapping" />
+        <error line="33" column="72" source="standard:argument-list-wrapping" />
+        <error line="33" column="81" source="standard:argument-list-wrapping" />
+        <error line="33" column="84" source="standard:argument-list-wrapping" />
+        <error line="33" column="100" source="standard:max-line-length" />
+        <error line="33" column="113" source="standard:argument-list-wrapping" />
+        <error line="33" column="117" source="standard:argument-list-wrapping" />
+        <error line="33" column="118" source="standard:argument-list-wrapping" />
+        <error line="38" column="43" source="standard:trailing-comma-on-declaration-site" />
+        <error line="111" column="26" source="standard:argument-list-wrapping" />
+        <error line="111" column="38" source="standard:argument-list-wrapping" />
+        <error line="111" column="43" source="standard:argument-list-wrapping" />
+        <error line="111" column="83" source="standard:argument-list-wrapping" />
+        <error line="111" column="86" source="standard:argument-list-wrapping" />
+        <error line="111" column="101" source="standard:max-line-length" />
+        <error line="111" column="110" source="standard:argument-list-wrapping" />
+        <error line="118" column="22" source="standard:argument-list-wrapping" />
+        <error line="118" column="40" source="standard:argument-list-wrapping" />
+        <error line="118" column="67" source="standard:argument-list-wrapping" />
+        <error line="118" column="70" source="standard:argument-list-wrapping" />
+        <error line="118" column="101" source="standard:argument-list-wrapping" />
+        <error line="118" column="101" source="standard:max-line-length" />
     </file>
     <file name="src/test/java/org/totschnig/myexpenses/next/feature/receipts/ReceiptViewModelTest.kt">
         <error line="43" column="26" source="standard:property-wrapping" />
