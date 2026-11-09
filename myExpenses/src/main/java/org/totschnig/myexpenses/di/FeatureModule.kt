@@ -4,7 +4,6 @@ import androidx.annotation.Keep
 import dagger.Module
 import dagger.Provides
 import org.totschnig.myexpenses.activity.MainScreenEntry
-import org.totschnig.myexpenses.activity.MyExpensesV2
 import org.totschnig.myexpenses.feature.BankingFeature
 import org.totschnig.myexpenses.feature.FeatureManager
 import org.totschnig.myexpenses.feature.OcrFeature
@@ -62,8 +61,8 @@ open class FeatureModule {
 
     /**
      * The main screen. :myExpenses does not know :ui_next, which holds it, so :app overrides this.
-     * The old main screen stays the default for the tests of :myExpenses until it is deleted.
      */
     @Provides
-    open fun provideMainScreen(): MainScreenEntry = MainScreenEntry(MyExpensesV2::class.java)
+    open fun provideMainScreen(): MainScreenEntry =
+        error(":myExpenses has no main screen, :app provides it")
 }

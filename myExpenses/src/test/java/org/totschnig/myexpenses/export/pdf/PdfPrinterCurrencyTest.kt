@@ -20,8 +20,8 @@ import org.totschnig.myexpenses.viewmodel.data.PageAccount
 
 /**
  * Pins how amounts are formatted and coloured, in one currency and in aggregates. The ids of
- * aggregates come in two forms: the old screens pass a negative id, and AggregateAccount of
- * MyExpensesV2 passes 0 with an account grouping.
+ * aggregates come in two forms: the old screens pass a negative id, and AggregateAccount of the
+ * main screen passes 0 with an account grouping.
  */
 @RunWith(AndroidJUnit4::class)
 class PdfPrinterCurrencyTest : BasePdfTest() {
@@ -260,7 +260,7 @@ class PdfPrinterCurrencyTest : BasePdfTest() {
         )
         assertThat(pdf.texts).containsAtLeast("Row", "Foreign", "€5.00", "$10.00", "€20.00")
         // Looks like a bug: the check for an aggregate in the printer is "id < 0", the rest of the
-        // code uses "id <= 0". So the aggregates of MyExpensesV2 print no account for a row.
+        // code uses "id <= 0". So the aggregates of the main screen print no account for a row.
         assertThat(pdf.texts).containsNoneOf("Euro", "Dollar")
     }
 

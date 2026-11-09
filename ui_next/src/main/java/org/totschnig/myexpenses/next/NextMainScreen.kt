@@ -1,5 +1,3 @@
-// Copy of compose/main/MainScreen.kt (MainScreenAdaptive) as starting point for the new UI.
-// Changes to the new main screen go here; the original stays untouched.
 package org.totschnig.myexpenses.next
 
 import android.content.res.Configuration

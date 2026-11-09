@@ -27,35 +27,6 @@ import org.totschnig.myexpenses.viewmodel.data.BaseAccount
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 
 @Composable
-fun AccountFilterMenu(
-    activeFilter: AccountGroupingKey?,
-    availableFilters: List<AccountGroupingKey>,
-    onFilterChange: (AccountGroupingKey?) -> Unit,
-) {
-    val context = LocalContext.current
-
-    TooltipIconMenu(
-        tooltip = stringResource(R.string.filter),
-        imageVector = Icons.Default.FilterAlt,
-        menu = listOf(
-            CheckableMenuEntry(
-                label = UiText.StringResource(R.string.show_all),
-                isChecked = activeFilter == null,
-                command = "RESET_FILTER",
-                isRadio = true
-            ) { onFilterChange(null) }
-        ) + availableFilters.map { filter ->
-            CheckableMenuEntry(
-                label = UiText.StringValue(filter.title(context)),
-                isChecked = activeFilter == filter,
-                command = "CHANGE_FILTER",
-                isRadio = true
-            ) { onFilterChange(filter) }
-        }
-    )
-}
-
-@Composable
 private fun viewOptions(currentAccount: BaseAccount, onEvent: AppEventHandler) =
     listOfNotNull(
         SubMenuEntry(

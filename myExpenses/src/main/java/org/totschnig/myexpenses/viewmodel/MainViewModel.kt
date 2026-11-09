@@ -37,7 +37,6 @@ import org.totschnig.myexpenses.activity.StartScreen
 import org.totschnig.myexpenses.adapter.ClearingLastPagingSourceFactory
 import org.totschnig.myexpenses.adapter.TradePagingSource
 import org.totschnig.myexpenses.compose.transactions.Action
-import org.totschnig.myexpenses.compose.transactions.FabStyle
 import org.totschnig.myexpenses.db2.createAccount
 import org.totschnig.myexpenses.viewmodel.data.CategoryRef
 import org.totschnig.myexpenses.db2.loadTrade
@@ -181,15 +180,6 @@ open class MainViewModel(
             stringPreferencesKey("lastActionPortfolio"),
             Action.Buy
         )
-    }
-
-    val fabStyle by lazy {
-        dataStore.data.map {
-            enumValueOrDefault(
-                it[prefHandler.getStringPreferencesKey(PrefKey.FAB_STYLE)],
-                FabStyle.Standard
-            )
-        }
     }
 
     val aggregateAccountBalanceType by lazy {

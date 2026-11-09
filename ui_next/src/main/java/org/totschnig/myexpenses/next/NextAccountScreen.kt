@@ -118,10 +118,10 @@ import org.totschnig.myexpenses.designsystem.DetailCard
 /**
  * Account page of the new design, showing the transactions of the selected account.
  *
- * Reuses the functionality of the classic TransactionScreen: the menus, the selection mode,
+ * Carries over from the old transaction screen the menus, the selection mode,
  * the FAB for new transactions and the trade dialog for portfolios. Transactions are shown with
  * [transactionList], portfolios still with the classic page ([pageContent]).
- * Unlike the classic screen it has no tabs for switching between accounts, that is done in the overview.
+ * Unlike the old screen it has no tabs for switching between accounts, that is done in the overview.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

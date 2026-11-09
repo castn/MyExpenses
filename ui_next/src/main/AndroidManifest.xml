@@ -22,11 +22,9 @@
         <!-- Up from the editors of :myExpenses leads to the main screen -->
         <activity
             android:name="org.totschnig.myexpenses.activity.ExpenseEdit"
-            android:parentActivityName="org.totschnig.myexpenses.next.MainActivity"
-            tools:replace="android:parentActivityName" />
+            android:parentActivityName="org.totschnig.myexpenses.next.MainActivity" />
         <activity
             android:name="org.totschnig.myexpenses.activity.ManageTemplates"
-            android:parentActivityName="org.totschnig.myexpenses.next.MainActivity"
-            tools:replace="android:parentActivityName" />
+            android:parentActivityName="org.totschnig.myexpenses.next.MainActivity" />
     </application>
 </manifest>
