@@ -51,34 +51,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="category_planner"
-        android:title="@string/planner_notification_channel_name">
-
-        <ListPreference
-            android:key="@string/pref_planner_calendar_id_key"
-            android:summary="@string/pref_planning_calendar_summary"
-            android:title="@string/calendar" />
-
-        <org.totschnig.myexpenses.preference.TimePreference
-            android:key="@string/pref_plan_executor_time_key"
-            android:title="@string/pref_plan_executor_time_title" />
-
-        <ListPreference
-            android:defaultValue="noon"
-            android:entries="@array/pref_planner_manual_time_entries"
-            android:entryValues="@array/pref_planner_manual_time_values"
-            android:key="@string/pref_planner_manual_time_key"
-            android:title="@string/pref_planner_manual_time_title"
-            my:useSimpleSummaryProvider="true" />
-
-        <Preference
-            android:key="@string/pref_remove_local_calendar_key"
-            android:summary="Local Calendar/LOCAL/MyExpensesPlanner"
-            android:title="@string/calendar_delete"
-            my:isPreferenceVisible="false" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="category_webdav"
         android:title="WebDAV">
 

@@ -24,7 +24,6 @@ import org.totschnig.myexpenses.fragment.TwoPanePreference.Companion.KEY_INITIAL
 import org.totschnig.myexpenses.fragment.TwoPanePreference.Companion.KEY_SINGLE_SCREEN
 import org.totschnig.myexpenses.fragment.preferences.BasePreferenceFragment
 import org.totschnig.myexpenses.fragment.preferences.PreferenceDataFragment
-import org.totschnig.myexpenses.fragment.preferences.PreferencesAdvancedFragment
 import org.totschnig.myexpenses.fragment.preferences.PreferencesBackupRestoreFragment
 import org.totschnig.myexpenses.fragment.preferences.PreferencesBackupRestoreFragment.Companion.KEY_CHECKED_FILES
 import org.totschnig.myexpenses.fragment.preferences.PreferencesOcrFragment
@@ -38,7 +37,6 @@ import org.totschnig.myexpenses.service.AutoBackupWorker
 import org.totschnig.myexpenses.service.DailyExchangeRateDownloadService
 import org.totschnig.myexpenses.sync.GenericAccountService
 import org.totschnig.myexpenses.util.LazyFontSelector
-import org.totschnig.myexpenses.util.PermissionHelper
 import org.totschnig.myexpenses.util.config.Configurator.Configuration.USE_SET_DECOR_PADDING_WORKAROUND
 import org.totschnig.myexpenses.util.config.get
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
@@ -80,8 +78,6 @@ class PreferenceActivity : SyncBackendSetupActivity(), ContribIFace,
                 licenceValidationViewModel.messageShown()
         }
     }
-
-    private var initialPrefToShow: String? = null
 
     val calledFromSystemSettings
         get() = intent.action == Intent.ACTION_APPLICATION_PREFERENCES
@@ -163,24 +159,6 @@ class PreferenceActivity : SyncBackendSetupActivity(), ContribIFace,
             R.id.REMOVE_LICENCE_COMMAND -> {
                 showSnackBarIndefinite(R.string.progress_removing_licence)
                 licenceValidationViewModel.removeLicence()
-                true
-            }
-
-            R.id.DELETE_CALENDAR_COMMAND -> {
-                //noinspection MissingPermission
-                viewModel?.deleteLocalCalendar()?.observe(this) {
-                    when (it) {
-                        1 -> twoPanePreference.getDetailFragment<PreferencesAdvancedFragment>()
-                            ?.configureDeleteCalendarPreference(false)
-
-                        else -> {
-                            val message = if (it == 0) "Deletion of local calendar failed" else
-                                "PANIC: DeleteLocalCalendar returned $it"
-                            CrashHandler.report(Exception(message))
-                            showSnackBar(message)
-                        }
-                    }
-                }
                 true
             }
 
@@ -274,8 +252,6 @@ class PreferenceActivity : SyncBackendSetupActivity(), ContribIFace,
             getKey(PrefKey.PROTECTION_ENABLE_BUDGET_WIDGET) ->
                 updateWidgetsForClass(BudgetWidget::class.java)
 
-            getKey(PrefKey.PLANNER_EXECUTION_TIME) -> enqueuePlanner(false)
-
             getKey(PrefKey.UNMAPPED_TRANSACTION_AS_TRANSFER) -> {
                 contentResolver.notifyChange(TRANSACTIONS_URI, null, false)
                 contentResolver.notifyChange(ACCOUNTS_URI, null, false)
@@ -327,24 +303,9 @@ class PreferenceActivity : SyncBackendSetupActivity(), ContribIFace,
         }
     }
 
-    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
-        super.onPermissionsGranted(requestCode, perms)
-        if (requestCode == PermissionHelper.PERMISSIONS_REQUEST_WRITE_CALENDAR) {
-            initialPrefToShow = prefHandler.getKey(PrefKey.PLANNER_CALENDAR_ID)
-        }
-    }
-
     override fun onReceiveSyncAccountData(data: SyncViewModel.SyncAccountData) {
         twoPanePreference.getDetailFragment<PreferencesBackupRestoreFragment>()
             ?.loadSyncAccountData(data.accountName)
-    }
-
-    override fun onResumeFragments() {
-        super.onResumeFragments()
-        initialPrefToShow?.let {
-            twoPanePreference.getDetailFragment<BasePreferenceFragment>()?.showPreference(it)
-            initialPrefToShow = null
-        }
     }
 
     override fun contribFeatureCalled(feature: ContribFeature, tag: ContribPayload?) {

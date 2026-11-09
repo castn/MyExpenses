@@ -1,10 +1,6 @@
 package org.totschnig.myexpenses.viewmodel
 
-import android.Manifest
 import android.app.Application
-import android.content.pm.PackageManager
-import androidx.annotation.RequiresPermission
-import androidx.core.app.ActivityCompat
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,17 +13,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.totschnig.myexpenses.MyApplication
-import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.provider.DbUtils
-import org.totschnig.myexpenses.provider.INVALID_CALENDAR_ID
 import org.totschnig.myexpenses.provider.KEY_ACCOUNT_LABEL
 import org.totschnig.myexpenses.provider.KEY_AMOUNT
 import org.totschnig.myexpenses.provider.KEY_CURRENCY
 import org.totschnig.myexpenses.provider.KEY_DATE
-import org.totschnig.myexpenses.provider.KEY_PLANID
 import org.totschnig.myexpenses.provider.KEY_ROWID
-import org.totschnig.myexpenses.provider.PlannerUtils.Companion.checkLocalCalendar
-import org.totschnig.myexpenses.provider.PlannerUtils.Companion.deleteLocalCalendar
 import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.provider.TransactionProvider.DUAL_URI
 import org.totschnig.myexpenses.provider.asSequence
@@ -112,26 +103,6 @@ class SettingsViewModel(
         }
     }
 
-    fun shouldOfferCalendarRemoval() = liveData(context = coroutineContext()) {
-        val localCalendar = if (ActivityCompat.checkSelfPermission(
-                getApplication(),
-                Manifest.permission.READ_CALENDAR
-            ) == PackageManager.PERMISSION_GRANTED
-        ) contentResolver.checkLocalCalendar()
-        else null
-        emit(
-            (localCalendar != null && localCalendar != INVALID_CALENDAR_ID) &&
-                    (localCalendar != prefHandler.requireString(
-                        PrefKey.PLANNER_CALENDAR_ID,
-                        INVALID_CALENDAR_ID
-                    )
-                            || repository.count(
-                        TransactionProvider.TEMPLATES_URI,
-                        "$KEY_PLANID IS NOT NULL"
-                    ) == 0)
-        )
-    }
-
     fun prettyPrintCorruptedData(currencyFormatter: ICurrencyFormatter) =
         liveData(context = coroutineContext()) {
             corruptedIdList()?.let { longs ->
@@ -203,10 +174,5 @@ class SettingsViewModel(
             })
         }
         loadAppData()
-    }
-
-    @RequiresPermission(allOf = [Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR])
-    fun deleteLocalCalendar() = liveData(context = coroutineContext()) {
-        emit(contentResolver.deleteLocalCalendar())
     }
 }

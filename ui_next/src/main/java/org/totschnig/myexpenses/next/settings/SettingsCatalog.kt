@@ -86,9 +86,6 @@ import org.totschnig.myexpenses.preference.PrefKey.OPTIMIZE_PICTURE_MAX_SIZE
 import org.totschnig.myexpenses.preference.PrefKey.OPTIMIZE_PICTURE_QUALITY
 import org.totschnig.myexpenses.preference.PrefKey.PERFORM_SHARE
 import org.totschnig.myexpenses.preference.PrefKey.PERSONALIZED_AD_CONSENT
-import org.totschnig.myexpenses.preference.PrefKey.PLANNER_CALENDAR_ID
-import org.totschnig.myexpenses.preference.PrefKey.PLANNER_EXECUTION_TIME
-import org.totschnig.myexpenses.preference.PrefKey.PLANNER_MANUAL_TIME
 import org.totschnig.myexpenses.preference.PrefKey.PRINT_FONT_SIZE
 import org.totschnig.myexpenses.preference.PrefKey.PRINT_FOOTER_CENTER
 import org.totschnig.myexpenses.preference.PrefKey.PRINT_FOOTER_LEFT
@@ -114,7 +111,6 @@ import org.totschnig.myexpenses.preference.PrefKey.PURGE_BACKUP
 import org.totschnig.myexpenses.preference.PrefKey.PURGE_BACKUP_KEEP
 import org.totschnig.myexpenses.preference.PrefKey.PURGE_BACKUP_REQUIRE_CONFIRMATION
 import org.totschnig.myexpenses.preference.PrefKey.RATE
-import org.totschnig.myexpenses.preference.PrefKey.REMOVE_LOCAL_CALENDAR
 import org.totschnig.myexpenses.preference.PrefKey.RESTORE
 import org.totschnig.myexpenses.preference.PrefKey.ROADMAP_VOTE
 import org.totschnig.myexpenses.preference.PrefKey.SCROLL_TO_CURRENT_DATE
@@ -182,7 +178,6 @@ enum class SettingsSection(val group: SettingsGroup) {
     ENTRY_RECEIPTS(SettingsGroup.ENTRY),
     DATA_MANAGE(SettingsGroup.DATA),
     DATA_CURRENCIES(SettingsGroup.DATA),
-    DATA_PLANNER(SettingsGroup.DATA),
     BACKUP_BACKUP(SettingsGroup.BACKUP),
     BACKUP_AUTO(SettingsGroup.BACKUP),
     BACKUP_PURGE(SettingsGroup.BACKUP),
@@ -382,14 +377,6 @@ object SettingsCatalog {
                     switch(AUTOMATIC_EXCHANGE_RATE_DOWNLOAD)
                     switch(EQUIVALENT_AMOUNTS_AUTOMATIC_UPDATE)
                     add(SettingKind.CHOICE, SettingKey.Plain("dynamic_exchange_rates_default"))
-                }
-            }
-            section(SettingsSection.DATA_PLANNER) {
-                on(LegacyScreen.ADVANCED) {
-                    choice(PLANNER_CALENDAR_ID)
-                    time(PLANNER_EXECUTION_TIME)
-                    choice(PLANNER_MANUAL_TIME)
-                    action(REMOVE_LOCAL_CALENDAR)
                 }
             }
         }

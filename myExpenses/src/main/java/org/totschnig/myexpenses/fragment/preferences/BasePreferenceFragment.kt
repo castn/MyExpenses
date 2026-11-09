@@ -25,7 +25,6 @@ import org.totschnig.myexpenses.dialog.HelpDialogFragment
 import org.totschnig.myexpenses.feature.FeatureManager
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.model.ContribFeature
-import org.totschnig.myexpenses.preference.CalendarListPreferenceDialogFragmentCompat
 import org.totschnig.myexpenses.preference.FontSizeDialogFragmentCompat
 import org.totschnig.myexpenses.preference.FontSizeDialogPreference
 import org.totschnig.myexpenses.preference.HeaderPreference
@@ -37,7 +36,6 @@ import org.totschnig.myexpenses.preference.SecurityQuestionDialogFragmentCompat
 import org.totschnig.myexpenses.preference.SimplePasswordDialogFragmentCompat
 import org.totschnig.myexpenses.preference.SimplePasswordPreference
 import org.totschnig.myexpenses.util.ICurrencyFormatter
-import org.totschnig.myexpenses.util.PermissionHelper.PermissionGroup
 import org.totschnig.myexpenses.util.ads.AdHandlerFactory
 import org.totschnig.myexpenses.util.licence.LicenceHandler
 import org.totschnig.myexpenses.util.tracking.Tracker
@@ -171,15 +169,6 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(),
                 }
             }
 
-            matches(preference, PrefKey.PLANNER_CALENDAR_ID) -> {
-                if (PermissionGroup.CALENDAR.hasPermission(requireContext())) {
-                    CalendarListPreferenceDialogFragmentCompat.newInstance(key)
-                } else {
-                    preferenceActivity.requestCalendarPermission()
-                    return
-                }
-            }
-
             matches(
                 preference,
                 PrefKey.SECURITY_QUESTION
@@ -261,10 +250,6 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(),
             preferenceActivity.contribFeatureRequested(feature)
             true
         } else false
-
-    open fun showPreference(prefKey: String) {
-        findPreference<Preference>(prefKey)?.let { onDisplayPreferenceDialog(it) }
-    }
 
     val ioTitle: String
         get() = getString(R.string.pref_category_title_import) + " / " + getString(R.string.pref_category_title_export)

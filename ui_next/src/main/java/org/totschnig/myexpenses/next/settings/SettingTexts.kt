@@ -21,14 +21,11 @@ import org.totschnig.myexpenses.preference.PrefKey.MANAGE_SYNC_BACKENDS
 import org.totschnig.myexpenses.preference.PrefKey.MLKIT_SCRIPT
 import org.totschnig.myexpenses.preference.PrefKey.OCR_ENGINE
 import org.totschnig.myexpenses.preference.PrefKey.OPTIMIZE_PICTURE_MAX_SIZE
-import org.totschnig.myexpenses.preference.PrefKey.PLANNER_EXECUTION_TIME
-import org.totschnig.myexpenses.preference.PrefKey.PLANNER_MANUAL_TIME
 import org.totschnig.myexpenses.preference.PrefKey.PROTECTION_ALLOW_SCREENSHOT
 import org.totschnig.myexpenses.preference.PrefKey.PROTECTION_DELAY_SECONDS
 import org.totschnig.myexpenses.preference.PrefKey.PROTECTION_ENABLE_ACCOUNT_WIDGET
 import org.totschnig.myexpenses.preference.PrefKey.PROTECTION_ENABLE_BUDGET_WIDGET
 import org.totschnig.myexpenses.preference.PrefKey.PROTECTION_ENABLE_TEMPLATE_WIDGET
-import org.totschnig.myexpenses.preference.PrefKey.REMOVE_LOCAL_CALENDAR
 import org.totschnig.myexpenses.preference.PrefKey.SHARE_TARGET
 import org.totschnig.myexpenses.preference.PrefKey.SYNC_FREQUCENCY
 import org.totschnig.myexpenses.preference.PrefKey.TESSERACT_LANGUAGE
@@ -55,8 +52,6 @@ object SettingTexts {
         SHARE_TARGET to R.string.next_settings_title_share_target,
         FEATURE_UNINSTALL_FEATURES to R.string.next_settings_title_uninstall_features,
         FEATURE_UNINSTALL_LANGUAGES to R.string.next_settings_title_uninstall_languages,
-        PLANNER_EXECUTION_TIME to R.string.next_settings_title_planner_execution_time,
-        PLANNER_MANUAL_TIME to R.string.next_settings_title_planner_manual_time,
         CRITERION_FUTURE to R.string.next_settings_title_criterion_future,
         EQUIVALENT_AMOUNTS_AUTOMATIC_UPDATE to R.string.next_settings_title_equivalent_amounts_update,
         UI_ITEM_RENDERER_ORIGINAL_AMOUNT to R.string.next_settings_title_original_amount,
@@ -80,7 +75,6 @@ object SettingTexts {
     val explanations: Map<PrefKey, Int> = mapOf(
         HOME_CURRENCY to R.string.next_settings_explain_home_currency,
         CRITERION_FUTURE to R.string.next_settings_explain_criterion_future,
-        PLANNER_MANUAL_TIME to R.string.next_settings_explain_planner_manual_time,
         EQUIVALENT_AMOUNTS_AUTOMATIC_UPDATE to R.string.next_settings_explain_equivalent_amounts_update,
         UI_ITEM_RENDERER_ORIGINAL_AMOUNT to R.string.next_settings_explain_original_amount,
         OCR_ENGINE to R.string.next_settings_explain_ocr_engine,
@@ -102,6 +96,5 @@ object SettingTexts {
         DEBUG_ADS to R.string.next_settings_explain_debug_ads,
         DB_SAFE_MODE to R.string.next_settings_explain_db_safe_mode,
         DEBUG_REPAIR_987 to R.string.next_settings_explain_repair_987,
-        REMOVE_LOCAL_CALENDAR to R.string.next_settings_explain_remove_local_calendar,
     )
 }

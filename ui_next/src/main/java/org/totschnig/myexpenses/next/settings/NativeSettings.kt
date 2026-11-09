@@ -58,8 +58,6 @@ import org.totschnig.myexpenses.preference.PrefKey.OPTIMIZE_PICTURE_FORMAT
 import org.totschnig.myexpenses.preference.PrefKey.OPTIMIZE_PICTURE_MAX_SIZE
 import org.totschnig.myexpenses.preference.PrefKey.OPTIMIZE_PICTURE_QUALITY
 import org.totschnig.myexpenses.preference.PrefKey.PERFORM_SHARE
-import org.totschnig.myexpenses.preference.PrefKey.PLANNER_EXECUTION_TIME
-import org.totschnig.myexpenses.preference.PrefKey.PLANNER_MANUAL_TIME
 import org.totschnig.myexpenses.preference.PrefKey.PROTECTION_ALLOW_SCREENSHOT
 import org.totschnig.myexpenses.preference.PrefKey.PROTECTION_DELAY_SECONDS
 import org.totschnig.myexpenses.preference.PrefKey.PROTECTION_DEVICE_LOCK_SCREEN
@@ -380,9 +378,7 @@ object NativeSettings {
         )
         listOf(
             UNMAPPED_TRANSACTION_AS_TRANSFER,
-            EQUIVALENT_AMOUNTS_AUTOMATIC_UPDATE,
-            PLANNER_EXECUTION_TIME,
-            PLANNER_MANUAL_TIME
+            EQUIVALENT_AMOUNTS_AUTOMATIC_UPDATE
         )
             .forEach { put(it, plain) }
         // Security & privacy, as the old screen: what depends on the screen lock only while it is on

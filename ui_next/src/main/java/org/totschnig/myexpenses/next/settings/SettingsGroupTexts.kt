@@ -78,7 +78,6 @@ val SettingsSection.title: Int
         SettingsSection.ENTRY_RECEIPTS -> R.string.next_settings_section_entry_receipts
         SettingsSection.DATA_MANAGE -> R.string.next_settings_section_data_manage
         SettingsSection.DATA_CURRENCIES -> R.string.next_settings_section_data_currencies
-        SettingsSection.DATA_PLANNER -> R.string.next_settings_section_data_planner
         SettingsSection.BACKUP_BACKUP -> R.string.next_settings_section_backup_backup
         SettingsSection.BACKUP_AUTO -> R.string.next_settings_section_backup_auto
         SettingsSection.BACKUP_PURGE -> R.string.next_settings_section_backup_purge

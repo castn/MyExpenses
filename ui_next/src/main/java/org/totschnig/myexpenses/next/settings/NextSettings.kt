@@ -109,7 +109,6 @@ class NextSettings : ProtectedFragmentActivity() {
 
     private var hasStaleImages by mutableStateOf(false)
     private var isDataCorrupted by mutableStateOf(false)
-    private var offersCalendarRemoval by mutableStateOf(false)
     private var isPrivacyOptionsRequired by mutableStateOf(false)
 
     private val categoryViewModel: ManageCategoriesViewModel by viewModels()
@@ -195,7 +194,6 @@ class NextSettings : ProtectedFragmentActivity() {
                 PrefKey.MANAGE_STALE_IMAGES -> hasStaleImages
                 PrefKey.MANAGE_APP_DIR_FILES -> appFiles.isNotEmpty()
                 PrefKey.DEBUG_REPAIR_987 -> isDataCorrupted
-                PrefKey.REMOVE_LOCAL_CALENDAR -> offersCalendarRemoval
                 PrefKey.NO_ADS -> !adHandlerFactory.isAdDisabled
                 PrefKey.PERSONALIZED_AD_CONSENT -> !adHandlerFactory.isAdDisabled && isPrivacyOptionsRequired
                 PrefKey.FEATURE_UNINSTALL_FEATURES, PrefKey.FEATURE_UNINSTALL_LANGUAGES ->
@@ -398,7 +396,6 @@ class NextSettings : ProtectedFragmentActivity() {
         }
         // What the old screens show only in some cases
         settingsViewModel.dataCorrupted().observe(this) { isDataCorrupted = it > 0 }
-        settingsViewModel.shouldOfferCalendarRemoval().observe(this) { offersCalendarRemoval = it }
         settingsViewModel.appData.observe(this) { appFiles = it }
         lifecycleScope.launch {
             isPrivacyOptionsRequired = adHandlerFactory.isPrivacyOptionsRequired(this@NextSettings)
@@ -514,7 +511,6 @@ class NextSettings : ProtectedFragmentActivity() {
                 crashHandler.setEnabled(sharedPreferences.getBoolean(key, false))
                 showSnackBar(R.string.app_restart_required)
             }
-            prefHandler.getKey(PrefKey.PLANNER_EXECUTION_TIME) -> enqueuePlanner(false)
             prefHandler.getKey(PrefKey.UNMAPPED_TRANSACTION_AS_TRANSFER) -> {
                 contentResolver.notifyChange(TRANSACTIONS_URI, null, false)
                 contentResolver.notifyChange(ACCOUNTS_URI, null, false)

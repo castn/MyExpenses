@@ -48,7 +48,6 @@ import org.totschnig.myexpenses.fragment.TemplatesList
 import org.totschnig.myexpenses.fragment.preferences.BasePreferenceFragment
 import org.totschnig.myexpenses.fragment.preferences.PreferencesContribFragment
 import org.totschnig.myexpenses.model.CurrencyContext
-import org.totschnig.myexpenses.preference.CalendarListPreferenceDialogFragmentCompat
 import org.totschnig.myexpenses.preference.PrefHandler
 import org.totschnig.myexpenses.preference.SecurePreferenceDataStore
 import org.totschnig.myexpenses.provider.BaseTransactionProvider
@@ -263,8 +262,6 @@ interface AppComponent {
     fun inject(planInstanceViewHolder: PlanInstanceViewHolder)
 
     fun inject(basePreferenceFragment: BasePreferenceFragment)
-
-    fun inject(calendarListPreferenceDialogFragmentCompat: CalendarListPreferenceDialogFragmentCompat)
 
     fun inject(extendProLicenceDialogFragment: ExtendProLicenceDialogFragment)
 
