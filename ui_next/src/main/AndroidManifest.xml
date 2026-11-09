@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dist="http://schemas.android.com/apk/distribution">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- The apps that can take a photo, which the settings offer as camera app -->
     <queries>
@@ -33,11 +32,4 @@
             android:name="org.totschnig.myexpenses.next.onboarding.NextOnboarding"
             android:taskAffinity="org.totschnig.myexpenses.next" />
     </application>
-
-    <dist:module dist:instant="false">
-        <dist:delivery>
-            <dist:install-time />
-        </dist:delivery>
-        <dist:fusing dist:include="true" />
-    </dist:module>
 </manifest>
