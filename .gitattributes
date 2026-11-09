@@ -1,0 +1,3 @@
+# Generated baselines: git diff and git show print only "Binary files differ", GitHub collapses them.
+# To read their changes: git show --text / git diff --text
+*-baseline.xml -diff linguist-generated
