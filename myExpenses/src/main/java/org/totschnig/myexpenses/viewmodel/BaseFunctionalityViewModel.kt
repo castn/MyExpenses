@@ -230,7 +230,7 @@ class BaseFunctionalityViewModel(application: Application) :
     }
 
     fun cleanupOrigFile(result: CropImage.ActivityResult) {
-        if (result.originalUri.authority == AppDirHelper.getFileProviderAuthority(getApplication())) {
+        if (result.originalUri.authority == AppDirHelper.fileProviderAuthority) {
             viewModelScope.launch(coroutineContext()) {
                 contentResolver.delete(result.originalUri, null, null)
             }

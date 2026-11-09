@@ -6,6 +6,7 @@ import android.text.format.Formatter
 import androidx.annotation.WorkerThread
 import androidx.core.content.FileProvider
 import androidx.documentfile.provider.DocumentFile
+import org.totschnig.myexpenses.BuildConfig
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.preference.PrefKey
@@ -235,9 +236,10 @@ object AppDirHelper {
 
     @JvmStatic
     fun getContentUriForFile(context: Context, file: File): Uri =
-        FileProvider.getUriForFile(context, getFileProviderAuthority(context), file)
+        FileProvider.getUriForFile(context, fileProviderAuthority, file)
 
+    // Not context.packageName, which is the test package in the unit tests of the library
     @JvmStatic
-    fun getFileProviderAuthority(context: Context): String =
-        context.packageName + ".fileprovider"
+    val fileProviderAuthority: String
+        get() = BuildConfig.APPLICATION_ID + ".fileprovider"
 }

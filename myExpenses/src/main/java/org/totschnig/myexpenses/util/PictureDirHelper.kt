@@ -6,7 +6,7 @@ import android.os.Environment
 import org.totschnig.myexpenses.MyApplication
 import org.totschnig.myexpenses.util.AppDirHelper.cacheDir
 import org.totschnig.myexpenses.util.AppDirHelper.getContentUriForFile
-import org.totschnig.myexpenses.util.AppDirHelper.getFileProviderAuthority
+import org.totschnig.myexpenses.util.AppDirHelper.fileProviderAuthority
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler.Companion.report
 import java.io.File
 import java.text.SimpleDateFormat
@@ -125,7 +125,7 @@ object PictureDirHelper {
         }
         Preconditions.checkArgument(
             "authority",
-            getFileProviderAuthority(context),
+            fileProviderAuthority,
             pictureUri.authority
         )
         val pathSegments = pictureUri.pathSegments

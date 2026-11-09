@@ -42,7 +42,7 @@ object PermissionHelper {
             }
             return false
         }
-        return AppDirHelper.getFileProviderAuthority(context) == uri.authority || context.checkUriPermission(
+        return AppDirHelper.fileProviderAuthority == uri.authority || context.checkUriPermission(
             uri, Binder.getCallingPid(), Binder.getCallingUid(),
             Intent.FLAG_GRANT_READ_URI_PERMISSION
         ) == PackageManager.PERMISSION_GRANTED

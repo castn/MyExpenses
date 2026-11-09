@@ -1743,7 +1743,7 @@ abstract class BaseTransactionProvider : ContentProvider() {
     fun deleteAttachment(db: SupportSQLiteDatabase, attachmentId: Long, uriString: String?) {
 
         val uri = (uriString ?: findAttachment(db, attachmentId)!!).toUri()
-        if (uri.authority != AppDirHelper.getFileProviderAuthority(context!!)) {
+        if (uri.authority != AppDirHelper.fileProviderAuthority) {
             Timber.d("External, releasePersistableUriPermission")
             if (try {
                     db.delete(
@@ -1795,10 +1795,7 @@ abstract class BaseTransactionProvider : ContentProvider() {
             }
         )
         val uri = uriString.toUri()
-        if (uri.scheme == "content" && uri.authority != AppDirHelper.getFileProviderAuthority(
-                context!!
-            )
-        ) {
+        if (uri.scheme == "content" && uri.authority != AppDirHelper.fileProviderAuthority) {
             Timber.d("External, takePersistableUriPermission")
             takePersistableUriPermission(uri)
         }
