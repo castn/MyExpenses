@@ -17,7 +17,6 @@ package org.totschnig.myexpenses.provider;
 
 import static android.database.sqlite.SQLiteDatabase.CONFLICT_IGNORE;
 import static android.database.sqlite.SQLiteDatabase.CONFLICT_NONE;
-import static org.totschnig.myexpenses.db2.RepositoryPlanKt.updateCustomAppUri;
 import static org.totschnig.myexpenses.model.UuidKt.generateUuid;
 import static org.totschnig.myexpenses.model2.PaymentMethodKt.PAYMENT_METHOD_EXPENSE;
 import static org.totschnig.myexpenses.model2.PaymentMethodKt.PAYMENT_METHOD_INCOME;
@@ -59,7 +58,6 @@ import static org.totschnig.myexpenses.provider.ConstantsKt.*;
 import static org.totschnig.myexpenses.provider.DataBaseAccount.HOME_AGGREGATE_ID;
 import static org.totschnig.myexpenses.provider.DbConstantsKt.buildViewDefinition;
 import static org.totschnig.myexpenses.util.ColorUtils.MAIN_COLORS;
-import static org.totschnig.myexpenses.util.PermissionHelper.PermissionGroup.CALENDAR;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -1195,27 +1193,6 @@ public class TransactionDatabase extends BaseTransactionDatabase {
       }
 
       if (oldVersion < 57) {
-        //fix custom app uris
-        try {
-          if (CALENDAR.hasPermission(MyApplication.Companion.getInstance())) {
-            Cursor c = MoreDbUtilsKt.query(db,"templates", new String[]{"_id", "plan_id"}, "plan_id IS NOT null", null, null, null, null, null);
-            if (c.moveToFirst()) {
-              while (!c.isAfterLast()) {
-                updateCustomAppUri(
-                        getContext(),
-                        c.getLong(1),
-                        c.getLong(0)
-                );
-                c.moveToNext();
-              }
-            }
-            c.close();
-          }
-        } catch (Exception e) {
-          //we have seen updateCustomAppUri fail, this should not prevent the database upgrade
-          CrashHandler.report(e);
-        }
-
         //Drop unique constraint on templates
 
         db.execSQL("ALTER TABLE templates RENAME to templates_old");
@@ -1345,7 +1322,8 @@ public class TransactionDatabase extends BaseTransactionDatabase {
             String whereClause = "rowid = ?";
             String[] whereArgs = {rowId};
             //This will be correct only for instances where date has not been edited by user, but it is the best we can do
-            v.put("instance_id", CalendarProviderProxy.calculateId(date * 1000));
+            java.time.LocalDate day = java.time.Instant.ofEpochSecond(date).atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+            v.put("instance_id", day.getYear() * 1000 + day.getDayOfYear());
             try {
               db.update("planinstance_transaction", CONFLICT_NONE, v, whereClause, whereArgs);
             } catch (Exception e) {
