@@ -48,7 +48,7 @@ import org.totschnig.myexpenses.viewmodel.data.TradeType
  */
 abstract class BaseTradeTest : BaseViewModelTest() {
 
-    protected lateinit var viewModel: MyExpensesV2ViewModel
+    protected lateinit var viewModel: MainViewModel
     protected lateinit var portfolio: FullAccount
 
     protected val home by lazy { currencyContext[HOME] }
@@ -58,7 +58,7 @@ abstract class BaseTradeTest : BaseViewModelTest() {
     fun setUpTradeTest() {
         prefHandler.putString(PrefKey.HOME_CURRENCY, HOME)
         prefHandler.isOnboardingCompleted = true
-        viewModel = MyExpensesV2ViewModel(application, SavedStateHandle()).also {
+        viewModel = MainViewModel(application, SavedStateHandle()).also {
             application.appComponent.inject(it)
         }
         insertAsset(AAPL, "Apple Inc.")

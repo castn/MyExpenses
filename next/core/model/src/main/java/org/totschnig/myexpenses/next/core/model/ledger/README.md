@@ -130,5 +130,5 @@ replacement for the provider. These read the database themselves:
 - the budgets of the classic screens, from `BudgetListViewModel` of the main module; the new UI
   has its own pots (package `budgets`) and only reads the classic budgets once to take them over
 - scanned receipts while they are added or corrected, `ReceiptViewModel` only offers their items
-- the accounts of the overview, from `MyExpensesV2ViewModel`; `ProviderLedgerSource` reads the
+- the accounts of the overview, from `MainViewModel`; `ProviderLedgerSource` reads the
   own accounts itself, with their labels and types

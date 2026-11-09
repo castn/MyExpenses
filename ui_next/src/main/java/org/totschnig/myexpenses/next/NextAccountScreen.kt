@@ -108,7 +108,7 @@ import org.totschnig.myexpenses.next.core.common.R as NextR
 import org.totschnig.myexpenses.preference.PreferenceState
 import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.util.enumValueOrDefault
-import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
+import org.totschnig.myexpenses.viewmodel.MainViewModel
 import org.totschnig.myexpenses.viewmodel.data.BaseAccount
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.viewmodel.data.PageAccount
@@ -126,7 +126,7 @@ import org.totschnig.myexpenses.designsystem.DetailCard
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NextAccountScreen(
-    viewModel: MyExpensesV2ViewModel,
+    viewModel: MainViewModel,
     accounts: List<FullAccount>,
     selectedAccountId: Long,
     visibleActionItems: Int,
@@ -345,7 +345,7 @@ private fun SealedFab() {
 
 @Composable
 private fun NewTransactionFab(
-    viewModel: MyExpensesV2ViewModel,
+    viewModel: MainViewModel,
     isPortfolio: Boolean,
     transferEnabled: Boolean,
     isExtended: Boolean,
@@ -391,7 +391,7 @@ private fun NewTransactionFab(
 
 @Composable
 private fun PortfolioTradeScreen(
-    viewModel: MyExpensesV2ViewModel,
+    viewModel: MainViewModel,
     portfolio: FullAccount,
     accounts: List<FullAccount>,
     allCurrencies: List<CurrencyUnit>,
@@ -451,7 +451,7 @@ private fun PortfolioTradeScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SelectionTopBar(
-    viewModel: MyExpensesV2ViewModel,
+    viewModel: MainViewModel,
     currentAccount: BaseAccount,
     windowInsets: WindowInsets,
     onEvent: AppEventHandler,
@@ -500,7 +500,7 @@ private fun SelectionTopBar(
  */
 @Composable
 private fun AccountActions(
-    viewModel: MyExpensesV2ViewModel,
+    viewModel: MainViewModel,
     currentAccount: BaseAccount,
     selectedAccountId: Long,
     visibleActionItems: Int,

@@ -99,8 +99,8 @@ import org.totschnig.myexpenses.model.Grouping
 import org.totschnig.myexpenses.model.sort.TransactionSort
 import org.totschnig.myexpenses.preference.PreferenceState
 import org.totschnig.myexpenses.viewmodel.AccountsScreenTab
-import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
-import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel.AccountPanelState
+import org.totschnig.myexpenses.viewmodel.MainViewModel
+import org.totschnig.myexpenses.viewmodel.MainViewModel.AccountPanelState
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.viewmodel.data.PageAccount
 import org.totschnig.myexpenses.viewmodel.data.TradeIntent
@@ -165,7 +165,7 @@ suspend fun ThreePaneScaffoldNavigator<*>.navigateToRoot(pane: ThreePaneScaffold
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun MainScreenAdaptive(
-    viewModel: MyExpensesV2ViewModel,
+    viewModel: MainViewModel,
     accounts: List<FullAccount>,
     allCurrencies: List<CurrencyUnit>,
     availableFilters: List<AccountGroupingKey>,

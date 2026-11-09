@@ -73,7 +73,7 @@ import org.totschnig.myexpenses.provider.KEY_SORT_KEY
 import org.totschnig.myexpenses.util.ads.AdHandlerV2
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler.Companion.report
 import org.totschnig.myexpenses.viewmodel.CurrencyViewModel
-import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
+import org.totschnig.myexpenses.viewmodel.MainViewModel
 import org.totschnig.myexpenses.viewmodel.SumInfo
 import org.totschnig.myexpenses.viewmodel.data.AggregateAccount
 import org.totschnig.myexpenses.viewmodel.data.BaseAccount
@@ -97,11 +97,11 @@ const val HELP_VARIANT_BALANCE_SHEET = "balanceSheet"
 /**
  * Help,
  */
-open class MyExpensesV2 : BaseMyExpenses<MyExpensesV2ViewModel>(),
+open class MyExpensesV2 : BaseMyExpenses<MainViewModel>(),
     SortUtilityDialogFragment.OnConfirmListener {
 
     @Inject
-    lateinit var modelClass: Class<out MyExpensesV2ViewModel>
+    lateinit var modelClass: Class<out MainViewModel>
 
     private val currencyViewModel: CurrencyViewModel by viewModels()
 
@@ -580,7 +580,7 @@ open class MyExpensesV2 : BaseMyExpenses<MyExpensesV2ViewModel>(),
      */
     @Composable
     protected open fun MainScreen(
-        viewModel: MyExpensesV2ViewModel,
+        viewModel: MainViewModel,
         accounts: List<FullAccount>,
         allCurrencies: List<CurrencyUnit>,
         availableFilters: List<AccountGroupingKey>,

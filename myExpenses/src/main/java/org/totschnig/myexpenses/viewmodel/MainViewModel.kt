@@ -127,7 +127,7 @@ enum class AccountsScreenTab(@param:StringRes val resourceId: Int) {
 }
 
 @OpenForTesting
-open class MyExpensesV2ViewModel(
+open class MainViewModel(
     application: Application,
     savedStateHandle: SavedStateHandle,
 ) : MyExpensesViewModel(application, savedStateHandle) {

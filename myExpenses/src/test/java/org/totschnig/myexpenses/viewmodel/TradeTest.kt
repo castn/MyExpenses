@@ -37,14 +37,14 @@ import java.time.LocalDateTime
 @RunWith(AndroidJUnit4::class)
 class TradeTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: MyExpensesV2ViewModel
+    private lateinit var viewModel: MainViewModel
     private lateinit var portfolioA: FullAccount
     private lateinit var portfolioB: FullAccount
     private val aapl = CurrencyUnit("AAPL", "AAPL", 2, "Apple Inc.", CommodityType.SECURITY)
 
     @Before
     fun setup() {
-        viewModel = MyExpensesV2ViewModel(ApplicationProvider.getApplicationContext(), SavedStateHandle())
+        viewModel = MainViewModel(ApplicationProvider.getApplicationContext(), SavedStateHandle())
         application.appComponent.inject(viewModel)
 
         runBlocking {

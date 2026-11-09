@@ -84,8 +84,8 @@ import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.preference.PreferenceState
 import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.viewmodel.AccountsScreenTab
-import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
-import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel.AccountPanelState
+import org.totschnig.myexpenses.viewmodel.MainViewModel
+import org.totschnig.myexpenses.viewmodel.MainViewModel.AccountPanelState
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.viewmodel.data.PageAccount
 
@@ -103,7 +103,7 @@ suspend fun ThreePaneScaffoldNavigator<*>.navigateToRoot(pane: ThreePaneScaffold
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun NextMainScreen(
-    viewModel: MyExpensesV2ViewModel,
+    viewModel: MainViewModel,
     accounts: List<FullAccount>,
     allCurrencies: List<CurrencyUnit>,
     selectedAccountId: Long,
@@ -333,7 +333,7 @@ fun NextMainScreen(
 
 /** The variant of the help for the shown pane */
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
-private fun helpVariant(viewModel: MyExpensesV2ViewModel, pane: ThreePaneScaffoldRole?, selectedAccountId: Long) =
+private fun helpVariant(viewModel: MainViewModel, pane: ThreePaneScaffoldRole?, selectedAccountId: Long) =
     when (pane) {
         ListDetailPaneScaffoldRole.List ->
             if (viewModel.currentAccountsTab.value == AccountsScreenTab.BALANCE_SHEET) HELP_VARIANT_BALANCE_SHEET
@@ -350,7 +350,7 @@ private fun helpVariant(viewModel: MyExpensesV2ViewModel, pane: ThreePaneScaffol
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 private fun AccountPanes(
-    viewModel: MyExpensesV2ViewModel,
+    viewModel: MainViewModel,
     navigator: ThreePaneScaffoldNavigator<FullAccount>,
     adaptiveInfo: WindowAdaptiveInfo,
     useNextBar: Boolean,
@@ -457,7 +457,7 @@ private fun AccountPanes(
 /** The overview with what the areas add to it */
 @Composable
 private fun OverviewPane(
-    viewModel: MyExpensesV2ViewModel,
+    viewModel: MainViewModel,
     accounts: List<FullAccount>,
     accountGrouping: AccountGrouping<*>,
     features: List<NextFeature>,

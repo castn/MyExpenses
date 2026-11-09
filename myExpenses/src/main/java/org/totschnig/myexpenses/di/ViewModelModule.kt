@@ -3,7 +3,7 @@ package org.totschnig.myexpenses.di
 import dagger.Module
 import dagger.Provides
 import org.totschnig.myexpenses.viewmodel.AbstractSyncBackendViewModel
-import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
+import org.totschnig.myexpenses.viewmodel.MainViewModel
 import org.totschnig.myexpenses.viewmodel.SyncBackendViewModel
 
 @Module
@@ -13,5 +13,5 @@ open class ViewModelModule {
         SyncBackendViewModel::class.java
 
     @Provides
-    open fun provideMyExpensesViewModelClass(): Class<out MyExpensesV2ViewModel> = MyExpensesV2ViewModel::class.java
+    open fun provideMyExpensesViewModelClass(): Class<out MainViewModel> = MainViewModel::class.java
 }

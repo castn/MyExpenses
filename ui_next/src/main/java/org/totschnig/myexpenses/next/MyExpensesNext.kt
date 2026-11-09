@@ -50,7 +50,7 @@ import org.totschnig.myexpenses.next.transactions.toShown
 import org.totschnig.myexpenses.next.transactions.TransactionActions
 import org.totschnig.myexpenses.preference.isOnboardingCompleted
 import org.totschnig.myexpenses.provider.KEY_DATE
-import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
+import org.totschnig.myexpenses.viewmodel.MainViewModel
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.viewmodel.data.PageAccount
 import org.totschnig.myexpenses.viewmodel.data.Transaction2
@@ -119,7 +119,7 @@ class MyExpensesNext : MyExpensesV2() {
 
     @Composable
     override fun MainScreen(
-        viewModel: MyExpensesV2ViewModel,
+        viewModel: MainViewModel,
         accounts: List<FullAccount>,
         allCurrencies: List<CurrencyUnit>,
         availableFilters: List<AccountGroupingKey>,

@@ -53,7 +53,7 @@ import org.totschnig.myexpenses.provider.PORTFOLIO_CONTAINER
 import org.totschnig.myexpenses.provider.PlannerUtils
 import org.totschnig.myexpenses.provider.SPLIT_CATID
 import org.totschnig.myexpenses.provider.TransactionProvider
-import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
+import org.totschnig.myexpenses.viewmodel.MainViewModel
 import org.totschnig.myexpenses.viewmodel.data.Budget
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.viewmodel.data.FundingSource
@@ -224,7 +224,7 @@ class Fixture(inst: Instrumentation) {
             portfolioRole = PORTFOLIO_CONTAINER
         )
 
-        val viewModel = MyExpensesV2ViewModel(appContext, SavedStateHandle())
+        val viewModel = MainViewModel(appContext, SavedStateHandle())
         appContext.appComponent.inject(viewModel)
 
         val currencyFactor = BigDecimal(when (defaultCurrency.code) {

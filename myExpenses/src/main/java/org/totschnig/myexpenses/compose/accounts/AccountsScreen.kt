@@ -51,7 +51,7 @@ import org.totschnig.myexpenses.model.AccountGrouping
 import org.totschnig.myexpenses.model.AccountGroupingKey
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.viewmodel.AccountsScreenTab
-import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
+import org.totschnig.myexpenses.viewmodel.MainViewModel
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import timber.log.Timber
 import java.time.LocalDate
@@ -64,7 +64,7 @@ fun AccountsScreen(
     accounts: List<FullAccount>,
     accountGrouping: AccountGrouping<*>,
     selectedAccountId: Long,
-    viewModel: MyExpensesV2ViewModel,
+    viewModel: MainViewModel,
     bottomBar: @Composable (() -> Unit) = {},
     onEvent: AppEventHandler,
     flags: List<AccountFlag> = emptyList(),

@@ -130,7 +130,7 @@ import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.preference.PreferenceState
 import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.util.enumValueOrDefault
-import org.totschnig.myexpenses.viewmodel.MyExpensesV2ViewModel
+import org.totschnig.myexpenses.viewmodel.MainViewModel
 import org.totschnig.myexpenses.viewmodel.data.BaseAccount
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.viewmodel.data.PageAccount
@@ -149,7 +149,7 @@ fun TransactionScreen(
     availableFilters: List<AccountGroupingKey>,
     selectedAccountId: Long,
     accounts: List<FullAccount>,
-    viewModel: MyExpensesV2ViewModel,
+    viewModel: MainViewModel,
     bottomBar: @Composable () -> Unit = {},
     visibleActionItems: Int,
     onEvent: AppEventHandler,

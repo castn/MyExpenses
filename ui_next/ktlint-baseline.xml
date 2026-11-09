@@ -343,14 +343,14 @@
         <error line="321" column="102" source="standard:argument-list-wrapping" />
         <error line="336" column="25" source="standard:parameter-list-wrapping" />
         <error line="336" column="25" source="standard:function-signature" />
-        <error line="336" column="59" source="standard:parameter-list-wrapping" />
-        <error line="336" column="59" source="standard:function-signature" />
-        <error line="336" column="89" source="standard:parameter-list-wrapping" />
-        <error line="336" column="89" source="standard:function-signature" />
+        <error line="336" column="51" source="standard:parameter-list-wrapping" />
+        <error line="336" column="51" source="standard:function-signature" />
+        <error line="336" column="81" source="standard:parameter-list-wrapping" />
+        <error line="336" column="81" source="standard:function-signature" />
         <error line="336" column="101" source="standard:max-line-length" />
-        <error line="336" column="112" source="standard:parameter-list-wrapping" />
-        <error line="336" column="112" source="standard:function-signature" />
-        <error line="336" column="115" source="standard:function-signature" />
+        <error line="336" column="104" source="standard:parameter-list-wrapping" />
+        <error line="336" column="104" source="standard:function-signature" />
+        <error line="336" column="107" source="standard:function-signature" />
         <error line="339" column="54" source="standard:binary-expression-wrapping" />
         <error line="339" column="88" source="standard:multiline-if-else" />
         <error line="339" column="101" source="standard:max-line-length" />
