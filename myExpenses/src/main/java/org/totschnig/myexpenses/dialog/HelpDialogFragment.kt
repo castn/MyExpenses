@@ -257,7 +257,7 @@ class HelpDialogFragment : DialogViewBinding<HelpDialogBinding>() {
             "MyExpenses_cabitems",
             "RoadmapVoteActivity_cabitems",
             "PriceHistory_cabitems",
-            "MyExpensesV2_accounts_cabitems"
+            "MainActivity_accounts_cabitems"
         )
 
     private fun findComponentArray(type: String) =

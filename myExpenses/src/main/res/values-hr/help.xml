@@ -222,7 +222,7 @@
     <string name="form_payer_or_payee_help_text"><![CDATA[Ovo polje omogućuje biranje ili stvaranje Platišu/Primatelja. Počni tipkati ime i pojavit će se prijedlozi. Ako nije odabran nijedan prijedlog, stvara se novi sudionik. Ako se prijedlog odabere, prikazuje se kao čip.
         <br><img src="ic_menu_edit"> Promijeni podatke odabranog sudionika.
         <br><img src="ic_menu_close_clear_cancel"> Ukloni trenutačni odabir. Tekstualno polje će se zatim ponovno pojaviti.]]></string>
-    <string name="help_MyExpensesV2_transactions_info">Pregledaj i upravljaj transakcijama za odabrani račun. Koristi plutajući gumb za radnju za dodavanje nove transakcije.</string>
+    <string name="help_MainActivity_transactions_info">Pregledaj i upravljaj transakcijama za odabrani račun. Koristi plutajući gumb za radnju za dodavanje nove transakcije.</string>
     <string name="menu_import_trades_help_text">Uvezi investicijske transakcije iz CSV datoteke u svoj portfelj.</string>
     <string name="fab_create_portfolio_help_text">Izradi portfelj za praćenje investicija, dionica ili druge nenovčane imovine. Besplatna verzija je ograničena na jedan portfelj.</string>
     <string name="fab_expense_help_text">Stvori novu transakciju troškova.</string>
@@ -237,6 +237,6 @@
     <string name="fab_trade_transfer_help_text">Prenesi imovinu između portfelja.</string>
     <string name="menu_balance_sheet_help_text_date">Klikni na datum za biranje jednog drugog datuma.</string>
     <string name="menu_sync_help_text">Pokreni trenutnu sinkronizaciju s uslugom u oblaku koja je konfigurirana za trenutačni račun.</string>
-    <string name="help_MyExpensesV2_portfolio_info">Prati svoje investicije u ovom portfelju. Može uvesti transakcije i pregledati raspodjelu imovine. Sažetak računa se povezuje na ekran s cijenama, gdje se može postaviti trenutačna cijena imovine.</string>
-    <string name="help_MyExpensesV2_accounts_info"><![CDATA[Upravljaj svojim računima i prati svoju neto imovinu. Pomoću padajućeg izbornika na alatnoj traci prebaci se između popisa računa i bilance. U izborniku <img src=\"tune\"> <b>Opcije</b> možeš grupirati i razvrstati račune, a u izborniku <img src=\"data\"> <b>Podaci</b> konfiguriraj vrste, oznake i valute. Dodirni račun za prikaz njegova sažetka ili ikonu <img src=\"ic_chevron_end\"> za pregled transakcija. Ikona <img src=\"more\"> nudi dodatne radnje za svaki račun.]]></string>
+    <string name="help_MainActivity_portfolio_info">Prati svoje investicije u ovom portfelju. Može uvesti transakcije i pregledati raspodjelu imovine. Sažetak računa se povezuje na ekran s cijenama, gdje se može postaviti trenutačna cijena imovine.</string>
+    <string name="help_MainActivity_accounts_info"><![CDATA[Upravljaj svojim računima i prati svoju neto imovinu. Pomoću padajućeg izbornika na alatnoj traci prebaci se između popisa računa i bilance. U izborniku <img src=\"tune\"> <b>Opcije</b> možeš grupirati i razvrstati račune, a u izborniku <img src=\"data\"> <b>Podaci</b> konfiguriraj vrste, oznake i valute. Dodirni račun za prikaz njegova sažetka ili ikonu <img src=\"ic_chevron_end\"> za pregled transakcija. Ikona <img src=\"more\"> nudi dodatne radnje za svaki račun.]]></string>
 </resources>

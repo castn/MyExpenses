@@ -72,10 +72,10 @@
     <string name="cab_exclude_from_totals_help_text">@string/menu_exclude_from_totals_help_text</string>
     <string name="menu_tune">@string/options</string>
     <string name="menu_import_trades">TODO</string>
-    <string name="help_MyExpensesV2_accounts_title">@string/accounts</string>
-    <string name="help_MyExpensesV2_transactions_title">@string/import_select_transactions</string>
-    <string name="help_MyExpensesV2_portfolio_title">@string/contrib_feature_portfolio_tracking</string>
-    <string name="help_MyExpensesV2_balanceSheet_title">@string/balance_sheet</string>
+    <string name="help_MainActivity_accounts_title">@string/accounts</string>
+    <string name="help_MainActivity_transactions_title">@string/import_select_transactions</string>
+    <string name="help_MainActivity_portfolio_title">@string/contrib_feature_portfolio_tracking</string>
+    <string name="help_MainActivity_balanceSheet_title">@string/balance_sheet</string>
     <string name="menu_expense">@string/expense</string>
     <string name="menu_income">@string/income</string>
     <string name="menu_transfer">@string/transfer</string>
