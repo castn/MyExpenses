@@ -162,7 +162,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="${applicationId}"
+                    android:host="${appId}"
                     android:path="/transactions"
                     android:scheme="content" />
             </intent-filter>
@@ -324,12 +324,12 @@
 
         <provider
             android:name=".provider.TransactionProvider"
-            android:authorities="${applicationId}"
+            android:authorities="${appId}"
             android:exported="false"
             android:syncable="true" />
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:authorities="${appId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -338,7 +338,7 @@
         </provider>
         <provider
             android:name=".provider.CalendarProviderProxy"
-            android:authorities="${applicationId}.calendarinstances"
+            android:authorities="${appId}.calendarinstances"
             android:exported="false" />
 
         <service android:name=".service.PlanNotificationClickHandler" />

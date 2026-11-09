@@ -67,6 +67,8 @@ android {
     buildTypes.each { type ->
         def applicationId = project.applicationId + project["${type.name}ApplicationIdSuffix"]
         type.buildConfigField "String", "APPLICATION_ID", "\"$applicationId\""
+        // Instead of ${applicationId}, which is the test package in the unit tests of a library
+        type.manifestPlaceholders["appId"] = applicationId
         type.resValue 'string', 'application_id', applicationId
         type.resValue "string", 'sync_account_type', applicationId + ".sync"
     }
