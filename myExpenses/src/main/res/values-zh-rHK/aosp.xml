@@ -3,8 +3,6 @@
      Licensed to The Android Open Source Project.
 -->
 <resources>
-    <string name="drawer_open">"開啟導覽列"</string>
-    <string name="drawer_close">"關閉導覽列"</string>
     <string name="sort_direction_ascending">"遞增"</string>
     <string name="sort_direction_descending">"遞減"</string>
     <string name="saving">"正在儲存…"</string>

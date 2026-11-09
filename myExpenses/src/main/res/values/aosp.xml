@@ -5,8 +5,6 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- packages/apps/DocumentsUI/res/values/strings.xml -->
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
     <string name="sort_direction_ascending">Ascending</string>
     <string name="sort_direction_descending">Descending</string>
     <plurals name="delete_files_confirmation_message">

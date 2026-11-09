@@ -308,7 +308,6 @@
     <string name="plan_instance_state_open">เปิด</string>
     <string name="dialog_confirm_sync_link_remote">ข้อมูลท้องถิ่นสำหรับบัญชีนี้จะถูกลบ</string>
     <string name="sync_error_will_try_again_later">จะลองอีกครั้งในภายหลัง</string>
-    <string name="onboarding_restore_from_local">กู้คืนจากไฟล์สำรองข้อมูลในเครื่อง</string>
     <string name="pref_protection_device_lock_screen_title">หน้าจอล็อกอุปกรณ์</string>
     <string name="gdpr_consent_button_no">ชำระเงินสำหรับเวอร์ชันไม่มีโฆษณา</string>
     <string name="budget_table_header_budgeted">งบประมาณที่กำหนดไว้</string>
@@ -427,7 +426,6 @@
     <string name="sync_io_exception_syncing">เกิดข้อผิดพลาดขณะซิงค์การเปลี่ยนแปลงกับเซิร์ฟเวอร์</string>
     <string name="synchronization_end_success_none">ไม่มีการเปลี่ยนแปลงที่ต้องซิงโครไนซ์</string>
     <string name="pref_webdav_timeout_title">เวลา timeout ของ WebDAV (ในหน่วยวินาที)</string>
-    <string name="onboarding_data_title">มาเริ่มตั้งค่าบัญชีแรกของคุณกัน</string>
     <string name="onboarding_restore_from_cloud">กู้คืนจากการซิงค์ข้อมูลบนคลาวด์</string>
     <string name="contributed_by">สนับสนุนโดย %s</string>
     <string name="pref_sync_notification_summary">แจ้งเตือนความคืบหน้าการซิงโครไนซ์</string>
@@ -610,7 +608,6 @@
     <string name="budget_filter_all_states">ทุกสถานะ</string>
     <string name="dialog_title_warning_delete_budget">ลบงบประมาณ?</string>
     <string name="warning_delete_budget">งบประมาณ \"%1$s\" จะถูกลบ</string>
-    <string name="onboarding_privacy_intro">ข้อมูลทางการเงินของคุณไม่ถูกส่งไปยังเซิร์ฟเวอร์ใดๆ ทั้งที่ดำเนินการโดยเราหรือบุคคลที่สาม</string>
     <string name="dialog_title_confirm_remap">เปลี่ยนการแมป (%s)?</string>
     <string name="clone_and_remap_result">รายการที่เลือกได้ถูกโคลนและแมปใหม่แล้ว</string>
     <string name="remapping_result">รายการที่เลือกได้ถูกแมปใหม่แล้ว</string>
@@ -681,7 +678,6 @@
     <string name="budget_filter_all_tags">ทุกแท็ก</string>
     <string name="budget_date_end_after_start">วันที่สิ้นสุดงบประมาณต้องอยู่หลังวันที่เริ่มต้น</string>
     <string name="menu_edit_budget">แก้ไขงบประมาณ</string>
-    <string name="onboarding_privacy_title">ข้อมูลของคุณยังอยู่ในมือคุณ</string>
     <string name="remap_category">รายการที่เลือกทั้งหมดจะถูกแมปไปยังหมวดหมู่ %s</string>
     <string name="remap_payee">รายการที่เลือกทั้งหมดจะถูกแมปไปยังผู้จ่าย/ผู้รับเงิน %s</string>
     <string name="remap_account">รายการที่เลือกทั้งหมดจะถูกแมปไปยังบัญชี %s</string>
@@ -721,7 +717,6 @@
     <string name="rollover_edit_invalid">ผลรวมของการโอนยอดที่กำหนดให้หมวดหมู่และหมวดหมู่ย่อยไม่สามารถเกินยอดที่เหลือได้</string>
     <string name="content_description_attachment">ไฟล์แนบ</string>
     <string name="select_all_list_too_large">คำสั่ง %s ไม่สามารถใช้งานได้เนื่องจากโหลดรายการเพียงบางส่วน โปรดใช้ฟังก์ชันการค้นหาเพื่อลดขนาดรายการ</string>
-    <string name="encrypt_database_info">ฐานข้อมูลจะถูกเข้ารหัสด้วยวลีรหัสที่ไม่สามารถดึงออกจากอุปกรณ์นี้ได้ ดังนั้นจึงจะไม่ถูกสำรองข้อมูลโดยบริการสำรองข้อมูลของอุปกรณ์ของคุณ</string>
     <string name="notifications_permission_required_sync">โดยการอนุญาตให้ส่งการแจ้งเตือน คุณสามารถติดตามความคืบหน้าของการดำเนินการซิงโครไนซ์ได้</string>
     <string name="notifications_permission_required_auto_backup">โดยการอนุญาตให้ส่งการแจ้งเตือน คุณจะได้รับแจ้งเกี่ยวกับการสำรองข้อมูลอัตโนมัติ</string>
     <string name="debt_installment_pay">ฉันจ่ายเงินงวดจำนวน %s</string>
@@ -826,7 +821,6 @@
     <string name="crash_reports_user_info">{app_name} จะส่งรายงานเกี่ยวกับข้อผิดพลาดของแอปพลิเคชันไปยังนักพัฒนาอัตโนมัติ ซึ่งช่วยให้พวกเขาสามารถแก้ไขปัญหาได้เร็วขึ้น</string>
     <string name="purge_backups">ไฟล์สำรองข้อมูลเก่าดังต่อไปนี้จะถูกลบ:</string>
     <string name="pref_debug_logging_share_summary">แบ่งปันไฟล์บันทึก</string>
-    <string name="pref_category_title_crash_reports">รายงานข้อผิดพลาด</string>
     <string name="object_sealed_debt">วัตถุอ้างอิงถึงหนี้สินที่ปิดแล้ว</string>
     <plurals name="debt_mapped_transactions">
         <item quantity="other">หนี้สิน %1$s มี %2$d รายการที่แมปไว้</item>

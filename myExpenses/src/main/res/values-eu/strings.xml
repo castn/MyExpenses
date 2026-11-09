@@ -494,9 +494,7 @@
     <string name="sync_state_restored">%d konturen sinkronizazio egoera leheneratu da.</string>
     <string name="sync_state_could_not_be_restored">%d konturen sinkronizazio egoera ezin izan da leheneratu.</string>
     <string name="onboarding_ui_title">{app_name} zure hobespenetara egokitzen da</string>
-    <string name="onboarding_data_title">Utzi guri zure lehen kontua konfiguratzen</string>
     <string name="onboarding_restore_from_cloud">Leheneratu hodeiko sinkronizaziotik</string>
-    <string name="onboarding_restore_from_local">Leheneratu babeskopia fitxategi lokala</string>
     <string name="contributed_by">%s-(r)en laguntzaz</string>
     <string name="pref_sync_notification_summary">Jakinarazi sinkronizazioaren aurreratzeari buruz</string>
     <string name="pref_debug_logging_summary">Idatzi arazketa informazioa sistemaren egunkarian</string>
@@ -544,7 +542,6 @@
     <string name="pref_category_title_features">Ezaugarriak</string>
     <string name="menu_save_and_new_content_description">Gorde datuak, laga formularioa irekita beste transakzio bat sortzeko datu berberekin.</string>
     <string name="crash_reports_user_info">{app_name} aplikazioaren kraskatzeen txostena bidaliko die automatikoki garatzaileei, honek arazoak azkarrago konpontzea baimentzen die.</string>
-    <string name="pref_category_title_crash_reports">Kraskatze txostenak</string>
     <string name="pref_enable_acra">Baimendu kraskatze txostenak automatikoki bidaltzea</string>
     <string name="pref_acra_user_email">Erabiltzailearen helbide elektronikoa txostenera gehituko da</string>
     <string name="pref_acra_user_email_summary">Mesedez sartu zure helbide elektronikoa arazketan lagundu nahi baduzu eta gu zurekin kontaktuan jartzea onartzen baduzu.</string>

@@ -4,8 +4,6 @@
      Licensed to The Android Open Source Project.
 -->
 <resources>
-    <string name="drawer_open">"Otevřít navigační složku"</string>
-    <string name="drawer_close">"Zavřít navigační složku"</string>
     <string name="sort_direction_ascending">"Vzestupně"</string>
     <string name="sort_direction_descending">"Sestupně"</string>
     <string name="saving">"Ukládání…"</string>

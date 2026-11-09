@@ -4,8 +4,6 @@
      Licensed to The Android Open Source Project.
 -->
 <resources>
-    <string name="drawer_open">"Navigációs fiók kinyitása"</string>
-    <string name="drawer_close">"Navigációs fiók bezárása"</string>
     <string name="sort_direction_ascending">"Növekvő"</string>
     <string name="sort_direction_descending">"Csökkenő"</string>
     <string name="saving">"Mentés…"</string>

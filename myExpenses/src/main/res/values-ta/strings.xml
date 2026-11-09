@@ -501,9 +501,7 @@
     <string name="sync_state_restored">%d கணக்குகளுக்கான ஒத்திசைவு நிலை மீட்டமைக்கப்பட்டது.</string>
     <string name="sync_state_could_not_be_restored">%d கணக்குகளுக்குக்கான ஒத்திசைவு நிலையை மீட்டமைக்க முடியவில்லை.</string>
     <string name="onboarding_ui_title">{app_name} உங்கள் விருப்பத்திற்கு ஏற்ப, மாறிக் கொள்ளும்</string>
-    <string name="onboarding_data_title">உங்கள் முதல் கணக்கை அமைப்போம்</string>
     <string name="onboarding_restore_from_cloud">மேகக்கணினி ஒத்திசைவிலிருந்து மீட்டமை</string>
-    <string name="onboarding_restore_from_local">உள் காப்புப்பிரதி கோப்பை மீட்டமை</string>
     <string name="contributed_by">%s-ஆல் பங்களிக்கப்பட்டது</string>
     <string name="pref_sync_notification_summary">ஒத்திசைவின் முன்னேற்றம் பற்றி தெரிவிக்கவும்</string>
     <string name="pref_debug_logging_summary">கணினி குறிப்பில் பிழைத்திருத்த உதவும் தகவல்களை எழுதவும்</string>
@@ -661,8 +659,6 @@
     <string name="dialog_title_warning_delete_budget">வரவு செலவுத் திட்டத்தை நீக்கவா?</string>
     <string name="warning_delete_budget">வரவு செலவுத் திட்டம் \"%1$s\" நீக்கப்படும்.</string>
     <string name="menu_edit_budget">வரவு செலவுத் திட்டத்தை தொகு</string>
-    <string name="onboarding_privacy_title">உங்கள் தரவு உங்கள் கைகளிலேயே இருக்கும்</string>
-    <string name="onboarding_privacy_intro">உங்கள் நிதி தரவு எந்தவொரு சேவையகத்திற்கும் அனுப்பப்படவில்லை, எங்களாலோ அல்லது எந்த மூன்றாம் தரப்பினராலோ இயக்கப்படவில்லை.</string>
     <string name="app_restart_required">புதிய விருப்பமைவுக்கு செயலியை மறுதொடக்கம் செய்ய வேண்டும்.</string>
     <!-- Title of the submenu for changing the category, payer, payment method of multiple transactions. The entries of the submenu read "Category, "Payer", "Payment method" -->
     <string name="menu_remap">மறு தொடற்புப்படுத்து</string>
@@ -782,7 +778,6 @@
      where the transaction has already been created.  -->
     <string name="warning_plan_instance_delete">தேர்ந்தெடுக்கப்பட்ட தேதிக்கு உருவாக்கப்பட்ட பரிவர்த்தனை நீக்கப்படும்.</string>
     <string name="crash_reports_user_info">\"{app_name}\" செயலியின் செயலிழப்புகளைப் பற்றிய அறிக்கையை தானாகவே உருவாக்குனருக்கு அனுப்புகிறது. இது சிக்கல்களை விரைவாக சரிசெய்ய அனுமதிக்கிறது.</string>
-    <string name="pref_category_title_crash_reports">செயலிழப்பு அறிக்கைகள்</string>
     <string name="pref_enable_acra">தன்னியக்கமாக செயலிழப்பு அறிக்கைகளை அனுப்ப அனுமதி</string>
     <string name="pref_acra_user_email">செயலிழப்பு அறிக்கையில் பயனர் மின்னஞ்சல் உள்ளடக்கப்பட்டுள்ளது</string>
     <string name="pref_acra_user_email_summary">நீங்கள் வழு நீக்க உதவ விரும்பினால் உங்கள் மின்னஞ்சல் முகவரியை உள்ளிட்டு உங்களை தொடர்பு கொள்ள எங்களை அனுமதிக்கவும்.</string>
@@ -850,7 +845,6 @@
     <string name="pref_purge_backup_require_confirmation_summary">கோப்புகள் சுத்திகரிக்கப்படுவதற்கு முன்பு உறுதிப்படுத்தல் வரியில் காண்பி</string>
     <string name="pref_debug_logging_share_summary">பதிவு கோப்புகளைப் பகிரவும்</string>
     <string name="budget_table_header_rollover">ரோல்ஓவர்</string>
-    <string name="encrypt_database_info">இந்த சாதனத்திலிருந்து பிரித்தெடுக்க முடியாத ஒரு கடவுச்சொற்றால் தரவுத்தளம் குறியாக்கம் செய்யப்படும். இதன் விளைவாக இது உங்கள் சாதனத்தின் காப்பு சேவையால் ஆதரிக்கப்படாது.</string>
     <string name="image_optimize_quality_summary">0 இன் தகுதி என்பது மிகச்சிறிய அளவிற்கு சுருக்க வேண்டும். 100 என்றால் அதிகபட்ச காட்சி தரத்திற்கு சுருக்க.</string>
     <string name="select_template">வார்ப்புருவைத் தேர்ந்தெடுக்கவும்</string>
     <string name="merge_parties_strategy_group">நகல்கள் சார்புடையவர்களாக தொகுக்கப்பட்டுள்ளன.</string>

@@ -2,8 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ComplexCondition:AccountList.kt:account.sealed || account.excludeFromTotals || account.dynamic || account.flag.icon != null</ID>
-    <ID>ComplexCondition:AccountList.kt:showEquivalent &amp;&amp; isFx &amp;&amp; account.equivalentOpeningBalance != 0L &amp;&amp; account.initialExchangeRate != null</ID>
     <ID>ComplexCondition:AmountEdit.kt:input.all { it.isDigit() || it == decimalSeparator || (it == '-' &amp;&amp; allowNegative) } &amp;&amp; decimalSeparatorCount &lt;= (if (fractionDigits == 0) 0 else 1) &amp;&amp; (decimalSeparatorCount == 0 || input.substringAfter(decimalSeparator).length &lt;= fractionDigits) &amp;&amp; input.lastIndexOf('-') &lt;= 0</ID>
     <ID>ComplexCondition:BackupSourcesDialogFragment.kt:BackupSourcesDialogFragment$typeParts[0] == "application" &amp;&amp; ((typeParts[1] == "zip") || (typeParts[1]) == "octet-stream") &amp;&amp; (extension == "" || extension == "zip" || extension == "enc")</ID>
     <ID>ComplexCondition:BaseAdHandlerImpl.kt:BaseAdHandlerImpl$(prefHandler.getBoolean(PrefKey.DEBUG_ADS, false) || ( System.currentTimeMillis() - prefHandler.getLong( PrefKey.INTERSTITIAL_LAST_SHOWN, 0 ) &gt; DateUtils.MINUTE_IN_MILLIS * 10 &amp;&amp; prefHandler.getInt( PrefKey.ENTRIES_CREATED_SINCE_LAST_INTERSTITIAL, 0 ) &gt; INTERSTITIAL_MIN_INTERVAL )) &amp;&amp; !shouldHideAd</ID>
@@ -11,7 +9,6 @@
     <ID>ComplexCondition:DeepLinkActivity.kt:DeepLinkActivity$existingKey == "" || existingKey == key &amp;&amp; existingEmail == email || !licenceHandler.isContribEnabled</ID>
     <ID>ComplexCondition:ExchangeRateEdit.kt:ExchangeRateEdit$amount1 != null &amp;&amp; amount2 != null &amp;&amp; amount1.compareTo(nullValue) != 0 &amp;&amp; amount2.compareTo( nullValue ) != 0</ID>
     <ID>ComplexCondition:FormAccentUtil.kt:view is ViewGroup &amp;&amp; view !is Spinner &amp;&amp; ( !view.isFocusable || view.descendantFocusability == ViewGroup.FOCUS_AFTER_DESCENDANTS )</ID>
-    <ID>ComplexCondition:MainScreen.kt:forcedAccountPanelLoadingState !is PreferenceState.Loaded || preferredNavModeLoadingState !is PreferenceState.Loaded || accountGroupingLoadingState !is PreferenceState.Loaded || mainMenuLoadingState !is PreferenceState.Loaded</ID>
     <ID>ComplexCondition:RestoreViewModel.kt:RestoreViewModel$key != prefHandler.getKey(PrefKey.NEW_LICENCE) &amp;&amp; key != prefHandler.getKey( PrefKey.LICENCE_EMAIL ) &amp;&amp; !key.startsWith("acra") &amp;&amp; key != prefHandler.getKey(PrefKey.FIRST_INSTALL_VERSION)</ID>
     <ID>ComplexCondition:SyncDelegate.kt:SyncDelegate$(label != null || categoryInfo != null) &amp;&amp; (merged.label != null || merged.categoryInfo != null) &amp;&amp; ( merged.label != label || merged.categoryInfo != categoryInfo )</ID>
     <ID>ComplexCondition:SyncDelegate.kt:SyncDelegate$(pictureUri != null || attachments != null) &amp;&amp; ( merged.pictureUri != null || merged.attachments != null ) &amp;&amp; ( merged.pictureUri != pictureUri || merged.attachments != attachments )</ID>
@@ -51,7 +48,6 @@
     <ID>CyclomaticComplexMethod:ManageBudgets.kt:ManageBudgets$@OptIn(ExperimentalMaterial3Api::class) public override fun onCreate</ID>
     <ID>CyclomaticComplexMethod:ManageCategories.kt:ManageCategories$override fun onCreate</ID>
     <ID>CyclomaticComplexMethod:MoreDbUtils.kt:fun parseCategoriesFromXml: List&lt;CategoryTreeItem&gt;</ID>
-    <ID>CyclomaticComplexMethod:MyExpensesV2.kt:MyExpensesV2$@OptIn(ExperimentalMaterial3Api::class) override fun onCreate</ID>
     <ID>CyclomaticComplexMethod:PartiesList.kt:PartiesList.PayeeAdapter$override fun onItemClick</ID>
     <ID>CyclomaticComplexMethod:PdfPrinter.kt:PdfPrinter$@Throws(DocumentException::class, IOException::class) private fun addTransactionList</ID>
     <ID>CyclomaticComplexMethod:PlanExecutor.kt:PlanExecutor$@RequiresPermission(allOf = [Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR]) @SuppressLint("InlinedApi") override suspend fun doWork: Result</ID>
@@ -169,8 +165,6 @@
     <ID>LongMethod:MoreDbUtils.kt:fun parseCategoriesFromXml: List&lt;CategoryTreeItem&gt;</ID>
     <ID>LongMethod:MoreDbUtils.kt:private fun setupCategoriesInternal: Pair&lt;Int, Int&gt;</ID>
     <ID>LongMethod:MoreUiUtils.kt:fun attachmentInfoMap: Map&lt;Uri, AttachmentInfo&gt;</ID>
-    <ID>LongMethod:MyExpensesV2.kt:MyExpensesV2$@OptIn(ExperimentalMaterial3Api::class) override fun onCreate</ID>
-    <ID>LongMethod:OnboardingUiFragment.kt:OnboardingUiFragment$override fun configureView</ID>
     <ID>LongMethod:PartiesList.kt:PartiesList.PayeeAdapter$override fun onItemClick</ID>
     <ID>LongMethod:PartyListViewModel.kt:PartyListViewModel$fun mergeParties</ID>
     <ID>LongMethod:PdfPrinter.kt:PdfPrinter$@Throws(DocumentException::class, IOException::class) private fun addTransactionList</ID>
@@ -225,9 +219,6 @@
     <ID>LoopWithTooManyJumpStatements:SyncAdapter.kt:SyncAdapter$do</ID>
     <ID>LoopWithTooManyJumpStatements:TransactionList.kt:while</ID>
     <ID>MagicNumber:AbstractSyncBackendProvider.kt:AbstractSyncBackendProvider$10</ID>
-    <ID>MagicNumber:AccountList.kt:4</ID>
-    <ID>MagicNumber:AccountList.kt:5</ID>
-    <ID>MagicNumber:AccountList.kt:5f</ID>
     <ID>MagicNumber:AccountWidgetService.kt:AccountRemoteViewsFactory.Companion$48</ID>
     <ID>MagicNumber:AmountCriterion.kt:AmountCriterion.Companion$3</ID>
     <ID>MagicNumber:AmountCriterion.kt:AmountCriterion.Companion$4</ID>
@@ -352,7 +343,6 @@
     <ID>MagicNumber:MyApplication.kt:MyApplication$1000000</ID>
     <ID>MagicNumber:NetworkUtils.kt:3</ID>
     <ID>MagicNumber:OnboardingHostActivity.kt:OnboardingHostActivity$4</ID>
-    <ID>MagicNumber:OnboardingUiFragment.kt:OnboardingUiFragment$4.6f</ID>
     <ID>MagicNumber:OrphanedTransactionDialog.kt:OrphanedTransactionDialog$1000</ID>
     <ID>MagicNumber:Package.kt:AddOnPackage$590</ID>
     <ID>MagicNumber:Package.kt:Package.Contrib$1540</ID>
@@ -472,13 +462,11 @@
     <ID>MagicNumber:tidBits.kt:1.8f</ID>
     <ID>MatchingDeclarationName:CompositionLocal.kt:Colors</ID>
     <ID>MatchingDeclarationName:FilterHandler.kt:FilterHandlerScope</ID>
-    <ID>MatchingDeclarationName:FloatingActionButtonMenu.kt:FabMenuAction</ID>
     <ID>MatchingDeclarationName:ImportsourceViewModel.kt:ImportSourceViewModel : BaseViewModel</ID>
     <ID>MatchingDeclarationName:MoreUiUtils.kt:Itag</ID>
     <ID>MatchingDeclarationName:RepositoryPlan.kt:CalendarIntegrationNotAvailableException : IllegalStateException</ID>
     <ID>MatchingDeclarationName:TradeList.kt:TradeEvent</ID>
     <ID>MatchingDeclarationName:TradeScreen.kt:CostLegUiState : Parcelable</ID>
-    <ID>MatchingDeclarationName:TransactionScreen.kt:FabStyle</ID>
     <ID>MatchingDeclarationName:prefHandler.kt:MyAbstractClass : PrefHandler</ID>
     <ID>NestedBlockDepth:AbstractExporter.kt:AbstractExporter$@Throws(IOException::class) open fun export: Result&lt;DocumentFile&gt;</ID>
     <ID>NestedBlockDepth:BaseTransactionProvider.kt:BaseTransactionProvider$fun SupportSQLiteDatabase.updateCurrency: Bundle</ID>
@@ -569,7 +557,6 @@
     <ID>TooGenericExceptionCaught:ManageTemplates.kt:ManageTemplates$e: Exception</ID>
     <ID>TooGenericExceptionCaught:MoreDbUtils.kt:e: Exception</ID>
     <ID>TooGenericExceptionCaught:MyApplication.kt:MyApplication$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:MyExpensesV2.kt:MyExpensesV2$e: Exception</ID>
     <ID>TooGenericExceptionCaught:OnboardingHostActivity.kt:OnboardingHostActivity$e: Exception</ID>
     <ID>TooGenericExceptionCaught:PartyListViewModel.kt:PartyListViewModel$e: Exception</ID>
     <ID>TooGenericExceptionCaught:PdfHelper.kt:PdfHelper$e: Exception</ID>

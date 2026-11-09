@@ -110,8 +110,6 @@
     <string name="empty">"Tom"</string>
     <string name="options">"Alternativ"</string>
     <string name="actions">"Åtgärder"</string>
-    <string name="drawer_open">Öppna navigeringspanelen</string>
-    <string name="drawer_close">Stäng navigeringspanelen</string>
     <string name="sort_direction_ascending">Stigande</string>
     <string name="sort_direction_descending">Fallande</string>
     <plurals name="delete_files_confirmation_message">

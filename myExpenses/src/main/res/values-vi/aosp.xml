@@ -3,8 +3,6 @@
      Licensed to The Android Open Source Project.
 -->
 <resources>
-    <string name="drawer_open">"Mở ngăn kéo điều hướng"</string>
-    <string name="drawer_close">"Đóng ngăn kéo điều hướng"</string>
     <string name="sort_direction_ascending">"Tăng dần"</string>
     <string name="sort_direction_descending">"Giảm dần"</string>
     <string name="saving">"Đang lưu…"</string>

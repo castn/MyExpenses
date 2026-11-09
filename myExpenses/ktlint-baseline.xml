@@ -1304,15 +1304,8 @@
         <error line="28" column="1" source="standard:final-newline" />
     </file>
     <file name="src/androidTest/java/org/totschnig/myexpenses/testutils/TestViewModelModule.kt">
-        <error line="29" column="78" source="standard:function-expression-body" />
-        <error line="35" column="5" source="standard:class-signature" />
-        <error line="36" column="5" source="standard:class-signature" />
-        <error line="36" column="39" source="standard:trailing-comma-on-declaration-site" />
-        <error line="36" column="40" source="standard:class-signature" />
-        <error line="37" column="5" source="standard:class-signature" />
-        <error line="66" column="36" source="standard:trailing-comma-on-declaration-site" />
-        <error line="82" column="101" source="standard:max-line-length" />
-        <error line="99" column="29" source="standard:trailing-comma-on-declaration-site" />
+        <error line="31" column="36" source="standard:trailing-comma-on-declaration-site" />
+        <error line="47" column="101" source="standard:max-line-length" />
     </file>
     <file name="src/androidTest/java/org/totschnig/myexpenses/testutils/ViewFinder.kt">
         <error line="3" column="1" source="standard:no-consecutive-blank-lines" />

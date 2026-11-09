@@ -3,8 +3,6 @@
      Copyright (C) 2011 Google Inc.
      Licensed to The Android Open Source Project.
 --><resources>
-    <string name="drawer_open">"Gezinme menüsünü aç"</string>
-    <string name="drawer_close">"Gezinme menüsünü kapat"</string>
     <string name="sort_direction_ascending">"Artan"</string>
     <string name="sort_direction_descending">"Azalan"</string>
     <string name="saving">"Kaydediliyor…"</string>

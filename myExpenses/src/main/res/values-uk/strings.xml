@@ -509,9 +509,7 @@
     <string name="sync_state_restored">Стан синхронізації відновлено для %d рахунків.</string>
     <string name="sync_state_could_not_be_restored">Стан синхронізації не вдалося відновити для %d рахунків.</string>
     <string name="onboarding_ui_title">{app_name} пристосовується до ваших уподобань</string>
-    <string name="onboarding_data_title">Давайте налаштуємо ваш перший рахунок</string>
     <string name="onboarding_restore_from_cloud">Відновити з хмарної синхронізації</string>
-    <string name="onboarding_restore_from_local">Відновлення локального файлу резервної копії</string>
     <string name="contributed_by">Внесок зроблено %s</string>
     <string name="pref_sync_notification_summary">Повідомляти про хід синхронізації</string>
     <string name="pref_debug_logging_summary">Записувати інформацію налагоджування в системний журнал</string>
@@ -643,7 +641,6 @@
     <!-- Title of a section on the Settings screen where each entry corresponds to a subsection dedicated to one feature (functionality)  -->
     <string name="pref_category_title_features">Особливості</string>
     <string name="crash_reports_user_info">{app_name} автоматично надсилатиме звіти розробникам про аварійне завершення роботи програми, що дозволить виправляти проблеми швидше.</string>
-    <string name="pref_category_title_crash_reports">Звіти про помилки</string>
     <string name="pref_enable_acra">Дозволити автоматичне надсилання звітів про помилки</string>
     <string name="pref_acra_user_email">Емейл користувача буде включено у звіт про помилки</string>
     <string name="pref_acra_user_email_summary">Будь ласка, вкажіть свій ел-пошту, якщо ви хочете допомогти у виправленні помилок і даєте згоду на контакт з вами.</string>
@@ -680,7 +677,6 @@
     <string name="pref_planner_manual_time_noon">12:00 (опівдні)</string>
     <string name="dialog_title_confirm_remap">Змінити відображення (%s) \?</string>
     <string name="menu_remap">Перепризначити</string>
-    <string name="onboarding_privacy_intro">Ваші фінансові дані не надсилаються на жоден сервер, ні наш, ні третіх сторін.</string>
     <string name="feature_download_requested">Функція %s запитується з Play Store.</string>
     <string name="menu_scan_mode">Режим сканування</string>
     <string name="pref_ocr_total_indicators_title">Показники для загальної суми</string>
@@ -693,7 +689,6 @@
     <string name="budget_filter_all_states">Всі статуси</string>
     <string name="budget_filter_all_tags">Всі мітки</string>
     <string name="warning_delete_budget">Бюджет \"%1$s\" буде видалено.</string>
-    <string name="onboarding_privacy_title">Ваші дані залишаються в ваших руках</string>
     <string name="pref_ocr_date_formats_title">Формати дати</string>
     <string name="pref_ocr_time_formats_title">Формати часу</string>
     <string name="pref_criterion_future_current">Поточний час</string>
@@ -890,7 +885,6 @@
     <string name="button_relink_keep_date">Перепривʼязати, але зберегти дату</string>
     <string name="database_is_encrypted">База даних зашифрована.</string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> потребує дозволу, щоб надсилати вам сповіщення про майбутні транзакції.</string>
-    <string name="encrypt_database_info">Базу даних буде зашифровано за допомогою парольної фрази, яку неможливо отримати з цього пристрою. Тому служба резервного копіювання вашого пристрою не створюватиме резервні копії.</string>
     <string name="budget_table_header_rollover">Перенесення бюджету</string>
     <string name="orphaned_transaction_align_date">За бажанням дату, збережену в транзакції, також можна узгодити з датою екземпляра.</string>
     <string name="rollover_edit_invalid">Сума перенесення, запланована для категорії, та суми перенесення, заплановані для підкатегорій, не можуть перевищувати залишок.</string>
@@ -1060,6 +1054,4 @@
     <string name="pref_tag_style_filled">Повністю кольоровий</string>
     <string name="trade_additional_costs">Додаткові витрати</string>
     <string name="trade_add_cost">Додати вартість</string>
-    <string name="single_pane_view">Одна панель</string>
-    <string name="split_pane_view">Розділений вигляд</string>
 </resources>

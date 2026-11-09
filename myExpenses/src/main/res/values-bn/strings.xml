@@ -518,9 +518,7 @@
     <string name="sync_state_restored" tools:ignore="PluralsCandidate">%d অ্যাকাউন্টের জন্য সিঙ্ক স্টেট পুনরুদ্ধার করা হয়েছে।</string>
     <string name="sync_state_could_not_be_restored" tools:ignore="PluralsCandidate">%d অ্যাকাউন্টের জন্য সিঙ্ক স্টেট পুনরুদ্ধার করা যায়নি।</string>
     <string name="onboarding_ui_title">{app_name} আপনার পছন্দের সাথে মানিয়ে নেয়</string>
-    <string name="onboarding_data_title">আপনার প্রথম অ্যাকাউন্ট সেট আপ করা যাক</string>
     <string name="onboarding_restore_from_cloud">ক্লাউড সিঙ্ক্রোনাইজেশন থেকে পুনরুদ্ধার করুন</string>
-    <string name="onboarding_restore_from_local">লোকাল ব্যাকআপ ফাইল পুনরুদ্ধার করুন</string>
     <string name="contributed_by">অবদান রেখেছেন %s</string>
     <string name="pref_sync_notification_summary">সিঙ্ক্রোনাইজেশন অগ্রগতি সম্পর্কে অবহিত করুন</string>
     <string name="pref_debug_logging_summary">ডিবাগিং তথ্য সিস্টেম লগে লিখুন</string>
@@ -685,8 +683,6 @@
     <string name="dialog_title_warning_delete_budget">বাজেট মুছবেন?</string>
     <string name="warning_delete_budget">বাজেট \"%1$s\" মুছে ফেলা হবে।</string>
     <string name="menu_edit_budget">বাজেট এডিট করুন</string>
-    <string name="onboarding_privacy_title">আপনার ডাটা আপনার হাতেই থাকে</string>
-    <string name="onboarding_privacy_intro">আপনার আর্থিক ডাটা কোনও সার্ভারে পাঠানো হয় না, যা আমাদের দ্বারা বা কোনও তৃতীয় পার্টি দ্বারা পরিচালিত হয়।</string>
     <string name="app_restart_required">নতুন কনফিগারেশন কার্যকর হতে অ্যাপ পুনরায় চালু করুন।</string>
     <!-- Title of the submenu for changing the category, payer, payment method of multiple transactions. The entries of the submenu read "Category, "Payer", "Payment method" -->
     <string name="menu_remap">পুনরায় ম্যাপ করুন</string>
@@ -808,7 +804,6 @@
     where the transaction has already been created.  -->
     <string name="warning_plan_instance_delete">নির্বাচিত তারিখের জন্য তৈরি করা লেনদেন মুছে ফেলা হবে।</string>
     <string name="crash_reports_user_info">{app_name} অ্যাপ্লিকেশনের ক্র্যাশ রিপোর্ট অটোমেটিকভাবে ডেভেলপারদের কাছে পাঠাবে, যা তাদের দ্রুত সমস্যার সমাধান করতে সাহায্য করে।</string>
-    <string name="pref_category_title_crash_reports">ক্র্যাশ রিপোর্ট</string>
     <string name="pref_enable_acra">ক্র্যাশ রিপোর্ট অটোমেটিক পাঠানোর অনুমতি দিন</string>
     <string name="pref_acra_user_email">ক্র্যাশ রিপোর্টে অন্তর্ভুক্ত করার জন্য ইউজার ইমেল</string>
     <string name="pref_acra_user_email_summary">যদি আপনি ডিবাগিংয়ে সাহায্য করতে আগ্রহী হন এবং আমাদের আপনার সাথে যোগাযোগ করার অনুমতি দিতে চান তবে অনুগ্রহ করে আপনার ইমেল ঠিকানা লিখুন।</string>
@@ -882,7 +877,6 @@
     <string name="select_all_list_too_large">%s কমান্ড উপলব্ধ নয় কারণ তালিকাটি আংশিকভাবে লোড করা হয়েছে। তালিকার আকার কমাতে অনুগ্রহ করে সার্চ ফাংশনালিটি ব্যবহার করুন।</string>
     <string name="menu_reconfigure">পুনরায় কনফিগার করুন</string>
     <string name="encrypt_database">ডাটাবেস এনক্রিপ্ট করুন</string>
-    <string name="encrypt_database_info">ডাটাবেস এমন একটি পাসফ্রেজ দিয়ে এনক্রিপ্ট করা হবে যা এই ডিভাইস থেকে বের করা যাবে না। ফলস্বরূপ এটি আপনার ডিভাইস ব্যাকআপ দ্বারা ব্যাকআপ করা হবে না।</string>
     <string name="database_is_encrypted">ডাটাবেস এনক্রিপ্ট করা আছে।</string>
     <string name="github_sponsors"><![CDATA[লাইসেন্স কী <a href="%s">Github Sponsors</a> দেরও প্রদান করা হয়।]]></string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> এর নেটিফিকেশন পাঠানোর অনুমতি প্রয়োজন, যখন ভবিষ্যতে লেনদেন পোস্ট করা হবে।</string>

@@ -3,8 +3,6 @@
      Copyright (C) 2011 Google Inc.
      Licensed to The Android Open Source Project.
 --><resources>
-    <string name="drawer_open">"Άνοιγμα συρταριού πλοήγησης"</string>
-    <string name="drawer_close">"Κλείσιμο συρταριού πλοήγησης"</string>
     <string name="sort_direction_ascending">"Αύξουσα"</string>
     <string name="sort_direction_descending">"Φθίνουσα"</string>
     <string name="saving">"Αποθήκευση…"</string>

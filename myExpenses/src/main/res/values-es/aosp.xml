@@ -3,8 +3,6 @@
      Copyright (C) 2011 Google Inc.
      Licensed to The Android Open Source Project.
 --><resources>
-    <string name="drawer_open">"Abrir control de navegación"</string>
-    <string name="drawer_close">"Cerrar control de navegación"</string>
     <string name="sort_direction_ascending">"Ascendente"</string>
     <string name="sort_direction_descending">"Descendente"</string>
     <string name="saving">"Guardando…"</string>

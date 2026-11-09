@@ -3,8 +3,6 @@
      Licensed to The Android Open Source Project.
 -->
 <resources>
-    <string name="drawer_open">"Apri riquadro di navigazione"</string>
-    <string name="drawer_close">"Chiudi riquadro di navigazione"</string>
     <string name="sort_direction_ascending">"Crescente"</string>
     <string name="sort_direction_descending">"Decrescente"</string>
     <string name="saving">"Salvataggio…"</string>

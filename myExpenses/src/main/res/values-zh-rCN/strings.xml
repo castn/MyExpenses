@@ -464,9 +464,7 @@
     <string name="sync_state_restored">已为%d账户恢复了同步状态。</string>
     <string name="sync_state_could_not_be_restored">无法为%d账户恢复同步状态。</string>
     <string name="onboarding_ui_title">{app_name} 适应您的喜好</string>
-    <string name="onboarding_data_title">让我们建立您的第一个账户</string>
     <string name="onboarding_restore_from_cloud">从云同步还原</string>
-    <string name="onboarding_restore_from_local">恢复本地备份文件</string>
     <string name="contributed_by">由%s贡献</string>
     <string name="pref_sync_notification_summary">通知同步进度</string>
     <string name="pref_debug_logging_summary">将调试信息写入系统日志</string>
@@ -610,8 +608,6 @@
     <string name="dialog_title_warning_delete_budget">删除预算？</string>
     <string name="warning_delete_budget">预算“ %1$s”将被删除。</string>
     <string name="menu_edit_budget">编辑预算</string>
-    <string name="onboarding_privacy_title">您的数据掌握在您的手中</string>
-    <string name="onboarding_privacy_intro">您的财务数据不会发送到任何由我们或任何第三方运营的服务器。</string>
     <string name="app_restart_required">新配置需要重启应用程序才能生效。</string>
     <string name="menu_remap">重新分配映射</string>
     <string name="dialog_title_confirm_remap">确定更改映射(%s)?</string>
@@ -693,7 +689,6 @@
     <string name="auto_fill_focus">设置聚焦收款人字段</string>
     <string name="warning_plan_instance_delete">为选定日期创建的交易将被删除。</string>
     <string name="crash_reports_user_info">{app_name} 将会自动向开发者发送应用程序崩溃报告，以便开发者可以快速解决问题。</string>
-    <string name="pref_category_title_crash_reports">故障报告</string>
     <string name="pref_enable_acra">允许自动发送崩溃报告</string>
     <string name="pref_acra_user_email">用户电子信箱地址将被包含在崩溃报告中</string>
     <string name="pref_acra_user_email_summary">如果您愿意协助除错并允许我们联系您，请留下您的电子邮件地址。</string>
@@ -746,7 +741,6 @@
     <string name="select_all_list_too_large">命令 %s 不可用，因为只加载了部分列表。请使用搜索功能以减少列表大小</string>
     <string name="menu_reconfigure">重新配置</string>
     <string name="encrypt_database">加密数据库</string>
-    <string name="encrypt_database_info">数据库将通过无法从此设备提取的密码短语进行加密。该口令因而不会被你设备的备份服务所备份。</string>
     <string name="database_is_encrypted">数据库已加密。</string>
     <string name="github_sponsors"><![CDATA[许可密钥也提供给 <a href="%s">Github 赞助者</a>.]]></string>
     <string name="notifications_permission_required_planner">
@@ -945,6 +939,4 @@
     <string name="rounding">舍入</string>
     <string name="help_floating_action_button">悬浮按钮</string>
     <string name="important_upgrade_information_heading">重要资讯</string>
-    <string name="single_pane_view">单面板</string>
-    <string name="split_pane_view">分屏视图</string>
 </resources>

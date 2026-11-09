@@ -109,8 +109,6 @@
     <string name="empty">"Kosong"</string>
     <string name="options">"Opsi"</string>
     <string name="actions">"Tindakan"</string>
-    <string name="drawer_open">Buka laci navigasi</string>
-    <string name="drawer_close">Tutup laci navigasi</string>
     <string name="sort_direction_ascending">Menaik</string>
     <string name="sort_direction_descending">Menurun</string>
     <plurals name="delete_files_confirmation_message">

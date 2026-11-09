@@ -524,9 +524,7 @@
     <string name="sync_state_restored" tools:ignore="PluralsCandidate">Sync state was restored for %d accounts.</string>
     <string name="sync_state_could_not_be_restored" tools:ignore="PluralsCandidate">Sync state could not be restored for %d accounts.</string>
     <string name="onboarding_ui_title">{app_name} adapts to your preference</string>
-    <string name="onboarding_data_title">Let\'s set up your first account</string>
     <string name="onboarding_restore_from_cloud">Restore from cloud synchronization</string>
-    <string name="onboarding_restore_from_local">Restore local backup file</string>
     <string name="contributed_by">Contributed by %s</string>
     <string name="pref_sync_notification_summary">Notify about synchronization progress</string>
     <string name="pref_debug_logging_summary">Write debugging information into system log</string>
@@ -691,8 +689,6 @@
     <string name="dialog_title_warning_delete_budget">Delete budget?</string>
     <string name="warning_delete_budget">Budget \"%1$s\" will be deleted.</string>
     <string name="menu_edit_budget">Edit budget</string>
-    <string name="onboarding_privacy_title">Your data stays in your hands</string>
-    <string name="onboarding_privacy_intro">Your financial data is not sent to any server, neither operated by us nor by any third party.</string>
     <string name="app_restart_required">New configuration requires app restart to take effect.</string>
     <!-- Title of the submenu for changing the category, payer, payment method of multiple transactions. The entries of the submenu read "Category, "Payer", "Payment method" -->
     <string name="menu_remap">Remap</string>
@@ -815,7 +811,6 @@
      where the transaction has already been created.  -->
     <string name="warning_plan_instance_delete">The transaction created for the selected date will be deleted.</string>
     <string name="crash_reports_user_info">{app_name} will send reports about application crashes automatically to its developers, which allows them to fix problems more quickly.</string>
-    <string name="pref_category_title_crash_reports">Crash reports</string>
     <string name="pref_enable_acra">Allow automatic sending of crash reports</string>
     <string name="pref_acra_user_email">User email to be included in crash report</string>
     <string name="pref_acra_user_email_summary">Please enter your email address if you are willing to help debugging and allow us to contact you.</string>
@@ -890,7 +885,6 @@
     <string name="select_all_list_too_large">The command %s is not available because the list is only partially loaded. Please use the Search functionality in order to reduce the list size.</string>
     <string name="menu_reconfigure">Reconfigure</string>
     <string name="encrypt_database">Encrypt database</string>
-    <string name="encrypt_database_info">The database will be encrypted with a passphrase that cannot be extracted from this device. Consequently it will not be backed up by your device\'s backup service.</string>
     <string name="database_is_encrypted">Database is encrypted.</string>
     <string name="github_sponsors"><![CDATA[Licence keys are also provided to <a href="%s">Github Sponsors</a>.]]></string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> needs permission to send you notifications, when future transactions are posted.</string>
@@ -1163,6 +1157,4 @@
     <string name="rounding">Rounding</string>
     <string name="help_floating_action_button">Floating action button</string>
     <string name="important_upgrade_information_heading">Important information</string>
-    <string name="single_pane_view">Single pane</string>
-    <string name="split_pane_view">Split view</string>
 </resources>

@@ -475,9 +475,7 @@
     <string name="sync_state_restored" tools:ignore="PluralsCandidate">ស្ថានភាពធ្វើសមកាលកម្មត្រូវបានស្ដារឡើងវិញសម្រាប់គណនី %d។</string>
     <string name="sync_state_could_not_be_restored" tools:ignore="PluralsCandidate">ស្ថានភាពធ្វើសមកាលកម្មមិនអាចស្ដារឡើងវិញសម្រាប់គណនី %d។</string>
     <string name="onboarding_ui_title">{app_name} កែប្រែទៅតាមចំណូលចិត្តរបស់អ្នក</string>
-    <string name="onboarding_data_title">សូមរៀបចំគណនីដំបូងរបស់អ្នក</string>
     <string name="onboarding_restore_from_cloud">ស្ដារឡើងវិញពីការធ្វើសមកាលកម្មពពក</string>
-    <string name="onboarding_restore_from_local">ស្ដារឯកសារបម្រុងទុកក្នុងស្រុក</string>
     <string name="contributed_by">រួមចំណែកដោយ %s</string>
     <string name="pref_sync_notification_summary">ជូនដំណឹងអំពីដំណើរកើនឡើងនៃការធ្វើសមកាលកម្ម</string>
     <string name="pref_debug_logging_summary">សរសេរព័ត៌មានបំបាត់កំហុសទៅក្នុងកំណត់ហេតុប្រព័ន្ធ</string>
@@ -621,8 +619,6 @@
     <string name="dialog_title_warning_delete_budget">លុបថវិកា?</string>
     <string name="warning_delete_budget">ថវិកា "%1$s" នឹងត្រូវលុបចោល។</string>
     <string name="menu_edit_budget">កែសម្រួលថវិកា</string>
-    <string name="onboarding_privacy_title">ទិន្នន័យរបស់អ្នកស្ថិតក្នុងដៃរបស់អ្នក</string>
-    <string name="onboarding_privacy_intro">ទិន្នន័យហិរញ្ញវត្ថុរបស់អ្នកមិនត្រូវបានផ្ញើទៅកាន់ម៉ាស៊ីនបម្រើណាមួយឡើយ ទាំងដែលដំណើរការដោយយើង ឬដោយភាគីទីបី។</string>
     <string name="app_restart_required">ការកំណត់រចនាសម្ព័ន្ធថ្មីតម្រូវឱ្យបើកកម្មវិធីឡើងវិញដើម្បីឱ្យមានប្រសិទ្ធភាព។</string>
     <string name="menu_remap">ភ្ជាប់ឡើងវិញ</string>
     <string name="dialog_title_confirm_remap">ផ្លាស់ប្តូរការភ្ជាប់ (%s) ?</string>
@@ -704,7 +700,6 @@
     <string name="auto_fill_focus">កំណត់ការផ្តោតលើអ្នកទទួលប្រាក់</string>
     <string name="warning_plan_instance_delete">ប្រតិបត្តិការដែលបានបង្កើតសម្រាប់កាលបរិច្ឆេទដែលបានជ្រើសរើសនឹងត្រូវលុបចោល។</string>
     <string name="crash_reports_user_info">{app_name} នឹងផ្ញើរបាយការណ៍អំពីការគាំងកម្មវិធីដោយស្វ័យប្រវត្តិទៅកាន់អ្នកអភិវឌ្ឍន៍របស់ខ្លួន ដែលអនុញ្ញាតឱ្យពួកគេដោះស្រាយបញ្ហាកាន់តែរហ័ស។</string>
-    <string name="pref_category_title_crash_reports">របាយការណ៍​សាច់​ប្រាក់</string>
     <string name="pref_enable_acra">អនុញ្ញាតិ​ផ្ញើ​របាយការណ៍​សាច់​ប្រាក់​ដោយ​ស្វ័យ​ប្រវត្តិ</string>
     <string name="pref_acra_user_email">អ៊ីម៉ែល​អ្នក​ប្រើ​ប្រាស់ ត្រូវ​បាន​ដាក់បញ្ចូល​ក្នុង របាយការណ៍​ជាប់គាំង</string>
     <string name="pref_acra_user_email_summary">សូម​វាយ​បញ្ចូល​ អ៊ីម៉ែល​របស់​អ្នក បើ​អ្នក​ចង់​ជួយ ស្វែង​រកកំហុស​ឆ្គង និង​អនុញ្ញាតិ​អោយ​យើង​ខ្ញុំ​ទាក់ទង​ទៅ​អ្នក។</string>
@@ -757,7 +752,6 @@
     <string name="select_all_list_too_large">ពាក្យបញ្ជា %s មិនមានទេ ព្រោះបញ្ជីត្រូវបានផ្ទុកតែមួយផ្នែកប៉ុណ្ណោះ។ សូមប្រើមុខងារស្វែងរកដើម្បីកាត់បន្ថយទំហំបញ្ជី។</string>
     <string name="menu_reconfigure">កំណត់រចនាសម្ព័ន្ធឡើងវិញ</string>
     <string name="encrypt_database">រ៉កខូដមូលដ្ឋានទិន្នន័យ</string>
-    <string name="encrypt_database_info">មូលដ្ឋានទិន្នន័យនឹងត្រូវរ៉កខូដជាមួយឃ្លាសម្ងាត់ដែលមិនអាចស្រង់ចេញពីឧបករណ៍នេះបានទេ។ ជាលទ្ធផល វានឹងមិនត្រូវបានបម្រុងទុកដោយសេវាកម្មបម្រុងទុកនៃឧបករណ៍របស់អ្នកឡើយ។</string>
     <string name="database_is_encrypted">មូលដ្ឋានទិន្នន័យត្រូវបានរ៉កខូដ។</string>
     <string name="github_sponsors">កូនសោអាជ្ញាប័ណ្ណត្រូវបានផ្តល់ជូនផងដែរដល់ <a href="%s">អ្នកឧបត្ថម្ភ GitHub</a>។</string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> ត្រូវការការអនុញ្ញាតដើម្បីផ្ញើការជូនដំណឹងមកអ្នក នៅពេលប្រតិបត្តិការនាពេលអនាគតត្រូវបានបង្ហោះ។</string>
@@ -955,6 +949,4 @@
     <string name="rounding">ការបង្គត់</string>
     <string name="help_floating_action_button">ប៊ូតុងសកម្មភាពអណ្តែត</string>
     <string name="important_upgrade_information_heading">ព័ត៌​មាន​សំខាន់</string>
-    <string name="single_pane_view">ផ្ទាំងតែមួយ</string>
-    <string name="split_pane_view">ទិដ្ឋភាពបំបែក</string>
 </resources>

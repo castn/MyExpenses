@@ -532,9 +532,7 @@
     <string name="sync_state_restored">تمت استعادة حالة المزامنة لـ %d حسابات.</string>
     <string name="sync_state_could_not_be_restored">تعذر استعادة حالة المزامنة لحسابات %d.</string>
     <string name="onboarding_ui_title">يتكيف {app_name} مع تفضيلاتك</string>
-    <string name="onboarding_data_title">دعنا ننشئ حسابك الأول</string>
     <string name="onboarding_restore_from_cloud">استعادة من المزامنة السحابية</string>
-    <string name="onboarding_restore_from_local">استعادة ملف النسخ الاحتياطي المحلي</string>
     <string name="contributed_by">تمت المساهمة بواسطة %s</string>
     <string name="pref_sync_notification_summary">قم بالإخطار حول تقدم المزامنة المُحرز</string>
     <string name="pref_debug_logging_summary">اكتب معلومات التصحيح في سجل النظام</string>
@@ -696,8 +694,6 @@
     <string name="dialog_title_warning_delete_budget">هل تودّ حذف الميزانية؟</string>
     <string name="warning_delete_budget">سيتم حذف الميزانية \"%1$s\".</string>
     <string name="menu_edit_budget">تحرير الميزانية</string>
-    <string name="onboarding_privacy_title">تبقى بياناتك بين يديك</string>
-    <string name="onboarding_privacy_intro">لا يتم إرسال بياناتك المالية إلى أي خادم، ولا يتم تشغيله من قبلنا ولا من قبل أي طرف ثالث.</string>
     <string name="app_restart_required">تتطلب التهيئة الجديد إعادة تشغيل التطبيق ليصبح ساري المفعول.</string>
     <!-- Title of the submenu for changing the category, payer, payment method of multiple transactions. The entries of the submenu read "Category, "Payer", "Payment method" -->
     <string name="menu_remap">إعادة تخطيط</string>
@@ -801,7 +797,6 @@
     <!-- Title of a menu item and a dialogue that allow to adjust the current balance. User can enter the new balance, and transaction form is opened with the amount prefiled to the difference between old and new balance  -->
     <string name="new_balance">الرصيد الجديد</string>
     <string name="crash_reports_user_info">{app_name} سوف يرسل تقرير عن فشل التطبيق بشكل تلقائي للمبرمجين, هذا سيسمح لهم بإصلاح المشاكل بسرعة أكبر.</string>
-    <string name="pref_category_title_crash_reports">تقارير لمشاكل التطبيق</string>
     <string name="pref_enable_acra">السماح بالإرسال التلقائي لتقارير الأعطال</string>
     <string name="pref_acra_user_email">بريد المستخدم ليتم إدراجه في تقرير المشكلة </string>
     <string name="pref_acra_user_email_summary">رجاءاً أدخل بريدك الإلكتروني إذا كنت ترغب بالمساعدة.</string>
@@ -928,7 +923,6 @@
     <string name="debt_balance_i_owe">أنا مدين الآن بـ %s.</string>
     <string name="template_shortcut">اختصار القالب</string>
     <string name="merge_parties_strategy_group">يتم تجميع التكرارات كتوابع.</string>
-    <string name="encrypt_database_info">سيتم تشفير قاعدة البيانات باستخدام عبارة مرور لا يمكن استخراجها من هذا الجهاز. وبالتالي لن يتم نسخها احتياطيًا بواسطة خدمة النسخ الاحتياطي بجهازك.</string>
     <string name="pref_purge_backup_keep_title">الحد الأقصى لعدد ملفات النسخ الاحتياطي الأحدث التي سيتم الاحتفاظ بها</string>
     <string name="pref_copy_attachments_summary_off">لا يتم نسخ الملفات، يتم تخزين مرجع فقط.</string>
     <string name="show_duplicates">إظهار التكرارات</string>
@@ -1130,6 +1124,4 @@
     <string name="remap_update_value_date">وأيضا تحديث تاريخ القيمة</string>
     <string name="trade_add_cost">إضافة التكلفة</string>
     <string name="help_floating_action_button">زر الحركة العائمة</string>
-    <string name="single_pane_view">لوحة واحدة</string>
-    <string name="split_pane_view">العرض المنقسم</string>
 </resources>

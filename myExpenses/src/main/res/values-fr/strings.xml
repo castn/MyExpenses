@@ -509,9 +509,7 @@
     <string name="sync_state_restored">L\'état de synchronisation a été restauré pour %d comptes.</string>
     <string name="sync_state_could_not_be_restored">L\'état de synchronisation n\'a pas pu être restauré pour %d comptes.</string>
     <string name="onboarding_ui_title">{app_name} s\'adapte à vos préférences</string>
-    <string name="onboarding_data_title">Allons configurer votre premier compte</string>
     <string name="onboarding_restore_from_cloud">Restaurer à partir de la synchronisation distante</string>
-    <string name="onboarding_restore_from_local">Restaurer le fichier de sauvegarde local</string>
     <string name="contributed_by">Contribution de %s</string>
     <string name="pref_sync_notification_summary">Notifier sur la progression de la synchronisation</string>
     <string name="pref_debug_logging_summary">Écrire des informations de débogage dans le journal du système</string>
@@ -670,8 +668,6 @@
     <string name="dialog_title_warning_delete_budget">Supprimer le budget \?</string>
     <string name="warning_delete_budget">Le budget « %1$s » sera supprimé.</string>
     <string name="menu_edit_budget">Modifier le budget</string>
-    <string name="onboarding_privacy_title">Vos données restent entre vos mains</string>
-    <string name="onboarding_privacy_intro">Vos données financières ne sont envoyées à aucun serveur, ni géré par nous ni par aucun tiers.</string>
     <string name="app_restart_required">La nouvelle configuration nécessite le redémarrage de l\'application pour prendre effet.</string>
     <!-- Title of the submenu for changing the category, payer, payment method of multiple transactions. The entries of the submenu read "Category, "Payer", "Payment method" -->
     <string name="menu_remap">Réaffecter</string>
@@ -792,7 +788,6 @@
      where the transaction has already been created.  -->
     <string name="warning_plan_instance_delete">L\'opération créée pour la date sélectionnée sera supprimée.</string>
     <string name="crash_reports_user_info">{app_name} enverra automatiquement des rapports aux développeurs si l\'application se bloque, ce qui leur permettra de résoudre les problèmes plus rapidement.</string>
-    <string name="pref_category_title_crash_reports">Rapports d\'incidents</string>
     <string name="pref_enable_acra">Autoriser l\'envoi automatique de rapports d\'incidents</string>
     <string name="pref_acra_user_email">Courriel de l\'utilisateur à inclure dans le rapport d\'incident</string>
     <string name="pref_acra_user_email_summary">Veuillez entrer votre adresse électronique si vous êtes prêt·e à nous aider à déboguer et nous permettent de vous contacter.</string>
@@ -856,7 +851,6 @@
     <string name="select_all_list_too_large">La commande %s n\'est pas disponible car la liste n\'est que partiellement chargée. Veuillez utiliser la fonctionnalité de recherche afin de réduire la taille de la liste.</string>
     <string name="menu_reconfigure">Reconfigurer</string>
     <string name="encrypt_database">Chiffrer la base de données</string>
-    <string name="encrypt_database_info">La base de données sera cryptée avec une phrase secrète qui ne peut pas être extraite de cet appareil. Par conséquent, elle ne sera pas sauvegardé par le service de sauvegarde de votre appareil.</string>
     <string name="database_is_encrypted">La base de données est cryptée.</string>
     <string name="github_sponsors"><![CDATA[Les clés de licence sont également fournies aux <a href="%s">Github Sponsors</a>.]]></string>
     <string name="notifications_channel_required">Veuillez activer le canal %s.</string>
@@ -1082,6 +1076,4 @@
     <string name="pref_tag_style_filled">Entièrement coloré</string>
     <string name="trade_additional_costs">Coûts supplémentaires</string>
     <string name="trade_add_cost">Ajouter un coût</string>
-    <string name="single_pane_view">Panneau unique</string>
-    <string name="split_pane_view">Vue fractionnée</string>
 </resources>

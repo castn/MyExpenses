@@ -501,9 +501,7 @@
     <string name="sync_state_restored">%d fiók szinkronizálási állapota visszaállt.</string>
     <string name="sync_state_could_not_be_restored">%d fióknál nem sikerült visszaállítani a szinkronizálási állapotot.</string>
     <string name="onboarding_ui_title">{app_name} alkalmazkodik az ön preferenciájához</string>
-    <string name="onboarding_data_title">Hadd állítsuk be az első fiókját</string>
     <string name="onboarding_restore_from_cloud">Visszaállítás a felhőalapú szinkronizálásból</string>
-    <string name="onboarding_restore_from_local">Helyi biztonsági mentés visszaállítása</string>
     <string name="contributed_by">%s közreműködésével</string>
     <string name="pref_sync_notification_summary">Értesítés a szinkronizálás állapotáról</string>
     <string name="pref_debug_logging_summary">Írjon hibakeresési információt a rendszernaplóba</string>
@@ -663,8 +661,6 @@
     <string name="dialog_title_warning_delete_budget">Törli a költségvetést?</string>
     <string name="warning_delete_budget">A(z) \"%1$s\" költségvetés törlődik.</string>
     <string name="menu_edit_budget">Költségvetés szerkesztése</string>
-    <string name="onboarding_privacy_title">Az adatai az ön kezében maradnak</string>
-    <string name="onboarding_privacy_intro">Az ön pénzügyi adatai nem kerülnek elküldésre, sem általunk, sem harmadik fél által üzemeltetett szerverre.</string>
     <string name="app_restart_required">Az új konfiguráció érvénybe léptetéséhez újra kell indítani az alkalmazást.</string>
     <!-- Title of the submenu for changing the category, payer, payment method of multiple transactions. The entries of the submenu read "Category, "Payer", "Payment method" -->
     <string name="menu_remap">Újratársítás</string>
@@ -825,7 +821,6 @@
     <string name="select_all_list_too_large">Az %s parancs nem érhető el, mert a lista csak részben töltődik be. Kérjük, használja a Keresés funkciót a lista méretének csökkentése érdekében.</string>
     <string name="search_account">Fiók keresése</string>
     <string name="budget_table_header_overspent">Túlköltekezés</string>
-    <string name="pref_category_title_crash_reports">Baleseti jelentések</string>
     <string name="pref_acra_user_email_summary">Kérjük, adja meg e-mail címét, ha szeretne segíteni a hibakeresésben, és lehetővé teszi, hogy kapcsolatba léphessünk Önnel.</string>
     <string name="menu_new_debt">Új adósság</string>
     <string name="setup_completed">Beállítás sikerült.</string>
@@ -852,7 +847,6 @@
     <string name="pref_mlkit_script_title">Parancsfájl az MlKit-hez</string>
     <string name="content_description_attachment">Melléklet</string>
     <string name="dialog_confirm_rollover_delete">Az erre az időszakra vonatkozó összes átgörgetési összeg törlődik.</string>
-    <string name="encrypt_database_info">Az adatbázis olyan jelszóval lesz titkosítva, amely nem nyerhető ki erről az eszközről. Következésképpen az eszköz biztonsági mentési szolgáltatása nem készít biztonsági másolatot.</string>
     <string name="database_is_encrypted">Az adatbázis titkosítva van.</string>
     <string name="contrib_feature_category_tree_label">Kategóriafa</string>
     <string name="content_description_remove_icon">Ikon eltávolítása</string>

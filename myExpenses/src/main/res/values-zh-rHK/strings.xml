@@ -464,9 +464,7 @@
     <string name="sync_state_restored">已为%d账户恢复了同步状态。</string>
     <string name="sync_state_could_not_be_restored">无法为%d账户恢复同步状态。</string>
     <string name="onboarding_ui_title">{app_name} 适应您的喜好</string>
-    <string name="onboarding_data_title">让我们建立您的第一个账户</string>
     <string name="onboarding_restore_from_cloud">从云同步还原</string>
-    <string name="onboarding_restore_from_local">恢复本地备份文件</string>
     <string name="contributed_by">由%s贡献</string>
     <string name="pref_sync_notification_summary">通知同步进度</string>
     <string name="pref_debug_logging_summary">将调试信息写入系统日志</string>
@@ -610,8 +608,6 @@
     <string name="dialog_title_warning_delete_budget">删除预算？</string>
     <string name="warning_delete_budget">预算“ %1$s”将被删除。</string>
     <string name="menu_edit_budget">编辑预算</string>
-    <string name="onboarding_privacy_title">您的数据掌握在您的手中</string>
-    <string name="onboarding_privacy_intro">您的财务数据不会发送到任何由我们或任何第三方运营的服务器。</string>
     <string name="app_restart_required">新配置需要重启应用程序才能生效。</string>
     <string name="menu_remap">重新分配映射</string>
     <string name="dialog_title_confirm_remap">确定更改映射(%s)?</string>
@@ -693,7 +689,6 @@
     <string name="auto_fill_focus">設焦點於交易對象欄位</string>
     <string name="warning_plan_instance_delete">为选定日期创建的交易将被删除。</string>
     <string name="crash_reports_user_info">{app_name}會自動發送有關應用程序崩潰報告到它的開發者，這使得他們能夠更迅速地解決問題。</string>
-    <string name="pref_category_title_crash_reports">崩潰報告</string>
     <string name="pref_enable_acra">允許自動發送崩潰報告</string>
     <string name="pref_acra_user_email">用戶的電子郵件被包含到崩潰報告</string>
     <string name="pref_acra_user_email_summary">如果你願意幫助調試，請輸入您的電子郵件地址，讓我們與您聯繫。</string>
@@ -746,7 +741,6 @@
     <string name="select_all_list_too_large">命令 %s 不可用，因為列表僅部分載入。請使用搜尋功能以減少列表大小。</string>
     <string name="menu_reconfigure">重新配置</string>
     <string name="encrypt_database">加密数据库</string>
-    <string name="encrypt_database_info">資料庫將使用無法從此裝置擷取的密碼短語進行加密。因此，它不會被您的裝置備份服務備份。</string>
     <string name="database_is_encrypted">数据库已加密。</string>
     <string name="github_sponsors">許可證金鑰也提供給 &lt;a href="%s"&gt;Github 贊助者&lt;/a&gt;。</string>
     <string name="notifications_permission_required_planner">
@@ -945,6 +939,4 @@
     <string name="rounding">舍入</string>
     <string name="help_floating_action_button">浮動動作按鈕</string>
     <string name="important_upgrade_information_heading">重要資訊</string>
-    <string name="single_pane_view">單面板</string>
-    <string name="split_pane_view">分割視圖</string>
 </resources>

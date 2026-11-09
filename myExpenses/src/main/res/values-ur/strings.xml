@@ -413,9 +413,7 @@
     <string name="pref_webdav_timeout_title">WebDAV ٹائم آؤٹ (سیکنڈ میں)</string>
     <string name="sync_state_restored">%d اکاؤنٹس کے لیے مطابقت پذیری کی حالت بحال کر دی گئی.</string>
     <string name="onboarding_ui_title">{app_name} آپ کی ترجیح کے مطابق ہوتا ہے</string>
-    <string name="onboarding_data_title">آئیے آپ کا پہلا اکاؤنٹ ترتیب دیں</string>
     <string name="onboarding_restore_from_cloud">کلاؤڈ سنکرونائزیشن سے بحال کریں</string>
-    <string name="onboarding_restore_from_local">مقامی بیک اپ فائل کو بحال کریں</string>
     <string name="contributed_by">%s کے ذریعے تعاون کیا گیا</string>
     <string name="pref_sync_notification_summary">مطابقت پذیری کی پیشرفت کے بارے میں مطلع کریں</string>
     <string name="feature_deprecated">فرسودہ</string>
@@ -513,7 +511,6 @@
     <string name="account_widget_configuration_sum">ظاہر کردہ رقم کی قسم</string>
     <string name="account_widget_configuration">اکاؤنٹ ویجیٹ کنفیگریشن</string>
     <string name="object_sealed_debt">آبجیکٹ سے مراد بند قرض ہے.</string>
-    <string name="pref_category_title_crash_reports">کریش رپورٹس</string>
     <string name="pref_acra_user_email">صارف کا ای میل کریش رپورٹ میں شامل کیا جائے گا</string>
     <string name="pref_acra_user_email_summary">اگر آپ ڈیبگنگ میں مدد کرنا چاہتے ہیں تو براہ کرم اپنا ای میل ایڈریس درج کریں اور ہمیں آپ سے رابطہ کرنے کی اجازت دیں.</string>
     <string name="backup_save_to_sync_backend">%s میں محفوظ کریں</string>
@@ -686,10 +683,8 @@
     <string name="menu_close">بند کریں</string>
     <string name="content_description_dates_are_linked">بکنگ کی تاریخ اور قیمت کی تاریخ ایک ساتھ اپ ڈیٹ کی جاتی ہے</string>
     <string name="warning_account_for_transaction_is_closed">منتخب کردہ ٹرانزیکشنز میں سے کم از کم ایک میں ترمیم نہیں کی جا سکتی ہے:</string>
-    <string name="onboarding_privacy_intro">آپ کا مالیاتی ڈیٹا کسی بھی سرور کو نہیں بھیجا جاتا ہے، نہ ہی ہمارے ذریعے چلایا جاتا ہے اور نہ ہی کسی تیسرے فریق کے ذریعے.</string>
     <string name="no_budgets">بٹن کو تھپتھپا کر اپنے پہلے بجٹ کی وضاحت کریں.</string>
     <string name="menu_create_budget">نیا بجٹ</string>
-    <string name="onboarding_privacy_title">آپ کا ڈیٹا آپ کے ہاتھ میں رہتا ہے</string>
     <string name="budget_filter_all_methods">تمام طریقے</string>
     <plurals name="warning_delete_tag">
         <item quantity="one">ٹیگ %1$s کو %2$d ٹرانزیکشن میں میپ کیا گیا ہے کیا اسے حذف کر دینا چاہیے؟</item>

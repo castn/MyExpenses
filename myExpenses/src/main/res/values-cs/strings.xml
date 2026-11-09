@@ -517,9 +517,7 @@
     <string name="sync_state_restored">Stav synchronizace účtů (%d) byl obnoven.</string>
     <string name="sync_state_could_not_be_restored">U %d účtů se nepovedlo obnovit status synchronizace.</string>
     <string name="onboarding_ui_title">Aplikace {app_name} se přizpůsobí vašim preferencím</string>
-    <string name="onboarding_data_title">Dovolte nám nastavit váš první účet</string>
     <string name="onboarding_restore_from_cloud">Obnovit z cloudové synchronizace</string>
-    <string name="onboarding_restore_from_local">Obnovit místní zálohovací soubor</string>
     <string name="contributed_by">Přispěno %s</string>
     <string name="pref_sync_notification_summary">Upozornit na průběh synchronizace</string>
     <string name="pref_debug_logging_summary">Zápis informací ladění do systémového protokolu</string>
@@ -679,8 +677,6 @@
     <string name="dialog_title_warning_delete_budget">Chcete odstranit rozpočet?</string>
     <string name="warning_delete_budget">Rozpočet „%1$s“ bude smazán.</string>
     <string name="menu_edit_budget">Upravit rozpočet</string>
-    <string name="onboarding_privacy_title">Vaše údaje zůstanou ve vašich rukou</string>
-    <string name="onboarding_privacy_intro">Vaše finanční údaje nejsou odesílány na žádný server provozovaný námi nebo třetí stranou.</string>
     <string name="app_restart_required">Aby nová konfigurace vešla v platnost, je nutné restartovat aplikaci.</string>
     <!-- Title of the submenu for changing the category, payer, payment method of multiple transactions. The entries of the submenu read "Category, "Payer", "Payment method" -->
     <string name="menu_remap">Přemapovat</string>
@@ -793,7 +789,6 @@
     <!-- When user selects duplicate parties to be merged, he sees this prompt asking him to select which name should be selected for the merged party -->
     <string name="merge_parties_select">Vyberte název sloučené strany</string>
     <string name="crash_reports_user_info">{app_name} pošle automaticky záznamy o pádech aplikace vývojářům, což umožní napravení chyb mnohem rychleji.</string>
-    <string name="pref_category_title_crash_reports">Hlášení o pádech</string>
     <string name="pref_enable_acra">Povolí automatické posílání záznamů o pádech</string>
     <string name="pref_acra_user_email">Uživatelský email bude zahrnut v záznamu pádu</string>
     <string name="pref_acra_user_email_summary">Prosím zadejte vaši emailovou adresu pokud chcete pomoci při ladění a pokud nám chcete umožnit kontaktovat vás.</string>
@@ -889,7 +884,6 @@
     <string name="budget_only_current_period">Nastavit pouze pro %s</string>
     <string name="content_description_attachment">Příloha</string>
     <string name="redesign">Předělat</string>
-    <string name="encrypt_database_info">Databáze bude zašifrována přístupovou frází, kterou nelze z tohoto zařízení extrahovat. V důsledku toho nebude zálohován zálohovací službou vašeho zařízení.</string>
     <string name="database_is_encrypted">Databáze je šifrována.</string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> potřebuje oprávnění, aby vám mohla zasílat oznámení, když budou zveřejněny budoucí transakce.</string>
     <string name="notifications_permission_required_sync">Udělením oprávnění k odesílání oznámení můžete sledovat průběh synchronizačních operací.</string>

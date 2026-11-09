@@ -399,7 +399,6 @@
     <!-- Title of a menu item and a dialogue that allow to adjust the current balance. User can enter the new balance, and transaction form is opened with the amount prefiled to the difference between old and new balance  -->
     <string name="new_balance">تراز تازه</string>
     <string name="crash_reports_user_info">{app_name} گزارشات مربوط به خرابی برنامه را به طور خودکار به توسعه دهندگان آن ارسال می کند، که به آنها اجازه می دهد مشکلات را سریعتر حل کنند.</string>
-    <string name="pref_category_title_crash_reports">گزارش های خرابی</string>
     <string name="pref_enable_acra">اجازه ارسال خودکار گزارشهای خرابی</string>
     <string name="pref_acra_user_email">ایمیل کاربر در گزارش تصادف گنجانده شده است</string>
     <string name="pref_acra_user_email_summary">لطفا آدرس ایمیل خود را وارد کنید اگر مایل هستید که به اشکالزدایی کمک کنید و به ما اجازه دهید با شما تماس بگیریم</string>
@@ -530,7 +529,6 @@
     <string name="sync_io_exception_setup_remote_account">خطا هنگام راه اندازی حساب سرور.</string>
     <string name="sync_io_exception_locking">سرور قفل است یا نمی تواند قفل شود.</string>
     <string name="sync_success_reset_account_data">داده های سرور برای حساب %s حذف شده است.</string>
-    <string name="onboarding_data_title">اجازه دهید اولین حساب شما را راه اندازی کنیم</string>
     <string name="sync_io_exception_unlocking">خطا هنگام برداشتن قفل از سرور.</string>
     <string name="sync_io_exception_syncing">خطا هنگام همگام سازی تغییرات با سرور.</string>
     <string name="progress_dialog_checking_sync_backend">در خال تایید سرور</string>
@@ -545,7 +543,6 @@
     <string name="warning_auto_backup_deactivated">پشتیبان گیری خودکار غیرفعال شده است. پس از حل مشکل (به عنوان مثال انتخاب پوشه دیگری برای پشتیبان گیری) می توانید آن را دوباره از تنظیمات روشن کنید.</string>
     <string name="pref_backup_cloud_summary">علاوه بر فضای ذخیره سازی محلی روی دستگاه، فایل پشتیبان را می توان در یک سرور کپی کرد.</string>
     <string name="auto_backup_cloud_success">فایل پشتیبان %1$s با موفقیت در سرور %2$s ذخیره شد.</string>
-    <string name="onboarding_restore_from_local">فایل پشتیبان محلی را بازیابی کنید</string>
     <string name="synchronization_end_success">%1$d تغییر در سرور در پایگاه داده محلی نوشته شد. %2$d تغییرات محلی در سرور نوشته شد.</string>
     <string name="button_validate">صحت سنجی</string>
     <string name="feature_deprecated">منسوخ شده</string>

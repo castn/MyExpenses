@@ -4,8 +4,6 @@
      Licensed to The Android Open Source Project.
      android-source/packages/apps/UnifiedEmail/res/values/strings.xml
 --><resources>
-    <string name="drawer_open">"Висунути навігаційну панель"</string>
-    <string name="drawer_close">"Сховати навігаційну панель"</string>
     <string name="sort_direction_ascending">"За зростанням"</string>
     <string name="sort_direction_descending">"За спаданням"</string>
     <string name="saving">"Збереження…"</string>

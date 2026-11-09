@@ -505,9 +505,7 @@
     <string name="sync_state_restored">Lo stato di sincronizzazione è stato ripristinato per%d conti.</string>
     <string name="sync_state_could_not_be_restored">Lo stato di sincronizzazione non può essere ripristinato per %dconti.</string>
     <string name="onboarding_ui_title">{app_name} si adatta alle tue preferenze</string>
-    <string name="onboarding_data_title">Lasciaci impostare il tuo primo conto</string>
     <string name="onboarding_restore_from_cloud">Ripristino dal cloud</string>
-    <string name="onboarding_restore_from_local">Ripristina il file di backup locale</string>
     <string name="contributed_by">Contribuito da %s</string>
     <string name="pref_sync_notification_summary">Notifica sull\'avanzamento della sincronizzazione</string>
     <string name="pref_debug_logging_summary">Scrivi le informazioni di debug nel registro di sistema</string>
@@ -665,8 +663,6 @@
     <string name="dialog_title_warning_delete_budget">Elimina il budget?</string>
     <string name="warning_delete_budget">Il budget \"%1$s\" verrà eliminato.</string>
     <string name="menu_edit_budget">Modifica il budget</string>
-    <string name="onboarding_privacy_title">I tuoi dati rimangono nelle tue mani</string>
-    <string name="onboarding_privacy_intro">I tuoi dati finanziari non vengono inviati a nessun server, né gestiti da noi, né da terze parti.</string>
     <string name="app_restart_required">La nuova configurazione richiede il riavvio dell\'app.</string>
     <!-- Title of the submenu for changing the category, payer, payment method of multiple transactions. The entries of the submenu read "Category, "Payer", "Payment method" -->
     <string name="menu_remap">Riassegna</string>
@@ -786,7 +782,6 @@
      where the transaction has already been created.  -->
     <string name="warning_plan_instance_delete">La transazione creata per la data selezionata verrà eliminata.</string>
     <string name="crash_reports_user_info">{app_name} invierà automaticamente segnalazioni di arresto anomalo dell\'applicazione agli sviluppatori, al fine di risolvere i problemi il prima possibile.</string>
-    <string name="pref_category_title_crash_reports">Segnalazioni di arresto anomalo</string>
     <string name="pref_enable_acra">Consenti l\'invio automatico delle segnalazioni di arresto anomalo</string>
     <string name="pref_acra_user_email">e-mail utente da includere nella segnalazione di arresto anomalo</string>
     <string name="pref_acra_user_email_summary">Inserisci il tuo indirizzo e-mail se desideri aiutarci nella risoluzione dei problemi, permettendoci di contattarti in merito.</string>
@@ -857,7 +852,6 @@
     <string name="debt_balance_they_owe">%1$s è ora in debito con %2$s.</string>
     <string name="pref_backup_file_prefix_title">Prefisso del file</string>
     <string name="optimize_image_file_size">Ottimizza le dimensioni del file di immagine</string>
-    <string name="encrypt_database_info">Il database sarà crittografato con una passphrase che non potrà essere esportata da questo dispositivo. Di conseguenza, non verrà salvata dal servizio di backup del dispositivo.</string>
     <string name="dialog_confirm_rollover_delete">Tutti gli importi di resto per questo periodo saranno cancellati.</string>
     <string name="encrypt_database">Crittografa il database</string>
     <string name="github_sponsors"><![CDATA[Chiavi di licenza vengono fornite anche agli <a href=%s>Sponsor su Github</a>.]]></string>
@@ -1065,8 +1059,6 @@
     <string name="pref_content_based_colors_summary">Ricava i colori del tema dal colore del conto corrente. Disattiva se il testo è difficile da leggere.</string>
     <string name="trade_transfer">Trasferimento</string>
     <string name="important_upgrade_information_heading">Informazioni importanti</string>
-    <string name="split_pane_view">Vista divisa</string>
-    <string name="single_pane_view">Riquadro singolo</string>
     <string name="pref_tag_style_title">Stile Tag</string>
     <string name="pref_tag_style_outline">Bordo colorato</string>
     <string name="pref_tag_style_filled">Completamente colorato</string>

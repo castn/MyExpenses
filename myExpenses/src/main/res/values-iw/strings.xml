@@ -509,9 +509,7 @@
     <string name="sync_state_restored">מצב הסינכרון שוחזר עבור %d חשבונות.</string>
     <string name="sync_state_could_not_be_restored">לא ניתן לשחזר את מצב הסנכרון עבור %d חשבונות.</string>
     <string name="onboarding_ui_title">האפליקציה \"{app_name}\" מותאמות להעדפותיך</string>
-    <string name="onboarding_data_title">הבה נגדיר את החשבון הראשון שלך</string>
     <string name="onboarding_restore_from_cloud">שחזר מסנכרון ענן</string>
-    <string name="onboarding_restore_from_local">שחזור קובץ גיבוי מקומי</string>
     <string name="contributed_by">נתרם על ידי %s</string>
     <string name="pref_sync_notification_summary">הודע על התקדמות הסנכרון</string>
     <string name="pref_debug_logging_summary">כתוב מידע לצורך פתרון באגים ביומן המערכת</string>
@@ -672,8 +670,6 @@
     <string name="dialog_title_warning_delete_budget">האם למחוק חשבון?</string>
     <string name="warning_delete_budget">התקציב „%1$s” יימחק.</string>
     <string name="menu_edit_budget">עריכת תקציב</string>
-    <string name="onboarding_privacy_title">הנתונים שלך נשארים ברשותך</string>
-    <string name="onboarding_privacy_intro">הנתונים הכספיים שלך לא נשלחים לשום שרת, לא שמופעל על ידינו ולא על ידי גורם שלישי כלשהו.</string>
     <string name="app_restart_required">תצורה חדשה מחייבת הפעלה מחדש של היישומון.</string>
     <!-- Title of the submenu for changing the category, payer, payment method of multiple transactions. The entries of the submenu read "Category, "Payer", "Payment method" -->
     <string name="menu_remap">מיפוי מחדש</string>
@@ -794,7 +790,6 @@
      where the transaction has already been created.  -->
     <string name="warning_plan_instance_delete">העסקה שנוצרה עבור התאריך שנבחר תימחק.</string>
     <string name="crash_reports_user_info">{app_name}  ישלחו באופן אוטומטי למפתחים את הדיווחים על קריסת יישומים, דבר שיאפשר להם לתקן בעיות במהירות רבה יותר.</string>
-    <string name="pref_category_title_crash_reports">דוחו\"ת קריסה</string>
     <string name="pref_enable_acra">אפשר שליחה אוטומטית של דוחות קריסה</string>
     <string name="pref_acra_user_email">כתובת האימייל של המשתמש תיכלל בדוח הקריסה</string>
     <string name="pref_acra_user_email_summary">הזן את כתובת הדוא\"ל שלך אם אתה מוכן לעזור באיתור באגים ולאפשר לנו ליצור איתך קשר.</string>
@@ -858,7 +853,6 @@
     <string name="select_all_list_too_large">הפקודה %s אינה זמינה כיוון שהרשימה נטענה באופן חלקי. נא להשתמש בחיפוש כדי לצמצם את גודל הרשימה.</string>
     <string name="menu_reconfigure">הגדרה מחדש</string>
     <string name="encrypt_database">הצפנת מסד הנתונים</string>
-    <string name="encrypt_database_info">מסד הנתונים יוצפן עם מילת מפתח שלא ניתן לחלץ מהמכשיר הזה. כתוצאה מכך הוא לא יגובה על ידי שירות הגיבוי של המכשיר שלך.</string>
     <string name="database_is_encrypted">מסד הנתונים מוצפן.</string>
     <string name="github_sponsors"><![CDATA[מפתחות רישוי מסופקים גם ל־<a href="%s">GitHub Sponsors</a> (נותני החסות).]]></string>
     <string name="notifications_permission_required_sync">הענקת הרשאות לשליחת התראות מאפשרת לעקוב אחר התקדמות פעילויות הסנכרון.</string>

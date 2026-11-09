@@ -501,9 +501,7 @@
     <string name="sync_state_restored">%d hesap için eşzamanlama durumu geri yüklendi.</string>
     <string name="sync_state_could_not_be_restored">%d hesap için eşzamanlama durumu geri yüklenemedi.</string>
     <string name="onboarding_ui_title">{app_name} tercihinize uyum sağlar</string>
-    <string name="onboarding_data_title">İlk hesabınızı kuralım</string>
     <string name="onboarding_restore_from_cloud">Bulut eşzamanlamasından geri yükle</string>
-    <string name="onboarding_restore_from_local">Yerel yedekleme dosyasını geri getir</string>
     <string name="contributed_by">Katkıda bulunan: %s</string>
     <string name="pref_sync_notification_summary">Eşzamanlama ilerlemesi hakkında bildirim göster</string>
     <string name="pref_debug_logging_summary">Hata ayıklama verilerini sistem günlüğüne yaz</string>
@@ -661,8 +659,6 @@
     <string name="dialog_title_warning_delete_budget">Bütçe silinsin mi?</string>
     <string name="warning_delete_budget">\"%1$s\" bütçesi silinecek.</string>
     <string name="menu_edit_budget">Bütçeyi düzenle</string>
-    <string name="onboarding_privacy_title">Verlileriniz sizin ellerinizde kalacaktır</string>
-    <string name="onboarding_privacy_intro">Finansal verileriniz ne biz, ne de üçüncü bir taraf tarafından yönetilen hiçbir sunucuya gönderilmez.</string>
     <string name="app_restart_required">Yeni yapılandırmanın uygulanması için uygulamanın yeniden başlatılması gerekir.</string>
     <!-- Title of the submenu for changing the category, payer, payment method of multiple transactions. The entries of the submenu read "Category, "Payer", "Payment method" -->
     <string name="menu_remap">Yeniden eşleme</string>
@@ -782,7 +778,6 @@
      where the transaction has already been created.  -->
     <string name="warning_plan_instance_delete">Seçili tarih için oluşturulmuş muamele silinecektir.</string>
     <string name="crash_reports_user_info">{app_name}, geliştiricilerine problemleri daha çabuk gidermelerine yardımcı olacak uygulama çökmeleri hakkında rapor gönderecektir.</string>
-    <string name="pref_category_title_crash_reports">Çökme raporları</string>
     <string name="pref_enable_acra">Çökme raporlarının otomatik olarak gönderilmelerine izin ver</string>
     <string name="pref_acra_user_email">Kullanıcı e-postası çökme raporlarına dahil edilecek</string>
     <string name="pref_acra_user_email_summary">Hata ayıklamaya yardım etmek ve sizinle irtibata geçmemize izin vermek istiyorsanız e-posta adresinizi giriniz.</string>
@@ -842,7 +837,6 @@
     <string name="select_all_list_too_large">Liste yalnızca kısmen yüklenmiş olduğundan %s komutu kullanılamıyor. Liste boyutunu küçültmek için lütfen Arama işlevini kullanın.</string>
     <string name="menu_reconfigure">Yeniden yapılandır</string>
     <string name="encrypt_database">Veri tabanını şifrele</string>
-    <string name="encrypt_database_info">Veri tabanı, bu aygıttan dışarı alınamayacak bir parola ile şifrelenecektir. Sonuç olarak aygıtınızın yedekleme hizmeti tarafından yedeklenmeyecektir.</string>
     <string name="database_is_encrypted">Veri tabanı şifrelendi.</string>
     <string name="github_sponsors"><![CDATA[<a href="%s">Github Sponsorlarına</a> da lisans anahtarları sağlanmaktadır.]]></string>
     <string name="notifications_permission_required_planner">Gelecekteki muameleler gönderildiğinde size bildirim göndermek için <i>{app_name}</i> izne ihtiyaç duyuyor.</string>
@@ -1063,6 +1057,4 @@
     <string name="pref_tag_style_filled">Tamamen renkli</string>
     <string name="trade_additional_costs">Ek masraflar</string>
     <string name="trade_add_cost">Masraf ekle</string>
-    <string name="single_pane_view">Tek ekran</string>
-    <string name="split_pane_view">Bölünmüş görünüm</string>
 </resources>

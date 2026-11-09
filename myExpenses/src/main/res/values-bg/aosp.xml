@@ -4,8 +4,6 @@
      Licensed to The Android Open Source Project.
      android-source/packages/apps/UnifiedEmail/res/values/strings.xmlls
 --><resources>
-    <string name="drawer_open">"Отваряне на слоя за навигация"</string>
-    <string name="drawer_close">"Затваряне на чекмеджето за навигация"</string>
     <string name="sort_direction_ascending">"Възходящ ред"</string>
     <string name="sort_direction_descending">"Низходящ ред"</string>
     <string name="saving">"Запазва се…"</string>

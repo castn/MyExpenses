@@ -507,9 +507,7 @@
     <string name="sync_state_restored">O estado de sincronização de %d contas foi restaurado.</string>
     <string name="sync_state_could_not_be_restored">Não foi possível restaurar o estado de sincronização de %d contas.</string>
     <string name="onboarding_ui_title">{app_name} adapta-se às suas preferências</string>
-    <string name="onboarding_data_title">Permita-nos configurar a sua primeira conta</string>
     <string name="onboarding_restore_from_cloud">Restaurar a partir da sincronização na nuvem</string>
-    <string name="onboarding_restore_from_local">Restaurar ficheiro de backup local</string>
     <string name="contributed_by">Contribuído por %s</string>
     <string name="pref_sync_notification_summary">Notificar sobre o progresso da sincronização</string>
     <string name="pref_debug_logging_summary">Escreva informações de depuração no registro do sistema</string>
@@ -668,8 +666,6 @@
     <string name="dialog_title_warning_delete_budget">Apagar o orçamento\?</string>
     <string name="warning_delete_budget">O orçamento \"%1$s\" será apagado.</string>
     <string name="menu_edit_budget">Editar o orçamento</string>
-    <string name="onboarding_privacy_title">Seus dados ficam em suas mãos</string>
-    <string name="onboarding_privacy_intro">Seus dados financeiros não são enviados para nenhum servidor, nem são operados por nós ou por terceiros.</string>
     <string name="app_restart_required">A nova configuração será ativada quando o aplicativo for reiniciado.</string>
     <!-- Title of the submenu for changing the category, payer, payment method of multiple transactions. The entries of the submenu read "Category, "Payer", "Payment method" -->
     <string name="menu_remap">Remapear</string>
@@ -790,7 +786,6 @@
      where the transaction has already been created.  -->
     <string name="warning_plan_instance_delete">A transação criada para a data selecionada será excluída.</string>
     <string name="crash_reports_user_info">{app_name} enviará relatórios sobre falhas do aplicativo automaticamente para seus desenvolvedores, o que lhes permitirá corrigir os problemas mais rapidamente.</string>
-    <string name="pref_category_title_crash_reports">Relatórios de falhas</string>
     <string name="pref_enable_acra">Permitir o envio automático de relatórios de falhas</string>
     <string name="pref_acra_user_email">E-mail do usuário a ser incluído no relatório de falhas</string>
     <string name="pref_acra_user_email_summary">Por favor, digite seu endereço de e-mail se você estiver disposto a ajudar na depuração e nos permitir entrar em contato com você.</string>
@@ -856,7 +851,6 @@
     <string name="encrypt_database">Criptografar o banco de dados</string>
     <string name="add_shortcut">Adicionar atalho</string>
     <string name="search_account">Pesquisar por conta</string>
-    <string name="encrypt_database_info">O banco de dados será criptografado com uma senha que não poderá ser extraída deste dispositivo. Consequentemente, ela não será incluída no backup efetuado pelo serviço de backup do seu aparelho.</string>
     <string name="github_sponsors"><![CDATA[Chaves de licença também são fornecidas para <a href="%s">Patrocinadores do Github</a>.]]></string>
     <string name="content_description_remove_icon">Remover o ícone</string>
     <string name="database_is_encrypted">O banco de dados está criptografado.</string>
@@ -1070,8 +1064,6 @@
     <string name="pref_content_based_colors_summary">Derivar cores do tema a partir da cor da conta atual. Desative se o texto ficar difícil de ler.</string>
     <string name="rounding">Arredondamento</string>
     <string name="important_upgrade_information_heading">Informações importantes</string>
-    <string name="single_pane_view">Painel único</string>
-    <string name="split_pane_view">Visualização dividida</string>
     <string name="pref_tag_style_title">Estilo da etiqueta</string>
     <string name="pref_tag_style_outline">Borda colorida</string>
     <string name="pref_tag_style_filled">Totalmente colorido</string>

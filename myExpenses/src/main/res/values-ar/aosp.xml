@@ -3,8 +3,6 @@
      Copyright (C) 2011 Google Inc.
      Licensed to The Android Open Source Project.
 --><resources>
-    <string name="drawer_open">"فتح ساحب التنقل"</string>
-    <string name="drawer_close">"إغلاق ساحب التنقل"</string>
     <string name="sort_direction_ascending">"تصاعدي"</string>
     <string name="sort_direction_descending">"تنازلي"</string>
     <string name="saving">"جارٍ الحفظ…"</string>

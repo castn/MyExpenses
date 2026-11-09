@@ -501,9 +501,7 @@
     <string name="sync_state_restored">Възстановена е синхронизацията на %d сметки.</string>
     <string name="sync_state_could_not_be_restored">Не може да се възстанови синхронизацията на %d сметки.</string>
     <string name="onboarding_ui_title">{app_name} се адаптира към вашите предпочитания</string>
-    <string name="onboarding_data_title">Нека да създадем първaта Ви сметка</string>
     <string name="onboarding_restore_from_cloud">Възстановяване от облачната синхронизация</string>
-    <string name="onboarding_restore_from_local">Възстановяване от локален архивен файл</string>
     <string name="contributed_by">Принос чрез %s</string>
     <string name="pref_sync_notification_summary">Уведомяване за хода на синхронизацията</string>
     <string name="pref_debug_logging_summary">Запис на информация за отстраняване на грешки в системния дневник</string>
@@ -661,8 +659,6 @@
     <string name="dialog_title_warning_delete_budget">Да се изтрие ли бюджетът?</string>
     <string name="warning_delete_budget">Бюджетът „%1$s“ ще бъде изтрит.</string>
     <string name="menu_edit_budget">Редактиране на бюджет</string>
-    <string name="onboarding_privacy_title">Данните ви остават във вашите ръце</string>
-    <string name="onboarding_privacy_intro">Вашите финансови данни не се изпращат до никой сървър, те не се обработват от нас, нито от трета страна.</string>
     <string name="app_restart_required">За да влезе в сила новата конфигурация се изисква рестартиране на приложението.</string>
     <!-- Title of the submenu for changing the category, payer, payment method of multiple transactions. The entries of the submenu read "Category, "Payer", "Payment method" -->
     <string name="menu_remap">Групово редаактиране</string>
@@ -782,7 +778,6 @@
      where the transaction has already been created.  -->
     <string name="warning_plan_instance_delete">Създадената вече транзакция за избраната дата, ще бъде изтрита.</string>
     <string name="crash_reports_user_info">{app_name} ще изпраща доклад за срив на приложението до програмистите, което позволява по-бързо отстраняване на проблемите.</string>
-    <string name="pref_category_title_crash_reports">Доклад за срив</string>
     <string name="pref_enable_acra">Разрешeние за автоматично изпращане</string>
     <string name="pref_acra_user_email">Електронна поща на потребителя</string>
     <string name="pref_acra_user_email_summary">Моля, въведете адрес на вашата електронна поща, който да се включи в доклад за срив, за връзка с вас, ако желаете да помогнете за отстраняване на проблеми.</string>
@@ -842,7 +837,6 @@
     <string name="select_all_list_too_large">Командата %s не е достъпна, защото списъка е зареден частично. Моля, използвайте функциите за Търсене, за да намалите размера на списъка.</string>
     <string name="menu_reconfigure">Преконфигуриране</string>
     <string name="encrypt_database">Криптиране на базата данни</string>
-    <string name="encrypt_database_info">Базата данни ще бъде шифрована с парола, която не може да бъде извлечена от устройството. Също така, тя няма да бъде архивирана от услугата за архивиране на вашето устройство.</string>
     <string name="database_is_encrypted">Базата данни е шифрована.</string>
     <string name="github_sponsors"><![CDATA[Предоставят се лицензионни ключове за <a href="%s">Github спонсор и</a>.]]></string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> се нуждае от разрешение да ви изпраща известия, когато бъдат публикувани бъдещи транзакции.</string>
@@ -1063,6 +1057,4 @@
     <string name="search_asset">Търсене на актив</string>
     <string name="remap_update_value_date">Актуализирайте и датата на вальора</string>
     <string name="trade_add_cost">Добавете цена</string>
-    <string name="single_pane_view">Единичен панел</string>
-    <string name="split_pane_view">Разделен изглед</string>
 </resources>

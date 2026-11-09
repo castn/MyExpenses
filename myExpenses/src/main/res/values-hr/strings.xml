@@ -429,9 +429,7 @@
     <string name="pref_debug_logging_summary">Piši podatke o otklanjanju grešaka u dnevnik sustava</string>
     <string name="pref_sync_notification_summary">Obavijesti o napretku sinkronizacije</string>
     <string name="contributed_by">Doprinositelj: %s</string>
-    <string name="onboarding_restore_from_local">Obnovi lokalnu datoteku sigurnosne kopije</string>
     <string name="onboarding_restore_from_cloud">Obnovi putem sinkronizacije iz oblaka</string>
-    <string name="onboarding_data_title">Postavi prvi račun</string>
     <string name="onboarding_ui_title">{app_name} se prilagođava tvojim željama</string>
     <string name="sync_state_could_not_be_restored">Nije moguće obnoviti stanje sinkronizacije za %d računa.</string>
     <string name="sync_state_restored">Stanje sinkronizacije je obnovljeno za %d računa.</string>
@@ -621,8 +619,6 @@
     <string name="dialog_title_confirm_remap">Promijeniti povezivanje (%s)\?</string>
     <string name="menu_remap">Promijeni vezu</string>
     <string name="app_restart_required">Za preuzimanje nove konfiguracije program se mora ponovo pokrenuti.</string>
-    <string name="onboarding_privacy_intro">Tvoji se financijski podaci ne šalju na nijedan poslužitelj niti itko drugi njima upravlja.</string>
-    <string name="onboarding_privacy_title">Ti vladaš svojim podacima</string>
     <string name="menu_edit_budget">Uredi budžet</string>
     <string name="warning_delete_budget">Budžet „%1$s” će se izbrisati.</string>
     <string name="dialog_title_warning_delete_budget">Izbrisati budžet?</string>
@@ -726,7 +722,6 @@
     <string name="menu_split_transaction">Pretvori u višedjelnu transakciju</string>
     <string name="button_label_close">Zatvori</string>
     <string name="crash_reports_user_info">{app_name} automatski šalje izvještaje o prestanku rada programa svojim programerima kako bi brže ispravili greške.</string>
-    <string name="pref_category_title_crash_reports">Izvještaji o prekidu rada programa</string>
     <string name="pref_enable_acra">Dozvoli automatsko slanje izvještaja o prekidu rada programa</string>
     <string name="pref_acra_user_email">Korisnički e-mail će biti sadržan u izvještaju o prekidu rada programa</string>
     <string name="pref_acra_user_email_summary">Upiši svoju e-mail adresu ako želiš pomoći u ispravljanju grešaka i dopustiti nam da te kontaktiramo.</string>
@@ -791,7 +786,6 @@
     <string name="select_all_list_too_large">Naredba %s nije dostupna jer je popis samo djelomično učitan. Koristi funkciju pretraživanja za dobivanje kraćeg popisa.</string>
     <string name="menu_reconfigure">Konfiguriraj ponovo</string>
     <string name="database_is_encrypted">Baza podataka je šifrirana.</string>
-    <string name="encrypt_database_info">Baza podataka će se šifrirati pristupnim izrazom koji se ne može izdvojiti iz ovog uređaja. Slijedom toga, usluga sigurnosnog kopiranja neće sigurnosno kopirati bazu podataka.</string>
     <string name="debt_installment_pay">Plaćam ratu od %s.</string>
     <string name="debt_lend_additional">Posuđujem %s.</string>
     <string name="debt_borrow_additional">Uzajmljujem %s.</string>
@@ -1016,6 +1010,4 @@
     <string name="asset_quantity_at_price">%1$s @ %2$s</string>
     <string name="premium_nudge_portfolio_message">Može besplatno upravljati jednim portfeljem. Nadogradi za upravljanje više portfelja i otključavanje naprednih funkcija praćenja (%1$s).</string>
     <string name="help_floating_action_button">Plutajući gumb za radnju</string>
-    <string name="split_pane_view">Podijeljeni prikaz</string>
-    <string name="single_pane_view">Jednostruki prikaz</string>
 </resources>

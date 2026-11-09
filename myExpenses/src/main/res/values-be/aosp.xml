@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- packages/apps/DocumentsUI/res/values/strings.xml -->
-    <string name="drawer_open">"Паказаць каранёвыя папкі"</string>
-    <string name="drawer_close">"Схаваць каранёвыя папкі"</string>
     <string name="sort_direction_ascending">"Па ўзрастанні"</string>
     <string name="sort_direction_descending">"Па ўбыванні"</string>
     <plurals name="delete_files_confirmation_message" formatted="false">

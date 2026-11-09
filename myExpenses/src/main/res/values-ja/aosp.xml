@@ -4,8 +4,6 @@
      android-source/packages/apps/UnifiedEmail/res/values/strings.xmlls
 -->
 <resources>
-    <string name="drawer_open">"ナビゲーションドロワーを開く"</string>
-    <string name="drawer_close">"ナビゲーションドロワーを閉じる"</string>
     <string name="sort_direction_ascending">"昇順"</string>
     <string name="sort_direction_descending">"降順"</string>
     <string name="saving">"保存中…"</string>

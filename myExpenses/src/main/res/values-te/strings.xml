@@ -104,9 +104,7 @@
     <string name="pref_debug_logging_summary">సిస్టమ్ లాగ్‌లో డీబగ్గింగ్ సమాచారాన్ని వ్రాయండి</string>
     <string name="pref_sync_notification_summary">సమకాలీకరణ పురోగతి గురించి తెలియజేయండి</string>
     <string name="contributed_by">%s తోడ్పడింది</string>
-    <string name="onboarding_restore_from_local">స్థానిక బ్యాకప్ ఫైల్‌ను పునరుద్ధరించండి</string>
     <string name="onboarding_restore_from_cloud">క్లౌడ్ సమకాలీకరణ నుండి పునరుద్ధరించండి</string>
-    <string name="onboarding_data_title">మీ మొదటి ఖాతాను సెటప్ చేద్దాం</string>
     <string name="onboarding_ui_title">{app_name} మీ ప్రాధాన్యతకు అనుగుణంగా ఉంటుంది</string>
     <string name="sync_state_could_not_be_restored">%d ఖాతాల కోసం సమకాలీకరణ స్థితిని పునరుద్ధరించడం సాధ్యం కాలేదు.</string>
     <string name="sync_state_restored">%d ఖాతాల కోసం సమకాలీకరణ స్థితి పునరుద్ధరించబడింది.</string>
@@ -647,8 +645,6 @@
     <string name="dialog_title_confirm_remap">మ్యాపింగ్ (%s) మార్చాలా\?</string>
     <string name="menu_remap">రీమాప్</string>
     <string name="app_restart_required">క్రొత్త కాన్ఫిగరేషన్ అమలులోకి రావడానికి అనువర్తన పున art ప్రారంభం అవసరం.</string>
-    <string name="onboarding_privacy_intro">మీ ఆర్థిక డేటా ఏ సర్వర్‌కు పంపబడదు, మా చేత లేదా మూడవ పక్షం చేత నిర్వహించబడదు.</string>
-    <string name="onboarding_privacy_title">మీ డేటా మీ చేతుల్లోనే ఉంటుంది</string>
     <string name="menu_edit_budget">బడ్జెట్‌ను సవరించండి</string>
     <string name="warning_delete_budget">బడ్జెట్ \"%1$s\" తొలగించబడుతుంది.</string>
     <string name="dialog_title_warning_delete_budget">బడ్జెట్‌ను తొలగించాలా\?</string>
@@ -681,7 +677,6 @@
     <string name="pref_acra_user_email_summary">డీబగ్గింగ్‌కు సహాయం చేయడానికి మీరు సిద్ధంగా ఉంటే దయచేసి మీ ఇమెయిల్ చిరునామాను నమోదు చేయండి మరియు మిమ్మల్ని సంప్రదించడానికి మమ్మల్ని అనుమతించండి.</string>
     <string name="pref_acra_user_email">క్రాష్ నివేదికలో చేర్చవలసిన వినియోగదారు ఇమెయిల్</string>
     <string name="pref_enable_acra">క్రాష్ నివేదికలను స్వయంచాలకంగా పంపడానికి అనుమతించండి</string>
-    <string name="pref_category_title_crash_reports">క్రాష్ నివేదికలు</string>
     <string name="crash_reports_user_info">{app_name} అనువర్తన క్రాష్‌ల గురించి దాని డెవలపర్‌లకు స్వయంచాలకంగా నివేదికలను పంపుతుంది, ఇది సమస్యలను మరింత త్వరగా పరిష్కరించడానికి అనుమతిస్తుంది.</string>
     <string name="stability_improvements">స్థిరత్వం మెరుగుదలలు</string>
     <string name="performance_enhancement">పనితీరు మెరుగుదల</string>

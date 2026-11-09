@@ -488,9 +488,7 @@
     <string name="sync_state_restored">Keadaan segerak telah dipulihkan untuk akaun %d.</string>
     <string name="sync_state_could_not_be_restored">Keadaan segerak tidak dapat dipulihkan untuk akaun %d.</string>
     <string name="onboarding_ui_title">{app_name} disuaikan dengan keutamaan anda</string>
-    <string name="onboarding_data_title">Mari kita tetapkan akaun pertama anda</string>
     <string name="onboarding_restore_from_cloud">Pulihkan melalui penyegerakan awan</string>
-    <string name="onboarding_restore_from_local">Pulih fail sandar setempat</string>
     <string name="contributed_by">%sDisumbang oleh </string>
     <string name="pref_sync_notification_summary">Makluman berkenaan kemajuan penyegerakan</string>
     <string name="pref_debug_logging_summary">Tuli maklumat penyahpepijatan ke dalam log sistem</string>
@@ -623,7 +621,6 @@
     <string name="pref_category_title_features">Fitur</string>
     <string name="menu_save_and_new_content_description">Simpan data, biarkan borang terbuka untuk mencipta transaksi baharu dengan data yang sama.</string>
     <string name="crash_reports_user_info">{app_name} akan menghantar laporan mengenai kerosakan aplikasi secara automatik kepada pembangunnya, yang membolehkan mereka membaiki masalah dengan lebih pantas.</string>
-    <string name="pref_category_title_crash_reports">Laporan kerosakan</string>
     <string name="pref_enable_acra">Benarkan penghantaran laporan kerosakan secara automatik</string>
     <string name="pref_acra_user_email">Emel pengguna disertakan dalam laporan kerosakan</string>
     <string name="pref_acra_user_email_summary">Sila masukkan alamat emel anda jika anda mahu bantu menyahpepijat dan membolehkan kami menghubungi anda.</string>
@@ -657,7 +654,6 @@
     <string name="cb_label_merge_accounts">Gabungkan akaun</string>
     <string name="setup_completed">Persediaan selesai</string>
     <string name="dialog_title_purge_backups">Bersihkan sandaran lama</string>
-    <string name="onboarding_privacy_title">Data anda kekal di tangan anda</string>
     <string name="advance_exexcution_in_days">Perlaksanaan awal (dalam hari)</string>
     <string name="backup_save_to_sync_backend">Simpan ke %s</string>
     <string name="new_version">Versi baharu</string>
@@ -814,7 +810,6 @@
     <string name="rollover_edit_invalid">Jumlah peralihan yang diperuntukkan kepada kategori dan peralihan yang diperuntukkan kepada subkategori tidak boleh melebihi baki.</string>
     <string name="warning_unlink_transfer">Pemindahan yang dipilih akan dinyahpautkan: Ia akan digantikan dengan transaksi biasa dalam kedua-dua akaun.</string>
     <string name="plan_automatic_without_amount_hint">Pelan tanpa jumlah tidak boleh disimpan dengan pelaksanaan pelan automatik</string>
-    <string name="encrypt_database_info">Pangkalan data akan disulitkan dengan frasa laluan yang tidak boleh diekstrak daripada peranti ini. Oleh itu, ia tidak akan disandarkan oleh perkhidmatan sandaran peranti anda.</string>
     <string name="pref_ocr_total_indicators_summary">Senarai rentetan, yang mengenal pasti jumlah nilai dalam resit. Letakkan setiap nilai pada baris baharu. Biarkan kosong untuk memulihkan nilai lalai.</string>
     <string name="budget_date_end_after_start">Tarikh tamat belanjawan mesti datang selepas tarikh mulanya.</string>
     <string name="warning_balance_account_delete">Jika anda meneruskan, semua transaksi yang diselaraskan bagi akaun ini akan dipadamkan daripada pangkalan data dan anda tidak akan dapat memulihkannya.</string>
@@ -851,7 +846,6 @@
     <string name="sub_budget_exceeded_error_2">Tingkatkan jumlah yang diperuntukkan kepada kategori utama, atau alih keluar wang daripada subkategori lain.</string>
     <string name="remap_empty_list">Tiada item ditemui, yang boleh dipetakan pada semua transaksi yang dipilih.</string>
     <string name="orphaned_transaction_align_date">Secara pilihan, tarikh yang disimpan dengan transaksi juga boleh diselaraskan dengan tarikh kejadian.</string>
-    <string name="onboarding_privacy_intro">Data kewangan anda tidak dihantar ke mana-mana pelayan, tidak dikendalikan oleh kami mahupun oleh mana-mana pihak ketiga.</string>
     <string name="archive">Arkib</string>
     <string name="quick_search">Carian pantas</string>
     <string name="complex_search">Carian kompleks</string>

@@ -4,8 +4,6 @@
      Licensed to The Android Open Source Project.
 -->
 <resources>
-    <string name="drawer_open">"Abrir gaveta de navegação"</string>
-    <string name="drawer_close">"Fechar gaveta de navegação"</string>
     <string name="sort_direction_ascending">"Crescente"</string>
     <string name="sort_direction_descending">"Decrescente"</string>
     <string name="saving">"Salvando…"</string>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="drawer_open">"روٹس دکھائیں"</string>
-    <string name="drawer_close">"روٹس کو چھپائیں"</string>
     <string name="sort_direction_ascending">"صعودی"</string>
     <string name="sort_direction_descending">"نزولی"</string>
     <string name="saving">"محفوظ ہو رہا ہے…"</string>

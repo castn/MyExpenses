@@ -501,9 +501,7 @@
     <string name="sync_state_restored">Sync-Status wurde für %d Konten wiederhergestellt.</string>
     <string name="sync_state_could_not_be_restored">Sync-Status konnte für %d Konten nicht wiederhergestellt werden.</string>
     <string name="onboarding_ui_title">{app_name} passt sich Ihren Vorlieben an</string>
-    <string name="onboarding_data_title">Lassen Sie uns Ihr erstes Konto einrichten</string>
     <string name="onboarding_restore_from_cloud">Wiederherstellung von Cloud-Synchronisation</string>
-    <string name="onboarding_restore_from_local">Wiederherstellung einer lokalen Sicherungsdatei</string>
     <string name="contributed_by">Beigetragen von %s</string>
     <string name="pref_sync_notification_summary">Über Fortschritt der Synchronisierung benachrichtigen</string>
     <string name="pref_debug_logging_summary">Debugging-Informationen in das Systemprotokoll schreiben</string>
@@ -661,8 +659,6 @@
     <string name="dialog_title_warning_delete_budget">Budget löschen?</string>
     <string name="warning_delete_budget">Budget „%1$s“ wird gelöscht.</string>
     <string name="menu_edit_budget">Budget bearbeiten</string>
-    <string name="onboarding_privacy_title">Ihre Daten bleiben in Ihren Händen</string>
-    <string name="onboarding_privacy_intro">Ihre Finanzdaten werden an keine Server gesendet, weder von uns noch von Dritten betrieben.</string>
     <string name="app_restart_required">Die neue Konfiguration erfordert einen Neustart der App, um wirksam zu werden.</string>
     <!-- Title of the submenu for changing the category, payer, payment method of multiple transactions. The entries of the submenu read "Category, "Payer", "Payment method" -->
     <string name="menu_remap">Neu zuordnen</string>
@@ -782,7 +778,6 @@
      where the transaction has already been created.  -->
     <string name="warning_plan_instance_delete">Die für das ausgewählte Datum erstellte Buchung wird gelöscht.</string>
     <string name="crash_reports_user_info">{app_name} sendet Berichte über Abstürze automatisch an seine Entwickler, wodurch Probleme schneller gelöst werden können.</string>
-    <string name="pref_category_title_crash_reports">Absturzberichte</string>
     <string name="pref_enable_acra">Automatischen Versand von Absturzberichten zulassen</string>
     <string name="pref_acra_user_email">E-Mail-Adresse für Absturzberichte</string>
     <string name="pref_acra_user_email_summary">Bitte geben Sie Ihre E-Mail-Adresse an, falls Sie bereit sind beim Aufspüren der Fehler zu helfen, und erlauben, dass wir Sie kontaktieren.</string>
@@ -842,7 +837,6 @@
     <string name="select_all_list_too_large">Der Befehl %s ist nicht verfügbar, da die Liste nur teilweise geladen ist. Bitte verwenden Sie die Suchfunktion, um die Größe der Liste zu reduzieren.</string>
     <string name="menu_reconfigure">Neu konfigurieren</string>
     <string name="encrypt_database">Datenbank verschlüsseln</string>
-    <string name="encrypt_database_info">Die Datenbank wird mit einer Passphrase verschlüsselt, die nicht von diesem Gerät extrahiert werden kann. Folglich wird sie nicht vom Backup-Service Ihres Geräts gesichert.</string>
     <string name="database_is_encrypted">Die Datenbank ist verschlüsselt.</string>
     <string name="github_sponsors"><![CDATA[Lizenzschlüssel werden auch <a href="%s">Github-Sponsoren</a> zur Verfügung gestellt.]]></string>
     <string name="notifications_channel_required">Bitte aktivieren Sie den Kanal %s.</string>
@@ -1065,6 +1059,4 @@
     <string name="pref_tag_style_filled">Vollständig farbig</string>
     <string name="trade_additional_costs">Zusätzliche Kosten</string>
     <string name="trade_add_cost">Kosten hinzufügen</string>
-    <string name="single_pane_view">Einzelansicht</string>
-    <string name="split_pane_view">Geteilte Ansicht</string>
 </resources>

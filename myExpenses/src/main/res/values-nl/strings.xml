@@ -400,7 +400,6 @@
     <string name="pref_webdav_timeout_title">WebDAV-time-out (in seconden)</string>
     <string name="onboarding_ui_title">{app_name} past zich aan je voorkeur aan</string>
     <string name="onboarding_restore_from_cloud">Herstel vanuit cloudsynchronisatie</string>
-    <string name="onboarding_restore_from_local">Herstel lokaal back-upbestand</string>
     <string name="plan_custom_recurrence_info">Sla eerst het sjabloon op. Het plan wordt vervolgens geopend in de kalender-app, waar je een aangepast herhalingspatroon kunt instellen.</string>
     <string name="progress_validating_licence">Licentie valideren</string>
     <string name="button_validate">Valideren</string>
@@ -543,7 +542,6 @@
     <string name="pref_exchange_rates_api_key_summary">Registreer een gratise rekeningnummer op %s en geef je App ID op</string>
     <string name="budget_only_current_period">Alleen instellen voor %s</string>
     <string name="dialog_title_warning_delete_budget">Budget verwijderen\?</string>
-    <string name="onboarding_privacy_intro">Je financiële gegevens worden naar geen enkele server verzonden, die noch door ons, noch door een derde partij wordt beheerd.</string>
     <string name="remap_empty_list">Er is geen item gevonden dat aan alle geselecteerde transacties kan worden toegewezen.</string>
     <string name="clone_and_remap_result">De geselecteerde transacties zijn gekloond en opnieuw toegewezen.</string>
     <string name="button_label_clone_and_remap">Klonen en opnieuw toewijzen</string>
@@ -624,7 +622,6 @@
     <string name="budget_filter_all_methods">Alle methodes</string>
     <string name="menu_edit_budget">Budget bewerken</string>
     <string name="budget_onetime">Eenmalig</string>
-    <string name="onboarding_privacy_title">Je gegevens blijven in uw handen</string>
     <string name="dialog_multi_tag_replace">Vervang bestaande tags door nieuwe tags</string>
     <string name="advance_exexcution_in_days">Uitvoering vooraf (in dagen)</string>
     <string name="pref_feature_uninstall_title">Verzoek tot verwijdering van functies en talen</string>
@@ -666,7 +663,6 @@
     <string name="download_completed">Downloaden (%s) is voltooid.</string>
     <string name="ocr_recognition_info">Tekstherkenning uitvoeren met %s</string>
     <string name="pref_enable_acra">Automatisch verzenden van crashrapporten toestaan</string>
-    <string name="pref_category_title_crash_reports">Crashrapporten</string>
     <string name="dialog_title_purge_backups">Verwijder oude back-ups</string>
     <plurals name="warning_delete_tag">
         <item quantity="one">Tag %1$s is toegewezen aan %2$d transactie. Moet het verwijderd worden\?</item>
@@ -731,7 +727,6 @@
     <string name="synchronization_end_success_none">Geen wijzigingen om te synchroniseren.</string>
     <string name="sync_state_restored">De synchronisatiestatus is hersteld voor %d-rekeningen.</string>
     <string name="sync_state_could_not_be_restored">De synchronisatiestatus kan niet worden hersteld voor %d-rekeningen.</string>
-    <string name="onboarding_data_title">Laten we je eerste rekening instellen</string>
     <string name="pref_warning_only_one_protection">Voordat je de beveiliging door %1$s kunt gebruiken, moet je de beveiliging door %2$s uitschakelen.</string>
     <string name="value_date">Waarde datum</string>
     <string name="menu_budget">Budgettering</string>
@@ -752,7 +747,6 @@
         <item quantity="one">Eén oud back-upbestand kon niet worden verwijderd.</item>
         <item quantity="other">%d oude back-upbestanden konden niet worden verwijderd.</item>
     </plurals>
-    <string name="encrypt_database_info">De database wordt gecodeerd met een wachtwoordzin die niet uit dit apparaat kan worden gehaald. Daarom wordt er geen back-up van gemaakt door de back-upservice van uw apparaat.</string>
     <string name="database_is_encrypted">Database is versleuteld.</string>
     <string name="menu_reconfigure">Configureer opnieuw</string>
     <string name="encrypt_database">Database versleutelen</string>

@@ -4,8 +4,6 @@
      android-source/packages/apps/UnifiedEmail/res/values/strings.xmlls
 -->
 <resources>
-    <string name="drawer_open">"Åbn navigationsskuffen"</string>
-    <string name="drawer_close">"Luk navigationsskuffen"</string>
     <string name="sort_direction_ascending">"Stigende rækkefølge"</string>
     <string name="sort_direction_descending">"Faldende rækkefølge"</string>
     <string name="saving">"Gemmer…"</string>

@@ -43,7 +43,6 @@
     <string name="licence_validation_error_expired">Lisensi kedaluwarsa</string>
     <string name="pref_sync_notification_summary">Beritahukan kemajuan sinkronisasi</string>
     <string name="contributed_by">Dikontribusikan oleh %s</string>
-    <string name="onboarding_restore_from_local">Pulihkan file cadangan lokal</string>
     <string name="onboarding_restore_from_cloud">Pulihkan dari sinkronisasi cloud</string>
     <string name="dialog_confirm_discard_changes">Buang perubahan\?</string>
     <string name="contrib_key_requires">Memerlukan %1$s.</string>
@@ -100,7 +99,6 @@
     <string name="feature_download_requested">Fitur %s diminta dari Play Store.</string>
     <string name="select_package">Harap pilih paket lisensi.</string>
     <string name="download_completed">Unduhan (%s) telah selesai.</string>
-    <string name="pref_category_title_crash_reports">Laporan crash</string>
     <string name="dialog_command_disabled_insert_transfer">Transaksi transfer memerlukan akun kedua.</string>
     <string name="pref_planner_manual_time_noon">Pukul 12 siang</string>
     <string name="pref_planner_manual_time_current">Waktu penerapan</string>
@@ -527,7 +525,6 @@
     <string name="sync_state_restored" tools:ignore="PluralsCandidate">Status sinkronisasi dipulihkan untuk %d akun.</string>
     <string name="sync_state_could_not_be_restored" tools:ignore="PluralsCandidate">Status sinkronisasi tidak dapat dipulihkan untuk %d akun.</string>
     <string name="onboarding_ui_title">{app_name} menyesuaikan dengan preferensi Anda</string>
-    <string name="onboarding_data_title">Mari siapkan akun pertama Anda</string>
     <string name="pref_debug_logging_summary">Tulis informasi debug ke log sistem</string>
     <string name="plan_custom_recurrence_info">Harap simpan templat terlebih dahulu. Rencana kemudian akan dibuka di aplikasi kalender, tempat Anda dapat menetapkan pengulangan kustom.</string>
     <string name="menu_create_template_for_split">Templat pembagian baru</string>
@@ -658,8 +655,6 @@
     <string name="dialog_title_warning_delete_budget">Hapus anggaran?</string>
     <string name="warning_delete_budget">Anggaran \"%1$s\" akan dihapus.</string>
     <string name="menu_edit_budget">Edit anggaran</string>
-    <string name="onboarding_privacy_title">Data Anda tetap di tangan Anda</string>
-    <string name="onboarding_privacy_intro">Data keuangan Anda tidak dikirim ke server mana pun, baik yang dioperasikan oleh kami maupun oleh pihak ketiga mana pun.</string>
     <string name="app_restart_required">Konfigurasi baru memerlukan aplikasi dimulai ulang agar berlaku.</string>
     <string name="menu_remap">Petakan ulang</string>
     <string name="dialog_title_confirm_remap">Ubah pemetaan (%s)?</string>
@@ -740,7 +735,6 @@
     <string name="select_all_list_too_large">Perintah %s tidak tersedia karena daftar hanya dimuat sebagian. Harap gunakan fungsi Pencarian untuk mengurangi ukuran daftar.</string>
     <string name="menu_reconfigure">Konfigurasi ulang</string>
     <string name="encrypt_database">Enkripsi database</string>
-    <string name="encrypt_database_info">Database akan dienkripsi dengan frasa sandi yang tidak dapat diekstrak dari perangkat ini. Akibatnya, database tidak akan dicadangkan oleh layanan cadangan perangkat Anda.</string>
     <string name="database_is_encrypted">Database dienkripsi.</string>
     <string name="github_sponsors"><![CDATA[Kunci lisensi juga diberikan kepada <a href="%s">Sponsor Github</a>.]]></string>
     <string name="notifications_permission_required_planner"><i>{app_name}</i> memerlukan izin untuk mengirimkan notifikasi kepada Anda ketika transaksi masa depan dibukukan.</string>

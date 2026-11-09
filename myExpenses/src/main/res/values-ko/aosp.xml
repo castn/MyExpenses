@@ -4,8 +4,6 @@
      android-source/packages/apps/UnifiedEmail/res/values/strings.xmlls
 -->
 <resources>
-    <string name="drawer_open">"내비게이션 폴더 열기"</string>
-    <string name="drawer_close">"내비게이션 폴더 닫기"</string>
     <string name="sort_direction_ascending">"오름차순"</string>
     <string name="sort_direction_descending">"내림차순"</string>
     <string name="saving">"저장 중…"</string>

@@ -4,8 +4,6 @@
      Licensed to The Android Open Source Project.
 -->
 <resources>
-    <string name="drawer_open">"Otvori navigaciju"</string>
-    <string name="drawer_close">"Zatvori navigaciju"</string>
     <string name="sort_direction_ascending">"Uzlazno"</string>
     <string name="sort_direction_descending">"Silazno"</string>
     <string name="saving">"Spremanje …"</string>
