@@ -15,8 +15,6 @@ import org.totschnig.myexpenses.activity.DistributionActivity
 import org.totschnig.myexpenses.activity.ExpenseEdit
 import org.totschnig.myexpenses.activity.HELP_VARIANT_MANGE
 import org.totschnig.myexpenses.activity.HELP_VARIANT_MERGE_MODE
-import org.totschnig.myexpenses.activity.HELP_VARIANT_PLANNER
-import org.totschnig.myexpenses.activity.HELP_VARIANT_PLANS
 import org.totschnig.myexpenses.activity.HELP_VARIANT_SELECT_FILTER
 import org.totschnig.myexpenses.activity.HELP_VARIANT_SELECT_MAPPING
 import org.totschnig.myexpenses.activity.HELP_VARIANT_SPLIT
@@ -164,9 +162,7 @@ class HelpDialogHelperTest(private val activity: Class<out ProtectedFragmentActi
             )
 
             ManageTemplates::class.java -> listOf(
-                HELP_VARIANT_TEMPLATES,
-                HELP_VARIANT_PLANS,
-                HELP_VARIANT_PLANNER
+                HELP_VARIANT_TEMPLATES
             )
 
             else -> emptyList()

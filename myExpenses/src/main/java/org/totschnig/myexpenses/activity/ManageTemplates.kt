@@ -16,28 +16,18 @@ package org.totschnig.myexpenses.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.CalendarContract
 import androidx.core.app.NavUtils
 import androidx.core.app.TaskStackBuilder
-import androidx.core.net.toUri
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.contract.TransactionsContract.Transactions
 import org.totschnig.myexpenses.dialog.ConfirmationDialogFragment.ConfirmationDialogListener
 import org.totschnig.myexpenses.fragment.TemplatesList
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.ContribPayload
-import org.totschnig.myexpenses.util.PermissionHelper
-import org.totschnig.myexpenses.util.crashreporting.CrashHandler
-import org.totschnig.myexpenses.viewmodel.PlanInstanceInfo
 
 const val HELP_VARIANT_TEMPLATES = "templates"
-const val HELP_VARIANT_PLANS = "plans"
-const val HELP_VARIANT_PLANNER = "planner"
 
 class ManageTemplates : ProtectedFragmentActivity(), ConfirmationDialogListener, ContribIFace {
-    var calledFromCalendarWithId = NOT_CALLED
-        private set
-
     private val mListFragment
         get() = supportFragmentManager.findFragmentById(R.id.fragment_container) as TemplatesList
 
@@ -49,20 +39,7 @@ class ManageTemplates : ProtectedFragmentActivity(), ConfirmationDialogListener,
             TemplatesList()
         }
         setupToolbar()
-        title = getString(R.string.menu_manage_plans)
-        val uriString = intent.getStringExtra(CalendarContract.Events.CUSTOM_APP_URI)
-        if (uriString != null) {
-            val uriPath = uriString.toUri().pathSegments
-            try {
-                calledFromCalendarWithId =
-                    uriPath[uriPath.size - 1].toLong() //legacy uri had account_id/template_id
-                if (calledFromCalendarWithId == 0L) { //ignore 0 that were introduced by legacy bug
-                    calledFromCalendarWithId = NOT_CALLED
-                }
-            } catch (e: Exception) {
-                CrashHandler.report(e)
-            }
-        }
+        title = getString(R.string.menu_templates)
     }
 
     override val fabDescription = R.string.menu_create_template
@@ -94,18 +71,6 @@ class ManageTemplates : ProtectedFragmentActivity(), ConfirmationDialogListener,
             else -> false
         }
 
-    fun dispatchEditInstance(transactionId: Long) {
-        mListFragment.dispatchEditInstance(transactionId)
-    }
-
-    fun dispatchDeleteInstance(transactionId: Long) {
-        mListFragment.dispatchDeleteInstance(transactionId)
-    }
-
-    fun dispatchRelinkInstance(planInstanceInfo: PlanInstanceInfo, adjustDate: Boolean) {
-        mListFragment.dispatchRelinkInstance(planInstanceInfo, adjustDate)
-    }
-
     override fun doHome() {
         if (isTaskRoot) {
             val upIntent = NavUtils.getParentActivityIntent(this)
@@ -122,13 +87,6 @@ class ManageTemplates : ProtectedFragmentActivity(), ConfirmationDialogListener,
         mListFragment.finishActionMode()
     }
 
-    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
-        super.onPermissionsGranted(requestCode, perms)
-        if (requestCode == PermissionHelper.PERMISSIONS_REQUEST_WRITE_CALENDAR) {
-            mListFragment.loadData()
-        }
-    }
-
     override fun contribFeatureCalled(feature: ContribFeature, tag: ContribPayload?) {
         if (feature == ContribFeature.SPLIT_TRANSACTION) {
             when (tag) {
@@ -141,9 +99,5 @@ class ManageTemplates : ProtectedFragmentActivity(), ConfirmationDialogListener,
                 else -> {}
             }
         }
-    }
-
-    companion object {
-        const val NOT_CALLED = -1L
     }
 }

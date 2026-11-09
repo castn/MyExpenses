@@ -131,7 +131,6 @@ import org.totschnig.myexpenses.provider.KEY_PAYEE_NAME
 import org.totschnig.myexpenses.provider.KEY_SYNC_ACCOUNT_NAME
 import org.totschnig.myexpenses.provider.KEY_URI
 import org.totschnig.myexpenses.provider.filter.FilterPersistence
-import org.totschnig.myexpenses.service.PlanExecutor.Companion.enqueueSelf
 import org.totschnig.myexpenses.sync.GenericAccountService
 import org.totschnig.myexpenses.ui.AmountInput
 import org.totschnig.myexpenses.ui.SnackbarAction
@@ -141,7 +140,6 @@ import org.totschnig.myexpenses.util.NotificationBuilderWrapper
 import org.totschnig.myexpenses.util.PermissionHelper
 import org.totschnig.myexpenses.util.PermissionHelper.PermissionGroup
 import org.totschnig.myexpenses.util.PictureDirHelper
-import org.totschnig.myexpenses.util.Utils
 import org.totschnig.myexpenses.util.ads.AdHandlerFactory
 import org.totschnig.myexpenses.util.config.Configurator
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
@@ -232,19 +230,7 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
         toolbar.setSubtitleTextColor(getAmountColor(sign))
     }
 
-    fun enqueuePlanner(forceImmediate: Boolean) {
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                enqueueSelf(this@BaseActivity, prefHandler, forceImmediate)
-            }
-        }
-    }
-
-    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
-        when (requestCode) {
-            PermissionHelper.PERMISSIONS_REQUEST_WRITE_CALENDAR -> enqueuePlanner(true)
-        }
-    }
+    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {}
 
     override fun showCalculator(amount: BigDecimal?, id: Int) {
         val intent = Intent(this, CalculatorInput::class.java).apply {
@@ -816,34 +802,6 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
                 true
             }
 
-            R.id.NOTIFICATION_SETTINGS_COMMAND -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-                    !PermissionGroup.NOTIFICATION.hasPermission(this)
-                ) {
-                    disableFab()
-                    requestPermission(
-                        PermissionHelper.PERMISSIONS_REQUEST_NOTIFICATIONS_PLANNER,
-                        PermissionGroup.NOTIFICATION
-                    )
-                } else {
-
-                    val intent = Intent().apply {
-                        val channelId = if (
-                            NotificationManagerCompat.from(this@BaseActivity)
-                                .areNotificationsEnabled()
-                        ) NotificationBuilderWrapper.CHANNEL_ID_PLANNER else null
-                        action = when (channelId) {
-                            null -> Settings.ACTION_APP_NOTIFICATION_SETTINGS
-                            else -> Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS
-                        }
-                        channelId?.let { putExtra(Settings.EXTRA_CHANNEL_ID, it) }
-                        putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
-                    }
-                    startActivity(intent)
-                }
-                true
-            }
-
             R.id.RATE_COMMAND -> {
                 startActivity(Intent(Intent.ACTION_VIEW).apply {
                     data = marketSelfUri.toUri()
@@ -1238,58 +1196,6 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
         }
     }
 
-    fun checkPermissionsForPlaner() {
-
-        val missingPermissions = buildList {
-            add(PermissionGroup.CALENDAR)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                add(PermissionGroup.NOTIFICATION)
-            }
-        }.filter { !it.hasPermission(this) }
-
-        if (missingPermissions.contains(PermissionGroup.CALENDAR)) {
-            disableFab()
-            requestPermission(
-                PermissionHelper.PERMISSIONS_REQUEST_WRITE_CALENDAR,
-                *missingPermissions.toTypedArray()
-            )
-        } else {
-
-            val prefKey = "notification_permission_rationale_shown"
-            if (!areNotificationsEnabled(NotificationBuilderWrapper.CHANNEL_ID_PLANNER) &&
-                !prefHandler.getBoolean(prefKey, false)
-            ) {
-                ConfirmationDialogFragment.newInstance(
-                    Bundle().apply {
-                        putString(ConfirmationDialogFragment.KEY_PREFKEY, prefKey)
-                        putCharSequence(
-                            KEY_MESSAGE,
-                            TextUtils.concat(
-                                Utils.getTextWithAppName(
-                                    this@BaseActivity,
-                                    R.string.notifications_permission_required_planner
-                                ),
-                                " ",
-                                getString(
-                                    R.string.notifications_channel_required,
-                                    getString(R.string.planner_notification_channel_name)
-                                )
-                            )
-                        )
-                        putInt(
-                            KEY_COMMAND_POSITIVE,
-                            R.id.NOTIFICATION_SETTINGS_COMMAND
-                        )
-                        putInt(
-                            KEY_POSITIVE_BUTTON_LABEL,
-                            R.string.menu_reconfigure
-                        )
-                    }
-                ).show(supportFragmentManager, "NOTIFICATION_PERMISSION_RATIONALE")
-            }
-        }
-    }
-
     private fun areNotificationsEnabled(channelId: String) =
         if (NotificationManagerCompat.from(this).areNotificationsEnabled()) {
             val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
@@ -1297,24 +1203,10 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
             channel?.importance != NotificationManager.IMPORTANCE_NONE
         } else false
 
-    fun requestCalendarPermission() {
-        disableFab()
-        requestPermission(
-            PermissionHelper.PERMISSIONS_REQUEST_WRITE_CALENDAR,
-            PermissionGroup.CALENDAR
-        )
-    }
-
-    private fun disableFab() {
-        if (hasFloatingActionButton) {
-            floatingActionButton.isEnabled = false
-        }
-    }
-
     open fun requestPermission(requestCode: Int, vararg permissionGroup: PermissionGroup) {
         EasyPermissions.requestPermissions(
             host = this,
-            rationale = PermissionHelper.getRationale(this, requestCode, *permissionGroup),
+            rationale = PermissionHelper.getRationale(this, requestCode),
             requestCode = requestCode,
             perms = permissionGroup.flatMap { it.androidPermissions }.toTypedArray()
         )
@@ -1326,17 +1218,12 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
             SettingsDialog.Builder(this)
                 .title(R.string.permissions_label)
                 .rationale(
-                    PermissionHelper.getRationale(
-                        this, requestCode,
-                        *perms.map { PermissionGroup.fromPermission(it) }.distinct().toTypedArray()
-                    )
+                    PermissionHelper.getRationale(this, requestCode)
                 )
                 .build().show()
         } else {
             showSnackBar(
-                PermissionHelper.getRationale(
-                    this, requestCode, PermissionGroup.NOTIFICATION
-                )
+                PermissionHelper.getRationale(this, requestCode)
             )
         }
     }
@@ -1792,7 +1679,6 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
 
 
     companion object {
-        const val ASYNC_TAG = "ASYNC_TASK"
         const val PROGRESS_TAG = "PROGRESS"
         private const val DIALOG_INACTIVE_BACKEND = "inactive_backend"
         const val RESULT_RESTORE_OK = RESULT_FIRST_USER + 1

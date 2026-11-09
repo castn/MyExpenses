@@ -3,10 +3,8 @@ package org.totschnig.myexpenses.viewmodel.data
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
-import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.db2.FLAG_NEUTRAL
 import org.totschnig.myexpenses.db2.Repository
-import org.totschnig.myexpenses.db2.entities.prettyTimeInfo
 import org.totschnig.myexpenses.db2.loadTagsForTransaction
 import org.totschnig.myexpenses.db2.loadTemplate
 import org.totschnig.myexpenses.db2.localizedLabelForPaymentMethod
@@ -226,10 +224,7 @@ data class Transaction(
                 ),
                 referenceNumber = getStringOrNull(KEY_REFERENCE_NUMBER),
                 originTemplate = getLongOrNull(KEY_TEMPLATEID)?.let { templateId ->
-                    repository.loadTemplate(templateId)?.takeIf { it.data.planId != 0L }?.let {
-                        it.plan?.let { prettyTimeInfo(repository.context, it.rRule, it.dtStart) }
-                         ?: repository.context.getString(R.string.plan_event_deleted)
-                    }
+                    repository.loadTemplate(templateId, require = false)?.title
                 },
                 isSealed = getInt(KEY_SEALED) > 0,
                 accountLabel = getString(KEY_ACCOUNT_LABEL),

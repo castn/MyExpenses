@@ -29,7 +29,7 @@ import org.totschnig.myexpenses.activity.IapActivity
 import org.totschnig.myexpenses.compose.AppTheme
 import org.totschnig.myexpenses.db2.Repository
 import org.totschnig.myexpenses.db2.countAccounts
-import org.totschnig.myexpenses.db2.updateNewPlanEnabled
+import org.totschnig.myexpenses.db2.updateNewSplitTemplateEnabled
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.preference.PrefHandler
@@ -145,7 +145,7 @@ open class LicenceHandler(
     fun update() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                repository.updateNewPlanEnabled(this@LicenceHandler)
+                repository.updateNewSplitTemplateEnabled(this@LicenceHandler)
                 updateNewAccountEnabled()
             } catch (_: Exception) {
             }

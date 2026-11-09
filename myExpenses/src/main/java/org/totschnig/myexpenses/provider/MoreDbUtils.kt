@@ -1,8 +1,6 @@
 package org.totschnig.myexpenses.provider
 
 import android.accounts.AccountManager
-import android.content.ContentResolver
-import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.res.Resources
@@ -11,8 +9,6 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteConstraintException
 import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
-import android.provider.CalendarContract
-import android.provider.CalendarContract.Calendars
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteQueryBuilder
@@ -26,10 +22,6 @@ import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model.Money
 import org.totschnig.myexpenses.model.generateUuid
 import org.totschnig.myexpenses.myApplication
-import org.totschnig.myexpenses.preference.PrefHandler
-import org.totschnig.myexpenses.preference.PrefKey
-import org.totschnig.myexpenses.provider.PlannerUtils.Companion.copyEventData
-import org.totschnig.myexpenses.provider.TransactionProvider.TEMPLATES_URI
 import org.totschnig.myexpenses.provider.TransactionProvider.pauseChangeTrigger
 import org.totschnig.myexpenses.provider.TransactionProvider.resumeChangeTrigger
 import org.totschnig.myexpenses.provider.filter.Operation
@@ -38,7 +30,6 @@ import org.totschnig.myexpenses.sync.GenericAccountService.Companion.getAccountN
 import org.totschnig.myexpenses.sync.SyncAdapter
 import org.totschnig.myexpenses.sync.json.TransactionChange
 import org.totschnig.myexpenses.util.ColorUtils
-import org.totschnig.myexpenses.util.PermissionHelper.PermissionGroup
 import org.totschnig.myexpenses.util.Utils
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
 import org.totschnig.myexpenses.viewmodel.data.Category
@@ -590,61 +581,6 @@ fun cacheSyncState(context: Context) {
     }
 }
 
-const val CALENDAR_FULL_PATH_PROJECTION: String = ("ifnull("
-        + Calendars.ACCOUNT_NAME + ",'') || '/' ||" + "ifnull("
-        + Calendars.ACCOUNT_TYPE + ",'') || '/' ||" + "ifnull(" + Calendars.NAME
-        + ",'')")
-
-fun getCalendarPath(contentResolver: ContentResolver, calendarId: String) =
-    contentResolver.query(
-        Calendars.CONTENT_URI,
-        arrayOf("$CALENDAR_FULL_PATH_PROJECTION AS path"),
-        Calendars._ID + " = ?",
-        arrayOf(calendarId),
-        null
-    )?.use { if (it.moveToFirst()) it.requireString(0) else "" }
-
-fun cacheEventData(context: Context, prefHandler: PrefHandler) {
-    if (!PermissionGroup.CALENDAR.hasPermission(context)) {
-        return
-    }
-    val plannerCalendarId = prefHandler.getString(PrefKey.PLANNER_CALENDAR_ID, "-1")
-    if (plannerCalendarId == "-1") {
-        return
-    }
-    val eventValues = ContentValues()
-    val cr = context.contentResolver
-    //remove old cache
-    cr.delete(
-        TransactionProvider.EVENT_CACHE_URI, null, null
-    )
-    cr.query(
-        TEMPLATES_URI, arrayOf(
-            KEY_PLANID
-        ),
-        "$KEY_PLANID IS NOT null", null, null
-    )?.use { planCursor ->
-        if (planCursor.moveToFirst()) {
-            do {
-                val planId = planCursor.getLong(0)
-                val eventUri = ContentUris.withAppendedId(
-                    CalendarContract.Events.CONTENT_URI,
-                    planId
-                )
-                cr.query(
-                    eventUri, PlannerUtils.eventProjection,
-                    CalendarContract.Events.CALENDAR_ID + " = ?", arrayOf(plannerCalendarId), null
-                )?.use { eventCursor ->
-                    if (eventCursor.moveToFirst()) {
-                        eventValues.copyEventData(eventCursor)
-                        cr.insert(TransactionProvider.EVENT_CACHE_URI, eventValues)
-                    }
-                }
-            } while (planCursor.moveToNext())
-        }
-    }
-}
-
 @JvmOverloads
 fun SupportSQLiteDatabase.update(
     table: String,
@@ -753,23 +689,6 @@ fun checkSyncAccounts(context: Context) {
         },
         where, validAccounts
     )
-}
-
-fun insertEventAndUpdatePlan(
-    contentResolver: ContentResolver,
-    eventValues: ContentValues,
-    templateId: Long,
-): Boolean {
-    val uri = contentResolver.insert(CalendarContract.Events.CONTENT_URI, eventValues)
-    val planId = ContentUris.parseId(uri!!)
-    Timber.i("event copied with new id %d ", planId)
-    val planValues = ContentValues()
-    planValues.put(KEY_PLANID, planId)
-    val updated = contentResolver.update(
-        ContentUris.withAppendedId(TEMPLATES_URI, templateId),
-        planValues, null, null
-    )
-    return updated > 0
 }
 
 fun Cursor.calculateEquivalentAmount(homeCurrency: CurrencyUnit) =

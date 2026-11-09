@@ -29,7 +29,7 @@
     </project>
     <project>
         <name>Android Open Source Project</name>
-        <extra_info>EventRecurrenceFormatter, Licencing Verification</extra_info>
+        <extra_info>Licencing Verification</extra_info>
         <url>https://source.android.com/</url>
         <licence>Apache License, Version 2.0</licence>
     </project>
@@ -42,11 +42,6 @@
         <name>Picasso</name>
         <url>http://square.github.io/picasso/</url>
         <licence>Apache License, Version 2.0</licence>
-    </project>
-    <project>
-        <name>Caldroid</name>
-        <url>https://github.com/roomorama/Caldroid</url>
-        <licence>MIT licence</licence>
     </project>
     <project>
         <name>Android-State</name>

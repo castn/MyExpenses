@@ -10,7 +10,6 @@ import org.totschnig.myexpenses.db2.RepositoryTransaction
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.provider.KEY_TEMPLATEID
 import org.totschnig.myexpenses.viewmodel.AccountSealedException
-import org.totschnig.myexpenses.viewmodel.PlanInstanceInfo
 import org.totschnig.myexpenses.viewmodel.TemplatesListViewModel
 
 class TemplateSaver : ComponentActivity() {

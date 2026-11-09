@@ -9,13 +9,9 @@
     <color name="colorIncomeOnCard">#A5D6A7</color>
     <color name="colorTransfer">#7777FF</color>
     <color name="colorAggregate">@color/material_grey_400</color>
-    <color name="caldroid_custom_gridview_background">@color/caldroid_middle_gray</color>
-    <color name="caldroid_red_border">@color/caldroid_light_red</color>
-    <color name="caldroid_state_date_prev_next_month">@color/caldroid_333</color>
     <color name="future_background">#11FFFFFF</color>
     <color name="cardBackground">#444444</color>
     <color name="activatedBackground">@color/material_grey_700</color>
-    <color name="activatedBackgroundPlanner">@color/material_grey_600</color>
     <color name="settings_two_pane_background_color">@android:color/transparent</color>
     <color name="overspent">#d32f2f</color>
     <color name="overspentDaily">#dddd00</color>

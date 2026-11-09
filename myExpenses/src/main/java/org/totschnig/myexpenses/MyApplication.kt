@@ -44,12 +44,9 @@ import org.totschnig.myexpenses.preference.PrefHandler
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.provider.BaseTransactionProvider
 import org.totschnig.myexpenses.provider.DataBaseAccount
-import org.totschnig.myexpenses.provider.INVALID_CALENDAR_ID
-import org.totschnig.myexpenses.provider.PlannerUtils
 import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.service.AutoBackupWorker.Companion.enqueueOrCancel
 import org.totschnig.myexpenses.service.BudgetWidgetUpdateWorker
-import org.totschnig.myexpenses.service.PlanExecutor
 import org.totschnig.myexpenses.sync.SyncAdapter
 import org.totschnig.myexpenses.ui.ContextHelper
 import org.totschnig.myexpenses.util.ICurrencyFormatter
@@ -92,9 +89,6 @@ open class MyApplication : Application(), SharedPreferences.OnSharedPreferenceCh
 
     @Inject
     lateinit var currencyFormatter: ICurrencyFormatter
-
-    @Inject
-    lateinit var plannerUtils: PlannerUtils
 
     private var lastPause: Long = 0
 
@@ -200,7 +194,6 @@ open class MyApplication : Application(), SharedPreferences.OnSharedPreferenceCh
                 if (debugLoggingEnabled) {
                     Timber.plant(Timber.DebugTree())
                     try {
-                        plantTree(PlanExecutor.TAG)
                         plantTree(SyncAdapter.TAG)
                         plantTree(LicenceHandler.TAG)
                         plantTree(BaseTransactionProvider.TAG)
@@ -291,12 +284,6 @@ open class MyApplication : Application(), SharedPreferences.OnSharedPreferenceCh
         when {
             prefHandler.matches(key, PrefKey.DEBUG_LOGGING) -> {
                 setupLogging()
-            }
-
-            prefHandler.matches(key, PrefKey.PLANNER_CALENDAR_ID) -> {
-                plannerUtils.onPlannerCalendarIdChanged(
-                    sharedPreferences.getString(key, INVALID_CALENDAR_ID)!!
-                )
             }
 
             prefHandler.matches(key, PrefKey.GROUP_WEEK_STARTS) -> {

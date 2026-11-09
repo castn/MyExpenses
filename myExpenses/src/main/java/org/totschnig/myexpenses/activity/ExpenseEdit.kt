@@ -14,17 +14,11 @@
  */
 package org.totschnig.myexpenses.activity
 
-import android.Manifest
 import android.app.NotificationManager
 import android.content.ActivityNotFoundException
-import android.content.ContentUris
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.database.ContentObserver
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.provider.CalendarContract
 import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.Menu
@@ -42,7 +36,6 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.PopupMenu.OnMenuItemClickListener
 import androidx.appcompat.widget.TooltipCompat
-import androidx.core.app.ActivityCompat
 import androidx.core.content.IntentCompat
 import androidx.core.os.BundleCompat
 import androidx.lifecycle.Lifecycle
@@ -69,12 +62,10 @@ import org.totschnig.myexpenses.databinding.AttachmentItemBinding
 import org.totschnig.myexpenses.databinding.DateEditBinding
 import org.totschnig.myexpenses.databinding.MethodRowBinding
 import org.totschnig.myexpenses.databinding.OneExpenseBinding
-import org.totschnig.myexpenses.db2.CalendarIntegrationNotAvailableException
 import org.totschnig.myexpenses.db2.FLAG_EXPENSE
 import org.totschnig.myexpenses.db2.FLAG_NEUTRAL
 import org.totschnig.myexpenses.db2.FLAG_TRANSFER
 import org.totschnig.myexpenses.db2.asCategoryType
-import org.totschnig.myexpenses.db2.entities.Recurrence
 import org.totschnig.myexpenses.db2.entities.Template
 import org.totschnig.myexpenses.delegate.CategoryDelegate
 import org.totschnig.myexpenses.delegate.MainDelegate
@@ -95,8 +86,6 @@ import org.totschnig.myexpenses.exception.ExternalStorageNotAvailableException
 import org.totschnig.myexpenses.exception.UnknownPictureSaveException
 import org.totschnig.myexpenses.feature.OcrResultFlat
 import org.totschnig.myexpenses.fragment.PartiesList.Companion.DIALOG_EDIT_PARTY
-import org.totschnig.myexpenses.fragment.PlanMonthFragment
-import org.totschnig.myexpenses.fragment.TemplatesList
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.ContribPayload
@@ -112,7 +101,6 @@ import org.totschnig.myexpenses.provider.KEY_COLOR
 import org.totschnig.myexpenses.provider.KEY_CURRENCY
 import org.totschnig.myexpenses.provider.KEY_DATE
 import org.totschnig.myexpenses.provider.KEY_ICON
-import org.totschnig.myexpenses.provider.KEY_INSTANCEID
 import org.totschnig.myexpenses.provider.KEY_LABEL
 import org.totschnig.myexpenses.provider.KEY_PARENTID
 import org.totschnig.myexpenses.provider.KEY_PATH
@@ -128,7 +116,6 @@ import org.totschnig.myexpenses.ui.DateButton
 import org.totschnig.myexpenses.ui.DisplayParty
 import org.totschnig.myexpenses.ui.ExchangeRateEdit
 import org.totschnig.myexpenses.ui.IDiscoveryHelper
-import org.totschnig.myexpenses.util.PermissionHelper
 import org.totschnig.myexpenses.util.PictureDirHelper
 import org.totschnig.myexpenses.util.Utils
 import org.totschnig.myexpenses.util.checkMenuIcon
@@ -236,7 +223,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
     private var mIsResumed = false
     private var isManualRecreate = false
     private var accountsLoaded = false
-    private var pObserver: ContentObserver? = null
     private lateinit var currencyViewModel: CurrencyViewModel
 
     private lateinit var attachmentInfoMap: Map<Uri, AttachmentInfo>
@@ -283,13 +269,10 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
         get() = newInstance && !isClone && !hasCreateFromTemplateAction && !hasCreateTemplateFromTransactionAction
 
     private val hasCreateFromTemplateAction
-        get() = intent.action == ACTION_CREATE_FROM_TEMPLATE || planInstanceId > 0L
+        get() = intent.action == ACTION_CREATE_FROM_TEMPLATE
 
     private val hasCreateTemplateFromTransactionAction
         get() = intent.action == ACTION_CREATE_TEMPLATE_FROM_TRANSACTION
-
-    private val planInstanceId: Long
-        get() = intent.getLongExtra(KEY_INSTANCEID, 0L)
 
     private val originTemplateId: Long
         get() = intent.getLongExtra(KEY_TEMPLATEID, 0L)
@@ -421,7 +404,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
                 null,
                 withTypeSpinner,
                 savedInstanceState,
-                null,
                 withAutoFill
             )
             if (isManualRecreate) {
@@ -429,11 +411,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
             }
             setHelpVariant(delegate.helpVariant)
             setTitle()
-            if (isTemplate) {
-                delegate.planId?.let { planId ->
-                    refreshPlanData(planId, false)
-                }
-            }
             floatingActionButton.show()
             updateOnBackPressedCallbackEnabled()
         } else {
@@ -869,12 +846,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
 
     override fun onDestroy() {
         super.onDestroy()
-        pObserver?.let {
-            try {
-                contentResolver.unregisterContentObserver(it)
-            } catch (_: IllegalStateException) { // Do Nothing.  Observer has already been unregistered.
-            }
-        }
         if (::delegate.isInitialized) delegate.onDestroy()
     }
 
@@ -887,9 +858,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
                 abortWithMessage("This transaction refers to a closed account or debt and can no longer be edited")
             } else {
                 populate(it, withAutoFill && task != TRANSACTION_FROM_TEMPLATE)
-                it.originTemplate?.let {
-                    delegate.originTemplateLoaded(it)
-                }
             }
         } ?: run {
             abortWithMessage(
@@ -967,7 +935,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
             t,
             withTypeSpinner,
             null,
-            null,
             withAutoFill
         )
         if (accountsLoaded) {
@@ -1007,7 +974,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
                 }?.setDate(date)
             }
             if (::delegate.isInitialized) {
-                delegate.configureLastDayButton()
                 (delegate as? MainDelegate)?.loadPrice()
             }
         }
@@ -1155,7 +1121,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
         val restartIntent = Intent(this, ExpenseEdit::class.java).apply {
             action = ACTION_CREATE_FROM_TEMPLATE
             putExtra(KEY_TEMPLATEID, id)
-            putExtra(KEY_INSTANCEID, -1L)
         }
         finish()
         startActivity(restartIntent)
@@ -1315,7 +1280,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
                         onSaved(
                             viewModel.save(
                                 transaction.copy(
-                                    planInstanceId = planInstanceId.takeIf { it > 0L },
                                     originTemplate = originTemplateId.takeIf { it > 0L }?.let {
                                         TemplateEditData(templateId = it)
                                     },
@@ -1360,14 +1324,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
         setDirty()
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            PLAN_REQUEST -> finish()
-        }
-    }
-
     override val onBackPressedCallbackEnabled: Boolean
         get() = super.onBackPressedCallbackEnabled || isSplitParent || backwardCanceledTagsIntent() != null
 
@@ -1384,31 +1340,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
      */
     override fun configureType() {
         delegate.configureType()
-    }
-
-    private inner class PlanObserver : ContentObserver(Handler()) {
-        override fun onChange(selfChange: Boolean) {
-            delegate.planId?.let { planId ->
-                refreshPlanData(planId, true)
-            }
-        }
-    }
-
-    private fun refreshPlanData(planId: Long, fromObserver: Boolean) {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.WRITE_CALENDAR
-            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_CALENDAR
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            viewModel.plan(planId).observe(this) { plan ->
-                plan?.let { delegate.configurePlan(it, fromObserver) }
-            }
-        } else {
-            CrashHandler.report(IllegalStateException("Calendar permissions not granted"))
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -1535,19 +1466,9 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
                     )
                     isSaving = false
                 } else doFinish()
-            } else {
-                if (delegate.recurrenceSpinner.selectedItem === Recurrence.CUSTOM) {
-                    if (transaction.initialPlanId != null) {
-                        launchPlanView(true, transaction.initialPlanId)
-                    } else {
-                        CrashHandler.report(IllegalStateException("PlanId is null"))
-                        hideKeyboard()
-                        doFinish()
-                    }
-                } else { //make sure soft keyboard is closed
-                    hideKeyboard()
-                    doFinish()
-                }
+            } else { //make sure soft keyboard is closed
+                hideKeyboard()
+                doFinish()
             }
         }.onFailure {
             showSnackBar(
@@ -1562,11 +1483,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
                         "Error while saving picture"
                     }
 
-                    is CalendarIntegrationNotAvailableException -> {
-                        delegate.recurrenceSpinner.setSelection(0)
-                        "Recurring transactions are not available, because calendar integration is not functional on this device."
-                    }
-
                     else -> {
                         CrashHandler.report(it)
                         "Error while saving transaction: ${it.safeMessage}"
@@ -1574,19 +1490,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
                 }
             )
         }
-    }
-
-    fun launchPlanView(forResult: Boolean, planId: Long) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        //ACTION_VIEW expects to get a range http://code.google.com/p/android/issues/detail?id=23852
-        //intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, mPlan!!.dtstart)
-        //intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, mPlan!!.dtstart)
-        intent.data = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, planId)
-        startActivity(
-            intent,
-            R.string.no_calendar_app_installed,
-            if (forResult) PLAN_REQUEST else null
-        )
     }
 
     override fun contribFeatureCalled(feature: ContribFeature, tag: ContribPayload?) {
@@ -1661,24 +1564,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
         startMediaChooserDo(PictureDirHelper.defaultFileName)
     }
 
-    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
-        super.onPermissionsGranted(requestCode, perms)
-        if (requestCode == PermissionHelper.PERMISSIONS_REQUEST_WRITE_CALENDAR &&
-            PermissionHelper.PermissionGroup.CALENDAR.androidPermissions.all { perms.contains(it) }
-        ) {
-            delegate.onCalendarPermissionsResult(true)
-        }
-    }
-
-    override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
-        super.onPermissionsDenied(requestCode, perms)
-        if (requestCode == PermissionHelper.PERMISSIONS_REQUEST_WRITE_CALENDAR &&
-            PermissionHelper.PermissionGroup.CALENDAR.androidPermissions.any { perms.contains(it) }
-        ) {
-            delegate.onCalendarPermissionsResult(false)
-        }
-    }
-
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         delegate.isProcessingLinkedAmountInputs = true
         exchangeRateEdit.setBlockWatcher(true)
@@ -1700,29 +1585,6 @@ open class ExpenseEdit : AmountActivity<TransactionEditViewModel>(), ContribIFac
         get() = if (
             createNew && delegate.createNewOverride
         ) R.string.menu_save_and_new_content_description else super.fabDescription
-
-    fun showPlanMonthFragment(originTemplate: TemplateEditData, color: Int) {
-        PlanMonthFragment.newInstance(
-            originTemplate.title,
-            originTemplate.templateId,
-            originTemplate.plan?.id ?: 0L,
-            color, true, prefHandler
-        ).show(
-            supportFragmentManager,
-            TemplatesList.CALDROID_DIALOG_FRAGMENT_TAG
-        )
-    }
-
-    fun observePlan(planId: Long) {
-        if (pObserver == null) {
-            pObserver = PlanObserver().also {
-                contentResolver.registerContentObserver(
-                    ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, planId),
-                    false, it
-                )
-            }
-        }
-    }
 
     companion object {
         const val KEY_NEW_TEMPLATE = "newTemplate"

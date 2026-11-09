@@ -10,18 +10,6 @@ import org.totschnig.myexpenses.prefHandler
 import org.totschnig.myexpenses.preference.PrefKey
 
 class SortTest {
-
-    /**
-     * NEXT_INSTANCE needs special treatment, because it is handled in TransactionProvider
-     */
-    @Test
-    fun nextInstanceReturnsNull() {
-        whenever(prefHandler.getString(eq(PrefKey.SORT_ORDER_TEMPLATES), any()))
-            .thenReturn(Sort.NEXT_INSTANCE.name)
-        assertThat(Sort.preferredOrderByForTemplatesWithPlans(prefHandler, Sort.TITLE))
-            .isNull()
-    }
-
     @Test
     fun configuredWithUnsupportedFallsBackToDefault() {
         whenever(prefHandler.getString(eq(PrefKey.SORT_ORDER_TEMPLATES), any()))

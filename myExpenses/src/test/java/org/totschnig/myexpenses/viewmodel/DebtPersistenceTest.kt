@@ -425,7 +425,7 @@ class DebtPersistenceTest : BaseDebtTest() {
         ).data.id
         val instance = repository.instantiateTemplate(
             exchangeRateHandler,
-            PlanInstanceInfo(templateId),
+            templateId,
             currencyContext
         ).getOrThrow()
         assertThat(instance.data.debtId).isEqualTo(id)
@@ -446,7 +446,7 @@ class DebtPersistenceTest : BaseDebtTest() {
             runBlocking {
                 repository.instantiateTemplate(
                     exchangeRateHandler,
-                    PlanInstanceInfo(templateId),
+                    templateId,
                     currencyContext
                 )
             }

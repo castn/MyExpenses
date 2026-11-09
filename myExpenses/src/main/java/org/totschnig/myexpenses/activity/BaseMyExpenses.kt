@@ -1417,13 +1417,6 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
                 }
             }
         }
-        checkCalendarPermission()
-    }
-
-    private fun checkCalendarPermission() {
-        if ("-1" != prefHandler.getString(PrefKey.PLANNER_CALENDAR_ID, "-1")) {
-            checkPermissionsForPlaner()
-        }
     }
 
     val sumInfo: MutableState<SumInfo> = mutableStateOf(SumInfo.EMPTY)

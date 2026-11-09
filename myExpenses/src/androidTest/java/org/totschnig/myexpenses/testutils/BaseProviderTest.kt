@@ -51,8 +51,7 @@ open class BaseProviderTest : ProviderTestCase2<TransactionProvider>(
             targetContextWrapper,
             app.appComponent.currencyContext(),
             prefHandler,
-            app.appComponent.preferencesDataStore(),
-            app.appComponent.plannerUtils()
+            app.appComponent.preferencesDataStore()
         )
 
     val contentResolver: ContentResolver

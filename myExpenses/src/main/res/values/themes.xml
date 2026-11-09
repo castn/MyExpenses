@@ -30,9 +30,6 @@ along with My Expenses.  If not, see <http://www.gnu.org/licenses/>.
         <item name="android:windowLightStatusBar">?isLightTheme</item>
     </style>
 
-    <style name="DarkBackground">
-        <item name="colorOnSurface">@android:color/white</item>
-    </style>
 
     <style name="LightBackground">
         <item name="colorOnSurface">@android:color/black</item>

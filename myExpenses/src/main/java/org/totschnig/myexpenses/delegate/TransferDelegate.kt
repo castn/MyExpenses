@@ -17,7 +17,6 @@ import org.totschnig.myexpenses.contract.TransactionsContract
 import org.totschnig.myexpenses.databinding.DateEditBinding
 import org.totschnig.myexpenses.databinding.MethodRowBinding
 import org.totschnig.myexpenses.databinding.OneExpenseBinding
-import org.totschnig.myexpenses.db2.entities.Recurrence
 import org.totschnig.myexpenses.dialog.addAllAccounts
 import org.totschnig.myexpenses.model.AccountFlag
 import org.totschnig.myexpenses.model.Money
@@ -85,7 +84,6 @@ class TransferDelegate(
         transaction: TransactionEditData?,
         withTypeSpinner: Boolean,
         savedInstanceState: Bundle?,
-        recurrence: Recurrence?,
         withAutoFill: Boolean,
     ) {
         transaction?.transferEditData?.let { data ->
@@ -107,7 +105,6 @@ class TransferDelegate(
             transaction,
             withTypeSpinner,
             savedInstanceState,
-            recurrence,
             withAutoFill
         )
         if (catId != null && catId != prefHandler.defaultTransferCategory) categoryVisible = true

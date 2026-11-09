@@ -15,14 +15,11 @@
 package org.totschnig.myexpenses.fragment
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Typeface
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.text.style.StyleSpan
@@ -39,31 +36,22 @@ import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.AdapterView
 import android.widget.AdapterView.AdapterContextMenuInfo
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.SimpleCursorAdapter
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.widget.PopupMenu
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.util.size
 import androidx.core.view.isVisible
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
-import com.evernote.android.state.State
 import com.evernote.android.state.StateSaver
-import com.google.android.material.snackbar.Snackbar
-import eltos.simpledialogfragment.SimpleDialog
 import org.totschnig.myexpenses.MyApplication
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.BaseActivity
 import org.totschnig.myexpenses.activity.EDIT_REQUEST
 import org.totschnig.myexpenses.activity.ExpenseEdit
-import org.totschnig.myexpenses.activity.ManageTemplates
 import org.totschnig.myexpenses.activity.ProtectedFragmentActivity
 import org.totschnig.myexpenses.compose.transactions.COMMENT_SEPARATOR
 import org.totschnig.myexpenses.databinding.TemplatesListBinding
@@ -74,7 +62,7 @@ import org.totschnig.myexpenses.dialog.MessageDialogFragment
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.CurrencyContext
 import org.totschnig.myexpenses.model.sort.Sort
-import org.totschnig.myexpenses.model.sort.Sort.Companion.preferredOrderByForTemplatesWithPlans
+import org.totschnig.myexpenses.model.sort.Sort.Companion.preferredOrderByForTemplates
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.provider.KEY_ACCOUNT_LABEL
 import org.totschnig.myexpenses.provider.KEY_AMOUNT
@@ -85,62 +73,38 @@ import org.totschnig.myexpenses.provider.KEY_CATID
 import org.totschnig.myexpenses.provider.KEY_COLOR
 import org.totschnig.myexpenses.provider.KEY_COMMENT
 import org.totschnig.myexpenses.provider.KEY_CURRENCY
-import org.totschnig.myexpenses.provider.KEY_DATE
 import org.totschnig.myexpenses.provider.KEY_DEFAULT_ACTION
-import org.totschnig.myexpenses.provider.KEY_INSTANCEID
 import org.totschnig.myexpenses.provider.KEY_ORIGINAL_AMOUNT
 import org.totschnig.myexpenses.provider.KEY_ORIGINAL_CURRENCY
 import org.totschnig.myexpenses.provider.KEY_PARENTID
 import org.totschnig.myexpenses.provider.KEY_PATH
 import org.totschnig.myexpenses.provider.KEY_PAYEE_NAME
-import org.totschnig.myexpenses.provider.KEY_PLANID
-import org.totschnig.myexpenses.provider.KEY_PLAN_INFO
-import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.provider.KEY_SEALED
 import org.totschnig.myexpenses.provider.KEY_TEMPLATEID
 import org.totschnig.myexpenses.provider.KEY_TITLE
-import org.totschnig.myexpenses.provider.KEY_TRANSACTIONID
 import org.totschnig.myexpenses.provider.KEY_TYPE
 import org.totschnig.myexpenses.provider.KEY_TRANSFER_ACCOUNT
 import org.totschnig.myexpenses.provider.KEY_TRANSFER_ACCOUNT_LABEL
-import org.totschnig.myexpenses.provider.KEY_UUID
 import org.totschnig.myexpenses.provider.SPLIT_CATID
 import org.totschnig.myexpenses.provider.TransactionProvider
-import org.totschnig.myexpenses.provider.appendBooleanQueryParameter
 import org.totschnig.myexpenses.provider.getInt
 import org.totschnig.myexpenses.provider.getIntIfExists
 import org.totschnig.myexpenses.provider.getLong
 import org.totschnig.myexpenses.provider.getLongOrNull
 import org.totschnig.myexpenses.provider.getString
-import org.totschnig.myexpenses.provider.getStringIfExists
 import org.totschnig.myexpenses.provider.getStringOrNull
 import org.totschnig.myexpenses.provider.isNull
-import org.totschnig.myexpenses.task.TaskExecutionFragment
 import org.totschnig.myexpenses.util.ICurrencyFormatter
-import org.totschnig.myexpenses.util.PermissionHelper.PermissionGroup
-import org.totschnig.myexpenses.util.TextUtils.concatResStrings
 import org.totschnig.myexpenses.util.Utils
 import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.util.enumValueOrDefault
 import org.totschnig.myexpenses.util.readPrimaryTextColor
-import org.totschnig.myexpenses.util.setEnabledAndVisible
-import org.totschnig.myexpenses.util.ui.UiUtils
-import org.totschnig.myexpenses.viewmodel.PlanInstanceInfo
 import org.totschnig.myexpenses.viewmodel.TemplatesListViewModel
 import org.totschnig.myexpenses.viewmodel.data.RIGHT_ARROW
-import timber.log.Timber
-import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlin.math.absoluteValue
 
-const val KEY_INSTANCE = "instance"
-const val DIALOG_TAG_CONFIRM_CANCEL = "confirm_cancel"
-const val DIALOG_TAG_CONFIRM_RESET = "confirm_reset"
-const val DIALOG_TAG_CONFIRM_DELETE = "confirm_delete"
-
-class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Cursor?>,
-    SimpleDialog.OnDialogResultListener {
-    private var popup: PopupMenu? = null
+class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Cursor?> {
     override val menuResource: Int
         get() = R.menu.templateslist_context
     private var _templatesCursor: Cursor? = null
@@ -149,17 +113,6 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
         get() = _templatesCursor!!
     private lateinit var mAdapter: SimpleCursorAdapter
     private lateinit var mManager: LoaderManager
-    private var hasPlans = false
-
-    /**
-     * if we are called from the calendar app, we only need to handle display of plan once
-     */
-    @State
-    var expandedHandled = false
-
-    @State
-    var repairTriggered = false
-
     @Inject
     lateinit var currencyFormatter: ICurrencyFormatter
 
@@ -213,53 +166,34 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
             if (isSealed) {
                 ctx.showSnackBar(R.string.object_sealed)
             }
-            if (templatesCursor.isNull(KEY_PLANID)) {
-                if (!isSealed) {
-                    if (isForeignExchangeTransfer(position)) {
-                        dispatchCreateInstanceEditDo(id)
-                    } else {
-                        val splitAtPosition = isSplitAtPosition(position)
-                        val defaultAction: Template.Action = enumValueOrDefault(
-                            templatesCursor.getString(KEY_DEFAULT_ACTION),
-                            Template.Action.SAVE
-                        )
-                        if (defaultAction == Template.Action.SAVE) {
-                            if (splitAtPosition) {
-                                requestSplitTransaction(ContribPayload.InstantiateSplitTemplateSave(longArrayOf(id)))
-                            } else {
-                                dispatchCreateInstanceSaveDo(longArrayOf(id))
-                            }
+            if (!isSealed) {
+                if (isForeignExchangeTransfer(position)) {
+                    dispatchCreateInstanceEditDo(id)
+                } else {
+                    val splitAtPosition = isSplitAtPosition(position)
+                    val defaultAction: Template.Action = enumValueOrDefault(
+                        templatesCursor.getString(KEY_DEFAULT_ACTION),
+                        Template.Action.SAVE
+                    )
+                    if (defaultAction == Template.Action.SAVE) {
+                        if (splitAtPosition) {
+                            requestSplitTransaction(ContribPayload.InstantiateSplitTemplateSave(longArrayOf(id)))
                         } else {
-                            if (splitAtPosition) {
-                                requestSplitTransaction(ContribPayload.InstantiateSplitTemplateEdit(id))
-                            } else {
-                                dispatchCreateInstanceEditDo(id)
-                            }
+                            dispatchCreateInstanceSaveDo(longArrayOf(id))
+                        }
+                    } else {
+                        if (splitAtPosition) {
+                            requestSplitTransaction(ContribPayload.InstantiateSplitTemplateEdit(id))
+                        } else {
+                            dispatchCreateInstanceEditDo(id)
                         }
                     }
-                }
-            } else {
-                if (isCalendarPermissionGranted) {
-                    val planMonthFragment = PlanMonthFragment.newInstance(
-                        templatesCursor.getString(KEY_TITLE),
-                        id,
-                        templatesCursor.getLong(KEY_PLANID),
-                        templatesCursor.getInt(KEY_COLOR), isSealed, prefHandler
-                    )
-                    if (!childFragmentManager.isStateSaved) {
-                        planMonthFragment.show(childFragmentManager, CALDROID_DIALOG_FRAGMENT_TAG)
-                    }
-                } else {
-                    ctx.requestCalendarPermission()
                 }
             }
         }
         registerForContextualActionBar(binding.list)
         return binding.root
     }
-
-    private val isCalendarPermissionGranted: Boolean
-        get() = PermissionGroup.CALENDAR.hasPermission(requireContext())
 
     private fun bulkUpdateDefaultAction(
         itemIds: LongArray,
@@ -391,11 +325,7 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
     }
 
     fun dispatchCreateInstanceSaveDo(templateIds: LongArray) {
-        dispatchCreateInstanceSaveDo(*templateIds.map { PlanInstanceInfo(it) }.toTypedArray())
-    }
-
-    private fun dispatchCreateInstanceSaveDo(vararg plans: PlanInstanceInfo) {
-        viewModel.newFromTemplate(*plans).observe(
+        viewModel.newFromTemplate(*templateIds).observe(
             viewLifecycleOwner
         ) { successCount: Int ->
             showSnackbar(
@@ -415,154 +345,36 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
         })
     }
 
-    private fun dispatchCreateInstanceEdit(templateId: Long, instanceId: Long, date: Long) {
-        startActivity(
-            Intent(requireActivity(), ExpenseEdit::class.java)
-                .putExtra(KEY_TEMPLATEID, templateId)
-                .putExtra(KEY_INSTANCEID, instanceId)
-                .putExtra(KEY_DATE, date)
-        )
-    }
-
-    fun dispatchEditInstance(transactionId: Long?) {
-        startActivityForResult(
-            Intent(requireActivity(), ExpenseEdit::class.java)
-                .putExtra(KEY_ROWID, transactionId), EDIT_REQUEST
-        )
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == EDIT_REQUEST && resultCode == Activity.RESULT_OK) {
-            val fragment = plannerFragment
-            fragment?.onEditRequestOk()
-        }
-    }
-
     override fun onCreateLoader(id: Int, bundle: Bundle?): Loader<Cursor?> {
         return if (id == SORTABLE_CURSOR) {
             CursorLoader(
                 requireActivity(),
-                TransactionProvider.TEMPLATES_URI.buildUpon()
-                    .appendBooleanQueryParameter(TransactionProvider.QUERY_PARAMETER_WITH_PLAN_INFO)
-                    .build(),
+                TransactionProvider.TEMPLATES_URI,
                 null,
                 "$KEY_PARENTID IS NULL",
                 null,
-                preferredOrderByForTemplatesWithPlans(prefHandler, Sort.USAGES, prefHandler.collate)
+                preferredOrderByForTemplates(prefHandler, Sort.USAGES, prefHandler.collate)
             )
         } else throw IllegalArgumentException("Unexpected loader id: $id")
     }
 
     override fun onLoadFinished(loader: Loader<Cursor?>, c: Cursor?) {
-        val ctx = requireActivity() as ManageTemplates
         if (loader.id == SORTABLE_CURSOR) {
             _templatesCursor = c
             invalidateCAB()
-            hasPlans = false
-            if (isCalendarPermissionGranted && _templatesCursor != null && templatesCursor.moveToFirst()) {
-                val needToExpand =
-                    if (expandedHandled) ManageTemplates.NOT_CALLED else ctx.calledFromCalendarWithId
-                var planMonthFragment: PlanMonthFragment? = null
-                while (!templatesCursor.isAfterLast) {
-                    val planId = templatesCursor.getLong(KEY_PLANID)
-                    if (planId != 0L) {
-                        hasPlans = true
-                    }
-                    val templateId = templatesCursor.getLong(KEY_ROWID)
-                    if (needToExpand == templateId) {
-                        planMonthFragment = PlanMonthFragment.newInstance(
-                            templatesCursor.getString(KEY_TITLE),
-                            templateId,
-                            planId,
-                            templatesCursor.getInt(KEY_COLOR),
-                            templatesCursor.getInt(KEY_SEALED) != 0,
-                            prefHandler
-                        )
-                    }
-                    templatesCursor.moveToNext()
-                }
-                if (needToExpand != ManageTemplates.NOT_CALLED) {
-                    expandedHandled = true
-                    if (planMonthFragment != null) {
-                        planMonthFragment.show(childFragmentManager, CALDROID_DIALOG_FRAGMENT_TAG)
-                    } else {
-                        ctx.showSnackBar(R.string.save_transaction_template_deleted)
-                    }
-                }
-                //look for plans that we could possible relink
-                if (!repairTriggered && templatesCursor.moveToFirst()) {
-                    val missingUuids = ArrayList<String>()
-                    while (!templatesCursor.isAfterLast) {
-                        if (!templatesCursor.isNull(KEY_PLANID) &&
-                            templatesCursor.isNull(KEY_PLAN_INFO)
-                        ) {
-                            missingUuids.add(
-                                templatesCursor.getString(
-                                    templatesCursor.getColumnIndexOrThrow(
-                                        KEY_UUID
-                                    )
-                                )
-                            )
-                        }
-                        templatesCursor.moveToNext()
-                    }
-                    if (missingUuids.isNotEmpty()) {
-                        RepairHandler(this).obtainMessage(
-                            0, missingUuids.toTypedArray()
-                        )
-                            .sendToTarget()
-                    }
-                }
-            }
             mAdapter.swapCursor(_templatesCursor)
             requireActivity().invalidateOptionsMenu()
         }
     }
 
     fun showSnackbar(msg: String) {
-        (planMonthFragment ?: plannerFragment)?.also {
-            showSnackbar(it, msg)
-        } ?: run { (activity as ProtectedFragmentActivity).showSnackBar(msg) }
-    }
-
-// In TemplatesList.kt
-
-    fun showSnackbar(dialogFragment: DialogFragment, msg: String) {
-        val dialog = dialogFragment.dialog
-        if (dialog == null || !dialogFragment.isAdded) {
-            Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
-            return
-        }
-
-        val content = dialog.findViewById<FrameLayout>(android.R.id.content) ?: return
-
-        val coordinatorLayout = CoordinatorLayout(dialog.context).apply {
-            layoutParams = FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
-            )
-        }
-
-        content.addView(coordinatorLayout)
-
-        val snackbar = Snackbar.make(coordinatorLayout, msg, Snackbar.LENGTH_LONG)
-            .addCallback(object : Snackbar.Callback() {
-                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                    super.onDismissed(transientBottomBar, event)
-                    content.removeView(coordinatorLayout)
-                }
-            })
-
-        UiUtils.increaseSnackbarMaxLines(snackbar)
-        snackbar.show()
+        (activity as ProtectedFragmentActivity).showSnackBar(msg)
     }
 
 
     fun dispatchDeleteDo(tag: LongArray) {
         showSnackbar(getString(R.string.progress_dialog_deleting))
-        viewModel.deleteTemplates(tag, PermissionGroup.CALENDAR.hasPermission(requireContext()))
+        viewModel.deleteTemplates(tag)
             .observe(
                 viewLifecycleOwner
             ) { result ->
@@ -586,82 +398,6 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
             }
     }
 
-    private fun confirmDeleteTransactionsForPlanInstances(
-        planInstance: PlanInstanceInfo, dialogTag: String, title: Int,
-    ) {
-        confirmDeleteTransactionsWithBundle(dialogTag, title) {
-            putParcelable(KEY_INSTANCE, planInstance)
-        }
-    }
-
-    private fun confirmDeleteTransactionsWithBundle(
-        dialogTag: String, title: Int, extras: Bundle.() -> Unit,
-    ) {
-        SimpleDialog.build()
-            .title(title)
-            .extra(Bundle().apply { this.extras() })
-            .msg(
-                concatResStrings(
-                    requireContext(),
-                    R.string.warning_plan_instance_delete,
-                    R.string.continue_confirmation
-                )
-            )
-            .pos(R.string.response_yes)
-            .neg(R.string.response_no)
-            .show(this, dialogTag)
-    }
-
-
-    private fun dispatchCancelInstance(planInstance: PlanInstanceInfo) {
-        if (planInstance.transactionId.let { it != null && it != 0L }) {
-            confirmDeleteTransactionsForPlanInstances(
-                planInstance,
-                DIALOG_TAG_CONFIRM_CANCEL,
-                R.string.menu_cancel_plan_instance
-            )
-        } else {
-            viewModel.cancel(planInstance)
-        }
-    }
-
-    private fun dispatchResetInstance(planInstance: PlanInstanceInfo) {
-        if (planInstance.transactionId.let { it != null && it != 0L }) {
-            confirmDeleteTransactionsForPlanInstances(
-                planInstance,
-                DIALOG_TAG_CONFIRM_RESET,
-                R.string.menu_reset_plan_instance
-            )
-        } else {
-            viewModel.reset(planInstance)
-        }
-    }
-
-    fun dispatchDeleteInstance(transactionId: Long) {
-        confirmDeleteTransactionsWithBundle(DIALOG_TAG_CONFIRM_DELETE, R.string.menu_delete) {
-            putLong(KEY_TRANSACTIONID, transactionId)
-        }
-    }
-
-    private class RepairHandler(fragment: TemplatesList) : Handler() {
-        private val mFragment: WeakReference<TemplatesList> = WeakReference(fragment)
-        override fun handleMessage(msg: Message) {
-            val missingUuids = msg.obj as Array<String>
-            mFragment.get()?.let { fragment ->
-                fragment.activity?.let {
-                    fragment.repairTriggered = true
-                    (it as ProtectedFragmentActivity).startTaskExecution(
-                        TaskExecutionFragment.TASK_REPAIR_PLAN,
-                        missingUuids,
-                        null,
-                        0
-                    )
-                }
-            }
-
-        }
-    }
-
     override fun onLoaderReset(loader: Loader<Cursor?>) {
         if (loader.id == SORTABLE_CURSOR) {
             _templatesCursor = null
@@ -672,12 +408,6 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
     override fun getSortOrderPrefKey(): PrefKey {
         return PrefKey.SORT_ORDER_TEMPLATES
     }
-
-    //after orientation change, we need to restore the reference
-    private val planMonthFragment: PlanMonthFragment?
-        get() = childFragmentManager.findFragmentByTag(CALDROID_DIALOG_FRAGMENT_TAG) as PlanMonthFragment?
-    private val plannerFragment: PlannerFragment?
-        get() = childFragmentManager.findFragmentByTag(PLANNER_FRAGMENT_TAG) as PlannerFragment?
 
     private inner class MyAdapter(context: Context) :
         SimpleCursorAdapter(context, R.layout.template_row, null, emptyArray(), intArrayOf(), 0) {
@@ -692,7 +422,6 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
         @SuppressLint("SetTextI18n")
         override fun bindView(view: View, context: Context, cursor: Cursor) {
             val isSealed = cursor.getInt(KEY_SEALED) != 0
-            val doesHavePlan = !cursor.isNull(KEY_PLANID)
             val isTransfer = !cursor.isNull(KEY_TRANSFER_ACCOUNT)
             val tv1 = view.findViewById<TextView>(R.id.Amount)
             val amount = cursor.getLong(KEY_AMOUNT)
@@ -740,29 +469,16 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
                     TextUtils.concat(catText, COMMENT_SEPARATOR, ssb)
             }
             tv2.text = catText
-            view.findViewById<TextView>(R.id.Title).text = cursor.getString(KEY_TITLE) +
-                    if (doesHavePlan)
-                        " (" + (cursor.getStringIfExists(KEY_PLAN_INFO)
-                            ?: if (isCalendarPermissionGranted) {
-                                getString(R.string.plan_event_deleted)
-                            } else {
-                                Utils.getTextWithAppName(
-                                    context,
-                                    R.string.calendar_permission_required
-                                )
-                            }) + ")"
-                    else ""
+            view.findViewById<TextView>(R.id.Title).text = cursor.getString(KEY_TITLE)
 
             val planImage = view.findViewById<ImageView>(R.id.Plan)
             planImage.setImageResource(
                 when {
                     isSealed -> R.drawable.ic_lock
-                    doesHavePlan -> R.drawable.ic_event
                     else -> R.drawable.ic_menu_template
                 }
             )
-            planImage.contentDescription =
-                getString(if (doesHavePlan) R.string.plan else R.string.template)
+            planImage.contentDescription = getString(R.string.template)
 
             with(view.findViewById<TextView>(R.id.OriginalAmount)) {
                 isVisible = cursor.getStringOrNull(KEY_ORIGINAL_CURRENCY)?.let {
@@ -783,7 +499,6 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
         if (id == R.id.list) {
             val checkedItemPositions = binding.list.checkedItemPositions
             var hasForeignExchangeTransfer = false
-            var hasPlan = false
             var hasSealed = false
             for (i in 0 until checkedItemPositions.size) {
                 if (checkedItemPositions.valueAt(i) && isForeignExchangeTransfer(
@@ -791,12 +506,6 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
                     )
                 ) {
                     hasForeignExchangeTransfer = true
-                    break
-                }
-            }
-            for (i in 0 until checkedItemPositions.size) {
-                if (checkedItemPositions.valueAt(i) && isPlan(checkedItemPositions.keyAt(i))) {
-                    hasPlan = true
                     break
                 }
             }
@@ -810,7 +519,6 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
                 menu,
                 lv.checkedItemCount,
                 hasForeignExchangeTransfer,
-                hasPlan,
                 hasSealed
             )
         }
@@ -820,14 +528,12 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
         menu: Menu,
         count: Int,
         foreignExchangeTransfer: Boolean,
-        hasPlan: Boolean,
         hasSealed: Boolean,
     ) {
         menu.findItem(R.id.CREATE_INSTANCE_SAVE_COMMAND).isVisible =
-            !foreignExchangeTransfer && !hasPlan and !hasSealed
+            !foreignExchangeTransfer && !hasSealed
         menu.findItem(R.id.CREATE_INSTANCE_EDIT_COMMAND).isVisible =
-            count == 1 && !hasPlan && !hasSealed
-        menu.findItem(R.id.DEFAULT_ACTION_MENU).isVisible = !hasPlan
+            count == 1 && !hasSealed
         menu.findItem(R.id.EDIT_COMMAND).isVisible = count == 1 && !hasSealed
     }
 
@@ -842,12 +548,6 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
         return false
     }
 
-    private fun isPlan(position: Int): Boolean {
-        return if (_templatesCursor != null && templatesCursor.moveToPosition(position)) {
-            !templatesCursor.isNull(KEY_PLANID)
-        } else false
-    }
-
     private fun isSealed(position: Int): Boolean {
         return if (_templatesCursor != null && templatesCursor.moveToPosition(position)) {
             templatesCursor.getInt(KEY_SEALED) == 1
@@ -860,26 +560,8 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
     }
 
     @Deprecated("Deprecated in Java")
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        menu.findItem(R.id.PLANNER_COMMAND)?.setEnabledAndVisible(hasPlans)
-    }
-
-    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.PLANNER_COMMAND) {
-            PlannerFragment().show(childFragmentManager, PLANNER_FRAGMENT_TAG)
-            return true
-        }
         return handleSortOption(item)
-    }
-
-    override fun inflateContextualActionBar(menu: Menu, listId: Int) {
-        if (listId == R.id.list) {
-            super.inflateContextualActionBar(menu, listId)
-        } else if (listId == com.caldroid.R.id.calendar_gridview) {
-            requireActivity().menuInflater.inflate(R.menu.planlist_context, menu)
-        }
     }
 
     public override fun loadData() {
@@ -888,89 +570,5 @@ class TemplatesList : SortableListFragment(), LoaderManager.LoaderCallbacks<Curs
 
     companion object {
         private const val SORTABLE_CURSOR = -1
-        const val CALDROID_DIALOG_FRAGMENT_TAG = "CALDROID_DIALOG_FRAGMENT"
-        const val PLANNER_FRAGMENT_TAG = "PLANNER_FRAGMENT"
-    }
-
-    override fun onResult(dialogTag: String, which: Int, extras: Bundle): Boolean {
-        if (which == SimpleDialog.OnDialogResultListener.BUTTON_POSITIVE) {
-            when (dialogTag) {
-                DIALOG_TAG_CONFIRM_DELETE -> viewModel.deleteTransactions(
-                    longArrayOf(extras.getLong(KEY_TRANSACTIONID))
-                )
-
-                DIALOG_TAG_CONFIRM_RESET -> viewModel.reset(extras.getParcelable(KEY_INSTANCE)!!)
-                DIALOG_TAG_CONFIRM_CANCEL -> viewModel.cancel(extras.getParcelable(KEY_INSTANCE)!!)
-            }
-        }
-        return true
-    }
-
-    fun configureOnClickPopup(
-        view: View,
-        planInstance: PlanInstanceInfo,
-        onClick: (() -> Boolean)?,
-        handleMenuItemClick: ((Int) -> Boolean)?,
-    ) {
-        view.setOnClickListener {
-            if (popup != null) {
-                Timber.d("Caught double click")
-                return@setOnClickListener
-            }
-            if (onClick?.invoke() == true) {
-                return@setOnClickListener
-            }
-
-            popup = PopupMenu(requireContext(), view).apply {
-                inflate(R.menu.planlist_context)
-                configureMenuInternalPlanInstances(menu, planInstance.state)
-                setOnMenuItemClickListener { item ->
-                    if (handleMenuItemClick?.invoke(item.itemId) == true) {
-                        return@setOnMenuItemClickListener true
-                    }
-                    when (item.itemId) {
-                        R.id.CREATE_PLAN_INSTANCE_EDIT_COMMAND -> {
-                            dispatchCreateInstanceEdit(
-                                planInstance.templateId, planInstance.instanceId!!,
-                                planInstance.date!! / 1000
-                            )
-                            true
-                        }
-
-                        R.id.CREATE_PLAN_INSTANCE_SAVE_COMMAND -> {
-                            dispatchCreateInstanceSaveDo(planInstance)
-                            true
-
-                        }
-
-                        R.id.EDIT_PLAN_INSTANCE_COMMAND -> {
-                            dispatchEditInstance(planInstance.transactionId)
-                            true
-                        }
-
-                        R.id.CANCEL_PLAN_INSTANCE_COMMAND -> {
-                            dispatchCancelInstance(planInstance)
-                            true
-                        }
-
-                        R.id.RESET_PLAN_INSTANCE_COMMAND -> {
-                            dispatchResetInstance(planInstance)
-                            true
-                        }
-
-                        else -> false
-                    }
-                }
-                setOnDismissListener {
-                    popup = null
-                }
-                //displaying the popup
-                show()
-            }
-        }
-    }
-
-    fun dispatchRelinkInstance(planInstanceInfo: PlanInstanceInfo, adjustDate: Boolean) {
-        viewModel.relink(planInstanceInfo, adjustDate)
     }
 }

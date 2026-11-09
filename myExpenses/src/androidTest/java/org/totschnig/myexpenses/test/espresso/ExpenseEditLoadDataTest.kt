@@ -6,19 +6,16 @@ import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
-import androidx.test.espresso.matcher.ViewMatchers.isChecked
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withSpinnerText
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.rule.GrantPermissionRule
-import com.adevinta.android.barista.assertion.BaristaProgressBarAssertions.assertProgress
 import com.google.common.truth.Truth.assertThat
 import org.hamcrest.CoreMatchers.allOf
 import org.junit.After
@@ -30,14 +27,10 @@ import org.totschnig.myexpenses.activity.ExpenseEdit
 import org.totschnig.myexpenses.activity.TestExpenseEdit
 import org.totschnig.myexpenses.contract.TransactionsContract.Transactions
 import org.totschnig.myexpenses.db2.RepositoryTransaction
-import org.totschnig.myexpenses.db2.createPlan
 import org.totschnig.myexpenses.db2.createSplitTemplate
 import org.totschnig.myexpenses.db2.createSplitTransaction
-import org.totschnig.myexpenses.db2.createTemplate
 import org.totschnig.myexpenses.db2.createTransaction
 import org.totschnig.myexpenses.db2.deleteAccount
-import org.totschnig.myexpenses.db2.deletePlan
-import org.totschnig.myexpenses.db2.entities.Recurrence
 import org.totschnig.myexpenses.db2.entities.Template
 import org.totschnig.myexpenses.db2.entities.Transaction
 import org.totschnig.myexpenses.db2.insertTemplate
@@ -64,7 +57,6 @@ import org.totschnig.myexpenses.testutils.withIdAndParent
 import org.totschnig.myexpenses.ui.AmountInput
 import org.totschnig.myexpenses.viewmodel.data.Currency.Companion.create
 import java.text.DecimalFormat
-import java.time.LocalDate
 import java.util.Currency
 
 @TestShard2
@@ -399,48 +391,6 @@ class ExpenseEditLoadDataTest : BaseExpenseEditTest() {
     }
 
     @Test
-    fun shouldPopulateWithPlanAndPrepareForm() {
-        val template = Template(
-            accountId = account1.id,
-            title = "Daily plan",
-            amount = 700L,
-            uuid = generateUuid(),
-            planExecutionAutomatic = true,
-            planExecutionAdvance = 7
-        )
-        val eventId = repository.createPlan(
-            title = "Daily plan",
-            description = "description",
-            date = LocalDate.now(),
-            recurrence = Recurrence.DAILY
-        ).id
-        val plan = repository.createTemplate(
-            template.copy(planId = eventId)
-        )
-
-        launchAndWait(intent.apply {
-            putExtra(KEY_TEMPLATEID, plan.id)
-        }).use {
-            checkEffectiveVisible(
-                R.id.TitleRow, R.id.AmountRow, R.id.CommentRow, R.id.CategoryRow,
-                R.id.PayeeRow, R.id.AccountRow, R.id.PB
-            )
-            checkEffectiveGone(R.id.Recurrence)
-            testScenario.onActivity { activity: ExpenseEdit ->
-                assertThat(activity.isTemplate).isTrue()
-            }
-            checkAmount(7)
-            closeSoftKeyboard()
-            onView(withId(R.id.PlanExecution)).check(matches(isChecked()))
-            assertProgress(R.id.advanceExecutionSeek, 7)
-            onView(withId(R.id.Title))
-                .check(matches(withText("Daily plan")))
-
-        }
-        repository.deletePlan(eventId)
-    }
-
-    @Test
     fun shouldInstantiateFromTemplateAndPrepareForm() {
         val template = repository.insertTemplate(
             accountId = account1.id,
@@ -455,7 +405,7 @@ class ExpenseEditLoadDataTest : BaseExpenseEditTest() {
                 R.id.DateTimeRow, R.id.AmountRow, R.id.CommentRow, R.id.CategoryRow,
                 R.id.PayeeRow, R.id.AccountRow
             )
-            checkEffectiveGone(R.id.PB, R.id.TitleRow)
+            checkEffectiveGone(R.id.TitleRow)
             testScenario.onActivity { activity: ExpenseEdit ->
                 assertThat(activity.isTemplate).isFalse()
             }

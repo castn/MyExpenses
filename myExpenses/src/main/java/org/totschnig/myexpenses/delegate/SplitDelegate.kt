@@ -12,10 +12,7 @@ import org.totschnig.myexpenses.contract.TransactionsContract
 import org.totschnig.myexpenses.databinding.DateEditBinding
 import org.totschnig.myexpenses.databinding.MethodRowBinding
 import org.totschnig.myexpenses.databinding.OneExpenseBinding
-import org.totschnig.myexpenses.db2.entities.Recurrence
-import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.Money
-import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.provider.SPLIT_CATID
 import org.totschnig.myexpenses.util.TextUtils.concatResStrings
 import org.totschnig.myexpenses.util.formatMoney
@@ -43,7 +40,6 @@ class SplitDelegate(
     override val typeResId = R.string.split_transaction
     override val editResId = R.string.menu_edit_split
     override val shouldAutoFill = false
-    private var missingRecurrenceFeature: ContribFeature? = null
     lateinit var adapter: SplitPartRVAdapter
     private var transactionSum: Long = 0
 
@@ -51,25 +47,18 @@ class SplitDelegate(
         transaction: TransactionEditData?,
         withTypeSpinner: Boolean,
         savedInstanceState: Bundle?,
-        recurrence: Recurrence?,
         withAutoFill: Boolean
     ) {
         super.bind(
             transaction,
             withTypeSpinner,
             savedInstanceState,
-            recurrence,
             withAutoFill
         )
 
         viewBinding.CategoryRow.isVisible = false
         viewBinding.SplitRow.isVisible = true
         host.registerForContextMenu(viewBinding.list)
-        missingRecurrenceFeature = if (!withTypeSpinner || prefHandler.getBoolean(
-                PrefKey.NEW_SPLIT_TEMPLATE_ENABLED,
-                true
-            )
-        ) super.missingRecurrenceFeature() else ContribFeature.SPLIT_TEMPLATE
         with(viewBinding.CREATEPARTCOMMAND) {
             val helpText = concatResStrings(
                 context, ". ",
@@ -211,8 +200,6 @@ class SplitDelegate(
             updateBalance()
         }
     }
-
-    override fun missingRecurrenceFeature() = missingRecurrenceFeature
 
     fun showSplits(transactions: MutableList<TransactionEditData>) {
         adapter.submitList(transactions.map { part ->

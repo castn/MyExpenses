@@ -19,7 +19,8 @@ class AcraCrashHandler(prefHandler: PrefHandler) : BaseCrashHandler(prefHandler)
             buildConfigClass = BuildConfig::class.java
             reportFormat = StringFormat.KEY_VALUE_LIST
             excludeMatchingSharedPreferencesKeys = listOf(
-                prefHandler.getKey(PrefKey.PLANNER_CALENDAR_PATH),
+                // Calendar path of the removed planner, still on devices that used it
+                "planner_calendar_path",
                 prefHandler.getKey(PrefKey.SET_PASSWORD),
                 prefHandler.getKey(PrefKey.EXPORT_PASSWORD),
                 // Password of the removed web user interface, still on devices that used it

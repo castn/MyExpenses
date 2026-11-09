@@ -1,7 +1,5 @@
 package org.totschnig.myexpenses.testutils
 
-import android.database.MatrixCursor
-import android.provider.CalendarContract
 import org.totschnig.myexpenses.provider.AccountInfo
 import org.totschnig.myexpenses.provider.PayeeInfo
 import org.totschnig.myexpenses.provider.TABLE_ACCOUNTS
@@ -9,9 +7,6 @@ import org.totschnig.myexpenses.provider.TABLE_PAYEES
 import org.totschnig.myexpenses.provider.TABLE_TEMPLATES
 import org.totschnig.myexpenses.provider.TemplateInfo
 import org.totschnig.myexpenses.provider.insert
-import org.totschnig.myexpenses.test.provider.EventProvider
-import org.totschnig.myexpenses.test.provider.Plan
-
 
 abstract class BaseTemplateTest : BaseDbTest() {
 
@@ -25,9 +20,6 @@ abstract class BaseTemplateTest : BaseDbTest() {
         }
     }
 
-    val dailyPlan = Plan(1, "FREQ=DAILY")
-    val weeklyPlan = Plan(2, "FREQ=WEEKLY")
-    val monthlyPlan = Plan(3, "FREQ=MONTHLY")
     val testAccountId by lazy {
         mDb.insert(
             TABLE_ACCOUNTS,
@@ -41,44 +33,20 @@ abstract class BaseTemplateTest : BaseDbTest() {
                 accountId = testAccountId,
                 title = "Template monthly",
                 amount = 150,
-                payeeId = payeeId,
-                planId = monthlyPlan.id
+                payeeId = payeeId
             ),
             TemplateInfo(
                 accountId = testAccountId,
                 title = "Template weekly",
                 amount = 200,
-                payeeId = payeeId,
-                planId = weeklyPlan.id
+                payeeId = payeeId
             ),
             TemplateInfo(
                 accountId = testAccountId,
                 title = "Template daily",
                 amount = 100,
-                payeeId = payeeId,
-                planId = dailyPlan.id
+                payeeId = payeeId
             )
         )
-    }
-
-
-    @Deprecated("Deprecated in Java")
-    override fun setUp() {
-        super.setUp()
-        EventProvider().also {
-            MatrixCursor(
-                arrayOf(
-                    CalendarContract.Events._ID,
-                    CalendarContract.Events.RRULE,
-                    CalendarContract.Events.DTSTART
-                )
-            ).apply {
-                addRow(dailyPlan.toMatrixRow())
-                addRow(weeklyPlan.toMatrixRow())
-                addRow(monthlyPlan.toMatrixRow())
-                it.addEventResult(this)
-            }
-            mockContentResolver.addProvider(CalendarContract.AUTHORITY, it)
-        }
     }
 }

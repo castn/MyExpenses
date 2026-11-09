@@ -32,7 +32,7 @@ class VersionInfo(val code: Int, val name: String, val tickets: String? = null) 
         fun t(resId: Int) = ctx.getString(resId)
         val changesArray = when (nameCondensed) {
             "360" -> arrayOf(
-                "${t(R.string.help_ManageTemplates_plans_title)}: ${t(R.string.ui_refinement)}"
+                "${t(R.string.menu_templates)}: ${t(R.string.ui_refinement)}"
             )
 
             "362" -> arrayOf(

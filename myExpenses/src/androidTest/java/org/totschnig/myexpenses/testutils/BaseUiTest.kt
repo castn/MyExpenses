@@ -59,7 +59,6 @@ import org.totschnig.myexpenses.db2.RepositoryTemplate
 import org.totschnig.myexpenses.db2.createSplitTemplate
 import org.totschnig.myexpenses.db2.createSplitTransaction
 import org.totschnig.myexpenses.db2.deleteAccount
-import org.totschnig.myexpenses.db2.entities.Recurrence
 import org.totschnig.myexpenses.db2.entities.Template
 import org.totschnig.myexpenses.db2.entities.Transaction
 import org.totschnig.myexpenses.db2.findAccountType
@@ -70,18 +69,14 @@ import org.totschnig.myexpenses.model.AccountType
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.CurrencyContext
 import org.totschnig.myexpenses.model.CurrencyUnit
-import org.totschnig.myexpenses.model.Money
 import org.totschnig.myexpenses.model.generateUuid
 import org.totschnig.myexpenses.model2.Account
 import org.totschnig.myexpenses.model2.Account.Companion.DEFAULT_COLOR
 import org.totschnig.myexpenses.model2.Category
 import org.totschnig.myexpenses.preference.PrefHandler
-import org.totschnig.myexpenses.provider.CalendarProviderProxy
 import org.totschnig.myexpenses.provider.KEY_LABEL
 import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.provider.KEY_TITLE
-import org.totschnig.myexpenses.provider.KEY_TRANSACTIONID
-import org.totschnig.myexpenses.provider.PlannerUtils
 import org.totschnig.myexpenses.provider.SPLIT_CATID
 import org.totschnig.myexpenses.provider.TABLE_ACCOUNTS
 import org.totschnig.myexpenses.provider.TransactionProvider
@@ -89,8 +84,6 @@ import org.totschnig.myexpenses.provider.TransactionProvider.TEMPLATES_URI
 import org.totschnig.myexpenses.util.ICurrencyFormatter
 import org.totschnig.myexpenses.util.distrib.DistributionHelper
 import org.totschnig.myexpenses.util.toEpoch
-import org.totschnig.myexpenses.viewmodel.data.compileDescription
-import org.totschnig.sharedtest.CursorSubject.Companion.useAndAssert
 import org.totschnig.sharedtest.TransactionData
 import org.totschnig.sharedtest.assertTransaction
 import java.time.LocalDate
@@ -118,9 +111,6 @@ abstract class BaseUiTest<A : ProtectedFragmentActivity> {
     val dataStore: DataStore<Preferences>
         get() = app.appComponent.preferencesDataStore()
 
-    val plannerUtils: PlannerUtils
-        get() = app.appComponent.plannerUtils()
-
     val currencyContext: CurrencyContext
         get() = app.appComponent.currencyContext()
 
@@ -137,8 +127,6 @@ abstract class BaseUiTest<A : ProtectedFragmentActivity> {
 
     fun buildGrantPermissionRule(): GrantPermissionRule = GrantPermissionRule.grant(
         *buildList {
-            add(Manifest.permission.WRITE_CALENDAR)
-            add(Manifest.permission.READ_CALENDAR)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 add(Manifest.permission.POST_NOTIFICATIONS)
             }
@@ -515,11 +503,6 @@ abstract class BaseUiTest<A : ProtectedFragmentActivity> {
         expectedCategory: Long? = null,
         expectedParty: Long? = null,
         expectedMethod: Long? = null,
-        expectedPlanRecurrence: Recurrence = Recurrence.NONE,
-        expectedPlanExecutionAutomatic: Boolean = false,
-        expectedPlanExecutionAdvance: Int = 0,
-        checkPlanInstance: Boolean = false,
-        expectedPlan: Long? = null,
         expectedDebt: Long? = null,
     ): RepositoryTemplate {
         val templateId = contentResolver.query(
@@ -541,8 +524,6 @@ abstract class BaseUiTest<A : ProtectedFragmentActivity> {
             assertThat(categoryId).isEqualTo(expectedCategory)
             assertThat(payeeId).isEqualTo(expectedParty)
             assertThat(methodId).isEqualTo(expectedMethod)
-            assertThat(planExecutionAutomatic).isEqualTo(expectedPlanExecutionAutomatic)
-            assertThat(planExecutionAdvance).isEqualTo(expectedPlanExecutionAdvance)
             assertThat(debtId).isEqualTo(expectedDebt)
         }
         assertThat(template.tags?.map { it.label }).containsExactlyElementsIn(expectedTags)
@@ -565,50 +546,6 @@ abstract class BaseUiTest<A : ProtectedFragmentActivity> {
             assertThat(actualSplitPartsAsInfo).containsExactlyElementsIn(expectedSplitParts)
         }
 
-        if (expectedPlanRecurrence != Recurrence.NONE) {
-            if (expectedPlanRecurrence != Recurrence.CUSTOM) {
-                val today = LocalDate.now()
-                assertThat(template.plan!!.rRule).isEqualTo(expectedPlanRecurrence.toRule(today))
-            }
-            if (expectedPlan != null) {
-                assertThat(template.data.planId).isEqualTo(expectedPlan)
-            } else {
-                assertThat(template.data.planId).isGreaterThan(0)
-            }
-            assertThat(template.plan!!.title).isEqualTo(templateTitle)
-            assertThat(template.plan.description).isEqualTo(
-                compileDescription(
-                    targetContext,
-                    currencyFormatter,
-                    Money(currencyContext[expectedAccount.currency], expectedAmount),
-                    expectedCategory,
-                    template.data.categoryPath,
-                    false,
-                    null,
-                    template.data.payeeName,
-                    expectedMethod,
-                    template.data.methodLabel,
-                    template.data.uuid
-                )
-            )
-
-        } else {
-            assertThat(template.data.planId).isNull()
-            assertThat(template.plan).isNull()
-        }
-        if (checkPlanInstance) {
-            contentResolver.query(
-                TransactionProvider.PLAN_INSTANCE_SINGLE_URI(
-                    template.id,
-                    CalendarProviderProxy.calculateId(template.plan!!.dtStart)
-                ),
-                null, null, null, null
-            ).useAndAssert {
-                hasCount(1)
-                movesToFirst()
-                hasLong(KEY_TRANSACTIONID) { isGreaterThan(0) }
-            }
-        }
         return template
     }
 }

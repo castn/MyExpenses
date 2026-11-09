@@ -43,7 +43,7 @@ import org.totschnig.myexpenses.db2.loadAccountFlow
 import org.totschnig.myexpenses.db2.loadAggregateAccountFlow
 import org.totschnig.myexpenses.db2.loadAggregateAccountFlowV2
 import org.totschnig.myexpenses.db2.saveParty
-import org.totschnig.myexpenses.db2.updateNewPlanEnabled
+import org.totschnig.myexpenses.db2.updateNewSplitTemplateEnabled
 import org.totschnig.myexpenses.db2.updateTransferPeersForTransactionDelete
 import org.totschnig.myexpenses.dialog.select.SelectFromMappedTableDialogFragment.Companion.accountSelection
 import org.totschnig.myexpenses.dialog.select.SelectFromMappedTableDialogFragment.Companion.accountSelectionArgs
@@ -231,20 +231,20 @@ open class ContentResolvingAndroidViewModel(application: Application) :
         data class DeleteComplete(val success: Int, val failure: Int) : DeleteState()
     }
 
-    fun deleteTemplates(ids: LongArray, deletePlan: Boolean): LiveData<DeleteState.DeleteComplete> =
+    fun deleteTemplates(ids: LongArray): LiveData<DeleteState.DeleteComplete> =
         liveData(context = coroutineContext()) {
             var success = 0
             var failure = 0
             ids.forEach {
                 try {
-                    repository.deleteTemplate(it, deletePlan)
+                    repository.deleteTemplate(it)
                     success++
                 } catch (e: SQLiteConstraintException) {
                     CrashHandler.reportWithDbSchema(contentResolver, e)
                     failure++
                 }
             }
-            repository.updateNewPlanEnabled(licenceHandler)
+            repository.updateNewSplitTemplateEnabled(licenceHandler)
             emit(DeleteState.DeleteComplete(success, failure))
         }
 

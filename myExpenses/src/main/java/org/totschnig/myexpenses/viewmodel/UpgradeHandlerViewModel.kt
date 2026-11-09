@@ -27,10 +27,8 @@ import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.BaseActivity
 import org.totschnig.myexpenses.activity.BudgetWidgetConfigure
 import org.totschnig.myexpenses.compose.transactions.FutureCriterion
-import org.totschnig.myexpenses.db2.entities.Template
 import org.totschnig.myexpenses.db2.getGrouping
 import org.totschnig.myexpenses.db2.preDefinedName
-import org.totschnig.myexpenses.db2.updatePlan
 import org.totschnig.myexpenses.dialog.MenuItem
 import org.totschnig.myexpenses.model.AccountGrouping
 import org.totschnig.myexpenses.model.CrStatus
@@ -46,14 +44,12 @@ import org.totschnig.myexpenses.provider.BaseTransactionProvider
 import org.totschnig.myexpenses.provider.BaseTransactionProvider.Companion.ACCOUNTS_MINIMAL_URI_WITH_AGGREGATES
 import org.totschnig.myexpenses.provider.DataBaseAccount.Companion.AGGREGATE_HOME_CURRENCY_CODE
 import org.totschnig.myexpenses.provider.DataBaseAccount.Companion.HOME_AGGREGATE_ID
-import org.totschnig.myexpenses.provider.INVALID_CALENDAR_ID
 import org.totschnig.myexpenses.provider.KEY_ACCOUNTID
 import org.totschnig.myexpenses.provider.KEY_CODE
 import org.totschnig.myexpenses.provider.KEY_CURRENCY
 import org.totschnig.myexpenses.provider.KEY_GROUPING
 import org.totschnig.myexpenses.provider.KEY_ICON
 import org.totschnig.myexpenses.provider.KEY_IS_DEFAULT
-import org.totschnig.myexpenses.provider.KEY_PLANID
 import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.provider.TABLE_BUDGETS
 import org.totschnig.myexpenses.provider.TABLE_CURRENCIES
@@ -63,7 +59,6 @@ import org.totschnig.myexpenses.provider.TransactionProvider.KEY_RESULT
 import org.totschnig.myexpenses.provider.TransactionProvider.METHODS_URI
 import org.totschnig.myexpenses.provider.TransactionProvider.METHOD_CHECK_CORRUPTED_DATA_987
 import org.totschnig.myexpenses.provider.TransactionProvider.SORT_URI
-import org.totschnig.myexpenses.provider.TransactionProvider.TEMPLATES_URI
 import org.totschnig.myexpenses.provider.TransactionProvider.TRANSACTIONS_URI
 import org.totschnig.myexpenses.provider.asSequence
 import org.totschnig.myexpenses.provider.filter.DateCriterion
@@ -74,7 +69,6 @@ import org.totschnig.myexpenses.provider.getEnumOrNull
 import org.totschnig.myexpenses.provider.getLong
 import org.totschnig.myexpenses.provider.useAndMapToList
 import org.totschnig.myexpenses.service.BudgetWidgetUpdateWorker
-import org.totschnig.myexpenses.service.PlanExecutor
 import org.totschnig.myexpenses.sync.GenericAccountService
 import org.totschnig.myexpenses.ui.IDiscoveryHelper
 import org.totschnig.myexpenses.util.ICurrencyFormatter
@@ -82,7 +76,6 @@ import org.totschnig.myexpenses.util.crashreporting.CrashHandler
 import org.totschnig.myexpenses.util.safeMessage
 import org.totschnig.myexpenses.util.tracking.Tracker
 import org.totschnig.myexpenses.util.validateDateFormat
-import org.totschnig.myexpenses.viewmodel.data.mapper.TransactionMapper
 import org.totschnig.myexpenses.widget.BudgetWidget
 import timber.log.Timber
 import java.io.File
@@ -273,27 +266,6 @@ class UpgradeHandlerViewModel(application: Application) :
                             Timber.d("Removed erroneous dateFormat %s ", it)
                             prefHandler.remove(PrefKey.CUSTOM_DATE_FORMAT)
                         }
-                    }
-                    //noinspection Recycle
-                    try {
-                        contentResolver.query(
-                            TEMPLATES_URI, null, "$KEY_PLANID is not null", null, null
-                        )?.useAndMapToList {
-                            Template.fromCursor(it)
-                        }?.forEach {
-                            it.planId?.let { planId ->
-                                repository.updatePlan(
-                                    planId,
-                                    title = null,
-                                    description = TransactionMapper.map(it, currencyContext)
-                                        .compileDescription(localizedContext, currencyFormatter),
-                                )
-                            }
-                        }
-                    } catch (e: SecurityException) {
-                        //permission missing
-                        CrashHandler.report(e)
-
                     }
                 }
 
@@ -497,14 +469,6 @@ class UpgradeHandlerViewModel(application: Application) :
 
                 if (fromVersion < 576) {
                     GenericAccountService.migratePasswords(getApplication())
-                }
-
-                if (fromVersion < 583 && prefHandler.requireString(
-                        PrefKey.PLANNER_CALENDAR_ID,
-                        INVALID_CALENDAR_ID
-                    ) != INVALID_CALENDAR_ID
-                ) {
-                    PlanExecutor.enqueueSelf(getApplication(), prefHandler, true)
                 }
 
                 if (fromVersion < 586) {

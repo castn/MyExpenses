@@ -4,15 +4,11 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.format.DateUtils
 import androidx.lifecycle.lifecycleScope
-import com.vmadalin.easypermissions.EasyPermissions.somePermissionPermanentlyDenied
 import kotlinx.coroutines.launch
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.dialog.ExtendProLicenceDialogFragment
-import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.preference.PrefKey
-import org.totschnig.myexpenses.provider.PlannerUtils
-import org.totschnig.myexpenses.util.PermissionHelper
 import org.totschnig.myexpenses.util.distrib.DistributionHelper.isGithub
 import org.totschnig.myexpenses.util.licence.LicenceHandler.Companion.log
 import org.totschnig.myexpenses.util.licence.LicenceStatus
@@ -20,8 +16,6 @@ import java.util.concurrent.TimeUnit
 
 @SuppressLint("CustomSplashScreen")
 abstract class LaunchActivity : IapActivity() {
-
-    private val plannerUtils: PlannerUtils get() = injector.plannerUtils()
 
     override val shouldQueryIap: Boolean
         get() = true
@@ -72,19 +66,6 @@ abstract class LaunchActivity : IapActivity() {
                     }
                 }
             }
-        }
-    }
-
-    override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
-        super.onPermissionsDenied(requestCode, perms)
-        if (requestCode == PermissionHelper.PERMISSIONS_REQUEST_WRITE_CALENDAR &&
-            (PermissionHelper.PermissionGroup.CALENDAR.androidPermissions.any { perms.contains(it) }) &&
-            somePermissionPermanentlyDenied(
-                this,
-                PermissionHelper.PermissionGroup.CALENDAR.androidPermissions
-            )
-        ) {
-            plannerUtils.removePlanner(prefHandler)
         }
     }
 

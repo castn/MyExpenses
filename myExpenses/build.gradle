@@ -171,7 +171,6 @@ dependencies {
     //noinspection GradleDependency
     api libs.picasso
     implementation libs.mpandroidchart
-    implementation libs.caldroid
     api libs.simpledialogfragments
 
     implementation libs.commons.collections4

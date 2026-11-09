@@ -33,10 +33,6 @@
             <intent-filter>
                 <action android:name="TRIGGER_SYNC"/>
             </intent-filter>
-            <!-- adb shell am broadcast -n org.totschnig.myexpenses.debug/org.totschnig.myexpenses.ExecutionTrigger -a TRIGGER_PLANNER -->
-            <intent-filter>
-                <action android:name="TRIGGER_PLANNER"/>
-            </intent-filter>
             <intent-filter>
                 <action android:name="TRIGGER_BACKUP"/>
             </intent-filter>

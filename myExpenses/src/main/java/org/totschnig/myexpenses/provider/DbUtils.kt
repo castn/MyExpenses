@@ -26,7 +26,6 @@ import org.totschnig.myexpenses.preference.PrefHandler
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.service.AutoBackupWorker
 import org.totschnig.myexpenses.service.DailyExchangeRateDownloadService
-import org.totschnig.myexpenses.service.PlanExecutor
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler.Companion.report
 import java.io.File
 import java.util.Locale
@@ -35,7 +34,6 @@ object DbUtils {
     fun restore(app: MyApplication, backupFile: File, encrypt: Boolean): Boolean {
         val result = try {
             AutoBackupWorker.cancel(app)
-            PlanExecutor.cancel(app)
             DailyExchangeRateDownloadService.cancel(app)
             if (backupFile.exists()) {
                 val client =
@@ -49,7 +47,6 @@ object DbUtils {
             false
         }
         val prefHandler = app.appComponent.prefHandler()
-        PlanExecutor.enqueueSelf(app, prefHandler, true)
         AutoBackupWorker.enqueueOrCancel(app, prefHandler)
         DailyExchangeRateDownloadService.enqueueOrCancel(app, prefHandler)
         return result

@@ -39,7 +39,6 @@ import org.totschnig.myexpenses.sync.json.TransactionChange;
 import org.totschnig.myexpenses.util.Preconditions;
 import org.totschnig.myexpenses.util.Utils;
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler;
-import org.totschnig.myexpenses.util.cursor.PlanInfoCursorWrapper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,7 +94,6 @@ import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_PARENTID;
 import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_PAYEEID;
 import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_PAYEE_NAME;
 import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_ROWID;
-import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_SEALED;
 import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_SORT_BY;
 import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_SORT_DIRECTION;
 import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_SORT_KEY;
@@ -106,7 +104,6 @@ import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_SYNC_SEQUENCE_LO
 import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_TAGID;
 import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_TAGLIST;
 import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_TEMPLATEID;
-import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_TITLE;
 import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_TRANSACTIONID;
 import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_TRANSFER_ACCOUNT;
 import static org.totschnig.myexpenses.provider.ConstantsKt.KEY_TYPE;
@@ -189,7 +186,6 @@ import static org.totschnig.myexpenses.provider.MoreDbUtilsKt.mapPaymentMethodPr
 import static org.totschnig.myexpenses.provider.MoreDbUtilsKt.suggestNewCategoryColor;
 import static org.totschnig.myexpenses.provider.MoreDbUtilsKt.tableForPaymentMethodQuery;
 import static org.totschnig.myexpenses.provider.SyncContract.METHOD_APPLY_CHANGES;
-import static org.totschnig.myexpenses.util.PermissionHelper.PermissionGroup.CALENDAR;
 
 public class TransactionProvider extends BaseTransactionProvider {
 
@@ -340,8 +336,6 @@ public class TransactionProvider extends BaseTransactionProvider {
   public static final String QUERY_PARAMETER_DISTINCT = "distinct";
   public static final String QUERY_PARAMETER_GROUP_BY = "groupBy";
   public static final String QUERY_PARAMETER_MARK_VOID = "markVoid";
-  //"1" from production, "2" from test
-  public static final String QUERY_PARAMETER_WITH_PLAN_INFO = "withPlanInfo";
   public static final String QUERY_PARAMETER_INIT = "init";
   public static final String QUERY_PARAMETER_CALLER_IS_SYNCADAPTER = "caller_is_syncadapter";
 
@@ -350,7 +344,6 @@ public class TransactionProvider extends BaseTransactionProvider {
   private static final String QUERY_PARAMETER_SYNC_END = "syncEnd";
   public static final String QUERY_PARAMETER_WITH_JULIAN_START = "withJulianStart";
   public static final String QUERY_PARAMETER_WITH_COUNT = "count";
-  public static final String QUERY_PARAMETER_WITH_INSTANCE = "withInstance";
   public static final String QUERY_PARAMETER_HIERARCHICAL = "hierarchical";
   public static final String QUERY_PARAMETER_DEPTH = "depth";
   public static final String QUERY_PARAMETER_CATEGORY_SEPARATOR = "categorySeparator";
@@ -786,27 +779,13 @@ public class TransactionProvider extends BaseTransactionProvider {
         qb = SupportSQLiteQueryBuilder.builder(TABLE_ACCOUNTTYES_METHODS);
         break;
       case TEMPLATES:
-        String instanceId = uri.getQueryParameter(QUERY_PARAMETER_WITH_INSTANCE);
-        if (instanceId == null) {
-          String selector = getTemplateQuerySelector(uri);
-          selection = TextUtils.isEmpty(selection) ? selector : (selection +
-                  (TextUtils.isEmpty(selector) ? "" : " AND " + selector));
-          qb = SupportSQLiteQueryBuilder.builder(VIEW_TEMPLATES_EXTENDED);
-          if (projection == null) {
-            projection = templateProjection(VIEW_TEMPLATES_EXTENDED);
-          }
-        } else {
-          qb = SupportSQLiteQueryBuilder.builder(String.format(Locale.ROOT, "%1$s LEFT JOIN %2$s ON %1$s.%3$s = %4$s AND %5$s = %6$s LEFT JOIN %7$s ON %7$s.%3$s = %2$s.%8$s",
-              VIEW_TEMPLATES_EXTENDED, TABLE_PLAN_INSTANCE_STATUS, KEY_ROWID, KEY_TEMPLATEID, KEY_INSTANCEID, instanceId,
-              TABLE_TRANSACTIONS, KEY_TRANSACTIONID));
-          if (projection != null) {
-            report("When calling templates cursor with QUERY_PARAMETER_WITH_INSTANCE, projection is ignored ");
-          }
-          projection = new String[]{KEY_TITLE, KEY_INSTANCEID, KEY_TRANSACTIONID, KEY_COLOR, KEY_CURRENCY,
-              String.format(Locale.ROOT, "coalesce(%1$s.%2$s, %3$s.%2$s) AS %2$s", TABLE_TRANSACTIONS, KEY_AMOUNT, VIEW_TEMPLATES_EXTENDED),
-              VIEW_TEMPLATES_EXTENDED + "." + KEY_ROWID + " AS " + KEY_ROWID, KEY_SEALED};
+        String selector = getTemplateQuerySelector(uri);
+        selection = TextUtils.isEmpty(selection) ? selector : (selection +
+                (TextUtils.isEmpty(selector) ? "" : " AND " + selector));
+        qb = SupportSQLiteQueryBuilder.builder(VIEW_TEMPLATES_EXTENDED);
+        if (projection == null) {
+          projection = templateProjection(VIEW_TEMPLATES_EXTENDED);
         }
-
         break;
       case TEMPLATE_ID:
         qb = SupportSQLiteQueryBuilder.builder(VIEW_TEMPLATES_ALL);
@@ -1059,10 +1038,6 @@ public class TransactionProvider extends BaseTransactionProvider {
 
     c = wrapWithResultCompat(c, extras);
 
-    final String withPlanInfo = uri.getQueryParameter(QUERY_PARAMETER_WITH_PLAN_INFO);
-    if (uriMatch == TEMPLATES && withPlanInfo != null) {
-      c = new PlanInfoCursorWrapper(getWrappedContext(), c, sortOrder == null, withPlanInfo.equals("2") || CALENDAR.hasPermission(getContext()));
-    }
     c.setNotificationUri(getContext().getContentResolver(), uri);
     return c;
   }

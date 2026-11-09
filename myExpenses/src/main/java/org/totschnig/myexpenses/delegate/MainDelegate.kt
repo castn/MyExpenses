@@ -15,7 +15,6 @@ import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.databinding.DateEditBinding
 import org.totschnig.myexpenses.databinding.MethodRowBinding
 import org.totschnig.myexpenses.databinding.OneExpenseBinding
-import org.totschnig.myexpenses.db2.entities.Recurrence
 import org.totschnig.myexpenses.dialog.ConfirmationDialogFragment
 import org.totschnig.myexpenses.dialog.ConfirmationDialogFragment.Companion.KEY_COMMAND_NEGATIVE
 import org.totschnig.myexpenses.dialog.ConfirmationDialogFragment.Companion.KEY_COMMAND_POSITIVE
@@ -80,14 +79,12 @@ abstract class MainDelegate(
         transaction: TransactionEditData?,
         withTypeSpinner: Boolean,
         savedInstanceState: Bundle?,
-        recurrence: Recurrence?,
         withAutoFill: Boolean,
     ) {
         super.bind(
             transaction,
             withTypeSpinner,
             savedInstanceState,
-            recurrence,
             withAutoFill
         )
 

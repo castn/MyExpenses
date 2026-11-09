@@ -41,7 +41,6 @@ import org.totschnig.myexpenses.fragment.CsvImportDataFragment
 import org.totschnig.myexpenses.fragment.CsvImportParseFragment
 import org.totschnig.myexpenses.fragment.HistoryChart
 import org.totschnig.myexpenses.fragment.PartiesList
-import org.totschnig.myexpenses.fragment.PlannerFragment.PlanInstanceViewHolder
 import org.totschnig.myexpenses.fragment.StaleImagesList
 import org.totschnig.myexpenses.fragment.SyncBackendList
 import org.totschnig.myexpenses.fragment.TemplatesList
@@ -51,11 +50,8 @@ import org.totschnig.myexpenses.model.CurrencyContext
 import org.totschnig.myexpenses.preference.PrefHandler
 import org.totschnig.myexpenses.preference.SecurePreferenceDataStore
 import org.totschnig.myexpenses.provider.BaseTransactionProvider
-import org.totschnig.myexpenses.provider.PlannerUtils
 import org.totschnig.myexpenses.retrofit.ExchangeRateService
 import org.totschnig.myexpenses.service.DailyExchangeRateDownloadService
-import org.totschnig.myexpenses.service.PlanExecutor
-import org.totschnig.myexpenses.service.PlanNotificationClickHandler
 import org.totschnig.myexpenses.sync.BackendService
 import org.totschnig.myexpenses.sync.SyncAdapter
 import org.totschnig.myexpenses.sync.SyncBackendProviderFactory
@@ -81,7 +77,6 @@ import org.totschnig.myexpenses.viewmodel.LicenceValidationViewModel
 import org.totschnig.myexpenses.viewmodel.MainViewModel
 import org.totschnig.myexpenses.viewmodel.MyExpensesViewModel
 import org.totschnig.myexpenses.viewmodel.OcrViewModel
-import org.totschnig.myexpenses.viewmodel.PlannerViewModel
 import org.totschnig.myexpenses.viewmodel.PriceHistoryViewModel
 import org.totschnig.myexpenses.viewmodel.PrintLayoutConfigurationViewModel
 import org.totschnig.myexpenses.viewmodel.RestoreViewModel
@@ -185,8 +180,6 @@ interface AppComponent {
 
     fun mainScreen(): MainScreenEntry
 
-    fun plannerUtils(): PlannerUtils
-
     fun coroutineDispatcher(): CoroutineDispatcher
 
     fun preferencesDataStore(): DataStore<Preferences>
@@ -237,8 +230,6 @@ interface AppComponent {
 
     fun inject(contentResolvingAndroidViewModel: ContentResolvingAndroidViewModel)
 
-    fun inject(plannerViewModel: PlannerViewModel)
-
     fun inject(transactionEditViewModel: TransactionEditViewModel)
 
     fun inject(currencyViewModel: CurrencyViewModel)
@@ -258,8 +249,6 @@ interface AppComponent {
     fun inject(abstractListWidget: AbstractListWidget)
 
     fun inject(budgetWidget: BudgetWidget)
-
-    fun inject(planInstanceViewHolder: PlanInstanceViewHolder)
 
     fun inject(basePreferenceFragment: BasePreferenceFragment)
 
@@ -307,8 +296,6 @@ interface AppComponent {
 
     fun inject(restoreViewModel: RestoreViewModel)
 
-    fun inject(planExecutor: PlanExecutor)
-
     fun inject(csvImportActivity: CsvImportActivity)
 
     fun inject(preferencesContribFragment: PreferencesContribFragment)
@@ -326,8 +313,6 @@ interface AppComponent {
     fun inject(priceHistoryViewModel: PriceHistoryViewModel)
 
     fun inject(editActivity: EditActivity)
-
-    fun inject(planNotificationClickHandler: PlanNotificationClickHandler)
 
     companion object {
         const val USER_COUNTRY: String = "userCountry"

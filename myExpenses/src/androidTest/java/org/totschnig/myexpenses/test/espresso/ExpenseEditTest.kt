@@ -13,7 +13,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withSpinnerText
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.rule.GrantPermissionRule
-import com.adevinta.android.barista.interaction.BaristaSeekBarInteractions
 import com.google.common.truth.Truth
 import com.google.common.truth.Truth.assertThat
 import org.hamcrest.CoreMatchers.instanceOf
@@ -28,12 +27,8 @@ import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.ExpenseEdit
 import org.totschnig.myexpenses.contract.TransactionsContract.Transactions
 import org.totschnig.myexpenses.contract.TransactionsContract.Transactions.TYPE_TRANSACTION
-import org.totschnig.myexpenses.db2.createPlan
-import org.totschnig.myexpenses.db2.createTemplate
 import org.totschnig.myexpenses.db2.deleteAccount
-import org.totschnig.myexpenses.db2.deletePlan
 import org.totschnig.myexpenses.db2.deleteTemplate
-import org.totschnig.myexpenses.db2.entities.Recurrence
 import org.totschnig.myexpenses.db2.entities.Template
 import org.totschnig.myexpenses.db2.findAccountType
 import org.totschnig.myexpenses.db2.getTransactionSum
@@ -42,7 +37,6 @@ import org.totschnig.myexpenses.db2.loadTemplate
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model.PREDEFINED_NAME_BANK
 import org.totschnig.myexpenses.model.PREDEFINED_NAME_CASH
-import org.totschnig.myexpenses.model.generateUuid
 import org.totschnig.myexpenses.model2.Account
 import org.totschnig.myexpenses.provider.KEY_ACCOUNTID
 import org.totschnig.myexpenses.testutils.ACCOUNT_LABEL_1
@@ -50,12 +44,10 @@ import org.totschnig.myexpenses.testutils.ACCOUNT_LABEL_2
 import org.totschnig.myexpenses.testutils.BaseExpenseEditTest
 import org.totschnig.myexpenses.testutils.Espresso.checkEffectiveGone
 import org.totschnig.myexpenses.testutils.Espresso.checkEffectiveVisible
-import org.totschnig.myexpenses.testutils.TEMPLATE_TITLE
 import org.totschnig.myexpenses.testutils.TestShard2
 import org.totschnig.myexpenses.testutils.cleanup
 import org.totschnig.myexpenses.testutils.withIdAndParent
 import org.totschnig.myexpenses.viewmodel.data.Currency as DisplayCurrency
-import java.time.LocalDate
 import java.util.Currency
 
 @TestShard2
@@ -104,9 +96,9 @@ class ExpenseEditTest : BaseExpenseEditTest() {
                 R.id.DateTimeRow, R.id.AmountRow, R.id.CommentRow, R.id.CategoryRow,
                 R.id.PayeeRow, R.id.AccountRow
             )
-            checkEffectiveGone(R.id.Status, R.id.Recurrence, R.id.TitleRow)
+            checkEffectiveGone(R.id.Status, R.id.TitleRow)
             clickMenuItem(R.id.CREATE_TEMPLATE_COMMAND)
-            checkEffectiveVisible(R.id.TitleRow, R.id.Recurrence)
+            checkEffectiveVisible(R.id.TitleRow)
             checkAccountDependents()
         }
     }
@@ -163,9 +155,9 @@ class ExpenseEditTest : BaseExpenseEditTest() {
                 R.id.DateTimeRow, R.id.AmountRow, R.id.CommentRow, R.id.AccountRow,
                 R.id.TransferAccountRow
             )
-            checkEffectiveGone(R.id.Status, R.id.Recurrence, R.id.TitleRow)
+            checkEffectiveGone(R.id.Status, R.id.TitleRow)
             clickMenuItem(R.id.CREATE_TEMPLATE_COMMAND)
-            checkEffectiveVisible(R.id.TitleRow, R.id.Recurrence)
+            checkEffectiveVisible(R.id.TitleRow)
             checkAccountDependents()
         }
     }
@@ -179,9 +171,9 @@ class ExpenseEditTest : BaseExpenseEditTest() {
                 R.id.DateTimeRow, R.id.AmountRow, R.id.CommentRow, R.id.SplitRow,
                 R.id.PayeeRow, R.id.AccountRow
             )
-            checkEffectiveGone(R.id.Status, R.id.Recurrence, R.id.TitleRow)
+            checkEffectiveGone(R.id.Status, R.id.TitleRow)
             clickMenuItem(R.id.CREATE_TEMPLATE_COMMAND)
-            checkEffectiveVisible(R.id.TitleRow, R.id.Recurrence)
+            checkEffectiveVisible(R.id.TitleRow)
             checkAccountDependents()
         }
     }
@@ -195,9 +187,8 @@ class ExpenseEditTest : BaseExpenseEditTest() {
         }).use {
             checkEffectiveVisible(
                 R.id.TitleRow, R.id.AmountRow, R.id.CommentRow, R.id.CategoryRow,
-                R.id.PayeeRow, R.id.AccountRow, R.id.Recurrence, R.id.DefaultActionRow
+                R.id.PayeeRow, R.id.AccountRow, R.id.DefaultActionRow
             )
-            checkEffectiveGone(R.id.PB)
         }
     }
 
@@ -254,19 +245,12 @@ class ExpenseEditTest : BaseExpenseEditTest() {
         launchNewTemplate(TYPE_TRANSACTION)
         setAmount(111)
         setTitle()
-        selectRecurrenceFromSpinner(Recurrence.DAILY)
-        //set execution to automatic
-        onView(withId(R.id.PlanExecution)).perform(scrollTo(), click())
-        BaristaSeekBarInteractions.setProgressTo(R.id.advanceExecutionSeek, 15)
         clickFab()
         assertTemplate(
             expectedAccount = account1,
-            expectedAmount = -11100,
-            expectedPlanRecurrence = Recurrence.DAILY,
-            expectedPlanExecutionAutomatic = true,
-            expectedPlanExecutionAdvance = 15
+            expectedAmount = -11100
         ).also {
-            repository.deletePlan(it.data.planId!!)
+            repository.deleteTemplate(it.id)
         }
     }
 
@@ -314,40 +298,5 @@ class ExpenseEditTest : BaseExpenseEditTest() {
             assertThat(restored.data.isTransfer).isTrue()
             assertThat(restored.data.amount).isEqualTo(-amount * 100L)
         }
-    }
-
-    //https://github.com/mtotschnig/MyExpenses/issues/1803
-    @Test
-    fun loadAndSaveTemplateWithPlan() {
-        val planId = repository.createPlan(
-            TEMPLATE_TITLE,
-            description = "Description",
-            date = LocalDate.now(),
-            recurrence = Recurrence.WEEKLY
-        ).id
-
-        val data = Template(
-            accountId = account1.id,
-            title = TEMPLATE_TITLE,
-            amount = -90000L,
-            uuid = generateUuid(),
-            planId = planId
-        )
-        val template = repository.createTemplate(data)
-
-        launch(getIntentForEditTemplate(template.id)).use {
-            val amount = 2
-            setAmount(amount)
-            clickFab()
-        }
-        assertTemplate(
-            expectedAccount = account1,
-            expectedAmount = -200,
-            expectedPlan = planId,
-            expectedPlanRecurrence = Recurrence.WEEKLY
-        )
-
-        cleanup { repository.deleteTemplate(template.id) }
-        repository.deletePlan(planId)
     }
 }

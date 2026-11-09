@@ -1,7 +1,5 @@
 package org.totschnig.myexpenses.test.espresso
 
-import android.content.Intent
-import android.provider.CalendarContract
 import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
@@ -9,15 +7,10 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.pressImeActionButton
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.action.ViewActions.scrollTo
-import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.rule.GrantPermissionRule
 import com.google.common.truth.Truth.assertThat
-import org.hamcrest.CoreMatchers.allOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -28,9 +21,7 @@ import org.totschnig.myexpenses.db2.createPaymentMethod
 import org.totschnig.myexpenses.db2.deleteAccount
 import org.totschnig.myexpenses.db2.deleteAllTags
 import org.totschnig.myexpenses.db2.deleteMethod
-import org.totschnig.myexpenses.db2.deletePlan
 import org.totschnig.myexpenses.db2.deleteTemplate
-import org.totschnig.myexpenses.db2.entities.Recurrence
 import org.totschnig.myexpenses.db2.entities.Template
 import org.totschnig.myexpenses.db2.findAccountType
 import org.totschnig.myexpenses.db2.insertTemplate
@@ -47,7 +38,6 @@ import org.totschnig.myexpenses.testutils.ACCOUNT_LABEL_2
 import org.totschnig.myexpenses.testutils.BaseExpenseEditTest
 import org.totschnig.myexpenses.testutils.TestShard2
 import org.totschnig.myexpenses.testutils.cleanup
-import org.totschnig.myexpenses.testutils.uriStartsWith
 import org.totschnig.myexpenses.testutils.withIdAndParent
 import java.time.LocalDate
 
@@ -163,80 +153,6 @@ class ExpenseEditFlowTest : BaseExpenseEditTest() {
         val template = assertTemplate(account1, -500, expectedTags = listOf("Tag"))
         cleanup {
             repository.deleteAllTags()
-            repository.deleteTemplate(template.id)
-        }
-    }
-
-    @Test
-    fun saveAsPlanCreatesPlanInstanceLink() {
-        launchForResult()
-        clickMenuItem(R.id.CREATE_TEMPLATE_COMMAND)
-        setTitle()
-        selectRecurrenceFromSpinner(Recurrence.DAILY)
-        setAmount(5)
-        clickFab()
-        val template = assertTemplate(
-            expectedAccount = account1,
-            expectedAmount = -500,
-            expectedPlanRecurrence = Recurrence.DAILY,
-            checkPlanInstance = true
-        )
-        repository.deletePlan(template.data.planId!!)
-        cleanup {
-            repository.deleteTemplate(template.id)
-        }
-    }
-
-    @Test
-    fun saveAsPlanCustomRecurrenceOpensCalendar() {
-        Intents.init()
-        launchForResult()
-        clickMenuItem(R.id.CREATE_TEMPLATE_COMMAND)
-        setTitle()
-        selectRecurrenceFromSpinner(Recurrence.CUSTOM)
-        setAmount(5)
-        clickFab()
-        val template = assertTemplate(
-            expectedAccount = account1,
-            expectedAmount = -500,
-            expectedPlanRecurrence = Recurrence.CUSTOM,
-            checkPlanInstance = true
-        )
-        intended(
-            allOf(
-                hasAction(Intent.ACTION_VIEW),
-                hasData(uriStartsWith(CalendarContract.Events.CONTENT_URI.toString()))
-            )
-        )
-        repository.deletePlan(template.data.planId!!)
-        Intents.release()
-        cleanup {
-            repository.deleteTemplate(template.id)
-        }
-    }
-
-    @Test
-    fun templateWithCustomRecurrenceOpensCalendar() {
-        Intents.init()
-        launchNewTemplate()
-        setTitle()
-        selectRecurrenceFromSpinner(Recurrence.CUSTOM)
-        setAmount(5)
-        clickFab()
-        val template = assertTemplate(
-            expectedAccount = account1,
-            expectedAmount = -500,
-            expectedPlanRecurrence = Recurrence.CUSTOM
-        )
-        intended(
-            allOf(
-                hasAction(Intent.ACTION_VIEW),
-                hasData(uriStartsWith(CalendarContract.Events.CONTENT_URI.toString()))
-            )
-        )
-        repository.deletePlan(template.data.planId!!)
-        Intents.release()
-        cleanup {
             repository.deleteTemplate(template.id)
         }
     }

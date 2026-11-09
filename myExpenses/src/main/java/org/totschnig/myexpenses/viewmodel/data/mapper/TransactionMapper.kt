@@ -2,7 +2,6 @@ package org.totschnig.myexpenses.viewmodel.data.mapper
 
 import org.totschnig.myexpenses.db2.RepositoryTemplate
 import org.totschnig.myexpenses.db2.RepositoryTransaction
-import org.totschnig.myexpenses.db2.entities.Plan
 import org.totschnig.myexpenses.db2.entities.Template
 import org.totschnig.myexpenses.db2.entities.Transaction
 import org.totschnig.myexpenses.model.CurrencyContext
@@ -12,8 +11,6 @@ import org.totschnig.myexpenses.util.crashreporting.CrashHandler
 import org.totschnig.myexpenses.util.epoch2LocalDate
 import org.totschnig.myexpenses.util.epoch2LocalDateTime
 import org.totschnig.myexpenses.util.toEpoch
-import org.totschnig.myexpenses.viewmodel.data.PlanEditData
-import org.totschnig.myexpenses.viewmodel.data.PlanLoadedData
 import org.totschnig.myexpenses.viewmodel.data.TemplateEditData
 import org.totschnig.myexpenses.viewmodel.data.TransactionEditData
 import org.totschnig.myexpenses.viewmodel.data.TransferEditData
@@ -98,7 +95,6 @@ object TransactionMapper {
                 )
             },
             parentId = template.parentId,
-            planId = template.planId,
             uuid = template.uuid,
             debtId = template.debtId,
             comment = template.comment,
@@ -114,27 +110,12 @@ object TransactionMapper {
         )
     }
 
-    fun mapPlan(plan: Plan) = PlanLoadedData(
-        id = plan.id,
-        rRule = plan.rRule,
-        dtStart = plan.dtStart,
-    )
-
     fun mapTemplateEditData(repositoryTemplate: RepositoryTemplate): TemplateEditData {
         val template = repositoryTemplate.data
         return TemplateEditData(
             templateId = template.id,
             title = template.title,
-            defaultAction = template.defaultAction,
-            plan = repositoryTemplate.plan?.let {
-                mapPlan(it)
-            },
-            planEditData = if (repositoryTemplate.plan != null) {
-                PlanEditData(
-                    isPlanExecutionAutomatic = repositoryTemplate.data.planExecutionAutomatic,
-                    planExecutionAdvance = repositoryTemplate.data.planExecutionAdvance
-                )
-            } else null
+            defaultAction = template.defaultAction
         )
     }
 
@@ -218,14 +199,10 @@ object TransactionMapper {
             originalCurrency = transactionEditData.originalAmount?.currencyUnit?.code,
             parentId = transactionEditData.parentId,
             comment = transactionEditData.comment,
-            planId = transactionEditData.planId,
             transferAccountId = transactionEditData.transferEditData?.transferAccountId,
             payeeId = transactionEditData.party?.id,
             uuid = transactionEditData.uuid,
             tagList = transactionEditData.tags.map { it.id },
-            planExecutionAutomatic = templateEditData.planEditData?.isPlanExecutionAutomatic
-                ?: false,
-            planExecutionAdvance = templateEditData.planEditData?.planExecutionAdvance ?: 0,
             debtId = transactionEditData.debtId,
             currency = transactionEditData.amount.currencyUnit.code
         )

@@ -16,7 +16,6 @@ appcompatVersion = "1.8.0"
 arrowCore = "2.3.0.1"
 barista = "4.3.0"
 browser = "1.10.0"
-caldroid = "377d10a2a2"
 cardview = "1.0.0"
 commonsCollections4 = "4.6.0"
 commonsCsv = "1.14.1"
@@ -174,7 +173,6 @@ androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version
 androidx-work-testing = { module = "androidx.work:work-testing", version.ref = "workManager" }
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrowCore" }
 barista = { module = "com.adevinta.android:barista", version.ref = "barista" }
-caldroid = { module = "com.github.mtotschnig:Caldroid", version.ref = "caldroid" }
 commons-collections4 = { module = "org.apache.commons:commons-collections4", version.ref = "commonsCollections4" }
 commons-csv = { module = "org.apache.commons:commons-csv", version.ref = "commonsCsv" }
 commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang" }

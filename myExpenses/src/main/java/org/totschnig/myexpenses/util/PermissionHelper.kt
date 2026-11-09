@@ -16,21 +16,16 @@ import java.io.File
 
 
 object PermissionHelper {
-    @IntDef(PERMISSIONS_REQUEST_WRITE_CALENDAR,
-        PERMISSIONS_REQUEST_NOTIFICATIONS_SYNC, PERMISSIONS_REQUEST_NOTIFICATIONS_PLANNER,
+    @IntDef(
+        PERMISSIONS_REQUEST_NOTIFICATIONS_SYNC,
         PERMISSIONS_REQUEST_NOTIFICATIONS_AUTO_BACKUP, PERMISSIONS_REQUEST_STORAGE
     )
     @Retention(AnnotationRetention.SOURCE)
     annotation class PermissionRequestCode
 
-    const val PERMISSIONS_REQUEST_WRITE_CALENDAR = 1
     const val PERMISSIONS_REQUEST_NOTIFICATIONS_SYNC = 3
-    const val PERMISSIONS_REQUEST_NOTIFICATIONS_PLANNER = 4
     const val PERMISSIONS_REQUEST_NOTIFICATIONS_AUTO_BACKUP = 5
     const val PERMISSIONS_REQUEST_STORAGE = 6
-
-    @JvmStatic
-    fun hasCalendarPermission(context: Context) = PermissionGroup.CALENDAR.hasPermission(context)
 
     @JvmStatic
     fun canReadUri(uri: Uri, context: Context): Boolean {
@@ -49,21 +44,9 @@ object PermissionHelper {
     }
 
     @TargetApi(Build.VERSION_CODES.TIRAMISU)
-    fun getRationale(context: Context, @PermissionRequestCode requestCode: Int, vararg group: PermissionGroup): String =
+    fun getRationale(context: Context, @PermissionRequestCode requestCode: Int): String =
         when (requestCode) {
-            PERMISSIONS_REQUEST_WRITE_CALENDAR -> {
-                group.joinToString(" ") {
-                    Utils.getTextWithAppName(
-                        context, when(it) {
-                            PermissionGroup.CALENDAR -> R.string.calendar_permission_required
-                            PermissionGroup.NOTIFICATION -> R.string.notifications_permission_required_planner
-                            else -> throw IllegalArgumentException("Unexpected value: $it")
-                        }).toString()
-                }
-            }
             PERMISSIONS_REQUEST_NOTIFICATIONS_SYNC -> context.getString(R.string.notifications_permission_required_sync)
-            PERMISSIONS_REQUEST_NOTIFICATIONS_PLANNER ->
-                Utils.getTextWithAppName(context, R.string.notifications_permission_required_planner).toString()
             PERMISSIONS_REQUEST_NOTIFICATIONS_AUTO_BACKUP ->
                 context.getString(R.string.notifications_permission_required_auto_backup)
             PERMISSIONS_REQUEST_STORAGE ->
@@ -77,9 +60,6 @@ object PermissionHelper {
         STORAGE(
             listOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         ),
-        CALENDAR(
-            listOf(Manifest.permission.WRITE_CALENDAR, Manifest.permission.READ_CALENDAR)
-        ),
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         NOTIFICATION(
             listOf(Manifest.permission.POST_NOTIFICATIONS)
@@ -91,12 +71,6 @@ object PermissionHelper {
          */
         fun hasPermission(context: Context): Boolean {
             return EasyPermissions.hasPermissions(context, *androidPermissions.toTypedArray())
-        }
-
-        companion object {
-            fun fromPermission(permission: String): PermissionGroup {
-                return PermissionGroup.entries.first { it.androidPermissions.contains(permission) }
-            }
         }
     }
 }

@@ -166,18 +166,6 @@ class HelpDialogHelper(val context: Context, val extra: CharSequence? = null) : 
     fun getStringOrThrowIf0(resIdString: String): CharSequence {
         fun toBold(resId: Int) = "<b>${getString(resId)}</b>"
         return when (resIdString) {
-            "help_ManageTemplates_plans_info" -> arrayOf<CharSequence>(
-                getString(R.string.help_ManageTemplates_plans_info_header),
-                "<br><img src=\"ic_stat_open\"> ",
-                getString(R.string.help_ManageTemplates_plans_info_open),
-                "<br><img src=\"ic_stat_applied\"> ",
-                getString(R.string.help_ManageTemplates_plans_info_applied),
-                "<br><img src=\"ic_stat_cancelled\"> ",
-                getString(R.string.help_ManageTemplates_plans_info_cancelled),
-                "<br><img src=\"ic_warning\"> ",
-                getString(R.string.orphaned_transaction_info)
-            ).joinToString("")
-
             "menu_categories_export" -> getString(R.string.export_to_format, "QIF")
             "help_ManageCategories_category_types" -> buildString {
                 append(toBold(R.string.expense))

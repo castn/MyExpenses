@@ -480,7 +480,7 @@ class TransactionDetailFragment : ComposeBaseDialogFragment3() {
         }
         if (transaction.originTemplate != null) {
             TableRow(
-                label = R.string.plan,
+                label = R.string.template,
                 content = transaction.originTemplate
             )
         }

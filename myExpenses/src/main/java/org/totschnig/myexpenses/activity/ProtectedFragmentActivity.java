@@ -38,27 +38,19 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import org.totschnig.myexpenses.MyApplication;
 import org.totschnig.myexpenses.R;
 import org.totschnig.myexpenses.dialog.ProgressDialogFragment;
 import org.totschnig.myexpenses.model.ContribFeature;
 import org.totschnig.myexpenses.model.CurrencyUnit;
-import org.totschnig.myexpenses.task.TaskExecutionFragment;
 import org.totschnig.myexpenses.ui.AmountInput;
-import org.totschnig.myexpenses.util.Result;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.inject.Inject;
 public abstract class ProtectedFragmentActivity extends BaseActivity
     implements
-    TaskExecutionFragment.TaskCallbacks,
     ProgressDialogFragment.ProgressDialogListener {
 
   public static final String EDIT_COLOR_DIALOG = "editColorDialog";
@@ -138,104 +130,6 @@ public abstract class ProtectedFragmentActivity extends BaseActivity
       }
     }
     return super.onOptionsItemSelected(item);
-  }
-
-  @Override
-  public void onPreExecute() {
-  }
-
-  @Override
-  public void onProgressUpdate(Object progress) {
-    FragmentManager m = getSupportFragmentManager();
-    ProgressDialogFragment f = ((ProgressDialogFragment) m.findFragmentByTag(PROGRESS_TAG));
-    if (f != null) {
-      if (progress instanceof Integer) {
-        f.setProgress((Integer) progress);
-      } else if (progress instanceof String) {
-        f.appendToMessage((String) progress);
-      } else if (progress instanceof Result) {
-        String print = ((Result) progress).print0(this);
-        if (print != null) {
-          f.appendToMessage(print);
-        }
-      }
-    }
-  }
-
-  @Override
-  public void onCancelled() {
-    removeAsyncTaskFragment(false);
-  }
-
-  protected boolean shouldKeepProgress(int taskId) {
-    return false;
-  }
-
-  public void onPostExecute(int taskId, @Nullable Object o) {
-    removeAsyncTaskFragment(shouldKeepProgress(taskId));
-  }
-
-  /**
-   * starts the given task, only if no task is currently executed,
-   * informs user through snackbar in that case
-   *
-   * @param progressMessage if 0 no progress dialog will be shown
-   */
-  @Deprecated
-  public <T> void startTaskExecution(int taskId, T[] objectIds, Serializable extra,
-                                     int progressMessage) {
-    startTaskExecution(taskId, objectIds, extra, progressMessage, false);
-  }
-
-  @Deprecated
-  public <T> void startTaskExecution(int taskId, T[] objectIds, Serializable extra,
-                                     int progressMessage, boolean withButton) {
-    FragmentManager m = getSupportFragmentManager();
-    if (hasPendingTask()) {
-      return;
-    }
-    if (m.isStateSaved()) {
-      return;
-    }
-    //noinspection AndroidLintCommitTransaction
-    FragmentTransaction ft = m.beginTransaction()
-        .add(TaskExecutionFragment.newInstance(
-            taskId,
-            objectIds, extra),
-            ASYNC_TAG);
-    if (progressMessage != 0) {
-      ft.add(ProgressDialogFragment.newInstance(getString(progressMessage), withButton), PROGRESS_TAG);
-    }
-    ft.commit();
-  }
-
-  private boolean hasPendingTask() {
-    FragmentManager m = getSupportFragmentManager();
-    final boolean result = m.findFragmentByTag(ASYNC_TAG) != null;
-    if (result) {
-      showSnackBar("Previous task still executing, please try again later");
-    }
-    return result;
-  }
-
-  private void removeAsyncTaskFragment(boolean keepProgress) {
-    FragmentManager m = getSupportFragmentManager();
-    FragmentTransaction t = m.beginTransaction();
-    ProgressDialogFragment f = ((ProgressDialogFragment) m.findFragmentByTag(PROGRESS_TAG));
-    if (f != null) {
-      if (keepProgress) {
-        f.onTaskCompleted();
-      } else {
-        t.remove(f);
-      }
-    }
-    final Fragment asyncFragment = m.findFragmentByTag(ASYNC_TAG);
-    if (asyncFragment != null) {
-      t.remove(asyncFragment);
-    }
-    t.commitAllowingStateLoss();
-    //we might want to call a new task immediately after executing the last one
-    m.executePendingTransactions();
   }
 
   @Override

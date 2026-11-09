@@ -16,7 +16,6 @@ import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.provider.KEY_TEMPLATEID
 import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.util.doAsync
-import org.totschnig.myexpenses.viewmodel.PlanInstanceInfo
 
 const val CLICK_ACTION_SAVE = "save"
 const val CLICK_ACTION_EDIT = "edit"
@@ -48,7 +47,7 @@ class TemplateWidget : AbstractListWidget(
                     doAsync {
                         val result = repository.instantiateTemplate(
                             exchangeRateHandler,
-                            PlanInstanceInfo(templateId),
+                            templateId,
                             currencyContext
                         )
                         withContext(Dispatchers.Main) {

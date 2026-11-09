@@ -14,10 +14,8 @@ public class NotificationBuilderWrapper {
   public static int NOTIFICATION_AUTO_BACKUP = -2;
   public static int NOTIFICATION_CONTRIB = -3;
 
-  public static int NOTIFICATION_PLANNER_ERROR = -5;
   public static int NOTIFICATION_EXCHANGE_RATE_DOWNLOAD_ERROR = -6;
   public static String CHANNEL_ID_SYNC = "sync";
-  public static String CHANNEL_ID_PLANNER = "planner";
   public static String CHANNEL_ID_DEFAULT = "default";
   public static String CHANNEL_ID_AUTO_BACKUP = "autoBackup";
   private final Context context;
@@ -31,9 +29,8 @@ public class NotificationBuilderWrapper {
           importance);
       syncChannel.setSound(null, null);
       mNotificationManager.createNotificationChannel(syncChannel);
-      mNotificationManager.createNotificationChannel(
-          new NotificationChannel(CHANNEL_ID_PLANNER, context.getString(R.string.planner_notification_channel_name),
-              importance));
+      // the planner is gone, its channel too
+      mNotificationManager.deleteNotificationChannel("planner");
       mNotificationManager.createNotificationChannel(
           new NotificationChannel(CHANNEL_ID_DEFAULT, context.getString(R.string.app_name),
               importance));

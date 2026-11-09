@@ -239,8 +239,6 @@ class BackupRestoreActivity : RestoreActivity(), ConfirmationDialogListener,
             putBoolean(KEY_ENCRYPT, encrypt)
         }
 
-    override fun shouldKeepProgress(taskId: Int) = true
-
     override fun onPostRestoreTask(result: Result<Unit>) {
         super.onPostRestoreTask(result)
         result.onSuccess {

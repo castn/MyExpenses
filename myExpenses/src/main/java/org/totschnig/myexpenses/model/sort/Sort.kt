@@ -21,7 +21,6 @@ enum class Sort(val commandId: Int, val isDescending: Boolean = true) {
     TITLE(R.id.SORT_TITLE_COMMAND, false),
     LABEL(R.id.SORT_LABEL_COMMAND, false),
     CUSTOM(R.id.SORT_CUSTOM_COMMAND, false),
-    NEXT_INSTANCE(R.id.SORT_NEXT_INSTANCE_COMMAND),
     ACCOUNT(R.id.SORT_ACCOUNT_COMMAND, false),
     ALLOCATED(0),
     SPENT(0),
@@ -54,7 +53,6 @@ enum class Sort(val commandId: Int, val isDescending: Boolean = true) {
 
     companion object {
         private val templateSort = arrayOf(TITLE, USAGES, LAST_USED, AMOUNT, ACCOUNT)
-        private val templateWithPlansSort = arrayOf(TITLE, USAGES, LAST_USED, AMOUNT, ACCOUNT, NEXT_INSTANCE)
         val accountSort = arrayOf(LABEL, USAGES, LAST_USED, CUSTOM)
         val accountSortLabels = listOf(
             R.string.label,
@@ -76,19 +74,6 @@ enum class Sort(val commandId: Int, val isDescending: Boolean = true) {
                 prefHandler,
                 defaultSort,
                 templateSort,
-                collate
-            )
-
-        fun preferredOrderByForTemplatesWithPlans(
-            prefHandler: PrefHandler,
-            defaultSort: Sort,
-            collate: String = "NOCASE"
-        ) =
-            preferredOrderByRestricted(
-                PrefKey.SORT_ORDER_TEMPLATES,
-                prefHandler,
-                defaultSort,
-                templateWithPlansSort,
                 collate
             )
 

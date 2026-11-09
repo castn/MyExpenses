@@ -7,16 +7,12 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
-import com.google.common.truth.Truth
 import org.totschnig.myexpenses.MyApplication
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.db2.Repository
 import org.totschnig.myexpenses.db2.addAttachments
-import org.totschnig.myexpenses.db2.createPlan
 import org.totschnig.myexpenses.db2.createSplitTransaction
 import org.totschnig.myexpenses.db2.createTemplate
-import org.totschnig.myexpenses.db2.deletePlan
-import org.totschnig.myexpenses.db2.entities.Recurrence
 import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.runBlocking
 import org.totschnig.myexpenses.db2.entities.Template
@@ -43,14 +39,12 @@ import org.totschnig.myexpenses.model.generateUuid
 import org.totschnig.myexpenses.model2.Account
 import org.totschnig.myexpenses.myApplication
 import org.totschnig.myexpenses.provider.BaseTransactionProvider
-import org.totschnig.myexpenses.provider.INVALID_CALENDAR_ID
 import org.totschnig.myexpenses.provider.KEY_BUDGET
 import org.totschnig.myexpenses.provider.KEY_LABEL
 import org.totschnig.myexpenses.provider.KEY_ONE_TIME
 import org.totschnig.myexpenses.provider.KEY_SECOND_GROUP
 import org.totschnig.myexpenses.provider.KEY_YEAR
 import org.totschnig.myexpenses.provider.PORTFOLIO_CONTAINER
-import org.totschnig.myexpenses.provider.PlannerUtils
 import org.totschnig.myexpenses.provider.SPLIT_CATID
 import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.viewmodel.MainViewModel
@@ -91,7 +85,6 @@ class Fixture(inst: Instrumentation) {
     lateinit var portfolioAccount: Account
         private set
     private var budgetId: Long = 0L
-    private var planId: Long = 0L
 
     val syncAccount1 by lazy {
         "Drive - " + appContext.getString(R.string.encrypted)
@@ -105,14 +98,9 @@ class Fixture(inst: Instrumentation) {
         "WebDAV - https://my.private.cloud/webdav/MyExpenses"
     }
 
-    fun cleanup() {
-        repository.deletePlan(planId)
-    }
-
     fun setup(
         withPicture: Boolean,
         repository: Repository,
-        plannerUtils: PlannerUtils,
         defaultCurrency: CurrencyUnit
     ) {
         this.repository = repository
@@ -444,17 +432,6 @@ class Fixture(inst: Instrumentation) {
         repository.saveTagsForTransaction(listOf(saveTag(label)), split.id)
 
         // Template
-        Truth.assertWithMessage("Unable to create planner").that(
-            plannerUtils.createPlanner(true)
-        ).isNotEqualTo(INVALID_CALENDAR_ID)
-
-        //createPlanner sets up a new plan, mPlannerCalendarId is only set in onSharedPreferenceChanged
-        //if it has not been called yet, when we save our plan, saving fails.
-        try {
-            Thread.sleep(1000)
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
         val templateSubCat = testContext.getString(RT.string.testData_templateSubCat)
         val template = Template(
             accountId = account3.id,
@@ -471,15 +448,7 @@ class Fixture(inst: Instrumentation) {
             uuid = generateUuid()
         )
 
-        planId = repository.createPlan(
-            template.title,
-            description = "Description",
-            date = LocalDate.now(),
-            recurrence = Recurrence.WEEKLY
-        ).id
-        repository.createTemplate(
-            template.copy(planId = planId)
-        )
+        repository.createTemplate(template)
         val budget = Budget(
             0L,
             account1.id,
