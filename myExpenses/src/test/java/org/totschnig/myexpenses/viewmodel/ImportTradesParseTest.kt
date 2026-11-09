@@ -1,6 +1,5 @@
 package org.totschnig.myexpenses.viewmodel
 
-import android.content.Context
 import android.net.Uri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
@@ -8,25 +7,21 @@ import java.io.File
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDate
-import kotlin.coroutines.Continuation
-import kotlin.coroutines.intrinsics.suspendCoroutineUninterceptedOrReturn
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
-import org.totschnig.myexpenses.compose.transactions.ImportTradesParseResult
 import org.totschnig.myexpenses.io.ImportDateFormat
+import org.totschnig.myexpenses.io.ImportTradesParseResult
+import org.totschnig.myexpenses.io.ImportTradesParser
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model.Money
-import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.viewmodel.data.FundingSource
 import org.totschnig.myexpenses.viewmodel.data.TradeType
 
 /**
  * Pins how a file of trades turns into trade intents, including the use of ImportUtils for the dates.
- * The parser is a private function in the file of the dialog, so that the tests reach it by
- * reflection. When it moves, the lookup below is the only thing to change.
  */
 @RunWith(AndroidJUnit4::class)
 class ImportTradesParseTest : BaseTradeTest() {
@@ -41,34 +36,16 @@ class ImportTradesParseTest : BaseTradeTest() {
         fundingAccountId: Long?,
         dateFormat: ImportDateFormat,
         roundingMode: RoundingMode
-    ): ImportTradesParseResult = suspendCoroutineUninterceptedOrReturn { continuation ->
-        Class.forName("org.totschnig.myexpenses.compose.transactions.ImportTradesDialogKt")
-            .getDeclaredMethod(
-                "parseCsv",
-                Context::class.java,
-                Uri::class.java,
-                FullAccount::class.java,
-                List::class.java,
-                FundingSource::class.java,
-                java.lang.Long::class.java,
-                ImportDateFormat::class.java,
-                RoundingMode::class.java,
-                Continuation::class.java
-            )
-            .apply { isAccessible = true }
-            .invoke(
-                null,
-                application,
-                uri,
-                portfolio,
-                assets,
-                fundingSource,
-                fundingAccountId,
-                dateFormat,
-                roundingMode,
-                continuation
-            )
-    }
+    ): ImportTradesParseResult = ImportTradesParser.parse(
+        application,
+        uri,
+        portfolio,
+        assets,
+        fundingSource,
+        fundingAccountId,
+        dateFormat,
+        roundingMode
+    )
 
     private fun parse(
         vararg lines: String,
