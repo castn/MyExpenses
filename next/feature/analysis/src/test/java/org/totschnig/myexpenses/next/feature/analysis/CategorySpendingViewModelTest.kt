@@ -14,9 +14,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertSame
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.totschnig.myexpenses.next.core.model.FakeLedgerSource
@@ -188,13 +186,14 @@ class CategorySpendingViewModelTest {
     }
 
     @Test
-    fun ignoresTheDayOfTheLedgerSource() = withViewModel(
+    fun followsTheDayOfTheLedgerSource() = withViewModel(
         FakeLedgerSource(ledger = ledger, catalog = catalog, today = today.minusYears(1))
     ) {
-        // Looks like a bug: the other analyses use LedgerSource.today, this one LocalDate.now(),
-        // so its current month does not follow the day of the ledger (e.g. after midnight)
-        assertNotEquals(source.today.value, analysis.period.end)
-        assertTrue(analysis.period.end >= today)
+        assertEquals(source.today.value, analysis.period.end)
+        assertEquals(source.today.value, currentMonth.period.end)
+
+        source.today.value = today
+        assertEquals(today, analysis.period.end)
         assertEquals(8000, analysis.total)
     }
 }

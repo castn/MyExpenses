@@ -2,7 +2,6 @@ package org.totschnig.myexpenses.next.feature.analysis
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import java.time.LocalDate
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -37,23 +36,24 @@ class CategorySpendingViewModel(
 
     private fun analyses(selection: Flow<Selection>): StateFlow<AnalysisState<CategoryAnalysis>> =
         combine(
-            ledgerSource.consent,
             ledgerSource.ledger,
             ledgerSource.catalog,
             tagFacts,
+            ledgerSource.today,
             selection
-        ) { consent, ledger, catalog, tags, selection ->
-            analysisState(consent, ledger?.let {
+        ) { ledger, catalog, tags, today, selection ->
+            ledger?.let {
                 CategoryAnalyzer.analyse(
                     it,
                     tags.excludedFromSpending,
                     catalog.categoriesById,
                     selection.kind,
                     selection.offset,
-                    LocalDate.now()
+                    today
                 )
-            })
+            }
         }
+            .combine(ledgerSource.consent) { analysis, consent -> analysisState(consent, analysis) }
             .flowOn(compute)
             .stateWhileShown(viewModelScope, AnalysisState.Loading)
 
