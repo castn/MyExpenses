@@ -4,8 +4,6 @@
   <CurrentIssues>
     <ID>ComplexCondition:NextMainScreen.kt:forcedAccountPanelLoadingState !is PreferenceState.Loaded || preferredNavModeLoadingState !is PreferenceState.Loaded || accountGroupingLoadingState !is PreferenceState.Loaded || mainMenuLoadingState !is PreferenceState.Loaded</ID>
     <ID>ComplexCondition:NextSettings.kt:NextSettings$autoBackup &amp;&amp; (prefHandler.getBoolean(PrefKey.PROTECTION_LEGACY, false) || prefHandler.getBoolean(PrefKey.PROTECTION_DEVICE_LOCK_SCREEN, false)) &amp;&amp; prefHandler.getString(PrefKey.EXPORT_PASSWORD, null) == null</ID>
-    <ID>ComplexCondition:TransactionEditing.kt:trimmed.isEmpty() || trimmed.any { !it.isDigit() &amp;&amp; it != ',' &amp;&amp; it != '.' }</ID>
-    <ID>ComplexCondition:TransactionStore.kt:RepositoryTransactionStore$data.isSplit || data.transferPeerId != null || data.parentId != null || data.crStatus == CrStatus.VOID || data.status == STATUS_ARCHIVE || data.sealed</ID>
     <ID>CyclomaticComplexMethod:NextTransactionList.kt:private fun LazyListScope.transactionItems</ID>
     <ID>LongMethod:NextSettings.kt:NextSettings$override fun onCreate</ID>
     <ID>LoopWithTooManyJumpStatements:LegacySpecs.kt:LegacySpecs$while</ID>
@@ -25,7 +23,6 @@
     <ID>MatchingDeclarationName:CategoryInfos.kt:RawCategory</ID>
     <ID>MatchingDeclarationName:InsightSettingsPages.kt:RuleItem</ID>
     <ID>MatchingDeclarationName:NextBottomBar.kt:NextTab</ID>
-    <ID>MatchingDeclarationName:NextTransactionDetails.kt:DetailsEditing</ID>
     <ID>MatchingDeclarationName:OnboardingScreen.kt:OnboardingStep</ID>
     <ID>MatchingDeclarationName:SearchOptions.kt:SearchOption</ID>
     <ID>MatchingDeclarationName:StartPage.kt:StartChoice</ID>
