@@ -87,7 +87,8 @@ class CategorySuggestionsViewModel(private val repository: CategoryRepository) :
      */
     fun stateOf(transactionId: Long, currentCategoryId: Long?): Flow<CategoryState> = analysis.map { analysis ->
         analysis ?: return@map CategoryState.None
-        val categoryId = analysis.inputs.find { it.id == transactionId }?.let { it.categoryId } ?: currentCategoryId
+        val input = analysis.inputs.find { it.id == transactionId }
+        val categoryId = if (input != null) input.categoryId else currentCategoryId
         if (categoryId != null) {
             analysis.decisions.automatic[transactionId]?.takeIf { it == categoryId }
                 ?.let { id -> analysis.paths[id]?.let { CategoryState.Automatic(id, it) } } ?: CategoryState.None

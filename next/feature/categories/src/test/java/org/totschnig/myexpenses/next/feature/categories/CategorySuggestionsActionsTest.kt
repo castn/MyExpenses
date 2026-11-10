@@ -217,12 +217,19 @@ class CategorySuggestionsActionsTest {
     }
 
     @Test
-    fun stateUsesTheLoadedCategoryOverTheAnalysis() = withViewModel {
+    fun stateUsesTheAnalysisOverTheLoadedCategory() = withViewModel {
         analysed { true }
-        // Looks like a bug: the analysis says transaction 1 has no category (e.g. it was removed
-        // meanwhile), but the found input's null category falls back to currentCategoryId, so the
-        // details show no suggestion instead of Food.
-        assertEquals(CategoryState.None, viewModel.stateOf(1, 11).first())
+        // The analysis says transaction 1 has no category (e.g. it was removed meanwhile)
+        val state = awaitValue(viewModel.stateOf(1, 11), suggested("Food"))
+        assertEquals(10L, (state as CategoryState.Suggested).suggestion.categoryId)
+    }
+
+    @Test
+    fun stateUsesTheLoadedCategoryForTransactionsNotInTheAnalysis() = withViewModel(
+        decisions = CategoryDecisions(rules = listOf(rule), automatic = mapOf(99L to 11L))
+    ) {
+        analysed { 99L in it.automatic }
+        assertEquals(CategoryState.Automatic(11, "Drinks"), viewModel.stateOf(99, 11).first())
     }
 
     @Test

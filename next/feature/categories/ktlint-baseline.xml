@@ -68,45 +68,36 @@
         <error line="88" column="101" source="standard:max-line-length" />
         <error line="88" column="102" source="standard:function-literal" />
         <error line="88" column="111" source="standard:function-literal" />
-        <error line="90" column="26" source="standard:binary-expression-wrapping" />
-        <error line="90" column="47" source="standard:function-literal" />
-        <error line="90" column="48" source="standard:wrapping" />
-        <error line="90" column="72" source="standard:function-literal" />
-        <error line="90" column="79" source="standard:function-literal" />
-        <error line="90" column="80" source="standard:wrapping" />
-        <error line="90" column="95" source="standard:function-literal" />
-        <error line="90" column="97" source="standard:binary-expression-wrapping" />
-        <error line="90" column="101" source="standard:max-line-length" />
-        <error line="93" column="29" source="standard:function-literal" />
-        <error line="93" column="55" source="standard:function-literal" />
-        <error line="93" column="81" source="standard:argument-list-wrapping" />
-        <error line="93" column="85" source="standard:argument-list-wrapping" />
-        <error line="93" column="87" source="standard:argument-list-wrapping" />
-        <error line="93" column="89" source="standard:function-literal" />
-        <error line="93" column="91" source="standard:function-literal" />
-        <error line="93" column="93" source="standard:binary-expression-wrapping" />
-        <error line="93" column="101" source="standard:max-line-length" />
-        <error line="97" column="64" source="standard:function-literal" />
-        <error line="97" column="90" source="standard:argument-list-wrapping" />
-        <error line="97" column="101" source="standard:max-line-length" />
-        <error line="97" column="102" source="standard:argument-list-wrapping" />
-        <error line="97" column="104" source="standard:argument-list-wrapping" />
-        <error line="97" column="106" source="standard:function-literal" />
-        <error line="126" column="67" source="standard:binary-expression-wrapping" />
-        <error line="126" column="86" source="standard:binary-expression-wrapping" />
-        <error line="126" column="101" source="standard:max-line-length" />
-        <error line="126" column="102" source="standard:binary-expression-wrapping" />
-        <error line="127" column="1" source="standard:indent" />
-        <error line="161" column="41" source="standard:multiline-if-else" />
-        <error line="164" column="19" source="standard:multiline-if-else" />
-        <error line="165" column="22" source="standard:multiline-if-else" />
-        <error line="172" column="16" source="standard:function-literal" />
-        <error line="172" column="26" source="standard:argument-list-wrapping" />
-        <error line="172" column="37" source="standard:binary-expression-wrapping" />
-        <error line="172" column="50" source="standard:binary-expression-wrapping" />
-        <error line="172" column="101" source="standard:max-line-length" />
-        <error line="172" column="102" source="standard:argument-list-wrapping" />
-        <error line="172" column="104" source="standard:function-literal" />
+        <error line="94" column="29" source="standard:function-literal" />
+        <error line="94" column="55" source="standard:function-literal" />
+        <error line="94" column="81" source="standard:argument-list-wrapping" />
+        <error line="94" column="85" source="standard:argument-list-wrapping" />
+        <error line="94" column="87" source="standard:argument-list-wrapping" />
+        <error line="94" column="89" source="standard:function-literal" />
+        <error line="94" column="91" source="standard:function-literal" />
+        <error line="94" column="93" source="standard:binary-expression-wrapping" />
+        <error line="94" column="101" source="standard:max-line-length" />
+        <error line="98" column="64" source="standard:function-literal" />
+        <error line="98" column="90" source="standard:argument-list-wrapping" />
+        <error line="98" column="101" source="standard:max-line-length" />
+        <error line="98" column="102" source="standard:argument-list-wrapping" />
+        <error line="98" column="104" source="standard:argument-list-wrapping" />
+        <error line="98" column="106" source="standard:function-literal" />
+        <error line="127" column="67" source="standard:binary-expression-wrapping" />
+        <error line="127" column="86" source="standard:binary-expression-wrapping" />
+        <error line="127" column="101" source="standard:max-line-length" />
+        <error line="127" column="102" source="standard:binary-expression-wrapping" />
+        <error line="128" column="1" source="standard:indent" />
+        <error line="162" column="41" source="standard:multiline-if-else" />
+        <error line="165" column="19" source="standard:multiline-if-else" />
+        <error line="166" column="22" source="standard:multiline-if-else" />
+        <error line="173" column="16" source="standard:function-literal" />
+        <error line="173" column="26" source="standard:argument-list-wrapping" />
+        <error line="173" column="37" source="standard:binary-expression-wrapping" />
+        <error line="173" column="50" source="standard:binary-expression-wrapping" />
+        <error line="173" column="101" source="standard:max-line-length" />
+        <error line="173" column="102" source="standard:argument-list-wrapping" />
+        <error line="173" column="104" source="standard:function-literal" />
     </file>
     <file name="src/test/java/org/totschnig/myexpenses/next/feature/categories/CategorySuggestionsViewModelTest.kt">
         <error line="35" column="18" source="standard:function-literal" />
