@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>TooManyFunctions:TransactionEditViewModel.kt:TransactionEditViewModel : ViewModelTransactionEditActionsTemplateEditActions</ID>
+  </CurrentIssues>
+</SmellBaseline>
