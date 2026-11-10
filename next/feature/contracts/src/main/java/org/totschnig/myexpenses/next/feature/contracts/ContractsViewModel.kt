@@ -2,7 +2,6 @@ package org.totschnig.myexpenses.next.feature.contracts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import java.time.LocalDate
 import java.util.UUID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -133,14 +132,20 @@ class ContractsViewModel(
 
     /**
      * The user cancelled the contract (or an income was discontinued): it is not expected anymore,
-     * but stays visible
+     * but stays visible. The day is the one of the analysis, which comes from the ledger source.
      */
     override fun cancel(contract: Contract) {
-        changeRule(contract) {
-            it.copy(
-                cancelledOn = LocalDate.now(),
-                snapshot = ContractRule.Snapshot(contract.name, contract.lastAmount, contract.lastDate)
-            )
+        updateRules { rules, analysis, _ ->
+            rules.withRuleFor(contract, analysis.transactions) {
+                it.copy(
+                    cancelledOn = analysis.today,
+                    snapshot = ContractRule.Snapshot(
+                        contract.name,
+                        contract.lastAmount,
+                        contract.lastDate
+                    )
+                )
+            }.first
         }
     }
 

@@ -328,7 +328,7 @@ class ContractsViewModelTest {
     }
 
     @Test
-    fun cancelsOnTheDayOfTheClock() {
+    fun cancelsOnTheDayOfTheLedgerSource() {
         val yearAgo = today.minusYears(1)
         val payments = (0 until 12).map {
             LedgerTransaction(
@@ -347,9 +347,7 @@ class ContractsViewModelTest {
         withViewModel(source) {
             viewModel.cancel(expenses { it.active.isNotEmpty() }.active.named("Vermieter"))
             val rule = rules { it.singleOrNull()?.cancelledOn != null }.single()
-            // Looks like a bug: the day of the cancellation comes from the clock, while
-            // the analysis and the other decisions take it from the ledger source
-            assertEquals(LocalDate.now(), rule.cancelledOn)
+            assertEquals(yearAgo, rule.cancelledOn)
         }
     }
 
