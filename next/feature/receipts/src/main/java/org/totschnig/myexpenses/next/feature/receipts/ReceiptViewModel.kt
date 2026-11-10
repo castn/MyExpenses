@@ -307,7 +307,7 @@ class ReceiptViewModel(
                     else -> {
                         val again = ReceiptDraft.recognized(draft.target, draft.transactionAmount, parsed, photo)
                             .copy(isNewPhoto = draft.isNewPhoto, isStandalone = draft.isStandalone, isChanged = true)
-                            .classified(null)
+                            .classified(draftPayee)
                         _draft.update { if (it?.photo == photo) again else it }
                     }
                 }

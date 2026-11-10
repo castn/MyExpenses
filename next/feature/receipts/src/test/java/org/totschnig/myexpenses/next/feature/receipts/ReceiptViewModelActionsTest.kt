@@ -217,12 +217,13 @@ class ReceiptViewModelActionsTest {
     }
 
     @Test
-    fun recognizingAgainForgetsThePayee() = withViewModel { viewModel ->
+    fun recognizingAgainKeepsThePayee() = withViewModel { viewModel ->
         viewModel.recognize(7, 368, "Rossmann", photo)
         viewModel.recognizeAgain()
-        // Looks like a bug: recognizeAgain classifies with payee null, so the kind of shop the
-        // payee of the transaction tells is lost, unlike after recognize or a new model
-        assertEquals(listOf(null, null), viewModel.draft.value!!.items.map { it.group })
+        assertEquals(
+            listOf(ItemGroup.DRUGSTORE.id, ItemGroup.DRUGSTORE.id),
+            viewModel.draft.value!!.items.map { it.group }
+        )
     }
 
     @Test
