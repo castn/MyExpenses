@@ -57,7 +57,6 @@
     <ID>CyclomaticComplexMethod:SyncDelegate.kt:SyncDelegate$private fun mergeUpdate: TransactionChange</ID>
     <ID>CyclomaticComplexMethod:SyncHandler.kt:SyncHandler$fun collectOperations: ArrayList&lt;ContentProviderOperation&gt;</ID>
     <ID>CyclomaticComplexMethod:SyncHandler.kt:SyncHandler$private fun TransactionChange.toContentValues: ContentValues</ID>
-    <ID>CyclomaticComplexMethod:TradePagingSource.kt:TradePagingSource$override suspend fun load: LoadResult&lt;Int, Trade&gt;</ID>
     <ID>CyclomaticComplexMethod:TradeSaver.kt:TradeSaver$private fun saveAssetTransfer</ID>
     <ID>CyclomaticComplexMethod:TradeSaver.kt:TradeSaver$private fun saveTradeInternal</ID>
     <ID>CyclomaticComplexMethod:Transaction2.kt:Transaction2.Companion$fun fromCursor: Transaction2</ID>
@@ -352,8 +351,6 @@
     <ID>MagicNumber:SyncAdapter.kt:SyncAdapter.Companion$1000</ID>
     <ID>MagicNumber:TagFilterFileLoggingTree.kt:TagFilterFileLoggingTree$5</ID>
     <ID>MagicNumber:TemplateWidgetService.kt:TemplateRemoteViewsFactory$48</ID>
-    <ID>MagicNumber:TradeList.kt:4f</ID>
-    <ID>MagicNumber:TradeScreen.kt:0.95f</ID>
     <ID>MagicNumber:Transaction.kt:Transaction$1000</ID>
     <ID>MagicNumber:TransactionDetailFragment.kt:TransactionDetailFragment$4.6f</ID>
     <ID>MagicNumber:TransactionRenderer.kt:ItemRenderer$0.5f</ID>
@@ -407,8 +404,6 @@
     <ID>MatchingDeclarationName:FilterHandler.kt:FilterHandlerScope</ID>
     <ID>MatchingDeclarationName:ImportsourceViewModel.kt:ImportSourceViewModel : BaseViewModel</ID>
     <ID>MatchingDeclarationName:MoreUiUtils.kt:Itag</ID>
-    <ID>MatchingDeclarationName:TradeList.kt:TradeEvent</ID>
-    <ID>MatchingDeclarationName:TradeScreen.kt:CostLegUiState : Parcelable</ID>
     <ID>MatchingDeclarationName:prefHandler.kt:MyAbstractClass : PrefHandler</ID>
     <ID>NestedBlockDepth:AbstractExporter.kt:AbstractExporter$@Throws(IOException::class) open fun export: Result&lt;DocumentFile&gt;</ID>
     <ID>NestedBlockDepth:BaseTransactionProvider.kt:BaseTransactionProvider$fun SupportSQLiteDatabase.updateCurrency: Bundle</ID>
@@ -498,7 +493,6 @@
     <ID>TooGenericExceptionCaught:StaleImagesViewModel.kt:StaleImagesViewModel$e: Exception</ID>
     <ID>TooGenericExceptionCaught:StorageAccessFrameworkBackendProvider.kt:StorageAccessFrameworkBackendProvider$e: Exception</ID>
     <ID>TooGenericExceptionCaught:SyncAdapter.kt:SyncAdapter$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:TradePagingSource.kt:TradePagingSource$e: Exception</ID>
     <ID>TooGenericExceptionCaught:TransactionPagingSource.kt:TransactionPagingSource$e: Throwable</ID>
     <ID>TooGenericExceptionCaught:UpgradeHandlerViewModel.kt:UpgradeHandlerViewModel$e: Exception</ID>
     <ID>TooGenericExceptionCaught:ViewIntentProvider.kt:ViewIntentProvider$e: Exception</ID>
