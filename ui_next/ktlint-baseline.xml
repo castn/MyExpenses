@@ -141,39 +141,39 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/NextData.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="59" column="37" source="standard:property-wrapping" />
-        <error line="59" column="59" source="standard:argument-list-wrapping" />
-        <error line="59" column="84" source="standard:argument-list-wrapping" />
-        <error line="59" column="95" source="standard:argument-list-wrapping" />
-        <error line="59" column="100" source="standard:max-line-length" />
-        <error line="59" column="102" source="standard:argument-list-wrapping" />
-        <error line="59" column="108" source="standard:argument-list-wrapping" />
-        <error line="59" column="115" source="standard:argument-list-wrapping" />
-        <error line="59" column="116" source="standard:argument-list-wrapping" />
-        <error line="64" column="23" source="standard:argument-list-wrapping" />
-        <error line="64" column="37" source="standard:argument-list-wrapping" />
-        <error line="64" column="46" source="standard:argument-list-wrapping" />
-        <error line="64" column="55" source="standard:argument-list-wrapping" />
-        <error line="64" column="58" source="standard:argument-list-wrapping" />
-        <error line="64" column="65" source="standard:argument-list-wrapping" />
-        <error line="64" column="87" source="standard:argument-list-wrapping" />
-        <error line="64" column="101" source="standard:max-line-length" />
+        <error line="64" column="37" source="standard:property-wrapping" />
+        <error line="64" column="59" source="standard:argument-list-wrapping" />
+        <error line="64" column="84" source="standard:argument-list-wrapping" />
+        <error line="64" column="95" source="standard:argument-list-wrapping" />
+        <error line="64" column="100" source="standard:max-line-length" />
+        <error line="64" column="102" source="standard:argument-list-wrapping" />
+        <error line="64" column="108" source="standard:argument-list-wrapping" />
+        <error line="64" column="115" source="standard:argument-list-wrapping" />
         <error line="64" column="116" source="standard:argument-list-wrapping" />
-        <error line="64" column="117" source="standard:argument-list-wrapping" />
-        <error line="86" column="23" source="standard:argument-list-wrapping" />
-        <error line="86" column="40" source="standard:argument-list-wrapping" />
-        <error line="86" column="52" source="standard:argument-list-wrapping" />
-        <error line="86" column="76" source="standard:argument-list-wrapping" />
-        <error line="86" column="83" source="standard:argument-list-wrapping" />
-        <error line="92" column="23" source="standard:argument-list-wrapping" />
-        <error line="92" column="32" source="standard:argument-list-wrapping" />
-        <error line="92" column="41" source="standard:argument-list-wrapping" />
-        <error line="92" column="44" source="standard:argument-list-wrapping" />
-        <error line="92" column="61" source="standard:argument-list-wrapping" />
-        <error line="92" column="73" source="standard:argument-list-wrapping" />
-        <error line="92" column="87" source="standard:argument-list-wrapping" />
-        <error line="92" column="94" source="standard:argument-list-wrapping" />
-        <error line="92" column="101" source="standard:max-line-length" />
+        <error line="69" column="23" source="standard:argument-list-wrapping" />
+        <error line="69" column="37" source="standard:argument-list-wrapping" />
+        <error line="69" column="46" source="standard:argument-list-wrapping" />
+        <error line="69" column="55" source="standard:argument-list-wrapping" />
+        <error line="69" column="58" source="standard:argument-list-wrapping" />
+        <error line="69" column="65" source="standard:argument-list-wrapping" />
+        <error line="69" column="87" source="standard:argument-list-wrapping" />
+        <error line="69" column="101" source="standard:max-line-length" />
+        <error line="69" column="116" source="standard:argument-list-wrapping" />
+        <error line="69" column="117" source="standard:argument-list-wrapping" />
+        <error line="91" column="23" source="standard:argument-list-wrapping" />
+        <error line="91" column="40" source="standard:argument-list-wrapping" />
+        <error line="91" column="52" source="standard:argument-list-wrapping" />
+        <error line="91" column="76" source="standard:argument-list-wrapping" />
+        <error line="91" column="83" source="standard:argument-list-wrapping" />
+        <error line="97" column="23" source="standard:argument-list-wrapping" />
+        <error line="97" column="32" source="standard:argument-list-wrapping" />
+        <error line="97" column="41" source="standard:argument-list-wrapping" />
+        <error line="97" column="44" source="standard:argument-list-wrapping" />
+        <error line="97" column="61" source="standard:argument-list-wrapping" />
+        <error line="97" column="73" source="standard:argument-list-wrapping" />
+        <error line="97" column="87" source="standard:argument-list-wrapping" />
+        <error line="97" column="94" source="standard:argument-list-wrapping" />
+        <error line="97" column="101" source="standard:max-line-length" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/NextFeature.kt">
         <error line="3" column="1" source="standard:import-ordering" />
@@ -988,9 +988,9 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/merchants/MerchantsFeature.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="87" column="31" source="standard:argument-list-wrapping" />
+        <error line="86" column="31" source="standard:argument-list-wrapping" />
+        <error line="86" column="52" source="standard:argument-list-wrapping" />
         <error line="87" column="52" source="standard:argument-list-wrapping" />
-        <error line="88" column="52" source="standard:argument-list-wrapping" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/merchants/PayeeReading.kt">
         <error line="3" column="1" source="standard:import-ordering" />

@@ -33,8 +33,8 @@ import org.totschnig.myexpenses.next.data.merchants.payeeLooks
  * The logos and icons of the payees: icons the user chose, see [PayeeIconStore], logos of
  * [Merchants] once the user agreed, see [MerchantLogoConsent], and of the web addresses the user
  * entered for payees, see [PayeeDomainStore]. Each domain is loaded once, in the background, while
- * the list shows the monogram. Without consent the logos of the merchants are removed, those
- * entered stay.
+ * the list shows the monogram. Without consent the logos of the merchants are not shown; their
+ * files are removed by `keepLogosOnlyWithConsent`.
  */
 class MerchantLogos(
     /** The payees of the user, as stored */
@@ -79,19 +79,6 @@ class MerchantLogos(
                 }
             }
         }.distinctUntilChanged().stateWhileShown(viewModelScope, emptyMap())
-
-    init {
-        viewModelScope.launch {
-            combine(consent.isGiven, domainStore.domains, ::Pair).collect { (isGiven, entered) ->
-                if (!isGiven) {
-                    val keep = entered.values.toSet()
-                    requested.retainAll(keep)
-                    byDomain.update { it.filterKeys(keep::contains) }
-                    store.clear(keep)
-                }
-            }
-        }
-    }
 
     private fun request(domain: String) {
         if (!requested.add(domain)) return

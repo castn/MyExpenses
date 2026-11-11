@@ -158,7 +158,7 @@ open class MyApplication : Application(), SharedPreferences.OnSharedPreferenceCh
         }
     }
 
-    private val isSyncService: Boolean
+    protected val isSyncService: Boolean
         get() {
             val processName = currentProcessName
             return processName != null && processName.endsWith(":sync")

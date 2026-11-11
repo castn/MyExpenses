@@ -36,12 +36,17 @@ import org.totschnig.myexpenses.next.data.budgets.BudgetStore
 import org.totschnig.myexpenses.next.data.tips.SavingTipsRepository
 import org.totschnig.myexpenses.next.data.tips.TipStore
 import org.totschnig.myexpenses.next.data.guidance.DataReadinessRepository
+import org.totschnig.myexpenses.next.data.merchants.MerchantLogoConsent
+import org.totschnig.myexpenses.next.data.merchants.MerchantLogoStore
+import org.totschnig.myexpenses.next.data.merchants.PayeeDomainStore
+import org.totschnig.myexpenses.next.data.merchants.keepLogosOnlyWithConsent
 
 /**
  * The data of the new UI, once per process: the ledger and the facts of the areas, so that they
- * outlive the activity and widgets or notifications can read them without a screen. Created on
- * first use, since the dynamic feature cannot add its types to the app's dependency graph. Its
- * flows run in [scope] while they are collected, see `shareWhileShown`.
+ * outlive the activity and widgets or notifications can read them without a screen. Created by the
+ * app when it starts, so that it hears about imports that run before a screen is shown; not yet
+ * part of the app's dependency graph, until the new UI moves to Hilt. Its flows run in [scope]
+ * while they are collected, see `shareWhileShown`.
  *
  * Each area has one repository here, in the order they build on each other, and a line in
  * [applyAutomaticDecisions] if it decides something by itself. An area that reads the facts of an
@@ -94,6 +99,9 @@ class NextData private constructor(context: Context) {
 
     val readiness = DataReadinessRepository(ledgerSource, receiptFacts, scope)
 
+    /** The logos of payees, loaded only with consent, see [keepLogosOnlyWithConsent] */
+    val merchantLogos = MerchantLogoStore(context.noBackupFilesDir.resolve("merchant-logos"))
+
     /**
      * Makes the automatic decisions of the areas while it runs: contracts, the rules of tags and
      * certain categories for new transactions. Called while the app is shown and after an import,
@@ -107,6 +115,14 @@ class NextData private constructor(context: Context) {
     }
 
     init {
+        // Logos are removed when the consent is withdrawn, whatever is shown at that moment
+        scope.launch {
+            keepLogosOnlyWithConsent(
+                MerchantLogoConsent(dataStore),
+                PayeeDomainStore(dataStore),
+                merchantLogos
+            )
+        }
         // Imported transactions get their tags and categories right away, also when the app is not shown
         scope.launch {
             TransactionImports.imported.collectLatest {

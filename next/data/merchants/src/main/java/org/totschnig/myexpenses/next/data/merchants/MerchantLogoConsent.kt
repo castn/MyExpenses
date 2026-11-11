@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
@@ -22,5 +23,20 @@ class MerchantLogoConsent(private val dataStore: DataStore<Preferences>) {
 
     private companion object {
         val KEY_CONSENT = booleanPreferencesKey("next_merchant_logos_consent")
+    }
+}
+
+/**
+ * Removes the logos of [Merchants] from [store] as soon as the user withdraws the [consent]; the
+ * logos of the web addresses the user entered stay. Runs until cancelled, in the scope of the data
+ * of the app rather than of a screen, so that it does not depend on what is shown.
+ */
+suspend fun keepLogosOnlyWithConsent(
+    consent: MerchantLogoConsent,
+    domains: PayeeDomainStore,
+    store: MerchantLogoStore
+) {
+    combine(consent.isGiven, domains.domains, ::Pair).collect { (isGiven, entered) ->
+        if (!isGiven) store.clear(entered.values.toSet())
     }
 }

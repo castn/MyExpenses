@@ -22,7 +22,6 @@ import org.totschnig.myexpenses.next.NextFeature
 import org.totschnig.myexpenses.next.RowDecorations
 import org.totschnig.myexpenses.next.core.ui.merchants.LocalPayeeImages
 import org.totschnig.myexpenses.next.data.merchants.MerchantLogoConsent
-import org.totschnig.myexpenses.next.data.merchants.MerchantLogoStore
 import org.totschnig.myexpenses.next.data.merchants.Payee
 import org.totschnig.myexpenses.next.data.merchants.PayeeDomainStore
 import org.totschnig.myexpenses.next.data.merchants.PayeeIconStore
@@ -38,7 +37,7 @@ class MerchantsFeature(activity: ComponentActivity, data: NextData) : NextFeatur
             MerchantLogoConsent(data.dataStore),
             PayeeDomainStore(data.dataStore),
             PayeeIconStore(data.dataStore),
-            MerchantLogoStore(activity.noBackupFilesDir.resolve("merchant-logos"))
+            data.merchantLogos
         )
     }
 
