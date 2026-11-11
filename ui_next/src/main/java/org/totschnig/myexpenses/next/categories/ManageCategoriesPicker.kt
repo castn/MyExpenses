@@ -9,7 +9,7 @@ import org.totschnig.myexpenses.db2.asCategoryType
 import org.totschnig.myexpenses.provider.KEY_LABEL
 import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.provider.KEY_TYPE
-import org.totschnig.myexpenses.next.feature.categories.CategoryPicker
+import org.totschnig.myexpenses.next.core.ui.categories.CategoryPicker
 
 /** [CategoryPicker] with the category screen of the app, filtered to income or expense */
 object ManageCategoriesPicker : CategoryPicker() {

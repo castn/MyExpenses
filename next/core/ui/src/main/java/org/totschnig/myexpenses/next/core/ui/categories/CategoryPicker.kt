@@ -1,4 +1,4 @@
-package org.totschnig.myexpenses.next.feature.categories
+package org.totschnig.myexpenses.next.core.ui.categories
 
 import android.content.Context
 import android.content.Intent

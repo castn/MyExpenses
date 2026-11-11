@@ -19,4 +19,6 @@ dependencies {
     api libs.androidx.navigation3.runtime
     implementation libs.androidx.compose.adaptive.navigation3
     implementation libs.androidx.material.icons.extended
+    // The category selection of the app is an activity result contract
+    api libs.androidx.activity.compose
 }

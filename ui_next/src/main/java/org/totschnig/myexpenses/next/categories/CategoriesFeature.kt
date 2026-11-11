@@ -23,7 +23,7 @@ import org.totschnig.myexpenses.next.RowDecorations
 import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
 import org.totschnig.myexpenses.next.feature.categories.CategoryBacklogBanner
 import org.totschnig.myexpenses.next.feature.categories.CategoryChip
-import org.totschnig.myexpenses.next.feature.categories.LocalCategoryPicker
+import org.totschnig.myexpenses.next.core.ui.categories.LocalCategoryPicker
 import org.totschnig.myexpenses.next.feature.categories.hasCategoryChoice
 import org.totschnig.myexpenses.next.transactions.toShown
 import org.totschnig.myexpenses.next.feature.categories.CategorySuggestionSection

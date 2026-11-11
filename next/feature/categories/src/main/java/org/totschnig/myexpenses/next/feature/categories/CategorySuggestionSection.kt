@@ -24,6 +24,7 @@ import org.totschnig.myexpenses.designsystem.LabelChip
 import org.totschnig.myexpenses.designsystem.LinkRow
 import org.totschnig.myexpenses.designsystem.SectionTitle
 import org.totschnig.myexpenses.next.core.ui.LabelIcons
+import org.totschnig.myexpenses.next.core.ui.categories.LocalCategoryPicker
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.feature.categories.CategorySuggestionsViewModel.CategoryState
 import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
