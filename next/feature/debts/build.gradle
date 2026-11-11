@@ -1,12 +1,14 @@
 plugins {
     id 'next.feature'
+    alias libs.plugins.kotlin.serialization
 }
 
 android {
     namespace 'org.totschnig.myexpenses.next.feature.debts'
 }
 
-// Debts in the details of a transaction: which debt it pays and what is left after it.
+// Debts: in the details of a transaction which debt it pays and what is left after it; the pages
+// of the debts with their history and the form of a debt.
 dependencies {
     implementation project(':next:data:debts')
 }

@@ -36,7 +36,7 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
     val categories = CategoriesFeature(activity, data)
     val tags = TagsFeature(activity, data)
     val attachments = AttachmentsFeature(activity, data)
-    val debts = DebtsFeature(activity)
+    val debts = DebtsFeature(activity, data)
     val transactions =
         TransactionsFeature(activity, data, attachments::attach) { tagIds, onChange ->
             tags.TagField(tagIds, onChange)

@@ -2,6 +2,7 @@ package org.totschnig.myexpenses.next.data.debts
 
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.time.LocalDate
 import kotlin.math.absoluteValue
 import kotlin.math.sign
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
@@ -12,6 +13,7 @@ import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
  *
  * @param equivalentAmount [amount] in the home currency, for a debt in another currency
  * @param isSealed closed: the database refuses changes of the debt and of its transactions
+ * @param date the day the debt was taken on, null if not known
  */
 data class Debt(
     val id: Long,
@@ -21,7 +23,9 @@ data class Debt(
     val currency: CurrencyInfo,
     val amount: Long,
     val equivalentAmount: Long? = null,
-    val isSealed: Boolean = false
+    val isSealed: Boolean = false,
+    val description: String = "",
+    val date: LocalDate? = null
 )
 
 /**
@@ -31,6 +35,7 @@ data class Debt(
  * @param currency the code of the currency of its account
  * @param homeAmount [amount] in the home currency
  * @param debtId the debt it pays, null if none
+ * @param date null if not known
  */
 data class DebtTransaction(
     val id: Long,
@@ -39,7 +44,8 @@ data class DebtTransaction(
     val homeAmount: Long,
     val payeeId: Long? = null,
     val debtId: Long? = null,
-    val isVoid: Boolean = false
+    val isVoid: Boolean = false,
+    val date: LocalDate? = null
 )
 
 /**

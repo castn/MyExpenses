@@ -52,7 +52,7 @@ class DebtsViewModel(
         val debtsOfPayee = transaction.payeeId?.let(database::debtsOf).orEmpty()
         val debtIds = (debtsOfPayee.map { it.id } + listOfNotNull(linked?.id)).toSet()
         val payments = if (debtIds.isEmpty()) emptyList() else database.paymentsOf(debtIds)
-        return debtChoice(transaction, linked, debtsOfPayee, payments, database.homeCurrency)
+        return debtChoice(transaction, linked, debtsOfPayee, payments, database.homeCurrency.code)
     }
 
     override fun link(transactionId: Long, debtId: Long) = write(transactionId, debtId)

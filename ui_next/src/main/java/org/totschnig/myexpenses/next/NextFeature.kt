@@ -65,6 +65,12 @@ interface NextFeature {
     /** The pages of the area on the back stack of the new UI, one entry per [NextKey] of the area */
     fun EntryProviderScope<NavKey>.pages(shell: NextShell) {}
 
+    /**
+     * A command of the menu of the main screen, e.g. `R.id.DEBT_COMMAND`, that the area handles
+     * itself, e.g. by showing its page. True if it did, the shell passes the others on.
+     */
+    fun onMenuCommand(command: Int, navigation: NextNavigation): Boolean = false
+
     /** After a transaction was saved, e.g. to show a hint */
     fun onTransactionSaved(transactionId: Long) {}
 

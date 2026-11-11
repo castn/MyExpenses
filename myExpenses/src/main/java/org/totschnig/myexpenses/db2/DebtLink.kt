@@ -2,14 +2,17 @@ package org.totschnig.myexpenses.db2
 
 import android.content.ContentUris
 import android.content.ContentValues
+import java.time.LocalDate
 import org.totschnig.myexpenses.model.CrStatus
 import org.totschnig.myexpenses.provider.KEY_AMOUNT
 import org.totschnig.myexpenses.provider.KEY_AMOUNT_HOME_EQUIVALENT
 import org.totschnig.myexpenses.provider.KEY_CR_STATUS
 import org.totschnig.myexpenses.provider.KEY_CURRENCY
+import org.totschnig.myexpenses.provider.KEY_DATE
 import org.totschnig.myexpenses.provider.KEY_DEBT_ID
 import org.totschnig.myexpenses.provider.KEY_PAYEEID
 import org.totschnig.myexpenses.provider.KEY_ROWID
+import org.totschnig.myexpenses.provider.KEY_SEALED
 import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.provider.TransactionProvider.DEBTS_URI
 import org.totschnig.myexpenses.provider.TransactionProvider.TRANSACTIONS_URI
@@ -17,6 +20,7 @@ import org.totschnig.myexpenses.provider.getLong
 import org.totschnig.myexpenses.provider.getLongOrNull
 import org.totschnig.myexpenses.provider.getString
 import org.totschnig.myexpenses.provider.useAndMapToList
+import org.totschnig.myexpenses.util.epoch2LocalDate
 import org.totschnig.myexpenses.viewmodel.data.DisplayDebt
 
 /**
@@ -31,7 +35,8 @@ data class DebtLink(
     val homeAmount: Long,
     val payeeId: Long?,
     val debtId: Long?,
-    val isVoid: Boolean
+    val isVoid: Boolean,
+    val date: LocalDate
 )
 
 /** Debts with their stored values, without sums; also sealed ones */
@@ -58,7 +63,8 @@ fun Repository.loadDebtLinks(selection: String, selectionArgs: Array<String>?): 
             KEY_AMOUNT_HOME_EQUIVALENT,
             KEY_PAYEEID,
             KEY_DEBT_ID,
-            KEY_CR_STATUS
+            KEY_CR_STATUS,
+            KEY_DATE
         ),
         selection,
         selectionArgs,
@@ -71,7 +77,8 @@ fun Repository.loadDebtLinks(selection: String, selectionArgs: Array<String>?): 
             homeAmount = cursor.getLong(KEY_AMOUNT_HOME_EQUIVALENT),
             payeeId = cursor.getLongOrNull(KEY_PAYEEID),
             debtId = cursor.getLongOrNull(KEY_DEBT_ID),
-            isVoid = cursor.getString(KEY_CR_STATUS) == CrStatus.VOID.name
+            isVoid = cursor.getString(KEY_CR_STATUS) == CrStatus.VOID.name,
+            date = epoch2LocalDate(cursor.getLong(KEY_DATE))
         )
     }.orEmpty()
 
@@ -91,3 +98,17 @@ fun Repository.linkToDebt(transactionId: Long, debtId: Long?) {
     )
     check(count == 1) { "Transaction $transactionId not updated" }
 }
+
+/** Closes or reopens the debt; the database refuses changes of a closed debt and its transactions */
+fun Repository.setDebtSealed(debtId: Long, isSealed: Boolean) {
+    contentResolver.update(
+        ContentUris.withAppendedId(DEBTS_URI, debtId),
+        ContentValues(1).apply { put(KEY_SEALED, isSealed) },
+        null,
+        null
+    )
+}
+
+/** Deletes the debt, its transactions stay without it; false if there was none */
+fun Repository.deleteDebt(debtId: Long): Boolean =
+    contentResolver.delete(ContentUris.withAppendedId(DEBTS_URI, debtId), null, null) == 1

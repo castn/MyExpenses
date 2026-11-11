@@ -82,6 +82,13 @@ sealed class MenuItem(
         )
     }
 
+    /** The debts of the new UI, see NextFeature.onMenuCommand */
+    data object Debts : MenuItem(
+        R.id.DEBT_COMMAND,
+        R.string.debts,
+        R.drawable.ic_debt_up
+    )
+
     data object ScanMode : MenuItem(
         R.id.SCAN_MODE_COMMAND,
         R.string.menu_scan_mode,
@@ -276,6 +283,7 @@ sealed class MenuItem(
                 Templates,
                 Budget,
                 Parties,
+                Debts,
                 Settings,
                 Help,
                 Backup,

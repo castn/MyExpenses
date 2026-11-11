@@ -54,9 +54,9 @@ class DebtLinksTest : BaseDebtTest() {
         val links = repository.loadDebtLinks("$KEY_DEBT_ID = ?", arrayOf(debtId.toString()))
 
         assertThat(links).containsExactly(
-            DebtLink(home, 3000, HOME, 3000, payee, debtId, isVoid = false),
-            DebtLink(foreign, 1000, FOREIGN, 2000, payee, debtId, isVoid = false),
-            DebtLink(voided, 500, HOME, 500, payee, debtId, isVoid = true)
+            DebtLink(home, 3000, HOME, 3000, payee, debtId, isVoid = false, DEBT_DATE),
+            DebtLink(foreign, 1000, FOREIGN, 2000, payee, debtId, isVoid = false, DEBT_DATE),
+            DebtLink(voided, 500, HOME, 500, payee, debtId, isVoid = true, DEBT_DATE)
         )
     }
 
@@ -64,7 +64,7 @@ class DebtLinksTest : BaseDebtTest() {
     fun aTransactionWithoutDebtIsFoundById() {
         val id = insert(accountId, 3000)
         assertThat(repository.loadDebtLinks("$KEY_ROWID = ?", arrayOf(id.toString())))
-            .containsExactly(DebtLink(id, 3000, HOME, 3000, payee, null, isVoid = false))
+            .containsExactly(DebtLink(id, 3000, HOME, 3000, payee, null, isVoid = false, DEBT_DATE))
     }
 
     @Test

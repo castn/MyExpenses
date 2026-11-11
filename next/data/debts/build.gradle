@@ -7,3 +7,7 @@ android {
 }
 
 // Debts with payees: their balance from the linked transactions and what a payment changes.
+dependencies {
+    // Reads amounts as they are typed, like the form of transactions
+    implementation project(':next:data:transactions')
+}

@@ -218,6 +218,8 @@ fun NextMainScreen(
     val isAdLoaded = remember { mutableStateOf(false) }
 
     fun MenuItem.onMenuItemClicked() {
+        // An area that opens the page of the command itself
+        if (features.any { it.onMenuCommand(id, navigation) }) return
         val tag = when (this) {
             MenuItem.Help -> helpVariant(viewModel, navigator.currentDestination?.pane, selectedAccountId)
             else -> null
@@ -533,4 +535,8 @@ sealed interface NextKey : NavKey {
     /** The breakdown behind the balance card */
     @Serializable
     data object Balance : NextKey
+
+    /** @param openDebt id of a debt shown from the start */
+    @Serializable
+    data class Debts(val openDebt: Long? = null) : NextKey
 }

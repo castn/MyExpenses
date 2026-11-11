@@ -2,10 +2,7 @@ package org.totschnig.myexpenses.next.feature.debts
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -18,36 +15,8 @@ import org.junit.Test
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.data.debts.Debt
 import org.totschnig.myexpenses.next.data.debts.DebtChoice
-import org.totschnig.myexpenses.next.data.debts.DebtDatabase
 import org.totschnig.myexpenses.next.data.debts.DebtOutcome
 import org.totschnig.myexpenses.next.data.debts.DebtTransaction
-
-/** Keeps debts and transactions in memory; a closed debt refuses links like the database */
-private class FakeDebtDatabase : DebtDatabase {
-    override val homeCurrency = "EUR"
-    val debts = mutableListOf<Debt>()
-    val transactions = mutableListOf<DebtTransaction>()
-    private val changes = MutableStateFlow(0)
-
-    override fun changes(): Flow<Unit> = changes.map { }
-
-    override fun transaction(transactionId: Long) = transactions.find { it.id == transactionId }
-
-    override fun debt(debtId: Long) = debts.find { it.id == debtId }
-
-    override fun debtsOf(payeeId: Long) = debts.filter { it.payeeId == payeeId }
-
-    override fun paymentsOf(debtIds: Collection<Long>) =
-        transactions.filter { it.debtId in debtIds }
-
-    override fun link(transactionId: Long, debtId: Long?) {
-        val transaction = transaction(transactionId)!!
-        val touched = listOfNotNull(transaction.debtId, debtId).mapNotNull(::debt)
-        check(touched.none { it.isSealed }) { "sealed" }
-        transactions[transactions.indexOf(transaction)] = transaction.copy(debtId = debtId)
-        changes.value++
-    }
-}
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class DebtsViewModelTest {

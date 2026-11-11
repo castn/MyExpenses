@@ -71,7 +71,7 @@ mNextDataBudgets --> mNextDataBalance
 mNextDataBudgets --> mNextDataTags
 mNextDataCategories --> mNextDataMerchants
 mNextDataContracts --> mNextDataMerchants
-mNextDataDebts --> mNextCoreCommon
+mNextDataDebts --> mNextDataTransactions
 mNextDataGuidance --> mNextDataTips
 mNextDataMerchants --> mNextCoreCommon
 mNextDataPortfolio --> mNextCoreCommon
