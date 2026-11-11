@@ -424,7 +424,19 @@ suspend fun Repository.instantiateTemplate(
                 } else transaction
             }
     )
+    templateUsed(templateId)
     return Result.success(t)
+}
+
+/** Counts a use of template [templateId], the templates used most are offered first */
+fun Repository.templateUsed(templateId: Long) {
+    contentResolver.update(
+        TEMPLATES_URI.buildUpon().appendPath(templateId.toString())
+            .appendPath(TransactionProvider.URI_SEGMENT_INCREASE_USAGE).build(),
+        null,
+        null,
+        null
+    )
 }
 
 fun Repository.updateNewSplitTemplateEnabled(licenceHandler: LicenceHandler) {

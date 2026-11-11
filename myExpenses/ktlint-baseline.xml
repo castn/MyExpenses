@@ -3076,9 +3076,6 @@
         <error line="32" column="36" source="standard:wrapping" />
         <error line="34" column="21" source="standard:wrapping" />
     </file>
-    <file name="src/main/java/org/totschnig/myexpenses/activity/TemplateSaver.kt">
-        <error line="47" column="21" source="standard:keyword-spacing" />
-    </file>
     <file name="src/main/java/org/totschnig/myexpenses/activity/TemplateShortcutSelect.kt">
         <error line="86" column="43" source="standard:trailing-comma-on-call-site" />
         <error line="119" column="13" source="standard:wrapping" />

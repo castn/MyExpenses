@@ -4,16 +4,18 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.db2.RepositoryTransaction
+import org.totschnig.myexpenses.db2.instantiateTemplate
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.provider.KEY_TEMPLATEID
 import org.totschnig.myexpenses.viewmodel.AccountSealedException
-import org.totschnig.myexpenses.viewmodel.TemplatesListViewModel
 
+/** Saves a transaction from a template without a screen, for its pinned shortcut */
 class TemplateSaver : ComponentActivity() {
-    val viewModel: TemplatesListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,13 +24,18 @@ class TemplateSaver : ComponentActivity() {
             finish()
             return
         }
-        injector.inject(viewModel)
-
-        viewModel.instantiateTemplateForResult(templateId)
-            .observe(this) {
-                showTemplateInstantiationResult(it)
-                finish()
+        val injector = injector
+        lifecycleScope.launch {
+            val result = withContext(injector.coroutineDispatcher()) {
+                injector.repository().instantiateTemplate(
+                    injector.exchangeRateHandler(),
+                    templateId,
+                    injector.currencyContext()
+                )
             }
+            showTemplateInstantiationResult(result)
+            finish()
+        }
     }
 }
 
@@ -44,7 +51,7 @@ fun Context.showTemplateInstantiationResult(result: Result<RepositoryTransaction
                 )
             },
             onFailure = {
-                when(it) {
+                when (it) {
                     is AccountSealedException -> getString(R.string.object_sealed)
                     else -> getString(R.string.save_transaction_template_deleted)
                 }

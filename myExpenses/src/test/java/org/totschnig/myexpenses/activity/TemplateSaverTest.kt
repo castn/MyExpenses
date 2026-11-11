@@ -15,6 +15,7 @@ import org.robolectric.Shadows.shadowOf
 import org.totschnig.myexpenses.BaseTestWithRepository
 import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.provider.KEY_TEMPLATEID
+import org.totschnig.myexpenses.provider.KEY_USAGES
 import org.totschnig.myexpenses.provider.TransactionProvider
 
 @RunWith(AndroidJUnit4::class)
@@ -48,6 +49,23 @@ class TemplateSaverTest : BaseTestWithRepository() {
         launch { putExtra(KEY_TEMPLATEID, templateId) }
 
         assertThat(transactions()).isEqualTo(1)
+    }
+
+    @Test
+    fun countsTheUseOfTheTemplate() {
+        launch { putExtra(KEY_TEMPLATEID, templateId) }
+
+        val usages = contentResolver.query(
+            TransactionProvider.TEMPLATES_URI,
+            arrayOf(KEY_USAGES),
+            "$KEY_ROWID = ?",
+            arrayOf(templateId.toString()),
+            null
+        )!!.use {
+            it.moveToFirst()
+            it.getInt(0)
+        }
+        assertThat(usages).isEqualTo(1)
     }
 
     @Test
