@@ -1,7 +1,5 @@
 package org.totschnig.myexpenses.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.runBlocking
@@ -38,7 +36,6 @@ import java.time.LocalDateTime
 @RunWith(AndroidJUnit4::class)
 class TradeTest : BaseViewModelTest() {
 
-    private lateinit var viewModel: MainViewModel
     private lateinit var tradeSaver: TradeSaver
     private lateinit var portfolioA: FullAccount
     private lateinit var portfolioB: FullAccount
@@ -46,8 +43,6 @@ class TradeTest : BaseViewModelTest() {
 
     @Before
     fun setup() {
-        viewModel = MainViewModel(ApplicationProvider.getApplicationContext(), SavedStateHandle())
-        application.appComponent.inject(viewModel)
         tradeSaver = TradeSaver(repository, application)
 
         runBlocking {
@@ -213,7 +208,7 @@ class TradeTest : BaseViewModelTest() {
             tradeId = initialId
         )
 
-        viewModel.saveTrade(portfolioA, updatedIntent)
+        tradeSaver.saveTrades(portfolioA, listOf(updatedIntent))
 
         // Verify Portfolio A
         val transactionsA = repository.loadTransactions(portfolioA.id)

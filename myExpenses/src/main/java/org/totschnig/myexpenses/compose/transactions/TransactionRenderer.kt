@@ -26,7 +26,11 @@ import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.CallSplit
+import androidx.compose.material.icons.automirrored.filled.TrendingFlat
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Archive
+import androidx.compose.material.icons.filled.ArrowDownward
+import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
@@ -48,6 +52,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
@@ -859,4 +864,12 @@ class SampleProvider : PreviewParameterProvider<Transaction2> {
             accountType = 0
         )
     )
+}
+
+private fun TradeType.icon(): ImageVector = when (this) {
+    TradeType.AssetTrade.BUY -> Icons.Default.ArrowUpward
+    TradeType.AssetTrade.SELL -> Icons.Default.ArrowDownward
+    TradeType.CashMovement.DEPOSIT -> Icons.Default.Add
+    TradeType.CashMovement.WITHDRAW -> Icons.Default.Remove
+    is TradeType.Transfer -> Icons.AutoMirrored.Filled.TrendingFlat
 }

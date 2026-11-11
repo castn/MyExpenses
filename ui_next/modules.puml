@@ -30,6 +30,7 @@ package "next/data" as pNextData {
     [:contracts] as mNextDataContracts
     [:guidance] as mNextDataGuidance
     [:merchants] as mNextDataMerchants
+    [:portfolio] as mNextDataPortfolio
     [:receipts] as mNextDataReceipts
     [:tags] as mNextDataTags
     [:tips] as mNextDataTips
@@ -45,6 +46,7 @@ package "next/feature" as pNextFeature {
     [:contracts] as mNextFeatureContracts
     [:guidance] as mNextFeatureGuidance
     [:merchants] as mNextFeatureMerchants
+    [:portfolio] as mNextFeaturePortfolio
     [:receipts] as mNextFeatureReceipts
     [:tags] as mNextFeatureTags
     [:tips] as mNextFeatureTips
@@ -69,6 +71,7 @@ mNextDataCategories --> mNextDataMerchants
 mNextDataContracts --> mNextDataMerchants
 mNextDataGuidance --> mNextDataTips
 mNextDataMerchants --> mNextCoreCommon
+mNextDataPortfolio --> mNextCoreCommon
 mNextDataReceipts --> mItemGroupModel
 mNextDataReceipts --> mNextDataCategories
 mNextDataReceipts --> mOcrModel
@@ -87,6 +90,7 @@ mNextFeatureCategories --> mNextDataCategories
 mNextFeatureContracts --> mNextDataContracts
 mNextFeatureGuidance --> mNextDataGuidance
 mNextFeatureMerchants --> mNextDataMerchants
+mNextFeaturePortfolio --> mNextDataPortfolio
 mNextFeatureReceipts --> mNextDataReceipts
 mNextFeatureTags --> mNextDataTags
 mNextFeatureTips --> mNextDataTips

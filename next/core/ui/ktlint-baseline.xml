@@ -23,37 +23,37 @@
         <error line="29" column="14" source="standard:multiline-if-else" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/core/ui/Formats.kt">
-        <error line="18" column="51" source="standard:function-signature" />
-        <error line="18" column="60" source="standard:function-literal" />
-        <error line="18" column="61" source="standard:wrapping" />
-        <error line="18" column="90" source="standard:argument-list-wrapping" />
-        <error line="18" column="101" source="standard:argument-list-wrapping" />
-        <error line="18" column="101" source="standard:max-line-length" />
-        <error line="18" column="103" source="standard:function-literal" />
-        <error line="21" column="35" source="standard:parameter-list-wrapping" />
-        <error line="21" column="53" source="standard:parameter-list-wrapping" />
-        <error line="21" column="67" source="standard:parameter-list-wrapping" />
-        <error line="21" column="71" source="standard:function-signature" />
-        <error line="21" column="81" source="standard:argument-list-wrapping" />
-        <error line="21" column="86" source="standard:argument-list-wrapping" />
-        <error line="21" column="100" source="standard:argument-list-wrapping" />
-        <error line="21" column="101" source="standard:max-line-length" />
-        <error line="21" column="103" source="standard:argument-list-wrapping" />
-        <error line="25" column="17" source="standard:parameter-list-wrapping" />
-        <error line="25" column="35" source="standard:parameter-list-wrapping" />
-        <error line="25" column="49" source="standard:parameter-list-wrapping" />
-        <error line="25" column="61" source="standard:function-signature" />
-        <error line="25" column="97" source="standard:argument-list-wrapping" />
-        <error line="25" column="101" source="standard:max-line-length" />
-        <error line="25" column="104" source="standard:argument-list-wrapping" />
-        <error line="25" column="118" source="standard:argument-list-wrapping" />
-        <error line="25" column="119" source="standard:argument-list-wrapping" />
-        <error line="25" column="120" source="standard:argument-list-wrapping" />
-        <error line="40" column="57" source="standard:function-literal" />
-        <error line="40" column="58" source="standard:wrapping" />
-        <error line="40" column="82" source="standard:binary-expression-wrapping" />
-        <error line="40" column="101" source="standard:max-line-length" />
-        <error line="40" column="107" source="standard:function-literal" />
+        <error line="19" column="51" source="standard:function-signature" />
+        <error line="19" column="60" source="standard:function-literal" />
+        <error line="19" column="61" source="standard:wrapping" />
+        <error line="19" column="90" source="standard:argument-list-wrapping" />
+        <error line="19" column="101" source="standard:argument-list-wrapping" />
+        <error line="19" column="101" source="standard:max-line-length" />
+        <error line="19" column="103" source="standard:function-literal" />
+        <error line="22" column="35" source="standard:parameter-list-wrapping" />
+        <error line="22" column="53" source="standard:parameter-list-wrapping" />
+        <error line="22" column="67" source="standard:parameter-list-wrapping" />
+        <error line="22" column="71" source="standard:function-signature" />
+        <error line="22" column="81" source="standard:argument-list-wrapping" />
+        <error line="22" column="86" source="standard:argument-list-wrapping" />
+        <error line="22" column="100" source="standard:argument-list-wrapping" />
+        <error line="22" column="101" source="standard:max-line-length" />
+        <error line="22" column="103" source="standard:argument-list-wrapping" />
+        <error line="26" column="17" source="standard:parameter-list-wrapping" />
+        <error line="26" column="35" source="standard:parameter-list-wrapping" />
+        <error line="26" column="49" source="standard:parameter-list-wrapping" />
+        <error line="26" column="61" source="standard:function-signature" />
+        <error line="26" column="97" source="standard:argument-list-wrapping" />
+        <error line="26" column="101" source="standard:max-line-length" />
+        <error line="26" column="104" source="standard:argument-list-wrapping" />
+        <error line="26" column="118" source="standard:argument-list-wrapping" />
+        <error line="26" column="119" source="standard:argument-list-wrapping" />
+        <error line="26" column="120" source="standard:argument-list-wrapping" />
+        <error line="41" column="57" source="standard:function-literal" />
+        <error line="41" column="58" source="standard:wrapping" />
+        <error line="41" column="82" source="standard:binary-expression-wrapping" />
+        <error line="41" column="101" source="standard:max-line-length" />
+        <error line="41" column="107" source="standard:function-literal" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/core/ui/ListDetailPages.kt">
         <error line="32" column="20" source="standard:argument-list-wrapping" />

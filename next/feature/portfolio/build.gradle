@@ -1,0 +1,12 @@
+plugins {
+    id 'next.feature'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.feature.portfolio'
+}
+
+// The trades of a portfolio: their list on the page of the portfolio and the form of a trade.
+dependencies {
+    implementation project(':next:data:portfolio')
+}

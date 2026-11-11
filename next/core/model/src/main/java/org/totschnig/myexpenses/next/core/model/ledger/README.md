@@ -132,5 +132,7 @@ replacement for the provider. These read the database themselves:
 - scanned receipts while they are added or corrected, `ReceiptViewModel` only offers their items
 - a transaction while it is entered or changed by hand, `TransactionEditViewModel` reads and writes
   it through `TransactionStore`
+- the trades of portfolios, `PortfolioTradesViewModel` and `TradeEditViewModel` (package
+  `portfolio`) read and write them through `TradeStore`
 - the accounts of the overview, from `MainViewModel`; `ProviderLedgerSource` reads the
   own accounts itself, with their labels and types

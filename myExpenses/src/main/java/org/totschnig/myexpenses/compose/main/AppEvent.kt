@@ -6,7 +6,6 @@ import org.totschnig.myexpenses.model.AccountGrouping
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.Grouping
 import org.totschnig.myexpenses.model.sort.TransactionSort
-import org.totschnig.myexpenses.viewmodel.data.TradeIntent
 
 sealed class AppEvent {
     object CreateAccount : AppEvent()
@@ -23,7 +22,9 @@ sealed class AppEvent {
     object Sort : AppEvent()
     data class CopyToClipBoard(val text: String) : AppEvent()
     object ToggleNavigation : AppEvent()
-    data class SaveTrade(val intent: TradeIntent) : AppEvent()
+
+    /** Opens the form of a trade for [action] of the plus button in the portfolio shown */
+    data class CreateTrade(val action: Action) : AppEvent()
     data class ShowUpgrade(val feature: ContribFeature) : AppEvent()
 }
 

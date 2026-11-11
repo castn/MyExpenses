@@ -90,7 +90,6 @@ import org.totschnig.myexpenses.compose.main.parseMenu
 import org.totschnig.myexpenses.compose.main.validatedBalanceType
 import org.totschnig.myexpenses.compose.transactions.Action
 import org.totschnig.myexpenses.compose.transactions.ActionMenu
-import org.totschnig.myexpenses.compose.transactions.TradeScreen
 import org.totschnig.myexpenses.compose.transactions.ViewOptionsMenu
 import org.totschnig.myexpenses.designsystem.FabMenuItem
 import org.totschnig.myexpenses.designsystem.MenuFab
@@ -102,8 +101,6 @@ import org.totschnig.myexpenses.next.search.rememberTransactionSearch
 import org.totschnig.myexpenses.viewmodel.SumInfo
 import org.totschnig.myexpenses.dialog.MenuItem
 import org.totschnig.myexpenses.model.BalanceType
-import org.totschnig.myexpenses.model.CommodityType
-import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.next.core.common.R as NextR
 import org.totschnig.myexpenses.preference.PreferenceState
 import org.totschnig.myexpenses.util.convAmount
@@ -112,15 +109,14 @@ import org.totschnig.myexpenses.viewmodel.MainViewModel
 import org.totschnig.myexpenses.viewmodel.data.BaseAccount
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.viewmodel.data.PageAccount
-import java.math.RoundingMode
 import org.totschnig.myexpenses.designsystem.DetailCard
 
 /**
  * Account page of the new design, showing the transactions of the selected account.
  *
  * Carries over from the old transaction screen the menus, the selection mode,
- * the FAB for new transactions and the trade dialog for portfolios. Transactions are shown with
- * [transactionList], portfolios still with the classic page ([pageContent]).
+ * and the FAB for new transactions; for a portfolio it opens the form of a trade. Transactions are shown with
+ * [transactionList], the trades of a portfolio with [pageContent].
  * Unlike the old screen it has no tabs for switching between accounts, that is done in the overview.
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -137,15 +133,6 @@ fun NextAccountScreen(
     pageContent: @Composable (PageAccount, Boolean) -> Unit,
     /** The redesigned transaction list for the given account, with the result of [TransactionSearch] above it */
     transactionList: @Composable (PageAccount, TransactionSearch) -> Unit,
-    allCurrencies: List<CurrencyUnit>,
-    isCurrencyUsed: suspend (String) -> Boolean,
-    onCreateAsset: suspend (
-        code: String,
-        symbol: String,
-        fractionDigits: Int,
-        label: String?,
-        commodityType: CommodityType
-    ) -> CurrencyUnit?,
     windowInsets: WindowInsets,
     bankIcon: (@Composable (Modifier, Long) -> Unit)? = null,
     /** Back to the overview, null if both are shown side by side */
@@ -170,11 +157,10 @@ fun NextAccountScreen(
         fractionDigits = currentAccount.currencyUnit.fractionDigits,
         scope = viewModel.viewModelScope
     )
-    // Portfolios keep the classic page with its filter dialog
+    // Portfolios have no search, their trades are few
     val isSearching = search.isActive && !isPortfolio
     BackHandler(isSearching && viewModel.selectionState.value.isEmpty()) { search.close() }
 
-    var showTradeScreen by rememberSaveable { mutableStateOf<Action?>(null) }
     // The label of the plus button gives way to the list while it is scrolled down
     var isFabExtended by rememberSaveable { mutableStateOf(true) }
     val fabScroll = remember {
@@ -242,7 +228,7 @@ fun NextAccountScreen(
                     isExtended = isFabExtended,
                     accountColor = Color(currentAccount.color(LocalResources.current)),
                     onEvent = onEvent,
-                    onTrade = { showTradeScreen = it }
+                    onTrade = { onEvent(AppEvent.CreateTrade(it)) }
                 )
             }
         }
@@ -274,20 +260,6 @@ fun NextAccountScreen(
                 if (pageAccount.isPortfolio) pageContent(pageAccount, true) else transactionList(pageAccount, search)
             }
         }
-    }
-
-    showTradeScreen?.let { tradeAction ->
-        PortfolioTradeScreen(
-            viewModel = viewModel,
-            portfolio = currentAccount as FullAccount,
-            accounts = accounts,
-            allCurrencies = allCurrencies,
-            initialAction = tradeAction,
-            onEvent = onEvent,
-            onCreateAsset = onCreateAsset,
-            isCurrencyUsed = isCurrencyUsed,
-            onDismiss = { showTradeScreen = null }
-        )
     }
 }
 
@@ -391,62 +363,6 @@ private fun NewTransactionFab(
         containerColor = accountColor,
         contentColor = accountColor.calculateOnColor(),
         modifier = Modifier.testTag(TEST_TAG_FAB_TRANSACTIONS)
-    )
-}
-
-@Composable
-private fun PortfolioTradeScreen(
-    viewModel: MainViewModel,
-    portfolio: FullAccount,
-    accounts: List<FullAccount>,
-    allCurrencies: List<CurrencyUnit>,
-    initialAction: Action,
-    onEvent: AppEventHandler,
-    onCreateAsset: suspend (
-        code: String,
-        symbol: String,
-        fractionDigits: Int,
-        label: String?,
-        commodityType: CommodityType
-    ) -> CurrencyUnit?,
-    isCurrencyUsed: suspend (String) -> Boolean,
-    onDismiss: () -> Unit,
-) {
-    val context = LocalContext.current
-    TradeScreen(
-        onDismiss = onDismiss,
-        onSave = { intent, stayOpen ->
-            onEvent(AppEvent.SaveTrade(intent))
-            if (!stayOpen) onDismiss()
-        },
-        portfolio = portfolio,
-        roundingMode = viewModel.getRoundingMode(portfolio.id)
-            .collectAsState(RoundingMode.HALF_UP).value,
-        onRoundingModeChange = { viewModel.setRoundingMode(portfolio.id, it) },
-        reportingCurrency = portfolio.currencyUnit,
-        assets = allCurrencies,
-        fundingAccounts = accounts
-            .filter {
-                !it.isPortfolio && !it.sealed &&
-                        it.currencyUnit.code == portfolio.currencyUnit.code &&
-                        it.id != portfolio.id
-            }
-            .map { it.id to it.labelV2(context) },
-        targetPortfolios = accounts
-            .filter { it.isPortfolio && it.id != portfolio.id }
-            .map { it.id to it.labelV2(context) },
-        initialAction = initialAction,
-        onCreateAsset = onCreateAsset,
-        isCurrencyUsed = isCurrencyUsed,
-        onLookupMatchingTransactions = { accountId, total, date, isBuy ->
-            viewModel.findMatchingTransactions(
-                accountId,
-                total,
-                date,
-                portfolio.currencyUnit,
-                isBuy
-            )
-        }
     )
 }
 

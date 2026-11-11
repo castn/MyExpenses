@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +24,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -41,7 +41,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import androidx.paging.compose.collectAsLazyPagingItems
 import java.math.RoundingMode
 import java.util.Optional
 import kotlinx.coroutines.launch
@@ -51,18 +50,10 @@ import org.totschnig.myexpenses.activity.PriceHistory
 import org.totschnig.myexpenses.compose.accounts.AccountEvent
 import org.totschnig.myexpenses.compose.accounts.AccountEventHandler
 import org.totschnig.myexpenses.compose.accounts.PortfolioSetupDialog
-import org.totschnig.myexpenses.compose.filter.FilterCard
-import org.totschnig.myexpenses.compose.filter.FilterDialog
-import org.totschnig.myexpenses.compose.filter.FilterHandler
-import org.totschnig.myexpenses.compose.filter.TYPE_COMPLEX
 import org.totschnig.myexpenses.compose.main.AppEvent
 import org.totschnig.myexpenses.compose.main.AppEventHandler
 import org.totschnig.myexpenses.compose.transactions.Action
 import org.totschnig.myexpenses.compose.transactions.ImportTradesDialog
-import org.totschnig.myexpenses.compose.transactions.RenderType
-import org.totschnig.myexpenses.compose.transactions.TradeEvent
-import org.totschnig.myexpenses.compose.transactions.TradeList
-import org.totschnig.myexpenses.compose.transactions.TradeScreen
 import org.totschnig.myexpenses.compose.transactions.TransactionEvent
 import org.totschnig.myexpenses.compose.transactions.TransactionEventHandler
 import org.totschnig.myexpenses.designsystem.ActionChipRow
@@ -75,6 +66,7 @@ import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model.Grouping
 import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
 import org.totschnig.myexpenses.next.onboarding.NextOnboarding
+import org.totschnig.myexpenses.next.portfolio.TradeEditorActivity
 import org.totschnig.myexpenses.next.search.SearchResult
 import org.totschnig.myexpenses.next.settings.NextSettings
 import org.totschnig.myexpenses.next.settings.SettingsGroup
@@ -97,9 +89,7 @@ import org.totschnig.myexpenses.viewmodel.data.AggregateAccount
 import org.totschnig.myexpenses.viewmodel.data.BaseAccount
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.viewmodel.data.HeaderData
-import org.totschnig.myexpenses.viewmodel.data.PageAccount
 import org.totschnig.myexpenses.viewmodel.data.Transaction2
-import timber.log.Timber
 
 /**
  * The main screen of the app, started by the launcher, widgets, notifications and after a restore
@@ -109,7 +99,7 @@ import timber.log.Timber
  * transactions, the context menu and the commands of the menus, until those are ported to the
  * new UI. Here it adds:
  * - the main screen of the new UI ([NextMainScreen]) in its theme ([NextTheme])
- * - the dialogs for portfolios and trades
+ * - the dialogs for portfolios, the trades open [TradeEditorActivity]
  * - navigation to screens of the new UI ([NextRouter])
  */
 class MainActivity : BaseMyExpenses<MainViewModel>() {
@@ -279,7 +269,6 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
         var showImportTrades by rememberSaveable { mutableStateOf(false) }
         val currencies by currencyViewModel.currencyUnits.collectAsState(emptyList())
 
-        TradeEditing(accounts, currencies)
         PortfolioSetup(accounts, currencies)
 
         val onAppEvent = object : AppEventHandler {
@@ -327,9 +316,7 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
 
                     AppEvent.ToggleNavigation -> isNavigationVisible = !isNavigationVisible
 
-                    is AppEvent.SaveTrade -> (currentAccount as? FullAccount)?.let {
-                        viewModel.saveTrade(it, event.intent)
-                    }
+                    is AppEvent.CreateTrade -> createTrade(event.action)
 
                     is AppEvent.ShowUpgrade -> contribFeatureRequested(event.feature)
                 }
@@ -363,7 +350,6 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
 
         MainScreen(
             accounts = accounts,
-            currencies = currencies,
             selectedAccountId = selectedAccountIdFromState,
             onAppEvent = onAppEvent,
             onAccountEvent = onAccountEvent,
@@ -396,55 +382,6 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
                 )
             }
         }
-    }
-
-    /** Editing a trade of a portfolio, see [editTrade] */
-    @Composable
-    private fun TradeEditing(accounts: List<FullAccount>, currencies: List<CurrencyUnit>) {
-        val tradeToEdit by viewModel.tradeToEdit.collectAsStateWithLifecycle()
-        val trade = tradeToEdit ?: return
-        val fullAccount = accounts.find { it.id == trade.portfolioId } ?: return
-        TradeScreen(
-            onDismiss = { viewModel.clearTradeToEdit() },
-            onSave = { intent, stayOpen ->
-                viewModel.saveTrade(fullAccount, intent)
-                if (stayOpen) {
-                    report(
-                        IllegalStateException(
-                            "did not expect stayOpen to be true when editing trade"
-                        )
-                    )
-                }
-            },
-            portfolio = fullAccount,
-            roundingMode = viewModel.getRoundingMode(
-                fullAccount.id
-            ).collectAsState(RoundingMode.HALF_UP).value,
-            onRoundingModeChange = { viewModel.setRoundingMode(fullAccount.id, it) },
-            reportingCurrency = fullAccount.currencyUnit,
-            assets = currencies,
-            fundingAccounts = accounts
-                .filter {
-                    !it.isPortfolio && !it.sealed &&
-                        it.currencyUnit.code == fullAccount.currencyUnit.code
-                }
-                .map { it.id to it.labelV2(this@MainActivity) },
-            targetPortfolios = accounts
-                .filter { it.isPortfolio && it.id != fullAccount.id }
-                .map { it.id to it.labelV2(this@MainActivity) },
-            initialTrade = trade,
-            canAddMultipleCostLegs = viewModel.canAddMultipleCostLegs,
-            onShowUpgrade = { contribFeatureRequested(ContribFeature.PORTFOLIO) },
-            onLookupMatchingTransactions = { accountId, total, date, isBuy ->
-                viewModel.findMatchingTransactions(
-                    accountId,
-                    total,
-                    date,
-                    fullAccount.currencyUnit,
-                    isBuy
-                )
-            }
-        )
     }
 
     /** Creating a portfolio, or editing one, see [editAccount] */
@@ -494,7 +431,6 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
     @Composable
     private fun MainScreen(
         accounts: List<FullAccount>,
-        currencies: List<CurrencyUnit>,
         selectedAccountId: Long,
         onAppEvent: AppEventHandler,
         onAccountEvent: AccountEventHandler,
@@ -519,7 +455,6 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
             NextMainScreen(
                 viewModel = viewModel,
                 accounts = accounts,
-                allCurrencies = currencies,
                 selectedAccountId = selectedAccountId,
                 onAppEvent = onAppEvent,
                 onAccountEvent = onAccountEvent,
@@ -528,12 +463,17 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
                 bankIcon = bankIcon,
                 adView = { isLoadedState -> adHandler.Banner(isLoadedState) },
                 isNavigationVisible = isNavigationVisible,
-                isCurrencyUsed = { currencyViewModel.isCurrencyUsed(it) },
-                onCreateAsset = { code, symbol, fractionDigits, label, type ->
-                    currencyViewModel.createAsset(code, symbol, fractionDigits, label, type)
+                pageContent = { pageAccount, _ ->
+                    features.portfolio.TradesPage(
+                        portfolioId = pageAccount.id,
+                        onEdit = { startActivity(TradeEditorActivity.edit(this, it)) },
+                        // Trades are usually unreconciled upon creation
+                        onDelete = { delete(listOf(it to CrStatus.UNRECONCILED)) },
+                        contentPadding = PaddingValues(
+                            bottom = dimensionResource(R.dimen.fab_related_bottom_padding)
+                        )
+                    )
                 },
-                // Portfolios still with the classic page
-                pageContent = { pageAccount, isCurrent -> PortfolioPage(pageAccount, isCurrent) },
                 transactionList = { pageAccount, search ->
                     // Day groups with the balance at the end of each day only make sense when
                     // sorted by date
@@ -591,98 +531,6 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
         }
     }
 
-    /** The trades of a portfolio, with the filter of its page */
-    @Composable
-    private fun PortfolioPage(account: PageAccount, isCurrentPage: Boolean) {
-        val coroutineScope = rememberCoroutineScope()
-        val preferredSearchType = viewModel.preferredSearchType.flow.collectAsState(
-            TYPE_COMPLEX
-        ).value
-        if (showFilterDialog && isCurrentPage) {
-            Timber.d("showFilterDialog for page ${account.label}")
-            FilterDialog(
-                account = account,
-                sumInfo = sumInfo.value,
-                // we are only interested in the current value, since as soon as we persist new
-                // value, the dialog is dismissed
-                // noinspection StateFlowValueCalledInComposition
-                criterion = currentFilter.whereFilter.value,
-                initialPreferredSearchType = preferredSearchType,
-                onDismissRequest = {
-                    showFilterDialog = false
-                },
-                onConfirmRequest = { preferredSearchType, criterion ->
-                    coroutineScope.launch {
-                        viewModel.preferredSearchType.set(preferredSearchType)
-                        currentFilter.persist(criterion)
-                        showFilterDialog = false
-                    }
-                }
-            )
-        }
-        val renderType by viewModel.renderer.collectAsState(initial = RenderType.New)
-        val lazyPagingItems = viewModel.getTrades(account).collectAsLazyPagingItems()
-        val isProcessingFilter = remember { mutableStateOf(false) }
-
-        Column(modifier = Modifier.fillMaxSize()) {
-            val persistence =
-                remember(account.id) { viewModel.filterPersistence.getValue(account.id) }
-            val filter = persistence.whereFilter.collectAsState(null)
-            filter.value?.let { filter ->
-                FilterHandler(account, "confirmFilterDirect_${account.id}", { oldValue, newValue ->
-                    if (newValue != null && oldValue != null) {
-                        lifecycleScope.launch {
-                            persistence.replaceCriterion(oldValue, newValue)
-                        }
-                    }
-                }) {
-                    FilterCard(
-                        filter,
-                        editFilter = { handleEdit(it) },
-                        clearAllFilter = { confirmClearFilter() },
-                        clearFilter = {
-                            if (isProcessingFilter.value) {
-                                Timber.d("double click: ignoring filter clear request")
-                            } else {
-                                isProcessingFilter.value = true
-                                lifecycleScope.launch {
-                                    try {
-                                        persistence.removeCriterion(it)
-                                    } finally {
-                                        isProcessingFilter.value = false
-                                    }
-                                }
-                            }
-                        }
-                    )
-                }
-            }
-            TradeList(
-                trades = lazyPagingItems,
-                modifier = Modifier.weight(1f),
-                renderType = renderType,
-                onEvent = if (account.sealed) {
-                    null
-                } else {
-                    { event, trade ->
-                        when (event) {
-                            TradeEvent.Edit -> lifecycleScope.launch {
-                                if (checkSealed(listOf(trade.id))) {
-                                    viewModel.editTrade(trade)
-                                }
-                            }
-
-                            TradeEvent.Delete -> lifecycleScope.launch {
-                                // Trades are usually unreconciled upon creation
-                                delete(listOf(trade.id to CrStatus.UNRECONCILED))
-                            }
-                        }
-                    }
-                }
-            )
-        }
-    }
-
     private fun openInsightSettings() {
         startActivity(NextSettings.intent(this, SettingsGroup.INSIGHTS))
     }
@@ -700,7 +548,13 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
     )
 
     override fun editTrade(transactionId: Long) {
-        viewModel.loadTrade(transactionId)
+        startActivity(TradeEditorActivity.edit(this, transactionId))
+    }
+
+    /** The form of a new trade for [action] in the portfolio shown */
+    private fun createTrade(action: Action) {
+        val portfolio = (currentAccount as? FullAccount)?.takeIf { it.isPortfolio } ?: return
+        startActivity(TradeEditorActivity.newTrade(this, portfolio.id, action))
     }
 
     // Calls from BaseMyExpenses, which still updates the menu of the old main screen

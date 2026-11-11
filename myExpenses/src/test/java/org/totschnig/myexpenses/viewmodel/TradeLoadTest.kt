@@ -1,15 +1,10 @@
 package org.totschnig.myexpenses.viewmodel
 
-import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingSource
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import java.math.BigDecimal
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.totschnig.myexpenses.adapter.TradePagingSource
 import org.totschnig.myexpenses.db2.createSplitTransaction
 import org.totschnig.myexpenses.db2.deleteAccount
 import org.totschnig.myexpenses.db2.entities.Transaction
@@ -19,16 +14,13 @@ import org.totschnig.myexpenses.db2.loadTrade
 import org.totschnig.myexpenses.db2.loadTrades
 import org.totschnig.myexpenses.db2.loadTransaction
 import org.totschnig.myexpenses.db2.transactionExists
-import org.totschnig.myexpenses.model.AccountType
 import org.totschnig.myexpenses.model.Money
 import org.totschnig.myexpenses.model.generateUuid
 import org.totschnig.myexpenses.model.sort.SortDirection
 import org.totschnig.myexpenses.provider.KEY_AMOUNT
 import org.totschnig.myexpenses.provider.KEY_DATE
 import org.totschnig.myexpenses.provider.SPLIT_CATID
-import org.totschnig.myexpenses.provider.filter.Criterion
 import org.totschnig.myexpenses.viewmodel.data.FundingSource
-import org.totschnig.myexpenses.viewmodel.data.PageAccount
 import org.totschnig.myexpenses.viewmodel.data.Trade
 import org.totschnig.myexpenses.viewmodel.data.TradeType
 
@@ -204,63 +196,6 @@ class TradeLoadTest : BaseTradeTest() {
         assertThat(
             repository.loadTrades(ids, KEY_DATE to SortDirection.ASC).principals()
         ).containsExactly(30000L, 20000L, 10000L).inOrder()
-    }
-
-    // Paging
-
-    private fun load(
-        sortBy: String = KEY_DATE,
-        sortDirection: SortDirection = SortDirection.DESC,
-        key: Int? = null,
-        loadSize: Int = 2
-    ): PagingSource.LoadResult.Page<Int, Trade> = runBlocking {
-        val source = TradePagingSource(
-            application,
-            repository,
-            PageAccount(
-                id = portfolio.id,
-                type = AccountType.INVESTMENT,
-                sortBy = sortBy,
-                sortDirection = sortDirection,
-                currencyUnit = home,
-                label = portfolio.label
-            ),
-            MutableStateFlow<Criterion?>(null),
-            2,
-            viewModel.viewModelScope
-        )
-        try {
-            source.load(PagingSource.LoadParams.Refresh(key, loadSize, true))
-                as PagingSource.LoadResult.Page<Int, Trade>
-        } finally {
-            source.clear()
-        }
-    }
-
-    @Test
-    fun pagesFollowTheDateOrderAndCountWhatIsLeft() {
-        saveThreeTrades()
-        val first = load()
-        assertThat(first.data.principals()).containsExactly(10000L, 20000L).inOrder()
-        assertThat(first.prevKey).isNull()
-        assertThat(first.nextKey).isEqualTo(2)
-        assertThat(first.itemsBefore).isEqualTo(0)
-        assertThat(first.itemsAfter).isEqualTo(1)
-        val second = load(key = 2)
-        assertThat(second.data.principals()).containsExactly(30000L)
-        assertThat(second.prevKey).isEqualTo(0)
-        assertThat(second.nextKey).isNull()
-        assertThat(second.itemsBefore).isEqualTo(2)
-        assertThat(second.itemsAfter).isEqualTo(0)
-    }
-
-    @Test
-    fun sortingByAmountLoadsEverythingOnOnePage() {
-        saveThreeTrades()
-        val page = load(sortBy = KEY_AMOUNT, sortDirection = SortDirection.ASC)
-        assertThat(page.data.principals()).containsExactly(10000L, 20000L, 30000L).inOrder()
-        assertThat(page.prevKey).isNull()
-        assertThat(page.nextKey).isNull()
     }
 
     // Deleting

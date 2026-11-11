@@ -9,11 +9,6 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import app.cash.copper.flow.mapToList
 import app.cash.copper.flow.observeQuery
 import arrow.core.Tuple4
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,12 +29,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.StartScreen
-import org.totschnig.myexpenses.adapter.ClearingLastPagingSourceFactory
-import org.totschnig.myexpenses.adapter.TradePagingSource
 import org.totschnig.myexpenses.compose.transactions.Action
 import org.totschnig.myexpenses.db2.createAccount
-import org.totschnig.myexpenses.viewmodel.data.CategoryRef
-import org.totschnig.myexpenses.db2.loadTrade
 import org.totschnig.myexpenses.db2.setBalanceType
 import org.totschnig.myexpenses.db2.storeExchangeRate
 import org.totschnig.myexpenses.db2.TradeSaver
@@ -53,7 +44,6 @@ import org.totschnig.myexpenses.model.BalanceType
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model.Grouping
-import org.totschnig.myexpenses.model.Money
 import org.totschnig.myexpenses.model.sort.Sort
 import org.totschnig.myexpenses.model.sort.TransactionSort
 import org.totschnig.myexpenses.model2.Account
@@ -65,20 +55,15 @@ import org.totschnig.myexpenses.preference.enumValueOrDefault
 import org.totschnig.myexpenses.provider.DataBaseAccount.Companion.GROUPING_AGGREGATE
 import org.totschnig.myexpenses.provider.DataBaseAccount.Companion.HOME_AGGREGATE_ID
 import org.totschnig.myexpenses.provider.DataBaseAccount.Companion.SORT_BY_AGGREGATE
-import org.totschnig.myexpenses.provider.KEY_ACCOUNTID
 import org.totschnig.myexpenses.provider.KEY_COLOR
 import org.totschnig.myexpenses.provider.KEY_CURRENCY
 import org.totschnig.myexpenses.provider.KEY_DATE
-import org.totschnig.myexpenses.provider.KEY_DISPLAY_AMOUNT
 import org.totschnig.myexpenses.provider.KEY_DYNAMIC
 import org.totschnig.myexpenses.provider.KEY_LABEL
-import org.totschnig.myexpenses.provider.KEY_PARENTID
 import org.totschnig.myexpenses.provider.KEY_ROWID
-import org.totschnig.myexpenses.provider.KEY_TRANSFER_PEER
 import org.totschnig.myexpenses.provider.PORTFOLIO_CONTAINER
 import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.provider.TransactionProvider.ACCOUNTS_URI
-import org.totschnig.myexpenses.provider.TransactionProvider.QUERY_PARAMETER_SEARCH
 import org.totschnig.myexpenses.provider.mapToListCatching
 import org.totschnig.myexpenses.provider.triggerAccountListRefresh
 import org.totschnig.myexpenses.util.enumValueOrDefault
@@ -86,14 +71,8 @@ import org.totschnig.myexpenses.viewmodel.data.AggregateAccount
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.viewmodel.data.FullAccount.Companion.fromCursor
 import org.totschnig.myexpenses.viewmodel.data.FullAccount.Companion.nest
-import org.totschnig.myexpenses.viewmodel.data.PageAccount
-import org.totschnig.myexpenses.viewmodel.data.Trade
 import org.totschnig.myexpenses.viewmodel.data.TradeIntent
-import org.totschnig.myexpenses.viewmodel.data.Transaction2
 import timber.log.Timber
-import java.math.BigDecimal
-import java.time.LocalDateTime
-import java.time.ZoneId
 
 enum class AccountsScreenTab(@param:StringRes val resourceId: Int) {
     LIST(R.string.accounts),
@@ -109,20 +88,7 @@ open class MainViewModel(
     private val _intentEvents = MutableSharedFlow<Intent>(replay = 1)
     val intentEvents = _intentEvents.asSharedFlow()
 
-    private val _tradeToEdit = MutableStateFlow<Trade?>(null)
-    val tradeToEdit = _tradeToEdit.asStateFlow()
-
     private val tradeSaver by lazy { TradeSaver(repository, localizedContext) }
-
-    private val _lastTradeFeeCategories = MutableStateFlow<List<CategoryRef>>(emptyList())
-    val lastTradeFeeCategories: StateFlow<List<CategoryRef>> by lazy {
-        viewModelScope.launch(coroutineDispatcher) {
-            tradeSaver.loadLastFeeCategories().takeIf { it.isNotEmpty() }?.let {
-                _lastTradeFeeCategories.value = it
-            }
-        }
-        _lastTradeFeeCategories.asStateFlow()
-    }
 
     fun handleIntent(intent: Intent) {
         viewModelScope.launch {
@@ -171,14 +137,6 @@ open class MainViewModel(
             dataStore,
             stringPreferencesKey("lastAction"),
             Action.Expense
-        )
-    }
-
-    val lastActionPortfolio by lazy {
-        EnumPreferenceAccessor(
-            dataStore,
-            stringPreferencesKey("lastActionPortfolio"),
-            Action.Buy
         )
     }
 
@@ -375,9 +333,6 @@ open class MainViewModel(
             !hasAny || licenceHandler.hasAccessTo(ContribFeature.PORTFOLIO)
         }.stateIn(viewModelScope, SharingStarted.whileSubscribedWithTimeout, true)
     }
-
-    val canAddMultipleCostLegs: Boolean
-        get() = licenceHandler.hasAccessTo(ContribFeature.PORTFOLIO)
 
     val groupingMap: Map<String, PreferenceAccessor<Grouping, String>> = lazyMap {
         EnumPreferenceAccessor(
@@ -616,68 +571,6 @@ open class MainViewModel(
             MenuItem.mapper
         )
 
-    fun findMatchingTransactions(
-        accountId: Long,
-        totalOutlay: BigDecimal,
-        date: LocalDateTime,
-        currencyUnit: CurrencyUnit,
-        isBuy: Boolean,
-    ): Flow<List<Transaction2>> {
-        val targetAmount = if (isBuy) totalOutlay.negate() else totalOutlay
-        val amountMinor =
-            Money.buildWithMajor(currencyUnit, targetAmount).getOrNull()?.amountMinor ?: 0L
-
-        val startOfDay = date.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toEpochSecond()
-        val endOfDay =
-            date.toLocalDate().plusDays(1).atStartOfDay(ZoneId.systemDefault()).toEpochSecond() - 1
-
-        return contentResolver.observeQuery(
-            projection = Transaction2.projection(
-                isAggregate = false,
-                grouping = Grouping.NONE,
-                prefHandler = prefHandler,
-            ),
-            uri = TransactionProvider.EXTENDED_URI.buildUpon()
-                .appendQueryParameter(QUERY_PARAMETER_SEARCH, "1").build(),
-            selection = "$KEY_ACCOUNTID = ? AND $KEY_DISPLAY_AMOUNT = ? AND $KEY_DATE BETWEEN ? AND ? " +
-                    "AND $KEY_TRANSFER_PEER IS NULL AND $KEY_PARENTID IS NULL",
-            selectionArgs = arrayOf(
-                accountId.toString(),
-                amountMinor.toString(),
-                startOfDay.toString(),
-                endOfDay.toString()
-            )
-        ).mapToList { cursor ->
-            Transaction2.fromCursor(
-                currencyContext = currencyContext,
-                cursor = cursor,
-                tags = tags.value,
-                grouping = Grouping.NONE
-            )
-        }
-    }
-
-    fun saveTrade(currentAccount: FullAccount, intent: TradeIntent) {
-        viewModelScope.launch(coroutineDispatcher) {
-            saveTrades(currentAccount, listOf(intent))
-            _tradeToEdit.value = null
-        }
-    }
-
-    fun loadTrade(transactionId: Long) {
-        viewModelScope.launch(coroutineDispatcher) {
-            _tradeToEdit.value = repository.loadTrade(transactionId)
-        }
-    }
-
-    fun editTrade(trade: Trade) {
-        _tradeToEdit.value = trade
-    }
-
-    fun clearTradeToEdit() {
-        _tradeToEdit.value = null
-    }
-
     suspend fun saveTrades(
         currentAccount: FullAccount,
         intents: List<TradeIntent>,
@@ -685,45 +578,6 @@ open class MainViewModel(
     ) {
         withContext(coroutineDispatcher) {
             tradeSaver.saveTrades(currentAccount, intents, onProgress)
-        }?.let { _lastTradeFeeCategories.value = it }
-    }
-
-    private data class TradePagerInfo(
-        val factory: ClearingLastPagingSourceFactory<Int, Trade, *>,
-        val flow: Flow<PagingData<Trade>>,
-    )
-
-    private val tradePagerCache = mutableMapOf<Long, TradePagerInfo>()
-
-    fun getTrades(account: PageAccount): Flow<PagingData<Trade>> {
-        val stableId = account.id
-        val queryKey = account.queryKey
-
-        val existingQueryKey = currentQueryKeys[stableId]
-        if (existingQueryKey != queryKey) {
-            // Sort order or grouping changed: Recreate Pager and clear old factory
-            tradePagerCache[stableId]?.factory?.clear()
-            val factory: ClearingLastPagingSourceFactory<Int, Trade, TradePagingSource> =
-                ClearingLastPagingSourceFactory {
-                    TradePagingSource(
-                        getApplication(),
-                        repository,
-                        account,
-                        filterPersistence.getValue(account.id).whereFilter,
-                        PAGE_SIZE,
-                        viewModelScope
-                    )
-                }
-            val flow = Pager(
-                config = PagingConfig(
-                    pageSize = PAGE_SIZE,
-                    enablePlaceholders = true
-                ),
-                pagingSourceFactory = factory
-            ).flow.cachedIn(viewModelScope)
-            tradePagerCache[stableId] = TradePagerInfo(factory, flow)
-            currentQueryKeys[stableId] = queryKey
         }
-        return tradePagerCache.getValue(stableId).flow
     }
 }

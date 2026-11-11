@@ -455,16 +455,6 @@ class TradeSaveTest : BaseTradeTest() {
         assertThat(storedPrice(TRADE_DATE)?.toDouble()).isEqualTo(150.0)
     }
 
-    @Test
-    fun tradeToEditFollowsLoadAndSave() {
-        save(tradeIntent())
-        val tradeId = tradeIds().single()
-        viewModel.loadTrade(tradeId)
-        assertThat(viewModel.tradeToEdit.value).isEqualTo(repository.loadTrade(tradeId))
-        viewModel.saveTrade(portfolio, tradeIntent(tradeId = tradeId))
-        assertThat(viewModel.tradeToEdit.value).isNull()
-    }
-
     // Transfer between portfolios
 
     @Test

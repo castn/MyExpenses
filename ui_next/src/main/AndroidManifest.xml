@@ -26,5 +26,9 @@
             android:name="org.totschnig.myexpenses.next.transactions.TemplatesActivity"
             android:parentActivityName="org.totschnig.myexpenses.next.MainActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="org.totschnig.myexpenses.next.portfolio.TradeEditorActivity"
+            android:parentActivityName="org.totschnig.myexpenses.next.MainActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 </manifest>

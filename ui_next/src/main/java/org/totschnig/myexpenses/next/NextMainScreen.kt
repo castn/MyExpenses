@@ -77,8 +77,6 @@ import org.totschnig.myexpenses.compose.main.AppEvent
 import org.totschnig.myexpenses.compose.main.AppEventHandler
 import org.totschnig.myexpenses.dialog.MenuItem
 import org.totschnig.myexpenses.model.AccountGrouping
-import org.totschnig.myexpenses.model.CommodityType
-import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.preference.PreferenceState
 import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.viewmodel.AccountsScreenTab
@@ -103,7 +101,6 @@ suspend fun ThreePaneScaffoldNavigator<*>.navigateToRoot(pane: ThreePaneScaffold
 fun NextMainScreen(
     viewModel: MainViewModel,
     accounts: List<FullAccount>,
-    allCurrencies: List<CurrencyUnit>,
     selectedAccountId: Long,
     onAppEvent: AppEventHandler,
     onAccountEvent: AccountEventHandler,
@@ -112,14 +109,6 @@ fun NextMainScreen(
     bankIcon: (@Composable (Modifier, Long) -> Unit)? = null,
     adView: @Composable (MutableState<Boolean>) -> Unit,
     isNavigationVisible: Boolean,
-    isCurrencyUsed: suspend (String) -> Boolean = { false },
-    onCreateAsset: suspend (
-        code: String,
-        symbol: String,
-        fractionDigits: Int,
-        label: String?,
-        commodityType: CommodityType
-    ) -> CurrencyUnit? = { _, _, _, _, _ -> null },
     pageContent: @Composable (pageAccount: PageAccount, isCurrent: Boolean) -> Unit,
     transactionList: @Composable (PageAccount, TransactionSearch) -> Unit,
     /** Lists of transactions outside of the accounts, for the pages of the areas */
@@ -295,7 +284,6 @@ fun NextMainScreen(
                                 useNextBar = useNextBar,
                                 accounts = accounts,
                                 accountGrouping = accountGrouping,
-                                allCurrencies = allCurrencies,
                                 selectedAccountId = selectedAccountId,
                                 features = features,
                                 navigation = navigation,
@@ -304,8 +292,6 @@ fun NextMainScreen(
                                 onAccountEvent = onAccountEvent,
                                 onPrepareContextMenuItem = onPrepareContextMenuItem,
                                 onPrepareMenuItem = onPrepareMenuItem,
-                                isCurrencyUsed = isCurrencyUsed,
-                                onCreateAsset = onCreateAsset,
                                 pageContent = pageContent,
                                 transactionList = transactionList
                             )
@@ -354,7 +340,6 @@ private fun AccountPanes(
     useNextBar: Boolean,
     accounts: List<FullAccount>,
     accountGrouping: AccountGrouping<*>,
-    allCurrencies: List<CurrencyUnit>,
     selectedAccountId: Long,
     features: List<NextFeature>,
     navigation: NextNavigation,
@@ -363,14 +348,6 @@ private fun AccountPanes(
     onAccountEvent: AccountEventHandler,
     onPrepareContextMenuItem: (itemId: Int) -> Boolean,
     onPrepareMenuItem: (itemId: Int) -> Boolean,
-    isCurrencyUsed: suspend (String) -> Boolean,
-    onCreateAsset: suspend (
-        code: String,
-        symbol: String,
-        fractionDigits: Int,
-        label: String?,
-        commodityType: CommodityType
-    ) -> CurrencyUnit?,
     pageContent: @Composable (pageAccount: PageAccount, isCurrent: Boolean) -> Unit,
     transactionList: @Composable (PageAccount, TransactionSearch) -> Unit,
 ) {
@@ -435,9 +412,6 @@ private fun AccountPanes(
                         onPrepareMenuItem = onPrepareMenuItem,
                         pageContent = pageContent,
                         transactionList = transactionList,
-                        allCurrencies = allCurrencies,
-                        isCurrencyUsed = isCurrencyUsed,
-                        onCreateAsset = onCreateAsset,
                         windowInsets = with(customInsets) {
                             if (is2Pane) only(WindowInsetsSides.Vertical + WindowInsetsSides.End) else this
                         },

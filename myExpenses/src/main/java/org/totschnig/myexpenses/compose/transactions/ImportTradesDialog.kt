@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,13 +14,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
@@ -38,11 +47,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import kotlinx.coroutines.launch
 import org.totschnig.myexpenses.R
+import org.totschnig.myexpenses.compose.AmountText
 import org.totschnig.myexpenses.io.ImportDateFormat
 import org.totschnig.myexpenses.io.ImportTradesParseResult
 import org.totschnig.myexpenses.io.ImportTradesParser
@@ -309,4 +321,89 @@ fun ImportTradesDialog(
             }
         }
     }
+}
+
+/** Where the money of the imported trades comes from, as the trade screen offered it */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun FundingSourceSelector(
+    label: String,
+    portfolio: FullAccount,
+    selectedSource: FundingSource,
+    selectedAccountId: Long?,
+    accounts: List<Pair<Long, String>>,
+    onSourceSelected: (FundingSource, Long?) -> Unit,
+    showPortfolio: Boolean = true
+) {
+    var expanded by remember { mutableStateOf(false) }
+    val portfolioLabel = stringResource(R.string.trade_funding_portfolio)
+    val selectedText = when (selectedSource) {
+        FundingSource.PORTFOLIO -> "$portfolioLabel (${portfolio.label})"
+        FundingSource.EXTERNAL -> stringResource(R.string.trade_funding_external_description)
+        FundingSource.ACCOUNT -> accounts.find { it.first == selectedAccountId }?.second.orEmpty()
+    }
+    fun select(source: FundingSource, accountId: Long?) {
+        onSourceSelected(source, accountId)
+        expanded = false
+    }
+    ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
+        OutlinedTextField(
+            value = selectedText,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(label) },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            modifier = Modifier
+                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
+                .fillMaxWidth()
+        )
+        ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            if (showPortfolio) {
+                val cash = portfolio.children.find { it.type.isCashAccount }?.currentBalance ?: 0L
+                val isSelected = selectedSource == FundingSource.PORTFOLIO
+                val onClick = { select(FundingSource.PORTFOLIO, null) }
+                FundingItem(isSelected, onClick) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column {
+                            Text(portfolioLabel)
+                            Text(portfolio.label, style = MaterialTheme.typography.labelSmall)
+                        }
+                        AmountText(amount = cash, currency = portfolio.currencyUnit)
+                    }
+                }
+            }
+            val isExternal = selectedSource == FundingSource.EXTERNAL
+            val onExternal = { select(FundingSource.EXTERNAL, null) }
+            FundingItem(isExternal, onExternal) {
+                Text(
+                    stringResource(R.string.trade_funding_external_description),
+                    style = MaterialTheme.typography.labelSmall
+                )
+            }
+            HorizontalDivider()
+            accounts.forEach { (id, accountLabel) ->
+                val isSelected = selectedSource == FundingSource.ACCOUNT && selectedAccountId == id
+                val onClick = { select(FundingSource.ACCOUNT, id) }
+                FundingItem(isSelected, onClick) { Text(accountLabel) }
+            }
+        }
+    }
+}
+
+@Composable
+private fun FundingItem(isSelected: Boolean, onClick: () -> Unit, text: @Composable () -> Unit) {
+    DropdownMenuItem(
+        modifier = Modifier.semantics { selected = isSelected },
+        text = text,
+        leadingIcon = if (isSelected) {
+            { Icon(Icons.Default.Check, contentDescription = null) }
+        } else {
+            null
+        },
+        onClick = onClick
+    )
 }

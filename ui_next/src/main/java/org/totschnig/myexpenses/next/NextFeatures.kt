@@ -13,6 +13,7 @@ import org.totschnig.myexpenses.next.guidance.GuidanceFeature
 import org.totschnig.myexpenses.next.guidance.HintSettings
 import org.totschnig.myexpenses.next.merchants.MerchantSettings
 import org.totschnig.myexpenses.next.merchants.MerchantsFeature
+import org.totschnig.myexpenses.next.portfolio.PortfolioFeature
 import org.totschnig.myexpenses.next.receipts.ReceiptSettings
 import org.totschnig.myexpenses.next.receipts.ReceiptsFeature
 import org.totschnig.myexpenses.next.tags.TagsFeature
@@ -39,6 +40,7 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
             tags.TagField(tagIds, onChange)
         }
     val budgets = BudgetsFeature(activity, data)
+    val portfolio = PortfolioFeature(activity)
     val guidance = GuidanceFeature(activity, data, { categories.isAsking() }, explained = NextKey.Analysis)
     val savingTips = SavingTipsFeature(activity, data, contracts, tags) { guidance.PendingTips(it) }
     val analysis = AnalysisFeature(activity, data, guidance)

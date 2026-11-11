@@ -1,0 +1,48 @@
+@startuml
+' The trades of portfolios, see README.md
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+package "shell (:ui_next, next.portfolio)" {
+  [MainActivity] as main
+  [PortfolioFeature] as feature
+  [TradeEditorActivity] as activity
+  [RepositoryTradeStore] as storeImpl
+}
+
+package ":next:feature:portfolio" {
+  [PortfolioTradesFlow] as list
+  [PortfolioTradesViewModel] as listVm
+  [TradeEditorFlow] as editor
+  [TradeForm] as form
+  [AssetDialog] as assetDialog
+  [TradeEditViewModel] as editVm
+}
+
+package ":next:data:portfolio" {
+  interface TradeStore as store
+  [TradeDraft rules\nfigures, withKind, withAsset,\ntoValues, matchQuery, linkAfter] as rules
+}
+
+package ":myExpenses" {
+  [TradeSaver] as saver
+  [Repository\nloadTrades, loadTrade] as repository
+  [BaseMyExpenses\neditTrade, delete] as base
+}
+
+main --> feature : page of a portfolio
+main --> activity : plus button, edit
+base --> activity : details of a trade
+feature --> list
+list --> listVm
+activity --> editor
+editor --> form
+form --> assetDialog
+editor --> editVm
+editVm --> rules
+listVm --> store
+editVm --> store
+storeImpl ..|> store
+storeImpl --> saver
+storeImpl --> repository
+@enduml

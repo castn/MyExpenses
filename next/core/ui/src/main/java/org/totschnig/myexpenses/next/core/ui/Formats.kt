@@ -2,6 +2,7 @@ package org.totschnig.myexpenses.next.core.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import java.math.BigDecimal
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -41,3 +42,21 @@ fun rememberAxisAmountFormat(currency: CurrencyInfo): (Double) -> String = remem
     val divisor = Math.pow(10.0, currency.fractionDigits.toDouble())
     return@remember { amount: Double -> format.format(amount / divisor) }
 }
+
+/** Times of day in the style of the locale, e.g. "14:30" */
+@Composable
+fun rememberTimeFormatter(): DateTimeFormatter =
+    remember { DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT) }
+
+/**
+ * Numbers that are no amount of a currency, e.g. a quantity of shares or a price per unit, with
+ * grouping and up to [maxFractionDigits] decimals, without trailing zeros
+ */
+@Composable
+fun rememberNumberFormat(maxFractionDigits: Int = 8): (BigDecimal) -> String =
+    remember(maxFractionDigits) {
+        val format = NumberFormat.getNumberInstance()
+        format.maximumFractionDigits = maxFractionDigits
+        val formatNumber: (BigDecimal) -> String = { format.format(it) }
+        formatNumber
+    }
