@@ -1,4 +1,4 @@
-package org.totschnig.myexpenses.next.transactions
+package org.totschnig.myexpenses.next.data.transactions
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -7,7 +7,7 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.time.ZoneOffset
 
-class TransactionEditingTest {
+class TransactionValuesTest {
 
     private val zone: ZoneId = ZoneOffset.UTC
 

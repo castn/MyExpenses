@@ -1,4 +1,4 @@
-package org.totschnig.myexpenses.next.transactions
+package org.totschnig.myexpenses.next.data.transactions
 
 import java.io.Serializable
 import java.math.BigDecimal
@@ -48,24 +48,6 @@ data class EditableTransaction(
 /** A payment method to choose from */
 data class MethodOption(val id: Long, val label: String)
 
-/**
- * What is typed in the edit mode of the details. Kept as typed, so that an amount that cannot be
- * read yet survives, and [Serializable] for the saved state.
- */
-data class EditDraft(
-    val id: Long,
-    val amountText: String,
-    val isIncome: Boolean,
-    val day: LocalDate,
-    val payee: String,
-    val methodId: Long?,
-    val comment: String,
-) : Serializable {
-    private companion object {
-        private const val serialVersionUID = 1L
-    }
-}
-
 /** Which value a quick change in the details changed, for the text of its undo */
 enum class ChangedField { COMMENT, DATE, METHOD, ALL }
 
@@ -94,31 +76,6 @@ fun parseAmountText(text: String, fractionDigits: Int): Long? {
 /** [amount] in minor units as typed in the edit mode: without sign and grouping */
 fun formatAmountText(amount: Long, fractionDigits: Int, decimalSeparator: Char): String =
     BigDecimal.valueOf(amount.absoluteValue, fractionDigits).toPlainString().replace('.', decimalSeparator)
-
-/** The draft of the edit mode for [transaction] */
-fun EditableTransaction.toDraft(decimalSeparator: Char, zone: ZoneId) = EditDraft(
-    id = id,
-    amountText = formatAmountText(values.amount, fractionDigits, decimalSeparator),
-    isIncome = values.amount > 0,
-    day = values.date.toDay(zone),
-    payee = values.payee.orEmpty(),
-    methodId = values.methodId,
-    comment = values.comment.orEmpty(),
-)
-
-/** The values of [draft] applied to [values], null if its amount cannot be read */
-fun EditableTransaction.apply(draft: EditDraft, zone: ZoneId): EditValues? {
-    val amount = if (isAmountEditable) {
-        val typed = parseAmountText(draft.amountText, fractionDigits) ?: return null
-        if (draft.isIncome) typed else -typed
-    } else values.amount
-    return values.withDay(draft.day, zone).copy(
-        amount = amount,
-        payee = draft.payee.trim().ifEmpty { null },
-        methodId = draft.methodId,
-        comment = draft.comment.trim().ifEmpty { null },
-    )
-}
 
 /** [EditValues] moved to [day], keeping the time; the value date moves along if it was the same day */
 fun EditValues.withDay(day: LocalDate, zone: ZoneId): EditValues {

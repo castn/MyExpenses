@@ -19,6 +19,7 @@ import org.totschnig.myexpenses.next.tags.TagSettings
 import org.totschnig.myexpenses.next.settings.AreaSettings
 import org.totschnig.myexpenses.next.settings.NextSettings
 import org.totschnig.myexpenses.next.tips.SavingTipsFeature
+import org.totschnig.myexpenses.next.transactions.TransactionsFeature
 
 /**
  * The features of the new UI, the only place that lists them. A feature needs the features it is
@@ -31,6 +32,7 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
     val balance = BalanceFeature(activity, data, contracts)
     val categories = CategoriesFeature(activity, data)
     val tags = TagsFeature(activity, data)
+    val transactions = TransactionsFeature(activity)
     val budgets = BudgetsFeature(activity, data)
     val guidance = GuidanceFeature(activity, data, { categories.isAsking() }, explained = NextKey.Analysis)
     val savingTips = SavingTipsFeature(activity, data, contracts, tags) { guidance.PendingTips(it) }

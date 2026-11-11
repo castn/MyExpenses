@@ -11,6 +11,10 @@ import org.totschnig.myexpenses.db2.requireParty
 import org.totschnig.myexpenses.db2.updateTransaction
 import org.totschnig.myexpenses.model.CrStatus
 import org.totschnig.myexpenses.model.PreDefinedPaymentMethod.Companion.translateIfPredefined
+import org.totschnig.myexpenses.next.data.transactions.EditValues
+import org.totschnig.myexpenses.next.data.transactions.EditableTransaction
+import org.totschnig.myexpenses.next.data.transactions.MethodOption
+import org.totschnig.myexpenses.next.data.transactions.TransactionStore
 import org.totschnig.myexpenses.provider.KEY_LABEL
 import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.provider.STATUS_ARCHIVE
@@ -19,20 +23,6 @@ import org.totschnig.myexpenses.provider.getLong
 import org.totschnig.myexpenses.provider.getString
 import org.totschnig.myexpenses.provider.useAndMapToList
 import org.totschnig.myexpenses.viewmodel.data.Transaction2
-
-/** Loads and saves what the details of a transaction can change */
-interface TransactionStore {
-    /**
-     * Null if the details cannot change it: a split, a transfer, a part of a split, cancelled, an archive,
-     * or in a closed account. These are left to the classic form.
-     */
-    suspend fun load(id: Long): EditableTransaction?
-
-    /** The payment methods of accounts of [accountType], for income or for expenses */
-    suspend fun methods(accountType: Long, isIncome: Boolean): List<MethodOption>
-
-    suspend fun save(id: Long, values: EditValues)
-}
 
 /** [TransactionStore] on the database of the app */
 class RepositoryTransactionStore(private val repository: Repository) : TransactionStore {
@@ -72,10 +62,10 @@ class RepositoryTransactionStore(private val repository: Repository) : Transacti
 
     override suspend fun save(id: Long, values: EditValues) {
         val data = repository.loadTransaction(id, withTransfer = false).data
-        val payeeId = when (values.payee) {
+        val payeeId = when (val payee = values.payee) {
             data.payeeName ?: data.payeeId?.let { repository.getPartyName(it) } -> data.payeeId
             null -> null
-            else -> repository.requireParty(values.payee)
+            else -> repository.requireParty(payee)
         }
         repository.updateTransaction(
             data.copy(

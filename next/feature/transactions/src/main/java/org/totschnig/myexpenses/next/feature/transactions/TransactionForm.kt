@@ -1,4 +1,4 @@
-package org.totschnig.myexpenses.next
+package org.totschnig.myexpenses.next.feature.transactions
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,13 +26,11 @@ import org.totschnig.myexpenses.designsystem.SingleChoiceDialog
 import org.totschnig.myexpenses.designsystem.Spacing
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
-import org.totschnig.myexpenses.next.transactions.ChangedField
-import org.totschnig.myexpenses.next.transactions.EditDraft
-import org.totschnig.myexpenses.next.transactions.EditableTransaction
-import org.totschnig.myexpenses.next.transactions.MethodOption
-import org.totschnig.myexpenses.next.transactions.TransactionEditActions
-import org.totschnig.myexpenses.next.transactions.TransactionEditState
-import org.totschnig.myexpenses.next.transactions.differsInBankFields
+import org.totschnig.myexpenses.next.data.transactions.ChangedField
+import org.totschnig.myexpenses.next.data.transactions.EditDraft
+import org.totschnig.myexpenses.next.data.transactions.EditableTransaction
+import org.totschnig.myexpenses.next.data.transactions.MethodOption
+import org.totschnig.myexpenses.next.data.transactions.differsInBankFields
 import java.time.ZoneId
 import java.time.format.FormatStyle
 
@@ -43,7 +41,7 @@ import java.time.format.FormatStyle
  * @param currencySymbol after the amount
  */
 @Composable
-internal fun TransactionEditForm(
+fun TransactionEditForm(
     transaction: EditableTransaction,
     draft: EditDraft,
     methods: List<MethodOption>,
@@ -134,7 +132,7 @@ internal fun TransactionEditForm(
 
 /** Picks one of [methods] or none */
 @Composable
-internal fun MethodDialog(
+fun MethodDialog(
     methods: List<MethodOption>,
     selectedId: Long?,
     onSelect: (Long?) -> Unit,
@@ -159,7 +157,7 @@ internal fun MethodDialog(
  * transaction from the bank import it also tells when the change no longer matches the bank.
  */
 @Composable
-internal fun UndoSnackbar(state: TransactionEditState, actions: TransactionEditActions, host: SnackbarHostState) {
+fun UndoSnackbar(state: TransactionEditState, actions: TransactionEditActions, host: SnackbarHostState) {
     val undo = state.undo ?: return
     val saved = stringResource(
         when (undo.field) {

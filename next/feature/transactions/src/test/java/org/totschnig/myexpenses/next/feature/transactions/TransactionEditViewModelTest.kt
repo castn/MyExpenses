@@ -1,4 +1,4 @@
-package org.totschnig.myexpenses.next.transactions
+package org.totschnig.myexpenses.next.feature.transactions
 
 import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +13,11 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.totschnig.myexpenses.next.data.transactions.ChangedField
+import org.totschnig.myexpenses.next.data.transactions.EditValues
+import org.totschnig.myexpenses.next.data.transactions.EditableTransaction
+import org.totschnig.myexpenses.next.data.transactions.MethodOption
+import org.totschnig.myexpenses.next.data.transactions.TransactionStore
 import java.time.LocalDate
 import java.time.ZoneOffset
 
@@ -155,3 +160,19 @@ class TransactionEditViewModelTest {
         assertNull(restored.state.value.draft)
     }
 }
+
+private fun transaction(id: Long = 1) = EditableTransaction(
+    id = id,
+    values = EditValues(
+        amount = -4290,
+        date = LocalDate.of(2026, 3, 1).atTime(12, 0).toEpochSecond(ZoneOffset.UTC),
+        valueDate = LocalDate.of(2026, 3, 1).atTime(12, 0).toEpochSecond(ZoneOffset.UTC),
+        payee = "REWE",
+        methodId = null,
+        comment = null,
+    ),
+    fractionDigits = 2,
+    accountType = 1,
+    isAmountEditable = true,
+    isImported = false,
+)

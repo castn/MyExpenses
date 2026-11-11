@@ -1,4 +1,4 @@
-package org.totschnig.myexpenses.next
+package org.totschnig.myexpenses.next.transactions
 
 import org.totschnig.myexpenses.next.core.ui.merchants.TransactionTile
 import androidx.compose.foundation.layout.Arrangement
@@ -38,10 +38,14 @@ import org.totschnig.myexpenses.designsystem.EditableTile
 import org.totschnig.myexpenses.designsystem.InfoRow
 import org.totschnig.myexpenses.designsystem.Spacing
 import org.totschnig.myexpenses.designsystem.TextDialog
-import org.totschnig.myexpenses.next.transactions.EditableTransaction
-import org.totschnig.myexpenses.next.transactions.TransactionEditActions
-import org.totschnig.myexpenses.next.transactions.TransactionEditState
-import org.totschnig.myexpenses.next.transactions.isEditableInDetails
+import org.totschnig.myexpenses.next.MenuActionSheet
+import org.totschnig.myexpenses.next.SignedAmount
+import org.totschnig.myexpenses.next.data.transactions.EditableTransaction
+import org.totschnig.myexpenses.next.feature.transactions.MethodDialog
+import org.totschnig.myexpenses.next.feature.transactions.TransactionEditForm
+import org.totschnig.myexpenses.next.feature.transactions.UndoSnackbar
+import org.totschnig.myexpenses.next.feature.transactions.TransactionEditActions
+import org.totschnig.myexpenses.next.feature.transactions.TransactionEditState
 import org.totschnig.myexpenses.viewmodel.data.Transaction2
 import java.time.Instant
 import java.time.ZoneId
@@ -52,15 +56,23 @@ import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
 
 /**
+ * What changes transactions from their details: the state and actions of the form, see
+ * [TransactionEditActions]
+ */
+class TransactionEditing(
+    val state: TransactionEditState,
+    val actions: TransactionEditActions
+)
+
+/**
  * Changing the opened transaction from its details
  *
  * @param onEditClassic opens the classic form, for what the details cannot change, e.g. a split
  */
-class DetailsEditing(
-    val state: TransactionEditState,
-    val actions: TransactionEditActions,
-    val onEditClassic: () -> Unit,
-)
+class DetailsEditing(editing: TransactionEditing, val onEditClassic: () -> Unit) {
+    val state = editing.state
+    val actions = editing.actions
+}
 
 /**
  * Details of a transaction in a sheet above the list, the rows straight on the sheet:

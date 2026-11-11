@@ -32,6 +32,7 @@ package "next/data" as pNextData {
     [:receipts] as mNextDataReceipts
     [:tags] as mNextDataTags
     [:tips] as mNextDataTips
+    [:transactions] as mNextDataTransactions
 }
 
 package "next/feature" as pNextFeature {
@@ -45,11 +46,12 @@ package "next/feature" as pNextFeature {
     [:receipts] as mNextFeatureReceipts
     [:tags] as mNextFeatureTags
     [:tips] as mNextFeatureTips
+    [:transactions] as mNextFeatureTransactions
 }
 
 ' Layout only
 mNextDataMerchants -[hidden]--> pNextCore
-mNextFeatureTips -[hidden]--> pNextData
+mNextFeatureTransactions -[hidden]--> pNextData
 
 mUiNext --> pNextFeature
 pNextFeature --> mNextCoreUi
@@ -70,6 +72,7 @@ mNextDataReceipts --> mOcrModel
 mNextDataTags --> mNextDataCategories
 mNextDataTags --> mNextDataContracts
 mNextDataTips --> mNextDataBudgets
+mNextDataTransactions --> mNextCoreCommon
 mNextFeatureAnalysis --> mCharts
 mNextFeatureAnalysis --> mNextDataAnalysis
 mNextFeatureAnalysis --> mNextDataGuidance
@@ -83,5 +86,6 @@ mNextFeatureMerchants --> mNextDataMerchants
 mNextFeatureReceipts --> mNextDataReceipts
 mNextFeatureTags --> mNextDataTags
 mNextFeatureTips --> mNextDataTips
+mNextFeatureTransactions --> mNextDataTransactions
 mUiNext --> mMyExpenses
 @enduml

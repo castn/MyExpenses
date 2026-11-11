@@ -1,4 +1,4 @@
-package org.totschnig.myexpenses.next.transactions
+package org.totschnig.myexpenses.next.feature.transactions
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -14,6 +14,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.ZoneId
+import org.totschnig.myexpenses.next.data.transactions.ChangedField
+import org.totschnig.myexpenses.next.data.transactions.EditDraft
+import org.totschnig.myexpenses.next.data.transactions.EditValues
+import org.totschnig.myexpenses.next.data.transactions.EditableTransaction
+import org.totschnig.myexpenses.next.data.transactions.MethodOption
+import org.totschnig.myexpenses.next.data.transactions.TransactionStore
+import org.totschnig.myexpenses.next.data.transactions.Undo
+import org.totschnig.myexpenses.next.data.transactions.apply
+import org.totschnig.myexpenses.next.data.transactions.toDraft
+import org.totschnig.myexpenses.next.data.transactions.withDay
 
 /**
  * What the details of a transaction show for changing it

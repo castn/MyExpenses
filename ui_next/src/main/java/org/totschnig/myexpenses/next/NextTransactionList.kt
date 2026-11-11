@@ -60,8 +60,9 @@ import org.totschnig.myexpenses.compose.transactions.TransactionEventHandler
 import org.totschnig.myexpenses.compose.transactions.TransactionListContent
 import org.totschnig.myexpenses.compose.transactions.transactionMenu
 import org.totschnig.myexpenses.compose.transactions.voidMarker
-import org.totschnig.myexpenses.next.transactions.TransactionEditActions
-import org.totschnig.myexpenses.next.transactions.TransactionEditState
+import org.totschnig.myexpenses.next.transactions.DetailsEditing
+import org.totschnig.myexpenses.next.transactions.TransactionDetailSheet
+import org.totschnig.myexpenses.next.transactions.TransactionEditing
 import org.totschnig.myexpenses.designsystem.BadgeStyle
 import org.totschnig.myexpenses.designsystem.GroupItem
 import org.totschnig.myexpenses.designsystem.GroupPosition
@@ -100,8 +101,7 @@ import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
  * are not [isReadOnly]
  * @param isMarker whether a tag is a marker (one-off, reimbursed, business) rather than a group,
  * the list shows both kinds apart
- * @param editState what the details of the opened transaction can change, see [TransactionEditActions]
- * @param editActions change the opened transaction from its details, null in lists where it cannot
+ * @param editing changes the opened transaction from its details, null in lists where it cannot
  * be changed
  */
 @Composable
@@ -122,8 +122,7 @@ fun NextTransactionList(
      */
     payeeImageDialog: (@Composable (payee: DisplayParty, transaction: Transaction2?, onDismiss: () -> Unit) -> Unit)? =
         null,
-    editState: TransactionEditState? = null,
-    editActions: TransactionEditActions? = null,
+    editing: TransactionEditing? = null
 ) {
     val lazyPagingItems = content.lazyPagingItems
     var openedId by rememberSaveable { mutableStateOf<Long?>(null) }
@@ -133,14 +132,14 @@ fun NextTransactionList(
             openedId = openedId,
             onClose = {
                 openedId = null
-                editActions?.close()
+                editing?.actions?.close()
             },
             isReadOnly = isReadOnly,
             categoryChip = categoryChip,
             tagChips = tagChips,
             payeeImage = payeeImage,
             payeeImageDialog = payeeImageDialog,
-            editing = if (editState != null && editActions != null && !isReadOnly) editState to editActions else null,
+            editing = editing.takeIf { !isReadOnly },
             detailsContent = detailsContent
         )
     }
@@ -203,7 +202,7 @@ private fun OpenedTransaction(
     tagChips: (Transaction2) -> (@Composable (Modifier) -> Unit)?,
     payeeImage: (payeeId: Long) -> PayeeImage?,
     payeeImageDialog: (@Composable (payee: DisplayParty, transaction: Transaction2?, onDismiss: () -> Unit) -> Unit)?,
-    editing: Pair<TransactionEditState, TransactionEditActions>?,
+    editing: TransactionEditing?,
     detailsContent: @Composable (Transaction2) -> Unit,
 ) {
     // The last version found is kept while the list reloads, e.g. after editing the transaction
@@ -219,7 +218,7 @@ private fun OpenedTransaction(
     logoPayee?.let { payee -> payeeImageDialog?.invoke(payee, opened) { logoPayee = null } }
     val transaction = opened ?: return
     val canEdit = editing != null && content.modificationAllowed
-    if (canEdit) LaunchedEffect(transaction.id) { editing.second.open(transaction.id) }
+    if (canEdit) LaunchedEffect(transaction.id) { editing.actions.open(transaction.id) }
     TransactionDetailSheet(
         transaction = transaction,
         image = transaction.party?.id?.let(payeeImage),
@@ -246,8 +245,7 @@ private fun OpenedTransaction(
         categoryChip = categoryChip(transaction),
         tagChips = tagChips(transaction).takeIf { !isReadOnly },
         editing = if (canEdit) DetailsEditing(
-            state = editing.first,
-            actions = editing.second,
+            editing = editing,
             onEditClassic = { content.onEvent(TransactionEvent.Edit, transaction) }
         ) else null
     ) {

@@ -43,7 +43,6 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.paging.compose.collectAsLazyPagingItems
 import java.math.RoundingMode
-import java.text.DecimalFormatSymbols
 import java.util.Optional
 import kotlinx.coroutines.launch
 import org.totschnig.myexpenses.R
@@ -81,9 +80,8 @@ import org.totschnig.myexpenses.next.settings.NextSettings
 import org.totschnig.myexpenses.next.settings.SettingsGroup
 import org.totschnig.myexpenses.next.transactions.AppFixedTransactions
 import org.totschnig.myexpenses.next.transactions.FixedTransactionsViewModel
-import org.totschnig.myexpenses.next.transactions.RepositoryTransactionStore
 import org.totschnig.myexpenses.next.transactions.TransactionActions
-import org.totschnig.myexpenses.next.transactions.TransactionEditViewModel
+import org.totschnig.myexpenses.next.transactions.TransactionEditing
 import org.totschnig.myexpenses.next.transactions.toShown
 import org.totschnig.myexpenses.preference.isOnboardingCompleted
 import org.totschnig.myexpenses.provider.KEY_COMMODITY
@@ -141,13 +139,7 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
     }
 
     // Changes transactions from their details, see [TransactionEditActions]
-    private val transactionEditViewModel by viewModelsOf {
-        TransactionEditViewModel(
-            RepositoryTransactionStore(injector.repository()),
-            it,
-            DecimalFormatSymbols.getInstance().decimalSeparator
-        )
-    }
+    private val transactionEditViewModel get() = features.transactions.viewModel
 
     override fun handleRootWindowInsets() {}
 
@@ -579,8 +571,7 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
                                 payeeImageDialog = rows.firstNotNullOfOrNull {
                                     it.payeeImageDialog
                                 },
-                                editState = editState,
-                                editActions = transactionEditViewModel
+                                editing = TransactionEditing(editState, transactionEditViewModel)
                             )
                         }
                     )

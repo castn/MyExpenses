@@ -49,6 +49,7 @@ dependencies {
     implementation project(':next:data:receipts')
     implementation project(':next:data:tags')
     implementation project(':next:data:tips')
+    implementation project(':next:data:transactions')
     implementation project(':next:feature:analysis')
     implementation project(':next:feature:balance')
     implementation project(':next:feature:budgets')
@@ -60,6 +61,7 @@ dependencies {
     implementation project(':ocr-model')
     implementation project(':next:feature:tags')
     implementation project(':next:feature:tips')
+    implementation project(':next:feature:transactions')
     implementation libs.kotlinx.serialization.json
 
     testImplementation libs.junit
