@@ -32,7 +32,21 @@ suspend fun TagDatabase.addMeaningTag(
     meaning: TagMeaning,
     label: String,
 ) {
-    val tagId = store.meanings.first().filterValues { it == meaning }.keys.firstOrNull { it in existingTagIds }
+    addTag(transactionIds, markerTagId(store, existingTagIds, meaning, label))
+}
+
+/**
+ * The first tag with [meaning], or a new tag [label] that gets this meaning
+ *
+ * @param existingTagIds the tags there are, a tag may have been deleted since it got its meaning
+ */
+suspend fun TagDatabase.markerTagId(
+    store: TagStore,
+    existingTagIds: Set<Long>,
+    meaning: TagMeaning,
+    label: String
+): Long {
+    val withMeaning = store.meanings.first().filterValues { it == meaning }.keys
+    return withMeaning.firstOrNull { it in existingTagIds }
         ?: tagIdOf(label).also { store.setMeaning(it, meaning) }
-    addTag(transactionIds, tagId)
 }

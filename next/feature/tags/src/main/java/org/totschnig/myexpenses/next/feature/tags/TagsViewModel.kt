@@ -19,6 +19,7 @@ import org.totschnig.myexpenses.next.data.tags.TagMeaning
 import org.totschnig.myexpenses.next.data.tags.TagRepository
 import org.totschnig.myexpenses.next.data.tags.TagStore
 import org.totschnig.myexpenses.next.data.tags.addMeaningTag
+import org.totschnig.myexpenses.next.data.tags.markerTagId
 import org.totschnig.myexpenses.next.data.tags.removeTags
 
 /**
@@ -85,6 +86,23 @@ class TagsViewModel(
                 val meanings = store.meanings.first()
                 tagDatabase.removeTags(transaction.id) { meanings[it] == meaning }
             }
+        }
+    }
+
+    /**
+     * The tag behind a marker, for a transaction that is not saved yet: the first tag with
+     * [meaning], or a new tag [label] that gets this meaning, see [markerTagId]
+     *
+     * @param onTag gets its id
+     */
+    fun markerTag(meaning: TagMeaning, label: String, onTag: (Long) -> Unit) {
+        viewModelScope.launch {
+            onTag(
+                withContext(io) {
+                    val tagIds = ledgerSource.catalog.first().tags.mapTo(HashSet()) { it.id }
+                    tagDatabase.markerTagId(store, tagIds, meaning, label)
+                }
+            )
         }
     }
 

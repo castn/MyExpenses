@@ -32,6 +32,7 @@ import org.totschnig.myexpenses.next.feature.tags.TagDetectionsViewModel
 import org.totschnig.myexpenses.next.feature.tags.TagLearningViewModel
 import org.totschnig.myexpenses.next.feature.tags.TagSuggestionSection
 import org.totschnig.myexpenses.next.feature.tags.TagChips
+import org.totschnig.myexpenses.next.feature.tags.TagField
 import org.totschnig.myexpenses.next.feature.tags.TagsViewModel
 import org.totschnig.myexpenses.next.feature.tags.TripBanner
 import org.totschnig.myexpenses.next.viewModelsOf
@@ -68,6 +69,12 @@ class TagsFeature(private val activity: ComponentActivity, private val data: Nex
     @Composable
     fun OneOff(transaction: ShownTransaction) {
         OneOffSection(viewModel, transaction)
+    }
+
+    /** The tags of a transaction in its form, saved with it */
+    @Composable
+    fun TagField(tagIds: List<Long>, onChange: (List<Long>) -> Unit) {
+        TagField(viewModel, tagIds, onChange)
     }
 
     @Composable

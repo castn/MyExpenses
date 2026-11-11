@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -28,6 +29,7 @@ import org.totschnig.myexpenses.designsystem.SingleChoiceDialog
 import org.totschnig.myexpenses.designsystem.ToggleChip
 import org.totschnig.myexpenses.next.core.ui.LabelIcons
 import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.ledger.TagInfo
 import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
 import org.totschnig.myexpenses.next.data.tags.TagMeaning
 
@@ -50,15 +52,72 @@ fun TagMeaning?.label() = stringResource(
  */
 @Composable
 fun TagChips(viewModel: TagsViewModel, transaction: ShownTransaction, modifier: Modifier = Modifier) {
+    TagChipRows(
+        viewModel = viewModel,
+        tags = transaction.tags,
+        onSetTags = { viewModel.setTags(transaction.id, it) },
+        onMarked = { meaning, marked, label ->
+            viewModel.setMarked(transaction, meaning, marked, label)
+        },
+        modifier = modifier
+    )
+}
+
+/**
+ * The tags of a transaction that is typed in a form, like [TagChips], but nothing is saved until
+ * the form is: a marker without its tag yet creates the tag right away.
+ */
+@Composable
+fun TagField(
+    viewModel: TagsViewModel,
+    tagIds: List<Long>,
+    onChange: (List<Long>) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val all by viewModel.tags.collectAsStateWithLifecycle()
+    val meanings by viewModel.meanings.collectAsStateWithLifecycle()
+    val current by rememberUpdatedState(tagIds)
+    val change by rememberUpdatedState(onChange)
+    TagChipRows(
+        viewModel = viewModel,
+        tags = tagIds.mapNotNull { id -> all.find { it.id == id } },
+        onSetTags = { change(it.toList()) },
+        onMarked = { meaning, marked, label ->
+            if (marked) {
+                viewModel.markerTag(meaning, label) { id ->
+                    if (id !in current) change(current + id)
+                }
+            } else {
+                change(current.filter { meanings[it] != meaning })
+            }
+        },
+        modifier = modifier
+    )
+}
+
+/**
+ * Groups and markers of [tags]
+ *
+ * @param onSetTags all tags after groups were chosen or removed
+ * @param onMarked a marker was switched, with the label of a tag created for it
+ */
+@Composable
+private fun TagChipRows(
+    viewModel: TagsViewModel,
+    tags: List<TagInfo>,
+    onSetTags: (Collection<Long>) -> Unit,
+    onMarked: (meaning: TagMeaning, marked: Boolean, label: String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     var picking by rememberSaveable { mutableStateOf(false) }
     var editingId by rememberSaveable { mutableStateOf<Long?>(null) }
     val meanings by viewModel.meanings.collectAsStateWithLifecycle()
-    val tagIds = transaction.tags.map { it.id }
+    val tagIds = tags.map { it.id }
     val (markerIds, groupIds) = tagIds.partition { meanings[it]?.isMarker == true }
     val markerLabels = TagMeaning.MARKERS.associateWith { it.label() }
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
         ChipRow(stringResource(R.string.next_tags_belongs_to)) {
-            transaction.tags.filter { it.id in groupIds }.forEach { tag ->
+            tags.filter { it.id in groupIds }.forEach { tag ->
                 LabelChip(text = tag.label, placeholder = "", onClick = { editingId = tag.id }, icon = LabelIcons.group)
             }
             LabelChip(text = null, placeholder = stringResource(R.string.next_tag_add), onClick = { picking = true })
@@ -69,7 +128,7 @@ fun TagChips(viewModel: TagsViewModel, transaction: ShownTransaction, modifier: 
                 ToggleChip(
                     text = label,
                     selected = marked,
-                    onClick = { viewModel.setMarked(transaction, meaning, !marked, label) }
+                    onClick = { onMarked(meaning, !marked, label) }
                 )
             }
         }
@@ -79,14 +138,14 @@ fun TagChips(viewModel: TagsViewModel, transaction: ShownTransaction, modifier: 
             viewModel = viewModel,
             initial = groupIds.toSet(),
             onConfirm = { selected ->
-                if (selected != groupIds.toSet()) viewModel.setTags(transaction.id, selected + markerIds)
+                if (selected != groupIds.toSet()) onSetTags(selected + markerIds)
                 picking = false
             },
             onDismiss = { picking = false }
         )
     }
     editingId?.let { id ->
-        transaction.tags.find { it.id == id }?.let { tag ->
+        tags.find { it.id == id }?.let { tag ->
             SingleChoiceDialog(
                 title = tag.label,
                 options = listOf(null, TagMeaning.TRIP),
@@ -100,7 +159,7 @@ fun TagChips(viewModel: TagsViewModel, transaction: ShownTransaction, modifier: 
                 intro = stringResource(R.string.next_tag_meaning_intro),
                 footer = {
                     TextButton(onClick = {
-                        viewModel.setTags(transaction.id, tagIds - tag.id)
+                        onSetTags(tagIds - tag.id)
                         editingId = null
                     }) {
                         Text(stringResource(R.string.next_tag_remove))

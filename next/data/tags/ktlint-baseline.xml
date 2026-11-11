@@ -151,15 +151,6 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/data/tags/TagWriting.kt">
         <error line="33" column="18" source="standard:trailing-comma-on-declaration-site" />
-        <error line="35" column="17" source="standard:binary-expression-wrapping" />
-        <error line="35" column="53" source="standard:function-literal" />
-        <error line="35" column="54" source="standard:wrapping" />
-        <error line="35" column="69" source="standard:function-literal" />
-        <error line="35" column="88" source="standard:function-literal" />
-        <error line="35" column="89" source="standard:wrapping" />
-        <error line="35" column="95" source="standard:binary-expression-wrapping" />
-        <error line="35" column="101" source="standard:max-line-length" />
-        <error line="35" column="111" source="standard:function-literal" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/data/tags/Trips.kt">
         <error line="3" column="1" source="standard:import-ordering" />
