@@ -19,7 +19,9 @@ date, payment method and note. It is shown
   "Edit" in the menus of lists without the pencil and the old details dialog. :myExpenses does
   not know the shell and opens it through `TransactionEditorEntry` (`newTransactionIntent`,
   `editTransactionIntent`), like the main screen. "Save" closes it, for a new transaction "save
-  and new" keeps account, sign, day and payment method for the next one.
+  and new" keeps account, sign, day and payment method for the next one. The photo of the old
+  OCR scan is attached to the first transaction saved (`onSaved`, through `attach` of the area
+  of the attachments).
 - in the details of a transaction after a tap on the pencil, in `TransactionDetailSheet` of the
   shell. A transaction from the bank import starts with a warning; one with an amount in another
   currency keeps its amount.

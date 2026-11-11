@@ -1,0 +1,12 @@
+plugins {
+    id 'next.feature'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.feature.attachments'
+}
+
+// The attachments in the details of a transaction: view, add a photo or file, delete.
+dependencies {
+    implementation project(':next:data:attachments')
+}

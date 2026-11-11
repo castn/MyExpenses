@@ -1,0 +1,10 @@
+plugins {
+    id 'next.data'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.data.attachments'
+}
+
+// Photos and files attached to transactions: what the app needs to store them and when a file is
+// copied.

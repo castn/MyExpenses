@@ -449,6 +449,16 @@
     <string name="next_receipt_photo">Show photo</string>
     <string name="next_receipt_delete">Remove receipt</string>
     <string name="next_receipt_delete_text">The items are deleted. The photo stays attached to the transaction.</string>
+    <string name="next_attachments_title">Attachments</string>
+    <string name="next_attachment_add">Attach</string>
+    <string name="next_attachment_photo">Take photo</string>
+    <string name="next_attachment_file">Choose file</string>
+    <string name="next_attachment_open">Open</string>
+    <string name="next_attachment_delete">Delete attachment</string>
+    <string name="next_attachment_delete_text">“%1$s” is removed from the transaction.</string>
+    <string name="next_attachment_adding">Storing attachment …</string>
+    <string name="next_attachment_add_failed">The file could not be attached.</string>
+    <string name="next_attachment_delete_failed">The attachment could not be deleted.</string>
     <string name="next_receipt_column_item">Item</string>
     <string name="next_receipt_column_price">Price</string>
     <string name="next_receipt_sum">Total</string>

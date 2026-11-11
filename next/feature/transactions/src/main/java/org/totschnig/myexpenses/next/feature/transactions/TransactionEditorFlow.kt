@@ -44,6 +44,8 @@ import org.totschnig.myexpenses.next.data.transactions.NewTransaction
  *
  * @param transactionId the transaction to change, null for a new one
  * @param prefill what a new transaction starts with, unless a draft survived from before
+ * @param onSaved with the id of each transaction saved, also more than once for the same one, e.g.
+ * after the screen was recreated
  * @param onClose with the id of the transaction saved last, null if none was saved
  */
 @Composable
@@ -52,13 +54,14 @@ fun TransactionEditorFlow(
     transactionId: Long?,
     prefill: NewTransaction,
     tagField: TagField?,
+    onSaved: (savedId: Long) -> Unit = {},
     onClose: (savedId: Long?) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
         if (transactionId != null) viewModel.edit(transactionId) else viewModel.startNew(prefill)
     }
-    TransactionEditorScreen(state, viewModel, transactionId, tagField, onClose)
+    TransactionEditorScreen(state, viewModel, transactionId, tagField, onSaved, onClose)
 }
 
 @Composable
@@ -67,6 +70,7 @@ private fun TransactionEditorScreen(
     actions: TransactionFormActions,
     transactionId: Long?,
     tagField: TagField?,
+    onSaved: (savedId: Long) -> Unit,
     onClose: (savedId: Long?) -> Unit
 ) {
     val snackbar = remember { SnackbarHostState() }
@@ -78,6 +82,7 @@ private fun TransactionEditorScreen(
     LaunchedEffect(saved) {
         if (saved == null) return@LaunchedEffect
         lastSaved = saved
+        onSaved(saved)
         if (state.draft == null) {
             actions.savedShown(saved)
             onClose(saved)

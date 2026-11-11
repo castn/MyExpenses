@@ -2,6 +2,7 @@ package org.totschnig.myexpenses.next.transactions
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.core.content.IntentCompat
@@ -25,29 +26,42 @@ import org.totschnig.myexpenses.provider.KEY_AMOUNT
 import org.totschnig.myexpenses.provider.KEY_CURRENCY
 import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.provider.KEY_TEMPLATEID
+import org.totschnig.myexpenses.provider.KEY_URI
 
 /**
  * The screen for a new expense or income and for changing one outside of its details, see
  * [TransactionEditorFlow]. An activity of its own, so that the main screen, the receipts, the
  * templates, widgets, launcher shortcuts and the screens of :myExpenses open it alike; they build its
  * intent with [newTransactionIntent], see [TransactionEditorEntry], the templates with [fromTemplate].
- * Its result is OK with [KEY_ROWID] of the transaction saved last, if one was saved.
+ * Its result is OK with [KEY_ROWID] of the transaction saved last, if one was saved. The photo of a
+ * scan, [KEY_URI], is attached to the first transaction saved.
  */
 class TransactionEditorActivity : ProtectedFragmentActivity() {
 
     private val transactions by lazy { NextFeatures(this).transactions }
 
+    // Whether the photo of the scan is attached, so that it is attached once
+    private var isScanAttached = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val transactionId = intent.getLongExtra(KEY_ROWID, 0L).takeIf { it > 0L }
         val prefill = intent.toNewTransaction()
+        val scan = IntentCompat.getParcelableExtra(intent, KEY_URI, Uri::class.java)
+        isScanAttached = savedInstanceState?.getBoolean(KEY_SCAN_ATTACHED) ?: false
         setContent {
             NextTheme {
                 TransactionEditorFlow(
                     transactions.viewModel,
                     transactionId,
                     prefill,
-                    transactions.tagField
+                    transactions.tagField,
+                    onSaved = { savedId ->
+                        if (scan != null && !isScanAttached) {
+                            isScanAttached = true
+                            transactions.attach(savedId, scan)
+                        }
+                    }
                 ) { savedId ->
                     if (savedId != null) setResult(RESULT_OK, Intent().putExtra(KEY_ROWID, savedId))
                     finish()
@@ -56,7 +70,14 @@ class TransactionEditorActivity : ProtectedFragmentActivity() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(KEY_SCAN_ATTACHED, isScanAttached)
+    }
+
     companion object {
+        private const val KEY_SCAN_ATTACHED = "scanAttached"
+
         /** For a new transaction filled with template [templateId] */
         fun fromTemplate(context: Context, templateId: Long): Intent =
             Intent(context, TransactionEditorActivity::class.java)

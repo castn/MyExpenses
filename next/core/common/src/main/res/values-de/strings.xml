@@ -449,6 +449,16 @@
     <string name="next_receipt_photo">Foto ansehen</string>
     <string name="next_receipt_delete">Kassenzettel entfernen</string>
     <string name="next_receipt_delete_text">Die Artikel werden gelöscht. Das Foto bleibt als Anhang der Buchung erhalten.</string>
+    <string name="next_attachments_title">Anhänge</string>
+    <string name="next_attachment_add">Anhängen</string>
+    <string name="next_attachment_photo">Foto aufnehmen</string>
+    <string name="next_attachment_file">Datei wählen</string>
+    <string name="next_attachment_open">Öffnen</string>
+    <string name="next_attachment_delete">Anhang löschen</string>
+    <string name="next_attachment_delete_text">„%1$s“ wird von der Buchung entfernt.</string>
+    <string name="next_attachment_adding">Anhang wird gespeichert …</string>
+    <string name="next_attachment_add_failed">Die Datei konnte nicht angehängt werden.</string>
+    <string name="next_attachment_delete_failed">Der Anhang konnte nicht gelöscht werden.</string>
     <string name="next_receipt_column_item">Artikel</string>
     <string name="next_receipt_column_price">Preis</string>
     <string name="next_receipt_sum">Summe</string>

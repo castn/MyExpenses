@@ -3,6 +3,7 @@ package org.totschnig.myexpenses.next
 import androidx.compose.runtime.ProvidedValue
 import org.totschnig.myexpenses.activity.BaseActivity
 import org.totschnig.myexpenses.next.analysis.AnalysisFeature
+import org.totschnig.myexpenses.next.attachments.AttachmentsFeature
 import org.totschnig.myexpenses.next.balance.BalanceFeature
 import org.totschnig.myexpenses.next.budgets.BudgetsFeature
 import org.totschnig.myexpenses.next.categories.CategoriesFeature
@@ -32,9 +33,11 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
     val balance = BalanceFeature(activity, data, contracts)
     val categories = CategoriesFeature(activity, data)
     val tags = TagsFeature(activity, data)
-    val transactions = TransactionsFeature(activity, data) { tagIds, onChange ->
-        tags.TagField(tagIds, onChange)
-    }
+    val attachments = AttachmentsFeature(activity, data)
+    val transactions =
+        TransactionsFeature(activity, data, attachments::attach) { tagIds, onChange ->
+            tags.TagField(tagIds, onChange)
+        }
     val budgets = BudgetsFeature(activity, data)
     val guidance = GuidanceFeature(activity, data, { categories.isAsking() }, explained = NextKey.Analysis)
     val savingTips = SavingTipsFeature(activity, data, contracts, tags) { guidance.PendingTips(it) }
@@ -42,7 +45,17 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
     val receipts = ReceiptsFeature(activity, data) { contracts.isContractPayment(it) }
 
     val all: List<NextFeature> = listOf(
-        categories, tags, contracts, budgets, receipts, guidance, merchants, balance, analysis, savingTips
+        categories,
+        tags,
+        contracts,
+        budgets,
+        receipts,
+        attachments,
+        guidance,
+        merchants,
+        balance,
+        analysis,
+        savingTips
     )
 
     companion object {

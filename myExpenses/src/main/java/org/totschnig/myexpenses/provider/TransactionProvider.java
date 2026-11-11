@@ -1722,7 +1722,10 @@ public class TransactionProvider extends BaseTransactionProvider {
       }
       case METHOD_DELETE_ATTACHMENTS ->  {
         Bundle result = new Bundle(1);
-        result.putBoolean(KEY_RESULT, deleteAttachments(getHelper().getWritableDatabase(), extras.getLong(KEY_TRANSACTIONID), Arrays.asList(extras.getStringArray(KEY_URI_LIST))));
+        boolean deleted = deleteAttachments(getHelper().getWritableDatabase(), extras.getLong(KEY_TRANSACTIONID), Arrays.asList(extras.getStringArray(KEY_URI_LIST)));
+        result.putBoolean(KEY_RESULT, deleted);
+        // Lets the details of the new UI and the attachment count of the list update
+        if (deleted) notifyChange(TRANSACTIONS_ATTACHMENTS_URI, false);
         return result;
       }
       case METHOD_SAVE_CATEGORY ->  {

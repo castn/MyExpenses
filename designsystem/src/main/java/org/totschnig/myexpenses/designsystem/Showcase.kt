@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Palette
@@ -172,6 +173,16 @@ private fun Showcase() {
                     leadingIcon = { Icon(Icons.Outlined.Folder, contentDescription = null) }
                 )
                 RemovableRow("Removable", "Value", removeLabel = "Remove", onRemove = {})
+                FileRow(
+                    "receipt.pdf",
+                    preview = null,
+                    icon = Icons.Outlined.Description,
+                    openLabel = "Open",
+                    onClick = {},
+                    removeLabel = "Remove",
+                    onRemove = {},
+                    supportingText = "PDF"
+                )
                 SwitchRow("Switch", checked = true, onCheckedChange = {}, supportingText = "Explanation")
                 NavigationRow("Navigation", "Supporting text", onClick = {}, value = "12,00 €")
                 NavigationRow("Navigation with news", "Something new behind it", onClick = {}, hasNews = true)

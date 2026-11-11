@@ -36,6 +36,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.Image
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
@@ -900,6 +903,84 @@ fun RemovableRow(
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
+        }
+    }
+}
+
+/**
+ * A file in a list, e.g. an attachment: a small preview, or the icon of its kind while there is
+ * none, and its name. Tapping it opens the file, the button removes it.
+ *
+ * @param openLabel tells what a tap does, e.g. "Open"
+ * @param supportingText second line below the name, e.g. the kind of file
+ */
+@Composable
+fun FileRow(
+    name: String,
+    preview: ImageBitmap?,
+    icon: ImageVector,
+    openLabel: String,
+    onClick: () -> Unit,
+    removeLabel: String,
+    onRemove: () -> Unit,
+    supportingText: String? = null,
+    isFirst: Boolean = false
+) {
+    if (!isFirst) RowDivider()
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClickLabel = openLabel, onClick = onClick)
+            .padding(start = Spacing.content, end = 4.dp, top = 8.dp, bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(48.dp)
+                .clip(MaterialTheme.shapes.small)
+                .background(MaterialTheme.colorScheme.surfaceContainerHighest),
+            contentAlignment = Alignment.Center
+        ) {
+            if (preview != null) {
+                Image(
+                    preview,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.size(48.dp)
+                )
+            } else {
+                Icon(
+                    icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+        Column(
+            Modifier
+                .weight(1f)
+                .padding(start = Spacing.content)
+        ) {
+            Text(
+                name,
+                style = MaterialTheme.typography.bodyLarge,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+            supportingText?.let {
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+        IconButton(onClick = onRemove) {
+            Icon(
+                Icons.Default.RemoveCircleOutline,
+                contentDescription = removeLabel,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
     }
 }
