@@ -11,6 +11,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,6 +43,14 @@ fun PayeeLogoDialog(logos: MerchantLogos, payee: Payee, onDismiss: () -> Unit) {
     val entered = logos.enteredDomains.collectAsStateWithLifecycle().value[payeeId]
     val logo = (logos.images.collectAsStateWithLifecycle().value[payeeId] as? PayeeImage.Logo)?.bitmap
     var address by rememberSaveable { mutableStateOf(entered ?: "") }
+    // The address entered before may come only after the first frame
+    var prefilled by rememberSaveable { mutableStateOf(entered != null) }
+    LaunchedEffect(entered) {
+        if (!prefilled && entered != null) {
+            address = entered
+            prefilled = true
+        }
+    }
     // Not saved: after a rotation the answer goes to the dialog shown before, the logo still comes
     var isLoading by remember { mutableStateOf(false) }
     // Why the domain has no logo, as the message and the domain it names

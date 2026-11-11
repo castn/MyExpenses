@@ -9,15 +9,14 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.totschnig.myexpenses.next.core.common.stateWhileShown
 import org.totschnig.myexpenses.next.core.ui.merchants.PayeeImage
 import org.totschnig.myexpenses.next.data.merchants.MerchantLogoConsent
 import org.totschnig.myexpenses.next.data.merchants.MerchantLogoStore
@@ -50,11 +49,11 @@ class MerchantLogos(
 
     /** The web addresses the user entered, by payee id */
     val enteredDomains: StateFlow<Map<Long, String>> =
-        domainStore.domains.stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
+        domainStore.domains.stateWhileShown(viewModelScope, emptyMap())
 
     /** The icons the user chose, by payee id */
     val chosenIcons: StateFlow<Map<Long, String>> =
-        iconStore.values.stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
+        iconStore.values.stateWhileShown(viewModelScope, emptyMap())
 
     /** What to show for each payee that has more than its monogram */
     private val looks: Flow<Map<Long, PayeeLook>> =
@@ -79,7 +78,7 @@ class MerchantLogos(
                     }
                 }
             }
-        }.distinctUntilChanged().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+        }.distinctUntilChanged().stateWhileShown(viewModelScope, emptyMap())
 
     init {
         viewModelScope.launch {

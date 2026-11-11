@@ -12,10 +12,9 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import org.totschnig.myexpenses.adapter.TransactionPagingSource
+import org.totschnig.myexpenses.next.core.common.stateWhileShown
 import org.totschnig.myexpenses.db2.tagMapFlow
 import org.totschnig.myexpenses.model.AccountGrouping
 import org.totschnig.myexpenses.provider.DataBaseAccount.Companion.HOME_AGGREGATE_ID
@@ -40,8 +39,9 @@ class FixedTransactionsViewModel(
     /** Never persisted, so that it cannot affect the account screens */
     private val filter = MutableStateFlow<Criterion?>(null)
 
+    /** Read while the paging source lives, see [TransactionPagingSource] */
     private val tags: StateFlow<Map<String, Pair<String, Int?>>> =
-        contentResolver.tagMapFlow.stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
+        contentResolver.tagMapFlow.stateWhileShown(viewModelScope, emptyMap())
 
     /** The transactions set with [show] */
     val transactions: Flow<PagingData<Transaction2>> = run {

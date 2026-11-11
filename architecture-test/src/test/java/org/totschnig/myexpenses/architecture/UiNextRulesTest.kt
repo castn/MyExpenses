@@ -7,8 +7,8 @@ import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.Test
 
 /**
- * Rules analysis-data-class, screen-no-alert-dialog, vm-constructor, vm-entry-points and vm-io-param of
- * ui_next/ARCHITECTURE.md.
+ * Rules analysis-data-class, screen-no-alert-dialog, vm-constructor, vm-entry-points, vm-io-param and
+ * vm-no-eagerly of ui_next/ARCHITECTURE.md.
  */
 class UiNextRulesTest {
 
@@ -72,6 +72,18 @@ class UiNextRulesTest {
                 val constructor = viewModel.primaryConstructor?.text.orEmpty()
                 val body = viewModel.text.replace(constructor, "")
                 body.contains("Dispatchers.IO") || body.contains("Dispatchers.Default")
+            }
+    }
+
+    @Test
+    fun `vm-no-eagerly view models share their flows only while they are shown`() {
+        scope.classes()
+            .filter { it.isViewModel() }
+            .assertFalse(
+                additionalMessage = "vm-no-eagerly: use stateWhileShown or shareWhileShown, not " +
+                    "SharingStarted.Eagerly or Lazily"
+            ) { viewModel ->
+                listOf("Eagerly", "Lazily").any { "SharingStarted.$it" in viewModel.text }
             }
     }
 

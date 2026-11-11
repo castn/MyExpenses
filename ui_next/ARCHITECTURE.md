@@ -606,6 +606,22 @@ tested without a coroutine test dispatcher. Taking it as a parameter lets tests 
 
 ---
 
+---
+
+### `vm-no-eagerly` — View models share their flows only while they are shown
+
+A view model offers its flows with `stateWhileShown` or `shareWhileShown`
+(`SharingStarted.WhileSubscribed(5000)`), never with `SharingStarted.Eagerly` or `Lazily`.
+`NextData` and the repositories may keep a flow running in their own scope.
+
+**Why:** A view model lives as long as its activity, also in the background. A flow started eagerly
+keeps its query or analysis running there and reacts to every change of the database without
+anyone looking. While shown, plus five seconds for a rotation, is what the screen needs.
+
+**Check:** Konsist
+
+---
+
 
 ## Screens
 

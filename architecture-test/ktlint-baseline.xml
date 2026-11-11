@@ -48,6 +48,6 @@
         <error line="56" column="101" source="standard:max-line-length" />
         <error line="68" column="37" source="standard:binary-expression-wrapping" />
         <error line="68" column="101" source="standard:max-line-length" />
-        <error line="90" column="26" source="standard:trailing-comma-on-call-site" />
+        <error line="102" column="26" source="standard:trailing-comma-on-call-site" />
     </file>
 </baseline>
