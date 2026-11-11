@@ -1,0 +1,9 @@
+plugins {
+    id 'next.data'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.data.debts'
+}
+
+// Debts with payees: their balance from the linked transactions and what a payment changes.
