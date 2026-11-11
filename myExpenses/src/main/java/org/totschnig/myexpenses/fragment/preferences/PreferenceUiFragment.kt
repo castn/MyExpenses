@@ -16,16 +16,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.TwoStatePreference
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.totschnig.myexpenses.MyApplication
 import org.totschnig.myexpenses.R
-import org.totschnig.myexpenses.contract.TransactionsContract
 import org.totschnig.myexpenses.dialog.AccountListDisplayConfigurationDialogFragment
 import org.totschnig.myexpenses.dialog.CustomizeMenuDialogFragment
 import org.totschnig.myexpenses.dialog.MenuItem
-import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.preference.ColorSource
 import org.totschnig.myexpenses.preference.PopupMenuPreference
 import org.totschnig.myexpenses.preference.PrefKey
@@ -144,31 +140,6 @@ class PreferenceUiFragment : BasePreferenceFragment() {
             }
         }
 
-        with(requirePreference<Preference>(PrefKey.SHORTCUT_CREATE_SPLIT)) {
-            if (licenceHandler.isContribEnabled) {
-                isEnabled = true
-            } else {
-                summary =
-                    ContribFeature.SPLIT_TRANSACTION.buildRequiresString(requireActivity())
-            }
-        }
-
-        with(requirePreference<Preference>(PrefKey.SHORTCUT_CREATE_TRANSFER)) {
-            lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    val transferEnabled = viewModel.isTransferEnabled
-                    withContext(Dispatchers.Main) {
-                        if (transferEnabled) {
-                            isEnabled = true
-                        } else {
-                            summary =
-                                context.getString(R.string.dialog_command_disabled_insert_transfer)
-                        }
-                    }
-                }
-            }
-        }
-
         with(requirePreference<ListPreference>(PrefKey.GROUP_WEEK_STARTS)) {
             val locale = preferenceActivity.getLocale()
             val dfs = DateFormatSymbols(locale)
@@ -209,23 +180,7 @@ class PreferenceUiFragment : BasePreferenceFragment() {
     override fun onPreferenceTreeClick(preference: Preference) = when {
         super.onPreferenceTreeClick(preference) -> true
         matches(preference, PrefKey.SHORTCUT_CREATE_TRANSACTION) -> {
-            addShortcut(
-                TransactionsContract.Transactions.TYPE_TRANSACTION
-            )
-            true
-        }
-
-        matches(preference, PrefKey.SHORTCUT_CREATE_TRANSFER) -> {
-            addShortcut(
-                TransactionsContract.Transactions.TYPE_TRANSFER
-            )
-            true
-        }
-
-        matches(preference, PrefKey.SHORTCUT_CREATE_SPLIT) -> {
-            addShortcut(
-                TransactionsContract.Transactions.TYPE_SPLIT
-            )
+            addTransactionShortcut()
             true
         }
 
@@ -253,24 +208,15 @@ class PreferenceUiFragment : BasePreferenceFragment() {
         else -> false
     }
 
-    private fun addShortcut(
-        @TransactionsContract.Transactions.TransactionType operationType: Int,
-    ) {
+    /** Pins the shortcut for a new transaction; transfers and splits are no longer entered by hand */
+    private fun addTransactionShortcut() {
         try {
-            requireContext().getSystemService(ShortcutManager::class.java)
-                .requestPinShortcut(
-                    ShortcutInfo.Builder(
-                        requireContext(), when (operationType) {
-                            TransactionsContract.Transactions.TYPE_SPLIT -> ShortcutHelper.ID_SPLIT
-                            TransactionsContract.Transactions.TYPE_TRANSACTION -> ShortcutHelper.ID_TRANSACTION
-                            TransactionsContract.Transactions.TYPE_TRANSFER -> ShortcutHelper.ID_TRANSFER
-                            else -> throw IllegalStateException("Unexpected operationType: $operationType")
-                        }
-                    ).build(),
-                    null
-                )
+            val context = requireContext()
+            val shortcut = ShortcutInfo.Builder(context, ShortcutHelper.ID_TRANSACTION).build()
+            context.getSystemService(ShortcutManager::class.java)
+                .requestPinShortcut(shortcut, null)
         } catch (e: IllegalArgumentException) {
-            Timber.w("requestPinShortcut failed for %d", operationType)
+            Timber.w("requestPinShortcut failed")
             CrashHandler.report(e)
         }
     }

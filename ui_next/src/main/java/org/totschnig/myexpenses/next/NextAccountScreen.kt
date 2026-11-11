@@ -354,11 +354,18 @@ private fun NewTransactionFab(
     /** Opens the trade screen for an action of a portfolio */
     onTrade: (Action) -> Unit,
 ) {
+    // Transfers and splits are no longer entered by hand, they come from the import
+    val actions = if (isPortfolio) {
+        Action.PORTFOLIO_ACTIONS
+    } else {
+        Action.STANDARD_ACTIONS.filter { it != Action.Transfer && it != Action.Split }
+    }
     // A fixed action from the settings is started by a tap, otherwise a tap opens the menu
     val staticAction = if (isPortfolio) null else
         viewModel.defaultAction.collectAsState("LastVisited").value
             .takeIf { it != "LastVisited" }
             ?.let { enumValueOrDefault(it, Action.Expense) }
+            ?.takeIf { it in actions }
     fun start(action: Action) {
         if (action in Action.PORTFOLIO_ACTIONS) {
             onTrade(action)
@@ -366,8 +373,6 @@ private fun NewTransactionFab(
             onEvent(AppEvent.CreateTransaction(action = action, transferEnabled = transferEnabled))
         }
     }
-    val actions = if (isPortfolio) Action.PORTFOLIO_ACTIONS
-    else Action.STANDARD_ACTIONS.filter { it != Action.Transfer || transferEnabled }
     MenuFab(
         label = staticAction?.let { stringResource(it.label) } ?: stringResource(NextR.string.next_fab_new),
         icon = Icons.Default.Add,

@@ -83,6 +83,9 @@ class AccountWidgetConfigurationFragment : PreferenceFragmentCompat() {
 
         companion object {
 
+            /** The buttons a widget shows; transfers and splits are no longer entered by hand */
+            val offered = listOf(TRANSACTION, SCAN)
+
             private const val SEPARATOR = ","
 
             fun Iterable<Button>.marshall() = joinToString(SEPARATOR)
@@ -120,7 +123,7 @@ class AccountWidgetConfigurationFragment : PreferenceFragmentCompat() {
                         .joinToString { getString(Button.valueOf(it).label) }
                 }
                 key = buttonsKey(appWidgetId)
-                value = Button.entries.marshall()
+                value = Button.offered.marshall()
             }
         } ?: kotlin.run { requireActivity().finish() }
     }
@@ -149,8 +152,8 @@ class AccountWidgetConfigurationFragment : PreferenceFragmentCompat() {
 
         fun loadButtons(context: Context, appWidgetId: Int) =
             sharedPreferences(context).getString(buttonsKey(appWidgetId), null)?.let {
-                Button.unmarshall(it)
-            } ?: Button.entries
+                Button.unmarshall(it).filter { button -> button in Button.offered }
+            } ?: Button.offered
 
 
         private fun sharedPreferences(context: Context) =

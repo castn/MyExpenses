@@ -154,7 +154,7 @@ open class LicenceHandler(
                 this@LicenceHandler,
                 prefHandler
             )
-            ShortcutHelper.configureSplitShortcut(context, isContribEnabled)
+            ShortcutHelper.removeTransferAndSplitShortcuts(context)
         }
     }
 

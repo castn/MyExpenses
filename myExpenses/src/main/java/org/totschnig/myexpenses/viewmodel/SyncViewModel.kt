@@ -95,7 +95,6 @@ open class SyncViewModel(application: Application) : ContentResolvingAndroidView
             homeCurrency.code
         )
         licenceHandler.updateNewAccountEnabled()
-        updateTransferShortcut()
     }
 
     fun getReconfigurationData(syncAccount: String) = Bundle().apply {

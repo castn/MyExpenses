@@ -38,8 +38,6 @@ enum class PrefKey(internal val resId: Int, internal val keyName: String?) {
     SEND_FEEDBACK(R.string.pref_send_feedback_key),
     MORE_INFO_DIALOG(R.string.pref_more_info_dialog_key),
     SHORTCUT_CREATE_TRANSACTION(R.string.pref_shortcut_create_transaction_key),
-    SHORTCUT_CREATE_TRANSFER(R.string.pref_shortcut_create_transfer_key),
-    SHORTCUT_CREATE_SPLIT(R.string.pref_shortcut_create_split_key),
     RATE(R.string.pref_rate_key),
     UI_LANGUAGE(R.string.pref_ui_language_key),
     APP_DIR(R.string.pref_app_dir_key),

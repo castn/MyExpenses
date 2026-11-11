@@ -119,9 +119,7 @@ import org.totschnig.myexpenses.preference.PrefKey.SEND_FEEDBACK
 import org.totschnig.myexpenses.preference.PrefKey.SHARE_TARGET
 import org.totschnig.myexpenses.preference.PrefKey.SHARE_TARGET_PASSWORD
 import org.totschnig.myexpenses.preference.PrefKey.SHARE_TARGET_USERNAME
-import org.totschnig.myexpenses.preference.PrefKey.SHORTCUT_CREATE_SPLIT
 import org.totschnig.myexpenses.preference.PrefKey.SHORTCUT_CREATE_TRANSACTION
-import org.totschnig.myexpenses.preference.PrefKey.SHORTCUT_CREATE_TRANSFER
 import org.totschnig.myexpenses.preference.PrefKey.SYNC_CHANGES_IMMEDIATELY
 import org.totschnig.myexpenses.preference.PrefKey.SYNC_FREQUCENCY
 import org.totschnig.myexpenses.preference.PrefKey.SYNC_NOTIFICATION
@@ -306,8 +304,6 @@ object SettingsCatalog {
                 on(LegacyScreen.UI) {
                     choice(DEFAULT_ACTION)
                     action(SHORTCUT_CREATE_TRANSACTION)
-                    action(SHORTCUT_CREATE_TRANSFER)
-                    action(SHORTCUT_CREATE_SPLIT)
                 }
             }
             section(SettingsSection.ENTRY_AUTO_FILL) {

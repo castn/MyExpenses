@@ -15,7 +15,6 @@ import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.ContribPayload
 import androidx.core.content.IntentCompat
-import org.totschnig.myexpenses.util.ShortcutHelper
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler.Companion.report
 import org.totschnig.myexpenses.util.distrib.DistributionHelper
 import org.totschnig.myexpenses.util.distrib.DistributionHelper.distribution
@@ -163,18 +162,9 @@ class ContribInfoDialogActivity : IapActivity() {
                 } else {
                     setResult(RESULT_CANCELED, i)
                 }
-            } else if (shouldCallFeature) {
-                callFeature(feature)
             }
         }
         super.finish()
-    }
-
-    private fun callFeature(feature: ContribFeature) {
-        if (feature === ContribFeature.SPLIT_TRANSACTION) {
-            startActivity(ShortcutHelper.createIntentForNewSplit(this))
-        }
-        // else User bought licence in the meantime
     }
 
     private fun callerIsContribIface(): Boolean {

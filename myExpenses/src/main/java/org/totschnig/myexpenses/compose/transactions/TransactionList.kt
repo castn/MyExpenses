@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.CallSplit
-import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.LinkOff
 import androidx.compose.material.icons.filled.Loupe
@@ -203,7 +202,6 @@ enum class TransactionEvent {
     UnArchive,
     Delete,
     Edit,
-    Clone,
     CreateTemplate,
     UnDelete,
     Select,
@@ -781,15 +779,6 @@ fun transactionMenu(
             })
         } else {
             if (!transaction.isTrade) {
-                add(
-                    MenuEntry(
-                        label = R.string.menu_clone_transaction,
-                        command = "CLONE",
-                        icon = Icons.Filled.ContentCopy
-                    ) {
-                        onEvent(TransactionEvent.Clone, transaction)
-                    }
-                )
                 add(
                     MenuEntry(
                         label = R.string.menu_create_template_from_transaction,

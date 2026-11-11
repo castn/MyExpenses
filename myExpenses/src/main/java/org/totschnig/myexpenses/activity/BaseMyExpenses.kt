@@ -1008,7 +1008,7 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
         }
     }
 
-    protected fun edit(transaction: Transaction2, clone: Boolean = false) {
+    protected fun edit(transaction: Transaction2) {
         lifecycleScope.launch {
             if (checkSealed(listOf(transaction.id))) {
                 when {
@@ -1033,9 +1033,6 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
                                     KEY_COLOR,
                                     transaction.color ?: currentAccount?.color(resources)
                                 )
-                                if (clone) {
-                                    putExtra(ExpenseEdit.KEY_CLONE, true)
-                                }
                             }
                         )
                     }
@@ -1449,8 +1446,7 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
                 }
             }
 
-            TransactionEvent.Edit -> edit(transaction, false)
-            TransactionEvent.Clone -> edit(transaction, true)
+            TransactionEvent.Edit -> edit(transaction)
             TransactionEvent.CreateTemplate -> createTemplate(transaction)
             TransactionEvent.UnDelete -> undelete(listOf(transaction.id))
             TransactionEvent.Select -> viewModel.selectionState.value =

@@ -91,7 +91,6 @@ import org.totschnig.myexpenses.provider.filter.Criterion
 import org.totschnig.myexpenses.sync.GenericAccountService
 import org.totschnig.myexpenses.sync.SyncAdapter
 import org.totschnig.myexpenses.util.ResultUnit
-import org.totschnig.myexpenses.util.ShortcutHelper
 import org.totschnig.myexpenses.util.Utils
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
 import org.totschnig.myexpenses.util.enumValueOrDefault
@@ -314,19 +313,11 @@ open class ContentResolvingAndroidViewModel(application: Application) :
                 }
             }
             licenceHandler.updateNewAccountEnabled()
-            updateTransferShortcut()
             if (failures.isEmpty())
                 ResultUnit
             else
                 Result.failure(Exception("${failures.size} exceptions occurred. "))
         }
-
-    open fun updateTransferShortcut() {
-        ShortcutHelper.configureTransferShortcut(
-            getApplication(),
-            isTransferEnabled
-        )
-    }
 
     val isTransferEnabled
         get() = repository.countAccounts() > 1
