@@ -14,6 +14,7 @@ import java.time.ZoneId
  * the accounts of one currency together
  * @param amount without sign, null for an empty field
  * @param day null for today
+ * @param templateId a template the form is filled with, e.g. from the widget
  */
 data class NewTransaction(
     val accountId: Long? = null,
@@ -21,10 +22,11 @@ data class NewTransaction(
     val isIncome: Boolean = false,
     val amount: BigDecimal? = null,
     val day: LocalDate? = null,
-    val payee: String? = null
+    val payee: String? = null,
+    val templateId: Long? = null
 ) : Serializable {
     private companion object {
-        private const val serialVersionUID = 1L
+        private const val serialVersionUID = 2L
     }
 }
 
@@ -35,6 +37,8 @@ data class NewTransaction(
  * @param id of the transaction changed, [NEW] for a new one
  * @param isCategorySuggested the category was set from a suggestion, not by the user, so that it
  * follows a change of the payee
+ * @param template set if this is the draft of a template, its day is not saved then
+ * @param fromTemplateId a new transaction filled from this template, saving it counts as its use
  */
 data class TransactionDraft(
     val id: Long,
@@ -48,13 +52,18 @@ data class TransactionDraft(
     val tagIds: List<Long>,
     val methodId: Long?,
     val comment: String,
-    val isCategorySuggested: Boolean = false
+    val isCategorySuggested: Boolean = false,
+    val template: TemplateFields? = null,
+    val fromTemplateId: Long? = null
 ) : Serializable {
     val isNew get() = id == NEW
 
+    /** A new transaction, not a template */
+    val isNewTransaction get() = isNew && template == null
+
     companion object {
         const val NEW = 0L
-        private const val serialVersionUID = 2L
+        private const val serialVersionUID = 3L
     }
 }
 
@@ -112,7 +121,8 @@ fun TransactionDraft.next(tagIds: List<Long>) = copy(
     categoryPath = null,
     tagIds = tagIds,
     comment = "",
-    isCategorySuggested = false
+    isCategorySuggested = false,
+    fromTemplateId = null
 )
 
 /**
