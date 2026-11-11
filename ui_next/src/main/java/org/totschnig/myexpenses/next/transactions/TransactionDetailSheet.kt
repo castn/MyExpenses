@@ -40,7 +40,10 @@ import org.totschnig.myexpenses.designsystem.Spacing
 import org.totschnig.myexpenses.designsystem.TextDialog
 import org.totschnig.myexpenses.next.MenuActionSheet
 import org.totschnig.myexpenses.next.SignedAmount
+import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
+import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.next.data.transactions.EditableTransaction
+import org.totschnig.myexpenses.next.data.transactions.SplitPart
 import org.totschnig.myexpenses.next.feature.transactions.MethodDialog
 import org.totschnig.myexpenses.next.feature.transactions.TagField
 import org.totschnig.myexpenses.next.feature.transactions.TransactionForm
@@ -196,8 +199,9 @@ private fun TransactionDetails(
 }
 
 /**
- * Date, account, category, payment method and note. With [editable] date, method and note show
- * what was just saved and are changed by tapping them, an empty method or note offers to add one.
+ * Date, account, the other account of a transfer or the parts of a split, category, payment method
+ * and note. With [editable] date, method and note show what was just saved and are changed by
+ * tapping them, an empty method or note offers to add one.
  */
 @Composable
 private fun DetailRows(
@@ -222,6 +226,13 @@ private fun DetailRows(
     )
     transaction.accountLabel?.takeIf { it.isNotBlank() }?.let {
         InfoRow(stringResource(R.string.next_transaction_account), it)
+    }
+    transaction.transferAccountLabel?.takeIf { transaction.isTransfer }?.let {
+        InfoRow(stringResource(R.string.next_transaction_transfer_account), it)
+    }
+    if (transaction.isSplit) {
+        val loaded = editing?.state?.takeIf { it.loadedId == transaction.id }
+        SplitParts(loaded?.splitParts.orEmpty(), transaction)
     }
     if (withCategory) transaction.categoryPath?.let {
         InfoRow(stringResource(R.string.next_contracts_transaction_category), it)
@@ -315,5 +326,22 @@ private fun Header(
             )
             actions()
         }
+    }
+}
+
+/**
+ * The parts of a split, each with its category, or the account of a transfer, and its amount. Only
+ * shown: splits are no longer entered or changed by hand.
+ */
+@Composable
+private fun SplitParts(parts: List<SplitPart>, transaction: Transaction2) {
+    val formatter = LocalCurrencyFormatter.current
+    val currency = (transaction.amount ?: transaction.displayAmount).currencyUnit
+    val noLabel = stringResource(R.string.next_transaction_split_parts)
+    parts.forEach { part ->
+        InfoRow(
+            label = part.categoryPath ?: part.transferAccount ?: part.comment ?: noLabel,
+            value = formatter.convAmount(part.amount, currency)
+        )
     }
 }

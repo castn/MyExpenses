@@ -17,6 +17,9 @@ interface TransactionStore {
     /** The tags [accountId] gives new transactions */
     suspend fun defaultTags(accountId: Long): List<Long>
 
+    /** The parts of split [id], empty if it is none */
+    suspend fun splitParts(id: Long): List<SplitPart>
+
     /**
      * Writes what differs between [from] and [to], so that a change made meanwhile to another
      * value, e.g. the category from its chip, stays. A payee without a payee of that name creates
@@ -51,3 +54,16 @@ fun interface CategorySuggestions {
         val None = CategorySuggestions { _, _, _ -> null }
     }
 }
+
+/**
+ * A part of a split, shown in its details; splits are no longer entered or changed by hand
+ *
+ * @param amount in minor units, negative for an expense
+ * @param transferAccount label of the account a part moves money to or from
+ */
+data class SplitPart(
+    val amount: Long,
+    val categoryPath: String?,
+    val comment: String?,
+    val transferAccount: String?
+)

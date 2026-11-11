@@ -24,6 +24,7 @@ import org.totschnig.myexpenses.next.data.transactions.EditValues
 import org.totschnig.myexpenses.next.data.transactions.EditableTransaction
 import org.totschnig.myexpenses.next.data.transactions.MethodOption
 import org.totschnig.myexpenses.next.data.transactions.NewTransaction
+import org.totschnig.myexpenses.next.data.transactions.SplitPart
 import org.totschnig.myexpenses.next.data.transactions.SuggestedCategory
 import org.totschnig.myexpenses.next.data.transactions.TransactionStore
 
@@ -58,6 +59,10 @@ class TransactionEditViewModelTest {
         override suspend fun accounts() = accounts
 
         override suspend fun defaultTags(accountId: Long) = defaultTags[accountId].orEmpty()
+
+        var parts = mapOf<Long, List<SplitPart>>()
+
+        override suspend fun splitParts(id: Long) = parts[id].orEmpty()
 
         override suspend fun save(id: Long, from: EditValues, to: EditValues) {
             saved += from to to
@@ -329,6 +334,20 @@ class TransactionEditViewModelTest {
         restored.startNew(NewTransaction(amount = BigDecimal.TEN))
         assertEquals("7", restored.state.value.draft!!.amountText)
         assertEquals(3, restored.state.value.accounts.size)
+    }
+
+    @Test
+    fun aSplitIsOnlyShownWithItsParts() {
+        val parts =
+            listOf(
+                SplitPart(-1000, "Lebensmittel", null, null),
+                SplitPart(-500, null, null, "Bargeld")
+            )
+        val viewModel = viewModel(FakeStore(null).apply { this.parts = mapOf(1L to parts) })
+        viewModel.open(1)
+        assertEquals(1L, viewModel.state.value.loadedId)
+        assertNull(viewModel.state.value.transaction)
+        assertEquals(parts, viewModel.state.value.splitParts)
     }
 
     // Categories suggested while typing

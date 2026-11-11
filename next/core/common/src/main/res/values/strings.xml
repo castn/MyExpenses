@@ -186,6 +186,8 @@
     <string name="next_transaction_create_failed">Could not save, the account may have been closed</string>
     <string name="next_transaction_no_account">No open account</string>
     <string name="next_transaction_no_account_hint">Create an account or reopen a closed one to enter transactions.</string>
+    <string name="next_transaction_split_parts">Parts</string>
+    <string name="next_transaction_transfer_account">Other account</string>
     <string name="next_payment_part_of">Belongs to</string>
     <string name="next_payment_suggested">Suggested as</string>
     <string name="next_payment_mark_contract">Mark as contract</string>

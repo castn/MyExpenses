@@ -186,6 +186,8 @@
     <string name="next_transaction_create_failed">Nicht gespeichert, das Konto ist vielleicht geschlossen</string>
     <string name="next_transaction_no_account">Kein offenes Konto</string>
     <string name="next_transaction_no_account_hint">Lege ein Konto an oder öffne ein geschlossenes wieder, um Buchungen einzutragen.</string>
+    <string name="next_transaction_split_parts">Aufteilung</string>
+    <string name="next_transaction_transfer_account">Gegenkonto</string>
     <string name="next_payment_part_of">Gehört zu</string>
     <string name="next_payment_suggested">Vorgeschlagen als</string>
     <string name="next_payment_mark_contract">Als Vertrag markieren</string>

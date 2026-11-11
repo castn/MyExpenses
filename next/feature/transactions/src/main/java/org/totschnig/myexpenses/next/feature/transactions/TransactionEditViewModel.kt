@@ -22,6 +22,7 @@ import org.totschnig.myexpenses.next.data.transactions.EditValues
 import org.totschnig.myexpenses.next.data.transactions.EditableTransaction
 import org.totschnig.myexpenses.next.data.transactions.MethodOption
 import org.totschnig.myexpenses.next.data.transactions.NewTransaction
+import org.totschnig.myexpenses.next.data.transactions.SplitPart
 import org.totschnig.myexpenses.next.data.transactions.SuggestedCategory
 import org.totschnig.myexpenses.next.data.transactions.TransactionDraft
 import org.totschnig.myexpenses.next.data.transactions.TransactionStore
@@ -50,6 +51,7 @@ import org.totschnig.myexpenses.next.data.transactions.withDay
  * meanwhile
  * @param undo the last change, offered to undo until it was shown
  * @param created a new transaction that was saved, until [TransactionEditActions.createdShown]
+ * @param splitParts the parts of an opened split, which is only shown
  */
 data class TransactionEditState(
     val transaction: EditableTransaction? = null,
@@ -62,7 +64,8 @@ data class TransactionEditState(
     val isAmountInvalid: Boolean = false,
     val isSaveFailed: Boolean = false,
     val undo: Undo? = null,
-    val created: Long? = null
+    val created: Long? = null,
+    val splitParts: List<SplitPart> = emptyList()
 ) {
     /** The account of the draft, e.g. for the symbol of its currency */
     val draftAccount: AccountOption?
@@ -374,7 +377,15 @@ class TransactionEditViewModel(
     private suspend fun reload(id: Long) {
         val transaction = withContext(io) { store.load(id) }
         if (openedId != id) return
-        _state.update { it.copy(transaction = transaction, loadedId = id) }
+        // A split is only shown with its parts
+        val parts = if (transaction ==
+            null
+        ) {
+            withContext(io) { store.splitParts(id) }
+        } else {
+            emptyList()
+        }
+        _state.update { it.copy(transaction = transaction, loadedId = id, splitParts = parts) }
         val draft = _state.value.draft
         if (transaction == null) {
             setDraft(null)

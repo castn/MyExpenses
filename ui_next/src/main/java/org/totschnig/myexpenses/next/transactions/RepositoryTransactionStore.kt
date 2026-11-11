@@ -9,6 +9,7 @@ import org.totschnig.myexpenses.db2.getPartyName
 import org.totschnig.myexpenses.db2.loadAccount
 import org.totschnig.myexpenses.db2.loadActiveTagsForAccount
 import org.totschnig.myexpenses.db2.loadAttributes
+import org.totschnig.myexpenses.db2.loadSplitParts
 import org.totschnig.myexpenses.db2.loadTransaction
 import org.totschnig.myexpenses.db2.requireParty
 import org.totschnig.myexpenses.db2.updateTransaction
@@ -20,6 +21,7 @@ import org.totschnig.myexpenses.next.data.transactions.AccountOption
 import org.totschnig.myexpenses.next.data.transactions.EditValues
 import org.totschnig.myexpenses.next.data.transactions.EditableTransaction
 import org.totschnig.myexpenses.next.data.transactions.MethodOption
+import org.totschnig.myexpenses.next.data.transactions.SplitPart
 import org.totschnig.myexpenses.next.data.transactions.TransactionStore
 import org.totschnig.myexpenses.provider.KEY_IS_PORTFOLIO
 import org.totschnig.myexpenses.provider.KEY_LABEL
@@ -98,6 +100,16 @@ class RepositoryTransactionStore(private val repository: Repository) : Transacti
 
     override suspend fun defaultTags(accountId: Long): List<Long> =
         repository.loadActiveTagsForAccount(accountId).map { it.id }
+
+    override suspend fun splitParts(id: Long): List<SplitPart> =
+        repository.loadSplitParts(id).map { part ->
+            SplitPart(
+                amount = part.amount,
+                categoryPath = part.categoryPath,
+                comment = part.comment,
+                transferAccount = part.transferAccountId?.let { repository.loadAccount(it)?.label }
+            )
+        }
 
     override suspend fun save(id: Long, from: EditValues, to: EditValues) {
         val data = repository.loadTransaction(id, withTransfer = false).data
