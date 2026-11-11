@@ -23,7 +23,7 @@ offer; a view model shows the flows of its repository and changes its store.
 | `ProviderLedgerSource` (shell) | transactions with their tags and split parts, own accounts with their IBANs, categories, tags, consent | `LedgerSource`: consent, `Ledger`, `Catalog`, today |
 | `ContractRepository` | ledger, its rules | `ContractFacts`: contracts, incomes, ids of their payments; to `ContractsViewModel` the analysis and the overviews |
 | `TagRepository` | ledger, meanings and rules of tags | `TagFacts`: debits excluded from spending, meanings; to the tag view models the tag rows, to `TagLearningViewModel` the learning inputs; applies the rules of tags |
-| `CategoryRepository` | ledger, catalog, its rules and decisions | to `CategorySuggestionsViewModel` the suggestions; applies certain categories to new transactions |
+| `CategoryRepository` | ledger, catalog, its rules and decisions | to `CategorySuggestionsViewModel` the suggestions, through `NextData.categorySuggestions` to `TransactionEditViewModel` a suggestion for what is typed; applies certain categories to new transactions |
 | `ReceiptRepository` | scanned receipts | `ReceiptFacts`: items by transaction |
 | `BudgetRepository` | ledger, catalog, `ContractFacts`, `TagFacts`, `ReceiptFacts`, its pots | `BudgetFacts`: the pots of the current period with their earlier periods |
 | `BalanceRepository` | ledger, `ContractFacts` | the balance from salary to salary |
@@ -130,5 +130,7 @@ replacement for the provider. These read the database themselves:
 - the budgets of the classic screens, from `BudgetListViewModel` of the main module; the new UI
   has its own pots (package `budgets`) and only reads the classic budgets once to take them over
 - scanned receipts while they are added or corrected, `ReceiptViewModel` only offers their items
+- a transaction while it is entered or changed by hand, `TransactionEditViewModel` reads and writes
+  it through `TransactionStore`
 - the accounts of the overview, from `MainViewModel`; `ProviderLedgerSource` reads the
   own accounts itself, with their labels and types

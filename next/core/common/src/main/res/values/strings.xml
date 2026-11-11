@@ -181,6 +181,11 @@
     <string name="next_transaction_undo">Undo</string>
     <string name="next_transaction_save">Save</string>
     <string name="next_transaction_cancel">Cancel</string>
+    <string name="next_transaction_new_title">New transaction</string>
+    <string name="next_transaction_save_and_new">Save and new</string>
+    <string name="next_transaction_create_failed">Could not save, the account may have been closed</string>
+    <string name="next_transaction_no_account">No open account</string>
+    <string name="next_transaction_no_account_hint">Create an account or reopen a closed one to enter transactions.</string>
     <string name="next_payment_part_of">Belongs to</string>
     <string name="next_payment_suggested">Suggested as</string>
     <string name="next_payment_mark_contract">Mark as contract</string>

@@ -14,6 +14,8 @@ import org.totschnig.myexpenses.util.TransactionImports
 import org.totschnig.myexpenses.next.categories.ProviderCategoryWriting
 import org.totschnig.myexpenses.next.data.categories.CategoryRepository
 import org.totschnig.myexpenses.next.data.categories.CategoryStore
+import org.totschnig.myexpenses.next.data.transactions.CategorySuggestions
+import org.totschnig.myexpenses.next.transactions.AnalysisCategorySuggestions
 import org.totschnig.myexpenses.next.tags.RepositoryTagDatabase
 import org.totschnig.myexpenses.next.data.tags.TagRepository
 import org.totschnig.myexpenses.next.data.tags.TagStore
@@ -74,6 +76,9 @@ class NextData private constructor(context: Context) {
         ProviderCategoryWriting(context.contentResolver),
         scope
     )
+
+    /** Categories for a transaction that is typed; [CategorySuggestions.None] without categories */
+    val categorySuggestions: CategorySuggestions = AnalysisCategorySuggestions(categories)
 
     val receipts = ReceiptRepository(
         ProviderReceiptDatabase(

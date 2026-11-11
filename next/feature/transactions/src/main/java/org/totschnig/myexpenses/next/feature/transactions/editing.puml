@@ -1,0 +1,53 @@
+@startuml editing
+' Who enters and changes transactions by hand, see README.md in this package.
+
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam defaultFontName sans-serif
+top to bottom direction
+
+database "Database\n(transactions, payees, tags)" as db
+
+package "ui_next (shell)" {
+  [MainActivity\nplus button] as main
+  [TransactionDetailSheet\nquick changes, form] as sheet
+  [NewTransactionActivity] as activity
+  [NewTransactionForReceipt] as receipt
+  [RepositoryTransactionStore] as store
+  [AnalysisCategorySuggestions] as suggestionsImpl
+  [TagsFeature.TagField] as tagField
+}
+
+package "feature.transactions" {
+  [NewTransactionFlow] as flow
+  [TransactionForm] as form
+  [TransactionEditViewModel] as vm
+}
+
+package "data.transactions" {
+  [TransactionDraft\nEditValues] as draft
+  interface TransactionStore
+  interface CategorySuggestions
+}
+
+package "data.categories" {
+  [CategoryRepository\nCategoryAnalysis.suggestFor] as categories
+}
+
+main --> activity : NewTransaction
+receipt --> activity : NewTransaction
+activity --> flow
+flow --> form
+sheet --> form
+form ..> tagField : slot
+flow --> vm
+sheet --> vm
+vm --> draft : toValues
+vm --> TransactionStore
+vm --> CategorySuggestions
+store ..|> TransactionStore
+suggestionsImpl ..|> CategorySuggestions
+suggestionsImpl --> categories
+store --> db
+@enduml

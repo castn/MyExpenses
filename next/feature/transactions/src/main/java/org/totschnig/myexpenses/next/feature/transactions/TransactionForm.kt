@@ -1,8 +1,11 @@
 package org.totschnig.myexpenses.next.feature.transactions
 
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AutoAwesome
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -17,56 +20,87 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import java.time.ZoneId
+import java.time.format.FormatStyle
+import org.totschnig.myexpenses.designsystem.ActionChip
+import org.totschnig.myexpenses.designsystem.ChipRow
 import org.totschnig.myexpenses.designsystem.ChoiceChips
 import org.totschnig.myexpenses.designsystem.DateDialog
 import org.totschnig.myexpenses.designsystem.FormPickerField
 import org.totschnig.myexpenses.designsystem.FormTextField
 import org.totschnig.myexpenses.designsystem.HintRow
+import org.totschnig.myexpenses.designsystem.LabelChip
 import org.totschnig.myexpenses.designsystem.SingleChoiceDialog
 import org.totschnig.myexpenses.designsystem.Spacing
 import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.ui.LabelIcons
+import org.totschnig.myexpenses.next.core.ui.categories.LocalCategoryPicker
 import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
+import org.totschnig.myexpenses.next.data.transactions.AccountOption
 import org.totschnig.myexpenses.next.data.transactions.ChangedField
-import org.totschnig.myexpenses.next.data.transactions.EditDraft
-import org.totschnig.myexpenses.next.data.transactions.EditableTransaction
 import org.totschnig.myexpenses.next.data.transactions.MethodOption
+import org.totschnig.myexpenses.next.data.transactions.TransactionDraft
 import org.totschnig.myexpenses.next.data.transactions.differsInBankFields
-import java.time.ZoneId
-import java.time.format.FormatStyle
 
 /**
- * The edit mode of the details: all fields of [transaction] at once, saved by the actions of the
- * sheet. A transaction from the bank import starts with a warning.
+ * Chips to choose the tags of a transaction in its form, handed in by the shell from the area of
+ * the tags; nothing is saved until the form is
+ */
+typealias TagField = @Composable (tagIds: List<Long>, onChange: (List<Long>) -> Unit) -> Unit
+
+/**
+ * All fields of a transaction, for a new one on its own screen and for changing one in its
+ * details. A transaction from the bank import starts with a warning. Saving is left to the
+ * screen around it.
  *
  * @param currencySymbol after the amount
+ * @param tagField the tags, left out where the area of the tags is
  */
 @Composable
-fun TransactionEditForm(
-    transaction: EditableTransaction,
-    draft: EditDraft,
-    methods: List<MethodOption>,
-    isAmountInvalid: Boolean,
+fun TransactionForm(
+    state: TransactionEditState,
+    draft: TransactionDraft,
+    actions: TransactionFormActions,
     currencySymbol: String,
-    onChange: (EditDraft) -> Unit,
+    tagField: TagField?,
+    modifier: Modifier = Modifier
 ) {
+    val transaction = state.transaction?.takeIf { it.id == draft.id }
+    val isAmountEditable = transaction?.isAmountEditable ?: true
     val dateFormatter = rememberDateFormatter(FormatStyle.FULL)
     var showDate by rememberSaveable { mutableStateOf(false) }
     var showMethod by rememberSaveable { mutableStateOf(false) }
-    Column(Modifier.padding(bottom = Spacing.screen)) {
-        if (transaction.isImported) {
-            HintRow(stringResource(R.string.next_transaction_imported_warning), isFirst = true, isWarning = true)
+    var showAccount by rememberSaveable { mutableStateOf(false) }
+    val onChange = actions::changeDraft
+    val pickCategory = rememberLauncherForActivityResult(LocalCategoryPicker.current) { picked ->
+        picked?.let { (id, path) ->
+            onChange(draft.copy(categoryId = id, categoryPath = path, isCategorySuggested = false))
+        }
+    }
+    Column(modifier.padding(bottom = Spacing.screen)) {
+        if (transaction?.isImported == true) {
+            HintRow(
+                stringResource(R.string.next_transaction_imported_warning),
+                isFirst = true,
+                isWarning = true
+            )
         }
         Column(
             modifier = Modifier.padding(horizontal = Spacing.screen, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            if (transaction.isAmountEditable) {
+            if (state.accounts.size > 1) {
+                FormPickerField(
+                    label = stringResource(R.string.next_transaction_account),
+                    value = state.draftAccount?.label.orEmpty(),
+                    onClick = { showAccount = true }
+                )
+            }
+            if (isAmountEditable) {
                 ChoiceChips(
                     options = listOf(false, true),
                     selected = draft.isIncome,
-                    label = {
-                        stringResource(if (it) R.string.next_transaction_income else R.string.next_transaction_expense)
-                    },
+                    label = { stringResource(signLabel(isIncome = it)) },
                     onSelect = { onChange(draft.copy(isIncome = it)) }
                 )
             }
@@ -75,11 +109,15 @@ fun TransactionEditForm(
                 value = draft.amountText,
                 onValueChange = { onChange(draft.copy(amountText = it)) },
                 keyboardType = KeyboardType.Decimal,
-                enabled = transaction.isAmountEditable,
-                isError = isAmountInvalid,
+                enabled = isAmountEditable,
+                isError = state.isAmountInvalid,
                 supportingText = when {
-                    isAmountInvalid -> stringResource(R.string.next_transaction_amount_invalid)
-                    !transaction.isAmountEditable -> stringResource(R.string.next_transaction_amount_foreign)
+                    state.isAmountInvalid -> stringResource(
+                        R.string.next_transaction_amount_invalid
+                    )
+
+                    !isAmountEditable -> stringResource(R.string.next_transaction_amount_foreign)
+
                     else -> null
                 },
                 trailing = { Text(currencySymbol) }
@@ -89,15 +127,31 @@ fun TransactionEditForm(
                 value = draft.payee,
                 onValueChange = { onChange(draft.copy(payee = it)) }
             )
+            ChipRow(stringResource(R.string.next_details_category)) {
+                LabelChip(
+                    text = draft.categoryPath,
+                    placeholder = stringResource(R.string.next_category_set),
+                    onClick = { pickCategory.launch(draft.isIncome) },
+                    icon = LabelIcons.category
+                )
+                state.suggestion?.takeIf { draft.categoryId == null }?.let { suggestion ->
+                    ActionChip(
+                        text = stringResource(R.string.next_category_suggested, suggestion.path),
+                        icon = Icons.Outlined.AutoAwesome,
+                        onClick = actions::acceptSuggestion
+                    )
+                }
+            }
+            tagField?.invoke(draft.tagIds) { onChange(draft.copy(tagIds = it)) }
             FormPickerField(
                 label = stringResource(R.string.next_transaction_date),
                 value = dateFormatter.format(draft.day),
                 onClick = { showDate = true }
             )
-            if (methods.isNotEmpty() || draft.methodId != null) {
+            if (state.methods.isNotEmpty() || draft.methodId != null) {
                 FormPickerField(
                     label = stringResource(R.string.next_transaction_method),
-                    value = methods.find { it.id == draft.methodId }?.label
+                    value = state.methods.find { it.id == draft.methodId }?.label
                         ?: stringResource(R.string.next_transaction_no_method),
                     onClick = { showMethod = true }
                 )
@@ -109,6 +163,14 @@ fun TransactionEditForm(
                 singleLine = false
             )
         }
+    }
+    if (showAccount) {
+        AccountDialog(
+            state.accounts,
+            draft.accountId,
+            onSelect = { onChange(draft.copy(accountId = it)) },
+            onDismiss = { showAccount = false }
+        )
     }
     if (showDate) {
         DateDialog(
@@ -122,12 +184,32 @@ fun TransactionEditForm(
     }
     if (showMethod) {
         MethodDialog(
-            methods,
+            state.methods,
             draft.methodId,
             onSelect = { onChange(draft.copy(methodId = it)) },
             onDismiss = { showMethod = false }
         )
     }
+}
+
+@Composable
+private fun AccountDialog(
+    accounts: List<AccountOption>,
+    selectedId: Long,
+    onSelect: (Long) -> Unit,
+    onDismiss: () -> Unit
+) {
+    SingleChoiceDialog(
+        title = stringResource(R.string.next_transaction_account),
+        options = accounts,
+        selected = accounts.find { it.id == selectedId },
+        label = { it.label },
+        onSelect = {
+            onSelect(it.id)
+            onDismiss()
+        },
+        onDismiss = onDismiss
+    )
 }
 
 /** Picks one of [methods] or none */
@@ -136,7 +218,7 @@ fun MethodDialog(
     methods: List<MethodOption>,
     selectedId: Long?,
     onSelect: (Long?) -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     val none = stringResource(R.string.next_transaction_no_method)
     SingleChoiceDialog(
@@ -157,7 +239,11 @@ fun MethodDialog(
  * transaction from the bank import it also tells when the change no longer matches the bank.
  */
 @Composable
-fun UndoSnackbar(state: TransactionEditState, actions: TransactionEditActions, host: SnackbarHostState) {
+fun UndoSnackbar(
+    state: TransactionEditState,
+    actions: TransactionEditActions,
+    host: SnackbarHostState
+) {
     val undo = state.undo ?: return
     val saved = stringResource(
         when (undo.field) {
@@ -169,11 +255,25 @@ fun UndoSnackbar(state: TransactionEditState, actions: TransactionEditActions, h
     )
     val current = state.transaction?.takeIf { it.id == undo.id }
     val differs = current != null && current.isImported &&
-            undo.previous.differsInBankFields(current.values, ZoneId.systemDefault())
-    val message = if (differs) stringResource(R.string.next_transaction_saved_differs, saved) else saved
+        undo.previous.differsInBankFields(undo.saved, ZoneId.systemDefault())
+    val message = if (differs) {
+        stringResource(
+            R.string.next_transaction_saved_differs,
+            saved
+        )
+    } else {
+        saved
+    }
     val undoLabel = stringResource(R.string.next_transaction_undo)
     LaunchedEffect(undo) {
-        val result = host.showSnackbar(message, actionLabel = undoLabel, duration = SnackbarDuration.Short)
+        val result = host.showSnackbar(
+            message,
+            actionLabel = undoLabel,
+            duration = SnackbarDuration.Short
+        )
         if (result == SnackbarResult.ActionPerformed) actions.undo() else actions.undoShown()
     }
 }
+
+private fun signLabel(isIncome: Boolean) =
+    if (isIncome) R.string.next_transaction_income else R.string.next_transaction_expense

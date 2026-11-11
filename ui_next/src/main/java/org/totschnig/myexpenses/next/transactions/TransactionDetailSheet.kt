@@ -42,7 +42,8 @@ import org.totschnig.myexpenses.next.MenuActionSheet
 import org.totschnig.myexpenses.next.SignedAmount
 import org.totschnig.myexpenses.next.data.transactions.EditableTransaction
 import org.totschnig.myexpenses.next.feature.transactions.MethodDialog
-import org.totschnig.myexpenses.next.feature.transactions.TransactionEditForm
+import org.totschnig.myexpenses.next.feature.transactions.TagField
+import org.totschnig.myexpenses.next.feature.transactions.TransactionForm
 import org.totschnig.myexpenses.next.feature.transactions.UndoSnackbar
 import org.totschnig.myexpenses.next.feature.transactions.TransactionEditActions
 import org.totschnig.myexpenses.next.feature.transactions.TransactionEditState
@@ -57,11 +58,14 @@ import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
 
 /**
  * What changes transactions from their details: the state and actions of the form, see
- * [TransactionEditActions]
+ * [TransactionEditActions], and the tags in it
+ *
+ * @param tagField the tags in the form, null without the area of the tags
  */
 class TransactionEditing(
     val state: TransactionEditState,
-    val actions: TransactionEditActions
+    val actions: TransactionEditActions,
+    val tagField: TagField?
 )
 
 /**
@@ -72,6 +76,7 @@ class TransactionEditing(
 class DetailsEditing(editing: TransactionEditing, val onEditClassic: () -> Unit) {
     val state = editing.state
     val actions = editing.actions
+    val tagField = editing.tagField
 }
 
 /**
@@ -115,7 +120,7 @@ fun TransactionDetailSheet(
                 TextButton(onClick = editing.actions::cancelEditing) {
                     Text(stringResource(R.string.next_transaction_cancel))
                 }
-                Button(onClick = editing.actions::saveDraft) {
+                Button(onClick = { editing.actions.saveDraft() }) {
                     Text(stringResource(R.string.next_transaction_save))
                 }
             }
@@ -124,13 +129,12 @@ fun TransactionDetailSheet(
         snackbarHostState = snackbar,
     ) {
         if (editing != null && editable != null && draft != null) {
-            TransactionEditForm(
-                transaction = editable,
+            TransactionForm(
+                state = editing.state,
                 draft = draft,
-                methods = editing.state.methods,
-                isAmountInvalid = editing.state.isAmountInvalid,
+                actions = editing.actions,
                 currencySymbol = (transaction.amount ?: transaction.displayAmount).currencyUnit.symbol,
-                onChange = editing.actions::changeDraft
+                tagField = editing.tagField
             )
         } else {
             TransactionDetails(transaction, menu, categoryChip, tagChips, image, onImageClick, editing, content)

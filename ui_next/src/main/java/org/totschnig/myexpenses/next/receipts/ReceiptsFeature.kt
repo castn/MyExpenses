@@ -75,7 +75,7 @@ class ReceiptsFeature(
 
     companion object {
         /** Lets the receipt screens open the editor for a new transaction, also outside of the main screen */
-        val editor = LocalNewTransactionEditor provides ExpenseEditForReceipt
+        val editor = LocalNewTransactionEditor provides NewTransactionForReceipt
     }
 }
 

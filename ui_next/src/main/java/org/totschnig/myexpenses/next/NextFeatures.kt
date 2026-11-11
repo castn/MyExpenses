@@ -32,7 +32,9 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
     val balance = BalanceFeature(activity, data, contracts)
     val categories = CategoriesFeature(activity, data)
     val tags = TagsFeature(activity, data)
-    val transactions = TransactionsFeature(activity)
+    val transactions = TransactionsFeature(activity, data) { tagIds, onChange ->
+        tags.TagField(tagIds, onChange)
+    }
     val budgets = BudgetsFeature(activity, data)
     val guidance = GuidanceFeature(activity, data, { categories.isAsking() }, explained = NextKey.Analysis)
     val savingTips = SavingTipsFeature(activity, data, contracts, tags) { guidance.PendingTips(it) }

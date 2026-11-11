@@ -44,6 +44,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.paging.compose.collectAsLazyPagingItems
 import java.math.RoundingMode
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 import kotlinx.coroutines.launch
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.BaseMyExpenses
@@ -80,6 +81,7 @@ import org.totschnig.myexpenses.next.settings.NextSettings
 import org.totschnig.myexpenses.next.settings.SettingsGroup
 import org.totschnig.myexpenses.next.transactions.AppFixedTransactions
 import org.totschnig.myexpenses.next.transactions.FixedTransactionsViewModel
+import org.totschnig.myexpenses.next.transactions.NewTransactionActivity
 import org.totschnig.myexpenses.next.transactions.TransactionActions
 import org.totschnig.myexpenses.next.transactions.TransactionEditing
 import org.totschnig.myexpenses.next.transactions.toShown
@@ -140,6 +142,15 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
 
     // Changes transactions from their details, see [TransactionEditActions]
     private val transactionEditViewModel get() = features.transactions.viewModel
+
+    /** The new editor for an expense or income, in the account shown or the one used last */
+    private fun createTransaction(isIncome: Boolean) {
+        lifecycleScope.launch {
+            val accountId = accountForNewTransaction().getOrNull()?.id
+            // The result calls onTransactionSaved, like the classic form
+            startEdit(NewTransactionActivity.intent(this@MainActivity, accountId, isIncome))
+        }
+    }
 
     override fun handleRootWindowInsets() {}
 
@@ -292,6 +303,11 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
                         when (event.action) {
                             Action.Scan -> contribFeatureRequested(ContribFeature.OCR)
 
+                            Action.Expense -> createTransaction(isIncome = false)
+
+                            Action.Income -> createTransaction(isIncome = true)
+
+                            // Transfers and splits still in the classic form
                             else -> createRow(
                                 event.action.type,
                                 event.transferEnabled,
@@ -571,7 +587,11 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
                                 payeeImageDialog = rows.firstNotNullOfOrNull {
                                     it.payeeImageDialog
                                 },
-                                editing = TransactionEditing(editState, transactionEditViewModel)
+                                editing = TransactionEditing(
+                                    editState,
+                                    transactionEditViewModel,
+                                    features.transactions.tagField
+                                )
                             )
                         }
                     )
