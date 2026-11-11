@@ -186,6 +186,8 @@
     <string name="next_transaction_create_failed">Nicht gespeichert, das Konto ist vielleicht geschlossen</string>
     <string name="next_transaction_no_account">Kein offenes Konto</string>
     <string name="next_transaction_no_account_hint">Lege ein Konto an oder öffne ein geschlossenes wieder, um Buchungen einzutragen.</string>
+    <string name="next_transaction_not_editable">Hier nicht änderbar</string>
+    <string name="next_transaction_not_editable_hint">Split- und Umbuchungen werden nur noch angezeigt. Lösche sie oder löse sie in ihren Details auf.</string>
     <string name="next_transaction_split_parts">Aufteilung</string>
     <string name="next_transaction_transfer_account">Gegenkonto</string>
     <string name="next_payment_part_of">Gehört zu</string>

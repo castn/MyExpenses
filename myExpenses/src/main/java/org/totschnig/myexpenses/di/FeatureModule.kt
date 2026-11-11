@@ -4,6 +4,7 @@ import androidx.annotation.Keep
 import dagger.Module
 import dagger.Provides
 import org.totschnig.myexpenses.activity.MainScreenEntry
+import org.totschnig.myexpenses.activity.TransactionEditorEntry
 import org.totschnig.myexpenses.feature.BankingFeature
 import org.totschnig.myexpenses.feature.FeatureManager
 import org.totschnig.myexpenses.feature.OcrFeature
@@ -65,4 +66,11 @@ open class FeatureModule {
     @Provides
     open fun provideMainScreen(): MainScreenEntry =
         error(":myExpenses has no main screen, :app provides it")
+
+    /**
+     * The screen for entering and changing transactions, also in :ui_next, so :app overrides this.
+     */
+    @Provides
+    open fun provideTransactionEditor(): TransactionEditorEntry =
+        error(":myExpenses has no transaction editor, :app provides it")
 }

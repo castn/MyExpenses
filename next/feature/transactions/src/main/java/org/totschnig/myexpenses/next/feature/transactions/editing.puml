@@ -12,7 +12,8 @@ database "Database\n(transactions, payees, tags)" as db
 package "ui_next (shell)" {
   [MainActivity\nplus button] as main
   [TransactionDetailSheet\nquick changes, form] as sheet
-  [NewTransactionActivity] as activity
+  [TransactionEditorActivity] as activity
+  [widgets, shortcuts,\nscreens of :myExpenses] as entries
   [NewTransactionForReceipt] as receipt
   [RepositoryTransactionStore] as store
   [AnalysisCategorySuggestions] as suggestionsImpl
@@ -20,7 +21,7 @@ package "ui_next (shell)" {
 }
 
 package "feature.transactions" {
-  [NewTransactionFlow] as flow
+  [TransactionEditorFlow] as flow
   [TransactionForm] as form
   [TransactionEditViewModel] as vm
 }
@@ -35,8 +36,9 @@ package "data.categories" {
   [CategoryRepository\nCategoryAnalysis.suggestFor] as categories
 }
 
-main --> activity : NewTransaction
-receipt --> activity : NewTransaction
+main --> activity : newTransactionIntent
+entries --> activity : TransactionEditorEntry
+receipt --> activity : newTransactionIntent
 activity --> flow
 flow --> form
 sheet --> form

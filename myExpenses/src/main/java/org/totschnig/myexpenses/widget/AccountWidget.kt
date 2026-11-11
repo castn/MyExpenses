@@ -5,12 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import org.totschnig.myexpenses.R
-import org.totschnig.myexpenses.activity.ExpenseEdit
 import org.totschnig.myexpenses.activity.OcrLauncher
+import org.totschnig.myexpenses.activity.asDataEntryFromWidget
 import org.totschnig.myexpenses.activity.mainScreenIntent
-import org.totschnig.myexpenses.contract.TransactionsContract.Transactions.OPERATION_TYPE
+import org.totschnig.myexpenses.activity.newTransactionIntent
 import org.totschnig.myexpenses.fragment.AccountWidgetConfigurationFragment
-import org.totschnig.myexpenses.fragment.AccountWidgetConfigurationFragment.Button
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.provider.KEY_ACCOUNTID
 import org.totschnig.myexpenses.provider.KEY_COLOR
@@ -110,12 +109,13 @@ class AccountWidget :
             }
 
             else -> {
-                (if (clickAction == "SCAN") Intent(context, OcrLauncher::class.java)
-                else Intent(context, ExpenseEdit::class.java).apply {
-                    putExtra(EXTRA_START_FROM_WIDGET, true)
-                    putExtra(EXTRA_START_FROM_WIDGET_DATA_ENTRY, true)
-                    putExtra(OPERATION_TYPE, Button.valueOf(clickAction).type)
-                }).apply {
+                // Buttons for transfers and splits of older widgets also open a new transaction
+                val target = if (clickAction == "SCAN") {
+                    Intent(context, OcrLauncher::class.java)
+                } else {
+                    context.newTransactionIntent().asDataEntryFromWidget()
+                }
+                target.apply {
                     if (accountId < 0) {
                         putExtra(
                             KEY_CURRENCY, intent.getStringExtra(KEY_CURRENCY)

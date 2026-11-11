@@ -13,12 +13,20 @@ Android Studio or `java -jar plantuml.jar editing.puml`.
 `TransactionForm` holds all fields: account, expense or income, amount, payee, category, tags,
 date, payment method and note. It is shown
 
-- on a screen of its own for a new transaction, `NewTransactionFlow` in `NewTransactionActivity`
-  of the shell, opened by the plus button of the main screen and for a receipt without a booking.
-  "Save" closes it, "save and new" keeps account, sign, day and payment method for the next one.
+- on a screen of its own, `TransactionEditorFlow` in `TransactionEditorActivity` of the shell: for
+  a new transaction from the plus button of the main screen, a receipt without a booking, the
+  widget, the launcher shortcut and a scanned receipt of the old OCR; and for changing one from
+  "Edit" in the menus of lists without the pencil and the old details dialog. :myExpenses does
+  not know the shell and opens it through `TransactionEditorEntry` (`newTransactionIntent`,
+  `editTransactionIntent`), like the main screen. "Save" closes it, for a new transaction "save
+  and new" keeps account, sign, day and payment method for the next one.
 - in the details of a transaction after a tap on the pencil, in `TransactionDetailSheet` of the
   shell. A transaction from the bank import starts with a warning; one with an amount in another
   currency keeps its amount.
+
+Splits and transfers are only shown, with their parts or the other account, and can be deleted,
+ungrouped or unlinked; `canBeEdited` of `TransactionEditorEntry` tells which transactions the form
+takes. Clone is gone; manual transfers and splits are no longer offered.
 
 Both use `TransactionEditViewModel`, which also saves the quick changes of the details (date,
 payment method, note) and offers to undo them. What is typed is a `TransactionDraft` in the

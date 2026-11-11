@@ -1,7 +1,6 @@
 package org.totschnig.myexpenses.dialog
 
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.foundation.clickable
@@ -19,13 +18,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
 import org.totschnig.myexpenses.R
-import org.totschnig.myexpenses.activity.ExpenseEdit
+import org.totschnig.myexpenses.activity.newTransactionIntent
 import org.totschnig.myexpenses.compose.transactions.CompactTransactionRenderer
 import org.totschnig.myexpenses.compose.transactions.DateTimeFormatInfo
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.preference.PrefKey
-import org.totschnig.myexpenses.provider.KEY_ACCOUNTID
-import org.totschnig.myexpenses.provider.KEY_COLOR
 import org.totschnig.myexpenses.provider.KEY_CURRENCY
 import org.totschnig.myexpenses.util.ICurrencyFormatter
 import org.totschnig.myexpenses.util.Utils
@@ -122,11 +119,7 @@ class TransactionListComposeDialogFragment : ComposeBaseDialogFragment(),
     override fun onClick(dialog: DialogInterface?, which: Int) {
         with(viewModel.loadingInfo) {
             startActivity(
-                Intent(requireContext(), ExpenseEdit::class.java).apply {
-                    putExtra(KEY_ACCOUNTID, accountId)
-                    putExtra(KEY_CURRENCY, currency)
-                    putExtra(KEY_COLOR, color)
-                }
+                requireContext().newTransactionIntent(accountId).putExtra(KEY_CURRENCY, currency)
             )
         }
     }

@@ -10,11 +10,14 @@ import java.time.ZoneId
  * What a new transaction starts with, e.g. from a receipt; all of it can be changed in the form
  *
  * @param accountId null for the account used last
+ * @param currency an account of this currency when [accountId] is not given or not open, e.g. for
+ * the accounts of one currency together
  * @param amount without sign, null for an empty field
  * @param day null for today
  */
 data class NewTransaction(
     val accountId: Long? = null,
+    val currency: String? = null,
     val isIncome: Boolean = false,
     val amount: BigDecimal? = null,
     val day: LocalDate? = null,

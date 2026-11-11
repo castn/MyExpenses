@@ -35,7 +35,6 @@ import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.provider.getLong
 import org.totschnig.myexpenses.provider.getString
 import org.totschnig.myexpenses.provider.useAndMapToList
-import org.totschnig.myexpenses.viewmodel.data.Transaction2
 
 /** [TransactionStore] on the database of the app */
 class RepositoryTransactionStore(private val repository: Repository) : TransactionStore {
@@ -169,13 +168,6 @@ class RepositoryTransactionStore(private val repository: Repository) : Transacti
         comment = comment
     )
 }
-
-/**
- * Whether the details may be able to change this transaction, before [TransactionStore.load] tells
- * for sure; the others go to the classic form at once
- */
-fun Transaction2.isEditableInDetails() =
-    !isSplit && !isTransfer && !isSplitPart && !isArchive && crStatus != CrStatus.VOID
 
 /** No split, transfer or part of a split, not cancelled, no archive and not in a closed account */
 private fun Transaction.isEditableHere() = !isSplit && transferPeerId == null && parentId == null &&

@@ -791,12 +791,12 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
     }
 
     /**
-     * start ExpenseEdit Activity for a new transaction/transfer/split
-     * Originally the form for transaction is rendered, user can change from spinner in toolbar
+     * The screen for a new transaction, see [TransactionEditorEntry]; transfers and splits are no longer
+     * entered by hand, [type] only tells the classic form, which no longer opens from here
      */
     suspend fun createRowIntent(type: Int, isIncome: Boolean) = getEditIntent()?.apply {
         putExtra(Transactions.OPERATION_TYPE, type)
-        putExtra(ExpenseEdit.KEY_INCOME, isIncome)
+        putExtra(EXTRA_INCOME, isIncome)
     }
 
     protected fun toggleCrStatus(transactionId: Long) {
@@ -1022,20 +1022,10 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
                         )
                     }
 
-                    else -> {
-                        startEdit(
-                            Intent(this@BaseMyExpenses, ExpenseEdit::class.java).apply {
-                                putExtra(
-                                    KEY_ROWID,
-                                    transaction.transferPeerParent ?: transaction.id
-                                )
-                                putExtra(
-                                    KEY_COLOR,
-                                    transaction.color ?: currentAccount?.color(resources)
-                                )
-                            }
-                        )
-                    }
+                    transaction.canBeEdited -> startEdit(editTransactionIntent(transaction.id))
+
+                    // Splits and transfers are only shown and deleted, the menus offer no editing
+                    else -> Unit
                 }
             }
         }
@@ -1761,10 +1751,6 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
                     putExtra(KEY_ACCOUNTID, it.id)
                     putExtra(KEY_CURRENCY, it.currency)
                     putExtra(KEY_COLOR, it.color)
-                }
-                val accountId = selectedAccountId
-                if (isAggregate(accountId)) {
-                    putExtra(ExpenseEdit.KEY_AUTOFILL_MAY_SET_ACCOUNT, true)
                 }
             }
         } else {

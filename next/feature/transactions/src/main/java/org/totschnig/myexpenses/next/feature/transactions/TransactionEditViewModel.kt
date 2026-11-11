@@ -50,7 +50,8 @@ import org.totschnig.myexpenses.next.data.transactions.withDay
  * @param isSaveFailed the database rejected the new transaction, e.g. as its account was closed
  * meanwhile
  * @param undo the last change, offered to undo until it was shown
- * @param created a new transaction that was saved, until [TransactionEditActions.createdShown]
+ * @param saved a transaction saved from the form, new or changed, until
+ * [TransactionFormActions.savedShown]
  * @param splitParts the parts of an opened split, which is only shown
  */
 data class TransactionEditState(
@@ -64,7 +65,7 @@ data class TransactionEditState(
     val isAmountInvalid: Boolean = false,
     val isSaveFailed: Boolean = false,
     val undo: Undo? = null,
-    val created: Long? = null,
+    val saved: Long? = null,
     val splitParts: List<SplitPart> = emptyList()
 ) {
     /** The account of the draft, e.g. for the symbol of its currency */
@@ -83,6 +84,12 @@ interface TransactionFormActions {
      */
     fun startNew(prefill: NewTransaction)
 
+    /**
+     * The form for [transactionId] on a screen of its own, once it is loaded, unless its draft
+     * survived
+     */
+    fun edit(transactionId: Long)
+
     fun changeDraft(draft: TransactionDraft)
 
     /** Takes the [TransactionEditState.suggestion] as the category of the draft */
@@ -93,7 +100,7 @@ interface TransactionFormActions {
 
     fun cancelEditing()
 
-    fun createdShown(id: Long)
+    fun savedShown(id: Long)
 }
 
 /**
@@ -142,6 +149,9 @@ class TransactionEditViewModel(
     private var loadJob: Job? = null
     private var suggestJob: Job? = null
     private var isSaving = false
+
+    // Starts the form once the transaction of [edit] is loaded
+    private var editOnLoad = false
 
     init {
         // A new transaction typed before Android ended the process
@@ -211,11 +221,21 @@ class TransactionEditViewModel(
         }
     }
 
+    override fun edit(transactionId: Long) {
+        // Asked again, e.g. after a rotation
+        if (openedId == transactionId) return
+        editOnLoad = _state.value.draft?.id != transactionId
+        open(transactionId)
+    }
+
     override fun startNew(prefill: NewTransaction) {
         if (_state.value.draft?.isNew == true) return
         viewModelScope.launch {
+            // The account asked for, else the one used last, of the currency asked for if any
             val account = loadAccounts(null).let { accounts ->
-                accounts.find { it.id == prefill.accountId } ?: accounts.firstOrNull()
+                accounts.find { it.id == prefill.accountId }
+                    ?: accounts.firstOrNull { it.currency == prefill.currency }
+                    ?: accounts.firstOrNull()
             }
             if (account == null) {
                 _state.update { it.copy(hasNoAccount = true) }
@@ -303,11 +323,11 @@ class TransactionEditViewModel(
         }
     }
 
-    override fun createdShown(id: Long) = _state.update {
-        if (it.created ==
+    override fun savedShown(id: Long) = _state.update {
+        if (it.saved ==
             id
         ) {
-            it.copy(created = null)
+            it.copy(saved = null)
         } else {
             it
         }
@@ -331,10 +351,10 @@ class TransactionEditViewModel(
             if (andNew) {
                 val next = draft.next(withContext(io) { store.defaultTags(account.id) })
                 setDraft(next)
-                _state.update { it.copy(suggestion = null, created = id) }
+                _state.update { it.copy(suggestion = null, saved = id) }
             } else {
                 setDraft(null)
-                _state.update { it.copy(created = id) }
+                _state.update { it.copy(saved = id) }
             }
         }
     }
@@ -363,14 +383,19 @@ class TransactionEditViewModel(
                 // Show what the database has, nothing to undo
                 _state.update { it.copy(undo = null) }
                 if (openedId == transaction.id) reload(transaction.id)
-            } else if (openedId == transaction.id &&
-                values.categoryId != transaction.values.categoryId
-            ) {
-                // The path of the category comes from the database
-                reload(transaction.id)
-            } else if (transaction.values.amount > 0 != values.amount > 0) {
-                loadMethods(transaction.accountType, values.amount > 0)
+            } else {
+                if (field == ChangedField.ALL) _state.update { it.copy(saved = transaction.id) }
+                afterSave(transaction, values)
             }
+        }
+    }
+
+    private suspend fun afterSave(transaction: EditableTransaction, values: EditValues) {
+        if (openedId == transaction.id && values.categoryId != transaction.values.categoryId) {
+            // The path of the category comes from the database
+            reload(transaction.id)
+        } else if (transaction.values.amount > 0 != values.amount > 0) {
+            loadMethods(transaction.accountType, values.amount > 0)
         }
     }
 
@@ -386,6 +411,8 @@ class TransactionEditViewModel(
             emptyList()
         }
         _state.update { it.copy(transaction = transaction, loadedId = id, splitParts = parts) }
+        if (transaction != null && editOnLoad && _state.value.draft == null) startEditing()
+        editOnLoad = false
         val draft = _state.value.draft
         if (transaction == null) {
             setDraft(null)

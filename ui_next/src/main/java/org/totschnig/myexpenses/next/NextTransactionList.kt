@@ -51,7 +51,6 @@ import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
 import org.totschnig.myexpenses.compose.Menu
 import org.totschnig.myexpenses.compose.MenuEntry
 import org.totschnig.myexpenses.compose.SubMenuEntry
-import org.totschnig.myexpenses.compose.UiText
 import org.totschnig.myexpenses.compose.conditional
 import org.totschnig.myexpenses.compose.transactions.FutureCriterion
 import org.totschnig.myexpenses.compose.transactions.SelectionHandler
@@ -60,8 +59,8 @@ import org.totschnig.myexpenses.compose.transactions.TransactionEventHandler
 import org.totschnig.myexpenses.compose.transactions.TransactionListContent
 import org.totschnig.myexpenses.compose.transactions.transactionMenu
 import org.totschnig.myexpenses.compose.transactions.voidMarker
-import org.totschnig.myexpenses.next.transactions.DetailsEditing
 import org.totschnig.myexpenses.next.transactions.TransactionDetailSheet
+import org.totschnig.myexpenses.activity.canBeEdited
 import org.totschnig.myexpenses.next.transactions.TransactionEditing
 import org.totschnig.myexpenses.designsystem.BadgeStyle
 import org.totschnig.myexpenses.designsystem.GroupItem
@@ -240,14 +239,12 @@ private fun OpenedTransaction(
                 }
             ).let { if (isReadOnly) it.withoutListActions() else it }
                 .let { if (canEdit) it.forEditingDetails() else it }
+                .withEditWhereItWorks(transaction, hasPencil = canEdit && transaction.canBeEdited)
         }.takeIf { !isReadOnly || content.modificationAllowed },
         onDismiss = onClose,
         categoryChip = categoryChip(transaction),
         tagChips = tagChips(transaction).takeIf { !isReadOnly },
-        editing = if (canEdit) DetailsEditing(
-            editing = editing,
-            onEditClassic = { content.onEvent(TransactionEvent.Edit, transaction) }
-        ) else null
+        editing = editing.takeIf { canEdit }
     ) {
         detailsContent(transaction)
     }
@@ -577,12 +574,15 @@ private fun String.lastCategoryPart() = substringAfterLast('>').trim()
 private fun Menu.withoutListActions() = filterNot { it.command == "SELECT_TRANSACTION" || it is SubMenuEntry }
 
 
+/** The menu of details that change the transaction themselves: no entry to show the details */
+private fun Menu.forEditingDetails() = filterNot { it.command == "DETAILS" }
+
 /**
- * The menu of details that change the transaction themselves: no entry to show the details, and
- * editing in the classic form is left as the way for what the details cannot change
+ * Editing opens the editor of the new UI, which cannot change splits and transfers, see
+ * [canBeEdited]; trades open their own screen. With the pencil of the details there is no entry
+ * to edit.
  */
-private fun Menu.forEditingDetails() = filterNot { it.command == "DETAILS" }.map { entry ->
-    if (entry is MenuEntry && entry.command == "EDIT_TRANSACTION")
-        entry.copy(label = UiText.StringResource(R.string.next_transaction_edit_classic))
-    else entry
+private fun Menu.withEditWhereItWorks(transaction: Transaction2, hasPencil: Boolean): Menu {
+    val editorTakesIt = transaction.canBeEdited || transaction.isTrade
+    return filterNot { it.command == "EDIT_TRANSACTION" && (hasPencil || !editorTakesIt) }
 }

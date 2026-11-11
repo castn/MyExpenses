@@ -14,7 +14,6 @@
  */
 package org.totschnig.myexpenses.dialog
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -80,7 +79,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.BaseActivity
 import org.totschnig.myexpenses.activity.BaseMyExpenses
-import org.totschnig.myexpenses.activity.ExpenseEdit
+import org.totschnig.myexpenses.activity.editTransactionIntent
 import org.totschnig.myexpenses.activity.ViewIntentProvider
 import org.totschnig.myexpenses.compose.ButtonRow
 import org.totschnig.myexpenses.compose.ColoredAmountText
@@ -311,7 +310,12 @@ class TransactionDetailFragment : ComposeBaseDialogFragment3() {
                 Text(stringResource(id = android.R.string.ok))
             }
             loadResult.value?.transaction
-                ?.takeIf { !(it.crStatus == CrStatus.VOID || it.isSealed || it.isArchive) }
+                // Splits and transfers are only shown, see [canBeEdited]
+                ?.takeIf {
+                    val isTrade = it.isPortfolio || it.transferPeerIsPortfolio
+                    val isOpen = !(it.crStatus == CrStatus.VOID || it.isSealed || it.isArchive)
+                    isOpen && (isTrade || !(it.isSplit || it.isTransfer))
+                }
                 ?.let { transaction ->
                     TextButton(onClick = {
                         when {
@@ -329,12 +333,7 @@ class TransactionDetailFragment : ComposeBaseDialogFragment3() {
                             else -> {
                                 dismiss()
                                 (requireActivity() as BaseActivity).startEdit(
-                                    Intent(
-                                        requireActivity(),
-                                        ExpenseEdit::class.java
-                                    ).apply {
-                                        putExtra(KEY_ROWID, transaction.transferPeerParent ?: transaction.id)
-                                    }
+                                    requireActivity().editTransactionIntent(transaction.id)
                                 )
                             }
                         }

@@ -89,7 +89,6 @@ import kotlinx.coroutines.withContext
 import org.totschnig.myexpenses.MyApplication
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.ContribInfoDialogActivity.Companion.getIntentFor
-import org.totschnig.myexpenses.activity.ExpenseEdit.Companion.KEY_OCR_RESULT
 import org.totschnig.myexpenses.databinding.ActivityWithFragmentBinding
 import org.totschnig.myexpenses.dialog.ConfirmationDialogFragment
 import org.totschnig.myexpenses.dialog.ConfirmationDialogFragment.Companion.KEY_COMMAND_NEGATIVE
@@ -1489,7 +1488,7 @@ abstract class BaseActivity : AppCompatActivity(), MessageDialogFragment.Message
         }
     }
 
-    open suspend fun getEditIntent(): Intent? = Intent(this, ExpenseEdit::class.java)
+    open suspend fun getEditIntent(): Intent? = newTransactionIntent()
 
     open fun startEdit(intent: Intent) {
         editLauncher.launch(intent)

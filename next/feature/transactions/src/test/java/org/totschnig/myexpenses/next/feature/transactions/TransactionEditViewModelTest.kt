@@ -277,9 +277,9 @@ class TransactionEditViewModelTest {
             values.date
         )
         assertNull(viewModel.state.value.draft)
-        assertEquals(101L, viewModel.state.value.created)
-        viewModel.createdShown(101)
-        assertNull(viewModel.state.value.created)
+        assertEquals(101L, viewModel.state.value.saved)
+        viewModel.savedShown(101)
+        assertNull(viewModel.state.value.saved)
     }
 
     @Test
@@ -296,7 +296,7 @@ class TransactionEditViewModelTest {
         assertEquals(LocalDate.of(2026, 3, 8), next.day)
         assertEquals("", next.amountText)
         assertEquals("", next.payee)
-        assertEquals(101L, viewModel.state.value.created)
+        assertEquals(101L, viewModel.state.value.saved)
     }
 
     @Test
@@ -307,7 +307,7 @@ class TransactionEditViewModelTest {
         viewModel.saveDraft()
         assertTrue(viewModel.state.value.isSaveFailed)
         assertNotNull(viewModel.state.value.draft)
-        assertNull(viewModel.state.value.created)
+        assertNull(viewModel.state.value.saved)
     }
 
     @Test
@@ -337,6 +337,49 @@ class TransactionEditViewModelTest {
     }
 
     @Test
+    fun newTransactionForACurrencyTakesAnAccountOfIt() {
+        val viewModel = viewModel(FakeStore())
+        viewModel.startNew(NewTransaction(currency = "USD"))
+        assertEquals(3L, viewModel.state.value.draft!!.accountId)
+    }
+
+    // Changing a transaction on the screen of its own
+
+    @Test
+    fun editStartsTheFormOnceLoadedAndClosesAfterSaving() {
+        val store = FakeStore(transaction())
+        val viewModel = viewModel(store)
+        viewModel.edit(1)
+        val draft = viewModel.state.value.draft!!
+        assertEquals(1L, draft.id)
+        assertEquals(listOf(1L, 2L), viewModel.state.value.accounts.map { it.id })
+
+        viewModel.changeDraft(draft.copy(comment = "Notiz"))
+        viewModel.saveDraft()
+        assertEquals("Notiz", store.saved.single().second.comment)
+        assertNull(viewModel.state.value.draft)
+        assertEquals(1L, viewModel.state.value.saved)
+    }
+
+    @Test
+    fun editAskedAgainKeepsWhatIsTyped() {
+        val viewModel = viewModel(FakeStore(transaction()))
+        viewModel.edit(1)
+        viewModel.changeDraft(viewModel.state.value.draft!!.copy(comment = "Notiz"))
+        // e.g. after a rotation
+        viewModel.edit(1)
+        assertEquals("Notiz", viewModel.state.value.draft!!.comment)
+    }
+
+    @Test
+    fun aQuickChangeIsNoSaveOfTheForm() {
+        val viewModel = viewModel(FakeStore(transaction()))
+        viewModel.open(1)
+        viewModel.changeComment("Notiz")
+        assertNull(viewModel.state.value.saved)
+    }
+
+    @Test
     fun aSplitIsOnlyShownWithItsParts() {
         val parts =
             listOf(
@@ -344,7 +387,8 @@ class TransactionEditViewModelTest {
                 SplitPart(-500, null, null, "Bargeld")
             )
         val viewModel = viewModel(FakeStore(null).apply { this.parts = mapOf(1L to parts) })
-        viewModel.open(1)
+        viewModel.edit(1)
+        assertNull(viewModel.state.value.draft)
         assertEquals(1L, viewModel.state.value.loadedId)
         assertNull(viewModel.state.value.transaction)
         assertEquals(parts, viewModel.state.value.splitParts)

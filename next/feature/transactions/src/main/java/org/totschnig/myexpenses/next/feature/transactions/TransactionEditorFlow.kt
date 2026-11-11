@@ -38,52 +38,58 @@ import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.data.transactions.NewTransaction
 
 /**
- * The screen for a new expense or income: the [TransactionForm] with "save", which closes it, and
- * "save and new", which keeps it open for the next transaction.
+ * The screen for a new expense or income, or for changing one outside of its details: the
+ * [TransactionForm] with "save", which closes it, and for a new one "save and new", which keeps it
+ * open for the next transaction.
  *
- * @param prefill what the transaction starts with, unless a draft survived from before
+ * @param transactionId the transaction to change, null for a new one
+ * @param prefill what a new transaction starts with, unless a draft survived from before
  * @param onClose with the id of the transaction saved last, null if none was saved
  */
 @Composable
-fun NewTransactionFlow(
+fun TransactionEditorFlow(
     viewModel: TransactionEditViewModel,
+    transactionId: Long?,
     prefill: NewTransaction,
     tagField: TagField?,
-    onClose: (createdId: Long?) -> Unit
+    onClose: (savedId: Long?) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    LaunchedEffect(Unit) { viewModel.startNew(prefill) }
-    NewTransactionScreen(state, viewModel, tagField, onClose)
+    LaunchedEffect(Unit) {
+        if (transactionId != null) viewModel.edit(transactionId) else viewModel.startNew(prefill)
+    }
+    TransactionEditorScreen(state, viewModel, transactionId, tagField, onClose)
 }
 
 @Composable
-private fun NewTransactionScreen(
+private fun TransactionEditorScreen(
     state: TransactionEditState,
     actions: TransactionFormActions,
+    transactionId: Long?,
     tagField: TagField?,
-    onClose: (createdId: Long?) -> Unit
+    onClose: (savedId: Long?) -> Unit
 ) {
     val snackbar = remember { SnackbarHostState() }
     val savedMessage = stringResource(R.string.next_transaction_saved_all)
     val failedMessage = stringResource(R.string.next_transaction_create_failed)
     // The transaction saved last since the screen opened, e.g. with "save and new"
-    var lastCreated by rememberSaveable { mutableStateOf<Long?>(null) }
-    val created = state.created
-    LaunchedEffect(created) {
-        if (created == null) return@LaunchedEffect
-        lastCreated = created
+    var lastSaved by rememberSaveable { mutableStateOf<Long?>(null) }
+    val saved = state.saved
+    LaunchedEffect(saved) {
+        if (saved == null) return@LaunchedEffect
+        lastSaved = saved
         if (state.draft == null) {
-            actions.createdShown(created)
-            onClose(created)
+            actions.savedShown(saved)
+            onClose(saved)
         } else {
             try {
                 snackbar.showSnackbar(savedMessage)
             } finally {
-                actions.createdShown(created)
+                actions.savedShown(saved)
             }
         }
     }
-    BackHandler { onClose(lastCreated) }
+    BackHandler { onClose(lastSaved) }
     LaunchedEffect(state.isSaveFailed) {
         if (state.isSaveFailed) snackbar.showSnackbar(failedMessage)
     }
@@ -96,8 +102,16 @@ private fun NewTransactionScreen(
     ) {
         Column(Modifier.fillMaxSize().imePadding()) {
             PageTopBar(
-                onBack = { onClose(lastCreated) },
-                title = stringResource(R.string.next_transaction_new_title)
+                onBack = { onClose(lastSaved) },
+                title = stringResource(
+                    if (transactionId ==
+                        null
+                    ) {
+                        R.string.next_transaction_new_title
+                    } else {
+                        R.string.next_transaction_edit_title
+                    }
+                )
             )
             Column(
                 Modifier
@@ -109,6 +123,16 @@ private fun NewTransactionScreen(
                         title = stringResource(R.string.next_transaction_no_account),
                         messages = listOf(
                             stringResource(R.string.next_transaction_no_account_hint)
+                        ),
+                        modifier = Modifier.padding(Spacing.screen)
+                    )
+
+                    // A split or transfer, or deleted meanwhile
+                    transactionId != null && state.loadedId == transactionId &&
+                        state.transaction == null -> Banner(
+                        title = stringResource(R.string.next_transaction_not_editable),
+                        messages = listOf(
+                            stringResource(R.string.next_transaction_not_editable_hint)
                         ),
                         modifier = Modifier.padding(Spacing.screen)
                     )
@@ -129,8 +153,10 @@ private fun NewTransactionScreen(
                         .padding(horizontal = Spacing.screen, vertical = 8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
                 ) {
-                    TextButton(onClick = { actions.saveDraft(andNew = true) }) {
-                        Text(stringResource(R.string.next_transaction_save_and_new))
+                    if (draft.isNew) {
+                        TextButton(onClick = { actions.saveDraft(andNew = true) }) {
+                            Text(stringResource(R.string.next_transaction_save_and_new))
+                        }
                     }
                     Button(onClick = { actions.saveDraft() }) {
                         Text(stringResource(R.string.next_transaction_save))

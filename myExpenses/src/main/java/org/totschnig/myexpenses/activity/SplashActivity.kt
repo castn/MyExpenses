@@ -8,7 +8,6 @@ import android.os.Handler
 import org.totschnig.myexpenses.MyApplication
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.preference.isOnboardingCompleted
-import org.totschnig.myexpenses.widget.EXTRA_START_FROM_WIDGET
 import org.totschnig.myexpenses.widget.EXTRA_START_FROM_WIDGET_DATA_ENTRY
 import kotlin.system.exitProcess
 
@@ -21,11 +20,8 @@ class SplashActivity : Activity() {
             val isDataEntry = intent.getBooleanExtra(EXTRA_START_FROM_WIDGET_DATA_ENTRY, false)
             // The main screen starts the first start itself, when the app is not set up yet
             val targetIntent = if (prefHandler.isOnboardingCompleted && isDataEntry) {
-                Intent(this, ExpenseEdit::class.java).apply {
-                    putExtra(ExpenseEdit.KEY_AUTOFILL_MAY_SET_ACCOUNT, true)
-                    putExtra(EXTRA_START_FROM_WIDGET, true)
-                    putExtra(EXTRA_START_FROM_WIDGET_DATA_ENTRY, true)
-                }
+                // The launcher shortcut for a new transaction
+                newTransactionIntent().asDataEntryFromWidget()
             } else {
                 mainScreenIntent()
             }

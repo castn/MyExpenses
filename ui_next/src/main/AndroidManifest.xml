@@ -19,7 +19,7 @@
             android:label="@string/settings_label" />
         <activity android:name="org.totschnig.myexpenses.next.onboarding.NextOnboarding" />
         <activity
-            android:name="org.totschnig.myexpenses.next.transactions.NewTransactionActivity"
+            android:name="org.totschnig.myexpenses.next.transactions.TransactionEditorActivity"
             android:parentActivityName="org.totschnig.myexpenses.next.MainActivity"
             android:windowSoftInputMode="adjustResize" />
 

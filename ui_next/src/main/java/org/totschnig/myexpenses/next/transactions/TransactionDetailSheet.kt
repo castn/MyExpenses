@@ -40,16 +40,14 @@ import org.totschnig.myexpenses.designsystem.Spacing
 import org.totschnig.myexpenses.designsystem.TextDialog
 import org.totschnig.myexpenses.next.MenuActionSheet
 import org.totschnig.myexpenses.next.SignedAmount
+import org.totschnig.myexpenses.activity.canBeEdited
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
 import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.next.data.transactions.EditableTransaction
 import org.totschnig.myexpenses.next.data.transactions.SplitPart
 import org.totschnig.myexpenses.next.feature.transactions.MethodDialog
-import org.totschnig.myexpenses.next.feature.transactions.TagField
 import org.totschnig.myexpenses.next.feature.transactions.TransactionForm
 import org.totschnig.myexpenses.next.feature.transactions.UndoSnackbar
-import org.totschnig.myexpenses.next.feature.transactions.TransactionEditActions
-import org.totschnig.myexpenses.next.feature.transactions.TransactionEditState
 import org.totschnig.myexpenses.viewmodel.data.Transaction2
 import java.time.Instant
 import java.time.ZoneId
@@ -60,34 +58,12 @@ import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
 
 /**
- * What changes transactions from their details: the state and actions of the form, see
- * [TransactionEditActions], and the tags in it
- *
- * @param tagField the tags in the form, null without the area of the tags
- */
-class TransactionEditing(
-    val state: TransactionEditState,
-    val actions: TransactionEditActions,
-    val tagField: TagField?
-)
-
-/**
- * Changing the opened transaction from its details
- *
- * @param onEditClassic opens the classic form, for what the details cannot change, e.g. a split
- */
-class DetailsEditing(editing: TransactionEditing, val onEditClassic: () -> Unit) {
-    val state = editing.state
-    val actions = editing.actions
-    val tagField = editing.tagField
-}
-
-/**
  * Details of a transaction in a sheet above the list, the rows straight on the sheet:
  * from the bottom, first up to half the height, or from the side in wide windows.
  * The pencil next to the payee opens the edit mode with all fields, date, payment method and
  * note can also be changed one by one by tapping their row; the other actions of the transaction
- * (delete, copy, …) are in the menu.
+ * (delete, create a template, …) are in the menu. Splits and transfers are only shown, with their
+ * parts or other account.
  *
  * @param menu actions of the transaction, null if it cannot be changed here
  * @param categoryChip shown below the title instead of the row with the category, to change it,
@@ -105,7 +81,7 @@ fun TransactionDetailSheet(
     tagChips: (@Composable (Modifier) -> Unit)? = null,
     image: PayeeImage? = null,
     onImageClick: (() -> Unit)? = null,
-    editing: DetailsEditing? = null,
+    editing: TransactionEditing? = null,
     content: @Composable () -> Unit = {},
 ) {
     val editable = editing?.state?.transaction?.takeIf { it.id == transaction.id }
@@ -153,7 +129,7 @@ private fun TransactionDetails(
     tagChips: (@Composable (Modifier) -> Unit)?,
     image: PayeeImage?,
     onImageClick: (() -> Unit)?,
-    editing: DetailsEditing?,
+    editing: TransactionEditing?,
     content: @Composable () -> Unit,
 ) {
     // What the details can change, null while it loads or if they cannot change it
@@ -162,13 +138,10 @@ private fun TransactionDetails(
     // there is. The rows pad themselves, header, chips and the added content are padded here.
     Column(Modifier.padding(bottom = Spacing.screen)) {
         Header(transaction, image, onImageClick) {
-            if (editing != null && menu != null) {
-                // Simple transactions wait until it is known whether the details can change them
-                val isLoaded = editing.state.loadedId == transaction.id
-                IconButton(
-                    onClick = { if (editable != null) editing.actions.startEditing() else editing.onEditClassic() },
-                    enabled = !transaction.isEditableInDetails() || isLoaded
-                ) {
+            // Splits and transfers are only shown, see [canBeEdited]; the others wait until it is known
+            // whether the details can change them
+            if (editing != null && menu != null && transaction.canBeEdited) {
+                IconButton(onClick = editing.actions::startEditing, enabled = editable != null) {
                     Icon(Icons.Outlined.Edit, contentDescription = stringResource(R.string.next_transaction_edit))
                 }
             }
@@ -208,7 +181,7 @@ private fun DetailRows(
     transaction: Transaction2,
     withCategory: Boolean,
     editable: EditableTransaction?,
-    editing: DetailsEditing?,
+    editing: TransactionEditing?
 ) {
     val dateFormatter = rememberDateFormatter(FormatStyle.FULL)
     val addLabel = stringResource(R.string.next_transaction_add)

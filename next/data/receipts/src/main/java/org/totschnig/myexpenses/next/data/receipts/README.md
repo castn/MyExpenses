@@ -132,7 +132,7 @@ The module never sees `:myExpenses`. The shell `:ui_next` implements what it nee
   by `ProviderReceiptDatabase`, which maps `Receipt` to the receipt the app stores.
 - `TextRecognition`: the text recognition the user configured, by `OcrTextRecognition`.
 - `LocalNewTransactionEditor`: the screen for a new expense filled from the receipt, by
-  `NewTransactionForReceipt`, which opens `NewTransactionActivity` of the new UI.
+  `NewTransactionForReceipt`, which opens `TransactionEditorActivity` of the new UI.
 
 `productKey()` is in `:ocr-model`, since the app stores it with the items and the classifier looks
 it up.
