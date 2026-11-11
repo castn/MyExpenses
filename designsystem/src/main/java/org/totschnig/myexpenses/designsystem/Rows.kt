@@ -15,6 +15,7 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.RemoveCircleOutline
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.HourglassEmpty
@@ -769,12 +770,54 @@ fun EditableItemRow(
     isFirst: Boolean = false,
     badge: String? = null,
     badgeStyle: BadgeStyle = BadgeStyle.Outlined,
+) = ItemRow(
+    title, value, Icons.Default.RemoveCircleOutline, removeLabel, onClick, onRemove, supportingText, isFirst, badge,
+    badgeStyle
+)
+
+/**
+ * Entry of a list with several actions: tapping it does the usual one, the button offers all, e.g.
+ * in an [ActionSheet]
+ *
+ * @param supportingText second line below the title, e.g. what the entry holds
+ * @param onClickLabel tells what a tap does, e.g. "Save now"
+ */
+@Composable
+fun ActionItemRow(
+    title: String,
+    value: String,
+    actionsLabel: String,
+    onClick: () -> Unit,
+    onActions: () -> Unit,
+    supportingText: String? = null,
+    isFirst: Boolean = false,
+    badge: String? = null,
+    badgeStyle: BadgeStyle = BadgeStyle.Outlined,
+    onClickLabel: String = title,
+) = ItemRow(
+    title, value, Icons.Default.MoreVert, actionsLabel, onClick, onActions, supportingText, isFirst, badge, badgeStyle,
+    onClickLabel
+)
+
+@Composable
+private fun ItemRow(
+    title: String,
+    value: String,
+    buttonIcon: ImageVector,
+    buttonLabel: String,
+    onClick: () -> Unit,
+    onButton: () -> Unit,
+    supportingText: String?,
+    isFirst: Boolean,
+    badge: String?,
+    badgeStyle: BadgeStyle,
+    onClickLabel: String = title,
 ) {
     if (!isFirst) RowDivider()
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClickLabel = title, onClick = onClick)
+            .clickable(onClickLabel = onClickLabel, onClick = onClick)
             .padding(start = Spacing.content, end = 4.dp, top = 8.dp, bottom = 8.dp)
             .heightIn(min = 40.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -802,10 +845,10 @@ fun EditableItemRow(
             maxLines = 1,
             modifier = Modifier.padding(start = Spacing.content)
         )
-        IconButton(onClick = onRemove) {
+        IconButton(onClick = onButton) {
             Icon(
-                Icons.Default.RemoveCircleOutline,
-                contentDescription = removeLabel,
+                buttonIcon,
+                contentDescription = buttonLabel,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }

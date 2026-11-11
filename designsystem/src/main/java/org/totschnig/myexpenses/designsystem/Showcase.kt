@@ -303,6 +303,21 @@ private fun Showcase() {
                 )
             }
             DetailCard {
+                ActionItemRow(
+                    "Item with actions",
+                    "−850,00 €",
+                    actionsLabel = "Actions",
+                    onClick = {},
+                    onActions = {},
+                    supportingText = "Rent · Giro",
+                    isFirst = true
+                )
+                ActionItemRow(
+                    "Item with badge", "−4,50 €", actionsLabel = "Actions", onClick = {}, onActions = {},
+                    badge = "Saves at once"
+                )
+            }
+            DetailCard {
                 ShareRow("Share", "62,40 € · 58 %", share = 0.58f, isFirst = true)
                 ShareRow("Smaller share", "31,20 € · 29 %", share = 0.29f)
                 ShareRow("Rest", "13,90 € · 13 %", share = 0.13f, isMuted = true, onClick = {})
