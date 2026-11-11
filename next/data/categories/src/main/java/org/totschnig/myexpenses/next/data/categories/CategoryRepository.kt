@@ -63,7 +63,7 @@ class CategoryRepository(
                         inputs,
                         decisions,
                         decisions.plan(suggestions),
-                        categories.associate { it.id to it.path }
+                        categories
                     )
                 } else flowOf(null)
             }
@@ -108,11 +108,20 @@ class CategoryRepository(
  * The suggestions for the transactions analysed
  *
  * @param inputs the transactions analysed, to find those of a payee
- * @param paths of the categories by id, to show suggestions
+ * @param categories the categories there are, to show and suggest them
  */
 class CategoryAnalysis(
     val inputs: List<CategoryInput>,
     val decisions: CategoryDecisions,
     val plan: CategoryPlan,
-    val paths: Map<Long, String>,
-)
+    val categories: List<CategoryInfo>
+) {
+    /** Paths of the categories by id, to show suggestions */
+    val paths: Map<Long, String> = categories.associate { it.id to it.path }
+
+    /** Learns from [inputs] only when a transaction that is typed asks for a suggestion */
+    private val suggester by lazy { CategorySuggester(inputs, decisions.rules, categories) }
+
+    /** The suggestion for a transaction that is entered and not saved yet, see [CategorySuggester] */
+    fun suggestFor(input: CategoryInput): CategorySuggestion? = suggester.suggest(input)
+}

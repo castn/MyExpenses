@@ -80,7 +80,6 @@
         <error line="61" column="108" source="standard:argument-list-wrapping" />
         <error line="61" column="109" source="standard:argument-list-wrapping" />
         <error line="68" column="24" source="standard:multiline-if-else" />
-        <error line="117" column="33" source="standard:trailing-comma-on-declaration-site" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/data/categories/CategoryStore.kt">
         <error line="19" column="65" source="standard:function-literal" />

@@ -49,4 +49,35 @@ class CategoryRepositoryTest {
             assertEquals(listOf(listOf(2L) to 10L), writing.set)
         }
     }
+
+    @Test
+    fun suggestsForATransactionThatIsTyped() = withTestDataStore { dataStore ->
+        runTest {
+            val source = FakeLedgerSource(
+                ledger = Ledger(
+                    listOf(
+                        LedgerTransaction(
+                            1,
+                            today,
+                            amount = -2000,
+                            accountId = 1,
+                            payeeId = 5,
+                            payeeName = "REWE",
+                            categoryId = 10
+                        )
+                    ),
+                    OwnAccounts(emptySet(), emptyMap())
+                ),
+                catalog = Catalog(listOf(CategoryInfo(10, "Food", "Food")))
+            )
+            val repository =
+                CategoryRepository(source, CategoryStore(dataStore), FakeWriting(), backgroundScope)
+            val analysis = repository.analysis.first { it != null }!!
+            val typed = CategoryInput(id = 0, amount = -1, payeeId = 5, payeeName = "REWE")
+            assertEquals(10L, analysis.suggestFor(typed)?.categoryId)
+            assertEquals("Food", analysis.paths[10])
+            // Learned per direction, an income at the shop is no purchase
+            assertEquals(null, analysis.suggestFor(typed.copy(amount = 1)))
+        }
+    }
 }
