@@ -1,6 +1,10 @@
 package org.totschnig.myexpenses.next.data.tips
 
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.first
+import org.json.JSONObject
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -20,5 +24,14 @@ class TipStoreTest {
         assertTrue(store.decisions.first().isDismissed(tip))
         store.restore(tip)
         assertFalse(store.decisions.first().isDismissed(tip))
+    }
+
+    @Test
+    fun tipOfALaterVersionSurvivesDismissing() = withTestDataStore { dataStore ->
+        val key = stringPreferencesKey("next_saving_tips_dismissed")
+        dataStore.edit { it[key] = """{"later":["fact"]}""" }
+        TipStore(dataStore).dismiss(tip)
+        val stored = JSONObject(dataStore.data.first()[key]!!)
+        assertEquals(setOf("later", tip.id), stored.keys().asSequence().toSet())
     }
 }

@@ -46,7 +46,7 @@ class CategoryStore(private val dataStore: DataStore<Preferences>) {
 
         /** Only what changed is written */
         fun MutablePreferences.write(old: CategoryDecisions, new: CategoryDecisions) {
-            if (new.rules != old.rules) this[KEY_RULES] = serializeRules(new.rules)
+            if (new.rules != old.rules) this[KEY_RULES] = serializeRules(new.rules, this[KEY_RULES])
             if (new.firstNewId != old.firstNewId) {
                 new.firstNewId?.let { this[KEY_FIRST_NEW_ID] = it } ?: remove(KEY_FIRST_NEW_ID)
             }

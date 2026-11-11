@@ -760,14 +760,14 @@
         <error line="362" column="60" source="standard:argument-list-wrapping" />
     </file>
     <file name="src/test/java/org/totschnig/myexpenses/next/data/budgets/BudgetStoreTest.kt">
-        <error line="30" column="24" source="standard:property-wrapping" />
-        <error line="30" column="29" source="standard:argument-list-wrapping" />
-        <error line="30" column="45" source="standard:argument-list-wrapping" />
-        <error line="30" column="64" source="standard:argument-list-wrapping" />
-        <error line="30" column="88" source="standard:argument-list-wrapping" />
-        <error line="30" column="100" source="standard:max-line-length" />
-        <error line="30" column="102" source="standard:argument-list-wrapping" />
-        <error line="39" column="101" source="standard:max-line-length" />
+        <error line="33" column="24" source="standard:property-wrapping" />
+        <error line="33" column="29" source="standard:argument-list-wrapping" />
+        <error line="33" column="45" source="standard:argument-list-wrapping" />
+        <error line="33" column="64" source="standard:argument-list-wrapping" />
+        <error line="33" column="88" source="standard:argument-list-wrapping" />
+        <error line="33" column="100" source="standard:max-line-length" />
+        <error line="33" column="102" source="standard:argument-list-wrapping" />
+        <error line="42" column="101" source="standard:max-line-length" />
     </file>
     <file name="src/test/java/org/totschnig/myexpenses/next/data/budgets/LegacyBudgetsTest.kt">
         <error line="13" column="30" source="standard:property-wrapping" />

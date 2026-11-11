@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <baseline version="1.0">
     <file name="src/main/java/org/totschnig/myexpenses/next/data/categories/CategoryCodecs.kt">
-        <error line="36" column="51" source="standard:function-literal" />
-        <error line="36" column="77" source="standard:function-literal" />
-        <error line="36" column="78" source="standard:wrapping" />
-        <error line="36" column="97" source="standard:argument-list-wrapping" />
-        <error line="36" column="100" source="standard:argument-list-wrapping" />
-        <error line="36" column="101" source="standard:max-line-length" />
-        <error line="36" column="102" source="standard:function-literal" />
-        <error line="36" column="104" source="standard:function-literal" />
-        <error line="43" column="24" source="standard:function-literal" />
-        <error line="43" column="58" source="standard:function-literal" />
-        <error line="43" column="64" source="standard:argument-list-wrapping" />
-        <error line="43" column="79" source="standard:argument-list-wrapping" />
-        <error line="43" column="89" source="standard:argument-list-wrapping" />
-        <error line="43" column="91" source="standard:function-literal" />
-        <error line="43" column="93" source="standard:function-literal" />
-        <error line="43" column="101" source="standard:max-line-length" />
+        <error line="38" column="51" source="standard:function-literal" />
+        <error line="38" column="77" source="standard:function-literal" />
+        <error line="38" column="78" source="standard:wrapping" />
+        <error line="38" column="97" source="standard:argument-list-wrapping" />
+        <error line="38" column="100" source="standard:argument-list-wrapping" />
+        <error line="38" column="101" source="standard:max-line-length" />
+        <error line="38" column="102" source="standard:function-literal" />
+        <error line="38" column="104" source="standard:function-literal" />
+        <error line="45" column="24" source="standard:function-literal" />
+        <error line="45" column="58" source="standard:function-literal" />
+        <error line="45" column="64" source="standard:argument-list-wrapping" />
+        <error line="45" column="79" source="standard:argument-list-wrapping" />
+        <error line="45" column="89" source="standard:argument-list-wrapping" />
+        <error line="45" column="91" source="standard:function-literal" />
+        <error line="45" column="93" source="standard:function-literal" />
+        <error line="45" column="101" source="standard:max-line-length" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/data/categories/CategoryDecisions.kt">
         <error line="18" column="48" source="standard:trailing-comma-on-declaration-site" />

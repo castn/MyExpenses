@@ -49,7 +49,7 @@ class BudgetStore(private val dataStore: DataStore<Preferences>) {
     suspend fun addFromLegacy(pots: List<Pot>) {
         dataStore.edit { preferences ->
             val existing = preferences[KEY_POTS]?.let(::parsePots) ?: emptyList()
-            preferences[KEY_POTS] = serializePots(existing + pots)
+            preferences[KEY_POTS] = serializePots(existing + pots, preferences[KEY_POTS])
             preferences[KEY_LEGACY_HANDLED] = true
         }
     }
@@ -64,7 +64,7 @@ class BudgetStore(private val dataStore: DataStore<Preferences>) {
     private suspend fun editPots(block: (List<Pot>) -> List<Pot>) {
         dataStore.edit { preferences ->
             val pots = preferences[KEY_POTS]?.let(::parsePots) ?: emptyList()
-            preferences[KEY_POTS] = serializePots(block(pots))
+            preferences[KEY_POTS] = serializePots(block(pots), preferences[KEY_POTS])
         }
     }
 
@@ -77,52 +77,54 @@ class BudgetStore(private val dataStore: DataStore<Preferences>) {
 }
 
 /*
- * How pots are stored as JSON. What cannot be read, e.g. a kind from a later version, is left out.
+ * How pots are stored as JSON. What cannot be read, e.g. a kind from a later version, is left out,
+ * and written back as it was when the stored JSON is passed as `previous`.
  */
 
-fun parsePots(json: String): List<Pot> = parseJsonArray(json) {
-    with(it) {
-        Pot(
-            id = getString("id"),
-            name = getString("name"),
-            kind = PotKind.valueOf(getString("kind")),
-            amount = optLong("amount"),
-            categoryIds = optJSONArray("categories")?.longs() ?: emptySet(),
-            tagIds = optJSONArray("tags")?.longs() ?: emptySet(),
-            payeeIds = optJSONArray("payees")?.longs() ?: emptySet(),
-            contractRuleIds = optJSONArray("contracts")?.strings() ?: emptySet(),
-            rollover = optBoolean("rollover"),
-            start = if (has("start")) LocalDate.parse(getString("start")) else null,
-            end = if (has("end")) LocalDate.parse(getString("end")) else null,
-            reserveRuleIds = optJSONArray("reserves")?.strings() ?: emptySet(),
-            savingAccountIds = optJSONArray("savingAccounts")?.longs() ?: emptySet(),
-            itemGroups = optJSONArray("itemGroups")?.strings() ?: emptySet(),
-            maxSharePercent = if (has("maxShare")) getInt("maxShare") else null,
-            icon = if (has("icon")) getString("icon") else null
-        )
-    }
+fun parsePots(json: String): List<Pot> = parseJsonArray(json, ::potOf)
+
+private fun potOf(json: JSONObject) = with(json) {
+    Pot(
+        id = getString("id"),
+        name = getString("name"),
+        kind = PotKind.valueOf(getString("kind")),
+        amount = optLong("amount"),
+        categoryIds = optJSONArray("categories")?.longs() ?: emptySet(),
+        tagIds = optJSONArray("tags")?.longs() ?: emptySet(),
+        payeeIds = optJSONArray("payees")?.longs() ?: emptySet(),
+        contractRuleIds = optJSONArray("contracts")?.strings() ?: emptySet(),
+        rollover = optBoolean("rollover"),
+        start = if (has("start")) LocalDate.parse(getString("start")) else null,
+        end = if (has("end")) LocalDate.parse(getString("end")) else null,
+        reserveRuleIds = optJSONArray("reserves")?.strings() ?: emptySet(),
+        savingAccountIds = optJSONArray("savingAccounts")?.longs() ?: emptySet(),
+        itemGroups = optJSONArray("itemGroups")?.strings() ?: emptySet(),
+        maxSharePercent = if (has("maxShare")) getInt("maxShare") else null,
+        icon = if (has("icon")) getString("icon") else null
+    )
 }
 
-fun serializePots(pots: List<Pot>) = pots.toJsonArray { pot ->
-    JSONObject().apply {
-        put("id", pot.id)
-        put("name", pot.name)
-        put("kind", pot.kind.name)
-        put("amount", pot.amount)
-        putSet("categories", pot.categoryIds)
-        putSet("tags", pot.tagIds)
-        putSet("payees", pot.payeeIds)
-        putSet("contracts", pot.contractRuleIds)
-        if (pot.rollover) put("rollover", true)
-        pot.start?.let { put("start", it.toString()) }
-        pot.end?.let { put("end", it.toString()) }
-        putSet("reserves", pot.reserveRuleIds)
-        putSet("savingAccounts", pot.savingAccountIds)
-        putSet("itemGroups", pot.itemGroups)
-        pot.maxSharePercent?.let { put("maxShare", it) }
-        pot.icon?.let { put("icon", it) }
+fun serializePots(pots: List<Pot>, previous: String? = null) =
+    pots.toJsonArray(previous, ::potOf) { pot ->
+        JSONObject().apply {
+            put("id", pot.id)
+            put("name", pot.name)
+            put("kind", pot.kind.name)
+            put("amount", pot.amount)
+            putSet("categories", pot.categoryIds)
+            putSet("tags", pot.tagIds)
+            putSet("payees", pot.payeeIds)
+            putSet("contracts", pot.contractRuleIds)
+            if (pot.rollover) put("rollover", true)
+            pot.start?.let { put("start", it.toString()) }
+            pot.end?.let { put("end", it.toString()) }
+            putSet("reserves", pot.reserveRuleIds)
+            putSet("savingAccounts", pot.savingAccountIds)
+            putSet("itemGroups", pot.itemGroups)
+            pot.maxSharePercent?.let { put("maxShare", it) }
+            pot.icon?.let { put("icon", it) }
+        }
     }
-}
 
 private fun JSONObject.putSet(name: String, values: Set<*>) {
     if (values.isNotEmpty()) put(name, JSONArray(values.toList()))

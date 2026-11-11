@@ -1,7 +1,10 @@
 package org.totschnig.myexpenses.next.data.budgets
 
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import java.time.LocalDate
 import kotlinx.coroutines.flow.first
+import org.json.JSONArray
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.totschnig.myexpenses.next.core.common.withTestDataStore
@@ -53,5 +56,17 @@ class BudgetStoreTest {
         assertEquals(listOf(full, renamed), store.pots.first())
         store.delete(full.id)
         assertEquals(listOf(renamed), store.pots.first())
+    }
+
+    @Test
+    fun potOfALaterVersionSurvivesSaving() = withTestDataStore { dataStore ->
+        val key = stringPreferencesKey("next_budget_pots")
+        dataStore.edit { it[key] = """[{"id":"later","name":"Later","kind":"LATER"}]""" }
+        val store = BudgetStore(dataStore)
+        store.save(plain)
+        store.addFromLegacy(listOf(full))
+        assertEquals(listOf(plain, full), store.pots.first())
+        val stored = JSONArray(dataStore.data.first()[key])
+        assertEquals("LATER", stored.getJSONObject(2).getString("kind"))
     }
 }

@@ -33,6 +33,29 @@ class JsonCodecTest {
     }
 
     @Test
+    fun writingKeepsWhatCouldNotBeRead() {
+        val previous = """[{"kind":"CONTRACT"},{"kind":"FROM_A_LATER_VERSION","x":1},7]"""
+        val read: (JSONObject) -> Kind = { Kind.valueOf(it.getString("kind")) }
+        val kinds = parseJsonArray(previous, read)
+        val json = (kinds + Kind.CONTRACT).toJsonArray(previous, read) {
+            JSONObject().put("kind", it.name)
+        }
+        val written = JSONArray(json)
+        assertEquals(4, written.length())
+        assertEquals("CONTRACT", written.getJSONObject(1).getString("kind"))
+        assertEquals("FROM_A_LATER_VERSION", written.getJSONObject(2).getString("kind"))
+        assertEquals(1, written.getJSONObject(2).getInt("x"))
+        assertEquals(7, written.getInt(3))
+    }
+
+    @Test
+    fun writingWithoutPreviousWritesOnlyTheItems() {
+        val read: (JSONObject) -> String = { it.getString("name") }
+        val json = listOf("a").toJsonArray(null, read) { JSONObject().put("name", it) }
+        assertEquals(listOf("a"), parseJsonArray(json) { it.getString("name") })
+    }
+
+    @Test
     fun readsSetsOfValues() {
         assertEquals(setOf(1L, 2L), JSONArray(listOf(1, 2, 2)).longs())
         assertEquals(setOf("x", "y"), JSONArray(listOf("x", "y")).strings())

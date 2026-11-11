@@ -32,19 +32,20 @@ class ContractStore(private val dataStore: DataStore<Preferences>) {
         var rules: List<ContractRule>
             get() = preferences[KEY_RULES]?.let(::parseRules) ?: emptyList()
             set(value) {
-                preferences[KEY_RULES] = serializeRules(value)
+                preferences[KEY_RULES] = serializeRules(value, preferences[KEY_RULES])
             }
 
         var news: List<ContractNews>
             get() = preferences.news()
             set(value) {
-                preferences[KEY_NEWS] = serializeNews(value)
+                preferences[KEY_NEWS] = serializeNews(value, preferences[KEY_NEWS])
             }
 
         var customAreas: List<CustomArea>
             get() = preferences.customAreas()
             set(value) {
-                preferences[KEY_CUSTOM_AREAS] = serializeCustomAreas(value)
+                preferences[KEY_CUSTOM_AREAS] =
+                    serializeCustomAreas(value, preferences[KEY_CUSTOM_AREAS])
             }
 
         fun setSalary(choice: SalaryChoice) {

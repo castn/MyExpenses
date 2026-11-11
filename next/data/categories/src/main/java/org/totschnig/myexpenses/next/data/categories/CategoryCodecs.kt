@@ -10,26 +10,28 @@ import org.totschnig.myexpenses.next.core.common.toJsonArray
 
 /*
  * How the decisions about categories are stored as JSON in the data store, see [CategoryStore].
- * What cannot be read is left out.
+ * What cannot be read is left out, and written back as it was when the stored JSON is passed as
+ * `previous`.
  */
 
-internal fun parseRules(json: String): List<CategoryRule> = parseJsonArray(json) { rule ->
-    CategoryRule(
-        id = rule.getString("id"),
-        payeeIds = rule.getJSONArray("payees").longs(),
-        categoryId = rule.getLong("category"),
-        merchants = rule.optJSONArray("merchants")?.strings() ?: emptySet()
-    )
-}
+internal fun parseRules(json: String): List<CategoryRule> = parseJsonArray(json, ::ruleOf)
 
-internal fun serializeRules(rules: List<CategoryRule>) = rules.toJsonArray { rule ->
-    JSONObject().apply {
-        put("id", rule.id)
-        put("payees", JSONArray(rule.payeeIds.toList()))
-        put("category", rule.categoryId)
-        if (rule.merchants.isNotEmpty()) put("merchants", JSONArray(rule.merchants.toList()))
+private fun ruleOf(rule: JSONObject) = CategoryRule(
+    id = rule.getString("id"),
+    payeeIds = rule.getJSONArray("payees").longs(),
+    categoryId = rule.getLong("category"),
+    merchants = rule.optJSONArray("merchants")?.strings() ?: emptySet()
+)
+
+internal fun serializeRules(rules: List<CategoryRule>, previous: String? = null) =
+    rules.toJsonArray(previous, ::ruleOf) { rule ->
+        JSONObject().apply {
+            put("id", rule.id)
+            put("payees", JSONArray(rule.payeeIds.toList()))
+            put("category", rule.categoryId)
+            if (rule.merchants.isNotEmpty()) put("merchants", JSONArray(rule.merchants.toList()))
+        }
     }
-}
 
 internal fun parseIdMap(json: String): Map<Long, Long> = try {
     JSONObject(json).let { obj ->
