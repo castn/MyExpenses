@@ -131,55 +131,53 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/feature/tags/TagDetectionsViewModel.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="44" column="57" source="standard:trailing-comma-on-declaration-site" />
-        <error line="50" column="25" source="standard:function-literal" />
-        <error line="50" column="26" source="standard:wrapping" />
-        <error line="50" column="49" source="standard:argument-list-wrapping" />
-        <error line="50" column="53" source="standard:argument-list-wrapping" />
-        <error line="50" column="61" source="standard:argument-list-wrapping" />
-        <error line="50" column="77" source="standard:function-literal" />
-        <error line="50" column="101" source="standard:function-literal" />
-        <error line="50" column="101" source="standard:max-line-length" />
-        <error line="50" column="103" source="standard:function-literal" />
-        <error line="57" column="37" source="standard:class-signature" />
-        <error line="57" column="61" source="standard:class-signature" />
-        <error line="57" column="88" source="standard:class-signature" />
-        <error line="57" column="100" source="standard:max-line-length" />
-        <error line="57" column="113" source="standard:class-signature" />
-        <error line="59" column="29" source="standard:property-wrapping" />
-        <error line="59" column="68" source="standard:argument-list-wrapping" />
-        <error line="59" column="83" source="standard:argument-list-wrapping" />
-        <error line="59" column="87" source="standard:function-literal" />
+        <error line="52" column="25" source="standard:function-literal" />
+        <error line="52" column="26" source="standard:wrapping" />
+        <error line="52" column="49" source="standard:argument-list-wrapping" />
+        <error line="52" column="53" source="standard:argument-list-wrapping" />
+        <error line="52" column="61" source="standard:argument-list-wrapping" />
+        <error line="52" column="77" source="standard:function-literal" />
+        <error line="52" column="101" source="standard:function-literal" />
+        <error line="52" column="101" source="standard:max-line-length" />
+        <error line="52" column="103" source="standard:function-literal" />
+        <error line="59" column="37" source="standard:class-signature" />
+        <error line="59" column="61" source="standard:class-signature" />
+        <error line="59" column="88" source="standard:class-signature" />
         <error line="59" column="100" source="standard:max-line-length" />
-        <error line="59" column="116" source="standard:function-literal" />
-        <error line="65" column="35" source="standard:class-signature" />
-        <error line="65" column="66" source="standard:class-signature" />
-        <error line="65" column="89" source="standard:class-signature" />
-        <error line="65" column="100" source="standard:max-line-length" />
-        <error line="65" column="114" source="standard:class-signature" />
-        <error line="67" column="27" source="standard:property-wrapping" />
-        <error line="67" column="57" source="standard:argument-list-wrapping" />
-        <error line="67" column="70" source="standard:argument-list-wrapping" />
-        <error line="67" column="74" source="standard:function-literal" />
+        <error line="59" column="113" source="standard:class-signature" />
+        <error line="61" column="29" source="standard:property-wrapping" />
+        <error line="61" column="68" source="standard:argument-list-wrapping" />
+        <error line="61" column="83" source="standard:argument-list-wrapping" />
+        <error line="61" column="87" source="standard:function-literal" />
+        <error line="61" column="100" source="standard:max-line-length" />
+        <error line="61" column="116" source="standard:function-literal" />
+        <error line="67" column="35" source="standard:class-signature" />
+        <error line="67" column="66" source="standard:class-signature" />
+        <error line="67" column="89" source="standard:class-signature" />
         <error line="67" column="100" source="standard:max-line-length" />
-        <error line="67" column="103" source="standard:function-literal" />
-        <error line="87" column="19" source="standard:argument-list-wrapping" />
-        <error line="87" column="37" source="standard:argument-list-wrapping" />
-        <error line="87" column="46" source="standard:argument-list-wrapping" />
-        <error line="87" column="61" source="standard:argument-list-wrapping" />
-        <error line="87" column="64" source="standard:argument-list-wrapping" />
-        <error line="87" column="79" source="standard:argument-list-wrapping" />
-        <error line="87" column="101" source="standard:max-line-length" />
-        <error line="87" column="102" source="standard:argument-list-wrapping" />
-        <error line="92" column="33" source="standard:function-literal" />
-        <error line="92" column="93" source="standard:function-literal" />
-        <error line="92" column="99" source="standard:function-literal" />
-        <error line="92" column="101" source="standard:max-line-length" />
-        <error line="92" column="118" source="standard:function-literal" />
+        <error line="67" column="114" source="standard:class-signature" />
+        <error line="69" column="27" source="standard:property-wrapping" />
+        <error line="69" column="57" source="standard:argument-list-wrapping" />
+        <error line="69" column="70" source="standard:argument-list-wrapping" />
+        <error line="69" column="74" source="standard:function-literal" />
+        <error line="69" column="100" source="standard:max-line-length" />
+        <error line="69" column="103" source="standard:function-literal" />
+        <error line="89" column="19" source="standard:argument-list-wrapping" />
+        <error line="89" column="37" source="standard:argument-list-wrapping" />
+        <error line="89" column="46" source="standard:argument-list-wrapping" />
+        <error line="89" column="61" source="standard:argument-list-wrapping" />
+        <error line="89" column="64" source="standard:argument-list-wrapping" />
+        <error line="89" column="79" source="standard:argument-list-wrapping" />
+        <error line="89" column="101" source="standard:max-line-length" />
+        <error line="89" column="102" source="standard:argument-list-wrapping" />
+        <error line="94" column="33" source="standard:function-literal" />
+        <error line="94" column="93" source="standard:function-literal" />
+        <error line="94" column="99" source="standard:function-literal" />
+        <error line="94" column="101" source="standard:max-line-length" />
+        <error line="94" column="118" source="standard:function-literal" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/feature/tags/TagLearningViewModel.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="40" column="57" source="standard:trailing-comma-on-declaration-site" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/feature/tags/TagSuggestionSection.kt">
         <error line="31" column="26" source="standard:parameter-list-wrapping" />

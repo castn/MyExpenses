@@ -590,16 +590,17 @@ the user has to start over.
 
 ---
 
-### `vm-io-param` — A view model that does IO takes its dispatcher as a parameter
+### `vm-io-param` — A view model takes its dispatchers as parameters
 
 A view model that reads the database, files or the network takes its dispatcher as a parameter
 (`io: CoroutineDispatcher = Dispatchers.IO`) and what it needs of Android as interfaces or
 functions, e.g. `ItemGroupModels` or a photo loader, so that it is a plain `ViewModel` that tests
-run in the JVM, see `ReceiptViewModelTest`.
+run in the JVM, see `ReceiptViewModelTest`. The same holds for analyses it runs off the main thread
+(`compute: CoroutineDispatcher = Dispatchers.Default`).
 
-**Why:** A view model that calls `Dispatchers.IO` directly cannot be tested without a coroutine
-test dispatcher. Taking it as a parameter lets tests inject `UnconfinedTestDispatcher` and run
-without emulator.
+**Why:** A view model that calls `Dispatchers.IO` or `Dispatchers.Default` directly cannot be
+tested without a coroutine test dispatcher. Taking it as a parameter lets tests inject
+`UnconfinedTestDispatcher` and run without emulator.
 
 **Check:** Konsist
 

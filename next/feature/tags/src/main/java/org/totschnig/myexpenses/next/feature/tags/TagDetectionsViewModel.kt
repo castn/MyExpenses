@@ -42,6 +42,8 @@ class TagDetectionsViewModel(
     private val tagDatabase: TagDatabase,
     /** Where the database is read and written */
     private val io: CoroutineDispatcher = Dispatchers.IO,
+    /** Where the analyses run */
+    private val compute: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
 
     /** Transactions with a tag of [meaning] */
@@ -78,7 +80,7 @@ class TagDetectionsViewModel(
             rows ?: return@combine emptyMap()
             refundMemo.of(RefundSearch(rows, reimbursed, rejected))
         }
-            .flowOn(Dispatchers.Default)
+            .flowOn(compute)
             .stateWhileShown(viewModelScope, emptyMap())
 
     /** Suggested trips, the latest first */
@@ -95,7 +97,7 @@ class TagDetectionsViewModel(
                 )
             )
         }
-            .flowOn(Dispatchers.Default)
+            .flowOn(compute)
             .stateWhileShown(viewModelScope, emptyList())
 
     /** Tags [transactionIds] with a tag [name] that means [TagMeaning.TRIP] */

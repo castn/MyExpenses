@@ -3,6 +3,7 @@ package org.totschnig.myexpenses.next.feature.budgets
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
@@ -68,6 +69,8 @@ class BudgetViewModel(
     legacyCount: Flow<Int> = flowOf(0),
     private val loadLegacy: suspend () -> List<LegacyBudget> = { emptyList() },
     private val savedState: SavedStateHandle,
+    /** Where the analyses run */
+    private val compute: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel(), BudgetActions {
 
     /** The user may create a pot, e.g. after the licence was checked, until its editor is opened */
@@ -106,7 +109,7 @@ class BudgetViewModel(
             analysisState(consent, input?.let { selectedMemo.of(it.copy(offset = offset)) })
         }
             .logTimings("budget: selected")
-            .flowOn(Dispatchers.Default)
+            .flowOn(compute)
             .stateWhileShown(viewModelScope, AnalysisState.Loading)
 
     /**
@@ -124,7 +127,7 @@ class BudgetViewModel(
         combine(input, ledgerSource.catalog, repository.canScanReceipts) { input, catalog, canScan ->
             input?.let { PotEditorData.of(it, catalog, canScan) }
         }
-            .flowOn(Dispatchers.Default)
+            .flowOn(compute)
             .stateWhileShown(viewModelScope, null)
 
     /** Budgets of the classic screens to offer to take over, 0 if there are none or they were handled */

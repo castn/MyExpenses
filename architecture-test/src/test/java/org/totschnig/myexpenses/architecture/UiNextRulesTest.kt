@@ -61,15 +61,17 @@ class UiNextRulesTest {
     }
 
     @Test
-    fun `vm-io-param view models take their IO dispatcher as a parameter`() {
+    fun `vm-io-param view models take their dispatchers as parameters`() {
         scope.classes()
             .filter { it.isViewModel() }
             .assertFalse(
-                additionalMessage = "vm-io-param: take `io: CoroutineDispatcher = Dispatchers.IO` as a parameter, so " +
-                    "that tests can run the view model"
+                additionalMessage = "vm-io-param: take `io: CoroutineDispatcher = Dispatchers.IO` or " +
+                    "`compute: CoroutineDispatcher = Dispatchers.Default` as a parameter, " +
+                    "so that tests can run the view model"
             ) { viewModel ->
                 val constructor = viewModel.primaryConstructor?.text.orEmpty()
-                viewModel.text.replace(constructor, "").contains("Dispatchers.IO")
+                val body = viewModel.text.replace(constructor, "")
+                body.contains("Dispatchers.IO") || body.contains("Dispatchers.Default")
             }
     }
 

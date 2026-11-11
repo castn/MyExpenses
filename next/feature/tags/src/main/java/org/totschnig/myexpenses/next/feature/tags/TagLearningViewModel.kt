@@ -38,6 +38,8 @@ class TagLearningViewModel(
     private val tagDatabase: TagDatabase,
     /** Where the database is read and written */
     private val io: CoroutineDispatcher = Dispatchers.IO,
+    /** Where the analyses run */
+    private val compute: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
 
     private val store: TagStore
@@ -68,7 +70,7 @@ class TagLearningViewModel(
         ) { inputs, meanings, rejected ->
             inputs?.let { suggestionMemo.of(LearningInput(it, meanings, rejected)) }.orEmpty()
         }
-            .flowOn(Dispatchers.Default)
+            .flowOn(compute)
             .stateWhileShown(viewModelScope, emptyMap())
 
     private val _justAccepted = MutableStateFlow<Map<Long, TagSuggestion>>(emptyMap())

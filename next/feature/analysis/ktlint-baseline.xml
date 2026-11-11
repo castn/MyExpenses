@@ -328,16 +328,15 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/feature/analysis/CategorySpendingViewModel.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="28" column="41" source="standard:trailing-comma-on-declaration-site" />
-        <error line="43" column="27" source="standard:wrapping" />
-        <error line="43" column="35" source="standard:wrapping" />
-        <error line="52" column="13" source="standard:wrapping" />
-        <error line="58" column="67" source="standard:property-wrapping" />
-        <error line="58" column="77" source="standard:argument-list-wrapping" />
-        <error line="58" column="94" source="standard:argument-list-wrapping" />
-        <error line="58" column="101" source="standard:max-line-length" />
-        <error line="58" column="105" source="standard:argument-list-wrapping" />
-        <error line="58" column="106" source="standard:argument-list-wrapping" />
+        <error line="46" column="27" source="standard:wrapping" />
+        <error line="46" column="35" source="standard:wrapping" />
+        <error line="55" column="13" source="standard:wrapping" />
+        <error line="61" column="67" source="standard:property-wrapping" />
+        <error line="61" column="77" source="standard:argument-list-wrapping" />
+        <error line="61" column="94" source="standard:argument-list-wrapping" />
+        <error line="61" column="101" source="standard:max-line-length" />
+        <error line="61" column="105" source="standard:argument-list-wrapping" />
+        <error line="61" column="106" source="standard:argument-list-wrapping" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/feature/analysis/MoneyFlowChart.kt">
         <error line="17" column="21" source="standard:parameter-list-wrapping" />
@@ -524,22 +523,21 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/feature/analysis/MoneyFlowViewModel.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="27" column="41" source="standard:trailing-comma-on-declaration-site" />
-        <error line="30" column="34" source="standard:class-signature" />
-        <error line="30" column="83" source="standard:class-signature" />
-        <error line="30" column="100" source="standard:max-line-length" />
-        <error line="30" column="102" source="standard:class-signature" />
-        <error line="34" column="89" source="standard:function-signature" />
-        <error line="36" column="34" source="standard:argument-list-wrapping" />
-        <error line="36" column="56" source="standard:argument-list-wrapping" />
-        <error line="36" column="66" source="standard:argument-list-wrapping" />
-        <error line="36" column="86" source="standard:argument-list-wrapping" />
-        <error line="40" column="25" source="standard:argument-list-wrapping" />
-        <error line="40" column="52" source="standard:argument-list-wrapping" />
-        <error line="40" column="76" source="standard:argument-list-wrapping" />
-        <error line="40" column="91" source="standard:argument-list-wrapping" />
-        <error line="40" column="101" source="standard:max-line-length" />
-        <error line="40" column="108" source="standard:argument-list-wrapping" />
+        <error line="33" column="34" source="standard:class-signature" />
+        <error line="33" column="83" source="standard:class-signature" />
+        <error line="33" column="100" source="standard:max-line-length" />
+        <error line="33" column="102" source="standard:class-signature" />
+        <error line="37" column="89" source="standard:function-signature" />
+        <error line="39" column="34" source="standard:argument-list-wrapping" />
+        <error line="39" column="56" source="standard:argument-list-wrapping" />
+        <error line="39" column="66" source="standard:argument-list-wrapping" />
+        <error line="39" column="86" source="standard:argument-list-wrapping" />
+        <error line="43" column="25" source="standard:argument-list-wrapping" />
+        <error line="43" column="52" source="standard:argument-list-wrapping" />
+        <error line="43" column="76" source="standard:argument-list-wrapping" />
+        <error line="43" column="91" source="standard:argument-list-wrapping" />
+        <error line="43" column="101" source="standard:max-line-length" />
+        <error line="43" column="108" source="standard:argument-list-wrapping" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/feature/analysis/ReadinessBox.kt">
         <error line="3" column="1" source="standard:import-ordering" />
@@ -566,33 +564,28 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/feature/analysis/TagAnalysisViewModel.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="31" column="5" source="standard:class-signature" />
-        <error line="32" column="5" source="standard:class-signature" />
-        <error line="32" column="41" source="standard:trailing-comma-on-declaration-site" />
-        <error line="32" column="42" source="standard:class-signature" />
-        <error line="33" column="5" source="standard:class-signature" />
-        <error line="44" column="23" source="standard:trailing-comma-on-declaration-site" />
-        <error line="60" column="25" source="standard:function-literal" />
-        <error line="60" column="41" source="standard:argument-list-wrapping" />
-        <error line="60" column="45" source="standard:argument-list-wrapping" />
-        <error line="60" column="59" source="standard:argument-list-wrapping" />
-        <error line="60" column="74" source="standard:argument-list-wrapping" />
-        <error line="60" column="98" source="standard:argument-list-wrapping" />
-        <error line="60" column="101" source="standard:max-line-length" />
-        <error line="60" column="105" source="standard:argument-list-wrapping" />
-        <error line="60" column="109" source="standard:argument-list-wrapping" />
-        <error line="60" column="111" source="standard:function-literal" />
-        <error line="64" column="17" source="standard:argument-list-wrapping" />
-        <error line="64" column="39" source="standard:argument-list-wrapping" />
-        <error line="64" column="53" source="standard:argument-list-wrapping" />
-        <error line="64" column="57" source="standard:argument-list-wrapping" />
-        <error line="64" column="58" source="standard:argument-list-wrapping" />
-        <error line="64" column="81" source="standard:function-literal" />
-        <error line="64" column="97" source="standard:argument-list-wrapping" />
-        <error line="64" column="101" source="standard:max-line-length" />
-        <error line="64" column="106" source="standard:argument-list-wrapping" />
-        <error line="64" column="114" source="standard:argument-list-wrapping" />
-        <error line="64" column="116" source="standard:function-literal" />
+        <error line="47" column="23" source="standard:trailing-comma-on-declaration-site" />
+        <error line="63" column="25" source="standard:function-literal" />
+        <error line="63" column="41" source="standard:argument-list-wrapping" />
+        <error line="63" column="45" source="standard:argument-list-wrapping" />
+        <error line="63" column="59" source="standard:argument-list-wrapping" />
+        <error line="63" column="74" source="standard:argument-list-wrapping" />
+        <error line="63" column="98" source="standard:argument-list-wrapping" />
+        <error line="63" column="101" source="standard:max-line-length" />
+        <error line="63" column="105" source="standard:argument-list-wrapping" />
+        <error line="63" column="109" source="standard:argument-list-wrapping" />
+        <error line="63" column="111" source="standard:function-literal" />
+        <error line="67" column="17" source="standard:argument-list-wrapping" />
+        <error line="67" column="39" source="standard:argument-list-wrapping" />
+        <error line="67" column="53" source="standard:argument-list-wrapping" />
+        <error line="67" column="57" source="standard:argument-list-wrapping" />
+        <error line="67" column="58" source="standard:argument-list-wrapping" />
+        <error line="67" column="81" source="standard:function-literal" />
+        <error line="67" column="97" source="standard:argument-list-wrapping" />
+        <error line="67" column="101" source="standard:max-line-length" />
+        <error line="67" column="106" source="standard:argument-list-wrapping" />
+        <error line="67" column="114" source="standard:argument-list-wrapping" />
+        <error line="67" column="116" source="standard:function-literal" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/feature/analysis/TagEvaluationScreen.kt">
         <error line="3" column="1" source="standard:import-ordering" />

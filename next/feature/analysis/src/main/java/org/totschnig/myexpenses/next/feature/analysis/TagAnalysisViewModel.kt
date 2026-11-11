@@ -10,6 +10,7 @@ import org.totschnig.myexpenses.next.core.model.ledger.TagInfo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import java.time.LocalDate
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +31,8 @@ import org.totschnig.myexpenses.next.data.analysis.TagAnalyzer
 class TagAnalysisViewModel(
     val ledgerSource: LedgerSource,
     private val tagFacts: Flow<TagFacts>,
+    /** Where the analyses run */
+    private val compute: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
 
     /** Year of the business expenses, null for the latest one */
@@ -63,7 +66,7 @@ class TagAnalysisViewModel(
     val analysis: StateFlow<AnalysisState<TagAnalysis>> =
         combine(ledgerSource.consent, input.mapMemo(memo)) { consent, analysis -> analysisState(consent, analysis) }
             .logTimings("analysis: tags")
-            .flowOn(Dispatchers.Default)
+            .flowOn(compute)
             .stateWhileShown(viewModelScope, AnalysisState.Loading)
 
     fun selectYear(year: Int) {

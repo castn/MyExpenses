@@ -2,6 +2,7 @@ package org.totschnig.myexpenses.next.feature.analysis
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +26,8 @@ import org.totschnig.myexpenses.next.data.analysis.PeriodKind
 class MoneyFlowViewModel(
     private val ledgerSource: LedgerSource,
     private val tagFacts: Flow<TagFacts>,
+    /** Where the analyses run */
+    private val compute: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
 
     private data class Selection(val kind: PeriodKind = PeriodKind.TWELVE_MONTHS, val offset: Int = 0)
@@ -42,7 +45,7 @@ class MoneyFlowViewModel(
             }
         }
             .combine(ledgerSource.consent) { flow, consent -> analysisState(consent, flow) }
-            .flowOn(Dispatchers.Default)
+            .flowOn(compute)
             .stateWhileShown(viewModelScope, AnalysisState.Loading)
 
     /** The last twelve months */

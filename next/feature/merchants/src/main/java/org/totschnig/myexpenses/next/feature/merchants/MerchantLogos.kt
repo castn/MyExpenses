@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,6 +44,8 @@ class MerchantLogos(
     private val domainStore: PayeeDomainStore,
     private val iconStore: PayeeIconStore,
     private val store: MerchantLogoStore,
+    /** Where the looks are worked out and the logos decoded */
+    private val compute: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
 
     /** The web addresses the user entered, by payee id */
@@ -57,7 +60,7 @@ class MerchantLogos(
     private val looks: Flow<Map<Long, PayeeLook>> =
         combine(payees, domainStore.domains, iconStore.values, consent.isGiven, ::payeeLooks)
             .distinctUntilChanged()
-            .flowOn(Dispatchers.Default)
+            .flowOn(compute)
 
     /** The logos loaded, by domain */
     private val byDomain = MutableStateFlow<Map<String, ImageBitmap>>(emptyMap())
@@ -100,7 +103,7 @@ class MerchantLogos(
     }
 
     private suspend fun decode(bytes: ByteArray?) = bytes?.let {
-        withContext(Dispatchers.Default) { BitmapFactory.decodeByteArray(it, 0, it.size)?.asImageBitmap() }
+        withContext(compute) { BitmapFactory.decodeByteArray(it, 0, it.size)?.asImageBitmap() }
     }
 
     /**
