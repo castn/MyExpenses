@@ -1,0 +1,43 @@
+@startuml setup
+skinparam componentStyle rectangle
+skinparam shadowing false
+left to right direction
+
+package "ledger" {
+  artifact Ledger
+}
+package "categories" {
+  [CategoryRepository] as categoryRepository
+  database "CategoryStore\n(rules, unclear)" as categoryStore
+  [CategorySuggester] as suggester
+}
+package "contracts (optional)" {
+  artifact "SetupContracts\n(from NextData)" as setupContracts
+}
+
+package "setup" {
+  [categoryQueue()] as queueFn
+  artifact "CategoryQueue\n(coverage, required,\noptional)" as queue
+  [automaticShare()] as shareFn
+  artifact AutomaticShare as share
+  [SetupRepository] as repository
+  database "SetupStore\n(steps, pace)" as store
+  artifact "Pace" as pace
+}
+
+Ledger --> queueFn
+categoryStore --> queueFn : unclear payees
+queueFn --> queue
+Ledger --> shareFn
+categoryStore --> shareFn : rules
+suggester --> shareFn : certain?
+shareFn --> share
+repository --> queueFn : Memo
+repository --> shareFn : Memo
+repository --> categoryRepository : categorize,\nmark unclear
+categoryRepository --> categoryStore
+setupContracts --> repository : steps
+store --> repository : progress
+store --> pace
+
+@enduml
