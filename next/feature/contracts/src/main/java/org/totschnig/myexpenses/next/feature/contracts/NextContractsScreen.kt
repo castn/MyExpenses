@@ -321,14 +321,7 @@ private fun ContractsHome(content: ContractsContent, backStack: NavBackStack<Nav
                     .wrapContentSize()
             )
 
-            AnalysisState.AskConsent -> ConsentCard(
-                isDeclined = false,
-                onConsent = content.onConsent,
-                modifier = contentModifier
-            )
-
-            AnalysisState.Declined -> ConsentCard(
-                isDeclined = true,
+            AnalysisState.AskConsent, AnalysisState.Declined -> DeclinedCard(
                 onConsent = content.onConsent,
                 modifier = contentModifier
             )
@@ -395,22 +388,13 @@ private fun AreaTabs(
 }
 
 @Composable
-private fun ConsentCard(
-    isDeclined: Boolean,
-    onConsent: (Boolean) -> Unit,
-    modifier: Modifier = Modifier,
-) {
+private fun DeclinedCard(onConsent: (Boolean) -> Unit, modifier: Modifier = Modifier) {
     PromptCard(
         icon = Icons.Default.Search,
         title = stringResource(R.string.next_contracts_consent_title),
-        text = stringResource(
-            if (isDeclined) R.string.next_contracts_declined
-            else R.string.next_contracts_consent_text
-        ),
+        text = stringResource(R.string.next_contracts_declined),
         confirmLabel = stringResource(R.string.next_contracts_consent_accept),
         onConfirm = { onConsent(true) },
-        dismissLabel = if (isDeclined) null else stringResource(R.string.next_contracts_consent_decline),
-        onDismiss = { onConsent(false) },
         modifier = modifier
     )
 }
@@ -496,6 +480,6 @@ private fun NextContractsScreenPreview() {
 @Composable
 private fun ConsentPreview() {
     PreviewTheme {
-        NextContractsScreen(state = AnalysisState.AskConsent, currency = CurrencyInfo.Preview)
+        NextContractsScreen(state = AnalysisState.Declined, currency = CurrencyInfo.Preview)
     }
 }
