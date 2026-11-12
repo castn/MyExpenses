@@ -16,6 +16,7 @@ import org.totschnig.myexpenses.next.NextShell
 import org.totschnig.myexpenses.next.NextTab
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
+import org.totschnig.myexpenses.next.feature.contracts.ContractSuggestionsSection
 import org.totschnig.myexpenses.next.feature.contracts.ContractsFlow
 import org.totschnig.myexpenses.next.feature.contracts.ContractsViewModel
 import org.totschnig.myexpenses.next.feature.contracts.PaymentContractChip
@@ -39,6 +40,12 @@ class ContractsFeature(activity: ComponentActivity, data: NextData) : NextFeatur
     @Composable
     override fun TransactionChips(transaction: ShownTransaction) {
         PaymentContractChip(viewModel, transaction)
+    }
+
+    /** The suggested contracts to decide on within another page, e.g. the contracts step of the setup */
+    @Composable
+    fun Suggestions() {
+        ContractSuggestionsSection(viewModel)
     }
 
     override val tab = NextTab(Icons.Default.Description, R.string.next_tab_contracts, NextKey.Contracts())

@@ -65,6 +65,7 @@ dependencies {
     implementation project(':next:feature:merchants')
     implementation project(':next:feature:portfolio')
     implementation project(':next:feature:receipts')
+    implementation project(':next:feature:setup')
     implementation project(':ocr-model')
     implementation project(':next:feature:tags')
     implementation project(':next:feature:tips')

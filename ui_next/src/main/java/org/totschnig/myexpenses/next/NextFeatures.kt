@@ -21,6 +21,7 @@ import org.totschnig.myexpenses.next.tags.TagsFeature
 import org.totschnig.myexpenses.next.tags.TagSettings
 import org.totschnig.myexpenses.next.settings.AreaSettings
 import org.totschnig.myexpenses.next.settings.NextSettings
+import org.totschnig.myexpenses.next.setup.SetupFeature
 import org.totschnig.myexpenses.next.tips.SavingTipsFeature
 import org.totschnig.myexpenses.next.transactions.TransactionsFeature
 
@@ -47,8 +48,10 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
     val savingTips = SavingTipsFeature(activity, data, contracts, tags) { guidance.PendingTips(it) }
     val analysis = AnalysisFeature(activity, data, guidance)
     val receipts = ReceiptsFeature(activity, data) { contracts.isContractPayment(it) }
+    val setup = SetupFeature(activity, data) { contracts.Suggestions() }
 
     val all: List<NextFeature> = listOf(
+        setup,
         categories,
         tags,
         contracts,

@@ -177,20 +177,20 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/NextFeatures.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="46" column="19" source="standard:property-wrapping" />
-        <error line="46" column="36" source="standard:argument-list-wrapping" />
-        <error line="46" column="46" source="standard:argument-list-wrapping" />
-        <error line="46" column="52" source="standard:function-literal" />
-        <error line="46" column="52" source="standard:argument-list-wrapping" />
-        <error line="46" column="53" source="standard:wrapping" />
-        <error line="46" column="76" source="standard:function-literal" />
-        <error line="46" column="79" source="standard:argument-list-wrapping" />
-        <error line="46" column="101" source="standard:max-line-length" />
-        <error line="46" column="107" source="standard:argument-list-wrapping" />
-        <error line="68" column="61" source="standard:argument-list-wrapping" />
-        <error line="68" column="87" source="standard:argument-list-wrapping" />
-        <error line="68" column="101" source="standard:max-line-length" />
-        <error line="68" column="109" source="standard:argument-list-wrapping" />
+        <error line="47" column="19" source="standard:property-wrapping" />
+        <error line="47" column="36" source="standard:argument-list-wrapping" />
+        <error line="47" column="46" source="standard:argument-list-wrapping" />
+        <error line="47" column="52" source="standard:function-literal" />
+        <error line="47" column="52" source="standard:argument-list-wrapping" />
+        <error line="47" column="53" source="standard:wrapping" />
+        <error line="47" column="76" source="standard:function-literal" />
+        <error line="47" column="79" source="standard:argument-list-wrapping" />
+        <error line="47" column="101" source="standard:max-line-length" />
+        <error line="47" column="107" source="standard:argument-list-wrapping" />
+        <error line="71" column="61" source="standard:argument-list-wrapping" />
+        <error line="71" column="87" source="standard:argument-list-wrapping" />
+        <error line="71" column="101" source="standard:max-line-length" />
+        <error line="71" column="109" source="standard:argument-list-wrapping" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/NextLayout.kt">
         <error line="16" column="25" source="standard:trailing-comma-on-declaration-site" />
@@ -712,25 +712,25 @@
         <error line="31" column="1" source="standard:indent" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/contracts/ContractsFeature.kt">
-        <error line="32" column="27" source="standard:parameter-list-wrapping" />
-        <error line="32" column="56" source="standard:parameter-list-wrapping" />
-        <error line="32" column="70" source="standard:function-signature" />
-        <error line="32" column="96" source="standard:argument-list-wrapping" />
-        <error line="32" column="101" source="standard:max-line-length" />
-        <error line="32" column="107" source="standard:argument-list-wrapping" />
-        <error line="32" column="118" source="standard:argument-list-wrapping" />
-        <error line="44" column="23" source="standard:property-wrapping" />
-        <error line="44" column="32" source="standard:argument-list-wrapping" />
-        <error line="44" column="59" source="standard:argument-list-wrapping" />
-        <error line="44" column="88" source="standard:argument-list-wrapping" />
-        <error line="44" column="100" source="standard:max-line-length" />
-        <error line="44" column="107" source="standard:argument-list-wrapping" />
-        <error line="48" column="30" source="standard:function-signature" />
-        <error line="48" column="85" source="standard:function-literal" />
-        <error line="48" column="86" source="standard:wrapping" />
-        <error line="48" column="100" source="standard:binary-expression-wrapping" />
-        <error line="48" column="101" source="standard:max-line-length" />
-        <error line="48" column="114" source="standard:function-literal" />
+        <error line="33" column="27" source="standard:parameter-list-wrapping" />
+        <error line="33" column="56" source="standard:parameter-list-wrapping" />
+        <error line="33" column="70" source="standard:function-signature" />
+        <error line="33" column="96" source="standard:argument-list-wrapping" />
+        <error line="33" column="101" source="standard:max-line-length" />
+        <error line="33" column="107" source="standard:argument-list-wrapping" />
+        <error line="33" column="118" source="standard:argument-list-wrapping" />
+        <error line="51" column="23" source="standard:property-wrapping" />
+        <error line="51" column="32" source="standard:argument-list-wrapping" />
+        <error line="51" column="59" source="standard:argument-list-wrapping" />
+        <error line="51" column="88" source="standard:argument-list-wrapping" />
+        <error line="51" column="100" source="standard:max-line-length" />
+        <error line="51" column="107" source="standard:argument-list-wrapping" />
+        <error line="55" column="30" source="standard:function-signature" />
+        <error line="55" column="85" source="standard:function-literal" />
+        <error line="55" column="86" source="standard:wrapping" />
+        <error line="55" column="100" source="standard:binary-expression-wrapping" />
+        <error line="55" column="101" source="standard:max-line-length" />
+        <error line="55" column="114" source="standard:function-literal" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/guidance/GuidanceFeature.kt">
         <error line="3" column="1" source="standard:import-ordering" />

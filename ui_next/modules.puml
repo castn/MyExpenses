@@ -51,6 +51,7 @@ package "next/feature" as pNextFeature {
     [:merchants] as mNextFeatureMerchants
     [:portfolio] as mNextFeaturePortfolio
     [:receipts] as mNextFeatureReceipts
+    [:setup] as mNextFeatureSetup
     [:tags] as mNextFeatureTags
     [:tips] as mNextFeatureTips
     [:transactions] as mNextFeatureTransactions
@@ -98,9 +99,9 @@ mNextFeatureGuidance --> mNextDataGuidance
 mNextFeatureMerchants --> mNextDataMerchants
 mNextFeaturePortfolio --> mNextDataPortfolio
 mNextFeatureReceipts --> mNextDataReceipts
+mNextFeatureSetup --> mNextDataSetup
 mNextFeatureTags --> mNextDataTags
 mNextFeatureTips --> mNextDataTips
 mNextFeatureTransactions --> mNextDataTransactions
 mUiNext --> mMyExpenses
-mUiNext --> mNextDataSetup
 @enduml
