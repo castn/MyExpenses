@@ -21,7 +21,6 @@ import androidx.annotation.RequiresApi
 import com.evernote.android.state.State
 import com.evernote.android.state.StateSaver
 import com.google.android.material.chip.Chip
-import kotlinx.parcelize.Parcelize
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.activity.ExpenseEdit
 import org.totschnig.myexpenses.databinding.PartyInputBinding
@@ -29,37 +28,12 @@ import org.totschnig.myexpenses.dialog.buildPartyEditDialog
 import org.totschnig.myexpenses.fragment.PartiesList.Companion.DIALOG_EDIT_PARTY
 import org.totschnig.myexpenses.model2.Party
 import org.totschnig.myexpenses.provider.KEY_PARENTID
-import org.totschnig.myexpenses.provider.KEY_PAYEEID
 import org.totschnig.myexpenses.provider.KEY_PAYEE_NAME
 import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.provider.KEY_SHORT_NAME
 import org.totschnig.myexpenses.provider.TransactionProvider
-import org.totschnig.myexpenses.provider.getLongOrNull
-import org.totschnig.myexpenses.provider.getString
-import org.totschnig.myexpenses.provider.getStringOrNull
 import org.totschnig.myexpenses.util.Utils
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
-
-@Parcelize
-data class DisplayParty(
-    val id: Long?,
-    val name: String,
-    val shortName: String? = null
-) : Parcelable {
-
-    val displayName: String
-        get() = shortName ?: name
-
-    companion object {
-        fun fromCursor(cursor: Cursor) = cursor.getLongOrNull(KEY_PAYEEID)?.let {
-            DisplayParty(
-                it,
-                cursor.getString(KEY_PAYEE_NAME),
-                cursor.getStringOrNull(KEY_SHORT_NAME)
-            )
-        }
-    }
-}
 
 class PartyInput @JvmOverloads constructor(
     context: Context,

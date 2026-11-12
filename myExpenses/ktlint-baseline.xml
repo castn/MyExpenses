@@ -435,6 +435,12 @@
         <error line="99" column="109" source="standard:argument-list-wrapping" />
         <error line="123" column="1" source="standard:final-newline" />
     </file>
+    <file name="src/androidTest/java/org/totschnig/myexpenses/test/espresso/ManageTemplatesTest.kt">
+        <error line="37" column="1" source="standard:comment-spacing" />
+        <error line="88" column="23" source="standard:wrapping" />
+        <error line="88" column="24" source="standard:argument-list-wrapping" />
+        <error line="93" column="50" source="standard:trailing-comma-on-call-site" />
+    </file>
     <file name="src/androidTest/java/org/totschnig/myexpenses/test/espresso/OrientationChangeTest.kt">
         <error line="3" column="1" source="standard:import-ordering" />
         <error line="47" column="1" source="standard:no-consecutive-blank-lines" />
@@ -10523,21 +10529,16 @@
         <error line="14" column="57" source="standard:argument-list-wrapping" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/ui/PartyInput.kt">
-        <error line="45" column="5" source="standard:class-signature" />
-        <error line="46" column="5" source="standard:class-signature" />
-        <error line="47" column="5" source="standard:class-signature" />
-        <error line="47" column="34" source="standard:class-signature" />
-        <error line="48" column="5" source="standard:class-signature" />
-        <error line="70" column="1" source="standard:no-consecutive-blank-lines" />
-        <error line="159" column="1" source="standard:no-consecutive-blank-lines" />
-        <error line="192" column="20" source="standard:multiline-if-else" />
-        <error line="196" column="47" source="standard:function-literal" />
-        <error line="196" column="67" source="standard:function-literal" />
-        <error line="196" column="77" source="standard:function-literal" />
-        <error line="196" column="92" source="standard:function-literal" />
-        <error line="196" column="100" source="standard:function-literal" />
-        <error line="196" column="101" source="standard:max-line-length" />
-        <error line="239" column="1" source="standard:no-consecutive-blank-lines" />
+        <error line="44" column="1" source="standard:no-consecutive-blank-lines" />
+        <error line="133" column="1" source="standard:no-consecutive-blank-lines" />
+        <error line="166" column="20" source="standard:multiline-if-else" />
+        <error line="170" column="47" source="standard:function-literal" />
+        <error line="170" column="67" source="standard:function-literal" />
+        <error line="170" column="77" source="standard:function-literal" />
+        <error line="170" column="92" source="standard:function-literal" />
+        <error line="170" column="100" source="standard:function-literal" />
+        <error line="170" column="101" source="standard:max-line-length" />
+        <error line="213" column="1" source="standard:no-consecutive-blank-lines" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/ui/SpinnerHelper.kt">
         <error line="125" column="47" source="standard:function-expression-body" />
