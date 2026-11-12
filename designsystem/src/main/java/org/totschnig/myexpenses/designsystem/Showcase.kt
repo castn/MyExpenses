@@ -827,3 +827,63 @@ private fun IllustrationShowcase() {
         }
     }
 }
+
+@Preview(name = "Guide", showBackground = true, heightDp = 900)
+@Preview(
+    name = "Guide, dark",
+    showBackground = true,
+    heightDp = 900,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Composable
+private fun GuideShowcase() {
+    DesignSystemTheme {
+        Column(verticalArrangement = Arrangement.spacedBy(Spacing.content)) {
+            GuideProgressHeader(
+                title = "Guide progress header",
+                value = "62 %",
+                progress = 0.62f,
+                target = 0.8f,
+                supportingText = "About 3 min. left · mark at the target"
+            )
+            GuideProgressHeader(
+                title = "Target reached",
+                value = "84 %",
+                progress = 0.84f,
+                target = 0.8f
+            )
+            DetailCard(Modifier.padding(horizontal = Spacing.screen)) {
+                GuideStepRow(
+                    1,
+                    "Done step",
+                    "Gone through to the end",
+                    GuideStepStatus.DONE,
+                    isFirst = true,
+                    statusLabel = "Done"
+                )
+                GuideStepRow(
+                    2,
+                    "Current step",
+                    "23 decisions · about 3 min.",
+                    GuideStepStatus.CURRENT,
+                    onClick = {}
+                )
+                GuideStepRow(
+                    3,
+                    "Open step",
+                    "5 decisions · about 1 min.",
+                    GuideStepStatus.OPEN,
+                    onClick = {}
+                )
+                GuideStepRow(
+                    4,
+                    "Skipped step",
+                    "Can still be done",
+                    GuideStepStatus.SKIPPED,
+                    statusLabel = "Skipped",
+                    onClick = {}
+                )
+            }
+        }
+    }
+}
