@@ -9,10 +9,11 @@ The diagram is the PlantUML source [`guidance.puml`](guidance.puml) next to this
 
 ## How well the transactions are described
 
-`dataReadiness(ledger, receipts, today)` counts, as a pure function:
+`dataReadiness(ledger, receipts, today, unclear)` counts, as a pure function:
 
 - the debits of the last 3 months that can have a category, those without one and those in a
-  catch-all category like "Sonstiges" (`DataReadiness.CATCH_ALL`)
+  catch-all category like "Sonstiges" (`DataReadiness.CATCH_ALL`); those of payees the user knows
+  no category for ("Weiß ich nicht", `NextData.unclearTransactions`) are not missing
 - the purchases at supermarket chains and those without scanned receipt
 - the purchases with a scanned receipt in the windows of `ItemGroupRising`, and within the last year
 - the debits of the last year with a tag
@@ -31,9 +32,9 @@ that what the gaps say cannot drift from what the tips need.
 | --- | --- | --- |
 | Analysis tab | `ReadinessBox` (an `InfoBox`): one paragraph per gap, with a button that lists its transactions; their details offer category, suggestions and receipts | never, it goes away once nothing is missing |
 | Saving tips | `PendingTipsSection`: tips that cannot say anything yet, without amounts, see `pendingTips()` | never, a tip that is there is not pending |
-| Overview | `OverviewHint` (an `InviteCard`): the first gap, opens the analysis tab; not while the category backlog asks | for its topic |
+| Overview | `OverviewHint` (an `InviteCard`): the first gap, opens the analysis tab; not while the category backlog asks, nor while the setup takes over the overview (`NextFeature.takesOverOverview`) | for its topic |
 | Details of a supermarket purchase without receipt | `ReceiptHint` (a `HintCard`), next to the chip that scans one | for its topic |
-| After saving a transaction | snackbar about a missing category or receipt | for its topic, or after `HintTopic.MAX_AFTER_SAVE` times |
+| After saving a transaction | snackbar about a missing category, not for a payee the user knows none for (`NextData.isCategoryUnclear`), or about a missing receipt | for its topic, or after `HintTopic.MAX_AFTER_SAVE` times |
 | Empty states | the empty transaction list, saving tips and receipt pots say what makes them useful | — |
 | First start | the last page says that precise categories and receipts make the app useful | — |
 
