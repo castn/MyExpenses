@@ -1,0 +1,160 @@
+package org.totschnig.myexpenses.next.feature.setup
+
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.lifecycle.SavedStateHandle
+import java.time.LocalDate
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
+import org.totschnig.myexpenses.next.core.common.withTestDataStore
+import org.totschnig.myexpenses.next.core.model.FakeLedgerSource
+import org.totschnig.myexpenses.next.core.model.ledger.Catalog
+import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
+import org.totschnig.myexpenses.next.core.model.ledger.Ledger
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
+import org.totschnig.myexpenses.next.core.model.ledger.OwnAccounts
+import org.totschnig.myexpenses.next.data.categories.CategoryRepository
+import org.totschnig.myexpenses.next.data.categories.CategoryStore
+import org.totschnig.myexpenses.next.data.categories.CategoryWriting
+import org.totschnig.myexpenses.next.data.setup.Pace
+import org.totschnig.myexpenses.next.data.setup.SetupRepository
+import org.totschnig.myexpenses.next.data.setup.SetupStep
+import org.totschnig.myexpenses.next.data.setup.SetupStore
+
+@OptIn(ExperimentalCoroutinesApi::class)
+class SetupViewModelTest {
+
+    @Before
+    fun setUp() {
+        Dispatchers.setMain(UnconfinedTestDispatcher())
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
+
+    private val today = LocalDate.of(2026, 11, 12)
+
+    private fun debit(id: Long, payeeId: Long, payee: String, amount: Long) =
+        LedgerTransaction(id, today, -amount, accountId = 1, payeeId = payeeId, payeeName = payee)
+
+    private val ledger = Ledger(
+        listOf(debit(1, 1, "Vermieter", 600), debit(2, 2, "REWE", 300), debit(3, 3, "Kino", 100)),
+        OwnAccounts(emptySet(), emptyMap())
+    )
+
+    private class FakeWriting : CategoryWriting {
+        val set = mutableListOf<Pair<List<Long>, Long>>()
+        override suspend fun changeCategory(
+            transactionId: Long,
+            fromCategoryId: Long?,
+            categoryId: Long
+        ) = Unit
+        override suspend fun removeCategory(transactionId: Long, categoryId: Long) = Unit
+        override suspend fun setMissingCategory(transactionIds: List<Long>, categoryId: Long) {
+            set += transactionIds to categoryId
+        }
+    }
+
+    private class Setup(
+        val viewModel: SetupViewModel,
+        val writing: FakeWriting,
+        val store: SetupStore
+    )
+
+    private fun CoroutineScope.setup(
+        dataStore: DataStore<Preferences>,
+        savedState: SavedStateHandle = SavedStateHandle(),
+        clock: () -> Long = { 0 }
+    ): Setup {
+        val catalog = Catalog(listOf(CategoryInfo(10, "Wohnen", "Wohnen")))
+        val source = FakeLedgerSource(ledger = ledger, catalog = catalog, today = today)
+        val writing = FakeWriting()
+        val categories = CategoryRepository(source, CategoryStore(dataStore), writing, this)
+        val store = SetupStore(dataStore)
+        val repository = SetupRepository(source, categories, store, this)
+        val viewModel = SetupViewModel(repository, savedState, clock)
+        return Setup(viewModel, writing, store)
+    }
+
+    @Test
+    fun decidesOnTheCardShownAndMeasuresTheTime() = withTestDataStore { dataStore ->
+        runTest {
+            var now = 1000L
+            val setup = backgroundScope.setup(dataStore, clock = { now })
+            val viewModel = setup.viewModel
+            viewModel.categories.launchIn(backgroundScope)
+            val card = viewModel.categories.first { it?.card != null }!!.card!!
+            assertEquals("p:1", card.key)
+            viewModel.cardShown(card)
+            now += 5000
+            viewModel.pickCategory(card)
+            viewModel.picked(10)
+            // The next card comes at once, before the ledger knows the category
+            assertEquals("p:2", viewModel.categories.first { it?.card?.key != "p:1" }!!.card!!.key)
+            assertEquals(listOf(listOf(1L) to 10L), setup.writing.set)
+            assertEquals(Pace(1, 5000), setup.store.progress.first { it.pace.decisions == 1 }.pace)
+        }
+    }
+
+    @Test
+    fun putsOffAndMarksPayeesAsUnclear() = withTestDataStore { dataStore ->
+        runTest {
+            val viewModel = backgroundScope.setup(dataStore).viewModel
+            viewModel.categories.launchIn(backgroundScope)
+            val first = viewModel.categories.first { it?.card != null }!!.card!!
+            viewModel.later(first)
+            val second = viewModel.categories.first { it?.card?.key == "p:2" }!!.card!!
+            viewModel.markUnclear(second)
+            // Only the payee put off is left up to the target
+            val step = viewModel.categories.first { it?.card?.key == "p:3" }!!
+            assertEquals(true, step.hasSkipped)
+            viewModel.goOn()
+            assertEquals("p:1", viewModel.categories.first { it?.card?.key == "p:1" }!!.card!!.key)
+        }
+    }
+
+    @Test
+    fun keepsTheVisitWhenTheProcessEnds() = withTestDataStore { dataStore ->
+        runTest {
+            val savedState = SavedStateHandle()
+            val before = backgroundScope.setup(dataStore, savedState).viewModel
+            before.categories.launchIn(backgroundScope)
+            val card = before.categories.first { it?.card != null }!!.card!!
+            before.pickCategory(card)
+            before.setAlways(false)
+            // The picker returns to a new view model
+            val after = backgroundScope.setup(dataStore, savedState)
+            after.viewModel.categories.launchIn(backgroundScope)
+            after.viewModel.categories.first { it != null }
+            after.viewModel.picked(10)
+            assertEquals(listOf(listOf(1L) to 10L), after.writing.set)
+            assertEquals(false, after.viewModel.always.value)
+        }
+    }
+
+    @Test
+    fun remembersSkippedAndFinishedSteps() = withTestDataStore { dataStore ->
+        runTest {
+            val setup = backgroundScope.setup(dataStore)
+            setup.viewModel.endStep(SetupStep.CATEGORIES, skipped = true)
+            setup.viewModel.endStep(SetupStep.CONTRACTS, skipped = false)
+            setup.viewModel.close()
+            val progress = setup.store.progress.first { it.closed }
+            assertEquals(setOf(SetupStep.CATEGORIES), progress.skipped)
+            assertEquals(setOf(SetupStep.CONTRACTS), progress.finished)
+        }
+    }
+}
