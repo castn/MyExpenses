@@ -81,55 +81,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="category_auto_fill"
-        android:title="@string/autofill"
-        my:initialExpandedChildrenCount="1">
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="@string/pref_auto_fill_key"
-            android:summary="@string/pref_auto_fill_summary" />
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:dependency="@string/pref_auto_fill_key"
-            android:key="@string/pref_auto_fill_amount_key"
-            android:title="@string/amount" />
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:dependency="@string/pref_auto_fill_key"
-            android:key="@string/pref_auto_fill_category_key"
-            android:title="@string/category" />
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:dependency="@string/pref_auto_fill_key"
-            android:key="@string/pref_auto_fill_comment_key"
-            android:title="@string/notes" />
-        <ListPreference
-            android:defaultValue="aggregate"
-            android:dependency="@string/pref_auto_fill_key"
-            android:entries="@array/pref_auto_fill_account_entries"
-            android:entryValues="@array/pref_auto_fill_account_values"
-            android:key="@string/pref_auto_fill_account_key"
-            android:title="@string/account"
-            my:useSimpleSummaryProvider="true" />
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:dependency="@string/pref_auto_fill_key"
-            android:key="@string/pref_auto_fill_method_key"
-            android:title="@string/method" />
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:dependency="@string/pref_auto_fill_key"
-            android:key="@string/pref_auto_fill_debt_key"
-            android:title="@string/debt" />
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:dependency="@string/pref_auto_fill_key"
-            android:key="@string/pref_auto_fill_focus_key"
-            android:title="@string/auto_fill_focus"
-            my:singleLineTitle="false" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="category_transaction_list"
         android:title="@string/help_MyExpenses_title"
         my:initialExpandedChildrenCount="3">
@@ -249,13 +200,6 @@
             android:defaultValue="false"
             android:key="@string/pref_value_date_key"
             android:summary="@string/pref_value_date_summary" />
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="@string/pref_clone_with_current_date_key"
-            android:summaryOff="@string/pref_clone_with_current_date_summary_off"
-            android:summaryOn="@string/pref_clone_with_current_date_summary_on"
-            android:title="@string/pref_clone_with_current_date_title" />
 
     </PreferenceCategory>
 

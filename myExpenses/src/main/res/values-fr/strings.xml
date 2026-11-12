@@ -385,7 +385,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">après</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">Échec ou annulation de l\'achat.</string>
-    <string name="hint_auto_fill">Voulez-vous remplir automatiquement les données à partir de la dernière opération de ce tiers ? Vous pouvez toujours modifier cette option dans les paramètres.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%1$d comptes en devise %2$s ont été mis à jour.</string>
     <string name="import_source_file">Fichier</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -516,7 +515,6 @@
     <string name="extend_validity">Prolonger la validité</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Récupération de données depuis un serveur distant. Cela peut prendre un certain temps.</string>
     <string name="donate_button_invoice">Facture</string>
-    <string name="auto_fill_account_from_aggregate_only">Uniquement lorsque démarré à partir du compte agrégé.</string>
     <string name="sync_auth_exception">L\'autorisation a échoué.</string>
     <string name="sync_login_again">Veuillez vous reconnecter.</string>
     <plurals name="delete_success">
@@ -664,9 +662,7 @@
     <!-- The label for the button, where user confirms that he wants to clone the selected transactions and then remap them. -->
     <string name="button_label_clone_and_remap">Cloner et réaffecter</string>
     <!-- The summary of a preference toggle. If switched on cloned transactions have the date set to the current date -->
-    <string name="pref_clone_with_current_date_summary_on">Les opérations clonées ont la date du jour</string>
     <!-- The summary of a preference toggle. If switched off cloned transactions keep the original date -->
-    <string name="pref_clone_with_current_date_summary_off">Les opérations clonées conservent la date d\'origine</string>
     <string name="tags_create_or_select">Créer ou sélectionner des étiquettes</string>
     <string name="pref_manage_tags_summary">Ajouter, modifier, supprimer des étiquettes.</string>
     <string name="dialog_title_warning_delete_tag">Supprimer l\'étiquette ?</string>
@@ -723,7 +719,6 @@
     <string name="warning_balance_account_delete">Si vous continuez, toutes les opérations rapprochées de ce compte seront supprimées de la base de données et vous ne pourrez pas les restaurer.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">Les données existantes seront supprimées du formulaire.</string>
-    <string name="pref_clone_with_current_date_title">Date des transactions clonées</string>
     <string name="template_default_action_without_amount_hint">Le modèle sans montant doit être enregistré avec l\'action par défaut « Modifier »</string>
     <string name="menu_save_and_new_content_description">Sauvegarder les données et garder le formulaire ouvert pour la saisie d\'une nouvelle  opération avec les même données.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
@@ -758,7 +753,6 @@
     <!-- This is used in the title of the email by which user requests an invoice for payment via bank transfer -->
     <string name="request_for_invoice">Demande de facture</string>
     <!-- Enables Focus on the Payee field for Auto fill -->
-    <string name="auto_fill_focus">Mettre le focus sur le tiers</string>
     <!-- This warning is shown when a user calls the Reset or Cancel commands on a scheduled transaction, for a date
      where the transaction has already been created.  -->
     <string name="crash_reports_user_info">{app_name} enverra automatiquement des rapports aux développeurs si l\'application se bloque, ce qui leur permettra de résoudre les problèmes plus rapidement.</string>

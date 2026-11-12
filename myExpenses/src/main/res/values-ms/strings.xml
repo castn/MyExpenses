@@ -365,7 +365,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">selepas</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">Pembelian gagal atau dibatalkan.</string>
-    <string name="hint_auto_fill">Patutkah data diisi secara automatik dari transaksi terakhir untuk penerima/pembayar yang sama? Anda sentiasa boleh menukar tingkah laku ini daripada tetapan.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%1$d akaun dengan matawang %2$s telah dikemaskini.</string>
     <string name="import_source_file">Fail</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -495,7 +494,6 @@
     <string name="extend_validity">Lanjutkan pengesahan</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Mendapatkan data dari bahagian belakang jauh. Ia mengambil sedikit masa.</string>
     <string name="donate_button_invoice">Invois</string>
-    <string name="auto_fill_account_from_aggregate_only">Hanya bermula dari akaun beragregat.</string>
     <string name="sync_auth_exception">Pengesahihan gagal.</string>
     <string name="sync_login_again">Sila daftar masuk sekali lagi.</string>
     <plurals name="delete_success">
@@ -640,7 +638,6 @@
     <string name="no_budgets">Tentukan belanjawan pertama anda dengan mengetik butang +.</string>
     <string name="budget_filter_all_categories">Semua kategori</string>
     <string name="button_scan">Imbas</string>
-    <string name="auto_fill_focus">Tetapkan Fokus pada Penerima</string>
     <string name="template_shortcut">Pintasan templat</string>
     <plurals name="debt_mapped_transactions">
         <item quantity="other">Hutang %1$s mempunyai %2$d transaksi yang dipetakan.</item>
@@ -687,7 +684,6 @@
     <string name="menu_transform_to_transfer">Tukar kepada pemindahan</string>
     <string name="dialog_title_confirm_remap">Tukar pemetaan (%s) ?</string>
     <string name="menu_edit_tag">Edit tag</string>
-    <string name="pref_clone_with_current_date_title">Tarikh transaksi klon</string>
     <string name="download_completed">Muat turun (%s) telah selesai.</string>
     <string name="budget_only_current_period">Tetapkan hanya untuk %s</string>
     <string name="optimize_image_file_size">Optimumkan saiz fail imej</string>
@@ -730,8 +726,6 @@
     <string name="merge_categories_prompt">Pilih kategori yang anda ingin kekalkan</string>
     <string name="select_package">Sila pilih pakej lesen.</string>
     <string name="menu_tag">Tag</string>
-    <string name="pref_clone_with_current_date_summary_on">Transaksi klon mempunyai tarikh semasa</string>
-    <string name="pref_clone_with_current_date_summary_off">Transaksi klon mengekalkan tarikh asal</string>
     <string name="debt_installment_pay">Saya membayar ansuran sebanyak %s.</string>
     <string name="pref_feature_uninstall_title">Minta nyahpasang ciri dan bahasa</string>
     <string name="new_tag_hint">Masukkan tag baharu</string>

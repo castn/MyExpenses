@@ -656,7 +656,6 @@
     <string name="pref_criterion_future_current">Aktualny czas</string>
     <string name="budget_filter_all_tags">Wszystkie tagi</string>
     <string name="remove_from_group">Usuń z grupy</string>
-    <string name="pref_clone_with_current_date_summary_off">Sklonowane transakcje zachowują oryginalną datę</string>
     <string name="pref_exchange_rates_api_key_summary">Zarejestruj bezpłatne konto na %s i podaj swój identyfikator aplikacji</string>
     <string name="confirmation_load_template_discard_data">Istniejące dane formularza zostaną odrzucone.</string>
     <string name="menu_aggregate_neutral_categories">Zagregowane kategorie neutralne</string>
@@ -696,7 +695,6 @@
     <string name="scan_result_no_date">Nie znaleziono daty</string>
     <string name="warning_account_for_transaction_is_closed">Nie można edytować co najmniej jednej z wybranych transakcji:</string>
     <string name="content_description_dates_are_not_linked">Data rezerwacji i data wartości nie są aktualizowane razem</string>
-    <string name="auto_fill_account_from_aggregate_only">Tylko w przypadku uruchomienia z konta zbiorczego.</string>
     <string name="widget_title_budget">Mój budżet</string>
     <string name="split_transaction_not_possible">Tylko transakcje z tym samym kontem, odbiorcą i statusem mogą zostać zgrupowane w jedną podzieloną transakcję.</string>
     <string name="pref_ocr_engine_title">Silnik rozpoznawania tekstu</string>
@@ -707,7 +705,6 @@
     <string name="database_is_encrypted">Baza danych jest szyfrowana.</string>
     <string name="budget_filter_all_parties">Wszystkie strony</string>
     <string name="pref_purge_backup_require_confirmation_summary">Pokaż monit o potwierdzenie przed usunięciem plików</string>
-    <string name="auto_fill_focus">Skoncentruj się na odbiorcy płatności</string>
     <string name="debt">Zadłużenie</string>
     <string name="budget_onetime">Jeden raz</string>
     <string name="attachments">Załączniki</string>
@@ -724,7 +721,6 @@
     <string name="maximum_size">Maksymalna wielkość</string>
     <string name="pref_ocr_total_indicators_summary">Lista ciągów, które identyfikują łączną wartość na paragonie. Umieść każdą wartość w nowym wierszu. Pozostaw puste, aby przywrócić wartość domyślną.</string>
     <string name="menu_reopen">Otwórz ponownie</string>
-    <string name="pref_clone_with_current_date_summary_on">Sklonowane transakcje mają bieżącą datę</string>
     <string name="content_description_closed">Zamknięte</string>
     <string name="tags_create_or_select">Tworzenie lub wybieranie tagów</string>
     <string name="budget_table_header_rollover">Przerzucanie</string>
@@ -744,7 +740,6 @@
     <string name="pref_csv_export_split_date_time_summary">Używanie oddzielnych kolumn dla daty i godziny</string>
     <string name="budget_table_header_overspent">Przekroczenie wydatków</string>
     <string name="remap_method">Wszystkie wybrane transakcje zostaną zmapowane do metody %s.</string>
-    <string name="pref_clone_with_current_date_title">Data sklonowanych transakcji</string>
     <plurals name="warning_delete_tag">
         <item quantity="one">Tag %1$s jest mapowany na %2$d transakcję. Czy należy go usunąć?</item>
         <item quantity="many">Tag %1$s jest mapowany na %2$d transakcje. Czy należy go usunąć?</item>
@@ -834,7 +829,6 @@
         <item quantity="many">%1$d kategorie zostały zaktualizowane o ikony.</item>
         <item quantity="other">%1$d kategorie zostały zaktualizowane o ikony.</item>
     </plurals>
-    <string name="hint_auto_fill">Czy dane powinny być wypełniane automatycznie od ostatniej transakcji dla tego samego odbiorcy/płatnika? Zawsze możesz zmienić to zachowanie w ustawieniach.</string>
     <string name="feature_downloaded">Funkcja %s została zainstalowana.</string>
     <string name="select_all_list_too_large">Polecenie %s jest niedostępne, ponieważ lista jest tylko częściowo załadowana. Użyj funkcji wyszukiwania, aby zmniejszyć rozmiar listy.</string>
     <string name="button_scan">Skanowanie</string>

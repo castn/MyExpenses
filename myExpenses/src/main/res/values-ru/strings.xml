@@ -392,7 +392,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">после</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">Покупка была прервана или отменена.</string>
-    <string name="hint_auto_fill">Автоматически заполнять данные из последней транзакции для того же контрагента? Вы всегда можете изменить этот параметр в настройках.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%1$d счетов с валютой %2$s было обновлено.</string>
     <string name="import_source_file">Файл</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -522,7 +521,6 @@
     <string name="extend_validity">Продлить действительность</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Получение данных с удаленного сервера. Это может занять некоторое время.</string>
     <string name="donate_button_invoice">Счёт-фактура</string>
-    <string name="auto_fill_account_from_aggregate_only">Только при запуске с совокупного счета.</string>
     <string name="sync_auth_exception">Авторизация провалена.</string>
     <string name="sync_login_again">Пожалуйста, представьтесь повторно.</string>
     <plurals name="delete_success">
@@ -670,9 +668,7 @@
     <!-- The label for the button, where user confirms that he wants to clone the selected transactions and then remap them. -->
     <string name="button_label_clone_and_remap">Клонировать и переоформить </string>
     <!-- The summary of a preference toggle. If switched on cloned transactions have the date set to the current date -->
-    <string name="pref_clone_with_current_date_summary_on">Клонированные операции имеют текущую дату</string>
     <!-- The summary of a preference toggle. If switched off cloned transactions keep the original date -->
-    <string name="pref_clone_with_current_date_summary_off">Клонированные операции сохраняют исходную дату</string>
     <string name="tags_create_or_select">Создать или выбрать теги</string>
     <string name="pref_manage_tags_summary">Добавить, отредактировать, удалить теги.</string>
     <string name="dialog_title_warning_delete_tag">Удалить тег?</string>
@@ -715,7 +711,6 @@
     <string name="pref_tesseract_language_title">Язык для Tesseract</string>
     <string name="pref_ocr_engine_title">Движок распознавания текста</string>
     <string name="template_default_action_without_amount_hint">Шаблон без суммы должен быть сохранен с действием по умолчанию \'Редактировать\'</string>
-    <string name="pref_clone_with_current_date_title">Дата клонированных транзакций</string>
     <string name="confirmation_load_template_discard_data">Существующие данные формы будут удалены.</string>
     <string name="warning_balance_account_delete">Если вы продолжите, все согласованные операции этого счета будут удалены из базы данных, и вы не сможете их восстановить.</string>
     <string name="select_package">Пожалуйста, выберите пакет лицензий.</string>
@@ -760,7 +755,6 @@
     <string name="menu_new_debt">Новый долг</string>
     <string name="ui_refinement">Усовершенствование пользовательского интерфейса</string>
     <string name="backup_save_to_sync_backend">Сохранить в %s</string>
-    <string name="auto_fill_focus">Установить фокус на получателе платежа</string>
     <string name="request_for_invoice">Запрос счета-фактуры</string>
     <string name="active_tags">Активные теги</string>
     <string name="account_widget_configuration_sum">Тип отображаемой суммы</string>

@@ -377,7 +377,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">sonra</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">Satın alma başarısız oldu veya iptal edildi.</string>
-    <string name="hint_auto_fill">Aynı karşı taraf için veriler son muameleden doldurulsun mu? Bu davranışı ayarlardan değiştirmeniz mümkündür.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%2$s para birimini kullanan %1$d hesap güncellendi.</string>
     <string name="import_source_file">Dosya</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -508,7 +507,6 @@
     <string name="extend_validity">Geçerliliği uzat</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Uzak arka uçtan veri alınıyor. Bu biraz zaman alabilir.</string>
     <string name="donate_button_invoice">Fatura</string>
-    <string name="auto_fill_account_from_aggregate_only">Sadece toplam (agrega) hesaptan başlatıldığında.</string>
     <string name="sync_auth_exception">İzin verme başarısız oldu.</string>
     <string name="sync_login_again">Lütfen tekrar giriş yapın.</string>
     <plurals name="delete_success">
@@ -655,9 +653,7 @@
     <!-- The label for the button, where user confirms that he wants to clone the selected transactions and then remap them. -->
     <string name="button_label_clone_and_remap">Klonla ve yeniden eşleştir</string>
     <!-- The summary of a preference toggle. If switched on cloned transactions have the date set to the current date -->
-    <string name="pref_clone_with_current_date_summary_on">Klonlanmış muamelelerin tarihi güncel tarihtir</string>
     <!-- The summary of a preference toggle. If switched off cloned transactions keep the original date -->
-    <string name="pref_clone_with_current_date_summary_off">Klonlanmış muameleler orijinal tarihi korur</string>
     <string name="tags_create_or_select">Etiket oluştur veya seç</string>
     <string name="pref_manage_tags_summary">Etiket ilave et, düzenle veya sil.</string>
     <string name="dialog_title_warning_delete_tag">Etiket silinsin mi?</string>
@@ -713,7 +709,6 @@
     <string name="warning_balance_account_delete">Devam ederseniz, bu hesabın tüm uzlaşmış işlemleri veri tabanından silinecek ve bunları geri yükleyemeyeceksiniz.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">Mevcut form verileri silinecektir.</string>
-    <string name="pref_clone_with_current_date_title">Klonlanmış muamelelerin tarihi</string>
     <string name="template_default_action_without_amount_hint">Meblağı olmayan şablon öntanımlı \'Düzenle\' eylemi ile kaydedilmelidir</string>
     <string name="menu_save_and_new_content_description">Verileri kaydet ve aynı verilerle yeni bir muamele oluşturmak için formu açık bırak.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
@@ -748,7 +743,6 @@
     <!-- This is used in the title of the email by which user requests an invoice for payment via bank transfer -->
     <string name="request_for_invoice">Fatura Talebi</string>
     <!-- Enables Focus on the Payee field for Auto fill -->
-    <string name="auto_fill_focus">Odağı Alacaklı alanına taşı</string>
     <!-- This warning is shown when a user calls the Reset or Cancel commands on a scheduled transaction, for a date
      where the transaction has already been created.  -->
     <string name="crash_reports_user_info">{app_name}, geliştiricilerine problemleri daha çabuk gidermelerine yardımcı olacak uygulama çökmeleri hakkında rapor gönderecektir.</string>

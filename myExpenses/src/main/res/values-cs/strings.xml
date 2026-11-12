@@ -393,7 +393,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">po</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">Nákup se nezdařil nebo byl zrušen.</string>
-    <string name="hint_auto_fill">Měla by být data vyplněna automaticky podle poslední transakce pro stejného příjemce/odesílate platby? Toto chování můžete v kdykoliv změnit v nastavení.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">Bylo aktualizováno %1$d účtů s měnou %2$s.</string>
     <string name="import_source_file">Soubor</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -524,7 +523,6 @@
     <string name="extend_validity">Prodloužit platnost</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Probíhá načítání dat ze vzdáleného rozhraní backend. Může to nějakou dobu trvat.</string>
     <string name="donate_button_invoice">Faktura</string>
-    <string name="auto_fill_account_from_aggregate_only">Pouze při začínání ze souhrnného účtu.</string>
     <string name="sync_auth_exception">Autorizace se nezdařila.</string>
     <string name="sync_login_again">Přihlaste se prosím znovu.</string>
     <plurals name="delete_success">
@@ -673,9 +671,7 @@
     <!-- The label for the button, where user confirms that he wants to clone the selected transactions and then remap them. -->
     <string name="button_label_clone_and_remap">Klonovat a přemapovat</string>
     <!-- The summary of a preference toggle. If switched on cloned transactions have the date set to the current date -->
-    <string name="pref_clone_with_current_date_summary_on">Klonované transakce mají aktuální datum</string>
     <!-- The summary of a preference toggle. If switched off cloned transactions keep the original date -->
-    <string name="pref_clone_with_current_date_summary_off">Klonované transakce si zachovávají původní datum</string>
     <string name="tags_create_or_select">Vytvořte nebo vyberte štítky</string>
     <string name="pref_manage_tags_summary">Přidávejte, upravujte a odstraňujte štítky.</string>
     <string name="dialog_title_warning_delete_tag">Chcete štítek odstranit?</string>
@@ -733,7 +729,6 @@
     <string name="warning_balance_account_delete">Pokud budete pokračovat, všechny vyrovnané transakce tohoto účtu budou odstraněny z databáze a nebudete je moci obnovit.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">Data existujícího formuláře budou zahozena.</string>
-    <string name="pref_clone_with_current_date_title">Datum klonovaných transakcí</string>
     <string name="template_default_action_without_amount_hint">Šablona bez částky by měla být uložena s výchozí akcí „Upravit“</string>
     <string name="menu_save_and_new_content_description">Uložte data,  formulář ponechte otevřený pro vytvoření nové transakce se stejnými daty.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
@@ -870,7 +865,6 @@
     <string name="subcategories_merged_recursively">Pokud má některá ze sloučených kategorií podkategorie se stejným štítkem, budou tyto sloučeny jako první, rekurzivně.</string>
     <string name="pref_csv_export_category_separator_summary">Oddělovač mezi úrovněmi hierarchie kategorií</string>
     <string name="content_description_remove_icon">Odebrat ikonu</string>
-    <string name="auto_fill_focus">Nastavte zaměření na příjemce platby</string>
     <string name="debt">Dluh</string>
     <plurals name="import_categories_icons_updated">
         <item quantity="one">%1$d kategorie byla aktualizována ikonou.</item>

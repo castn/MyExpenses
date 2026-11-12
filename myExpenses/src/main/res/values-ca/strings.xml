@@ -416,7 +416,6 @@
     <string name="extend_until">Prolongui fins a %1$s per %2$s</string>
     <string name="licence_key">Clau de llicència</string>
     <string name="valid_until">Fins a %s</string>
-    <string name="auto_fill_account_from_aggregate_only">Només quan es comenci amb un compte agregat.</string>
     <string name="feature_deprecated">Descartat</string>
     <string name="menu_original_amount">Quantitat original</string>
     <string name="menu_equivalent_amount">Quantitat equivalent</string>
@@ -490,7 +489,6 @@
     </plurals>
     <string name="warning_instantiate_template_from_widget_password_protected">Crear ràpidament plantilles a partir del widget requereix que autoritzeu l\'entrada de dades des de widgets sense contrasenya des de la configuració de l\'aplicació.</string>
     <string name="search_payee">Cerca pagador/beneficiari</string>
-    <string name="hint_auto_fill">Voleu omplir automàticament les dades amb l\'última transacció del mateix beneficiari/pagador? Sempre podeu modificar aquesta opció a la configuració.</string>
     <string name="transaction_deleted">Transacció eliminada</string>
     <string name="comparison_operator_lesser_than">menor que</string>
     <string name="comparison_operator_date_before">abans</string>
@@ -694,8 +692,6 @@
     <string name="tags_create_or_select">Crea o selecciona etiquetes</string>
     <string name="menu_tag">Etiquetar</string>
     <string name="dialog_multi_tag">Totes les operacions seleccionades s\'etiquetaran amb %s.</string>
-    <string name="pref_clone_with_current_date_title">Data de les transaccions clonades</string>
-    <string name="auto_fill_focus">Estableix el focus al beneficiari</string>
     <string name="default_transfer_category">Categoria de transferència per defecte</string>
     <string name="new_tag_hint">Introdueix una etiqueta nova</string>
     <string name="feature_downloaded">S\'ha instal·lat la característica %s.</string>
@@ -791,8 +787,6 @@
     <string name="roadmap_intro">El vot sobre el full de ruta %d ja està obert! Vota les característiques i millores que més t\'estimes.</string>
     <string name="subcategories_merged_recursively">Si alguna de les categories fusionades té subcategories amb la mateixa etiqueta, aquestes es fusionaran primer, recursivament.</string>
     <string name="pref_csv_export_category_separator_summary">Separador entre nivells de jerarquia de categories</string>
-    <string name="pref_clone_with_current_date_summary_on">Les operacions clonades tindran la data actual</string>
-    <string name="pref_clone_with_current_date_summary_off">Les operacions clonades mantindran la data original</string>
     <string name="pref_manage_tags_summary">Afegiu, editeu o elimineu etiquetes.</string>
     <string name="dialog_multi_tag_clear">S\'eliminaran totes les etiquetes de les operacions seleccionades.</string>
     <string name="dialog_multi_tag_append">Afegeix etiquetes noves a les etiquetes existents</string>

@@ -12,14 +12,6 @@ import org.totschnig.myexpenses.preference.PrefKey.AUTO_BACKUP_CLOUD
 import org.totschnig.myexpenses.preference.PrefKey.AUTO_BACKUP_CLOUD_SETUP
 import org.totschnig.myexpenses.preference.PrefKey.AUTO_BACKUP_TIME
 import org.totschnig.myexpenses.preference.PrefKey.AUTO_BACKUP_UNENCRYPTED_INFO
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_ACCOUNT
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_AMOUNT
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_CATEGORY
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_COMMENT
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_DEBT
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_FOCUS
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_METHOD
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_SWITCH
 import org.totschnig.myexpenses.preference.PrefKey.AUTOMATIC_EXCHANGE_RATE_DOWNLOAD
 import org.totschnig.myexpenses.preference.PrefKey.BACKUP
 import org.totschnig.myexpenses.preference.PrefKey.BACKUP_FILE_PREFIX
@@ -29,7 +21,6 @@ import org.totschnig.myexpenses.preference.PrefKey.CAMERA_CHOOSER
 import org.totschnig.myexpenses.preference.PrefKey.CATEGORY_BACKUP_RESTORE
 import org.totschnig.myexpenses.preference.PrefKey.CATEGORY_IO
 import org.totschnig.myexpenses.preference.PrefKey.CATEGORY_SECURITY
-import org.totschnig.myexpenses.preference.PrefKey.CLONE_WITH_CURRENT_DATE
 import org.totschnig.myexpenses.preference.PrefKey.COIN_API_API_KEY
 import org.totschnig.myexpenses.preference.PrefKey.CONTENT_BASED_COLORS
 import org.totschnig.myexpenses.preference.PrefKey.CONTRIB_PURCHASE
@@ -170,7 +161,7 @@ enum class SettingsGroup(val section: Section) {
 /** Parts of a long group, each shown under its title on the page of the group */
 enum class SettingsSection(val group: SettingsGroup) {
     ENTRY_QUICK(SettingsGroup.ENTRY),
-    ENTRY_AUTO_FILL(SettingsGroup.ENTRY),
+    ENTRY_TRANSFERS(SettingsGroup.ENTRY),
     ENTRY_DATE(SettingsGroup.ENTRY),
     ENTRY_ATTACHMENTS(SettingsGroup.ENTRY),
     ENTRY_RECEIPTS(SettingsGroup.ENTRY),
@@ -306,17 +297,8 @@ object SettingsCatalog {
                     action(SHORTCUT_CREATE_TRANSACTION)
                 }
             }
-            section(SettingsSection.ENTRY_AUTO_FILL) {
-                on(LegacyScreen.UI) {
-                    switch(AUTO_FILL_SWITCH)
-                    switch(AUTO_FILL_AMOUNT)
-                    switch(AUTO_FILL_CATEGORY)
-                    switch(AUTO_FILL_COMMENT)
-                    choice(AUTO_FILL_ACCOUNT)
-                    switch(AUTO_FILL_METHOD)
-                    switch(AUTO_FILL_DEBT)
-                    switch(AUTO_FILL_FOCUS)
-                }
+            // Transfers between own accounts come from the import, this is the category they get
+            section(SettingsSection.ENTRY_TRANSFERS) {
                 on(LegacyScreen.ADVANCED) {
                     action(DEFAULT_TRANSFER_CATEGORY)
                 }
@@ -325,7 +307,6 @@ object SettingsCatalog {
                 on(LegacyScreen.UI) {
                     switch(TRANSACTION_WITH_TIME)
                     switch(TRANSACTION_WITH_VALUE_DATE)
-                    switch(CLONE_WITH_CURRENT_DATE)
                 }
             }
             section(SettingsSection.ENTRY_ATTACHMENTS) {

@@ -62,17 +62,6 @@
     <string name="menu_ManageCategories_search_help_text">Hanya kategori utama dan subkategori yang sesuai dengan kueri Anda yang akan ditampilkan.</string>
     <string name="menu_ManageCategories_sort_help_text">Daftar kategori dapat diurutkan berdasarkan judul (secara alfabetis), berdasarkan frekuensi penggunaan, atau berdasarkan waktu terakhir sebuah transaksi dipetakan ke kategori tersebut.</string>
     <string name="cab_ManageCategories_color_help_text">Anda dapat menetapkan warna untuk kategori utama. Warna ini akan digunakan untuk mewakili kategori dalam diagram. Subkategori akan menggunakan nuansa warna dari kategori utamanya.</string>
-    <string name="help_ExpenseEdit_transaction_title">Formulir untuk transaksi</string>
-    <string name="help_ExpenseEdit_transfer_title">Formulir untuk transfer</string>
-    <string name="help_ExpenseEdit_split_title">Formulir untuk transaksi terbagi</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Formulir untuk bagian transaksi terbagi per kategori</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Formulir untuk bagian transaksi terbagi per transfer</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Formulir untuk templat transaksi</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Formulir untuk templat transfer</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Formulir untuk templat transaksi terbagi</string>
-    <string name="help_ExpenseEdit_transaction_info">Gunakan formulir ini untuk memasukkan transaksi baru atau mengedit transaksi yang sudah ada. Gunakan menu tarik-turun di bilah aksi untuk beralih ke formulir penambahan transfer baru atau transaksi terbagi.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Gunakan formulir ini untuk memasukkan templat baru atau mengedit templat yang sudah ada. Gunakan menu tarik-turun di bilah aksi untuk beralih antara templat untuk transaksi, transfer, dan transaksi terbagi.</string>
-    <string name="help_ExpenseEdit_split_info">Transaksi terbagi adalah satu transaksi yang dibagi menjadi beberapa bagian, di mana setiap bagian dapat ditetapkan ke kategori yang berbeda, atau ditransfer ke akun yang berbeda.</string>
     <string name="form_account_help_text">Pilih akun tempat transaksi ini berasal.</string>
     <string name="form_date_time_help_text">Masukkan tanggal dan waktu saat transaksi terjadi.</string>
     <string name="form_date_time_help_text_configuration">Di pengaturan, Anda dapat menonaktifkan input waktu dan mengaktifkan pembedaan antara tanggal pembukuan dan tanggal valuta.</string>
@@ -88,7 +77,6 @@
     <string name="form_split_parts_heading_help_text_1">Gunakan ikon + untuk memasukkan bagian-bagian transaksi terbagi sebanyak yang diperlukan.</string>
     <string name="form_split_parts_heading_help_text_2">Kolom jumlah akan diperbarui secara otomatis dengan jumlah total bagian-bagian tersebut, kecuali jika Anda memasukkan jumlah secara manual; dalam hal itu, selisih antara jumlah total bagian dan jumlah tersebut (jumlah yang belum dibagi) akan ditampilkan.</string>
     <string name="form_split_parts_heading_help_text_3">Anda hanya dapat menyimpan transaksi terbagi jika jumlah transaksi telah ditetapkan secara tepat.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Pilih kategori untuk bagian transaksi terbagi ini.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Tetapkan akun asal dan tujuan transfer objek ini.</string>
     <string name="form_exchange_rate_help_text">Anda dapat menentukan nilai tukar dalam salah satu arah transfer. Nilai tukar kebalikannya dan jumlah yang sesuai dengan bagian dependen dari nilai tukar dihitung secara otomatis.</string>
     <string name="form_title_help_text">Masukkan judul yang secara unik mengidentifikasi templat ini.</string>
@@ -100,7 +88,6 @@
     <string name="menu_original_amount_help_text">Tampilkan kolom yang memungkinkan untuk menentukan jumlah tambahan. Misalnya, jika Anda membayar dengan kartu kredit dalam mata uang asing, Anda dapat mencatat harga aslinya selain jumlah yang didebit dari kartu Anda. Jumlah asli diabaikan dalam penghitungan total.</string>
     <string name="menu_equivalent_amount_help_text">Untuk menghitung total keseluruhan di semua akun, transaksi dari akun mata uang asing dikalikan dengan nilai tukar yang Anda tetapkan untuk akun tersebut.</string>
     <string name="menu_invert_transfer_help_text">Balikkan arah transfer dengan menukar akun \'Dari\' dan \'Ke\'.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Jika mata uang akun \'Dari\' dan \'Ke\' berbeda, Anda hanya menentukan jumlah untuk salah satunya. Jumlah yang lainnya akan dihitung saat Anda membuat instansi dari templat.</string>
     <string name="form_goal_or_limit_help_text">Kolom ini memungkinkan untuk menentukan target tabungan positif atau batas kredit negatif. Dalam kedua kasus, pada daftar akun, indikator progres memvisualisasikan jarak antara saldo saat ini dengan target atau batas tersebut.</string>
     <string name="menu_templates_help_text">Buka menu yang menampilkan semua templat sehingga Anda dapat memuat templat ke dalam formulir dengan cepat.</string>
     <string name="menu_create_template_from_transaction_help_text">Jika ini dicentang, transaksi juga akan disimpan sebagai templat. Anda dapat menentukan judulnya dan secara opsional mengatur rencana untuk pengulangan otomatis.</string>

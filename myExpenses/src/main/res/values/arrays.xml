@@ -190,17 +190,7 @@
         <item>@string/date_format_a</item>
     </string-array>
 
-    <string-array name="pref_auto_fill_account_entries">
-        <item>@string/never</item>
-        <item>@string/auto_fill_account_from_aggregate_only</item>
-        <item>@string/always</item>
-    </string-array>
 
-    <string-array name="pref_auto_fill_account_values">
-        <item>never</item>
-        <item>aggregate</item>
-        <item>always</item>
-    </string-array>
 
     <string-array name="multi_tag_options">
         <item>@string/dialog_multi_tag_append</item>

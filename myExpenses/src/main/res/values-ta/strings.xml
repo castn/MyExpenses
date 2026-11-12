@@ -377,7 +377,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">பின்</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">வாங்குதல் தோல்வியுற்றது அல்லது ரத்துசெய்யப்பட்டது.</string>
-    <string name="hint_auto_fill">அதே பணம் பெறுபவர்/செலுத்துபவர் கொண்ட முந்தய பரிவர்த்தனையிலிருந்து தரவு தானாகவே நிரப்பப்பட வேண்டுமா? இதை அமைப்புகளிலிருந்து எப்போதும் மாற்றிக்கொள்ளலாம்.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%2$s-ஐ நாணயமாக கொண்ட %1$d கணக்குகள் புதுப்பிக்கப்பட்டன.</string>
     <string name="import_source_file">கோப்பு</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -508,7 +507,6 @@
     <string name="extend_validity">செல்லுபடியாகும் காலத்தை நீட்டு</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">தொலை பின்தளத்தில் இருந்து தரவைப் பெறுகிறது. இதற்கு சிறிது நேரம் ஆகலாம்.</string>
     <string name="donate_button_invoice">விலைப்பட்டியல்</string>
-    <string name="auto_fill_account_from_aggregate_only">மொத்த கணக்கிலிருந்து தொடங்கும்போது மட்டுமே.</string>
     <string name="sync_auth_exception">அதிகாரமளிப்பு தோல்வியடைந்தது.</string>
     <string name="sync_login_again">தயவு செய்து மீண்டும் புகுபதிகை செய்க.</string>
     <plurals name="delete_success">
@@ -655,9 +653,7 @@
     <!-- The label for the button, where user confirms that he wants to clone the selected transactions and then remap them. -->
     <string name="button_label_clone_and_remap">நகல் எடுத்து மறு தொடற்புப்படுத்து</string>
     <!-- The summary of a preference toggle. If switched on cloned transactions have the date set to the current date -->
-    <string name="pref_clone_with_current_date_summary_on">நகல் எடுக்கப்படும் பரிவர்த்தனைகள் தற்போதைய தேதியை பெற்றிருக்கும்</string>
     <!-- The summary of a preference toggle. If switched off cloned transactions keep the original date -->
-    <string name="pref_clone_with_current_date_summary_off">நகல் எடுக்கப்படும் பரிவர்த்தனைகள் அசல் தேதியை தக்கவைத்துக் கொள்ளும்</string>
     <string name="tags_create_or_select">குறிச்சொற்களை உருவாக்கவும் அல்லது தேர்ந்தெடுக்கவும்</string>
     <string name="pref_manage_tags_summary">குறிச்சொற்களைச் சேர்க்கவும், திருத்தவும், நீக்கவும்.</string>
     <string name="dialog_title_warning_delete_tag">குறிச்சொல்லை நீக்கவா?</string>
@@ -713,7 +709,6 @@
     <string name="warning_balance_account_delete">நீங்கள் தொடர்ந்தால், இந்த கணக்கின் அனைத்து நல்லிணக்கம் செய்யப்பட்ட பரிவர்த்தனைகளும் தரவுத்தளத்திலிருந்து நீக்கப்படும், மேலும் அவற்றை நீங்கள் மீட்டெடுக்க முடியாது.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">இருக்கும் படிவத் தரவு நிராகரிக்கப்படும்.</string>
-    <string name="pref_clone_with_current_date_title">நகல் எடுக்கப்பட்ட பரிவர்த்தனைகளின் தேதி</string>
     <string name="template_default_action_without_amount_hint">தொகை இல்லாத வார்ப்புருக்கள் இயல்புநிலை நடவடிக்கை \'திருத்து\' உடன் சேமிக்கப்பட வேண்டும்</string>
     <string name="menu_save_and_new_content_description">தரவைச் சேமிக்கவும், அதே தரவுடன் புதிய பரிவர்த்தனையை உருவாக்க படிவத்தைத் திறந்து விடவும்.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
@@ -748,7 +743,6 @@
     <!-- This is used in the title of the email by which user requests an invoice for payment via bank transfer -->
     <string name="request_for_invoice">விலைப்பட்டியலை கோரு</string>
     <!-- Enables Focus on the Payee field for Auto fill -->
-    <string name="auto_fill_focus">பணம் பெறுபவர் உள்ளீட்டில் கவனம் செலுத்து</string>
     <!-- This warning is shown when a user calls the Reset or Cancel commands on a scheduled transaction, for a date
      where the transaction has already been created.  -->
     <string name="crash_reports_user_info">\"{app_name}\" செயலியின் செயலிழப்புகளைப் பற்றிய அறிக்கையை தானாகவே உருவாக்குனருக்கு அனுப்புகிறது. இது சிக்கல்களை விரைவாக சரிசெய்ய அனுமதிக்கிறது.</string>

@@ -17,15 +17,6 @@ import org.totschnig.myexpenses.ui.DisplayParty
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-/**
- * Saving a new transaction can also save it as a template, with this title and uuid.
- */
-@Parcelize
-data class InitialTemplateData(
-    val title: String?,
-    val uuid: String,
-) : Parcelable
-
 @Parcelize
 data class TemplateEditData(
     val templateId: Long = 0,
@@ -64,7 +55,6 @@ data class TransactionEditData(
     val templateEditData: TemplateEditData? = null,
     val comment: String? = null,
     val referenceNumber: String? = null,
-    val initialTemplate: InitialTemplateData? = null,
     val transferEditData: TransferEditData? = null,
     val isSealed: Boolean = false,
     val isSplitPart: Boolean = false,
@@ -96,10 +86,3 @@ data class TransactionEditData(
             splitParts = splitParts?.map { it.createNew }
         )
 }
-
-data class TransactionEditResult(
-    val id: Long,
-    val amount: Long,
-    val transferPeer: Long? = null,
-    val transferAmount: Long? = null,
-)

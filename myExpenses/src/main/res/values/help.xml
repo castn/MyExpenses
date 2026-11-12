@@ -81,17 +81,6 @@
     <string name="menu_ManageCategories_search_help_text">Only main and sub categories which match your query will be displayed.</string>
     <string name="menu_ManageCategories_sort_help_text">The category list can be sorted by title (alphabetically), by frequency of usages, or by the last time a transaction was mapped to it.</string>
     <string name="cab_ManageCategories_color_help_text">You can assign a color to main categories. This color will be used to represent the category in charts. Subcategories will use shades of their main category\'s color. </string>
-    <string name="help_ExpenseEdit_transaction_title">Form for transactions</string>
-    <string name="help_ExpenseEdit_transfer_title">Form for transfers</string>
-    <string name="help_ExpenseEdit_split_title">Form for splits</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Form for category split parts</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Form for transfer split parts</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Form for transaction templates</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Form for transfer templates</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Form for split templates</string>
-    <string name="help_ExpenseEdit_transaction_info">Use this form to enter a new transaction or to edit an existing one. Use the dropdown menu in the actionbar to switch to the form for adding a new transfer or split transaction.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Use this form to enter a new template or to edit an existing one. Use the dropdown menu in the actionbar to switch between templates for transactions, transfers and splits.</string>
-    <string name="help_ExpenseEdit_split_info">A split transaction is a single transaction split up in parts, where each part can be assigned to a different category, or transferred to a different account.</string>
     <string name="form_account_help_text">Select the account to which the transaction belongs.</string>
     <string name="form_date_time_help_text">Enter the date and time when the transaction took place.</string>
     <string name="form_date_time_help_text_configuration">In the settings you can disable time input and enable differentiation between booking date and value date.</string>
@@ -107,7 +96,6 @@
     <string name="form_split_parts_heading_help_text_1">Use the + icon for entering as many split parts as needed.</string>
     <string name="form_split_parts_heading_help_text_2">The amount field will be automatically updated with the sum of the parts, unless you manually enter an amount, in which case the difference between the sum of the parts and the amount (unsplit amount) will be shown.</string>
     <string name="form_split_parts_heading_help_text_3">You can only save the split transaction, if the transaction amount has been exactly assigned.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Select a category for this split part.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Assign the accounts where this object is transferred from or to.</string>
     <string name="form_exchange_rate_help_text">You can specify the rate in either of the both directions of the transfer. The inverse rate and the amount corresponding to the dependent part of the exchange rate are calculated automatically.</string>
     <string name="form_title_help_text">Enter a title that uniquely identifies the template.</string>
@@ -119,7 +107,6 @@
     <string name="menu_original_amount_help_text">Show a field that allows to define an additional amount. For example if you pay with your credit card in a foreign currency, you can remember the original price in addition to the amount debited from your card. The original amount is ignored for calculating sums.</string>
     <string name="menu_equivalent_amount_help_text">For calculating a grand total across all accounts, transactions of foreign currency accounts, are multiplied by an exchange rate that you set for the account.</string>
     <string name="menu_invert_transfer_help_text">Invert the direction of the transfer by swapping \'From\' and \'To\' account.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">If the currencies of \'From\' and \'To\' account are different, you specify the amount for only one of them. The other one will be calculated when you create instances from the template.</string>
     <string name="form_goal_or_limit_help_text">This field allows to specify either a positive saving goal or a negative credit limit. In either case, on the account list, a progress indicator visualizes the distance between the current balance and the goal or the limit.</string>
     <string name="menu_templates_help_text">Open a menu that lists all templates allowing to quickly load them into the form.</string>
     <string name="menu_create_template_from_transaction_help_text">If this is checked, the transaction will also be saved as template. You can define its title and optionally set a plan for automatic recurrence.</string>

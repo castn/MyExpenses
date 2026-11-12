@@ -409,7 +409,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">بعد</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">عملية الشراء فشلت أو ألغيت.</string>
-    <string name="hint_auto_fill">هل يجب ملء البيانات تلقائياً من آخر معاملة لنفس المستفيد / الدافع؟ يمكنك دائماً تغيير هذا السلوك من الإعدادات.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">تم تحديث %1$d حسابات بعملة %2$s.</string>
     <string name="import_source_file">ملف</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -539,7 +538,6 @@
     <string name="extend_validity">مدد الصلاحية</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">جارِ إحضار البيانات من الخلفية البعيدة. هذا قد يستغرق بعض الوقت.</string>
     <string name="donate_button_invoice">فاتورة</string>
-    <string name="auto_fill_account_from_aggregate_only">فقط عندما تبدأ من الحساب الكلي.</string>
     <string name="sync_auth_exception">تعذَّر التخويل.</string>
     <string name="sync_login_again">الرجاء تسجيل الدخول مرةً أخرى.</string>
     <plurals name="delete_success">
@@ -690,9 +688,7 @@
     <!-- The label for the button, where user confirms that he wants to clone the selected transactions and then remap them. -->
     <string name="button_label_clone_and_remap">استنساخ وإعادة تعيين</string>
     <!-- The summary of a preference toggle. If switched on cloned transactions have the date set to the current date -->
-    <string name="pref_clone_with_current_date_summary_on">المعاملات المستنسخة لها التاريخ الحالي</string>
     <!-- The summary of a preference toggle. If switched off cloned transactions keep the original date -->
-    <string name="pref_clone_with_current_date_summary_off">تحافظ المعاملات المستنسخة على التاريخ الأصلي</string>
     <string name="tags_create_or_select">إنشاء أو تحديد العلامات</string>
     <string name="pref_manage_tags_summary">إضافة وتحرير وحذف العلامات.</string>
     <string name="dialog_title_warning_delete_tag">هل تودّ حذف العلامة؟</string>
@@ -752,7 +748,6 @@
     <string name="warning_balance_account_delete">إذا قمت بالمتابعة ، فسيتم حذف جميع المعاملات التي تمت تسويتها لهذا الحساب من قاعدة البيانات ولن تتمكن من استعادتها.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">سيتم تجاهل بيانات النموذج الموجودة.</string>
-    <string name="pref_clone_with_current_date_title">تاريخ المعاملات المستنسخة</string>
     <string name="template_default_action_without_amount_hint">يجب حفظ النموذج الذي لا يحتوى على مبلغ بالإجراء الافتراضي \"تحرير\"</string>
     <string name="menu_save_and_new_content_description">حفظ البيانات، مع ترك النموذج مفتوح لإنشاء عملية جديدة بنفس البيانات.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
@@ -784,7 +779,6 @@
     <string name="pref_news_title">الأخبار</string>
     <string name="account_widget_configuration">إعدادات أداة ويدجيت الحساب</string>
     <string name="backup_save_to_sync_backend">حفظ إلى %s</string>
-    <string name="auto_fill_focus">تعيين التركيز على المستفيد</string>
     <string name="request_for_invoice">طلب فاتورة</string>
     <string name="active_tags">علامات نشطة</string>
     <string name="merge_parties_select">حدد اسم الطرف المدمج</string>

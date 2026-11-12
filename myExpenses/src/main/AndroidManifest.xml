@@ -142,26 +142,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.ExpenseEdit"
-            android:exported="true"
-            android:theme="@style/EditDialog">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.INSERT" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="${appId}"
-                    android:path="/transactions"
-                    android:scheme="content" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".activity.AccountEdit"
             android:theme="@style/EditDialog" />
         <activity

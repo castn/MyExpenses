@@ -377,7 +377,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">след</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">Закупуването е неуспешно или отменено.</string>
-    <string name="hint_auto_fill">Да се попълват ли автоматично данните от последната транзакция за същия контрагент? Винаги можете да промените това поведение от настройките.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">Актуализирани са %1$d сметки с валута %2$s .</string>
     <string name="import_source_file">Файл</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -508,7 +507,6 @@
     <string name="extend_validity">Удължаване на валидността</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Извличане на данни от отдалечното хранилище. Това може да отнеме известно време.</string>
     <string name="donate_button_invoice">Фактура</string>
-    <string name="auto_fill_account_from_aggregate_only">Само при започване от общата сметка.</string>
     <string name="sync_auth_exception">остъпът е отказан.</string>
     <string name="sync_login_again">Моля, влезте отново.</string>
     <plurals name="delete_success">
@@ -655,9 +653,7 @@
     <!-- The label for the button, where user confirms that he wants to clone the selected transactions and then remap them. -->
     <string name="button_label_clone_and_remap">Клонирай и промени</string>
     <!-- The summary of a preference toggle. If switched on cloned transactions have the date set to the current date -->
-    <string name="pref_clone_with_current_date_summary_on">Клонирай транзакциите с текуща дата</string>
     <!-- The summary of a preference toggle. If switched off cloned transactions keep the original date -->
-    <string name="pref_clone_with_current_date_summary_off">Клонирай транзакциите с първоначалната им дата</string>
     <string name="tags_create_or_select">Създаване или избор на маркери</string>
     <string name="pref_manage_tags_summary">Добавяне, редактиране, изтриване на маркери.</string>
     <string name="dialog_title_warning_delete_tag">Да се изтрие ли маркерът?</string>
@@ -713,7 +709,6 @@
     <string name="warning_balance_account_delete">Ако продължите, всички съгласувани транзакции от тази сметка ще бъдат изтрити от базата данни и няма да можете да ги възстановите.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">Сегашните данни на страницата ще бъдат премахнати.</string>
-    <string name="pref_clone_with_current_date_title">Дата на клонирани транзакции</string>
     <string name="template_default_action_without_amount_hint">Шаблон без сума трябва да бъде запазен с действие по подразбиране „Редактиране“</string>
     <string name="menu_save_and_new_content_description">Запазва данните, но оставя отворена бланката - за създаване на нова транзакция със същите данни.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
@@ -748,7 +743,6 @@
     <!-- This is used in the title of the email by which user requests an invoice for payment via bank transfer -->
     <string name="request_for_invoice">Искане за фактура</string>
     <!-- Enables Focus on the Payee field for Auto fill -->
-    <string name="auto_fill_focus">Задайте фокуса да бъде върху полето за получател</string>
     <!-- This warning is shown when a user calls the Reset or Cancel commands on a scheduled transaction, for a date
      where the transaction has already been created.  -->
     <string name="crash_reports_user_info">{app_name} ще изпраща доклад за срив на приложението до програмистите, което позволява по-бързо отстраняване на проблемите.</string>

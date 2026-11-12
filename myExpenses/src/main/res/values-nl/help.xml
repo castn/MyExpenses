@@ -52,13 +52,6 @@
     <string name="cab_ManageCategories_select_filter_select_help_text">De geselecteerde categorieën worden gebruikt voor het filteren van de transactielijst.</string>
     <string name="menu_ManageCategories_search_help_text">Alleen hoofd- en subcategorieën die overeenkomen met je zoekopdracht worden weergegeven.</string>
     <string name="menu_ManageCategories_sort_help_text">De categorielijst kan worden gesorteerd op titel (alfabetisch), op gebruiksfrequentie of op de laatste keer dat een transactie eraan is toegewezen.</string>
-    <string name="help_ExpenseEdit_transaction_title">Formulier voor transacties</string>
-    <string name="help_ExpenseEdit_transfer_title">Formulier voor overboekingen</string>
-    <string name="help_ExpenseEdit_split_title">Formulier voor splitsingen</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Formulier voor categorie gesplitste onderdelen</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Formulier overdracht gesplitste delen</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Formulier voor transactiesjablonen</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Formulier voor overdrachtssjablonen</string>
     <string name="form_account_help_text">Selecteer het account waartoe de transactie behoort.</string>
     <string name="form_date_time_help_text_configuration">In de instellingen kun je tijdinvoer uitschakelen en het onderscheid tussen boekingsdatum en valutadatum inschakelen.</string>
     <string name="form_date_time_help_text">Voer de datum en tijd in waarop de transactie heeft plaatsgevonden.</string>
@@ -72,7 +65,6 @@
     <string name="menu_save_help_text">Sla de gegevens op en sluit het formulier.</string>
     <string name="menu_save_and_new_help_text">Als dit is aangevinkt, wordt het formulier nadat je de gegevens hebt opgeslagen, opengelaten voor het maken van een nieuwe transactie met dezelfde gegevens.</string>
     <string name="menu_invert_transfer_help_text">Keer de richting van de overboeking om door \'Van\' en \'Aan\' account om te wisselen.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Als de valuta\'s van de \'Van\'- en \'Aan\'-rekening verschillend zijn, geef je het bedrag voor slechts één ervan op. De andere wordt berekend wanneer je instanties van de sjabloon maakt.</string>
     <string name="menu_templates_help_text">Open een menu met alle sjablonen zodat je ze snel in het formulier kunt laden.</string>
     <string name="form_color_help_text">Op de transactielijst voor een account wordt de kleur ervan gebruikt als primaire kleur van de gebruikersinterface.</string>
     <string name="form_synchronization_help_text_select">Selecteer een backend voor cloudsynchronisatie.</string>
@@ -107,10 +99,6 @@
     <string name="menu_back_help_text">Navigeer naar de vorige groep. Kan ook worden gedaan door middel van een veegbeweging van links naar rechts.</string>
     <string name="cab_ManageCategories_create_sub_cat_help_text">Hiermee open je het dialoogvenster voor het maken van een nieuwe subcategorie onder de geselecteerde categorie. Subcategorieën kunnen worden genest met willekeurige diepte.</string>
     <string name="cab_ManageCategories_color_help_text">Je kunt een kleur toekennen aan hoofdcategorieën. Deze kleur wordt gebruikt om de categorie in grafieken weer te geven. Subcategorieën gebruiken tinten van de kleur van hun hoofdcategorie.</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Formulier voor gesplitste sjablonen</string>
-    <string name="help_ExpenseEdit_transaction_info">Gebruik dit formulier om een nieuwe transactie in te voeren of om een bestaande te wijzigen. Gebruik het dropdown menu in de actiebalk om over te schakelen naar het formulier voor het toevoegen van een nieuwe overboeking of gesplitste transactie.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Gebruik dit formulier om een nieuwe sjabloon in te voeren of een bestaande te bewerken. Gebruik het dropdown-menu in de actiebalk om te schakelen tussen sjablonen voor transacties, overschrijvingen en splitsingen.</string>
-    <string name="help_ExpenseEdit_split_info">Een gesplitste transactie is een enkele transactie opgesplitst in delen, waarbij elk deel kan worden toegewezen aan een andere categorie of kan worden overgeschreven naar een andere rekening.</string>
     <string name="form_crstatus_help_text">Voor transacties die bij bankrekeningen horen, kun je de status van de transactie wijzigen in Vereffend. Om deze op afgestemd te zetten, moet je de opdracht \"Saldorekening\" uit de transactielijst gebruiken. Als de status op ongeldig staat, wordt de transactie niet geteld.</string>
     <string name="form_method_help_text">Dit veld is alleen beschikbaar als de lopende rekening van een type is dat is gekoppeld aan een betaalmethode. Standaard zijn alleen bankrekeningen gekoppeld aan betaalmethoden (cheque, kredietkaart, storting, domiciliëring). Ga naar Instellingen -&gt; Beheren -&gt; Betaalmethoden om de koppeling tussen accounttypes en betaalmethoden te configureren. Wanneer je een methode selecteert die is gedefinieerd als genummerd, komt er een extra veld voor het invoeren van een referentienummer beschikbaar.</string>
     <string name="form_category_help_text">Deze knop opent de lijst met categorieën, waar je de categorie kunt selecteren die je aan de transactie wilt toewijzen.</string>
@@ -118,7 +106,6 @@
     <string name="form_split_parts_heading_help_text_2">Het bedragveld wordt automatisch bijgewerkt met de som van de delen, tenzij je handmatig een bedrag invoert, in welk geval het verschil tussen de som van de delen en het bedrag (niet-gesplitst bedrag) wordt weergegeven.</string>
     <string name="form_split_parts_heading_help_text_3">Je kunt de gesplitste transactie alleen opslaan als het transactiebedrag exact is toegewezen.</string>
     <string name="form_plan_help_text">Wanneer je een plan voor een sjabloon maakt, wordt dit toegevoegd aan een privéagenda die wordt beheerd door je Kalender-app. Je kunt het plan definiëren als een eenmalig evenement of als terugkerend dagelijks, wekelijks, maandelijks of jaarlijks.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Selecteer een categorie voor dit gesplitste onderdeel.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Wijs de rekeningen toe waar dit object van of naar wordt overgeboekt.</string>
     <string name="form_exchange_rate_help_text">Je kunt het tarief in beide richtingen van de overdracht specificeren. De omgekeerde koers en het bedrag dat overeenkomt met het afhankelijke deel van de wisselkoers worden automatisch berekend.</string>
     <string name="menu_original_amount_help_text">Toon een veld waarin je een extra bedrag kunt definiëren. Als je bijvoorbeeld met je kredietkaart in vreemde valuta betaalt, kun je naast het bedrag dat van je kaart is afgeschreven, de oorspronkelijke prijs onthouden. Bij het berekenen van sommen wordt het oorspronkelijke bedrag genegeerd.</string>

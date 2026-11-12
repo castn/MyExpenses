@@ -54,17 +54,6 @@
     <string name="menu_ManageCategories_search_help_text">Solo la categoria principale e le sottocategorie che corrispondono alla tua query verranno visualizzate.</string>
     <string name="menu_ManageCategories_sort_help_text">Elenco categoria possa essere ordinato per titolo (in ordine alfabetico), per frequenza di utilizzi, o in base all\'ultima volta che una transazione è stata mappata ad esso.</string>
     <string name="cab_ManageCategories_color_help_text">Puoi assegnare un colore alle categorie principali. Questo colore sarà utilizzato per rappresentare la categoria nei grafici. Le sottocategorie utilizzeranno le sfumature del colore della loro categoria principale.</string>
-    <string name="help_ExpenseEdit_transaction_title">Modulo per le operazioni</string>
-    <string name="help_ExpenseEdit_transfer_title">Modulo per i trasferimenti</string>
-    <string name="help_ExpenseEdit_split_title">Modulo per le operazioni frazionate</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Modulo per la categoria importi frazionati</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Modulo per i trasferimenti di importi frazionati</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Modulo per i modelli d\'operazione</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Modulo per i modelli di trasferimento</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Modulo per i modelli frazionati</string>
-    <string name="help_ExpenseEdit_transaction_info">Utilizzare questo modulo per immettere una nuova operazione o per modificarne uno esistente. Utilizzare il menu a discesa per passare al modulo per l\'aggiunta di un nuovo trasferimento o operazione frazionata.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Utilizza questo modulo per inserire un nuovo modello o per modificarne uno esistente. Utilizza il menu a discesa nella barra degli strumenti per passare tra i modelli per transazioni, trasferimenti e operazioni frazionate.</string>
-    <string name="help_ExpenseEdit_split_info">Un\'operazione frazionata è una singola operazione divisa in più parti, in cui ciascuna parte può essere assegnata ad una categoria diversa, o trasferita ad un altro conto.</string>
     <string name="form_account_help_text">Selezionare il conto a cui appartiene l\'operazione.</string>
     <string name="form_date_time_help_text">Inserisci la data e l\'ora in cui la transazione ha avuto luogo.</string>
     <string name="form_date_time_help_text_configuration">Nelle impostazioni puoi disabilitare l\'immissione dell\'ora, e abilitare la differenziazione fra data di prenotazione e data di valuta.</string>
@@ -79,7 +68,6 @@
     <string name="form_category_help_text">Questo pulsante apre l\'elenco delle categorie, dove è possibile selezionare la categoria che si desidera associare all\'operazione.</string>
     <string name="form_split_parts_heading_help_text_1">Utilizzare l\'icona + per entrare come molti parti divise secondo le necessità.</string>
     <string name="form_split_parts_heading_help_text_3">È possibile salvare l\'operazione frazionata, solo se l\'importo dell\'operazione è stato assegnato esattamente.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Selezionare una categoria per questo importo frazionato.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Assegnare i conti da dove o dove questo oggetto viene trasferito.</string>
     <string name="form_exchange_rate_help_text">È possibile specificare il tasso di cambio in ognuna delle due direzioni del trasferimento. Il tasso inverso e l\'importo corrispondente alla seconda parte del tasso di cambio vengono calcolati automaticamente.</string>
     <string name="form_title_help_text">Inserisci un titolo che identifica in modo univoco il modello.</string>
@@ -91,7 +79,6 @@
     <string name="menu_original_amount_help_text">Mostra un campo che consente di definire un importo aggiuntivo. Ad esempio, se si paga con la carta di credito in una valuta estera, è possibile registrare il prezzo originale oltre all\'importo addebitato sulla carta. L\'importo originale viene ignorato per il calcolo delle somme.</string>
     <string name="menu_equivalent_amount_help_text">Per calcolare un totale complessivo su tutti i conti, le transazioni dei conti in valuta estera vengono moltiplicate per il tasso di cambio che hai impostato per il conto.</string>
     <string name="menu_invert_transfer_help_text">Invertire la direzione del trasferimento scambiando \'Da\' e \'A\' del conto.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Se le valute dei conti \'Da\' e \'A\' sono diverse, è necessario specificare la quantità per uno solo di loro. L\'altra sarà calcolata quando si creano istanze dal modello.</string>
     <string name="form_goal_or_limit_help_text">Questo campo consente di specificare un obiettivo di risparmio positivo o un limite di credito negativo. In entrambi i casi, nell\'elenco dei conti, un indicatore di avanzamento mostrerà la distanza fra il saldo corrente e l\'obiettivo o il limite.</string>
     <string name="menu_templates_help_text">Apre un menu che elenca tutti i modelli, consentendo di caricarli rapidamente nel modulo.</string>
     <string name="menu_create_template_from_transaction_help_text">Se questa opzione è selezionata, la transazione verrà salvata anche come modello. È possibile definirne il titolo e, facoltativamente, impostare un piano per la ricorrenza automatica.</string>

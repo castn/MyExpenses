@@ -53,17 +53,6 @@
     <string name="menu_ManageCategories_search_help_text">Sorgunuzla eşleşen sadece ana ve alt kategoriler gösterilecektir.</string>
     <string name="menu_ManageCategories_sort_help_text">Kategori listesi başlıklara göre (alfabetik olarak), kullanma sıklığına göre ya da son muamele ilişkilendirme tarihine göre sıralanabilir.</string>
     <string name="cab_ManageCategories_color_help_text">Ana kategorilere renk atayabilirsiniz. Bu renk, kategoriyi grafiklerde temsil etmek için kullanılacaktır. Alt kategoriler, ana kategorinin renginin tonlarını kullanacaktır.</string>
-    <string name="help_ExpenseEdit_transaction_title">Muamele formu</string>
-    <string name="help_ExpenseEdit_transfer_title">Transfer formu</string>
-    <string name="help_ExpenseEdit_split_title">Bölünmüş muamele formu</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Bölünmüş alt muamele formu (kategori)</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Bölünmüş alt muamele formu (transfer)</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Muamele şablonları için form</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Transfer şablonları için form</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Bölünmüş şablonlar için formlar</string>
-    <string name="help_ExpenseEdit_transaction_info">Yeni bir muamele girmek için ya da mevcut bir muameleyi düzenlemek için bu formu kullanın. Yeni bir transfer ya da bölünmüş muamele ekleme formuna geçmek  için eylem çubuğundaki menüyü kullanın.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Yeni bir şablon girmek için veya mevcut bir şablonu düzenlemek için bu formu kullanabilirsiniz. Muamele ve havale şablonları arasında geçiş yapmak için etkinlik çubuğundaki aşağıya doğru açılan menüyü kullanın.</string>
-    <string name="help_ExpenseEdit_split_info">Bölünmüş bir muamele, parçalara ayrılmış tek bir muameledir ve her parça değişik bir kategoriye atanabilir ya da başka bir hesaba transfer edilebilir.</string>
     <string name="form_account_help_text">Muamelenin ait olduğu hesabı seçin.</string>
     <string name="form_date_time_help_text">Muamelenin gerçekleştiği tarih ve zamanı girin.</string>
     <string name="form_date_time_help_text_configuration">Ayarlarda, zaman girişini devre dışı bırakabilir ve muamele tarihi ile değer tarihi arasındaki farklılığı etkinleştirebilirsiniz.</string>
@@ -77,7 +66,6 @@
     <string name="form_default_action_help_text">Her şablon için ona şablonar listesinde kısa bir dokunmanın örneklemeyi derhal kaydedeceğini mi veya onu düzenleyebileceğiniz düzenleme formuna mı gireceğini yapılandırabilirsiniz. Her iki eyleme daima uzun bir dokunuş ile erişebilirsiniz.</string>
     <string name="form_category_help_text">Bu düğme kategorilerin listesini açar ve burada muameleyi ilişkilendireceğiniz kategoriyi seçebilirsiniz.</string>
     <string name="form_split_parts_heading_help_text_3">Bölünmüş muameleyi sadece muamele miktarı tam olarak atanmışsa kaydedebilirsiniz.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Bu bölünmüş kısım için bir kategori seç.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Bu unsurun aktarıldığı kaynak ya da hedef hesapları atayın.</string>
     <string name="form_exchange_rate_help_text">Döviz kurunu virmanın tek ya da iki yönü için belirtebilirsiniz. Ters oran ve döviz kuru bağımlı kısmına tekabül eden meblağ otomatik olarak hesaplanır.</string>
     <string name="form_title_help_text">Şablonu benzersiz bir biçimde tanımlayacak bir başlık girin.</string>
@@ -89,7 +77,6 @@
     <string name="menu_original_amount_help_text">Ek meblağ tanımlamaya imkân verecek bir alan göster. Mesela kredi kartınızla yabancı bir para biriminde ödeme yapıyorsanız, kartınızdan alınan meblağa ek olarak orijinal fiyatı hatırlayabilirsiniz. Orijinal fiyat toplam hesaplanmasında görmezden gelinir.</string>
     <string name="menu_equivalent_amount_help_text">Tüm hesaplar dahilinde genel toplam hesaplamak için yabancı para birimindeki hesaplardaki muameleler hesap için tanımlayacağınız bir döviz kuruyla çarpılacaktır.</string>
     <string name="menu_invert_transfer_help_text">Transfer yönünü \'Kimden\' ve \'Kime\' hesaplarını takas ederek ters çevirin.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Eğer \'Kaynak\' ve \'Hedef\' hesaplarının para birimleri değişik ise, bunlardan sadece biri için meblağı belirtmeniz gerekir. Diğeri şablondan örnekleme oluşturduğunuzda hesaplanacaktır.</string>
     <string name="form_goal_or_limit_help_text">Bu alan ya bir pozitif tasarruf hedefi ya da bir negatif kredi limiti belirtmenize izin verir. Her iki durumda da hesap listesinde, bir ilerleme göstergesi mevcut bakiye ile hedef veya limit arasındaki mesafeyi görselleştirir.</string>
     <string name="menu_templates_help_text">Forma hızlı bir şekilde yükleme yapılmasına imkân veren tüm şablonları listeleyen bir menü açar.</string>
     <string name="menu_create_template_from_transaction_help_text">Eğer bu şık seçiliyse, muamele aynı zamanda bir şablon olarak da kaydedilecektir. Başlığını tanımlayabilir ve seçime dayalı olarak otomatik tekrarlama için bir planlama ayarlayabilirsiniz.</string>

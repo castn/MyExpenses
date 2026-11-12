@@ -70,7 +70,7 @@ class SettingsCatalogTest {
 
     @Test
     fun everySettingOfTheOldScreensIsInTheCatalogOrOmitted() {
-        assertTrue("found ${settings.size} settings", settings.size > 140)
+        assertTrue("found ${settings.size} settings", settings.size > 130)
         val known = SettingsCatalog.entries.mapNotNull { it.key.token } +
                 SettingsCatalog.omitted.keys.map { it.token }
         val missing = settings.map { "${it.file}: ${it.key}" }.filter { it.substringAfter(": ") !in known }

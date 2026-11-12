@@ -65,7 +65,6 @@
     <string name="menu_create_template_from_transaction_help_text">ఇది తనిఖీ చేయబడితే, లావాదేవీ కూడా టెంప్లేట్‌గా సేవ్ చేయబడుతుంది. మీరు దాని శీర్షికను నిర్వచించవచ్చు మరియు స్వయంచాలక పునరావృతానికి ఐచ్ఛికంగా ఒక ప్రణాళికను సెట్ చేయవచ్చు.</string>
     <string name="menu_templates_help_text">అన్ని టెంప్లేట్‌లను త్వరగా ఫారమ్‌లోకి లోడ్ చేయడానికి అనుమతించే మెనుని తెరవండి.</string>
     <string name="form_goal_or_limit_help_text">ఈ ఫీల్డ్ సానుకూల పొదుపు లక్ష్యం లేదా ప్రతికూల క్రెడిట్ పరిమితిని పేర్కొనడానికి అనుమతిస్తుంది. ఈ రెండు సందర్భాల్లో, ఖాతా జాబితాలో, పురోగతి సూచిక ప్రస్తుత బ్యాలెన్స్ మరియు లక్ష్యం లేదా పరిమితి మధ్య దూరాన్ని దృశ్యమానం చేస్తుంది.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">\'నుండి\' మరియు \'నుండి\' ఖాతా యొక్క కరెన్సీలు భిన్నంగా ఉంటే, మీరు వాటిలో ఒకదానికి మాత్రమే మొత్తాన్ని పేర్కొంటారు. మీరు టెంప్లేట్ నుండి ఉదాహరణలను సృష్టించినప్పుడు మరొకటి లెక్కించబడుతుంది.</string>
     <string name="menu_invert_transfer_help_text">\'నుండి\' మరియు \'కు\' ఖాతాను మార్పిడి చేయడం ద్వారా బదిలీ దిశను విలోమం చేయండి.</string>
     <string name="menu_equivalent_amount_help_text">అన్ని ఖాతాలలో గ్రాండ్ మొత్తాన్ని లెక్కించడానికి, విదేశీ కరెన్సీ ఖాతాల లావాదేవీలు, మీరు ఖాతా కోసం సెట్ చేసిన మారకపు రేటుతో గుణించబడతాయి.</string>
     <string name="menu_original_amount_help_text">అదనపు మొత్తాన్ని నిర్వచించడానికి అనుమతించే ఫీల్డ్‌ను చూపించు. ఉదాహరణకు మీరు మీ క్రెడిట్ కార్డుతో విదేశీ కరెన్సీలో చెల్లిస్తే, మీ కార్డు నుండి డెబిట్ చేసిన మొత్తానికి అదనంగా అసలు ధరను మీరు గుర్తుంచుకోవచ్చు. మొత్తాలను లెక్కించడానికి అసలు మొత్తం విస్మరించబడుతుంది.</string>
@@ -77,7 +76,6 @@
     <string name="form_title_help_text">టెంప్లేట్‌ను ప్రత్యేకంగా గుర్తించే శీర్షికను నమోదు చేయండి.</string>
     <string name="form_exchange_rate_help_text">బదిలీ యొక్క రెండు దిశలలో మీరు రేటును పేర్కొనవచ్చు. విలోమ రేటు మరియు మార్పిడి రేటు యొక్క ఆధారిత భాగానికి అనుగుణంగా ఉన్న మొత్తం స్వయంచాలకంగా లెక్కించబడుతుంది.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">ఈ వస్తువు నుండి లేదా బదిలీ చేయబడిన ఖాతాలను కేటాయించండి.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">ఈ స్ప్లిట్ భాగం కోసం ఒక వర్గాన్ని ఎంచుకోండి.</string>
     <string name="form_split_parts_heading_help_text_3">లావాదేవీ మొత్తాన్ని సరిగ్గా కేటాయించినట్లయితే మాత్రమే మీరు స్ప్లిట్ లావాదేవీని సేవ్ చేయవచ్చు.</string>
     <string name="form_category_help_text">ఈ బటన్ వర్గాల జాబితాను తెరుస్తుంది, ఇక్కడ మీరు లావాదేవీకి మ్యాప్ చేయదలిచిన వర్గాన్ని ఎంచుకోవచ్చు.</string>
     <string name="form_default_action_help_text">ప్రతి టెంప్లేట్ కోసం, టెంప్లేట్ జాబితాలో దానిపై ఒక చిన్న ట్యాప్ చేస్తే వెంటనే ఆ ఉదాహరణను సేవ్ చేస్తుంది లేదా సేవ్ చేసే ముందు దాన్ని సవరించగలిగే దాని ఎడిటింగ్ ఫారమ్‌ను నమోదు చేయండి. లాంగ్ ట్యాప్ ద్వారా మీరు రెండు చర్యలను ఎల్లప్పుడూ యాక్సెస్ చేయవచ్చు.</string>
@@ -91,17 +89,6 @@
     <string name="form_date_time_help_text_configuration">సెట్టింగులలో మీరు సమయ ఇన్పుట్ను నిలిపివేయవచ్చు మరియు బుకింగ్ తేదీ మరియు విలువ తేదీ మధ్య భేదాన్ని ప్రారంభించవచ్చు.</string>
     <string name="form_date_time_help_text">లావాదేవీ జరిగిన తేదీ మరియు సమయాన్ని నమోదు చేయండి.</string>
     <string name="form_account_help_text">లావాదేవీకి చెందిన ఖాతాను ఎంచుకోండి.</string>
-    <string name="help_ExpenseEdit_split_info">స్ప్లిట్ లావాదేవీ అనేది భాగాలుగా విభజించబడిన ఒకే లావాదేవీ, ఇక్కడ ప్రతి భాగాన్ని వేరే వర్గానికి కేటాయించవచ్చు లేదా వేరే ఖాతాకు బదిలీ చేయవచ్చు.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">క్రొత్త టెంప్లేట్‌ను నమోదు చేయడానికి లేదా ఇప్పటికే ఉన్నదాన్ని సవరించడానికి ఈ ఫారమ్‌ను ఉపయోగించండి. లావాదేవీలు, బదిలీలు మరియు విభజనల కోసం టెంప్లేట్ల మధ్య మారడానికి యాక్షన్‌బార్‌లోని డ్రాప్‌డౌన్ మెనుని ఉపయోగించండి.</string>
-    <string name="help_ExpenseEdit_transaction_info">క్రొత్త లావాదేవీని నమోదు చేయడానికి లేదా ఇప్పటికే ఉన్నదాన్ని సవరించడానికి ఈ ఫారమ్‌ను ఉపయోగించండి. క్రొత్త బదిలీ లేదా స్ప్లిట్ లావాదేవీని జోడించడానికి ఫారమ్‌కు మారడానికి యాక్షన్‌బార్‌లోని డ్రాప్‌డౌన్ మెనుని ఉపయోగించండి.</string>
-    <string name="help_ExpenseEdit_templateSplit_title">స్ప్లిట్ టెంప్లేట్ల కోసం ఫారం</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">బదిలీ టెంప్లేట్ల కోసం ఫారం</string>
-    <string name="help_ExpenseEdit_templateCategory_title">లావాదేవీ టెంప్లేట్ల కోసం ఫారం</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">బదిలీ స్ప్లిట్ భాగాల కోసం ఫారం</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">వర్గం స్ప్లిట్ భాగాల కోసం ఫారం</string>
-    <string name="help_ExpenseEdit_split_title">చీలికల కోసం ఫారం</string>
-    <string name="help_ExpenseEdit_transfer_title">బదిలీల కోసం ఫారం</string>
-    <string name="help_ExpenseEdit_transaction_title">లావాదేవీల కోసం ఫారం</string>
     <string name="cab_ManageCategories_color_help_text">మీరు ప్రధాన వర్గాలకు రంగును కేటాయించవచ్చు. చార్టులలో వర్గాన్ని సూచించడానికి ఈ రంగు ఉపయోగించబడుతుంది. ఉపవర్గాలు వారి ప్రధాన వర్గం యొక్క రంగు యొక్క ఛాయలను ఉపయోగిస్తాయి.</string>
     <string name="menu_ManageCategories_sort_help_text">వర్గం జాబితాను శీర్షిక ద్వారా (అక్షరక్రమంగా), ఉపయోగాల పౌన తరచుదనం పున్యం ద్వారా లేదా చివరిసారిగా లావాదేవీకి మ్యాప్ చేయబడినప్పుడు క్రమబద్ధీకరించవచ్చు.</string>
     <string name="menu_ManageCategories_search_help_text">మీ ప్రశ్నకు సరిపోయే ప్రధాన మరియు ఉప వర్గాలు మాత్రమే ప్రదర్శించబడతాయి.</string>

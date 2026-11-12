@@ -14,16 +14,12 @@ import org.totschnig.myexpenses.activity.BaseActivity
 import org.totschnig.myexpenses.activity.BaseMyExpenses
 import org.totschnig.myexpenses.activity.CsvImportActivity
 import org.totschnig.myexpenses.activity.EditActivity
-import org.totschnig.myexpenses.activity.ExpenseEdit
 import org.totschnig.myexpenses.activity.MainScreenEntry
 import org.totschnig.myexpenses.activity.TransactionEditorEntry
 import org.totschnig.myexpenses.activity.PreferenceActivity
 import org.totschnig.myexpenses.activity.ProtectedFragmentActivity
 import org.totschnig.myexpenses.activity.TemplateScreens
 import org.totschnig.myexpenses.db2.Repository
-import org.totschnig.myexpenses.delegate.CategoryDelegate
-import org.totschnig.myexpenses.delegate.SplitDelegate
-import org.totschnig.myexpenses.delegate.TransferDelegate
 import org.totschnig.myexpenses.dialog.ArchiveDialogFragment
 import org.totschnig.myexpenses.dialog.BaseDialogFragment
 import org.totschnig.myexpenses.dialog.ContribDialogFragment
@@ -83,7 +79,6 @@ import org.totschnig.myexpenses.viewmodel.PrintLayoutConfigurationViewModel
 import org.totschnig.myexpenses.viewmodel.RestoreViewModel
 import org.totschnig.myexpenses.viewmodel.RoadmapViewModel
 import org.totschnig.myexpenses.viewmodel.SettingsViewModel
-import org.totschnig.myexpenses.viewmodel.TransactionEditViewModel
 import org.totschnig.myexpenses.viewmodel.UpgradeHandlerViewModel
 import org.totschnig.myexpenses.widget.AbstractListWidget
 import org.totschnig.myexpenses.widget.AccountRemoteViewsFactory
@@ -196,8 +191,6 @@ interface AppComponent {
 
     fun inject(application: MyApplication)
 
-    fun inject(expenseEdit: ExpenseEdit)
-
     fun inject(mainActivity: BaseMyExpenses<MainViewModel>)
 
     fun inject(preferenceActivity: PreferenceActivity)
@@ -231,8 +224,6 @@ interface AppComponent {
     fun inject(baseViewModel: BaseViewModel)
 
     fun inject(contentResolvingAndroidViewModel: ContentResolvingAndroidViewModel)
-
-    fun inject(transactionEditViewModel: TransactionEditViewModel)
 
     fun inject(currencyViewModel: CurrencyViewModel)
 
@@ -273,12 +264,6 @@ interface AppComponent {
     fun inject(debtViewModel: DebtViewModel)
 
     fun inject(debtDetailsDialogFragment: DebtDetailsDialogFragment)
-
-    fun inject(transactionDelegate: CategoryDelegate)
-
-    fun inject(transactionDelegate: SplitDelegate)
-
-    fun inject(transactionDelegate: TransferDelegate)
 
     fun inject(exportViewModel: ExportViewModel)
 

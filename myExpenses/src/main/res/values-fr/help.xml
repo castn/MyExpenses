@@ -55,17 +55,6 @@
     <string name="menu_ManageCategories_search_help_text">Seulement la catégorie principal et les sous catégories qui correspondent à votre requête seront affichées.</string>
     <string name="menu_ManageCategories_sort_help_text">La liste des catégories peut être triée par titre (ordre alphabétique), par la fréquence d\'utilisation ou de la date de dernière création d\'une transaction.</string>
     <string name="cab_ManageCategories_color_help_text">Vous pouvez attribuer une couleur aux catégories principales. Cette couleur sera utilisée pour représenter la catégorie dans les graphiques. Les sous-catégories utiliseront les nuances de la couleur de leur catégorie principale.</string>
-    <string name="help_ExpenseEdit_transaction_title">Formulaire pour opérations</string>
-    <string name="help_ExpenseEdit_transfer_title">Formulaire pour transferts</string>
-    <string name="help_ExpenseEdit_split_title">Formulaire pour opérations ventilées</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Formulaire pour sous-opérations ventilées (catégorie)</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Formulaire pour sous-opérations ventilées (transfert)</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Formulaire pour les modèles d\'opération</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Formulaire pour les modèles de transfert</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Formulaire pour les modèles ventilés</string>
-    <string name="help_ExpenseEdit_transaction_info">Utilisez ce formulaire pour entrer une nouvelle opération ou pour en modifier une existante. Utilisez le menu déroulant dans la barre d\'action pour basculer vers le formulaire d\'ajout d\'une nouvelle opération de transfert ou de ventilation.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Utilisez ce formulaire pour entrer un nouveau modèle ou pour en modifier un existant. Utilisez le menu déroulant de la barre d\'actions pour basculer entre les modèles pour les transactions, transferts et opérations ventilées.</string>
-    <string name="help_ExpenseEdit_split_info">Une opération ventilée est une opération unique, séparé en parties, où chaque partie peut être assignée à une catégorie différente, ou un transfert vers un autre compte.</string>
     <string name="form_account_help_text">Sélectionnez le compte auquel appartient l\'opération.</string>
     <string name="form_date_time_help_text">Entrez la date et l\'heure auxquelles l\'opération a eu lieu.</string>
     <string name="form_date_time_help_text_configuration">Dans les paramètres, vous pouvez désactiver la saisie de l\'heure et activer la différenciation entre la date d\'enregistrement et la date de valeur.</string>
@@ -80,7 +69,6 @@
     <string name="form_category_help_text">Ce bouton ouvre la liste des catégories, où vous pouvez sélectionner la catégorie dont vous souhaitez attribuer à l\'opération.</string>
     <string name="form_split_parts_heading_help_text_1">Utilisez l\'icône + pour la saisie des ventilations nécessaires.</string>
     <string name="form_split_parts_heading_help_text_3">Vous ne pourrez enregistrer l\'opération ventilée que si le montant total est exactement attribué.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Sélectionnez une catégorie pour cette partie ventilée.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Affecter les comptes desquels ou vers lesquels cet objet est transféré.</string>
     <string name="form_exchange_rate_help_text">Vous pouvez spécifier le taux dans une des deux directions du transfert. Le taux inverse et le montant correspondant à la partie dépendante du taux de change seront calculés automatiquement.</string>
     <string name="form_title_help_text">Entrez un titre qui identifie le modèle.</string>
@@ -92,7 +80,6 @@
     <string name="menu_original_amount_help_text">Afficher un champ permettant de définir un montant supplémentaire. Par exemple, si vous payez avec votre carte de crédit dans une devise étrangère, vous pouvez  enregistrer le prix d\'origine en plus du montant débité de votre carte. Le montant d\'origine est ignoré pour le calcul des sommes.</string>
     <string name="menu_equivalent_amount_help_text">Pour calculer une somme finale pour tous les comptes, les opérations de comptes en devises étrangères sont multipliées par le taux de change que vous avez défini pour le compte.</string>
     <string name="menu_invert_transfer_help_text">Inverser la direction du transfert en inversant \"De\" et \"Vers\" le compte.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Si les devises des comptes  \"De\"  et  \"Vers\" sont différentes, vous ne spécifiez le montant que pour un seul des deux. L\'autre sera calculée lorsque vous créerez des instances du modèle.</string>
     <string name="form_goal_or_limit_help_text">Ce champ permet de spécifier soit un objectif d\'économie positif, soit une limite de crédit négative. Dans les deux cas, sur la liste des comptes, un indicateur de progression visualise la distance entre le solde actuel et le but ou la limite.</string>
     <string name="menu_templates_help_text">Ouvrez un menu qui répertorie tous les modèles permettant de les charger rapidement dans le formulaire.</string>
     <string name="menu_create_template_from_transaction_help_text">Si cette case est cochée, l\'opération sera également enregistrée comme modèle. Vous pouvez définir son titre et éventuellement définir un plan d\'échéance automatique.</string>

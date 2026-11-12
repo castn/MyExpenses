@@ -514,7 +514,6 @@
     <string name="search_payee">Sök efter motpart</string>
     <string name="between_and">mellan %1$s och %2$s</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">Köpet misslyckades eller avbröts.</string>
-    <string name="hint_auto_fill">Ska data fyllas i automatiskt från senaste transaktion med samma motpart? Du kan alltid ändra detta beteende från inställningarna.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%1$d konton med valutan %2$s har uppdaterats.</string>
     <string name="pref_manage_stale_images_title">Kvarblivna bilder</string>
     <string name="pref_manage_stale_images_summary">Hantera bilder som blivit kvar från raderade transaktioner</string>
@@ -594,7 +593,6 @@
     <string name="switch_to_yearly" tools:ignore="UnusedResources">Byt till årsprenumeration</string>
     <string name="switch_to_monthly" tools:ignore="UnusedResources">Byt till månadsprenumeration</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Hämtar data från fjärrbackend. Detta kan ta lite tid.</string>
-    <string name="auto_fill_account_from_aggregate_only">Endast när du startar från ett aggregerat konto.</string>
     <string name="sync_auth_exception">Åtkomst nekades.</string>
     <string name="sync_login_again">Logga in igen, tack.</string>
     <plurals name="delete_success">
@@ -689,8 +687,6 @@
     <string name="clone_and_remap_result">De valda transaktionerna har klonats och fått ändrad koppling.</string>
     <string name="remap_empty_list">Kunde inte hitta något alternativ som kan kopplas till alla valda transaktioner.</string>
     <string name="button_label_clone_and_remap">Duplicera och ändra</string>
-    <string name="pref_clone_with_current_date_summary_on">Duplicerade transaktioner får dagens datum</string>
-    <string name="pref_clone_with_current_date_summary_off">Duplicerade transaktioner behåller ursprungligt datum</string>
     <string name="tags_create_or_select">Skapa eller välj etiketter</string>
     <string name="pref_manage_tags_summary">Lägg till, redigera, ta bort etiketter.</string>
     <string name="menu_tag">Etikettera</string>
@@ -717,7 +713,6 @@
     <string name="select_package">Välj ett licenspaket.</string>
     <string name="warning_balance_account_delete">Om du fortsätter kommer alla avstämda transaktioner på detta konto att raderas från databasen och du kommer inte kunna återställa dem.</string>
     <string name="confirmation_load_template_discard_data">Befintlig formulärdata kommer att kasseras.</string>
-    <string name="pref_clone_with_current_date_title">Datum för duplicerade transaktioner</string>
     <string name="template_default_action_without_amount_hint">Mall utan belopp ska sparas med standardåtgärden \'Redigera\'</string>
     <string name="menu_save_and_new_content_description">Spara datan, lämna formuläret öppet för att skapa en ny transaktion med samma data.</string>
     <string name="pref_ocr_engine_title">Motor för textigenkänning</string>
@@ -733,7 +728,6 @@
     <string name="account_widget_configuration_sum">Typ av visad summa</string>
     <string name="merge_parties_select">Välj namn på sammanslagen part</string>
     <string name="request_for_invoice">Begäran om faktura</string>
-    <string name="auto_fill_focus">Fokusera på Betalningsmottagare</string>
     <string name="crash_reports_user_info">{app_name} skickar automatiskt rapporter om applikationskrascher till sina utvecklare, vilket gör att de kan åtgärda problem snabbare.</string>
     <string name="pref_enable_acra">Tillåt automatisk sändning av kraschrapporter</string>
     <string name="pref_acra_user_email">Användarens e-postadress som ska inkluderas i kraschrapporten</string>

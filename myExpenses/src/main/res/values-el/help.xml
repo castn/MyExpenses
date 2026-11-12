@@ -49,9 +49,6 @@
     <string name="menu_categories_setup_default_help_text">Ένα σύνολο προεπιλεγμένων κατηγοριών θα εισαχθεί.</string>
     <string name="menu_categories_export_help_text">Οι κατηγορίες θα εξαχθούν σε ένα αρχείο QIF.</string>
     <string name="menu_chart_help_text">Εναλλαγή της ορατότητας του διαγράμματος.</string>
-    <string name="help_ExpenseEdit_transaction_title">Φόρμα για συναλλαγές</string>
-    <string name="help_ExpenseEdit_transfer_title">Φόρμα για μεταφορές</string>
-    <string name="help_ExpenseEdit_split_title">Φόρμα για διαχωρισμούς</string>
     <string name="form_account_help_text">Επιλέξτε τον λογαριασμό στον οποίο ανήκει η συναλλαγή.</string>
     <string name="form_date_time_help_text">Εισάγετε την ημερομηνία και την ώρα που πραγματοποιήθηκε η συναλλαγή.</string>
     <string name="form_amount_switch_help_text">Χρησιμοποιήστε τον διακόπτη για να εναλλάσσεστε μεταξύ εξόδων και εσόδων.</string>

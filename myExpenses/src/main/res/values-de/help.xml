@@ -54,17 +54,6 @@
     <string name="menu_ManageCategories_search_help_text">Nur Haupt und Unter-Kategorien, die Ihrer Abfrage entsprechen, werden angezeigt.</string>
     <string name="menu_ManageCategories_sort_help_text">Die Kategorienliste kann nach Titel (alphabetisch) sortiert werden, nach der Häufigkeit der Verwendung oder nach dem Zeitpunkt, an dem zuletzt eine Buchung zugeordnet wurde.</string>
     <string name="cab_ManageCategories_color_help_text">Sie können Hauptkategorien eine Farbe zuweisen. Diese Farbe wird verwendet, um die Kategorie in Diagrammen darzustellen. Unterkategorien verwenden Schattierungen der Farbe ihrer Hauptkategorie.</string>
-    <string name="help_ExpenseEdit_transaction_title">Formular für Buchungen</string>
-    <string name="help_ExpenseEdit_transfer_title">Formular für Umbuchungen</string>
-    <string name="help_ExpenseEdit_split_title">Formular für Splitbuchungen</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Formular für Split-Teilbetrag (Kategorie)</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Formular für Split-Teilbetrag (Umbuchung)</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Formular für Buchungs-Vorlagen</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Formular für Umbuchungs-Vorlagen</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Formular für Vorlagen für mehrteilige Buchungen</string>
-    <string name="help_ExpenseEdit_transaction_info">Verwenden Sie dieses Formular, um eine neue Buchung einzugeben oder eine vorhandene zu bearbeiten. Verwenden Sie das Dropdown-Menü in der Aktionsleiste um zum Formular zum Hinzufügen einer neuen Umbuchung oder Split-Buchung zu wechseln.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Verwenden Sie dieses Formular, um eine neue Vorlage einzugeben oder eine bestehende zu bearbeiten. Verwenden Sie das Dropdown-Menü in der Aktionsleiste, um zwischen Vorlagen für Buchungen, Umbuchungen und mehrteiligen Buchungen zu wechseln.</string>
-    <string name="help_ExpenseEdit_split_info">Eine Splittbuchung ist eine einzelne Buchung, aufgeteilt in Teile, wo jeder Teil einer anderen Kategorie zugewiesen oder auf ein anderes Konto übertragen werden kann.</string>
     <string name="form_account_help_text">Wählen Sie das Konto, zu dem die Buchung gehört.</string>
     <string name="form_date_time_help_text">Geben Sie die Datum und Zeit an, wann die Buchung stattgefunden hat.</string>
     <string name="form_date_time_help_text_configuration">In den Einstellungen können Sie die Zeiteingabe deaktivieren und die Unterscheidung zwischen Buchungsdatum und Wertstellung aktivieren.</string>
@@ -79,7 +68,6 @@
     <string name="form_category_help_text">Diese Schaltfläche öffnet die Liste der Kategorien, aus der Sie die Kategorie auswählen können, der Sie die Buchung zuordnen möchten.</string>
     <string name="form_split_parts_heading_help_text_1">Verwenden Sie das + Icon, um Teile nach Bedarf hinzuzufügen.</string>
     <string name="form_split_parts_heading_help_text_3">Die Splittbuchung kann nur gespeichert werden, wenn der Betrag vollständig zugewiesen wurde.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Wählen Sie eine Kategorie für diesen Buchungsteil aus.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Wählen Sie die Konten aus, zwischen denen dieses Objekt übertragen wird.</string>
     <string name="form_exchange_rate_help_text">Sie können den Kurs in jedem der beiden Richtungen der Überweisung angeben. Der reziproke Kurs und die Höhe des abhängigen Teils des Wechselkurses werden automatisch berechnet.</string>
     <string name="form_title_help_text">Geben Sie einen Titel an, der die Vorlage eindeutig identifiziert.</string>
@@ -91,7 +79,6 @@
     <string name="menu_original_amount_help_text">Zeigt ein Feld an, in dem Sie einen zusätzlichen Betrag definieren können. Wenn Sie beispielsweise mit Ihrer Kreditkarte in einer fremden Währung bezahlen, können Sie sich den Originalpreis zusätzlich zu dem von Ihrer Karte abgebuchten Betrag merken. Der Originalbetrag wird bei der Summenberechnung ignoriert.</string>
     <string name="menu_equivalent_amount_help_text">Bei der Berechnung einer Gesamtsumme für alle Konten werden Buchungen von Konten in Fremdwährungen mit einem Wechselkurs multipliziert, den Sie für das Konto festgelegt haben.</string>
     <string name="menu_invert_transfer_help_text">Verändert die Richtung der Umbuchung indem die Konten \'Von\' und \'Nach\' ihre Position wechseln.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Wenn die Währungen der \'Von\' und \'Nach\' Konten unterschiedlich sind, geben Sie den Betrag für nur eines der beiden an. Der andere wird beim Erstellen von Instanzen aus der Vorlage berechnet.</string>
     <string name="form_goal_or_limit_help_text">In diesem Feld kann entweder ein positives Sparziel oder ein negatives Kreditlimit angegeben werden. In beiden Fällen zeigt eine Fortschrittsanzeige in der Kontenliste die Entfernung zwischen dem aktuellen Kontostand und dem Ziel oder dem Limit an.</string>
     <string name="menu_templates_help_text">Öffnen Sie ein Menü, in dem alle Vorlagen aufgelistet sind, damit Sie diese schnell in das Formular laden können.</string>
     <string name="menu_create_template_from_transaction_help_text">Wenn dies aktiviert ist, wird die Buchung auch als Vorlage gespeichert. Sie können den Titel definieren und optional einen Plan für die automatische Wiederholung festlegen.</string>

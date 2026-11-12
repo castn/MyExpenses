@@ -14,8 +14,6 @@
     <string name="help_ManageStaleImages_title">@string/pref_manage_stale_images_title</string>
     <string name="help_CsvImportActivity_title">@string/contrib_feature_csv_import_label</string>
     <string name="help_ManageSyncBackends_title">@string/pref_manage_sync_backends_title</string>
-    <string name="help_ExpenseEdit_templateTransfer_info">@string/help_ExpenseEdit_templateCategory_info</string>
-    <string name="help_ExpenseEdit_templateSplit_info">@string/help_ExpenseEdit_templateCategory_info</string>
     <string name="help_HistoryActivity_title">@string/menu_history</string>
     <string name="form_AccountEdit_exchange_rate_help_text">@string/menu_equivalent_amount_help_text</string>
     <string name="cab_ungroup_split_transaction_help_text">@string/warning_ungroup_split_transactions</string>

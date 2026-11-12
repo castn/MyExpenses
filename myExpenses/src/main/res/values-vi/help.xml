@@ -26,11 +26,6 @@
     <string name="menu_ManageCategories_distribution_grouping_help_text">Chỉnh loại của nhóm và hiển thị việc phân phối theo ngày, tháng, tuần hoặc năm.</string>
     <string name="menu_back_help_text">Định hướng tới nhóm trước đó.</string>
     <string name="menu_forward_help_text">Định hướng đến nhóm tiếp theo.</string>
-    <string name="help_ExpenseEdit_transaction_title">Mẫu đơn cho các giao dịch</string>
-    <string name="help_ExpenseEdit_transfer_title">Mẫu đơn cho các truyền đổi</string>
-    <string name="help_ExpenseEdit_split_title">Mẫu đơn cho phần tách biệt</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Mẫu đơn cho phần tách biệt phân loại</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Mẫu đơn cho phần chuyển đổi phân tách</string>
     <string name="menu_save_help_text">Lưu dữ liệu và đóng lại mẫu đơn.</string>
     <string name="help_AccountEdit_title">Mẫu đơn cho các tài khoản</string>
     <string name="help_MethodEdit_title">Mẫu đơn cho phương thức thanh toán</string>

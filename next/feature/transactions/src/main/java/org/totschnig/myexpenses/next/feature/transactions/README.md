@@ -58,7 +58,8 @@ The rules (`toDraft`, `withTemplate`, `toTemplateValues`, `forChips`) are pure a
 
 - `TransactionStore`, by `RepositoryTransactionStore` of the shell: loads and saves on the
   database of the app. A change writes only the values that differ, so that a category set from
-  its chip meanwhile stays. A payee typed by name is found or created, like in the classic form.
+  its chip meanwhile stays. A payee typed by name is found or created, like the classic form did
+  (pinned in `TransactionSaveRulesTest` of :myExpenses).
 - `CategorySuggestions`, by `AnalysisCategorySuggestions` through `NextData.categorySuggestions`:
   the suggestion of `CategorySuggester` for the payee and note typed, instead of the payee autofill
   of the classic form. A certain suggestion, e.g. from a rule of the user, is taken and follows

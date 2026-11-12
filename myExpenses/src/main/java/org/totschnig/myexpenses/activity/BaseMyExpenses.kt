@@ -1027,24 +1027,8 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
         }
     }
 
-    protected open fun createTemplate(transaction: Transaction2) {
-        lifecycleScope.launch {
-            if (checkSealed(listOf(transaction.id))) {
-                if (transaction.isSplit && !prefHandler.getBoolean(
-                        PrefKey.NEW_SPLIT_TEMPLATE_ENABLED,
-                        true
-                    )
-                ) {
-                    showContribDialog(ContribFeature.SPLIT_TEMPLATE, null)
-                } else {
-                    startActivity(Intent(this@BaseMyExpenses, ExpenseEdit::class.java).apply {
-                        action = ExpenseEdit.ACTION_CREATE_TEMPLATE_FROM_TRANSACTION
-                        putExtra(KEY_ROWID, transaction.id)
-                    })
-                }
-            }
-        }
-    }
+    /** A template from [transaction], in the template screens of the new UI */
+    protected abstract fun createTemplate(transaction: Transaction2)
 
     protected fun delete(transactions: List<Pair<Long, CrStatus>>) {
         val hasReconciled = transactions.any { it.second == CrStatus.RECONCILED }

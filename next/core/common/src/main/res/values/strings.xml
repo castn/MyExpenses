@@ -738,7 +738,7 @@
     <string name="next_settings_share">Tell a friend</string>
     <string name="next_settings_about">About</string>
     <string name="next_settings_section_entry_quick">Quick access</string>
-    <string name="next_settings_section_entry_auto_fill">Autofill</string>
+    <string name="next_settings_section_entry_transfers">Transfers</string>
     <string name="next_settings_section_entry_date">Date &amp; time</string>
     <string name="next_settings_section_entry_attachments">Attachments &amp; photos</string>
     <string name="next_settings_section_entry_receipts">Receipts</string>

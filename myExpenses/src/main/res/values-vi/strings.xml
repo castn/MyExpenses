@@ -362,7 +362,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">sau</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">Giao dịch thất bại hoặc đã bị huỷ bỏ</string>
-    <string name="hint_auto_fill">Dữ liệu từ giao dịch liền trước với cùng người nhận/trả có nên được tự động thêm vào? Bạn luôn có thể thay đổi tuỳ chọn này trong mục cài đặt.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%1$d tài khoản với loại tiền %2$s đã được cập nhật.</string>
     <string name="import_source_file">Tập tin</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -490,7 +489,6 @@
     <string name="extend_validity">Gia hạn tính hợp lệ</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Đang lấy dữ liệu từ backend từ xa. Điều này có thể mất một lúc.</string>
     <string name="donate_button_invoice">Hoá đơn</string>
-    <string name="auto_fill_account_from_aggregate_only">Chỉ khi bắt đầu từ tài khoản gộp.</string>
     <string name="sync_auth_exception">Không thể uỷ quyền.</string>
     <string name="sync_login_again">Vui lòng đăng nhập lại.</string>
     <plurals name="delete_success">
@@ -594,7 +592,6 @@
     <string name="budget_filter_all_methods">Tất cả các phương pháp</string>
     <string name="remap_payee">Tất cả các giao dịch đã chọn sẽ được ánh xạ đến người trả tiền / người nhận thanh toán %s.</string>
     <string name="button_label_clone_and_remap">Sao chép và ánh xạ lại</string>
-    <string name="pref_clone_with_current_date_summary_off">Giao dịch nhân bản giữ ngày ban đầu</string>
     <string name="dialog_multi_tag_replace">Thay thế các thẻ hiện có bằng các thẻ mới</string>
     <string name="pref_ocr_total_indicators_title">Các chỉ số cho tổng số tiền</string>
     <string name="pref_ocr_total_indicators_summary">Danh sách các chuỗi xác định tổng giá trị trong biên nhận. Đặt mỗi giá trị trên một dòng mới. Để trống để khôi phục giá trị mặc định.</string>
@@ -639,7 +636,6 @@
     <string name="menu_transform_to_transfer">Chuyển thành chuyển khoản</string>
     <string name="warning_transform_to_transfer">Giao dịch đã chọn sẽ được thay thế bằng chuyển khoản từ %1$s sang %2$s.</string>
     <string name="roadmap_intro">Cuộc bỏ phiếu Lộ trình năm %d hiện đã mở! Bình chọn cho các tính năng và cải tiến quan trọng nhất đối với bạn.</string>
-    <string name="auto_fill_focus">Đặt trọng tâm vào người nhận thanh toán</string>
     <string name="tags_create_or_select">Tạo hoặc chọn thẻ</string>
     <string name="cb_label_merge_accounts">Hợp nhất tài khoản</string>
     <string name="pref_attachment_mime_types_title">Các loại MIME được phép cho phần đính kèm</string>
@@ -647,7 +643,6 @@
     <string name="widget_title_budget">Ngân sách của tôi</string>
     <string name="menu_new_debt">Nợ mới</string>
     <string name="backup_is_encrypted">Tệp sao lưu được mã hóa. Để giải mã nó, bạn cần chỉ định cụm mật khẩu của nó.</string>
-    <string name="pref_clone_with_current_date_summary_on">Giao dịch nhân bản có ngày hiện tại</string>
     <string name="menu_edit_tag">Chỉnh sửa thẻ</string>
     <string name="scan_result_no_amount">Không tìm thấy số tiền</string>
     <string name="select_payee">Chọn người trả tiền/người được trả tiền</string>
@@ -657,7 +652,6 @@
     <string name="budget_filter_all_parties">Tất cả các bên</string>
     <string name="menu_remap">Bản đồ lại</string>
     <string name="feature_download_requested">Tính năng %s được yêu cầu từ Play Store.</string>
-    <string name="pref_clone_with_current_date_title">Ngày giao dịch nhân bản</string>
     <string name="template_default_action_without_amount_hint">Mẫu không có số lượng sẽ được lưu với hành động mặc định \'Chỉnh sửa\'</string>
     <string name="template_shortcut">Lối tắt mẫu</string>
     <string name="add_shortcut">Thêm phím tắt</string>

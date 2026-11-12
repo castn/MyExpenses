@@ -383,7 +383,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">após</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">A compra falhou ou foi cancelada.</string>
-    <string name="hint_auto_fill">Os dados devem ser automaticamente preenchidos baseados na última transação da mesma contraparte? Esse comportamento pode ser alterado nas configurações.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%1$d contas com a moeda %2$s foram atualizadas.</string>
     <string name="import_source_file">Arquivo</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -514,7 +513,6 @@
     <string name="extend_validity">Estender a validade</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Obtendo dados do destino remoto. Isso pode demorar algum tempo.</string>
     <string name="donate_button_invoice">Fatura</string>
-    <string name="auto_fill_account_from_aggregate_only">Apenas quando iniciar de uma conta agregada.</string>
     <string name="sync_auth_exception">Falha na autorização.</string>
     <string name="sync_login_again">Por favor, autentique-se novamente.</string>
     <plurals name="delete_success">
@@ -662,9 +660,7 @@
     <!-- The label for the button, where user confirms that he wants to clone the selected transactions and then remap them. -->
     <string name="button_label_clone_and_remap">Clonar e remapear</string>
     <!-- The summary of a preference toggle. If switched on cloned transactions have the date set to the current date -->
-    <string name="pref_clone_with_current_date_summary_on">As transações clonadas mudam para a data atual</string>
     <!-- The summary of a preference toggle. If switched off cloned transactions keep the original date -->
-    <string name="pref_clone_with_current_date_summary_off">As transações clonadas mantêm a data original</string>
     <string name="tags_create_or_select">Criar ou selecionar etiquetas</string>
     <string name="pref_manage_tags_summary">Adicione, edite, apague etiquetas.</string>
     <string name="dialog_title_warning_delete_tag">Apagar a etiqueta\?</string>
@@ -721,7 +717,6 @@
     <string name="warning_balance_account_delete">Se continuar, todas as transações conciliadas desta conta serão apagadas do banco de dados e não poderá restaurá-las.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">Os dados presentes no formulário serão descartados.</string>
-    <string name="pref_clone_with_current_date_title">Data das transações clonadas</string>
     <string name="template_default_action_without_amount_hint">O modelo sem quantia deve ser salvo com a ação padrão \'Editar\'</string>
     <string name="menu_save_and_new_content_description">Salve os dados, deixando o formulário aberto para a criação de uma nova transação com os mesmos dados.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
@@ -756,7 +751,6 @@
     <!-- This is used in the title of the email by which user requests an invoice for payment via bank transfer -->
     <string name="request_for_invoice">Pedido de fatura</string>
     <!-- Enables Focus on the Payee field for Auto fill -->
-    <string name="auto_fill_focus">Definir foco no beneficiário</string>
     <!-- This warning is shown when a user calls the Reset or Cancel commands on a scheduled transaction, for a date
      where the transaction has already been created.  -->
     <string name="crash_reports_user_info">{app_name} enviará relatórios sobre falhas do aplicativo automaticamente para seus desenvolvedores, o que lhes permitirá corrigir os problemas mais rapidamente.</string>

@@ -49,31 +49,19 @@
     <string name="menu_categories_export_help_text">Kategorier eksporteres til en QIF-fil.</string>
     <string name="menu_ManageCategories_search_help_text">Kun hoved- og underkategorier, der matcher din forespørgsel, vises.</string>
     <string name="menu_ManageCategories_sort_help_text">Kategorilisten kan sorteres efter titel (alfabetisk), brugsfrekvens eller sidste gang en transaktion blev knyttet til den.</string>
-    <string name="help_ExpenseEdit_transaction_title">Formular til transaktioner</string>
-    <string name="help_ExpenseEdit_transfer_title">Formular til overførsler</string>
-    <string name="help_ExpenseEdit_split_title">Formular til opdelinger</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Formular til kategoriopdelte dele</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Formular til overførselsopdelte dele</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Formular til transaktionsskabeloner</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Formular til overførselsskabeloner</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Formular til opdelingsskabeloner</string>
     <string name="form_account_help_text">Vælg den konto, som transaktionen hører til.</string>
     <string name="form_date_time_help_text">Indtast dato og klokkeslæt, hvor transaktionen fandt sted.</string>
     <string name="form_date_time_help_text_link"><![CDATA[Hvis <img src="ic_hchain">/<img src="ic_hchain_broken"> knappen er i sin forbundne tilstand, vil indstilling af enten værdi- eller bogføringsdato også opdatere den anden dato.]]></string>
     <string name="help_ManageCategories_distribution_info">Denne skærm viser fordelingen af dine udgifter og indtægter pr. kategori for alle transaktioner på en konto eller for en bestemt gruppe. Hvis du udvider en hovedkategori på listen, viser cirkeldiagrammet fordelingen af dens underkategorier. Hvis du vælger en kategori på listen, fremhæves den i cirkeldiagrammet, og vice versa. Hold nede på en kategori for at vise en samlet liste over de transaktioner, der er knyttet til den.</string>
     <string name="help_ManageCategories_manage_info">Denne skærm lader dig oprette, redigere og slette kategorier. Som standard er det primære sorteringskriterium i kategorilisten antallet af gange, du bruger en kategori (det sekundære kriterium er alfabetisk orden). Dette giver dig hurtig adgang til de kategorier, du bruger oftest.</string>
     <string name="help_ManageCategories_select_mapping_info">Ud over de handlinger, du kan udføre, når du administrerer kategorier fra skærmen Indstillinger (oprette, redigere, slette), kan du på denne skærm knytte en transaktion til en valgt kategori ved blot at klikke på den.</string>
-    <string name="help_ExpenseEdit_transaction_info">Brug denne formular til at indtaste en ny transaktion eller redigere en eksisterende. Brug rullemenuen i værktøjslinjen for at skifte til formularen til tilføjelse af en ny overførsel eller opdelt transaktion.</string>
     <string name="cab_ManageCategories_select_filter_select_help_text">De valgte kategorier bruges til at filtrere transaktionslisten.</string>
-    <string name="help_ExpenseEdit_split_info">En opdelt transaktion er en enkelt transaktion, der er delt op i dele, hvor hver del kan tildeles en anden kategori eller overføres til en anden konto.</string>
     <string name="cab_ManageCategories_color_help_text">Du kan tildele en farve til hovedkategorier som bruges til at repræsentere dem i diagrammer. Underkategorier bruger nuancer af deres hovedkategoris farve.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Brug denne formular til at indtaste en ny skabelon eller redigere en eksisterende. Brug rullemenuen i handlingslinjen til at skifte mellem skabeloner for transaktioner, overførsler og opdelinger.</string>
     <string name="form_date_time_help_text_configuration">I indstillingerne kan du deaktivere indtastning af klokkeslæt og aktivere skelnen mellem bogførings- og værdidato.</string>
     <string name="form_calculator_help_text"><![CDATA[Knappen <img src="?calcIcon"> åbner lommeregneren.]]></string>
     <string name="form_comment_help_text">Indtast en note om objektet.</string>
     <string name="form_category_help_text">Denne knap åbner listen over kategorier, hvor du kan vælge kategorien, du vil knytte til transaktionen.</string>
     <string name="form_split_parts_heading_help_text_3">Du kan kun gemme den opdelte transaktion, hvis transaktionsbeløbet er tildelt nøjagtigt.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Vælg en kategori til denne del.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Tildel de konti, som dette objekt overføres fra eller til.</string>
     <string name="form_title_help_text">Indtast en titel, der entydigt identificerer skabelonen.</string>
     <string name="form_plan_help_text_advanced">Efter du har gemt skabelonen, kan du konfigurere mere avancerede typer af gentagelse ved hjælp af din kalender-app.</string>
@@ -90,7 +78,6 @@
     <string name="form_plan_help_text_mode">En plan kan indstilles til automatisk eller manuel. Når en instans af en automatisk plan opstår, oprettes transaktionen, og du modtager en notifikation. Når planen er manuel, modtager du også en notifikation, som overlader valget mellem at annullere, ændre eller anvende skabelonen til dig.</string>
     <string name="menu_original_amount_help_text">Vis et felt, der lader dig definere et ekstra beløb. Hvis du fx betaler med dit kreditkort i en udenlandsk valuta, kan du huske den oprindelige pris ud over det beløb, der trækkes fra dit kort. Det oprindelige beløb ignoreres ved beregning af totaler.</string>
     <string name="menu_equivalent_amount_help_text">For at beregne en samlet sum på tværs af alle konti, ganges transaktioner på udenlandsk valutakonti med en valutakurs, som du indstiller for kontoen.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Hvis valutaerne på \'Fra\'- og \'Til\'-kontoen er forskellige, angiver du kun beløbet for en af dem. Det andet beregnes, når du opretter instanser fra skabelonen.</string>
     <string name="cab_ManageTemplates_templates_create_instance_save_help_text">Instantiér de valgte skabeloner, og gem dem øjeblikkeligt.</string>
     <string name="cab_ManageTemplates_templates_create_instance_edit_help_text">Instantiér den valgte skabelon og gå ind i dens redigeringsform, hvor du kan ændre den før du gemmer.</string>
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img "src=ic_menu_template">Mens skabeloner kan udledes fra transaktioner gennem deres kontekstmenu, kan du her oprette nye skabeloner fra bunden (for transaktioner eller overførsler) ved at klikke på den flydende handlingsknap. Ved at klikke på en skabelon oprettes en instans for den.<br><img src="ic_event">En plan er en skabelon, som du har oprettet en begivenhed for (engangs eller tilbagevendende) i planlægningskalenderen. Klik på en plan for at åbne en kalendervisning, som viser tidligere og kommende instanser af en plan.]]></string>

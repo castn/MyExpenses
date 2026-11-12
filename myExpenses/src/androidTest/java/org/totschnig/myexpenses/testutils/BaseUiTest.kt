@@ -93,6 +93,8 @@ import java.util.concurrent.TimeoutException
 import com.google.android.material.R as RM
 import org.totschnig.myexpenses.test.R as RT
 
+const val TEMPLATE_TITLE = "Espresso template"
+
 abstract class BaseUiTest<A : ProtectedFragmentActivity> {
     var isLarge = false
 

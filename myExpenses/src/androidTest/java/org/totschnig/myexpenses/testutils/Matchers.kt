@@ -23,7 +23,6 @@ import org.hamcrest.TypeSafeMatcher
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.adapter.IdHolder
 import org.totschnig.myexpenses.adapter.SpinnerItem
-import org.totschnig.myexpenses.delegate.TransactionDelegate.OperationType
 import org.totschnig.myexpenses.model.AccountType
 import org.totschnig.myexpenses.model.CrStatus
 import org.totschnig.myexpenses.ui.DateButton
@@ -52,17 +51,6 @@ fun withStatus(status: CrStatus): Matcher<Any> =
 
         override fun describeTo(description: Description) {
             description.appendText("with status '${status.name}'")
-        }
-    }
-
-fun withOperationType(type: Int): Matcher<Any> =
-    object : BoundedMatcher<Any, OperationType>(OperationType::class.java) {
-        override fun matchesSafely(myObj: OperationType): Boolean {
-            return myObj.type == type
-        }
-
-        override fun describeTo(description: Description) {
-            description.appendText("with operation type '$type'")
         }
     }
 

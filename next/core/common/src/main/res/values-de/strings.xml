@@ -738,7 +738,7 @@
     <string name="next_settings_share">Weiterempfehlen</string>
     <string name="next_settings_about">Über</string>
     <string name="next_settings_section_entry_quick">Schnellzugriff</string>
-    <string name="next_settings_section_entry_auto_fill">Vorbelegung</string>
+    <string name="next_settings_section_entry_transfers">Umbuchungen</string>
     <string name="next_settings_section_entry_date">Datum &amp; Zeit</string>
     <string name="next_settings_section_entry_attachments">Anhänge &amp; Fotos</string>
     <string name="next_settings_section_entry_receipts">Kassenzettel</string>

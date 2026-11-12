@@ -62,17 +62,6 @@
     <string name="menu_ManageCategories_search_help_text">শুধুমাত্র আপনার অনুসন্ধানের সাথে মিলে যাওয়া প্রধান এবং উপবিভাগগুলো দেখানো হবে।</string>
     <string name="menu_ManageCategories_sort_help_text">বিভাগের তালিকাটি শিরোনাম (বর্ণনানুক্রমিক), ব্যবহারের হার, অথবা শেষবার এতে কোনো লেনদেন যুক্ত করার সময় অনুযায়ী সাজানো যেতে পারে।</string>
     <string name="cab_ManageCategories_color_help_text">আপনি প্রধান বিভাগগুলোতে একটি রঙ নির্ধারণ করতে পারেন। এই রঙটি চার্টে বিভাগটিকে উপস্থাপন করতে ব্যবহৃত হবে। উপবিভাগগুলো তাদের প্রধান বিভাগের রঙের শেড ব্যবহার করবে।</string>
-    <string name="help_ExpenseEdit_transaction_title">লেনদেনের জন্য ফর্ম</string>
-    <string name="help_ExpenseEdit_transfer_title">স্থানান্তরের জন্য ফর্ম</string>
-    <string name="help_ExpenseEdit_split_title">বিভাজনের জন্য ফর্ম</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">বিভাগ বিভাজনের অংশগুলোর জন্য ফর্ম</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">স্থানান্তর বিভাজনের অংশগুলোর জন্য ফর্ম</string>
-    <string name="help_ExpenseEdit_templateCategory_title">লেনদেনের টেমপ্লেটগুলোর জন্য ফর্ম</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">স্থানান্তরের টেমপ্লেটগুলোর জন্য ফর্ম</string>
-    <string name="help_ExpenseEdit_templateSplit_title">বিভাজনের টেমপ্লেটগুলোর জন্য ফর্ম</string>
-    <string name="help_ExpenseEdit_transaction_info">একটি নতুন লেনদেন লিখতে বা বিদ্যমান কোনো লেনদেন সম্পাদনা করতে এই ফর্মটি ব্যবহার করুন। একটি নতুন স্থানান্তর বা স্প্লিট লেনদেন যোগ করার ফর্মে যেতে অ্যাকশনবারের ড্রপডাউন মেনুটি ব্যবহার করুন।</string>
-    <string name="help_ExpenseEdit_templateCategory_info">একটি নতুন টেমপ্লেট লিখতে বা বিদ্যমান কোনো টেমপ্লেট সম্পাদনা করতে এই ফর্মটি ব্যবহার করুন। লেনদেন, স্থানান্তর এবং স্প্লিটের টেমপ্লেটগুলোর মধ্যে পরিবর্তন করতে অ্যাকশনবারের ড্রপডাউন মেনুটি ব্যবহার করুন।</string>
-    <string name="help_ExpenseEdit_split_info">একটি স্প্লিট লেনদেন হলো একটি একক লেনদেন যা বিভিন্ন অংশে বিভক্ত, যেখানে প্রতিটি অংশকে একটি ভিন্ন বিভাগে নির্ধারণ করা যেতে পারে, অথবা একটি ভিন্ন হিসাবে স্থানান্তর করা যেতে পারে।</string>
     <string name="form_account_help_text">লেনদেনটি যে হিসাবের অন্তর্ভুক্ত, সেটি নির্বাচন করুন।</string>
     <string name="form_date_time_help_text">লেনদেনটি যে তারিখ এবং সময়ে হয়েছিল তা লিখুন।</string>
     <string name="form_date_time_help_text_configuration">সেটিংসে আপনি সময় ইনপুট নিষ্ক্রিয় করতে পারেন এবং বুকিং তারিখ ও ভ্যালু তারিখের মধ্যে পার্থক্য করা সক্ষম করতে পারেন।</string>
@@ -88,7 +77,6 @@
     <string name="form_split_parts_heading_help_text_1">প্রয়োজন অনুযায়ী যতগুলো ইচ্ছা স্প্লিট অংশ লিখতে + আইকনটি ব্যবহার করুন।</string>
     <string name="form_split_parts_heading_help_text_2">পরিমাণ ফিল্ডটি স্বয়ংক্রিয়ভাবে অংশগুলোর যোগফলের সাথে আপডেট হয়ে যাবে, যদি না আপনি ম্যানুয়ালি কোনো পরিমাণ লেখেন; সেক্ষেত্রে অংশগুলোর যোগফল এবং পরিমাণের (অবিভক্ত পরিমাণ) মধ্যকার পার্থক্যটি দেখানো হবে।</string>
     <string name="form_split_parts_heading_help_text_3">আপনি স্প্লিট লেনদেনটি তখনই সেভ করতে পারবেন, যদি লেনদেনের পরিমাণটি সঠিকভাবে বরাদ্দ করা হয়ে থাকে।</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">এই স্প্লিট অংশের জন্য একটি বিভাগ নির্বাচন করুন।</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">এই অবজেক্টটি যে হিসাব থেকে বা যে হিসাবে স্থানান্তর করা হয়েছে, তা নির্ধারণ করুন।</string>
     <string name="form_exchange_rate_help_text">আপনি স্থানান্তরের যেকোনো দিকের হার নির্ধারণ করতে পারেন। বিপরীত হার এবং বিনিময় হারের নির্ভরশীল অংশের সাথে সম্পর্কিত পরিমাণ স্বয়ংক্রিয়ভাবে গণনা করা হয়।</string>
     <string name="form_title_help_text">এমন একটি শিরোনাম লিখুন যা টেমপ্লেটটিকে অনন্যভাবে চিহ্নিত করে।</string>
@@ -100,7 +88,6 @@
     <string name="menu_original_amount_help_text">এমন একটি ফিল্ড দেখান যা একটি অতিরিক্ত পরিমাণ নির্ধারণ করতে দেয়। উদাহরণস্বরূপ, আপনি যদি আপনার ক্রেডিট কার্ড দিয়ে বিদেশী মুদ্রায় পেমেন্ট করেন, তাহলে কার্ড থেকে ডেবিট হওয়া পরিমাণের পাশাপাশি আপনি আসল দামটিও মনে রাখতে পারবেন। যোগফল হিসাব করার সময় আসল পরিমাণটি বাদ দেওয়া হয়।</string>
     <string name="menu_equivalent_amount_help_text">সমস্ত হিসাবের সর্বমোট পরিমাণ গণনা করার জন্য, বিদেশী মুদ্রার হিসাবগুলোর লেনদেনকে এমন একটি বিনিময়ের হার দিয়ে গুণ করা হয় যা আপনি ওই হিসাবটির জন্য নির্ধারণ করেন।</string>
     <string name="menu_invert_transfer_help_text">\'থেকে\' এবং \'প্রতি\' হিসাব অদলবদল করে স্থানান্তরের দিক উল্টে দিন।</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">যদি \'থেকে\' এবং \'প্রতি\' হিসাবের মুদ্রা আলাদা হয়, তাহলে আপনি শুধুমাত্র যেকোনো একটির পরিমাণ নির্ধারণ করবেন। টেমপ্লেট থেকে ইনস্ট্যান্স তৈরি করার সময় অন্যটি গণনা করা হবে।</string>
     <string name="form_goal_or_limit_help_text">এই ফিল্ডটি একটি ধনাত্মক সঞ্চয় লক্ষ্য অথবা একটি ঋণাত্মক ক্রেডিট সীমা নির্ধারণ করতে দেয়। উভয় ক্ষেত্রেই, হিসাবের তালিকায় একটি অগ্রগতি নির্দেশক বর্তমান ব্যালেন্স এবং লক্ষ্য বা সীমার মধ্যকার দূরত্বটি প্রদর্শন করে।</string>
     <string name="menu_templates_help_text">এমন একটি মেনু খুলুন যা সমস্ত টেমপ্লেটের তালিকা দেখায়, যাতে সেগুলোকে দ্রুত ফর্মে লোড করা যায়।</string>
     <string name="menu_create_template_from_transaction_help_text">এটি চেক করা থাকলে, লেনদেনটি টেমপ্লেট হিসেবেও সেভ করা হবে। আপনি এর শিরোনাম নির্ধারণ করতে পারেন এবং ঐচ্ছিকভাবে স্বয়ংক্রিয় পুনরাবৃত্তির জন্য একটি প্ল্যান সেট করতে পারেন।</string>

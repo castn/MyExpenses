@@ -45,17 +45,6 @@
     <string name="menu_ManageCategories_search_help_text">Будут отображены только основные категории и подкатегории, которые соответствуют вашему запросу. будет отображаться.</string>
     <string name="menu_ManageCategories_sort_help_text">Список категорий может быть отсортирован по заголовку (в алфавитном порядке), по частоте использования или по времени последней операции внутри категории.</string>
     <string name="cab_ManageCategories_color_help_text">Вы можете назначить цвет основным категориям. Этот цвет будет использоваться для представления категории в диаграммах. Подкатегории будут использовать оттенки цвета их основной категории.</string>
-    <string name="help_ExpenseEdit_transaction_title">Форма для операций</string>
-    <string name="help_ExpenseEdit_transfer_title">Форма для переводов</string>
-    <string name="help_ExpenseEdit_split_title">Форма для разделений</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Форма для разделения на части категорий</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Форма для разделения на части переводов</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Форма для шаблонов операций</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Форма для шаблонов переводов</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Форма для разделенных шаблонов</string>
-    <string name="help_ExpenseEdit_transaction_info">Используйте эту форму для ввода новой трансакции или редактирования существующей. Используйте выпадающее меню на панели действий, чтобы переключиться на форму для добавления новой трансакции переноса или разделения.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Используйте эту форму, чтобы ввести новый шаблон или отредактировать существующий. Используйте выпадающее меню на панели действий для переключения между шаблонами для трансакций, переводов и разделений.</string>
-    <string name="help_ExpenseEdit_split_info">Разделенная транзакция - это отдельная транзакция, разделенная на части, где каждая часть может быть отнесена к другой категории или перенесена на другой счет.</string>
     <string name="form_account_help_text">Выберите учетную запись, к которой относится трансакция.</string>
     <string name="form_date_time_help_text">Введите дату и время совершения трансакции.</string>
     <string name="form_date_time_help_text_configuration">В настройках вы можете отключить ввод времени и включить различие между датой бронирования и датой валютирования.</string>
@@ -68,7 +57,6 @@
     <string name="form_attach_image_help_text"><![CDATA[Кнопка<img src=\"android:ic_menu_camera\"> позволяет прикрепить изображение (например, из галереи или камеры) к объекту.]]></string>
     <string name="form_category_help_text">Эта кнопка открывает список категорий, где вы можете выбрать категорию, которую хотите сопоставить с трансакцией.</string>
     <string name="form_split_parts_heading_help_text_3">Сохранить разделенную трансакцию можно только в том случае, если сумма трансакции была точно назначена.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Выберите категорию для этой разделенной части.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Назначьте учетные записи, с которых этот объект переносится от или до.</string>
     <string name="form_exchange_rate_help_text">Вы можете указать тариф в любом из двух направлений перевода. Обратный курс и сумма, соответствующая зависимой части обменного курса, рассчитываются автоматически.</string>
     <string name="form_title_help_text">Введите не повторяющейся заголовок, который идентифицирует шаблон.</string>
@@ -78,7 +66,6 @@
     <string name="menu_save_help_text">Сохранить данные и закрыть форму.</string>
     <string name="menu_original_amount_help_text">Покажите поле, в котором можно указать дополнительную сумму. Например, если вы платите своей кредитной картой в иностранной валюте, вы можете запомнить исходную цену в дополнение к сумме, списанной с вашей карты. Исходная сумма не учитывается при расчете сумм.</string>
     <string name="menu_invert_transfer_help_text">Инвертировать направление перевода путем перестановки счёта \"От\" к \"Кому\".</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Если валюты счета «От» и «Кому» различаются, вы указываете сумму только для одной из них. Другой будет рассчитан при создании инстанс из шаблона.</string>
     <string name="form_goal_or_limit_help_text">В этом поле можно указать положительную цель сбережений или отрицательный лимит кредита. В любом случае в списке счетов индикатор прогресса отображает расстояние между текущим балансом и целью или лимитом.</string>
     <string name="help_AccountEdit_title">Форма для счетов</string>
     <string name="form_AccountEdit_label_help_text">Метка идентифицирует учетную запись в перечне учетных записей.</string>

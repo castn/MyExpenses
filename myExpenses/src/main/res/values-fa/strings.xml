@@ -342,7 +342,6 @@
     <!-- %1$s date, %2$s price  -->
     <string name="extend_until">تا %1$s تمدید کنید برای %2$s</string>
     <string name="donate_button_invoice">فاکتور</string>
-    <string name="auto_fill_account_from_aggregate_only">فقط وقتی از حساب جمع شروع می شود.</string>
     <string name="sync_auth_exception">مجوز ناموفق بود.</string>
     <string name="sync_login_again"> لطفا دوباره وارد شوید.</string>
     <!-- the date on which the transaction took place, aka transaction date, as opposed to value date -->
@@ -488,7 +487,6 @@
     </plurals>
     <string name="warning_balance_account">لطفاً مجموع تسویه شده را با مانده پایانی صورت حساب بانکی خود مقایسه کنید. اگر ادامه دهید، تراکنش‌های پاک‌شده به‌عنوان تطبیق‌شده علامت‌گذاری می‌شوند.</string>
     <string name="warning_change_fraction_digits_3">اگر مقادیر به روز شوند، اطلاعات مربوط به بخش کسری آنها را از دست خواهید داد.</string>
-    <string name="hint_auto_fill">آیا داده ها باید به طور خودکار از آخرین تراکنش برای همان گیرنده یا پرداخت کننده پر شود؟ همیشه می توانید این رفتار را از تنظیمات تغییر دهید.</string>
     <string name="warning_change_fraction_digits_2_multiplied" tools:ignore="PluralsCandidate">اگر مقادیر به روز نشوند، پس از تغییر به صورت ضرب در %d نمایش داده خواهند شد.</string>
     <string name="pref_manage_stale_images_summary">تصاویر باقی مانده از تراکنش های حذف شده را مدیریت کنید</string>
     <string name="account_deleted">حساب حذف شده است</string>

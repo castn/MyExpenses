@@ -69,17 +69,6 @@
     <string name="menu_ManageCategories_search_help_text">Apenas a categoria principal e as subcategorias que coincidem com a sua pesquisa serão exibidas.</string>
     <string name="menu_ManageCategories_sort_help_text">A lista de categorias pode ser ordenada por título (alfabeticamente), por frequência de usos, ou pela última categoria atribuída a uma transação.</string>
     <string name="cab_ManageCategories_color_help_text">Pode atribuir uma cor às categorias principais. Esta cor será usada para representar a categoria nos gráficos. As subcategorias usarão tons da cor da categoria principal dela.</string>
-    <string name="help_ExpenseEdit_transaction_title">Formulário para transações</string>
-    <string name="help_ExpenseEdit_transfer_title">Formulário para transferências</string>
-    <string name="help_ExpenseEdit_split_title">Formulário para divisões</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Formulário para divisões (categoria)</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Formulário para divisões (transferência)</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Formulário para modelos de transações</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Formulário para modelos de transferências</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Formulário para modelos de divisão</string>
-    <string name="help_ExpenseEdit_transaction_info">Utilize este formulário para introduzir uma nova transação ou para editar uma já existente. Utilize o menu em cascata na barra de ações para mudar para o formulário de adição de uma nova transferência ou transação dividida.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Use este formulário para inserir um novo modelo ou para editar um existente. Use o menu suspenso na barra de ações para alternar entre os modelos de transações, transferências e divisões.</string>
-    <string name="help_ExpenseEdit_split_info">Uma transação dividida é uma transação única dividida em partes, onde cada parte pode ser atribuída a uma categoria diferente, ou transferida para uma conta diferente.</string>
     <string name="form_account_help_text">Selecionar a conta a que pretence a transação.</string>
     <string name="form_date_time_help_text">Insira a data e a hora em que a transação ocorreu.</string>
     <string name="form_date_time_help_text_configuration">Nas configurações, pode desativar a entrada de horário e permitir a diferenciação entre a data do movimento e a data valor.</string>
@@ -93,7 +82,6 @@
     <string name="form_category_help_text">Este botão abre a lista de categorias, onde poderá selecionar a categoria que pretende atribuir à transação.</string>
     <string name="form_split_parts_heading_help_text_2">O campo do montante será automaticamente atualizado com a soma das partes, a menos que digite um montante manualmente, nesse caso será exibida a diferença entre a soma das partes e o montante (não dividido).</string>
     <string name="form_split_parts_heading_help_text_3">Apenas pode guardar a transação dividida, se a quantia da transação foi exatamente designada.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Selecionar a categoria para esta divisão.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Designar as contas de ou para onde este objeto é transferido.</string>
     <string name="form_exchange_rate_help_text">Pode especificar uma taxa em ambas as direções da transferência. A taxa inversa e o montante correspondente à parte dependente da taxa de câmbio são calculados automaticamente.</string>
     <string name="form_title_help_text">Introduzir um título que identifica unicamente o modelo.</string>
@@ -105,7 +93,6 @@
     <string name="menu_original_amount_help_text">Exibe um campo que permite definir uma quantia adicional. Por exemplo, se paga com o seu cartão de crédito em moeda estrangeira, Pode lembrar o valor original além da quantia debitada do seu cartão. O valor original é ignorado para calcular as somas.</string>
     <string name="menu_equivalent_amount_help_text">Para calcular um total geral em todas as contas, as transações de contas em moeda estrangeira são multiplicadas por uma taxa de câmbio que definir para a conta.</string>
     <string name="menu_invert_transfer_help_text">Inverter a direção da transferência trocando o \'De\' e \'Para\' conta.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Se as moedas das contas \'De\' e \'Para\' forem diferentes, especifique a quantia apenas para uma delas. A outra será calculada quando criar ocorrências a partir do modelo.</string>
     <string name="form_goal_or_limit_help_text">Este campo permite especificar uma meta positiva de poupança ou um limite negativo de crédito. Em ambos os casos, na lista de contas, um indicador de progresso mostra a distância entre o saldo atual e a meta ou o limite.</string>
     <string name="menu_templates_help_text">Abra um menu que lista todos os modelos, permitindo carregá-los rapidamente no formulário.</string>
     <string name="menu_create_template_from_transaction_help_text">Se estiver marcada, a transação também será salva como modelo. Pode definir o título dele e, opcionalmente, um plano para recorrência automática.</string>

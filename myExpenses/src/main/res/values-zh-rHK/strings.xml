@@ -341,7 +341,6 @@
     <string name="comparison_operator_date_before">前</string>
     <string name="comparison_operator_date_after">後</string>
     <string name="premium_failed_or_canceled" ns0:ignore="UnusedResources">購買失敗或取消。</string>
-    <string name="hint_auto_fill">是否應該從同一收款人/付款人的最後一筆交易中自動填寫資料？您始終可以從設定中變更此行為。</string>
     <string name="change_fraction_digits_result" ns0:ignore="PluralsCandidate">貨幣為 %2$s 的 %1$d 帳戶已更新。</string>
     <string name="import_source_file">文件</string>
     <string name="pref_manage_stale_images_title">陳舊的圖像</string>
@@ -470,7 +469,6 @@
     <string name="extend_validity">延长有效期</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">从远程后端获取数据中。这可能要花点时间。</string>
     <string name="donate_button_invoice">发票</string>
-    <string name="auto_fill_account_from_aggregate_only">仅当从汇总账户启动时。</string>
     <string name="sync_auth_exception">授权失败。</string>
     <string name="sync_login_again">请重新登录。</string>
     <plurals name="delete_success">
@@ -600,8 +598,6 @@
     <string name="clone_and_remap_result">所选交易已被复制并重新分配映射。</string>
     <string name="remap_empty_list">找不到一个项目可以映射到所有选定的交易。</string>
     <string name="button_label_clone_and_remap">复制并重新分配映射</string>
-    <string name="pref_clone_with_current_date_summary_on">复制的交易使用当前日期</string>
-    <string name="pref_clone_with_current_date_summary_off">复制的交易保留原本日期</string>
     <string name="tags_create_or_select">创建或选择标签</string>
     <string name="pref_manage_tags_summary">添加，编辑或删除标签。</string>
     <string name="dialog_title_warning_delete_tag">確定刪除標籤？</string>
@@ -640,7 +636,6 @@
     <string name="select_package">请选择一个许可证包。</string>
     <string name="warning_balance_account_delete">如果继续，此账户的所有已对账交易将从数据库中删除，并且您将无法还原它们。</string>
     <string name="confirmation_load_template_discard_data">现有的表格数据将被丢弃。</string>
-    <string name="pref_clone_with_current_date_title">复制交易使用的日期</string>
     <string name="template_default_action_without_amount_hint">应该使用默认操作“编辑”来保存没有金额的模板</string>
     <string name="menu_save_and_new_content_description">交易保存后，表单仍维持打开状态并保留相同的数据内容，方便多次新建类似的交易。</string>
     <string name="pref_ocr_engine_title">文字识别引擎</string>
@@ -661,7 +656,6 @@
     <string name="merge_parties_select">请选择要合并的交易对象</string>
     <string name="active_tags">活跃标签</string>
     <string name="request_for_invoice">请求发票</string>
-    <string name="auto_fill_focus">設焦點於交易對象欄位</string>
     <string name="crash_reports_user_info">{app_name}會自動發送有關應用程序崩潰報告到它的開發者，這使得他們能夠更迅速地解決問題。</string>
     <string name="pref_enable_acra">允許自動發送崩潰報告</string>
     <string name="pref_acra_user_email">用戶的電子郵件被包含到崩潰報告</string>

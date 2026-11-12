@@ -78,7 +78,6 @@
     </plurals>
     <string name="sync_auth_exception">ప్రామాణీకరణ విఫలమైంది.</string>
     <string name="sync_login_again">దయచేసి మళ్ళీ లాగిన్ అవ్వండి.</string>
-    <string name="auto_fill_account_from_aggregate_only">మొత్తం ఖాతా నుండి ప్రారంభించినప్పుడు మాత్రమే.</string>
     <string name="donate_button_invoice">ఇన్వాయిస్</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">రిమోట్ బ్యాకెండ్ నుండి డేటాను పొందడం. దీనికి కొంత సమయం పడుతుంది.</string>
     <string name="extend_validity">చెల్లుబాటును విస్తరించండి</string>
@@ -189,7 +188,6 @@
     <string name="pref_csv_import_delimiter">డీలిమిటర్</string>
     <string name="import_source_file">ఫైల్</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%2$s కరెన్సీ ఉన్న%1$d ఖాతాలు నవీకరించబడ్డాయి.</string>
-    <string name="hint_auto_fill">అదే చెల్లింపుదారు / చెల్లించువారు కోసం చివరి లావాదేవీ నుండి డేటా స్వయంచాలకంగా నింపాలా? మీరు ఈ ప్రవర్తనను ఎల్లప్పుడూ సెట్టింగ్‌ల నుండి మార్చవచ్చు.</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">కొనుగోలు విఫలమైంది లేదా రద్దు చేయబడింది.</string>
     <string name="comparison_operator_date_after">తరువాత</string>
     <string name="comparison_operator_date_before">ముందు</string>
@@ -552,7 +550,6 @@
     <string name="menu_create_instance_save">వర్తించండి మరియు సేవ్ చేయండి</string>
     <string name="menu_create_instance_edit">వర్తించు మరియు సవరించండి</string>
     <string name="menu_create_account">కొత్త ఖాతా</string>
-    <string name="auto_fill_focus">చెల్లింపుదారు పై దృష్టి పెట్టండి</string>
     <string name="request_for_invoice">ఇన్వాయిస్ కోసం అభ్యర్థన</string>
     <string name="active_tags">సక్రియ ట్యాగ్‌లు</string>
     <string name="merge_parties_select">విలీనం చేసిన పార్టీ పేరును ఎంచుకోండి</string>
@@ -572,7 +569,6 @@
     <string name="pref_ocr_engine_title">టెక్స్ట్ గుర్తింపు కోసం ఇంజిన్</string>
     <string name="menu_save_and_new_content_description">డేటాను సేవ్ చేయండి, అదే డేటాతో క్రొత్త లావాదేవీని సృష్టించడానికి ఫారమ్‌ను తెరిచి ఉంచండి.</string>
     <string name="template_default_action_without_amount_hint">మొత్తం లేకుండా మూస డిఫాల్ట్ చర్య \'సవరించు\' తో సేవ్ చేయాలి</string>
-    <string name="pref_clone_with_current_date_title">క్లోన్ చేసిన లావాదేవీల తేదీ</string>
     <string name="confirmation_load_template_discard_data">ఇప్పటికే ఉన్న ఫారమ్ డేటా విస్మరించబడుతుంది.</string>
     <string name="warning_balance_account_delete">మీరు కొనసాగితే, ఈ ఖాతా యొక్క అన్ని రాజీ లావాదేవీలు డేటాబేస్ నుండి తొలగించబడతాయి మరియు మీరు వాటిని పునరుద్ధరించలేరు.</string>
     <string name="select_package">దయచేసి లైసెన్స్ ప్యాకేజీని ఎంచుకోండి.</string>
@@ -607,8 +603,6 @@
     <string name="dialog_title_warning_delete_tag">ట్యాగ్ తొలగించాలా\?</string>
     <string name="pref_manage_tags_summary">ట్యాగ్‌లను జోడించండి, సవరించండి, తొలగించండి.</string>
     <string name="tags_create_or_select">ట్యాగ్‌లను సృష్టించండి లేదా ఎంచుకోండి</string>
-    <string name="pref_clone_with_current_date_summary_off">క్లోన్ చేసిన లావాదేవీలు అసలు తేదీని ఉంచుతాయి</string>
-    <string name="pref_clone_with_current_date_summary_on">క్లోన్ చేసిన లావాదేవీలకు ప్రస్తుత తేదీ ఉంది</string>
     <string name="button_label_clone_and_remap">క్లోన్ మరియు రీమాప్</string>
     <string name="remap_empty_list">ఏ అంశం కనుగొనబడలేదు, అది ఎంచుకున్న అన్ని లావాదేవీలకు మ్యాప్ చేయవచ్చు.</string>
     <string name="clone_and_remap_result">ఎంచుకున్న లావాదేవీలను క్లోన్ చేసి రీమేప్ చేశారు.</string>

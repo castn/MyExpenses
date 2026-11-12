@@ -322,7 +322,6 @@
     <string name="after">%s کے بعد</string>
     <string name="comparison_operator_equal">برابر</string>
     <string name="comparison_operator_lesser_than">سے کم</string>
-    <string name="hint_auto_fill">کیا ایک ہی وصول کنندہ / ادا کنندہ کے لئے آخری لین دین سے ڈیٹا خود بخود بھرنا چاہئے؟ آپ ہمیشہ ترتیبات سے اس طرز عمل کو تبدیل کر سکتے ہیں.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">کرنسی %2$s والے %1$d اکاؤنٹس کو اپ ڈیٹ کر دیا گیا ہے.</string>
     <string name="import_source_file">فائل</string>
     <string name="search_amount">رقم تلاش کریں</string>
@@ -402,7 +401,6 @@
     <string name="contributed_by">%s کے ذریعے تعاون کیا گیا</string>
     <string name="pref_sync_notification_summary">مطابقت پذیری کی پیشرفت کے بارے میں مطلع کریں</string>
     <string name="feature_deprecated">فرسودہ</string>
-    <string name="auto_fill_account_from_aggregate_only">صرف اس وقت جب مجموعی اکاؤنٹ سے شروع کیا جائے.</string>
     <string name="sync_auth_exception">اجازت دینے میں ناکام.</string>
     <string name="sync_login_again">براہ کرم دوبارہ لاگ ان کریں.</string>
     <plurals name="delete_success">
@@ -484,7 +482,6 @@
     <string name="pref_feature_uninstall_summary">Play Store آخر کار پس منظر میں ان ماڈیولز کو ہٹانے کی کوشش کرتا ہے.</string>
     <string name="select_package">براہ کرم لائسنس پیکج منتخب کریں.</string>
     <string name="warning_balance_account_delete">اگر آپ آگے بڑھتے ہیں، تو اس اکاؤنٹ کے تمام مصالحت شدہ لین دین کو ڈیٹا بیس سے حذف کر دیا جائے گا اور آپ انہیں بحال نہیں کر سکیں گے.</string>
-    <string name="pref_clone_with_current_date_title">کلون شدہ لین دین کی تاریخ</string>
     <string name="template_default_action_without_amount_hint">رقم کے بغیر ٹیمپلیٹ کو ڈیفالٹ ایکشن \'ترمیم\' کے ساتھ محفوظ کیا جانا چاہیے</string>
     <string name="pref_ocr_engine_title">متن کی شناخت کے لیے انجن</string>
     <string name="pref_tesseract_language_title">ٹیسریکٹ کے لیے زبان</string>
@@ -610,8 +607,6 @@
     <string name="remapping_result">منتخب کردہ لین دین کو دوبارہ ترتیب دیا گیا.</string>
     <string name="clone_and_remap_result">منتخب کردہ ٹرانزیکشنز کو کلون اور ری میپ کیا گیا.</string>
     <string name="button_label_clone_and_remap">کلون اور ری میپ کریں</string>
-    <string name="pref_clone_with_current_date_summary_on">کلون شدہ لین دین کی موجودہ تاریخ ہے</string>
-    <string name="pref_clone_with_current_date_summary_off">کلون شدہ لین دین کی اصل تاریخ ہوتی ہے</string>
     <string name="tags_create_or_select">ٹیگز بنائیں یا منتخب کریں</string>
     <string name="remap_empty_list">کوئی آئٹم نہیں ملا، جسے تمام منتخب لین دین میں نقشہ بنایا جا سکے.</string>
     <string name="pref_planner_manual_time_current">درخواست کا وقت</string>
@@ -631,7 +626,6 @@
     <string name="merge_parties_select">ضم شدہ پارٹی کا نام منتخب کریں</string>
     <string name="active_tags">ایکٹو ٹیگز</string>
     <string name="request_for_invoice">انوائس کی درخواست</string>
-    <string name="auto_fill_focus">وصول کنندہ پر توجہ مرکوز کریں</string>
     <string name="warning_synchronization_select_parent" tools:ignore="UnusedResources">آپ نے جو فولڈر منتخب کیا ہے وہ موجودہ بیک اینڈ کے ایک اکاؤنٹ سے مساوی ہے. اس بیک اینڈ کو دوبارہ استعمال کرنے کے لیے آپ کو اس کا پیرنٹ فولڈر منتخب کرنا ہوگا.</string>
     <string name="sync_io_exception_reset_account_data">ریموٹ اکاؤنٹ کو ری سیٹ کرتے وقت خرابی.</string>
     <string name="sync_io_exception_setup_remote_account">ریموٹ اکاؤنٹ ترتیب دیتے وقت خرابی.</string>

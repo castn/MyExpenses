@@ -53,17 +53,6 @@
     <string name="menu_ManageCategories_search_help_text">Sólo se mostrarán las categorías principales y las subcategorías que coinciden con su consulta.</string>
     <string name="menu_ManageCategories_sort_help_text">La lista de categorías puede ordenarse por título (alfabéticamente), por la frecuencia de uso o por la última vez en que se le asignó una transacción.</string>
     <string name="cab_ManageCategories_color_help_text">Puede asignar colores a las categorías principales. Este color podrá usarse para representar la categoría en los gráficos. Las subcategorías usarán tonos del color de la categoría principal.</string>
-    <string name="help_ExpenseEdit_transaction_title">Formulario para transacciones</string>
-    <string name="help_ExpenseEdit_transfer_title">Formulario para transferencias</string>
-    <string name="help_ExpenseEdit_split_title">Formulario para transacciones divididas</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Formulario para partes de categorías divididas</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Formulario para partes de transferencias divididas</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Formulario para plantillas de transacciones</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Formulario para las plantillas de transferencias</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Formulario para plantillas divididas</string>
-    <string name="help_ExpenseEdit_transaction_info">Utilice este formulario para entrar en una transacción nueva o editar una existente. Utilice el menú desplegable en el barra de acción para cambiar al formulario para agregar una nueva transferencia o transacción dividida.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Use este formulario para introducir una nueva plantilla o para editar una existente. Use el menú desplegable en la barra de acción para cambiar entre plantillas de transacciones, transferencias y divisiones.</string>
-    <string name="help_ExpenseEdit_split_info">Una transacción dividida es una única transacción dividida en partes, donde cada parte puede ser asignada a una categoría diferente o transferida a otra cuenta diferente.</string>
     <string name="form_account_help_text">Seleccione la cuenta a la que pertenece la transacción.</string>
     <string name="form_date_time_help_text">Introducir la fecha y hora de cuándo se realizó la transacción.</string>
     <string name="form_date_time_help_text_configuration">En configuración, puede deshabilitar la entrada de tiempo y añadir una diferenciación entre la fecha de reserva y la fecha de valor.</string>
@@ -78,7 +67,6 @@
     <string name="form_category_help_text">Este botón abre la lista de categorías, donde puede seleccionar la categoría que desea asignar a la transacción.</string>
     <string name="form_split_parts_heading_help_text_1">Use el icono de \"+\" para ingresar tantas partes divididas como sean necesarias.</string>
     <string name="form_split_parts_heading_help_text_3">Sólo podrá guardar la transacción dividida, si el total de la transacción ha sido asignada de forma exacta.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Seleccione una categoría para esta parte dividida.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Asignar las cuentas desde o hacia las que se transfiere este objeto.</string>
     <string name="form_exchange_rate_help_text">Puede especificar la tasa de cambio en cualquiera de los dos sentidos de la transferencia. La tasa de cambio inversa y el importe correspondiente a la parte dependiente del tipo de cambio se calculan automáticamente.</string>
     <string name="form_title_help_text">Escriba un título que identifique la plantilla.</string>
@@ -90,7 +78,6 @@
     <string name="menu_original_amount_help_text">Mostrar un campo que permita definir una cantidad adicional. Por ejemplo, si paga con una tarjeta de crédito en una moneda extranjera, puede recordar el precio original además de la cantidad deducida de la tarjeta. Se ignora la cantidad original para calcular las sumas.</string>
     <string name="menu_equivalent_amount_help_text">Para calcular el total a través de todas las cuentas, las transacciones de cuentas de monedas extranjeras se multiplican por el tipo de cambio que esté establecido para la cuenta.</string>
     <string name="menu_invert_transfer_help_text">Invertir la dirección de la transferencia mediante el cambio de \'De\' y \'A\' de las cuentas.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Si las monedas de las cuentas de \'Desde\' y \'A\' son diferentes, especifique la cantidad de solo uno de ellos. El otro se calculará al crear instancias desde la plantilla.</string>
     <string name="form_goal_or_limit_help_text">Este campo le permite especificar tanto un objetivo de ahorro positivo o un límite de crédito negativo. En cualquier caso, desde la lista de cuenta, un indicador progresivo visualizará la distancia entre el balance actual y el objetivo o límite.</string>
     <string name="menu_templates_help_text">Abre un menú que enumera todas las plantillas, permitiendo cargarlas rápidamente en el formulario.</string>
     <string name="menu_create_template_from_transaction_help_text">Si se marca esta casilla, la transacción también se guardará como plantilla. Se puede definir su título y opcionalmente establecer un plan para su repetición automática.</string>

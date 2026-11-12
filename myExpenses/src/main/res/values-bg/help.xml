@@ -52,17 +52,6 @@
     <string name="menu_ManageCategories_search_help_text">Ще бъдат показани само категориите (главна и подкатегория), съответстващи на заявката за търсене.</string>
     <string name="menu_ManageCategories_sort_help_text">Списъка на категориите може да е подреден по име (в азбучен ред), по честота на използване или по последно използвана категория.</string>
     <string name="cab_ManageCategories_color_help_text">Може да зададете цвят на главните категории. Този цвят ще се използва за представяне на категорията в графиките. Подкатегориите ще използват нюанси на цвета на главната категория.</string>
-    <string name="help_ExpenseEdit_transaction_title">Бланка за транзакция</string>
-    <string name="help_ExpenseEdit_transfer_title">Бланка за трансфер</string>
-    <string name="help_ExpenseEdit_split_title">Бланка за разпределена транзакция</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Бланка за категория на разпределяната част</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Бланка за трансфер на разпределяната част</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Бланка за шаблон за транзакция</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Бланка за шаблон за трансфер</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Бланка за шаблон за разпределена транзакция</string>
-    <string name="help_ExpenseEdit_transaction_info">Използвайте тази бланка за да въведете нова транзакция или да редактирате съществуваща. Използвайте падащото меню в лентата за действие за да превключите към бланка за добавяне на нов трансфер или нова разпределена транзакция.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Използвайте тази бланка за да въведете нов шаблон или да редактирате съществуващ. Използвайте падащото меню в лентата за действие за да превключите към шаблони за тразнзакция, трансфер или разпределена транзакция.</string>
-    <string name="help_ExpenseEdit_split_info">Разпределена транзакция е такава, чиято сума се разделя на части, на които могат да се приложат различни категории или частта да се трансферира към друга сметка.</string>
     <string name="form_account_help_text">Изберете сметката, в която да се запише транзакцията.</string>
     <string name="form_date_time_help_text">Въведете датата и часа на извършване на транзакцията.</string>
     <string name="form_date_time_help_text_configuration">В Настройки може да изключите въвеждане на времето на транзакцията и да разрешите дата на резервацията и дата на вальора.</string>
@@ -76,7 +65,6 @@
     <string name="form_default_action_help_text">За всеки шаблон може да конфигурирате дали краткото докосване върху него в списъка с шаблони ще запази незабавно екземпляр или ще го отвори за редактиране, където може да направите промени преди да запазите. Винаги може да получите достъп до двете действия чрез дълго натискане.</string>
     <string name="form_category_help_text">Този бутон отваря списък с категории, от който може да изберете категория, която да приложите на транзакцията.</string>
     <string name="form_split_parts_heading_help_text_3">Ще може да запазите транзакцията само ако сумата е точно разпределена.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Изберете категория за тази разпределяна част.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Определете сметките, между които се трансферира сумата.</string>
     <string name="form_exchange_rate_help_text">Задайте обменен курс на валутата в едната от двете страни на трансфера. Обратния курс и съответната сума за трансфер се изчисляват автоматично.</string>
     <string name="form_title_help_text">Въведете име, което да идентифицира уникално шаблона.</string>
@@ -88,7 +76,6 @@
     <string name="menu_original_amount_help_text">Показва поле, в което да запишете допълнителна сума. Например, ако плащате с кредитната си карта в чуждестранна валута, може да си запишете цената в друга валута, в допълнение към сумата, дебитирана от вашата карта. Тази стойност не се използва при изчисляване на сумите.</string>
     <string name="menu_equivalent_amount_help_text">При изчисляване на обща сума за всички сметки, транзакциите с различна от основната валута се умножават по разменния курс, който сте задали за сметката.</string>
     <string name="menu_invert_transfer_help_text">Сменя посоката на трансфера чрез размяна на сметките От и Към.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Ако валутите на сметките \'От\' и \'Към\' са различни, задайте сума само в едната от тях. Сумата в другата сметка ще се изчисли когато създавате транзакция от шаблона.</string>
     <string name="form_goal_or_limit_help_text">Това поле позволява да посочите или положителна цел за спестяване или отрицателен кредитен лимит. И в двата случая в списъка на сметки индикатор за напредък показва отстоянието между текущото салдо и целта или лимита.</string>
     <string name="menu_templates_help_text">Отваряте меню, в което са изброени всички шаблони. Позволява бързо зареждане на шаблон във формуляра.</string>
     <string name="menu_create_template_from_transaction_help_text">Ако тук е отметнато, транзакцията ще бъде запазена и като шаблон. Може да дефинирате заглавието му и по желание да зададете план за автоматично повтаряне.</string>

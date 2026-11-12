@@ -45,17 +45,6 @@
     <string name="menu_ManageCategories_search_help_text">クエリに一致するメインとサブカテゴリーのみ表示されます。</string>
     <string name="menu_ManageCategories_sort_help_text">分類リストは、タイトル (アルファベット順)、使用頻度、または取引がマップされた最後の時間によってソートすることができます。</string>
     <string name="cab_ManageCategories_color_help_text">主分類に色を割り当てることができます。 この色は、グラフの分類を表すために使用されます。 副分類は、主分類の色の陰影を使用します。</string>
-    <string name="help_ExpenseEdit_transaction_title">取引用のフォーム</string>
-    <string name="help_ExpenseEdit_transfer_title">振替用のフォーム</string>
-    <string name="help_ExpenseEdit_split_title">分割用のフォーム</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">分類分割パート用のフォーム</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">振替分割パート用のフォーム</string>
-    <string name="help_ExpenseEdit_templateCategory_title">取引テンプレート用のフォーム</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">振替テンプレート用のフォーム</string>
-    <string name="help_ExpenseEdit_templateSplit_title">分割テンプレート用のフォーム</string>
-    <string name="help_ExpenseEdit_transaction_info">このフォームを使用して、新しい取引を入力するか、既存のものを編集することができます。アクションバーのドロップダウンメニューを使用して、新しい振替や分割取引を追加するフォームに切り替えることができます。</string>
-    <string name="help_ExpenseEdit_templateCategory_info">このフォームを使用して、新しい取引を入力するか、既存のものを編集することができます。アクションバーのドロップダウンメニューを使用して、取引、振替、分割のテンプレートを切り替えることができます。</string>
-    <string name="help_ExpenseEdit_split_info">分割取引は、一部が分割された一つの取引で、各部分が別の分類に割り当てられ、または別の勘定に振替することができます。</string>
     <string name="form_account_help_text">取引が属する勘定を選択します。</string>
     <string name="form_date_time_help_text">取引が行われた日時を入力します。</string>
     <string name="form_date_time_help_text_configuration">設定で、時間入力を無効にして、予約日と実行日を区別するようにすることができます。</string>
@@ -68,7 +57,6 @@
     <string name="form_attach_image_help_text"><![CDATA[<img src=\"android:ic_menu_camera\"> ボタンをクリックすると、オブジェクトに (例えばギャラリーやカメラから) 画像を添付することができます。]]></string>
     <string name="form_category_help_text">このボタンは、取引にマップしたい分類を選択できる、分類のリストが表示されます。</string>
     <string name="form_split_parts_heading_help_text_3">取引金額が正確に割り当てられている場合にのみ、分割取引を保存することができます。</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">分割部分の分類を選択します。</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">この対象の振替元または先の勘定を割り当てます。</string>
     <string name="form_exchange_rate_help_text">振替の双方のいずれかのレートを指定することができます。逆のレートと為替レートの依存する部分に相当する金額は自動的に計算されます。</string>
     <string name="form_title_help_text">テンプレートを一意に識別するタイトルを入力してください。</string>
@@ -79,7 +67,6 @@
     <string name="menu_original_amount_help_text">追加金額を定義できるフィールドを表示します。 たとえば、クレジットカードで外貨を支払う場合、カードから引き落とされた金額に加えて、元の価格を覚えておくことができます。 合計の計算には元の金額は無視されます。</string>
     <string name="menu_equivalent_amount_help_text">すべての勘定科目の総額を計算するため、外貨勘定の取引に、勘定科目に設定した為替レートを掛けます。</string>
     <string name="menu_invert_transfer_help_text">勘定の \'元\' と \'先\' を入れ換えて、振替の向きを反転させます。</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">勘定の \'元\' と \'先\' の通貨が異なる場合は、そのうちの一つだけ金額を指定します。テンプレートからインスタンスを作成するときには、他方は計算されます。</string>
     <string name="form_goal_or_limit_help_text">このフィールドは、ポジティブな貯蓄目標またはネガティブなクレジット限度のいずれかを指定できます。 どちらの場合も、口座一覧で、現在の残高と目標または上限との間の距離を進捗インジケータが視覚化します。</string>
     <string name="help_AccountEdit_title">勘定用のフォーム</string>
     <string name="form_AccountEdit_label_help_text">ラベルは、勘定のリストで勘定を識別します。</string>

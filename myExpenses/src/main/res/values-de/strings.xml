@@ -377,7 +377,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">nach</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">Einkauf ist gescheitert oder abgebrochen.</string>
-    <string name="hint_auto_fill">Sollen Daten automatisch auf Basis der letzten Buchung für dieselbe Gegenpartei ausgefüllt werden? Sie können dieses Verhalten jederzeit in den Einstellungen ändern.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%1$d Konten mit Währung %2$s wurden aktualisiert.</string>
     <string name="import_source_file">Datei</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -508,7 +507,6 @@
     <string name="extend_validity">Gültigkeit verlängern</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Daten werden vom entfernten Backend geladen. Dies könnte eine Weile dauern.</string>
     <string name="donate_button_invoice">Rechnung</string>
-    <string name="auto_fill_account_from_aggregate_only">Nur wenn vom Gesamtkonto gestartet.</string>
     <string name="sync_auth_exception">Autorisation fehlgeschlagen.</string>
     <string name="sync_login_again">Bitte melden Sie sich erneut an.</string>
     <plurals name="delete_success">
@@ -655,9 +653,7 @@
     <!-- The label for the button, where user confirms that he wants to clone the selected transactions and then remap them. -->
     <string name="button_label_clone_and_remap">Klonen und neu zuordnen</string>
     <!-- The summary of a preference toggle. If switched on cloned transactions have the date set to the current date -->
-    <string name="pref_clone_with_current_date_summary_on">Geklonte Buchungen haben das aktuelle Datum</string>
     <!-- The summary of a preference toggle. If switched off cloned transactions keep the original date -->
-    <string name="pref_clone_with_current_date_summary_off">Geklonte Buchungen behalten das ursprüngliche Datum</string>
     <string name="tags_create_or_select">Schlagwörter erstellen oder auswählen</string>
     <string name="pref_manage_tags_summary">Schlagwörter hinzufügen, bearbeiten, löschen.</string>
     <string name="dialog_title_warning_delete_tag">Schlagwort löschen?</string>
@@ -713,7 +709,6 @@
     <string name="warning_balance_account_delete">Wenn Sie fortfahren, werden alle abgeglichenen Buchungen dieses Kontos aus der Datenbank gelöscht und Sie können diese nicht wiederherstellen.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">Vorhandene Formulardaten werden verworfen.</string>
-    <string name="pref_clone_with_current_date_title">Datum der geklonten Buchungen</string>
     <string name="template_default_action_without_amount_hint">Vorlage ohne Betrag sollte mit der Standardaktion „Bearbeiten“ gespeichert werden</string>
     <string name="menu_save_and_new_content_description">Abspeichern, und das Formular für das Erfassen einer neuen Buchung mit denselben Daten offen lassen.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
@@ -748,7 +743,6 @@
     <!-- This is used in the title of the email by which user requests an invoice for payment via bank transfer -->
     <string name="request_for_invoice">Rechnungsanfrage</string>
     <!-- Enables Focus on the Payee field for Auto fill -->
-    <string name="auto_fill_focus">Stellen Sie den Fokus auf den Zahlungsempfänger</string>
     <!-- This warning is shown when a user calls the Reset or Cancel commands on a scheduled transaction, for a date
      where the transaction has already been created.  -->
     <string name="crash_reports_user_info">{app_name} sendet Berichte über Abstürze automatisch an seine Entwickler, wodurch Probleme schneller gelöst werden können.</string>

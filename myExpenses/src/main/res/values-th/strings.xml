@@ -337,7 +337,6 @@
     <string name="comparison_operator_between">ระหว่าง</string>
     <string name="comparison_operator_date_before">ก่อน</string>
     <string name="comparison_operator_date_after">หลัง</string>
-    <string name="hint_auto_fill">ควรกรอกข้อมูลอัตโนมัติจากรายการล่าสุดสำหรับผู้รับเงิน/ผู้จ่ายเงินเดียวกันหรือไม่? คุณสามารถเปลี่ยนการทำงานนี้ได้ตลอดเวลาในการตั้งค่า</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">อัปเดตบัญชี %1$d บัญชีด้วยสกุลเงิน %2$s เรียบร้อยแล้ว</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">การซื้อไม่สำเร็จหรือถูกยกเลิก</string>
     <string name="import_source_file">ไฟล์</string>
@@ -429,7 +428,6 @@
     <string name="extended_upgrade_goodie_github" tools:ignore="PluralsCandidate">เพิ่มอีก %d เดือนให้กับผู้ใช้ที่ถือลิขสิทธิ์ส่วนขยายอยู่แล้ว (ให้ครั้งเดียว)</string>
     <string name="extend_validity">ขยายระยะเวลาการใช้งาน</string>
     <string name="donate_button_invoice">ใบแจ้งหนี้</string>
-    <string name="auto_fill_account_from_aggregate_only">เฉพาะเมื่อเริ่มจากบัญชีรวมเท่านั้น</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">กำลังดึงข้อมูลจากแบ็กเอนด์ระยะไกล อาจใช้เวลาสักครู่</string>
     <string name="sync_auth_exception">การอนุญาตล้มเหลว</string>
     <string name="sync_login_again">กรุณาเข้าสู่ระบบอีกครั้ง</string>
@@ -672,7 +670,6 @@
     <string name="warning_balance_account_delete">หากคุณดำเนินการต่อ รายการทั้งหมดที่กระทบยอดแล้วของบัญชีนี้จะถูกลบออกจากฐานข้อมูลและคุณจะไม่สามารถกู้คืนได้</string>
     <string name="confirmation_load_template_discard_data">ข้อมูลฟอร์มที่มีอยู่จะถูกยกเลิก</string>
     <string name="pref_feature_uninstall_summary">Play Store จะพยายามลบโมดูลเหล่านั้นในพื้นหลังในที่สุด</string>
-    <string name="pref_clone_with_current_date_title">วันที่ของรายการที่โคลนมา</string>
     <string name="template_default_action_without_amount_hint">แม่แบบที่ไม่มีจำนวนเงินควรบันทึกด้วยการกระทำเริ่มต้น \'แก้ไข\'</string>
     <string name="menu_save_and_new_content_description">บันทึกข้อมูล แล้วเปิดฟอร์มไว้เพื่อสร้างรายการใหม่ด้วยข้อมูลเดียวกัน</string>
     <string name="pref_ocr_engine_title">เครื่องมือสำหรับการจดจำข้อความ</string>
@@ -683,7 +680,6 @@
     <string name="budget_widget_configuration">เลือกงบประมาณ</string>
     <string name="merge_parties_select">เลือกชื่อของคู่กรณีที่รวมกัน</string>
     <string name="active_tags">แท็กที่ใช้งานอยู่</string>
-    <string name="auto_fill_focus">ตั้งโฟกัสที่ผู้รับเงิน/ผู้จ่ายเงิน</string>
     <string name="pref_enable_acra">อนุญาตให้ส่งรายงานข้อผิดพลาดอัตโนมัติ</string>
     <string name="backup_save_to_sync_backend">บันทึกไปยัง %s</string>
     <string name="pref_csv_export_split_categories_summary">ใช้คอลัมน์แยกสำหรับแต่ละระดับของลำดับชั้นหมวดหมู่</string>
@@ -731,7 +727,6 @@
     <string name="recalculate_equivalent_amounts_warning">จำนวนที่เท่ากันจะถูกคำนวณใหม่หากมีอัตราแลกเปลี่ยนที่บันทึกไว้ applicable</string>
     <string name="archive_warning">รายการทั้งหมด (%d) ในช่วงวันที่ที่เลือกจะถูกเก็บถาวร</string>
     <string name="discover_feature_expense_income_switch" tools:ignore="UnusedResources">ใช้ปุ่มสวิตช์นี้เพื่อบันทึกรายรับ</string>
-    <string name="pref_clone_with_current_date_summary_on">รายการที่โคลนมาจะมีวันที่ปัจจุบัน</string>
     <string name="app_restart_required">การกำหนดค่าใหม่ต้องการให้เริ่มต้นแอปใหม่เพื่อให้มีผล</string>
     <string name="pref_purge_backup_require_confirmation_summary">แสดงข้อความยืนยันก่อนล้างไฟล์</string>
     <string name="warning_party_delete_debt">เมื่อลบคู่กรณีนี้ หนี้สินที่กำหนดไว้จะถูกลบไปด้วย</string>
@@ -783,7 +778,6 @@
     <string name="database_is_encrypted">ฐานข้อมูลถูกเข้ารหัสแล้ว</string>
     <string name="budget_filter_all_accounts">ทุกบัญชี</string>
     <string name="remap_method">รายการที่เลือกทั้งหมดจะถูกแมปไปยังวิธีการ %s</string>
-    <string name="pref_clone_with_current_date_summary_off">รายการที่โคลนมาจะคงวันที่เดิมไว้</string>
     <string name="pref_criterion_future_current">เวลาปัจจุบัน</string>
     <string name="select_package">กรุณาเลือกแพ็คเกจลิขสิทธิ์</string>
     <string name="request_for_invoice">คำขอใบแจ้งหนี้</string>

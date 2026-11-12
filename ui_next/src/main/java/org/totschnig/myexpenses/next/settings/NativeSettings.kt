@@ -19,18 +19,9 @@ import org.totschnig.myexpenses.preference.PrefKey.ATTACHMENT_MIME_TYPES
 import org.totschnig.myexpenses.preference.PrefKey.AUTO_BACKUP
 import org.totschnig.myexpenses.preference.PrefKey.AUTO_BACKUP_TIME
 import org.totschnig.myexpenses.preference.PrefKey.AUTO_BACKUP_UNENCRYPTED_INFO
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_ACCOUNT
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_AMOUNT
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_CATEGORY
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_COMMENT
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_DEBT
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_FOCUS
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_METHOD
-import org.totschnig.myexpenses.preference.PrefKey.AUTO_FILL_SWITCH
 import org.totschnig.myexpenses.preference.PrefKey.BACKUP_FILE_PREFIX
 import org.totschnig.myexpenses.preference.PrefKey.CAMERA_APP
 import org.totschnig.myexpenses.preference.PrefKey.CAMERA_CHOOSER
-import org.totschnig.myexpenses.preference.PrefKey.CLONE_WITH_CURRENT_DATE
 import org.totschnig.myexpenses.preference.PrefKey.CONTENT_BASED_COLORS
 import org.totschnig.myexpenses.preference.PrefKey.COPY_ATTACHMENT
 import org.totschnig.myexpenses.preference.PrefKey.CRASHREPORT_ENABLED
@@ -301,23 +292,25 @@ object NativeSettings {
         put(
             DEFAULT_ACTION, NativeSetting(
                 storage = Storage.DATA_STORE,
-                // Without a fixed action, the plus button of the new account page opens a menu of all kinds
+                // Without a fixed action, the plus button of the new account page opens a menu of all kinds;
+                // transfers and splits are no longer entered by hand
                 options = {
                     listOf(
                         "LastVisited" to getString(NextR.string.next_settings_default_action_menu),
                         "Expense" to getString(R.string.expense),
                         "Income" to getString(R.string.income),
-                        "Transfer" to getString(R.string.transfer),
-                        "Split" to getString(R.string.split_transaction),
                         "Scan" to getString(R.string.button_scan)
                     )
                 }
             )
         )
         listOf(
-            AUTO_FILL_SWITCH, AUTO_FILL_AMOUNT, AUTO_FILL_CATEGORY, AUTO_FILL_COMMENT, AUTO_FILL_ACCOUNT,
-            AUTO_FILL_METHOD, AUTO_FILL_DEBT, AUTO_FILL_FOCUS, TRANSACTION_WITH_TIME, TRANSACTION_WITH_VALUE_DATE,
-            CLONE_WITH_CURRENT_DATE, CAMERA_CHOOSER, OPTIMIZE_PICTURE, OPTIMIZE_PICTURE_FORMAT, COPY_ATTACHMENT
+            TRANSACTION_WITH_TIME,
+            TRANSACTION_WITH_VALUE_DATE,
+            CAMERA_CHOOSER,
+            OPTIMIZE_PICTURE,
+            OPTIMIZE_PICTURE_FORMAT,
+            COPY_ATTACHMENT
         ).forEach { put(it, plain) }
         put(
             CAMERA_APP, NativeSetting(

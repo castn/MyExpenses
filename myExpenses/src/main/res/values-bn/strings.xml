@@ -389,7 +389,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">পরে</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">ট্রানজেকশন ব্যর্থ হয়েছে বা বাতিল করা হয়েছে।</string>
-    <string name="hint_auto_fill">একই কাউন্টারপার্টির জন্য শেষ লেনদেন থেকে কি স্বয়ংক্রিয়ভাবে ডেটা পূরণ করা উচিত? আপনি সেটিংস থেকে সর্বদা এই আচরণ পরিবর্তন করতে পারেন।</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%1$d অ্যাকাউন্ট যার কারেন্সি %2$s আপডেট করা হয়েছে।</string>
     <string name="import_source_file">ফাইল</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -525,7 +524,6 @@
     <string name="extend_validity">মেয়াদ বাড়ান</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">রিমোট ব্যাকএন্ড থেকে ডাটা আনা হচ্ছে। এতে কিছু সময় লাগতে পারে।</string>
     <string name="donate_button_invoice">চালান</string>
-    <string name="auto_fill_account_from_aggregate_only">শুধুমাত্র যখন সমষ্টিগত অ্যাকাউন্ট থেকে শুরু করা হয়।</string>
     <string name="sync_auth_exception">অনুমোদন করা যায়নি।</string>
     <string name="sync_login_again">অনুগ্রহ করে আবার লগ ইন করুন।</string>
     <plurals name="delete_success">
@@ -679,9 +677,7 @@
     <!-- The label for the button, where user confirms that he wants to clone the selected transactions and then remap them. -->
         <string name="button_label_clone_and_remap">ক্লোন এবং রিম্যাপ করুন</string>
     <!-- The summary of a preference toggle. If switched on cloned transactions have the date set to the current date -->
-    <string name="pref_clone_with_current_date_summary_on">ক্লোন করা লেনদেনের বর্তমান তারিখ রাখবে</string>
     <!-- The summary of a preference toggle. If switched off cloned transactions keep the original date -->
-    <string name="pref_clone_with_current_date_summary_off">ক্লোন করা লেনদেনের আসল তারিখ রাখে</string>
     <string name="tags_create_or_select">ট্যাগ তৈরি বা নির্বাচন করুন</string>
     <string name="pref_manage_tags_summary">ট্যাগ যোগ করুন, এডিট করুন, মুছুন।</string>
     <string name="dialog_title_warning_delete_tag">ট্যাগ মুছবেন?</string>
@@ -737,7 +733,6 @@
     <string name="warning_balance_account_delete">আপনি যদি চালিয়ে যান, এই অ্যাকাউন্টের সমস্ত মিলিত লেনদেন ডাটাবেস থেকে মুছে ফেলা হবে এবং আপনি সেগুলি পুনরুদ্ধার করতে পারবেন না।</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">বিদ্যমান ফর্ম ডেটা বাতিল করা হবে।</string>
-    <string name="pref_clone_with_current_date_title">ক্লোন করা লেনদেনের তারিখ</string>
     <string name="template_default_action_without_amount_hint">পরিমাণ ছাড়া টেমপ্লেট ডিফল্ট অ্যাকশন \'এডিট\' দিয়ে সেভ করা উচিত</string>
     <string name="menu_save_and_new_content_description">ডেটা সেভ করুন, একই ডেটা দিয়ে নতুন লেনদেন তৈরি করার জন্য ফর্মটি খোলা রাখুন।</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
@@ -774,7 +769,6 @@
     <!-- This is used in the title of the email by which user requests an invoice for payment via bank transfer -->
     <string name="request_for_invoice">ইনভয়েসের জন্য অনুরোধ</string>
     <!-- Enables Focus on the Payee field for Auto fill -->
-    <string name="auto_fill_focus">প্রাপক ফোকাস করুন</string>
     <!-- This warning is shown when a user calls the Reset or Cancel commands on a scheduled transaction, for a date
     where the transaction has already been created.  -->
     <string name="crash_reports_user_info">{app_name} অ্যাপ্লিকেশনের ক্র্যাশ রিপোর্ট অটোমেটিকভাবে ডেভেলপারদের কাছে পাঠাবে, যা তাদের দ্রুত সমস্যার সমাধান করতে সাহায্য করে।</string>

@@ -53,17 +53,6 @@
     <string name="menu_ManageCategories_search_help_text">רק קטגוריות עיקריות ותת־קטגוריות התואמות את השאילתה שלך תוצגנה.</string>
     <string name="menu_ManageCategories_sort_help_text">ניתן לסווג את רשימת הקטגוריות לפי כותרת (בסדר אלפביתי), לפי תדירות השימוש, או לפי הפעם האחרונה ששויכה לעסקה.</string>
     <string name="cab_ManageCategories_color_help_text">ניתן להקצות צבע לקטגוריות עיקריות. צבע זה ישמש לייצוג הקטגוריה בתרשימים. קטגוריות משנה ישתמשו בגוונים של צבע הקטגוריה העיקרית שלהם.</string>
-    <string name="help_ExpenseEdit_transaction_title">טופס עסקאות</string>
-    <string name="help_ExpenseEdit_transfer_title">טופס העברות</string>
-    <string name="help_ExpenseEdit_split_title">טופס עסקה מפוצלת</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">טופס קטגוריה עם חלקים מפוצלים</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">טופס העברה עם חלקים מפוצלים</string>
-    <string name="help_ExpenseEdit_templateCategory_title">טופס תבניות עסקה</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">טופס תבניות העברה</string>
-    <string name="help_ExpenseEdit_templateSplit_title">טופס תבניות מפוצלות</string>
-    <string name="help_ExpenseEdit_transaction_info">טופס זה משמש להזנת עסקה חדשה או לעריכת עסקה קיימת. התפריט הנפתח שבשורת הפעולות משמש למעבר לטופס להוספת העברה חדשה או עסקה מפוצלת.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">אפשר להשתמש בטופס זה כדי להזין תבנית חדשה או לערוך תבנית קיימת. שימוש בתפריט הנפתח בשורת הפעולות מאפשר לעבור בין תבניות לעסקאות, העברות ופיצולים.</string>
-    <string name="help_ExpenseEdit_split_info">עסקת פיצול היא עסקה אחת המפוצלת בחלקים, שבהם ניתן להקצות כל חלק לקטגוריה אחרת, או להעביר לחשבון אחר.</string>
     <string name="form_account_help_text">בחירת החשבון שאליו משתייכת העסקה.</string>
     <string name="form_date_time_help_text">נא למלא את התאריך והשעה שבהם בוצעה העסקה.</string>
     <string name="form_date_time_help_text_configuration">בהגדרות ניתן להשבית את קלט הזמן ולאפשר את ההבחנה בין תאריך ההזמנה לבין תאריך הערך.</string>
@@ -77,7 +66,6 @@
     <string name="form_default_action_help_text">עבור כל תבנית, אפשר להגדיר אם לחיצה קצרה עליה ברשימת התבניות תשמור את המופע באופן מיידי או שתעביר לטופס העריכה שבו אפשר לשנות אותה לפני השמירה. תמיד ניתן לגשת לשתי הפעולות בלחיצה ארוכה.</string>
     <string name="form_category_help_text">לחצן זה פותח את רשימת הקטגוריות, שבהן אפשר לבחור את הקטגוריה למיפוי לעסקה.</string>
     <string name="form_split_parts_heading_help_text_3">אפשר לשמור רק את העסקה המפוצלת, אם סכום העסקה הוקצה במדויק.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">נא לבחור קטגוריה לחלק המפוצל.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">הקצאת החשבונות שמהם או אליהם יועבר העצם הזה.</string>
     <string name="form_exchange_rate_help_text">אפשר לציין את התעריף באחד משני הכיוונים של ההעברה. הכיוון ההפוך והסכום המתאים לחלק התלותי של שער החליפין מחושבים באופן אוטומטי.</string>
     <string name="form_title_help_text">נא למלא כותרת שמבדילה את התבנית באופן ייחודי.</string>
@@ -89,7 +77,6 @@
     <string name="menu_original_amount_help_text">הצגת שדה המאפשר הגדרת סכום נוסף. לדוגמה, אם בעת תשלום עם כרטיס האשראי שלך במט״ח, אפשר לזכור את המחיר המקורי בנוסף לסכום המחויב בכרטיס. הסכום המקורי לא ייחושב בסיכומים.</string>
     <string name="menu_equivalent_amount_help_text">לצורך חישוב סך כולל בכל החשבונות, עסקאות של חשבונות מט״ח, מוכפלים בשער החליפין שקבעת עבור החשבון.</string>
     <string name="menu_invert_transfer_help_text">היפוך כיוון ההעברה על ידי החלפת החשבונות ‚מ־\' ו‚אל’.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">אם המטבעות של החשבונות ‚מאת’ ו‚אל’ שונים, יש לציין את הסכום עבור אחד מהם בלבד. השני יחושב בעת יצירת מופעים מהתבנית.</string>
     <string name="form_goal_or_limit_help_text">שדה זה מאפשר לציין יעד חיסכון חיובי או מסגרת אשראי שלילית. בכל מקרה, ברשימת החשבונות, מחוון התקדמות מדמה את המרחק בין היתרה הנוכחית לבין היעד או הגבול.</string>
     <string name="menu_templates_help_text">פתיחת תפריט המפרט את כל התבניות המאפשרות לטעון אותן במהירות לטופס.</string>
     <string name="menu_create_template_from_transaction_help_text">אם זה מסומן, העסקה תישמר גם כתבנית. אפשר להגדיר את הכותרת שלה והישנות אוטומטית כרשות.</string>

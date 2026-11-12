@@ -367,7 +367,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">以降</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">購入が失敗またはキャンセルされました。</string>
-    <string name="hint_auto_fill">同じ受取人/支払人の場合、前回の取引から自動的にデータを入力する必要がありますか? この動作はいつでも設定から変更できます。</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">通貨 %2$s の %1$d 勘定が更新されました。</string>
     <string name="import_source_file">ファイル</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -497,7 +496,6 @@
     <string name="extend_validity">有効期限を延長する</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">リモートのバックエンドからデータを取得しています。これはしばらく時間がかかることがあります。</string>
     <string name="donate_button_invoice">請求書</string>
-    <string name="auto_fill_account_from_aggregate_only">集計勘定から開始された場合のみ。</string>
     <string name="sync_auth_exception">認証に失敗しました。</string>
     <string name="sync_login_again">もう一度ログインしてください。</string>
     <plurals name="delete_success">
@@ -642,9 +640,7 @@
     <!-- The label for the button, where user confirms that he wants to clone the selected transactions and then remap them. -->
     <string name="button_label_clone_and_remap">複製と再配置</string>
     <!-- The summary of a preference toggle. If switched on cloned transactions have the date set to the current date -->
-    <string name="pref_clone_with_current_date_summary_on">複製された取引は現在の日付になります</string>
     <!-- The summary of a preference toggle. If switched off cloned transactions keep the original date -->
-    <string name="pref_clone_with_current_date_summary_off">複製された取引は元の日付になります</string>
     <string name="tags_create_or_select">タグの作成または選択</string>
     <string name="pref_manage_tags_summary">タグの追加、編集、削除。</string>
     <string name="dialog_title_warning_delete_tag">タグを削除しますか?</string>

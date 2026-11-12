@@ -12,19 +12,10 @@ import org.totschnig.myexpenses.activity.BudgetEdit
 import org.totschnig.myexpenses.activity.CsvImportActivity
 import org.totschnig.myexpenses.activity.DebtEdit
 import org.totschnig.myexpenses.activity.DistributionActivity
-import org.totschnig.myexpenses.activity.ExpenseEdit
 import org.totschnig.myexpenses.activity.HELP_VARIANT_MANGE
 import org.totschnig.myexpenses.activity.HELP_VARIANT_MERGE_MODE
 import org.totschnig.myexpenses.activity.HELP_VARIANT_SELECT_FILTER
 import org.totschnig.myexpenses.activity.HELP_VARIANT_SELECT_MAPPING
-import org.totschnig.myexpenses.activity.HELP_VARIANT_SPLIT
-import org.totschnig.myexpenses.activity.HELP_VARIANT_SPLIT_PART_CATEGORY
-import org.totschnig.myexpenses.activity.HELP_VARIANT_SPLIT_PART_TRANSFER
-import org.totschnig.myexpenses.activity.HELP_VARIANT_TEMPLATE_CATEGORY
-import org.totschnig.myexpenses.activity.HELP_VARIANT_TEMPLATE_SPLIT
-import org.totschnig.myexpenses.activity.HELP_VARIANT_TEMPLATE_TRANSFER
-import org.totschnig.myexpenses.activity.HELP_VARIANT_TRANSACTION
-import org.totschnig.myexpenses.activity.HELP_VARIANT_TRANSFER
 import org.totschnig.myexpenses.activity.HistoryActivity
 import org.totschnig.myexpenses.activity.ManageBudgets
 import org.totschnig.myexpenses.activity.ManageCategories
@@ -52,7 +43,6 @@ class HelpDialogHelperTest(private val activity: Class<out ProtectedFragmentActi
             arrayOf(CsvImportActivity::class.java),
             arrayOf(DebtEdit::class.java),
             arrayOf(DistributionActivity::class.java),
-            arrayOf(ExpenseEdit::class.java),
             arrayOf(HistoryActivity::class.java),
             arrayOf(ManageBudgets::class.java),
             arrayOf(ManageCategories::class.java),
@@ -143,13 +133,6 @@ class HelpDialogHelperTest(private val activity: Class<out ProtectedFragmentActi
 
     private fun getHelpVariants(clazz: Class<out ProtectedFragmentActivity>): List<String> =
         when (clazz) {
-            ExpenseEdit::class.java -> listOf(
-                HELP_VARIANT_TRANSACTION, HELP_VARIANT_TRANSFER, HELP_VARIANT_SPLIT,
-                HELP_VARIANT_TEMPLATE_CATEGORY, HELP_VARIANT_TEMPLATE_TRANSFER,
-                HELP_VARIANT_TEMPLATE_SPLIT, HELP_VARIANT_SPLIT_PART_CATEGORY,
-                HELP_VARIANT_SPLIT_PART_TRANSFER
-            )
-
             ManageParties::class.java -> listOf(
                 HELP_VARIANT_MERGE_MODE
             )

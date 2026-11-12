@@ -28,12 +28,6 @@
     <string name="menu_categories_setup_default_help_text">จะนำเข้าชุดหมวดหมู่เริ่มต้น</string>
     <string name="menu_chart_help_text">สลับการแสดงแผนภูมิ</string>
     <string name="menu_ManageCategories_search_help_text">จะแสดงเฉพาะหมวดหมู่หลักและหมวดหมู่ย่อยที่ตรงกับคำค้นหาของคุณ</string>
-    <string name="help_ExpenseEdit_transaction_title">แบบฟอร์มสำหรับธุรกรรม</string>
-    <string name="help_ExpenseEdit_transfer_title">แบบฟอร์มสำหรับการโอนเงิน</string>
-    <string name="help_ExpenseEdit_split_title">แบบฟอร์มสำหรับการแยกธุรกรรม</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">แบบฟอร์มสำหรับส่วนแยกการโอนเงิน</string>
-    <string name="help_ExpenseEdit_templateCategory_title">แบบฟอร์มสำหรับเทมเพลตธุรกรรม</string>
-    <string name="help_ExpenseEdit_templateSplit_title">แบบฟอร์มสำหรับเทมเพลตการแยก</string>
     <string name="form_account_help_text">เลือกบัญชีที่ธุรกรรมนี้เกี่ยวข้อง</string>
     <string name="form_comment_help_text">ป้อนหมายเหตุเกี่ยวกับรายการ</string>
     <string name="form_category_help_text">ปุ่มนี้เปิดรายการหมวดหมู่ ซึ่งคุณสามารถเลือกหมวดหมู่ที่ต้องการเชื่อมโยงกับธุรกรรมได้</string>
@@ -106,9 +100,6 @@
     <string name="help_ManageCategories_manage_info">หน้าจอนี้ช่วยให้สร้าง แก้ไข และลบหมวดหมู่ได้ โดยค่าเริ่มต้น เกณฑ์การเรียงลำดับหลักในรายการหมวดหมู่คือจำนวนครั้งที่คุณใช้หมวดหมู่ (เกณฑ์รองคือลำดับตัวอักษร) ซึ่งช่วยให้คุณเข้าถึงหมวดหมู่ที่ใช้บ่อยที่สุดได้อย่างรวดเร็ว</string>
     <string name="menu_categories_export_help_text">จะส่งออกหมวดหมู่ไปยังไฟล์ QIF</string>
     <string name="menu_ManageCategories_sort_help_text">รายการหมวดหมู่สามารถจัดเรียงตามชื่อ (ตามลำดับตัวอักษร) ตามความถี่ในการใช้งาน หรือตามเวลาล่าสุดที่มีการเชื่อมโยงธุรกรรมกับหมวดหมู่นั้น</string>
-    <string name="help_ExpenseEdit_transaction_info">ใช้แบบฟอร์มนี้เพื่อป้อนธุรกรรมใหม่หรือแก้ไขธุรกรรมที่มีอยู่ ใช้เมนูแบบเลื่อนลงในแถบการดำเนินการเพื่อสลับไปยังแบบฟอร์มสำหรับเพิ่มการโอนเงินใหม่หรือแยกธุรกรรม</string>
-    <string name="help_ExpenseEdit_templateCategory_info">ใช้แบบฟอร์มนี้เพื่อป้อนเทมเพลตใหม่หรือแก้ไขเทมเพลตที่มีอยู่ ใช้เมนูแบบเลื่อนลงในแถบการดำเนินการเพื่อสลับระหว่างเทมเพลตสำหรับธุรกรรม การโอนเงิน และการแยก</string>
-    <string name="help_ExpenseEdit_split_info">ธุรกรรมแยกส่วนคือธุรกรรมเดียวที่ถูกแบ่งออกเป็นหลายส่วน โดยแต่ละส่วนสามารถกำหนดให้กับหมวดหมู่ที่ต่างกัน หรือโอนไปยังบัญชีอื่นได้</string>
     <string name="form_split_parts_heading_help_text_2">ช่องจำนวนเงินจะอัปเดตโดยอัตโนมัติด้วยผลรวมของส่วนต่างๆ ยกเว้นกรณีที่คุณป้อนจำนวนเงินด้วยตนเอง ซึ่งในกรณีนี้จะแสดงความแตกต่างระหว่างผลรวมของส่วนต่างๆ และจำนวนเงิน (จำนวนที่ยังไม่ได้แยก)</string>
     <string name="form_plan_help_text_mode">สามารถตั้งค่าแผนเป็นอัตโนมัติหรือมือได้ เมื่อเกิดอินสแตนซ์ของแผนอัตโนมัติ ธุรกรรมจะถูกสร้างขึ้น และคุณจะได้รับการแจ้งเตือน เมื่อแผนเป็นแบบมือ คุณจะได้รับการแจ้งเตือนเช่นกัน ซึ่งให้คุณเลือกที่จะยกเลิก แก้ไข หรือนำเทมเพลตไปใช้</string>
     <string name="help_ManageParties_select_filter_info">เลือกผู้เกี่ยวข้องทั้งหมดที่ต้องการใช้สำหรับกรองรายการธุรกรรม</string>
@@ -124,14 +115,11 @@
     <string name="menu_back_help_text">ไปยังกลุ่มก่อนหน้า สามารถทำได้ผ่านการปัดจากซ้ายไปขวา</string>
     <string name="cab_ManageCategories_create_sub_cat_help_text">เปิดกล่องโต้ตอบสำหรับสร้างหมวดหมู่ย่อยใหม่ภายใต้หมวดหมู่ที่เลือก หมวดหมู่ย่อยสามารถซ้อนกันได้โดยไม่มีข้อจำกัดความลึก</string>
     <string name="cab_ManageCategories_move_help_text">หมวดหมู่ใดๆ (รวมถึงหมวดหมู่ย่อย) สามารถย้ายไปยังหมวดหมู่หลักใหม่ได้ หมวดหมู่ย่อยสามารถเปลี่ยนเป็นหมวดหมู่หลักได้</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">แบบฟอร์มสำหรับเทมเพลตการโอนเงิน</string>
     <string name="cab_ManageCategories_color_help_text">คุณสามารถกำหนดสีให้กับหมวดหมู่หลัก สีนี้จะถูกใช้เพื่อแสดงหมวดหมู่ในแผนภูมิ ส่วนหมวดหมู่ย่อยจะใช้เฉดสีของหมวดหมู่หลักนั้น</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">แบบฟอร์มสำหรับส่วนแยกหมวดหมู่</string>
     <string name="form_attach_image_help_text"><![CDATA[ปุ่ม <img src="android:ic_menu_camera"> ช่วยให้คุณแนบภาพ (เช่น จากแกลเลอรีหรือกล้อง) ไปยังรายการได้]]></string>
     <string name="form_default_action_help_text">สำหรับแต่ละเทมเพลต คุณสามารถกำหนดได้ว่าการแตะสั้นๆ ในรายการเทมเพลตจะบันทึกอินสแตนซ์ทันทีหรือเข้าสู่แบบฟอร์มแก้ไขที่คุณสามารถปรับเปลี่ยนก่อนบันทึก คุณสามารถเข้าถึงทั้งสองการดำเนินการผ่านการแตะค้างได้เสมอ</string>
     <string name="help_ManageStaleImages_info">หน้าจอนี้ช่วยให้คุณจัดการกับไฟล์ภาพที่เหลือจากการลบธุรกรรม กดค้างที่รายการเพื่อลบหรือย้ายออกจากโฟลเดอร์เก็บข้อมูล (อาจเป็นภายใน) ไปยังโฟลเดอร์สำรอง (%s) บนที่เก็บข้อมูลภายนอก</string>
     <string name="form_date_time_help_text_configuration">ในการตั้งค่าคุณสามารถปิดการป้อนเวลาและเปิดใช้งานการแยกความแตกต่างระหว่างวันที่บันทึกและวันที่มีผล</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">เลือกหมวดหมู่สำหรับส่วนแยกนี้</string>
     <string name="form_date_time_help_text">ป้อนวันที่และเวลาที่เกิดธุรกรรม</string>
     <string name="form_date_time_help_text_link"><![CDATA[หากปุ่มสลับ <img src="ic_hchain">/<img src="ic_hchain_broken"> อยู่ในสถานะเชื่อมโยง การตั้งค่าวันที่มีผลหรือวันที่บันทึกจะอัปเดตอีกวันที่หนึ่งด้วย]]></string>
     <string name="form_goal_or_limit_help_text">ช่องนี้ช่วยให้ระบุเป้าหมายการออมที่เป็นบวกหรือวงเงินเครดิตที่เป็นลบ ไม่ว่าในกรณีใด ในรายการบัญชี ตัวชี้วัดความคืบหน้าจะแสดงภาพระยะห่างระหว่างยอดคงเหลือปัจจุบันกับเป้าหมายหรือวงเงิน</string>
@@ -141,7 +129,6 @@
     <string name="form_calculator_help_text"><![CDATA[ปุ่ม <img src="?calcIcon"> เปิดเครื่องคิดเลข]]></string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">กำหนดบัญชีที่รายการนี้ถูกโอนจากหรือไปยัง</string>
     <string name="form_exchange_rate_help_text">คุณสามารถระบุอัตราในทิศทางใดทิศทางหนึ่งของการโอน อัตราส่วนกลับและจำนวนเงินที่สอดคล้องกับส่วนที่ขึ้นอยู่กับอัตราแลกเปลี่ยนจะถูกคำนวณโดยอัตโนมัติ</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">หากสกุลเงินของบัญชี \'จาก\' และ \'ไปยัง\' แตกต่างกัน คุณระบุจำนวนเงินสำหรับเพียงบัญชีใดบัญชีหนึ่งเท่านั้น อีกบัญชีหนึ่งจะถูกคำนวณเมื่อคุณสร้างอินสแตนซ์จากเทมเพลต</string>
     <string name="menu_save_and_new_help_text">หากเลือก此项 หลังจากบันทึกข้อมูลแล้ว แบบฟอร์มจะยังคงเปิดอยู่เพื่อสร้างธุรกรรมใหม่ด้วยข้อมูลเดียวกัน</string>
     <string name="menu_create_template_from_transaction_help_text">หากเลือก此项 ธุรกรรมจะถูกบันทึกเป็นเทมเพลตด้วย คุณสามารถกำหนดชื่อและตั้งค่าแผนสำหรับการเกิดซ้ำอัตโนมัติได้</string>
     <string name="form_plan_help_text">เมื่อคุณสร้างแผนสำหรับเทมเพลต มันจะถูกเพิ่มไปยังปฏิทินส่วนตัวที่จัดการโดยแอปปฏิทินของคุณ คุณสามารถกำหนดแผนเป็นเหตุการณ์ครั้งเดียว หรือเกิดขึ้นซ้ำทุกวัน ทุกสัปดาห์ ทุกเดือน หรือทุกปีได้</string>

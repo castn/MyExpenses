@@ -42,13 +42,6 @@
     <string name="cab_ManageCategories_select_filter_select_help_text">دسته های انتخاب شده برای فیلتر کردن لیست تراکنش ها استفاده خواهند شد.</string>
     <string name="menu_ManageCategories_search_help_text">تنها دسته های اصلی و زیر که با پرس و جو شما مطابقت دارند نمایش داده خواهند شد.</string>
     <string name="cab_ManageCategories_color_help_text">شما می توانید یک رنگ را به دسته های اصلی اختصاص دهید. این رنگ برای نشان دادن رده در نمودار استفاده می شود. زیر شاخه ها از سایه رنگ اصلی آنها استفاده می کنند.</string>
-    <string name="help_ExpenseEdit_transaction_title">فرم برای معاملات</string>
-    <string name="help_ExpenseEdit_transfer_title">فرم برای انتقال</string>
-    <string name="help_ExpenseEdit_split_title">از برای سرشکنی</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">از برای بخش های سرشکنی دسته</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">از برای بخش های سرشکنی انتقال</string>
-    <string name="help_ExpenseEdit_transaction_info">برای ایجاد تراکنش جدید یا ویرایش تراکش موجود از این فرم استفاده کنید. از منوی کشویی موجود در اکشن بار استفاده کنید تا به فرم افزودن تراکنش جدید انتقال یا تقسیم تغییر وضعیت دهید.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">یک دسته‌بندی برای این قسمت جداشده انتخاب کنید.</string>
     <string name="form_title_help_text">عنوانی را وارد کنید که منحصراً معرف این قالب باشد.</string>
     <string name="menu_save_help_text">ذخیرهٔ داده‌ها و بستن فرم.</string>
     <string name="form_description_help_text">توضیحات فقط جنبهٔ آموزشی دارند.</string>
@@ -62,8 +55,6 @@
     <string name="menu_merge_help_text">اگر یک فرد چندین بار در لیست با تغییرات املایی متفاوت ظاهر شود، می توانید آنها را با هم ادغام کنید.</string>
     <string name="help_ManageParties_mergeMode_info_2">از شما خواسته می شود که کدام نوع را انتخاب کنید.</string>
     <string name="menu_ManageCategories_sort_help_text">فهرست دسته ها را می توان بر اساس عنوان (الفبایی)، تعداد دفعات استفاده، یا آخرین باری که تراکنش به آن نگاشت شده است مرتب کرد.</string>
-    <string name="help_ExpenseEdit_templateSplit_title">فرم برای تقسیم الگوها</string>
-    <string name="help_ExpenseEdit_templateCategory_info">از این فرم برای وارد کردن یک الگوی جدید یا ویرایش یک الگوی موجود استفاده کنید. از منوی کشویی در نوار عمل برای جابه‌جایی بین قالب‌های تراکنش، انتقال و تقسیم استفاده کنید.</string>
     <string name="form_account_help_text">حسابی که تراکنش به آن تعلق دارد را انتخاب کنید.</string>
     <string name="form_date_time_help_text_link"><![CDATA[اگر وضعیت <img src=ic_hchain>/<img src=ic_hchain_broken> در حالت پیوندی باشد، تنظیم تاریخ ارزش یا تاریخ ثبت، تاریخ دیگر را نیز به‌روزرسانی می‌کند.]]></string>
     <string name="form_default_action_help_text">برای هر الگو، می‌توانید پیکربندی کنید که یک ضربه کوتاه روی آن در لیست الگو، نمونه را بلافاصله ذخیره می‌کند یا فرم ویرایش آن را وارد می‌کنید که می‌توانید قبل از ذخیره آن را تغییر دهید. همیشه می توانید از طریق یک ضربه طولانی به هر دو عملکرد دسترسی داشته باشید.</string>
@@ -77,9 +68,6 @@
     <string name="help_ManageParties_select_mapping_info">یک فرد را با ضربه زدن روی آن انتخاب کنید.</string>
     <string name="help_ManageParties_select_filter_info"/>
     <string name="form_attach_image_help_text"><![CDATA[دکمه <img src=android:ic_menu_camera> به شما امکان می دهد یک تصویر (مثلاً از گالری یا دوربین) را به موضوع متصل کنید.]]></string>
-    <string name="help_ExpenseEdit_templateCategory_title">فرم الگوهای تراکنش</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">فرم الگوهای انتقال</string>
-    <string name="help_ExpenseEdit_split_info">تسهیم تراکنش یک تراکنش منفرد است که به بخش‌هایی تقسیم می‌شود، که در آن هر بخش می‌تواند به دسته‌ای اختصاص داده شود یا به حساب دیگری منتقل شود.</string>
     <string name="form_date_time_help_text">تاریخ و زمان انجام معامله را وارد کنید.</string>
     <string name="form_date_time_help_text_configuration">در تنظیمات می توانید ورودی زمان را غیرفعال کنید و تمایز بین تاریخ ثبت و تاریخ ارزش را فعال کنید.</string>
     <string name="form_amount_switch_help_text">از سوئیچ برای جابجایی بین هزینه و درآمد استفاده کنید.</string>

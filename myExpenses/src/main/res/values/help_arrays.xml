@@ -213,143 +213,28 @@
         <item>budget_synchronization</item>
     </string-array>
 
-    <string-array name="ExpenseEdit_transaction_menuitems">
-        <item>templates</item>
-        <item>save_and_new</item>
-        <item>create_template_from_transaction</item>
-        <item>original_amount</item>
-        <item>equivalent_amount</item>
-    </string-array>
 
-    <string-array name="ExpenseEdit_transfer_menuitems">
-        <item>templates</item>
-        <item>save_and_new</item>
-        <item>create_template_from_transaction</item>
-        <item>invert_transfer</item>
-    </string-array>
 
-    <string-array name="ExpenseEdit_split_menuitems">
-        <item>templates</item>
-        <item>save_and_new</item>
-        <item>create_template_from_transaction</item>
-        <item>original_amount</item>
-        <item>equivalent_amount</item>
-    </string-array>
 
-    <string-array name="ExpenseEdit_templateCategory_menuitems">
-    </string-array>
 
-    <string-array name="ExpenseEdit_templateTransfer_menuitems">
-    </string-array>
 
-    <string-array name="ExpenseEdit_templateSplit_menuitems">
-    </string-array>
 
-    <string-array name="ExpenseEdit_splitPartCategory_menuitems">
-    </string-array>
 
-    <string-array name="ExpenseEdit_splitPartTransfer_menuitems">
-        <item>invert_transfer</item>
-    </string-array>
 
-    <string-array name="ExpenseEdit_transaction_formfields">
-        <item>account</item>
-        <item>amount</item>
-        <item>date.time</item>
-        <item>payer_or_payee</item>
-        <item>comment</item>
-        <item>category</item>
-        <item>tags</item>
-        <item>method</item>
-        <item>instant_plan</item>
-    </string-array>
 
-    <string-array name="ExpenseEdit_transfer_formfields">
-        <item>transfer_from_account.transfer_to_account</item>
-        <item>amount</item>
-        <item>exchange_rate</item>
-        <item>date.time</item>
-        <item>tags</item>
-        <item>comment</item>
-        <item>instant_plan</item>
-    </string-array>
 
-    <string-array name="ExpenseEdit_templateCategory_formfields">
-        <item>title</item>
-        <item>account</item>
-        <item>amount</item>
-        <item>payer_or_payee</item>
-        <item>comment</item>
-        <item>category</item>
-        <item>tags</item>
-        <item>method</item>
-        <item>default_action</item>
-        <item>plan</item>
-    </string-array>
 
-    <string-array name="ExpenseEdit_templateTransfer_formfields">
-        <item>title</item>
-        <item>transfer_from_account.transfer_to_account</item>
-        <item>amount</item>
-        <item>exchange_rate</item>
-        <item>tags</item>
-        <item>comment</item>
-        <item>default_action</item>
-        <item>plan</item>
-    </string-array>
 
-    <string-array name="ExpenseEdit_templateSplit_formfields">
-        <item>title</item>
-        <item>account</item>
-        <item>amount</item>
-        <item>payer_or_payee</item>
-        <item>comment</item>
-        <item>category</item>
-        <item>tags</item>
-        <item>method</item>
-        <item>default_action</item>
-        <item>plan</item>
-        <item>split_parts_heading</item>
-    </string-array>
 
-    <string-array name="ExpenseEdit_split_formfields">
-        <item>account</item>
-        <item>amount</item>
-        <item>date.time</item>
-        <item>payer_or_payee</item>
-        <item>tags</item>
-        <item>comment</item>
-        <item>method</item>
-        <item>instant_plan</item>
-        <item>split_parts_heading</item>
-    </string-array>
 
-    <string-array name="ExpenseEdit_splitPartCategory_formfields">
-        <item>amount</item>
-        <item>comment</item>
-        <item>category</item>
-    </string-array>
 
-    <string-array name="ExpenseEdit_splitPartTransfer_formfields">
-        <item>transfer_from_account.transfer_to_account</item>
-        <item>amount</item>
-        <item>exchange_rate</item>
-        <item>comment</item>
-    </string-array>
 
     <string-array name="form_amount_help_text">
         <item>form_amount_switch_help_text</item>
         <item>form_calculator_help_text</item>
     </string-array>
 
-    <string-array name="form_ExpenseEdit_transfer_amount_help_text">
-        <item>form_calculator_help_text</item>
-    </string-array>
 
-    <string-array name="form_ExpenseEdit_templateTransfer_amount_help_text">
-        <item>form_ExpenseEdit_templateTransfer_foreign_currency_help_text</item>
-        <item>form_calculator_help_text</item>
-    </string-array>
 
     <string-array name="form_comment_help_text">
         <item>form_comment_help_text</item>
@@ -357,15 +242,7 @@
         <item>form_attach_image_help_text</item>
     </string-array>
 
-    <string-array name="form_ExpenseEdit_splitPartCategory_comment_help_text">
-        <item>form_comment_help_text</item>
-        <item>form_attach_image_help_text</item>
-    </string-array>
 
-    <string-array name="form_ExpenseEdit_splitPartTransfer_comment_help_text">
-        <item>form_comment_help_text</item>
-        <item>form_attach_image_help_text</item>
-    </string-array>
 
     <string-array name="form_plan_help_text">
         <item>form_plan_help_text</item>

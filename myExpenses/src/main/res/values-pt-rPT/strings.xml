@@ -468,7 +468,6 @@
     <string name="pref_category_title_features">Características</string>
     <string name="menu_save_and_new_content_description">Salve os dados, deixando o formulário aberto para a criação de uma nova transação com os mesmos dados.</string>
     <string name="all_extended_key_features">Todos os recursos da Chave Estendida</string>
-    <string name="hint_auto_fill">Os dados devem ser automaticamente preenchidos baseados na última transação para o mesmo beneficiário/pagador? Esse comportamento pode ser alterado nas configurações.</string>
     <string name="search_tag">Pesquisar pela etiqueta</string>
     <string name="warning_delete_category_with_budget">Para pelo menos uma categoria selecionada, há alocações de orçamento, que também serão excluídas.</string>
     <string name="select_payee">Selecionar pagador/beneficiário</string>
@@ -490,7 +489,6 @@
     <string name="pref_tesseract_language_title">Idioma para o Tesseract</string>
     <string name="pref_ocr_engine_title">Mecanismo para reconhecimento de texto</string>
     <string name="template_default_action_without_amount_hint">O modelo sem quantia deve ser salvo com a ação padrão \'Editar\'</string>
-    <string name="pref_clone_with_current_date_title">Data das transações clonadas</string>
     <string name="confirmation_load_template_discard_data">Os dados presentes no formulário serão descartados.</string>
     <string name="warning_balance_account_delete">Se você continuar, todas as transações reconciliadas desta conta serão excluídas do banco de dados e você não poderá restaurá-las.</string>
     <string name="select_package">Por favor, selecione uma licença.</string>
@@ -529,8 +527,6 @@
     <string name="dialog_title_warning_delete_tag">Excluir a etiqueta\?</string>
     <string name="pref_manage_tags_summary">Adicione, edite, apague etiquetas.</string>
     <string name="tags_create_or_select">Criar ou selecionar etiquetas</string>
-    <string name="pref_clone_with_current_date_summary_off">As transações clonadas mantêm a data original</string>
-    <string name="pref_clone_with_current_date_summary_on">As transações clonadas mudam para a data atual</string>
     <string name="button_label_clone_and_remap">Clonar e remapear</string>
     <string name="remap_empty_list">Não foi encontrado nenhum item que possa ser mapeado para todas as transações selecionadas.</string>
     <string name="clone_and_remap_result">As transações selecionadas foram clonadas e remapeadas.</string>
@@ -654,7 +650,6 @@
     </plurals>
     <string name="sync_auth_exception">Falha na autorização.</string>
     <string name="sync_login_again">Por favor, autentique-se novamente.</string>
-    <string name="auto_fill_account_from_aggregate_only">Apenas quando iniciar de uma conta agregada.</string>
     <string name="donate_button_invoice">Fatura</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Obtendo dados do destino remoto. Isso pode demorar algum tempo.</string>
     <string name="extend_validity">Estender a validade</string>
@@ -710,7 +705,6 @@
     <string name="merge_parties_select">Selecione o nome do parceiro unificado</string>
     <string name="active_tags">Etiquetas ativas</string>
     <string name="request_for_invoice">Pedido de fatura</string>
-    <string name="auto_fill_focus">Definir foco no beneficiário</string>
     <string name="backup_save_to_sync_backend">Gravar em %s</string>
     <string name="stability_improvements" tools:ignore="UnusedResources">Melhorias de estabilidade</string>
     <string name="debt">Dívida</string>

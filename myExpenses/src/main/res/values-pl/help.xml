@@ -40,17 +40,6 @@
     <string name="cab_ManageCategories_select_filter_select_help_text">Wybrane kategorie posłużą do filtrowania listy transakcji.</string>
     <string name="menu_ManageCategories_search_help_text">Tylko kategorie główne i podkategorie które pasują do twojego zapytania zostaną wyświetlone.</string>
     <string name="menu_ManageCategories_sort_help_text">Lista kategorii może być sortowana według tytułu (alfabetycznie), według częstotliwości używania lub ostatniego czasu, kiedy transakcja została do niej przyporządkowana.</string>
-    <string name="help_ExpenseEdit_transaction_title">Formularz dla transakcji</string>
-    <string name="help_ExpenseEdit_transfer_title">Formularz dla przelewów</string>
-    <string name="help_ExpenseEdit_split_title">Formularz dla podziałów</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Formularz dla części podziału kategorii</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Formularz dla części podziału przelewu</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Formularz dla szablonów transakcji</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Formularz dla szablonów transferów</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Formularz dla osobnych szablonów</string>
-    <string name="help_ExpenseEdit_transaction_info">Użyj tego formularza, aby wprowadzić nową transakcję lub edytować istniejącą. Użyj menu rozwijanego na pasku akcji, aby przejść do formularza dodawania nowego przelewu lub podziału transakcji.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Użyj tego formularza, aby wprowadzić nowy szablon lub edytować istniejący. Użyj menu rozwijanego na pasku akcji, aby przełączać się między szablonami transakcji, przelewów i podziałów.</string>
-    <string name="help_ExpenseEdit_split_info">Podzielona transakcja to pojedyncza transakcja podzielona na części, w której każda część może zostać przypisana do innej kategorii lub przeniesiona na inne konto.</string>
     <string name="form_account_help_text">Wskaż konto do którego należy transakcja.</string>
     <string name="form_amount_switch_help_text">Użyj przełącznika aby zmieniać widok pomiędzy wydatkiem i przychodem.</string>
     <string name="form_calculator_help_text"><![CDATA[Przycisk <img src=\"?calcIcon\"> otwiera kalkulator.]]></string>
@@ -60,7 +49,6 @@
     <string name="form_attach_image_help_text"><![CDATA[Przycisk <img src=\"android:ic_menu_camera\"> umożliwia dołączenie obrazu (np. z galerii lub aparatu) do obiektu.]]></string>
     <string name="form_category_help_text">Ten przycisk otwiera listę kategorii, w których możesz wybrać kategorię, którą chcesz przenieść na transakcję.</string>
     <string name="form_split_parts_heading_help_text_3">Możesz zapisać tylko transakcję podziału, jeśli kwota transakcji została dokładnie przypisana.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Wybierz kategorię dla tej podzielonej części.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Przypisywanie kont, do których ten obiekt jest przesyłany \'Od\' lub \'Do\'.</string>
     <string name="form_exchange_rate_help_text">Możesz określić stawkę w jednym z obu kierunków transferu. Odwrotna stawka i kwota odpowiadająca zależnej części kursu walutowego jest obliczana automatycznie.</string>
     <string name="form_title_help_text">Wprowadź tytuł który unikalnie zidentyfikuje szablon.</string>
@@ -69,7 +57,6 @@
     <string name="form_plan_help_text_mode">Plan może być ustawiony jako automatyczny lub ręczny. Kiedy wystąpi instancja automatycznego planu, transakcja zostanie utworzona, i dostaniesz o tym powiadomienie. Kiedy plan jest ustawiony jako ręczny, to także dostaniesz o tym powiadomienie, które tym razem da Ci do wyboru jego anulowanie, modyfikację lub zastosowania dla Ciebie szablonu.</string>
     <string name="menu_save_help_text">Zapiuje dane i zamyka formularz.</string>
     <string name="menu_invert_transfer_help_text">Odwróć kierunek przelewu poprzez zamianę kont \'Z\' i \'Do\'</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Jeśli waluty konta \'Od\' i \'Do\' są różne, określasz kwotę tylko dla jednego z nich. Drugi zostanie obliczony podczas tworzenia instancji z szablonu.</string>
     <string name="help_AccountEdit_title">Formularz dla kont</string>
     <string name="form_AccountEdit_label_help_text">Etykieta identyfikuje konto na liście kont.</string>
     <string name="form_description_help_text">Opis pełni tylko funkcje informacyjną.</string>

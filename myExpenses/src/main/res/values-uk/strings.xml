@@ -386,7 +386,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">після</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">Покупка не вдалася або була скасована.</string>
-    <string name="hint_auto_fill">Чи повинні дані заповнюватися автоматично з останньої транзакції для того самого контрагента? Ви завжди можете змінити цю поведінку в налаштуваннях.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">Було оновлено %1$d рахунків з валютою %2$s.</string>
     <string name="import_source_file">Файл</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -516,7 +515,6 @@
     <string name="extend_validity">Подовжити термін дії</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Отримання даних з віддаленого сервера. Це може зайняти деякий час.</string>
     <string name="donate_button_invoice">Рахунок (інвойс)</string>
-    <string name="auto_fill_account_from_aggregate_only">Лише коли розпочатий з об\'єднаного рахунку.</string>
     <string name="sync_auth_exception">Помилка авторизації.</string>
     <string name="sync_login_again">Спробуйте знову.</string>
     <plurals name="delete_success">
@@ -679,7 +677,6 @@
     <string name="select_payee">Виберіть контрагента</string>
     <string name="account_deleted">Рахунок видалено</string>
     <string name="account_widget_configuration_sum">Тип відображуваної суми</string>
-    <string name="auto_fill_focus">Фокусуватися на полі одержувача</string>
     <string name="account_widget_configuration_sum_total">Включіть майбутні транзакції</string>
     <string name="merge_parties_select">Виберіть назву об\'єднаного учасника</string>
     <string name="active_tags">Активні теги</string>
@@ -705,12 +702,10 @@
     <string name="discover_feature_expense_income_switch" tools:ignore="UnusedResources">Використовуйте цю кнопку перемикача для запису доходів.</string>
     <string name="pref_feature_uninstall_summary">Play Маркет намагається зрештою видалити ці модулі у фоновому режимі.</string>
     <string name="remap_account">Усі вибрані транзакції буде зіставлено з рахунком %s.</string>
-    <string name="pref_clone_with_current_date_summary_on">Клоновані транзакції мають поточну дату</string>
     <string name="remap_empty_list">Не знайдено жодного елемента, який можна було б зіставити з усіма вибраними транзакціями.</string>
     <string name="pref_criterion_futur_title">Критерій майбутніх транзакцій</string>
     <string name="pref_sync_changes_immediately_summary">Негайно записати локальні зміни у серверну частину</string>
     <string name="warning_synced_account_cannot_be_closed">Не можна закрити рахунок, пов\'язаний з модулем синхронізації</string>
-    <string name="pref_clone_with_current_date_summary_off">Клоновані транзакції зберігають оригінальну дату</string>
     <string name="dialog_multi_tag_append">Додайте нову мітку до існуючих міток</string>
     <string name="budget_date_end_after_start">Дата завершення бюджету має бути після дати його початку.</string>
     <string name="no_budgets">Створіть свій перший бюджет, натиснувши кнопку +.</string>
@@ -741,7 +736,6 @@
     <string name="setup_completed">Налаштування завершено</string>
     <string name="purge_backups">Наступні старі файли резервних копій будуть видалені:</string>
     <string name="new_balance">Новий баланс</string>
-    <string name="pref_clone_with_current_date_title">Дата клонованих транзакцій</string>
     <string name="single_feature_info">Крім того, ви можете придбати необмежений доступ тільки до цієї функції.</string>
     <string name="cb_label_merge_accounts">Обʼєднати рахунки</string>
     <string name="pref_mlkit_script_title">Писемність для MlKit</string>

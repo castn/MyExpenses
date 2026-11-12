@@ -1,6 +1,5 @@
 package org.totschnig.myexpenses.dialog
 
-import android.content.DialogInterface
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Parcelable
@@ -95,10 +94,6 @@ import java.math.BigDecimal
 import java.text.NumberFormat
 import kotlin.math.absoluteValue
 import kotlin.math.sign
-
-interface OnCriterionDialogDismissedListener {
-    fun onCriterionDialogDismissed()
-}
 
 @Parcelize
 data class CriterionInfo(
@@ -198,7 +193,6 @@ class CriterionReachedDialogFragment : ComposeBaseDialogFragment3(), OnDialogRes
                 }
             ) {
                 dismiss()
-                onFinished()
             }
         }
     }
@@ -237,14 +231,6 @@ class CriterionReachedDialogFragment : ComposeBaseDialogFragment3(), OnDialogRes
                     putBoolean(KEY_WITH_ANIMATION, withAnimation)
                 }
             }
-    }
-
-    override fun onCancel(dialog: DialogInterface) {
-        onFinished()
-    }
-
-    fun onFinished() {
-        (requireActivity() as? OnCriterionDialogDismissedListener)?.onCriterionDialogDismissed()
     }
 
     override fun onResult(

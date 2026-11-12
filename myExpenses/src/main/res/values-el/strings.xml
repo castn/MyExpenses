@@ -374,7 +374,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">μετά από</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">Η αγορά απέτυχε ή ακυρώθηκε.</string>
-    <string name="hint_auto_fill">Θα πρέπει τα δεδομένα να συμπληρώνονται αυτόματα από την τελευταία συναλλαγή για τον ίδιο αντισυμβαλλόμενο; Μπορείτε πάντα να αλλάξετε αυτήν τη συμπεριφορά από τις ρυθμίσεις.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%1$d λογαριασμοί με νόμισμα %2$s έχουν ενημερωθεί.</string>
     <string name="import_source_file">Αρχείο</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -488,7 +487,6 @@
     <string name="extend_validity">Επέκταση ισχύος</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Λήψη δεδομένων από απομακρυσμένο σύστημα υποστήριξης. Αυτό μπορεί να διαρκέσει λίγο.</string>
     <string name="donate_button_invoice">Τιμολόγιο</string>
-    <string name="auto_fill_account_from_aggregate_only">Μόνο όταν ξεκινούν από συνολικό λογαριασμό.</string>
     <string name="sync_auth_exception">Η εξουσιοδότηση απέτυχε.</string>
     <string name="sync_login_again">Συνδεθείτε ξανά.</string>
     <plurals name="delete_success">
@@ -664,7 +662,6 @@
     <string name="sync_backend_is_not_encrypted">Το απομακρυσμένο backend δεν είναι κρυπτογραφημένο.</string>
     <string name="request_for_invoice">Αίτηση τιμολογίου</string>
     <string name="pref_criterion_future_current">Τρέχουσα ώρα</string>
-    <string name="pref_clone_with_current_date_summary_off">Οι κλωνοποιημένες συναλλαγές διατηρούν την αρχική ημερομηνία</string>
     <string name="confirmation_load_template_discard_data">Τα υπάρχοντα δεδομένα φόρμας θα απορριφθούν.</string>
     <string name="unmapped_filter_only_single">Το φίλτρο \"Χωρίς χαρτογράφηση\" δεν μπορεί να συμπεριληφθεί σε πολλαπλές επιλογές</string>
     <string name="no_sync_backends">Χωρίς backend συγχρονισμού</string>
@@ -689,13 +686,11 @@
     <string name="sync_io_exception_locking">Το απομακρυσμένο backend είναι κλειδωμένο ή δεν μπορεί να κλειδωθεί.</string>
     <string name="link_account_failure_2">Υπάρχει ήδη ένας λογαριασμός με το ίδιο uuid στο απομακρυσμένο backend.</string>
     <string name="budget_filter_all_parties">Όλα τα μέρη</string>
-    <string name="auto_fill_focus">Ορίστε την εστίαση στον δικαιούχο πληρωμής</string>
     <string name="budget_onetime">Μια φορά</string>
     <string name="warning_synced_account_cannot_be_closed">Δεν είναι δυνατό να κλείσει ένας λογαριασμός που συνδέεται με ένα backend συγχρονισμού</string>
     <string name="warning_synchronization_select_parent" tools:ignore="UnusedResources">Ο φάκελος που έχετε επιλέξει αντιστοιχεί σε έναν λογαριασμό υπάρχοντος συστήματος υποστήριξης. Πρέπει να επιλέξετε τον γονικό φάκελο για να επαναχρησιμοποιήσετε αυτό το backend.</string>
     <string name="remap_account">Όλες οι επιλεγμένες συναλλαγές θα αντιστοιχιστούν στο λογαριασμό %s.</string>
     <string name="pref_ocr_total_indicators_summary">Μια λίστα συμβολοσειρών, οι οποίες προσδιορίζουν τη συνολική αξία σε μια απόδειξη. Βάλτε κάθε τιμή σε μια νέα γραμμή. Αφήστε κενό για να επαναφέρετε την προεπιλεγμένη τιμή.</string>
-    <string name="pref_clone_with_current_date_summary_on">Οι κλωνοποιημένες συναλλαγές έχουν τρέχουσα ημερομηνία</string>
     <string name="warning_delete_budget">Ο προϋπολογισμός \"%1$s\" θα διαγραφεί.</string>
     <string name="dialog_multi_tag_replace">Αντικαταστήστε τις υπάρχουσες ετικέτες με νέες ετικέτες</string>
     <string name="account_widget_configuration_sum">Τύπος εμφανιζόμενου αθροίσματος</string>
@@ -703,7 +698,6 @@
     <string name="menu_budget_allocated_only">Εμφάνιση μόνο κατηγοριών με κατανομή</string>
     <string name="pref_criterion_future_end_of_day">Τέλος της ημέρας</string>
     <string name="remap_method">Όλες οι επιλεγμένες συναλλαγές θα αντιστοιχιστούν στη μέθοδο %s.</string>
-    <string name="pref_clone_with_current_date_title">Ημερομηνία κλωνοποιημένων συναλλαγών</string>
     <plurals name="warning_delete_tag">
         <item quantity="one">Η ετικέτα %1$s αντιστοιχίζεται σε %2$d συναλλαγή. Πρέπει να διαγραφεί;</item>
         <item quantity="other">Η ετικέτα %1$s αντιστοιχίζεται σε %2$d συναλλαγές. Πρέπει να διαγραφεί;</item>

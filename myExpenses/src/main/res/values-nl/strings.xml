@@ -334,7 +334,6 @@
     <string name="and">en</string>
     <string name="comparison_operator_date_after">na</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%1$d rekeningen met munteenheid %2$s zijn bijgewerkt.</string>
-    <string name="hint_auto_fill">Moeten de gegevens van de laatste transactie automatisch worden ingevuld voor dezelfde begunstigde/betaler? Je kunt dit gedrag altijd wijzigen via de instellingen.</string>
     <string name="dialog_export_applied_to_filter">Alleen transacties die overeenkomen met het huidige filter worden in aanmerking genomen.</string>
     <string name="pref_manage_stale_images_title">Verouderde afbeeldingen</string>
     <string name="export_handle_deleted_update_balance">Openingssaldo bijwerken</string>
@@ -434,7 +433,6 @@
     <string name="warning_delete_budget">Budget \"%1$s\" wordt verwijderd.</string>
     <string name="app_restart_required">Nieuwe configuratie vereist opnieuw opstarten van de app om van kracht te worden.</string>
     <string name="dialog_title_confirm_remap">Toewijzing wijzigen (%s) \?</string>
-    <string name="pref_clone_with_current_date_summary_off">Gekloonde transacties behouden de oorspronkelijke datum</string>
     <string name="tags_create_or_select">Tags maken of selecteren</string>
     <string name="menu_tag">Tag</string>
     <string name="dialog_multi_tag">Alle geselecteerde transacties worden getagd met %s.</string>
@@ -472,12 +470,10 @@
     <string name="synchronization_none">Geen synchronisatie</string>
     <string name="dialog_confirm_sync_remove_backend">Externe backend %s wordt verwijderd. Dit heeft geen invloed op gegevens die lokaal of op afstand zijn opgeslagen, maar de synchronisatiestatus gaat verloren.</string>
     <string name="pref_debug_logging_summary">Schrijf foutopsporingsinformatie in het systeemlogboek</string>
-    <string name="auto_fill_account_from_aggregate_only">Alleen wanneer gestart vanaf een samengestelde rekening.</string>
     <string name="menu_history_transfers">Inclusief transfers</string>
     <string name="licence_expires_today">Je professionele sleutel verloopt vandaag.</string>
     <string name="no_budgets">Bepaal je eerste budget door op de knop + te tikken.</string>
     <string name="menu_remap">Opnieuw toewijzen</string>
-    <string name="pref_clone_with_current_date_summary_on">Gekloonde transacties hebben de huidige datum</string>
     <string name="dialog_multi_tag_append">Voeg nieuwe tags toe aan bestaande tags</string>
     <string name="pref_category_title_features">Functies</string>
     <string name="pref_criterion_future_current">Huidige tijd</string>
@@ -610,7 +606,6 @@
     <string name="pref_feature_uninstall_summary">Play Store probeert die modules uiteindelijk op de achtergrond te verwijderen.</string>
     <string name="template_default_action_without_amount_hint">Sjabloon zonder bedrag moet worden opgeslagen met standaardactie \'Bewerken\'</string>
     <string name="confirmation_load_template_discard_data">Bestaande formuliergegevens worden verwijderd.</string>
-    <string name="pref_clone_with_current_date_title">Datum van gekloonde transacties</string>
     <string name="pref_group_header_show_details_summary">Toon detailsommen in groepskoptekst</string>
     <string name="warning_unencrypted_backup">Hoewel je gegevens beschermd zijn tegen ongeoorloofde toegang op dit apparaat, worden er back-ups gemaakt zonder codering, tenzij je %s configureert.</string>
     <string name="warning_link_transfer">De twee geselecteerde transacties worden als overboeking aan elkaar gekoppeld. Informatie over begunstigde/betaler en categorie wordt verwijderd.</string>
@@ -680,7 +675,6 @@
     <string name="feature_downloaded">Functie %s is geïnstalleerd.</string>
     <string name="scan_result_multiple_candidates_dialog_title">Meerdere kandidaten gevonden. Selecteer:</string>
     <string name="select_package">Selecteer een licentiepakket.</string>
-    <string name="auto_fill_focus">Zet Focus op Begunstigde</string>
     <string name="bug_fixes" tools:ignore="UnusedResources">Foutoplossingen</string>
     <string name="performance_enhancement" tools:ignore="UnusedResources">Prestatieverbetering</string>
     <string name="menu_new_debt">Nieuwe schuld</string>

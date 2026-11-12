@@ -445,7 +445,6 @@
     <string name="comparison_operator_between">паміж</string>
     <string name="comparison_operator_date_after">пасля</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">Купля не атрымалася або адменена.</string>
-    <string name="hint_auto_fill">Ці павінны дадзеныя аўтаматычна запаўняцца з апошняй транзакцыі для таго ж контрагента? Вы заўсёды можаце змяніць гэта ў наладах.</string>
     <string name="pref_manage_stale_images_title">Састарэлыя выявы</string>
     <string name="pref_manage_stale_images_summary">Кіруйце фотаздымкамі, якія засталіся пасля выдаленых транзакцый</string>
     <string name="menu_show_transactions">Паказаць транзакцыі</string>
@@ -498,7 +497,6 @@
     <string name="dialog_title_warning_delete_budget">Выдаліць бюджэт?</string>
     <string name="budget_filter_all_accounts">Усе акаўнты</string>
     <string name="budget_onetime">Аднаразовы</string>
-    <string name="pref_clone_with_current_date_summary_on">Кланаваныя аперацыі маюць бягучую дату</string>
     <string name="pref_manage_tags_summary">Дадаць, змяніць, выдаліць тэгі.</string>
     <string name="valid_until">Да %s</string>
     <string name="eu_vat_info">Для жыхароў Еўрапейскага Саюза цэны паказаны без уліку VAT.</string>
@@ -604,7 +602,6 @@
     <string name="no_budgets">Вызначце свой першы бюджэт, націснуўшы кнопку «+».</string>
     <string name="menu_history_transfers">Уключаць пераводы</string>
     <string name="backup_wrong_password">Здаецца, што файл рэзервовай копіі зашыфраваны іншай парольнай фразай.</string>
-    <string name="pref_clone_with_current_date_summary_off">Кланаваныя аперацыі захоўваюць зыходную дату</string>
     <string name="warning_ungroup_split_transactions">Выбраныя падзеленыя транзакцыі будуць разгрупаваныя, г.зн. іх падзеленыя часткі стануць звычайнымі транзакцыямі.</string>
     <string name="dialog_title_edit_budget">Рэдагаваць бюджэт</string>
     <string name="budget_table_header_budgeted">Бюджэт</string>
@@ -629,7 +626,6 @@
     <string name="clone_and_remap_result">Выбраныя аперацыі былі кланіраваны і пераназначаны.</string>
     <string name="n_months" tools:ignore="PluralsCandidate">%d месяцаў</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Атрыманне дадзеных з аддаленага сервера. Гэта можа заняць некаторы час.</string>
-    <string name="auto_fill_account_from_aggregate_only">Толькі пры запуску з сукупнага рахунку.</string>
     <string name="pref_warning_only_one_protection">Перш чым выкарыстоўваць абарону з дапамогай %1$s, неабходна адключыць абарону з дапамогай %2$s.</string>
     <string name="menu_history">Гісторыя</string>
     <string name="menu_history_show_balance">Паказаць баланс</string>
@@ -693,7 +689,6 @@
     <string name="pref_category_title_features">Асаблівасці</string>
     <string name="pref_tesseract_language_title">Мова для Tesseract</string>
     <string name="account_widget_configuration_sum_total">Уключыць будучыя транзакцыі</string>
-    <string name="auto_fill_focus">Устанавіць фокус на атрымальніку плацяжу</string>
     <string name="backup_save_to_sync_backend">Захаваць у %s</string>
     <string name="performance_enhancement" tools:ignore="UnusedResources">Паляпшэнне прадукцыйнасці</string>
     <plurals name="debt_mapped_transactions">
@@ -764,7 +759,6 @@
     <string name="debt_I_owe">Я абавязаны %s</string>
     <string name="confirmation_load_template_discard_data">Існуючыя дадзеныя формы будуць выдаленыя.</string>
     <string name="pref_ocr_date_formats_title">Фарматы даты</string>
-    <string name="pref_clone_with_current_date_title">Дата кланаваных транзакцый</string>
     <string name="pref_purge_backup_require_confirmation_summary">Паказваць запыт на пацверджанне перад выдаленнем файлаў</string>
     <string name="dialog_multi_tag_append">Дадаць новыя тэгі да існуючых тэгаў</string>
     <string name="language_download_requested">Пераклады для мовы %s запытаны з Play Store</string>

@@ -17,7 +17,6 @@
     <string name="menu_HistoryActivity_history_transfers_help_text">切換是否應將轉帳視為一般收入或支出。</string>
     <string name="form_BudgetEdit_filter_help_text">可以根據類別、交易對象、方式或狀態篩選預算。僅會考量符合這些篩選器的交易。</string>
     <string name="cab_MyExpenses_filter_help_text">搜尋具有相同屬性的交易。</string>
-    <string name="help_ExpenseEdit_transaction_title">交易表單</string>
     <string name="menu_save_and_new_help_text">如果勾選此選項，則在您儲存資料後，表單會保持開啟狀態，以便使用相同的資料建立新交易。</string>
     <string name="menu_original_amount_help_text">顯示一個允許定義額外金額的欄位。例如，如果您使用信用卡以外幣付款，除了從您的卡中扣除的金額外，您還可以記住原始價格。原始金額在計算總和時會被忽略。</string>
     <string name="form_AccountEdit_type_help_text">您可以將帳戶類型定義為現金、銀行、資產、負債或信用卡。該類型決定了您可以在「設定」-&gt;「管理」-&gt;「付款方式」下設定的可用付款方式。</string>
@@ -33,14 +32,8 @@
     <string name="help_ManageParties_manage_info">此畫面列出用於自動完成「付款人／收款人」欄位的交易對象。</string>
     <string name="help_ManageParties_select_filter_info">選擇您要用於篩選交易列表的所有交易對象。</string>
     <string name="help_ManageParties_floating_action_button">使用浮動動作按鈕新增項目。</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">轉帳範本表單</string>
-    <string name="help_ExpenseEdit_templateSplit_title">分割範本表單</string>
-    <string name="help_ExpenseEdit_transaction_info">使用此表單輸入新交易或編輯現有交易。使用動作列中的下拉式選單切換至新增轉帳或分割交易的表單。</string>
-    <string name="help_ExpenseEdit_templateCategory_info">使用此表單輸入新範本或編輯現有範本。使用動作列中的下拉式選單在交易、轉帳和分割的範本之間切換。</string>
     <string name="form_calculator_help_text"><![CDATA[<img src=?calcIcon> 按鈕會開啟計算機。]]></string>
     <string name="form_comment_help_text">輸入任何關於此物件的備註。</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">為此分割部分選擇一個類別。</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">如果「來源」和「目的地」帳戶的貨幣不同，您只需指定其中一個的金額。另一個金額將在您從範本建立實例時計算。</string>
     <string name="form_synchronization_help_text_add">可以從「設定」畫面新增後端。</string>
     <string name="help_form_fields">表單欄位</string>
     <string name="help_MyExpenses_info">此畫面列出目前帳戶的所有交易。使用浮動動作按鈕開啟新增交易的表單。</string>
@@ -82,8 +75,6 @@
     <string name="cab_ManageCategories_select_filter_select_help_text">所選類別將用於篩選交易列表。</string>
     <string name="menu_ManageCategories_sort_help_text">類別列表可以按標題（字母順序）、使用頻率或最後一次對應交易的時間排序。</string>
     <string name="cab_ManageCategories_color_help_text">您可以指派顏色給主類別。此顏色將用於在圖表中表示該類別。子類別將使用其主類別顏色的陰影。</string>
-    <string name="help_ExpenseEdit_transfer_title">轉帳表單</string>
-    <string name="help_ExpenseEdit_split_info">分割交易是單筆交易分割成多個部分，其中每個部分都可以指派給不同的類別，或轉帳到不同的帳戶。</string>
     <string name="form_account_help_text">選擇交易所屬的帳戶。</string>
     <string name="form_date_time_help_text">輸入交易發生的日期和時間。</string>
     <string name="form_date_time_help_text_configuration">您可以在設定中停用時間輸入，並啟用記帳日期和價值日期之間的區分。</string>
@@ -173,10 +164,6 @@
     <string name="menu_status_handle_help_text">交易狀態以彩色矩形表示：灰色表示未核對，藍色表示已清算，綠色表示已核對。點選矩形可更改狀態。</string>
     <string name="menu_equivalent_amount_help_text">為了計算所有帳戶的總計，外幣帳戶的交易會乘以您為該帳戶設定的匯率。</string>
     <string name="help_ManageParties_mergeMode_info_1">選擇您要合併的重複交易對象。</string>
-    <string name="help_ExpenseEdit_split_title">分割表單</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">類別分割部分表單</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">轉帳分割部分表單</string>
-    <string name="help_ExpenseEdit_templateCategory_title">交易範本表單</string>
     <string name="form_split_parts_heading_help_text_2">金額欄位將會自動以各部分的總和更新，除非您手動輸入金額，在這種情況下，將會顯示各部分總和與金額之間的差額（未分割金額）。</string>
     <string name="help_ManageSyncBackends_webdav">如果您的雲端儲存空間供應商支援此協定，My Expenses 將能夠與其同步資料。只需提供資料夾的 URL 以及您的使用者名稱和密碼即可。如果您使用 https 且您的網路伺服器使用自簽憑證，您將能夠明確信任它。</string>
     <string name="help_ManageSyncBackends_drive">選擇您擁有或與您共用的任何資料夾。</string>

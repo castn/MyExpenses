@@ -353,7 +353,6 @@
     <string name="comparison_operator_date_before">មុន</string>
     <string name="comparison_operator_date_after">បន្ទាប់ពី</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">ការទិញបានបរាជ័យ ឬត្រូវបានបោះបង់។</string>
-    <string name="hint_auto_fill">តើគួរបំពេញទិន្នន័យដោយស្វ័យប្រវត្តិពីប្រតិបត្តិការចុងក្រោយសម្រាប់ភាគីដូចគ្នាដែរឬទេ? អ្នកតែងតែអាចផ្លាស់ប្តូរការកែប្រែនេះចេញពីការកំណត់។</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">គណនី %1$d ដែលមានរូបិយប័ណ្ណ %2$s ត្រូវបានធ្វើបច្ចុប្បន្នភាព។</string>
     <string name="import_source_file">ឯកសារ</string>
     <string name="pref_manage_stale_images_title">រូបភាពចាស់ៗ</string>
@@ -481,7 +480,6 @@
     <string name="extend_validity">ពន្យារសុពលភាព</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">កំពុងទាញយកទិន្នន័យពីផ្នែកខាងក្រោយពីចម្ងាយ។ វាអាចចំណាយពេលខ្លះ។</string>
     <string name="donate_button_invoice">វិក្កយបត្រ</string>
-    <string name="auto_fill_account_from_aggregate_only">លុះត្រាតែចាប់ផ្តើមពីគណនីសរុប។</string>
     <string name="sync_auth_exception">ការអនុញ្ញាតបានបរាជ័យ។</string>
     <string name="sync_login_again">សូមចូលម្តងទៀត។</string>
     <plurals name="delete_success">
@@ -611,8 +609,6 @@
     <string name="clone_and_remap_result">ប្រតិបត្តិការដែលបានជ្រើសរើសត្រូវបានក្លូន និងភ្ជាប់ឡើងវិញ។</string>
     <string name="remap_empty_list">រកមិនឃើញធាតុណាដែលអាចភ្ជាប់ទៅកាន់ប្រតិបត្តិការដែលបានជ្រើសរើសទាំងអស់បានទេ។</string>
     <string name="button_label_clone_and_remap">ក្លូន និងភ្ជាប់ឡើងវិញ</string>
-    <string name="pref_clone_with_current_date_summary_on">ប្រតិបត្តិការដែលបានក្លូនមានកាលបរិច្ឆេទបច្ចុប្បន្ន</string>
-    <string name="pref_clone_with_current_date_summary_off">ប្រតិបត្តិការដែលបានក្លូនរក្សាកាលបរិច្ឆេទដើម</string>
     <string name="tags_create_or_select">បង្កើត ឬជ្រើសរើសស្លាក</string>
     <string name="pref_manage_tags_summary">បន្ថែម កែសម្រួល លុបស្លាក។</string>
     <string name="dialog_title_warning_delete_tag">លុបស្លាក?</string>
@@ -651,7 +647,6 @@
     <string name="select_package">សូមជ្រើសរើសកញ្ចប់អាជ្ញាប័ណ្ណ។</string>
     <string name="warning_balance_account_delete">ប្រសិនបើអ្នកបន្ត ប្រតិបត្តិការស្រុះស្រួលទាំងអស់នៃគណនីនេះនឹងត្រូវលុបចេញពីមូលដ្ឋានទិន្នន័យ ហើយអ្នកនឹងមិនអាចស្ដារពួកវាឡើងវិញបានទេ។</string>
     <string name="confirmation_load_template_discard_data">ទិន្នន័យសំណុំបែបបទដែលមានស្រាប់នឹងត្រូវបោះបង់។</string>
-    <string name="pref_clone_with_current_date_title">កាលបរិច្ឆេទនៃប្រតិបត្តិការដែលបានក្លូន</string>
     <string name="template_default_action_without_amount_hint">ពុម្ពដែលគ្មានចំនួនទឹកប្រាក់គួរត្រូវបានរក្សាទុកជាមួយនឹងសកម្មភាពលំនាំដើម \'កែសម្រួល\'</string>
     <string name="menu_save_and_new_content_description">រក្សាទុកទិន្នន័យ ទុកសំណុំបែបបទឱ្យបើកសម្រាប់បង្កើតប្រតិបត្តិការថ្មីដែលមានទិន្នន័យដូចគ្នា។</string>
     <string name="pref_ocr_engine_title">ម៉ាស៊ីនសម្រាប់ការទទួលស្គាល់អត្ថបទ</string>
@@ -672,7 +667,6 @@
     <string name="merge_parties_select">ជ្រើសរើសឈ្មោះភាគីដែលបានបញ្ចូលចូលគ្នា</string>
     <string name="active_tags">ស្លាកសកម្ម</string>
     <string name="request_for_invoice">ការស្នើសុំវិក្កយបត្រ</string>
-    <string name="auto_fill_focus">កំណត់ការផ្តោតលើអ្នកទទួលប្រាក់</string>
     <string name="crash_reports_user_info">{app_name} នឹងផ្ញើរបាយការណ៍អំពីការគាំងកម្មវិធីដោយស្វ័យប្រវត្តិទៅកាន់អ្នកអភិវឌ្ឍន៍របស់ខ្លួន ដែលអនុញ្ញាតឱ្យពួកគេដោះស្រាយបញ្ហាកាន់តែរហ័ស។</string>
     <string name="pref_enable_acra">អនុញ្ញាតិ​ផ្ញើ​របាយការណ៍​សាច់​ប្រាក់​ដោយ​ស្វ័យ​ប្រវត្តិ</string>
     <string name="pref_acra_user_email">អ៊ីម៉ែល​អ្នក​ប្រើ​ប្រាស់ ត្រូវ​បាន​ដាក់បញ្ចូល​ក្នុង របាយការណ៍​ជាប់គាំង</string>

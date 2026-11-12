@@ -45,15 +45,6 @@
     <string name="menu_ManageCategories_search_help_text">Zure kontsultarekin bat datozen kategoria nagusiak eta azpikategoriak bakarrik bistaratuko dira.</string>
     <string name="menu_ManageCategories_sort_help_text">Kategoria zerrenda izenburuaren (alfabetikoki), erabilera maiztasunaren edo transakzio bat esleitua izan den azken aldiaren arabera ordenatu daiteke.</string>
     <string name="cab_ManageCategories_color_help_text">Kolore bat kategoria nagusiei eslei diezaiekezu. Kolore hau erabiliko da kategoria grafikoetan irudikatzeko. Azpikategoriek bere kategoria nagusiaren kolorearen itzalak erabiliko ditu. </string>
-    <string name="help_ExpenseEdit_transaction_title">Transakzioen formularioa</string>
-    <string name="help_ExpenseEdit_transfer_title">Transferentzien formularioa</string>
-    <string name="help_ExpenseEdit_split_title">Banaketen formularioa</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Kategoria banaketen zatien formularioa</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Transferentzia banaketen zatien formularioa</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Transakzio txantiloien formularioa</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Transferentzia txantiloien formularioa</string>
-    <string name="help_ExpenseEdit_transaction_info">Erabili inprimaki hau transakzio berri bat sartzeko edo existitzen den bat editatzeko. Erabili ekintza-barrako goitibeherako menua transferentzia edo transferentzia banatu berri bat gehitzeko inprimakira aldatzeko.</string>
-    <string name="help_ExpenseEdit_split_info">Transferentzia banatu bat zatitan banatutako transferentzia bakarra da, non zati bakoitza kategoria desberdin batera eslei edo kontu desberdin batera transferi daiteke.</string>
     <string name="form_account_help_text">Hautatu transakzioari dagokion kontua.</string>
     <string name="form_date_time_help_text">Sartu noiz egin zen transakzioa, eguna eta ordua.</string>
     <string name="form_amount_switch_help_text">Erabili etengailua gastu eta irabazi artean txandakatzeko.</string>
@@ -64,7 +55,6 @@
     <string name="form_attach_image_help_text"><![CDATA[<img src=\"android:ic_menu_camera\"> botoiarekin irudi bat erants dezakezu (adib. galeriatik edo kameratik) objektura.]]></string>
     <string name="form_category_help_text">Botoi honek kategorien zerrenda irekitzen du, non transakziori esleitu nahi diozun kategoria hautatu dezakezun.</string>
     <string name="form_split_parts_heading_help_text_3">Transakzio banatua transakzioaren kopurua zehazki esleitua izan bada bakarrik gorde dezakezu.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Aukeratu kategoria bat banaketaren zati honentzat.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Esleitu objektu hau zein kontutik edo kontura transferitzen den.</string>
     <string name="form_exchange_rate_help_text">Tasa transferentziaren bi noranzkoetako edozeinetan zehaztu dezakezu. Alderantzizko tasa eta kanbio-tasaren mendeko zatiari dagokion kopurua automatikoki kalkulatzen dira.</string>
     <string name="form_title_help_text">Sartu txantiloia identifikatzeko izen esklusibo bat.</string>
@@ -73,7 +63,6 @@
     <string name="form_plan_help_text_mode">Plana automatikoa ala eskuzkoa gisa ezarri daiteke. Plan automatiko baten instantzia bat gertatzen denean, transakzioa sortuko da eta jakinarazpen bat jasoko duzu. Plana eskuzkoa bada, jakinarazpen bat jasoko duzu ere eta zure esku dago txantiloia bertan behera utzi, aldatu ala aplikatzea.</string>
     <string name="menu_save_help_text">Gorde datuak eta itxi formularioa.</string>
     <string name="menu_invert_transfer_help_text">Alderantzikatu transferentziaren norabidea \'Nondik\' eta \'Nora\' kontuak txandakatuz</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">\'Nork\' et \'Nori\' kontuen monetak desberdinak badira, bietako bakarraren kopurua zehaztu. Bestea txantiloitik instantziak sortzen dituzunean kalkulatuko da.</string>
     <string name="help_AccountEdit_title">Kontuen formularioa</string>
     <string name="form_AccountEdit_label_help_text">Etiketak kontua identifikatzen du kontuen zerrendan.</string>
     <string name="form_description_help_text">Deskripzioa informaziorako da besterik ez.</string>

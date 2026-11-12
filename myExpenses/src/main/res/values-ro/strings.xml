@@ -442,7 +442,6 @@
     <string name="warning_change_fraction_digits_1">Sumele din baza de date trebuie actualizate pentru a corespunde noului număr de fracții.</string>
     <string name="warning_change_fraction_digits_2_divided" tools:ignore="PluralsCandidate">Dacă sumele nu sunt actualizate, acestea vor fi afișate împărțite la %d după modificare.</string>
     <string name="select_payee">Selectați plătitorul/beneficiarul</string>
-    <string name="hint_auto_fill">Ar trebui să fie completate automat datele din ultima tranzacție pentru același beneficiar/plătitor? Puteți schimba oricând acest comportament din setări.</string>
     <string name="dialog_contrib_text_2">Contribuiți prin actualizarea <i>{app_name}</i> și obțineți acces nerestricționat la următoarele funcții:</string>
     <string name="warning_change_fraction_digits_3">Dacă sumele sunt actualizate, veți pierde informațiile despre partea lor fracțională.</string>
     <string name="account_deleted">Contul a fost șters</string>
@@ -545,7 +544,6 @@
     <string name="switch_to_monthly" tools:ignore="UnusedResources">Treceți la abonamentul lunar</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Preluarea datelor din backend-ul la distanță. Acest lucru poate dura ceva timp.</string>
     <string name="donate_button_invoice">Factură</string>
-    <string name="auto_fill_account_from_aggregate_only">Numai atunci când este pornit de la cont agregate.</string>
     <string name="button_validate">Validează</string>
     <string name="contributed_by">A contribuit %s</string>
     <string name="pref_sync_notification_summary">Notificare despre progresul sincronizării</string>
@@ -642,7 +640,6 @@
     <string name="show_duplicates">Afișare duplicate</string>
     <string name="pref_ocr_engine_title">Motor pentru recunoașterea textului</string>
     <string name="account_widget_configuration">Configurarea widgetului contului</string>
-    <string name="auto_fill_focus">Setați focalizarea pe beneficiar</string>
     <string name="backup_save_to_sync_backend">Salvați în %s</string>
     <string name="performance_enhancement" tools:ignore="UnusedResources">Îmbunătățirea performanței</string>
     <string name="object_sealed_debt">Obiectul se referă la o datorie închisă.</string>
@@ -675,7 +672,6 @@
     <string name="remap_method">Toate tranzacțiile selectate vor fi mapate la metoda %s.</string>
     <string name="pref_manage_tags_summary">Adăugați, editați, ștergeți etichete.</string>
     <string name="dialog_multi_tag">Toate tranzacțiile selectate vor fi etichetate cu %s.</string>
-    <string name="pref_clone_with_current_date_summary_off">Tranzacțiile clonate păstrează data inițială</string>
     <string name="dialog_multi_tag_clear">Toate etichetele vor fi eliminate din tranzacțiile selectate.</string>
     <string name="pref_planner_manual_time_current">Momentul aplicării</string>
     <string name="pref_ocr_date_formats_title">Formate de date</string>
@@ -698,7 +694,6 @@
     <string name="tags_create_or_select">Crearea sau selectarea etichetelor</string>
     <string name="menu_edit_tag">Editați eticheta</string>
     <string name="warning_balance_account_delete">Dacă continuați, toate tranzacțiile reconciliate ale acestui cont vor fi șterse din baza de date și nu le veți putea restaura.</string>
-    <string name="pref_clone_with_current_date_title">Data tranzacțiilor clonate</string>
     <string name="debt_installment_pay">Plătesc o rată de %s.</string>
     <string name="pref_backup_file_prefix_title">Prefixul fișierului</string>
     <string name="feature_downloaded">Caracteristica %s a fost instalată.</string>
@@ -765,7 +760,6 @@
     <string name="clone_and_remap_result">Tranzacțiile selectate au fost clonate și remapate.</string>
     <string name="remap_empty_list">Nu a fost găsit niciun element care să poată fi mapat la toate tranzacțiile selectate.</string>
     <string name="dialog_title_warning_delete_tag">Ștergeți eticheta?</string>
-    <string name="pref_clone_with_current_date_summary_on">Tranzacțiile clonate au data curentă</string>
     <plurals name="warning_delete_tag">
         <item quantity="one">Eticheta %1$s este mapată la %2$d tranzacție. Ar trebui șters?</item>
         <item quantity="few">Eticheta %1$s este mapată la %2$d tranzacții. Ar trebui șters?</item>

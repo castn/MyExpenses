@@ -36,7 +36,6 @@ import org.totschnig.myexpenses.model.CurrencyEnum
 import org.totschnig.myexpenses.model.PreDefinedPaymentMethod
 import org.totschnig.myexpenses.model.sort.Sort
 import org.totschnig.myexpenses.preference.PrefKey
-import org.totschnig.myexpenses.preference.enableAutoFill
 import org.totschnig.myexpenses.preference.enumValueOrDefault
 import org.totschnig.myexpenses.preference.menu
 import org.totschnig.myexpenses.preference.persistMenu
@@ -198,12 +197,6 @@ class UpgradeHandlerViewModel(application: Application) :
                             "ALPHABETIC"
                     )
                 }
-                if (fromVersion < 303) {
-                    if (prefHandler.getBoolean(PrefKey.AUTO_FILL_LEGACY, false)) {
-                        enableAutoFill(prefHandler)
-                    }
-                    prefHandler.remove(PrefKey.AUTO_FILL_LEGACY)
-                }
                 if (fromVersion < 316) {
                     val homeCurrency = currencyContext.homeCurrencyString
                     prefHandler.putString(PrefKey.HOME_CURRENCY, homeCurrency)
@@ -271,18 +264,6 @@ class UpgradeHandlerViewModel(application: Application) :
 
                 if (fromVersion < 429 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     prefHandler.putString(PrefKey.UI_THEME, "default")
-                }
-
-                if (fromVersion < 486) {
-                    with(prefHandler) {
-                        putBoolean(
-                            PrefKey.AUTO_FILL_SWITCH, (getBoolean(PrefKey.AUTO_FILL_AMOUNT, false)
-                                    || getBoolean(PrefKey.AUTO_FILL_CATEGORY, false)
-                                    || getBoolean(PrefKey.AUTO_FILL_COMMENT, false)
-                                    || getBoolean(PrefKey.AUTO_FILL_METHOD, false)
-                                    || getString(PrefKey.AUTO_FILL_ACCOUNT, "never") != "never")
-                        )
-                    }
                 }
 
                 if (fromVersion < 518) {

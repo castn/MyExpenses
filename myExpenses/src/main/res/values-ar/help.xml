@@ -50,17 +50,6 @@
     <string name="menu_ManageCategories_search_help_text">تُعرض الفئات الرئيسية والفرعية التي تطابق استعلامك فقط.</string>
     <string name="menu_ManageCategories_sort_help_text">يمكن فرز قائمة الفئات حسب العنوان (أبجديًا)، تكرار الاستخدام، أو آخر مرة تم فيها ربط معاملة بها.</string>
     <string name="cab_ManageCategories_color_help_text">يمكنك تعيين لون للفئات الرئيسية. يُستخدم هذا اللون لتمثيل الفئة في الرسوم البيانية. تستخدم الفئات الفرعية ظلال لون فئتها الرئيسية.</string>
-    <string name="help_ExpenseEdit_transaction_title">نموذج المعاملات</string>
-    <string name="help_ExpenseEdit_transfer_title">نموذج التحويلات</string>
-    <string name="help_ExpenseEdit_split_title">نموذج التقسيمات</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">نموذج أجزاء التقسيم حسب الفئة</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">نموذج أجزاء التقسيم حسب التحويل</string>
-    <string name="help_ExpenseEdit_templateCategory_title">نموذج قوالب المعاملات</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">نموذج قوالب التحويلات</string>
-    <string name="help_ExpenseEdit_templateSplit_title">نموذج القوالب المقسمة</string>
-    <string name="help_ExpenseEdit_transaction_info">استخدم هذا النموذج لإدخال معاملة جديدة أو تعديل معاملة موجودة. استخدم القائمة المنسدلة في شريط الإجراءات للتبديل إلى نموذج إضافة تحويل أو معاملة مقسمة.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">استخدم هذا النموذج لإدخال قالب جديد أو تعديل قالب موجود. استخدم القائمة المنسدلة في شريط الإجراءات للتبديل بين قوالب المعاملات، التحويلات، والتقسيمات.</string>
-    <string name="help_ExpenseEdit_split_info">المعاملة المقسمة هي معاملة واحدة مقسمة إلى أجزاء، حيث يمكن تخصيص كل جزء إلى فئة مختلفة أو تحويله إلى حساب آخر.</string>
     <string name="form_account_help_text">حدد الحساب الذي تنتمي إليه المعاملة.</string>
     <string name="form_date_time_help_text">أدخل التاريخ والوقت اللذين تمت فيهما المعاملة.</string>
     <string name="form_date_time_help_text_configuration">في الإعدادات، يمكنك تعطيل إدخال الوقت وتفعيل التفريق بين تاريخ الحجز وتاريخ القيمة.</string>
@@ -74,7 +63,6 @@
     <string name="form_default_action_help_text">لكل قالب، يمكنك تهيئته بحيث يؤدي النقر القصير عليه في قائمة القوالب إما إلى حفظ المثيل فورًا أو فتح نموذج التحرير الخاص به لتعديله قبل الحفظ. يمكنك دائمًا الوصول إلى كلا الإجراءين عبر الضغط المطول.</string>
     <string name="form_category_help_text">يفتح هذا الزر قائمة الفئات، حيث يمكنك تحديد الفئة التي تريد ربطها بالمعاملة.</string>
     <string name="form_split_parts_heading_help_text_3">يمكنك حفظ المعاملة المقسمة فقط إذا تم تخصيص مبلغ المعاملة بالكامل.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">حدد فئة لهذا الجزء المقسم.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">حدد الحسابات التي تم التحويل منها أو إليها.</string>
     <string name="form_exchange_rate_help_text">يمكنك تحديد سعر الصرف في أي من الاتجاهين للتحويل. يتم حساب السعر العكسي والمبلغ المقابل للجزء التابع لسعر الصرف تلقائيًا.</string>
     <string name="form_title_help_text">أدخل عنوانًا يعرّف القالب بشكل فريد.</string>
@@ -86,7 +74,6 @@
     <string name="menu_original_amount_help_text">إظهار حقل يتيح تحديد مبلغ إضافي. على سبيل المثال، إذا دفعت ببطاقتك الائتمانية بعملة أجنبية، يمكنك تسجيل السعر الأصلي بالإضافة إلى المبلغ المخصوم من بطاقتك. يُتجاهل المبلغ الأصلي لحساب الإجماليات.</string>
     <string name="menu_equivalent_amount_help_text">لحساب الإجمالي الكلي عبر جميع الحسابات، تُضرب معاملات حسابات العملات الأجنبية بسعر الصرف الذي تحدده للحساب.</string>
     <string name="menu_invert_transfer_help_text">عكس اتجاه التحويل عن طريق تبديل الحساب من وإلى.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">إذا كانت عملات الحساب من وإلى مختلفة، تحدد المبلغ لعملة واحدة فقط. يُحسب الآخر عند إنشاء مثيلات من القالب.</string>
     <string name="form_goal_or_limit_help_text">يتيح هذا الحقل تحديد إما هدف توفير إيجابي أو حد ائتماني سلبي. في كلتا الحالتين، في قائمة الحسابات، يظهر مؤشر تقدم يوضح المسافة بين الرصيد الحالي والهدف أو الحد.</string>
     <string name="menu_templates_help_text">فتح قائمة تسرد جميع القوالب، مما يتيح تحميلها بسرعة في النموذج.</string>
     <string name="menu_create_template_from_transaction_help_text">إذا تم تحديد هذا الخيار، تُحفظ المعاملة أيضًا كقالب. يمكنك تحديد عنوانها واختياريًا تعيين خطة للتكرار التلقائي.</string>

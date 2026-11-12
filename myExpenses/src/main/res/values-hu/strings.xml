@@ -377,7 +377,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">ezután</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">A vásárlás sikertelen vagy törölt.</string>
-    <string name="hint_auto_fill">Azonos kedvezményezett/fizető esetén kitöltsük automatikusan az utolsó tranzakció adataival? Ez a viselkedés a beállításokban bármikor megváltoztatható.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%1$d fiók frissítve, amely %2$s pénznemmel rendelkezik.</string>
     <string name="import_source_file">Fájl</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -509,7 +508,6 @@
     <string name="extend_validity">Érvényesség meghosszabbítása</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Adatok betöltése távoli háttérrendszerről. Ez eltarthat egy darabig.</string>
     <string name="donate_button_invoice">Számla</string>
-    <string name="auto_fill_account_from_aggregate_only">Csak ha összevont számláról van indítva.</string>
     <string name="sync_auth_exception">Engedélyezés nem sikerült.</string>
     <string name="sync_login_again">Jelentkezzen be újra.</string>
     <plurals name="delete_success">
@@ -657,9 +655,7 @@
     <!-- The label for the button, where user confirms that he wants to clone the selected transactions and then remap them. -->
     <string name="button_label_clone_and_remap">Klónozás és újratervezés</string>
     <!-- The summary of a preference toggle. If switched on cloned transactions have the date set to the current date -->
-    <string name="pref_clone_with_current_date_summary_on">A klónozott tranzakciók aktuális dátummal rendelkeznek</string>
     <!-- The summary of a preference toggle. If switched off cloned transactions keep the original date -->
-    <string name="pref_clone_with_current_date_summary_off">A klónozott tranzakciók megtartják az eredeti dátumot.</string>
     <string name="tags_create_or_select">Címkék létrehozása vagy kiválasztása</string>
     <string name="pref_manage_tags_summary">Adjon hozzá, módosítson, töröljön címkéket.</string>
     <string name="dialog_title_warning_delete_tag">Törli a címkét?</string>
@@ -715,7 +711,6 @@
     <string name="warning_balance_account_delete">Ha folytatja, a fiók minden érvényesített tranzakcióját töröljük az adatbázisból, és nem lehet majd visszaállítani őket.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">A meglévő űrlapadatok elvetésre kerülnek.</string>
-    <string name="pref_clone_with_current_date_title">Klónozott tranzakció dátuma</string>
     <string name="template_default_action_without_amount_hint">Az összeg nélküli sablont el kell menteni az alapértelmezett \"Szerkesztés\" művelettel</string>
     <string name="menu_save_and_new_content_description">Mentse el az adatokat, hagyja nyitva az űrlapot, hogy új tranzakciót készíthessen ugyanazokkal az adatokkal.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
@@ -760,7 +755,6 @@
     <string name="dialog_contrib_trial_info_play">Ez az ingyenes próbaverzió soha nem vált át semmilyen típusú előfizetésre.</string>
     <string name="dialog_contrib_subscription_info_play">Ez az előfizetés azonnal hatályba lép, havonta vagy évente kerül számlázásra, és bármikor lemondható.</string>
     <string name="stability_improvements" tools:ignore="UnusedResources">Stabilitási fejlesztések</string>
-    <string name="auto_fill_focus">Fókusz beállítása a kedvezményezettre</string>
     <string name="performance_enhancement" tools:ignore="UnusedResources">Teljesítménynövelés</string>
     <string name="debt_owes_me">%s tartozik nekem</string>
     <string name="debt_I_owe">Tartozom %s</string>

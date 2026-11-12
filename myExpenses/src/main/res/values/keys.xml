@@ -52,7 +52,6 @@
     <string name="pref_rate_key">rate</string>
     <string name="pref_ui_language_key">ui_language</string>
     <string name="pref_app_dir_key">app_dir</string>
-    <string name="pref_auto_fill_key">auto_fill</string>
     <string name="pref_template_click_default_key">template_click_default</string>
     <string name="pref_protection_enable_account_widget_key">enable_account_widget</string>
     <string name="pref_protection_enable_template_widget_key">enable_template_widget</string>
@@ -78,13 +77,6 @@
     <string name="pref_sync_notification_key">sync_notification</string>
     <string name="pref_category_privacy_key">category_privacy</string>
     <string name="pref_category_ads_key">category_ads</string>
-    <string name="pref_auto_fill_amount_key">auto_fill_amount</string>
-    <string name="pref_auto_fill_category_key">auto_fill_category</string>
-    <string name="pref_auto_fill_comment_key">auto_fill_comment</string>
-    <string name="pref_auto_fill_account_key">auto_fill_account</string>
-    <string name="pref_auto_fill_method_key">auto_fill_method</string>
-    <string name="pref_auto_fill_debt_key">auto_fill_debt</string>
-    <string name="pref_auto_fill_focus_key">auto_fill_focus</string>
     <string name="pref_debug_show_ads_key">debug_show_ads</string>
     <string name="pref_protection_device_lock_screen_key">protection_device_lock_screen</string>
     <string name="pref_crashreport_enabled_key">crashreport_enabled</string>
@@ -104,7 +96,6 @@
     <string name="pref_openexchangerates_app_id_key">openexchangerates_app_id</string>
     <string name="pref_coin_api_api_key_key">coin_api_api_key</string>
     <string name="pref_webdav_allow_unverified_host_key">webdav_allow_unverified_host</string>
-    <string name="pref_clone_with_current_date_key">clone_with_current_date</string>
     <string name="pref_feature_uninstall_key">feature_uninstall</string>
     <string name="pref_feature_uninstall_features_key">feature_uninstall_features</string>
     <string name="pref_feature_uninstall_languages_key">feature_uninstall_languages</string>

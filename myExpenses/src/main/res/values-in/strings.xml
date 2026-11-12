@@ -424,7 +424,6 @@
     <string name="comparison_operator_date_before">sebelum</string>
     <string name="comparison_operator_date_after">setelah</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">Pembelian gagal atau dibatalkan.</string>
-    <string name="hint_auto_fill">Apakah data harus diisi secara otomatis dari transaksi terakhir untuk pihak lawan yang sama? Anda selalu dapat mengubah perilaku ini dari pengaturan.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%1$d akun dengan mata uang %2$s telah diperbarui.</string>
     <string name="import_source_file">File</string>
     <string name="pref_manage_stale_images_title">Gambar sisa</string>
@@ -522,7 +521,6 @@
     <string name="extend_validity">Perpanjang masa berlaku</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Mengambil data dari backend jarak jauh. Ini mungkin memerlukan waktu.</string>
     <string name="donate_button_invoice">Faktur</string>
-    <string name="auto_fill_account_from_aggregate_only">Hanya saat dimulai dari akun agregat.</string>
     <string name="sync_auth_exception">Otorisasi gagal.</string>
     <string name="sync_login_again">Harap masuk lagi.</string>
     <plurals name="delete_success">
@@ -647,8 +645,6 @@
     <string name="clone_and_remap_result">Transaksi yang dipilih telah diklon dan dipetakan ulang.</string>
     <string name="remap_empty_list">Tidak ditemukan item yang dapat dipetakan ke semua transaksi yang dipilih.</string>
     <string name="button_label_clone_and_remap">Klon dan petakan ulang</string>
-    <string name="pref_clone_with_current_date_summary_on">Transaksi hasil kloning menggunakan tanggal saat ini</string>
-    <string name="pref_clone_with_current_date_summary_off">Transaksi hasil kloning mempertahankan tanggal asli</string>
     <string name="tags_create_or_select">Buat atau pilih tag</string>
     <string name="pref_manage_tags_summary">Tambah, edit, hapus tag.</string>
     <string name="dialog_title_warning_delete_tag">Hapus tag?</string>
@@ -667,7 +663,6 @@
     <string name="pref_feature_uninstall_summary">Play Store akan mencoba menghapus modul-modul tersebut di latar belakang.</string>
     <string name="warning_balance_account_delete">Jika Anda melanjutkan, semua transaksi yang telah direkonsiliasi dari akun ini akan dihapus dari database dan Anda tidak akan dapat memulihkannya.</string>
     <string name="confirmation_load_template_discard_data">Data formulir yang ada akan dibuang.</string>
-    <string name="pref_clone_with_current_date_title">Tanggal transaksi hasil kloning</string>
     <string name="template_default_action_without_amount_hint">Templat tanpa jumlah harus disimpan dengan tindakan bawaan \'Edit\'</string>
     <string name="menu_save_and_new_content_description">Simpan data, biarkan formulir tetap terbuka untuk membuat transaksi baru dengan data yang sama.</string>
     <string name="pref_ocr_engine_title">Mesin untuk pengenalan teks</string>
@@ -685,7 +680,6 @@
     <string name="merge_parties_select">Pilih nama pihak hasil penggabungan</string>
     <string name="active_tags">Tag Aktif</string>
     <string name="request_for_invoice">Permintaan Faktur</string>
-    <string name="auto_fill_focus">Atur Fokus pada Penerima Pembayaran</string>
     <string name="crash_reports_user_info">{app_name} akan mengirim laporan tentang crash aplikasi secara otomatis kepada pengembangnya, yang memungkinkan mereka memperbaiki masalah dengan lebih cepat.</string>
     <string name="pref_enable_acra">Izinkan pengiriman otomatis laporan crash</string>
     <string name="pref_acra_user_email">Email pengguna yang akan disertakan dalam laporan crash</string>

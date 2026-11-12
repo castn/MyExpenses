@@ -43,17 +43,6 @@
     <string name="menu_ManageCategories_search_help_text">Hanya kategori utama dan sub-kategori yang sepadan dengan pertanyaan anda akan dipaparkan.</string>
     <string name="menu_ManageCategories_sort_help_text">Senarai kategori boleh diisih mengikut tajuk (secara berabjad), mengikut kekerapan penggunaan, atau mengikut kali terakhir transaksi dipetakan.</string>
     <string name="cab_ManageCategories_color_help_text">Anda boleh umpuk satu warna untuk kategori utama. Warna ini akan digunakan untuk mewakili kategori dalam carta. Subkategori akan guna lorekan dari warna kategori utama mereka.</string>
-    <string name="help_ExpenseEdit_transaction_title">Borang  untuk transaksi</string>
-    <string name="help_ExpenseEdit_transfer_title">Borang untuk pemindahan</string>
-    <string name="help_ExpenseEdit_split_title">Borang untuk pengasingan</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Borang untuk bahagian pengasingan kategori</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Borang untuk bahagian pengasingan pemindahan</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Borang untuk templat transaksi</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Borang untuk templat pemindahan</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Borang untuk pengasingan templat</string>
-    <string name="help_ExpenseEdit_transaction_info">Guna borang ini untuk masukkan transaksi baharu atau sunting sedia ada. Guna menu tarik-turun dalam palang tindakan untuk tukar ke borang bagi menambah pemindahan baharu atau pengasingan transaksi.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Guna borang ini untuk masukkan transaksi baharu atau sunting sedia ada. Guna menu tarik-turun dalam palang tindakan untuk antara templat untuk transaksi, pemindahan dan pengasingan.</string>
-    <string name="help_ExpenseEdit_split_info">Pengasingan transaksi ialah satu transaksi yang diasingkan kepada beberapa bahagian, yang mana setiap bahagian boleh diumpuk ke kategori berbeza, atau dipindah ke akaun berbeza.</string>
     <string name="form_account_help_text">Pilih akaun yang mana milik transaksi tersebut.</string>
     <string name="form_date_time_help_text">Masukkan tarikh dan waktu bila transaksi berlaku.</string>
     <string name="form_date_time_help_text_configuration">Dalam tetapan anda boleh lumpuhkan input waktu dan benarkan perbezaan diantara tarikh tempahan dengan tarikh nilai.</string>
@@ -66,7 +55,6 @@
     <string name="form_attach_image_help_text"><![CDATA[The <img src=\"android:ic_menu_camera\"> butang membolehkan anda lampirkan imej (cth. dari galeri atau kamera) kepada objek.]]></string>
     <string name="form_category_help_text">Butang ini membuka senarai kategori, yang mana anda boleh pilih kategori yang anda mahu petakan ke dalam transaksi.</string>
     <string name="form_split_parts_heading_help_text_3">Anda boleh menyimpan transaksi pengasingan, jika amaun transaksi telah diumpuk dengan tepat.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Pilih satu kategori untuk bahagian pengasingan ini.</string>
     <string name="form_transfer_from_account_transfer_to_account_help_text">Umpuk akaun yang mana objek ini dipindahkan daripada atau kepada.</string>
     <string name="form_exchange_rate_help_text">Anda boleh nyatakan kadar sama ada kedua-dua arah pemindahan. Kadar songsang dan amaun berkenaan pada bahagian dependan bagi kadar pertukaran dikira secara automatik.</string>
     <string name="form_title_help_text">Masukkan tajuk mengenalpasti templat secara unik.</string>
@@ -77,7 +65,6 @@
     <string name="menu_original_amount_help_text">Tunjuk satu medan yang boleh takrifkan amaun tambahan. Sebagai contoh jika anda bayar dengan kad kredit dalam matawang asing, anda boleh ingat harga asal selain dari amaun yang didebitkan dari kad anda. Amaun asal diabaikan untuk mengira jumlah.</string>
     <string name="menu_equivalent_amount_help_text">Untuk mengira jumlah keseluruhan merentasi semua akaun, transaksi bagi akaun matawang asing, digandakan dengan kadar pertukaran yang anda tetapkan untuk akaun.</string>
     <string name="menu_invert_transfer_help_text">Songsang arah pemindahan dengan menyilih akaun \"Daripada\' dan \'Kepada\'.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Jika matawang bagi akaun \'Daripada\' dan \'Kepada\' berlainan, anda boleh nyatakan amaun hanya salah satu daripada mereka. Yang lagi satu akan dikara bila anda wujudkan tika dari templat.</string>
     <string name="form_goal_or_limit_help_text">Medan ini membolehkan penentuan sama had matlamat simpanan positif atau had kredit negatif. Ataupun, pada senarai akaun, satu penunjuk kemajuan visualkan jarak diantara baki semasa dengan matlamat atau had.</string>
     <string name="help_AccountEdit_title">Borang untuk akaun</string>
     <string name="form_AccountEdit_label_help_text">Label mengenalpasti akaun di dalam senarai akaun.</string>

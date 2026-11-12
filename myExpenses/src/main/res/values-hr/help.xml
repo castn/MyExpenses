@@ -32,20 +32,15 @@
     <string name="cab_create_template_from_transaction_help_text">Definiraj novi predložak na temelju odabrane transakcije. Morat ćeš zadati naslov predloška.</string>
     <string name="menu_ManageTemplates_templates_sort_help_text">Popis predložaka može se razvrstati po naslovu (abecednim redom), po iznosu, po učestalosti korištenja ili po zadnjem vremenu kada je transakcija stvorena iz njega.</string>
     <string name="help_ManageCategories_distribution_info">Ovaj ekran prikazuje distribuciju tvojih troškova i prihoda po kategorijama, za sve transakcije na računu ili za određenu grupu. Ako proširiš glavnu kategoriju u popisu, kružni dijagram će prikazati distribuciju njezinih potkategorija. Ako odabereš kategoriju u popisu, ona će biti istaknuta u kružnom dijagramu i obrnuto. Pritisni kategoriju dugo za prikaz agregiranog popisa transakcija koje su na nju mapirane.</string>
-    <string name="help_ExpenseEdit_templateCategory_title">Obrazac za predloške transakcija</string>
-    <string name="help_ExpenseEdit_templateTransfer_title">Obrazac za predloške prijenosa</string>
-    <string name="help_ExpenseEdit_templateSplit_title">Obrazac za predloške podjele</string>
     <string name="help_ManageCategories_select_mapping_info">Osim radnji koje možeš izvršiti prilikom upravljanja kategorijama u ekranu „Osobne postavke” (stvori, uredi, izbriši), na ovom ekranu mapiraš transakciju na odabranu kategoriju pritiskom na nju.</string>
     <string name="menu_ManageCategories_distribution_grouping_help_text">Postavi vrstu grupiranja i prikaži distribuciju po danu, mjesecu, tjednu ili godini.</string>
     <string name="menu_back_help_text">Idi na prethodnu grupu. To se može obaviti i povlačenjem ekrana prstom slijeva nadesno.</string>
     <string name="menu_categories_setup_default_help_text">Uvest će se skup zadanih kategorija.</string>
     <string name="menu_categories_export_help_text">Kategorije će se izvesti u QIF datoteku.</string>
     <string name="cab_ManageCategories_select_filter_select_help_text">Odabrane kategorije će se koristiti za filtriranje popisa transakcija.</string>
-    <string name="help_ExpenseEdit_transfer_title">Obrazac za prijenose</string>
     <string name="menu_save_help_text">Spremi podatke i zatvori obrazac.</string>
     <string name="help_ManageBudgets_title">Popis svih budžeta</string>
     <string name="help_ManageParties_manage_info">Ovaj ekran prikazuje popis stranaka koje se koriste za automatsko popunjavanje polja Platiša/Primalac.</string>
-    <string name="help_ExpenseEdit_transaction_title">Obrazac za transakcije</string>
     <string name="help_BudgetEdit_title">Obrazac za budžete</string>
     <string name="help_BudgetEdit_info">Koristi ovaj obrazac za izradu novog budžeta ili za uređivanje postojećeg.</string>
     <string name="form_BudgetEdit_title_help_text">Naslov budžeta pomaže da ga se identificira u popisu budžeta.</string>
@@ -55,7 +50,6 @@
     <string name="menu_ManageCategories_search_help_text">Prikazat će se samo glavne kategorije i potkategorije koje odgovaraju tvom upitu.</string>
     <string name="menu_ManageCategories_sort_help_text">Popis kategorija može se razvrstati po naslovu (abecednim redom), po učestalosti korištenja ili po zadnjem vremenu mapiranja transakcije.</string>
     <string name="cab_ManageCategories_color_help_text">Glavnim kategorijama možeš dodijeliti boju. Ova će se boja koristiti za predstavljanje kategorije u dijagramima. Podkategorije će koristiti nijanse boje glavne kategorije.</string>
-    <string name="help_ExpenseEdit_split_title">Obrazac za podjele</string>
     <string name="help_AccountEdit_title">Obrazac za račune</string>
     <string name="menu_forward_help_text">Idi na sljedeću grupu. To se može obaviti i povlačenjem ekrana prstom zdesna nalijevo.</string>
     <string name="menu_reset_help_text">Ova naredba će izvesti sve transakcije trenutačnog računa u datoteku na SD karticu u QIF ili CSV formatu. Možeš odlučiti izbrisati izvezene transakcije, u tom slučaju se početni saldo automatski prilagođava. Alternativno, ako se transakcije ne izbrišu, bit će označene kao izvezene. Program „Moji troškovi” može dijeliti datoteku odmah nakon izvoza putem FTP-a, e-maila ili bilo koje drugog programa za dijeljenje datoteka, ako je tako konfiguriran u postavkama. Ako je filtar pretraživanja aktivan, u obzir će se uzeti samo transakcije mapirane ovim filtrom.</string>
@@ -72,8 +66,6 @@
     <string name="help_ManageTemplates_templates_info"><![CDATA[<img src="ic_menu_template">Dok se predlošci mogu izvesti iz transakcija putem njihovog kontekstnog izbornika, ovdje možeš stvoriti nove predloške (za transakcije ili prijenose) pritiskom na plutajući gumb radnji. Pritiskom na predložak stvorit ćeš instancu za transakciju ili prijenos.<br><img src="ic_event">Plan je predložak za koji si stvorio/la događaj (jednokratan ili ponavljajući) u kalendaru planova. Pritiskom na plan otvorit će se prikaz kalendara koji prikazuje prošle i nadolazeće instance plana.]]></string>
     <string name="help_ManageCategories_manage_info">Ovaj ekran omogućuje stvaranje, uređivanje i brisanje kategorija. Prema zadanim postavkama, primarni kriterij razvrstavanja u popisu kategorija je broj korištenja kategorije (sekundarni kriterij je abecedni redoslijed). To omogućuje brz pristup kategorijama koje najčešće koristiš.</string>
     <string name="help_SetupSync_info">Ovaj ekran omogućuje biranje podataka koje želiš sinkronizirati između uređaja i pozadinskog sustava. Popisuje sve račune na tvom uređaju koji još nisu sinkronizirani s drugim pozadinskim sustavima i sve račune spremljene na pozadinskom sustavu. Pritiskom na &lt;img src=ic_hchain_broken&gt; / &lt;img src=ic_hchain&gt; označit ili odznačit će račun za sinkronizaciju. Ako odabereš račun koji već postoji lokalno i udaljeno, moraš odlučiti hoće li podaci na tvom uređaju prepisati postojeće podatke na pozadinskom sustavu ili obratno.</string>
-    <string name="help_ExpenseEdit_splitPartCategory_title">Obrazac za kategorije dijelova podjela</string>
-    <string name="help_ExpenseEdit_splitPartTransfer_title">Obrazac za prijenos dijelova višedjelne transakcije</string>
     <string name="form_amount_switch_help_text">Koristi sklopku za prikazivanje troškova ili prihoda.</string>
     <string name="form_calculator_help_text"><![CDATA[The <img src="?calcIcon"> gumb otvara kalukulator.]]></string>
     <string name="menu_HistoryActivity_history_transfers_help_text">Uključi/Isključi, ako se prijenosi trebaju tretirati kao redovni prihod ili trošak.</string>
@@ -82,13 +74,9 @@
     <string name="form_transfer_from_account_transfer_to_account_help_text">Dodijeli račune u koje ili iz kojih se ovaj objekt prenosi.</string>
     <string name="form_title_help_text">Upiši naslov koji identificira predložak.</string>
     <string name="form_date_time_help_text_configuration">U postavkama možeš deaktivirati unos vremena i aktivirati razlikovanje datuma uknjiženja i datuma vrijednosti.</string>
-    <string name="help_ExpenseEdit_transaction_info">Koristi ovaj obrazac za unos nove transakcije ili za uređivanje postojeće. Koristi padajući izbornik u traci radnji za prebacivanje na obrazac za dodavanje novog prijenosa ili višedjelne transakcije.</string>
-    <string name="help_ExpenseEdit_templateCategory_info">Koristi ovaj obrazac za unos nove transakcije ili za uređivanje postojeće. Koristi padajući izbornik u traci radnji za prebacivanje na obrazce za transakcije, prijenose i višedjelne transakcije.</string>
-    <string name="help_ExpenseEdit_split_info">Višedjelna transakcija je transakcija podijeljena na dijelove, pri čemu se svaki dio može dodijeliti jednoj drugoj kategoriji ili prenijeti na jedan drugi račun.</string>
     <string name="form_comment_help_text">Upiši bilo koju napomenu o objektu.</string>
     <string name="form_attach_image_help_text"><![CDATA[The <img src="android:ic_menu_camera"> gumb omogućuje prilaganje slike objektu (npr. iz galerije ili pomoću kamere).]]></string>
     <string name="form_category_help_text">Ovaj gumb otvara popis kategorija, gdje možeš odabrati kategoriju za transakciju.</string>
-    <string name="form_ExpenseEdit_splitPartCategory_category_help_text">Odaberi kategoriju za ovaj dio podjele.</string>
     <string name="form_exchange_rate_help_text">Tečaj možeš odrediti u oba smjera prijenosa. Inverzni tečaj i iznos koji odgovara ovisnom dijelu tečaja izračunavaju se automatski.</string>
     <string name="form_split_parts_heading_help_text_1">Koristi ikonu + za dodavanje dijelova po potrebi.</string>
     <string name="form_split_parts_heading_help_text_2">Polje iznosa će se automatski akatualizirati sa zbrojem dijelova, osim ako ručno ne uneseš iznos. U tom slučaju će se prikazati razlika između zbroja dijelova i iznosa (nepodijeljeni iznos).</string>
@@ -114,7 +102,6 @@
     <string name="menu_templates_help_text">Otvori izbornik s popisom svih predložaka koji omogućuje njihovo brzo učitavanje u obrazac.</string>
     <string name="form_plan_help_text_advanced">Nakon što spremiš predložak, možeš konfigurirati naprednije vrste ponavljanja koristeći svoju aplikaciju kalendara.</string>
     <string name="menu_original_amount_help_text">Prikaži polje koje omogućuje definiranje dodatnog iznosa. Na primjer, ako plaćaš svojom kreditnom karticom u stranoj valuti, možeš zapamtiti izvornu cijenu dodatno iznosu terećenja tvoje kartice. Izvorni iznos se zanemaruje za izračunavanje ukupnih iznosa.</string>
-    <string name="form_ExpenseEdit_templateTransfer_foreign_currency_help_text">Ako su valute računa „Od” i „U” različite, navedi iznos samo za jednu od njih. Drugi račun će se izračunati kada stvoriš instance iz predloška.</string>
     <string name="help_fab_confirm_selection">Koristi plutajući gumb radnje za potvrđivanje odabira.</string>
     <string name="help_ManageParties_mergeMode_info_1">Odaberi duple sudionike koje želiš spojiti.</string>
     <string name="menu_HistoryActivity_history_show_balance_help_text">Uključi/Isključi prikaz salda.</string>

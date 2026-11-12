@@ -376,7 +376,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">ನಂತರ</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">ಖರೀದಿ ವಿಫಲವಾಗಿದೆ ಅಥವಾ ರದ್ದುಗೊಂಡಿದೆ.</string>
-    <string name="hint_auto_fill">ಅದೇ ಪಾವತಿದಾರ / ಪಾವತಿಸುವವರಿಗೆ ಕೊನೆಯ ವಹಿವಾಟಿನಿಂದ ಡೇಟಾವನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಭರ್ತಿ ಮಾಡಬೇಕೇ? ನೀವು ಯಾವಾಗಲೂ ಈ ನಡವಳಿಕೆಯನ್ನು ಸೆಟ್ಟಿಂಗ್‌ಗಳಿಂದ ಬದಲಾಯಿಸಬಹುದು.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%1$d ಕರೆನ್ಸಿ %2$s ಹೊಂದಿರುವ ಖಾತೆಗಳನ್ನು ನವೀಕರಿಸಲಾಗಿದೆ.</string>
     <string name="import_source_file">ಫೈಲ್</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -506,7 +505,6 @@
     <string name="extend_validity">ಸಿಂಧುತ್ವವನ್ನು ವಿಸ್ತರಿಸಿ</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">ರಿಮೋಟ್ ಬ್ಯಾಕೆಂಡ್‌ನಿಂದ ಡೇಟಾವನ್ನು ಪಡೆಯಲಾಗುತ್ತಿದೆ. ಇದಕ್ಕೆ ಸ್ವಲ್ಪ ಸಮಯ ತೆಗೆದುಕೊಳ್ಳಬಹುದು.</string>
     <string name="donate_button_invoice">ಸರಕುಪಟ್ಟಿ</string>
-    <string name="auto_fill_account_from_aggregate_only">ಒಟ್ಟು ಖಾತೆಯಿಂದ ಪ್ರಾರಂಭಿಸಿದಾಗ ಮಾತ್ರ.</string>
     <string name="sync_auth_exception">ಅಧಿಕಾರ ವಿಫಲವಾಗಿದೆ.</string>
     <string name="sync_login_again">ದಯವಿಟ್ಟು ಮತ್ತೆ ಲಾಗ್ ಇನ್ ಮಾಡಿ.</string>
     <plurals name="delete_success">
@@ -651,9 +649,7 @@
     <!-- The label for the button, where user confirms that he wants to clone the selected transactions and then remap them. -->
     <string name="button_label_clone_and_remap">ಕ್ಲೋನ್ ಮತ್ತು ರೀಮ್ಯಾಪ್</string>
     <!-- The summary of a preference toggle. If switched on cloned transactions have the date set to the current date -->
-    <string name="pref_clone_with_current_date_summary_on">ಅಬೀಜ ವಹಿವಾಟುಗಳು ಪ್ರಸ್ತುತ ದಿನಾಂಕವನ್ನು ಹೊಂದಿವೆ</string>
     <!-- The summary of a preference toggle. If switched off cloned transactions keep the original date -->
-    <string name="pref_clone_with_current_date_summary_off">ಅಬೀಜ ವಹಿವಾಟುಗಳು ಮೂಲ ದಿನಾಂಕವನ್ನು ಇಡುತ್ತವೆ</string>
     <string name="tags_create_or_select">ಟ್ಯಾಗ್‌ಗಳನ್ನು ರಚಿಸಿ ಅಥವಾ ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="pref_manage_tags_summary">ಟ್ಯಾಗ್‌ಗಳನ್ನು ಸೇರಿಸಿ, ಸಂಪಾದಿಸಿ, ಅಳಿಸಿ.</string>
     <string name="dialog_title_warning_delete_tag">ಟ್ಯಾಗ್ ಅಳಿಸುವುದೇ?</string>
@@ -703,7 +699,6 @@
     <string name="ocr_recognition_info">%s ನೊಂದಿಗೆ ಪಠ್ಯ ಗುರುತಿಸುವಿಕೆಯನ್ನು ನಡೆಸಲಾಗುತ್ತಿದೆ</string>
     <string name="warning_link_transfer">ಆಯ್ದ ಎರಡು ವಹಿವಾಟುಗಳನ್ನು ವರ್ಗಾವಣೆಯಂತೆ ಲಿಂಕ್ ಮಾಡಲಾಗುತ್ತದೆ. ಪಾವತಿಸುವವರು / ಪಾವತಿಸಿದವರು ಮತ್ತು ವರ್ಗದ ಮಾಹಿತಿಯನ್ನು ಕೈಬಿಡಲಾಗುತ್ತದೆ.</string>
     <string name="download_completed">ಡೌನ್‌ಲೋಡ್ (%s) ಪೂರ್ಣಗೊಂಡಿದೆ.</string>
-    <string name="auto_fill_focus">ಪಾವತಿಸುವವರ ಮೇಲೆ ಕೇಂದ್ರೀಕರಿಸಿ</string>
     <string name="request_for_invoice">ಸರಕುಪಟ್ಟಿಗಾಗಿ ವಿನಂತಿ</string>
     <string name="active_tags">ಸಕ್ರಿಯ ಟ್ಯಾಗ್‌ಗಳು</string>
     <string name="merge_parties_select">ವಿಲೀನಗೊಂಡ ಪಕ್ಷದ ಹೆಸರನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
@@ -718,7 +713,6 @@
     <string name="pref_tesseract_language_title">ಟೆಸ್ಸೆರಾಕ್ಟ್ ಭಾಷೆ</string>
     <string name="pref_ocr_engine_title">ಪಠ್ಯ ಗುರುತಿಸುವಿಕೆಗಾಗಿ ಎಂಜಿನ್</string>
     <string name="template_default_action_without_amount_hint">ಮೊತ್ತವಿಲ್ಲದ ಟೆಂಪ್ಲೇಟ್ ಅನ್ನು ಡೀಫಾಲ್ಟ್ ಕ್ರಿಯೆಯೊಂದಿಗೆ ಉಳಿಸಬೇಕು \'ಸಂಪಾದಿಸು\'</string>
-    <string name="pref_clone_with_current_date_title">ಅಬೀಜ ವಹಿವಾಟಿನ ದಿನಾಂಕ</string>
     <string name="confirmation_load_template_discard_data">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಫಾರ್ಮ್ ಡೇಟಾವನ್ನು ತ್ಯಜಿಸಲಾಗುತ್ತದೆ.</string>
     <string name="crash_reports_user_info">{app_name} ಅಪ್ಲಿಕೇಶನ್ ಕ್ರ್ಯಾಶ್‌ಗಳ ಕುರಿತು ಅದರ ಡೆವಲಪರ್‌ಗಳಿಗೆ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ವರದಿಗಳನ್ನು ಕಳುಹಿಸುತ್ತದೆ, ಇದು ಸಮಸ್ಯೆಗಳನ್ನು ತ್ವರಿತವಾಗಿ ಪರಿಹರಿಸಲು ಅನುವು ಮಾಡಿಕೊಡುತ್ತದೆ.</string>
     <string name="pref_enable_acra">ಕ್ರ್ಯಾಶ್ ವರದಿಗಳನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಕಳುಹಿಸಲು ಅನುಮತಿಸಿ</string>

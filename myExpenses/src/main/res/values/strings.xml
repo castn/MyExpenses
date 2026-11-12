@@ -392,7 +392,6 @@
     <!-- Used in dialogue where user can filter transactions based on their date. This is one of three possible values populating a dropdown. Allows to select transactions after a specified date. -->
     <string name="comparison_operator_date_after">after</string>
     <string name="premium_failed_or_canceled" tools:ignore="UnusedResources">Purchasing failed or cancelled.</string>
-    <string name="hint_auto_fill">Should data be filled in automatically from last transaction for same counterparty? You can always change this behaviour from the settings.</string>
     <string name="change_fraction_digits_result" tools:ignore="PluralsCandidate">%1$d accounts with currency %2$s have been updated.</string>
     <string name="import_source_file">File</string>
     <!-- Stale refers to pictures left over from deleted transactions  -->
@@ -531,7 +530,6 @@
     <string name="extend_validity">Extend validity</string>
     <string name="progress_dialog_fetching_data_from_sync_backend">Fetching data from remote backend. This may take some time.</string>
     <string name="donate_button_invoice">Invoice</string>
-    <string name="auto_fill_account_from_aggregate_only">Only when started from aggregate account.</string>
     <string name="sync_auth_exception">Authorization failed.</string>
     <string name="sync_login_again">Please log in again.</string>
     <plurals name="delete_success">
@@ -686,9 +684,7 @@
     <!-- The label for the button, where user confirms that they want to clone the selected transactions and then remap them. -->
     <string name="button_label_clone_and_remap">Clone and remap</string>
     <!-- The summary of a preference toggle. If switched on cloned transactions have the date set to the current date -->
-    <string name="pref_clone_with_current_date_summary_on">Cloned transactions have current date</string>
     <!-- The summary of a preference toggle. If switched off cloned transactions keep the original date -->
-    <string name="pref_clone_with_current_date_summary_off">Cloned transactions keep original date</string>
     <string name="tags_create_or_select">Create or select tags</string>
     <string name="pref_manage_tags_summary">Add, edit, delete tags.</string>
     <string name="dialog_title_warning_delete_tag">Delete tag?</string>
@@ -744,7 +740,6 @@
     <string name="warning_balance_account_delete">If you proceed, all reconciled transactions of this account will be deleted from the database and you will not be able to restore them.</string>
     <!-- When user opens a template from the transaction form, existing data is discarded. This message appears in a dialgoue to confirm the action -->
     <string name="confirmation_load_template_discard_data">Existing form data will be discarded.</string>
-    <string name="pref_clone_with_current_date_title">Date of cloned transactions</string>
     <string name="template_default_action_without_amount_hint">Template without amount should be saved with default action \'Edit\'</string>
     <string name="menu_save_and_new_content_description">Save the data, leave the form open for creating a new transaction with the same data.</string>
     <!-- Title of a preference where user can select between Ml Kit and Tesseract as Engine for Optical character recognition -->
@@ -781,7 +776,6 @@
     <!-- This is used in the title of the email by which user requests an invoice for payment via bank transfer -->
     <string name="request_for_invoice">Request for Invoice</string>
     <!-- Enables Focus on the Payee field for Auto fill -->
-    <string name="auto_fill_focus">Set Focus on Payee</string>
     <!-- This warning is shown when a user calls the Reset or Cancel commands on a scheduled transaction, for a date
      where the transaction has already been created.  -->
     <string name="crash_reports_user_info">{app_name} will send reports about application crashes automatically to its developers, which allows them to fix problems more quickly.</string>

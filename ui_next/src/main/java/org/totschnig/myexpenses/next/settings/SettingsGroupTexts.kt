@@ -72,7 +72,7 @@ val SettingsGroup.icon: ImageVector
 val SettingsSection.title: Int
     get() = when (this) {
         SettingsSection.ENTRY_QUICK -> R.string.next_settings_section_entry_quick
-        SettingsSection.ENTRY_AUTO_FILL -> R.string.next_settings_section_entry_auto_fill
+        SettingsSection.ENTRY_TRANSFERS -> R.string.next_settings_section_entry_transfers
         SettingsSection.ENTRY_DATE -> R.string.next_settings_section_entry_date
         SettingsSection.ENTRY_ATTACHMENTS -> R.string.next_settings_section_entry_attachments
         SettingsSection.ENTRY_RECEIPTS -> R.string.next_settings_section_entry_receipts
