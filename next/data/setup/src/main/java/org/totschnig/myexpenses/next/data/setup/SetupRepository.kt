@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -17,6 +18,8 @@ import org.totschnig.myexpenses.next.core.common.shareWhileShown
 import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
+import org.totschnig.myexpenses.next.data.categories.CategoryAnalysis
+import org.totschnig.myexpenses.next.data.categories.CategoryPlan
 import org.totschnig.myexpenses.next.data.categories.CategoryRepository
 import org.totschnig.myexpenses.next.data.categories.CategoryRule
 
@@ -89,6 +92,26 @@ class SetupRepository(
             it != SetupStep.CONTRACTS || contracts is SetupContracts.Available
         }
     }.distinctUntilChanged()
+
+    /** The suggestions of categories, null without consent to the analysis or while loading */
+    val analysis: Flow<CategoryAnalysis?> = categories.analysis
+
+    /**
+     * Transactions from before the suggestions started that can be categorized for sure, asked
+     * once at the start of the categories step, see [CategoryPlan.backlog]; 0 if none or answered
+     */
+    val backlog: Flow<Int> =
+        categories.analysis.map { it?.plan?.backlog?.size ?: 0 }.distinctUntilChanged()
+
+    /** Applies the [backlog] if the user agrees; either way it is not asked again */
+    suspend fun answerBacklog(accept: Boolean) {
+        if (accept) {
+            categories.analysis.first()?.plan?.backlog?.takeIf { it.isNotEmpty() }?.let {
+                categories.applyAutomatically(it)
+            }
+        }
+        categories.store.update { it.copy(backlogAnswered = true) }
+    }
 
     /** The debits of [payee] without category get [categoryId], with [always] also later ones */
     suspend fun categorize(payee: SetupPayee, categoryId: Long, always: Boolean) {

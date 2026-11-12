@@ -79,6 +79,19 @@ class CategoryQueueTest {
     }
 
     @Test
+    fun tellsSinceWhenAndTheLastPurpose() {
+        val first = debit(1, "Stadtwerke", 30)
+            .copy(date = today.minusDays(40), comment = "Abschlag Juli")
+        val last = debit(1, "Stadtwerke", 20)
+            .copy(date = today.minusDays(5), comment = "Abschlag November")
+        val withoutPurpose = debit(1, "Stadtwerke", 10).copy(date = today.minusDays(1))
+        val ledger = ledger(first, last, withoutPurpose)
+        val payee = categoryQueue(ledger, unclear = emptySet()).all.single()
+        assertEquals(today.minusDays(40), payee.since)
+        assertEquals("Abschlag November", payee.purpose)
+    }
+
+    @Test
     fun withEverythingCategorizedNothingIsLeft() {
         val categorized = ledger(debit(1, "REWE", 100, categoryId = 5))
         val queue = categoryQueue(categorized, unclear = emptySet())

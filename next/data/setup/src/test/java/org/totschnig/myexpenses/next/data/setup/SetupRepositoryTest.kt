@@ -14,6 +14,7 @@ import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.core.model.ledger.OwnAccounts
 import org.totschnig.myexpenses.next.data.categories.CategoryRepository
+import org.totschnig.myexpenses.next.data.categories.CategoryRule
 import org.totschnig.myexpenses.next.data.categories.CategoryStore
 import org.totschnig.myexpenses.next.data.categories.CategoryWriting
 
@@ -61,6 +62,28 @@ class SetupRepositoryTest {
             repository.markUnclear(queue.optional.single())
             val unclear = repository.categoryQueue.first { it?.coverage?.unclear == 200L }!!
             assertEquals(emptyList<SetupPayee>(), unclear.optional)
+        }
+    }
+
+    @Test
+    fun appliesTheBacklogOnlyIfTheUserAgrees() = withTestDataStore { dataStore ->
+        runTest {
+            val catalog = Catalog(listOf(CategoryInfo(10, "Wohnen", "Wohnen")))
+            val source = FakeLedgerSource(ledger = ledger, catalog = catalog, today = today)
+            val categoryStore = CategoryStore(dataStore)
+            // The rent was there before the suggestions started, and a rule is certain
+            categoryStore.update {
+                it.copy(firstNewId = 100, rules = listOf(CategoryRule("r", setOf(1), 10)))
+            }
+            val writing = FakeWriting()
+            val categories = CategoryRepository(source, categoryStore, writing, backgroundScope)
+            val store = SetupStore(dataStore)
+            val repository = SetupRepository(source, categories, store, backgroundScope)
+            assertEquals(1, repository.backlog.first { it > 0 })
+            repository.answerBacklog(accept = true)
+            assertEquals(listOf(listOf(1L) to 10L), writing.set)
+            assertEquals(0, repository.backlog.first { it == 0 })
+            assertEquals(true, categoryStore.decisions.first().backlogAnswered)
         }
     }
 

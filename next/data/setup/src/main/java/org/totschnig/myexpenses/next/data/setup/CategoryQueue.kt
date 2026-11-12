@@ -1,5 +1,6 @@
 package org.totschnig.myexpenses.next.data.setup
 
+import java.time.LocalDate
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.data.categories.Counterpart
@@ -13,11 +14,16 @@ import org.totschnig.myexpenses.next.data.categories.counterpart
  * @param amount spent at the payee by the debits without category, in minor units of the home
  * currency, positive
  * @param transactionIds the debits without category
+ * @param since the date of the first of them
+ * @param purpose of the last of them that has one, as the bank wrote it, which helps to tell what
+ * the payee is, e.g. the merchant behind PayPal
  */
 data class SetupPayee(
     val counterpart: Counterpart,
     val amount: Long,
-    val transactionIds: List<Long>
+    val transactionIds: List<Long>,
+    val since: LocalDate,
+    val purpose: String? = null
 )
 
 /**
@@ -85,7 +91,11 @@ fun categoryQueue(
             SetupPayee(
                 counterpart = group.first().second,
                 amount = group.sumOf { (transaction, _) -> -transaction.homeAmount },
-                transactionIds = group.map { (transaction, _) -> transaction.id }
+                transactionIds = group.map { (transaction, _) -> transaction.id },
+                since = group.minOf { (transaction, _) -> transaction.date },
+                purpose = group.map { it.first }
+                    .filter { !it.comment.isNullOrBlank() }
+                    .maxByOrNull { it.date }?.comment
             )
         }
         .sortedWith(compareByDescending<SetupPayee> { it.amount }.thenBy { it.counterpart.name })

@@ -21,8 +21,13 @@ source [`setup.puml`](setup.puml) next to this file.
   are, so that PayPal purchases are decided on per merchant.
 - `required` are the payees that bring the coverage to `TARGET_SHARE` (80 %), usually 20 to 30
   decisions. `optional` are the others, for users who want to come closer to all of the money.
+- A `SetupPayee` tells since when it is paid and the last purpose of the bank, which helps to tell
+  what the payee is, and `suggestionFor` gives the category most of its debits are suggested.
 - Debits without counterpart, e.g. Amazon through a payment service, count, but cannot be decided
   on by payee.
+
+Before the payees the step asks once about the backlog (`SetupRepository.backlog`, `answerBacklog`):
+the transactions from before the suggestions started that can be categorized for sure.
 
 A decision goes to `CategoryRepository.categorize`: the debits of the payee without category get
 it, and with "Immer so machen" a rule gives it to later ones. "Weiß ich nicht" goes to
