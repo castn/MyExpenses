@@ -60,3 +60,10 @@ fun rememberNumberFormat(maxFractionDigits: Int = 8): (BigDecimal) -> String =
         val formatNumber: (BigDecimal) -> String = { format.format(it) }
         formatNumber
     }
+
+/** A share from 0 to 1 as whole percent in the style of the locale, e.g. "62 %" */
+@Composable
+fun rememberPercentFormat(): (Double) -> String = remember {
+    val format = NumberFormat.getPercentInstance()
+    return@remember { share: Double -> format.format(share) }
+}
