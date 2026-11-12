@@ -7,13 +7,13 @@ import org.junit.Test
 
 class ItemGroupModelReleaseTest {
 
-    private fun release(language: String, version: String, format: Int = 2) =
-        """{"language": "$language", "version": "$version", "format": $format, "url": "https://example.org/$version.bin", "sha256": "AB12", "size": 1929216}"""
+    private fun release(market: String, version: String, format: Int = 2) =
+        """{"market": "$market", "version": "$version", "format": $format, "url": "https://example.org/$version.bin", "sha256": "AB12", "size": 1929216}"""
 
     @Test
     fun parsesManifestAndSkipsIncompleteEntries() {
         val releases = ItemGroupModelRelease.parseManifest(
-            """{"models": [${release("de", "2026.10-de-1")}, {"language": "fr"}], "comment": "ignored"}"""
+            """{"models": [${release("de-DE", "2026.10-de-1")}, {"market": "fr-FR"}], "schema": 1}"""
         )
         assertEquals(
             listOf(
@@ -27,8 +27,8 @@ class ItemGroupModelReleaseTest {
     @Test
     fun choosesLanguageOfDeviceElseGermanInReadableFormat() {
         val releases = ItemGroupModelRelease.parseManifest(
-            """{"models": [${release("de", "de-1")}, ${release("de", "de-2")}, """ +
-                """${release("fr", "fr-1")}, ${release("it", "it-9", format = 3)}]}"""
+            """{"models": [${release("de-DE", "de-1")}, ${release("de-DE", "de-2")}, """ +
+                """${release("fr-FR", "fr-1")}, ${release("it-IT", "it-9", format = 3)}]}"""
         )
         assertEquals("fr-1", ItemGroupModelRelease.choose(releases, "fr")?.version)
         // the last entry is the latest
@@ -73,5 +73,28 @@ class ItemGroupModelReleaseTest {
         } catch (e: InvalidItemGroupModel) {
             assertEquals(reason, e.reason)
         }
+    }
+
+    @Test
+    fun parsesPublishedManifest() {
+        val releases = ItemGroupModelRelease.parseManifest(
+            """
+            {
+              "schema": 1,
+              "models": [
+                {
+                  "format": 2,
+                  "market": "de-DE",
+                  "version": "de-DE-2026.10.1",
+                  "url": "https://github.com/castn/product-group-modell/releases/download/model-de-DE-2026.10.1/pgm-f2-de-DE-2026.10.1.bin",
+                  "size": 1841016,
+                  "sha256": "225b6b0186b0d69ac7a85cc00d3665617e332164b684b8b9ab44047883862257",
+                  "commit": "1bd2f482e8a608cc14c0f6a4b5a70708e5524ab3"
+                }
+              ]
+            }
+            """
+        )
+        assertEquals("de-DE-2026.10.1", ItemGroupModelRelease.choose(releases, "de")?.version)
     }
 }

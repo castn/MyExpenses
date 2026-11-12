@@ -26,12 +26,12 @@ data class ItemGroupModelRelease(
 ) {
     companion object {
         /**
-         * Lists the models, kept in the repository of product-group-modell, the files are
+         * Lists the models, published by product-group-modell on its GitHub pages, the files are
          * attached to its releases:
-         * `{"models": [{"language": "de", "version": "2026.10-de-1", "format": 2, "url": "…",
-         * "sha256": "…", "size": 1929216}]}`
+         * `{"schema": 1, "models": [{"format": 2, "market": "de-DE", "version": "de-DE-2026.10.1",
+         * "url": "…", "size": 1841016, "sha256": "…"}]}`
          */
-        const val MANIFEST_URL = "https://raw.githubusercontent.com/castn/product-group-modell/main/models.json"
+        const val MANIFEST_URL = "https://castn.github.io/product-group-modell/models.json"
 
         /** Format the copied [ProductGroupModel] reads */
         const val FORMAT = 2
@@ -46,7 +46,7 @@ data class ItemGroupModelRelease(
                     val model = element.jsonObject
                     fun text(key: String) = model.getValue(key).jsonPrimitive.content
                     ItemGroupModelRelease(
-                        language = text("language"),
+                        language = text("market").substringBefore('-'),
                         version = text("version"),
                         format = model.getValue("format").jsonPrimitive.int,
                         url = text("url"),

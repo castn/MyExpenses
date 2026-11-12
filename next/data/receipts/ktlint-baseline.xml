@@ -1248,8 +1248,8 @@
     </file>
     <file name="src/test/java/org/totschnig/myexpenses/next/data/receipts/ItemGroupModelReleaseTest.kt">
         <error line="16" column="38" source="standard:argument-list-wrapping" />
-        <error line="16" column="44" source="standard:argument-list-wrapping" />
-        <error line="16" column="58" source="standard:argument-list-wrapping" />
+        <error line="16" column="47" source="standard:argument-list-wrapping" />
+        <error line="16" column="61" source="standard:argument-list-wrapping" />
         <error line="20" column="39" source="standard:argument-list-wrapping" />
         <error line="20" column="45" source="standard:argument-list-wrapping" />
         <error line="20" column="61" source="standard:argument-list-wrapping" />
