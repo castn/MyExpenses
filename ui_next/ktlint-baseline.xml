@@ -560,20 +560,20 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/balance/BalanceFeature.kt">
         <error line="35" column="44" source="standard:trailing-comma-on-declaration-site" />
-        <error line="62" column="42" source="standard:function-literal" />
-        <error line="62" column="55" source="standard:argument-list-wrapping" />
-        <error line="62" column="75" source="standard:argument-list-wrapping" />
-        <error line="62" column="100" source="standard:argument-list-wrapping" />
+        <error line="61" column="42" source="standard:function-literal" />
+        <error line="61" column="55" source="standard:argument-list-wrapping" />
+        <error line="61" column="75" source="standard:argument-list-wrapping" />
+        <error line="61" column="100" source="standard:argument-list-wrapping" />
+        <error line="61" column="101" source="standard:max-line-length" />
+        <error line="61" column="106" source="standard:argument-list-wrapping" />
+        <error line="61" column="108" source="standard:function-literal" />
+        <error line="62" column="52" source="standard:function-literal" />
+        <error line="62" column="72" source="standard:argument-list-wrapping" />
+        <error line="62" column="92" source="standard:argument-list-wrapping" />
+        <error line="62" column="101" source="standard:argument-list-wrapping" />
         <error line="62" column="101" source="standard:max-line-length" />
-        <error line="62" column="106" source="standard:argument-list-wrapping" />
-        <error line="62" column="108" source="standard:function-literal" />
-        <error line="63" column="52" source="standard:function-literal" />
-        <error line="63" column="72" source="standard:argument-list-wrapping" />
-        <error line="63" column="92" source="standard:argument-list-wrapping" />
-        <error line="63" column="101" source="standard:argument-list-wrapping" />
-        <error line="63" column="101" source="standard:max-line-length" />
-        <error line="63" column="103" source="standard:function-literal" />
-        <error line="65" column="35" source="standard:argument-list-wrapping" />
+        <error line="62" column="103" source="standard:function-literal" />
+        <error line="64" column="35" source="standard:argument-list-wrapping" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/budgets/BudgetsFeature.kt">
         <error line="3" column="1" source="standard:import-ordering" />
@@ -805,16 +805,6 @@
         <error line="235" column="48" source="standard:argument-list-wrapping" />
         <error line="235" column="79" source="standard:argument-list-wrapping" />
         <error line="235" column="89" source="standard:argument-list-wrapping" />
-        <error line="250" column="17" source="standard:argument-list-wrapping" />
-        <error line="250" column="29" source="standard:function-literal" />
-        <error line="250" column="30" source="standard:wrapping" />
-        <error line="250" column="42" source="standard:function-literal" />
-        <error line="250" column="68" source="standard:argument-list-wrapping" />
-        <error line="250" column="75" source="standard:argument-list-wrapping" />
-        <error line="250" column="81" source="standard:argument-list-wrapping" />
-        <error line="250" column="99" source="standard:function-literal" />
-        <error line="250" column="101" source="standard:max-line-length" />
-        <error line="250" column="119" source="standard:function-literal" />
         <error line="251" column="29" source="standard:multiline-if-else" />
         <error line="274" column="18" source="standard:multiline-if-else" />
         <error line="307" column="54" source="standard:function-signature" />
