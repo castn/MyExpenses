@@ -6,14 +6,12 @@ import android.widget.Toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.totschnig.myexpenses.R
-import org.totschnig.myexpenses.activity.ExpenseEdit
-import org.totschnig.myexpenses.activity.ManageTemplates
 import org.totschnig.myexpenses.activity.showTemplateInstantiationResult
 import org.totschnig.myexpenses.db2.instantiateTemplate
+import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.myApplication
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.provider.KEY_ROWID
-import org.totschnig.myexpenses.provider.KEY_TEMPLATEID
 import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.util.doAsync
 
@@ -28,9 +26,10 @@ class TemplateWidget : AbstractListWidget(
 
     override fun handleWidgetClick(context: Context, intent: Intent) {
         val templateId = intent.getLongExtra(KEY_ROWID, 0)
+        val screens = context.injector.templateScreens()
         when (intent.getStringExtra(KEY_CLICK_ACTION)) {
             null -> {
-                context.startActivity(Intent(context, ManageTemplates::class.java).apply {
+                context.startActivity(screens.list(context).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                     putExtra(EXTRA_START_FROM_WIDGET, true)
                 })
@@ -58,13 +57,8 @@ class TemplateWidget : AbstractListWidget(
             }
 
             CLICK_ACTION_EDIT -> context.startActivity(
-                Intent(
-                    context,
-                    ExpenseEdit::class.java
-                ).apply {
+                screens.newTransaction(context, templateId).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    action = ExpenseEdit.ACTION_CREATE_FROM_TEMPLATE
-                    putExtra(KEY_TEMPLATEID, templateId)
                     putExtra(EXTRA_START_FROM_WIDGET, true)
                     putExtra(EXTRA_START_FROM_WIDGET_DATA_ENTRY, true)
                 })

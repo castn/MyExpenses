@@ -20,7 +20,6 @@ import org.totschnig.myexpenses.activity.HELP_VARIANT_SELECT_MAPPING
 import org.totschnig.myexpenses.activity.HELP_VARIANT_SPLIT
 import org.totschnig.myexpenses.activity.HELP_VARIANT_SPLIT_PART_CATEGORY
 import org.totschnig.myexpenses.activity.HELP_VARIANT_SPLIT_PART_TRANSFER
-import org.totschnig.myexpenses.activity.HELP_VARIANT_TEMPLATES
 import org.totschnig.myexpenses.activity.HELP_VARIANT_TEMPLATE_CATEGORY
 import org.totschnig.myexpenses.activity.HELP_VARIANT_TEMPLATE_SPLIT
 import org.totschnig.myexpenses.activity.HELP_VARIANT_TEMPLATE_TRANSFER
@@ -35,7 +34,6 @@ import org.totschnig.myexpenses.activity.ManageParties
 import org.totschnig.myexpenses.activity.ManageStaleImages
 import org.totschnig.myexpenses.activity.ManageSyncBackends
 import org.totschnig.myexpenses.activity.ManageTags
-import org.totschnig.myexpenses.activity.ManageTemplates
 import org.totschnig.myexpenses.activity.MethodEdit
 import org.totschnig.myexpenses.activity.ProtectedFragmentActivity
 import org.totschnig.myexpenses.activity.RoadmapVoteActivity
@@ -64,7 +62,6 @@ class HelpDialogHelperTest(private val activity: Class<out ProtectedFragmentActi
             arrayOf(ManageStaleImages::class.java),
             arrayOf(ManageSyncBackends::class.java),
             arrayOf(ManageTags::class.java),
-            arrayOf(ManageTemplates::class.java),
             arrayOf(MethodEdit::class.java),
             arrayOf(RoadmapVoteActivity::class.java)
         )
@@ -159,10 +156,6 @@ class HelpDialogHelperTest(private val activity: Class<out ProtectedFragmentActi
 
             ManageCategories::class.java, ManageTags::class.java -> listOf(
                 HELP_VARIANT_MANGE, HELP_VARIANT_SELECT_FILTER, HELP_VARIANT_SELECT_MAPPING
-            )
-
-            ManageTemplates::class.java -> listOf(
-                HELP_VARIANT_TEMPLATES
             )
 
             else -> emptyList()

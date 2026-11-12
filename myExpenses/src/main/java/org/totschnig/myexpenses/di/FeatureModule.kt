@@ -4,6 +4,7 @@ import androidx.annotation.Keep
 import dagger.Module
 import dagger.Provides
 import org.totschnig.myexpenses.activity.MainScreenEntry
+import org.totschnig.myexpenses.activity.TemplateScreens
 import org.totschnig.myexpenses.activity.TransactionEditorEntry
 import org.totschnig.myexpenses.feature.BankingFeature
 import org.totschnig.myexpenses.feature.FeatureManager
@@ -73,4 +74,11 @@ open class FeatureModule {
     @Provides
     open fun provideTransactionEditor(): TransactionEditorEntry =
         error(":myExpenses has no transaction editor, :app provides it")
+
+    /**
+     * The screens of the templates, in :ui_next like the main screen, so :app overrides this.
+     */
+    @Provides
+    open fun provideTemplateScreens(): TemplateScreens =
+        error(":myExpenses has no screens of templates, :app provides them")
 }

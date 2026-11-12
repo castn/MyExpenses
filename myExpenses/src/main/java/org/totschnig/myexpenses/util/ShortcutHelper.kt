@@ -8,9 +8,9 @@ import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import org.totschnig.myexpenses.R
-import org.totschnig.myexpenses.activity.ExpenseEdit
 import org.totschnig.myexpenses.activity.TemplateSaver
 import org.totschnig.myexpenses.db2.entities.Template.Action
+import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.provider.KEY_TEMPLATEID
 import org.totschnig.myexpenses.util.crashreporting.CrashHandler
 import org.totschnig.myexpenses.viewmodel.TemplateInfo
@@ -43,10 +43,10 @@ object ShortcutHelper {
                 action = Intent.ACTION_INSERT
                 putExtra(KEY_TEMPLATEID, id)
             } else
-            Intent(context, ExpenseEdit::class.java).apply {
-                action = ExpenseEdit.ACTION_CREATE_FROM_TEMPLATE
+            context.injector.templateScreens().newTransaction(context, id).apply {
+                // A shortcut needs an action
+                action = Intent.ACTION_INSERT
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                putExtra(KEY_TEMPLATEID, id)
                 putExtra(EXTRA_START_FROM_WIDGET, true)
                 putExtra(EXTRA_START_FROM_WIDGET_DATA_ENTRY, true)
             }

@@ -234,14 +234,6 @@
             android:exported="true"
             android:theme="@style/Translucent" />
         <activity
-            android:name=".activity.ManageTemplates"
-            android:exported="true"
-            android:theme="@style/EditDialog">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".activity.ManageMethods"
             android:exported="false"
             android:theme="@style/EditDialog" />

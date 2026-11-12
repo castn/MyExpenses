@@ -592,10 +592,6 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
 
             R.id.BUDGET_COMMAND -> contribFeatureRequested(ContribFeature.BUDGET, null)
 
-            R.id.MANAGE_TEMPLATES_COMMAND -> startActivity(
-                Intent(this, ManageTemplates::class.java)
-            )
-
             R.id.MANAGE_PARTIES_COMMAND -> startActivity(
                 Intent(this, ManageParties::class.java).apply {
                     action = Action.MANAGE.name

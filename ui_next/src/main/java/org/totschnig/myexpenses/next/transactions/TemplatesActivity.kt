@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import org.totschnig.myexpenses.activity.ProtectedFragmentActivity
+import org.totschnig.myexpenses.activity.TemplateScreens
 import org.totschnig.myexpenses.next.NextFeatures
 import org.totschnig.myexpenses.next.NextTheme
 import org.totschnig.myexpenses.next.feature.transactions.TemplatesFlow
@@ -44,4 +45,12 @@ class TemplatesActivity : ProtectedFragmentActivity() {
             TemplatesActivity::class.java
         ).putExtra(KEY_TRANSACTIONID, transactionId)
     }
+}
+
+/** The screens of the templates for widget and shortcuts of :myExpenses */
+object NextTemplateScreens : TemplateScreens {
+    override fun list(context: Context) = Intent(context, TemplatesActivity::class.java)
+
+    override fun newTransaction(context: Context, templateId: Long) =
+        TransactionEditorActivity.fromTemplate(context, templateId)
 }

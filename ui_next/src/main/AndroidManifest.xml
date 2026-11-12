@@ -27,12 +27,9 @@
             android:parentActivityName="org.totschnig.myexpenses.next.MainActivity"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- Up from the editors of :myExpenses leads to the main screen -->
+        <!-- Up from the editor of :myExpenses leads to the main screen -->
         <activity
             android:name="org.totschnig.myexpenses.activity.ExpenseEdit"
-            android:parentActivityName="org.totschnig.myexpenses.next.MainActivity" />
-        <activity
-            android:name="org.totschnig.myexpenses.activity.ManageTemplates"
             android:parentActivityName="org.totschnig.myexpenses.next.MainActivity" />
     </application>
 </manifest>

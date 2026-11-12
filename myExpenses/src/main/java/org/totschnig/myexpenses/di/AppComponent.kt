@@ -19,6 +19,7 @@ import org.totschnig.myexpenses.activity.MainScreenEntry
 import org.totschnig.myexpenses.activity.TransactionEditorEntry
 import org.totschnig.myexpenses.activity.PreferenceActivity
 import org.totschnig.myexpenses.activity.ProtectedFragmentActivity
+import org.totschnig.myexpenses.activity.TemplateScreens
 import org.totschnig.myexpenses.db2.Repository
 import org.totschnig.myexpenses.delegate.CategoryDelegate
 import org.totschnig.myexpenses.delegate.SplitDelegate
@@ -44,7 +45,6 @@ import org.totschnig.myexpenses.fragment.HistoryChart
 import org.totschnig.myexpenses.fragment.PartiesList
 import org.totschnig.myexpenses.fragment.StaleImagesList
 import org.totschnig.myexpenses.fragment.SyncBackendList
-import org.totschnig.myexpenses.fragment.TemplatesList
 import org.totschnig.myexpenses.fragment.preferences.BasePreferenceFragment
 import org.totschnig.myexpenses.fragment.preferences.PreferencesContribFragment
 import org.totschnig.myexpenses.model.CurrencyContext
@@ -83,7 +83,6 @@ import org.totschnig.myexpenses.viewmodel.PrintLayoutConfigurationViewModel
 import org.totschnig.myexpenses.viewmodel.RestoreViewModel
 import org.totschnig.myexpenses.viewmodel.RoadmapViewModel
 import org.totschnig.myexpenses.viewmodel.SettingsViewModel
-import org.totschnig.myexpenses.viewmodel.TemplatesListViewModel
 import org.totschnig.myexpenses.viewmodel.TransactionEditViewModel
 import org.totschnig.myexpenses.viewmodel.UpgradeHandlerViewModel
 import org.totschnig.myexpenses.widget.AbstractListWidget
@@ -183,6 +182,8 @@ interface AppComponent {
 
     fun transactionEditor(): TransactionEditorEntry
 
+    fun templateScreens(): TemplateScreens
+
     fun coroutineDispatcher(): CoroutineDispatcher
 
     fun preferencesDataStore(): DataStore<Preferences>
@@ -208,8 +209,6 @@ interface AppComponent {
     fun inject(staleImagesList: StaleImagesList)
 
     fun inject(pdfPrinter: PdfPrinter)
-
-    fun inject(templatesList: TemplatesList)
 
     fun inject(transactionListComposeDialogFragment: TransactionListComposeDialogFragment)
 
@@ -310,8 +309,6 @@ interface AppComponent {
     fun inject(dailyExchangeRateService: DailyExchangeRateDownloadService)
 
     fun inject(printLayoutConfigurationViewModel: PrintLayoutConfigurationViewModel)
-
-    fun inject(templatesListViewModel: TemplatesListViewModel)
 
     fun inject(priceHistoryViewModel: PriceHistoryViewModel)
 
