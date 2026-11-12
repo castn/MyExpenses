@@ -31,6 +31,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -45,6 +47,7 @@ import org.totschnig.myexpenses.designsystem.EmptyState
 import org.totschnig.myexpenses.designsystem.HighlightCard
 import org.totschnig.myexpenses.designsystem.PageTopBar
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.data.contracts.Contract
 import org.totschnig.myexpenses.next.data.contracts.ContractArea
@@ -429,8 +432,6 @@ internal fun ContractSuggestionsScreen(
     modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(suggestions.isEmpty()) { if (suggestions.isEmpty()) onBack() }
-    val dismissLabel = stringResource(if (isIncome) R.string.next_income_dismiss else R.string.next_contracts_dismiss)
-    val confirmLabel = stringResource(if (isIncome) R.string.next_income_confirm else R.string.next_contracts_confirm)
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -450,28 +451,77 @@ internal fun ContractSuggestionsScreen(
                 )
             }
             itemsIndexed(suggestions, key = { _, contract -> contract.signature }) { index, contract ->
-                ContractItem(
-                    contract = contract,
-                    currency = currency,
-                    isFirst = index == 0,
-                    isLast = index == suggestions.lastIndex,
-                    onClick = { onOpen(contract) },
-                    editAction = null,
-                    suggestionActions = SuggestionActions(
-                        confirm = EditAction(Icons.Default.Check, confirmLabel) { actions.confirm(contract) },
-                        reject = EditAction(Icons.Default.Close, dismissLabel) { actions.dismiss(contract) }
-                    ),
-                    accessibilityActions = emptyList(),
-                    isFaded = false,
-                    badge = when {
-                        isIncome -> null
-                        contract.isReserve -> stringResource(R.string.next_reserve)
-                        else -> contract.area?.label()
-                    }
-                )
+                SuggestionItem(contract, index, suggestions.size, isIncome, currency, actions) {
+                    onOpen(contract)
+                }
             }
         }
     }
+}
+
+/**
+ * The suggested contracts to decide on within another page, e.g. the contracts step of the setup;
+ * nothing while loading, without the analysis or without suggestions
+ */
+@Composable
+fun ContractSuggestionsSection(viewModel: ContractsViewModel, modifier: Modifier = Modifier) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val currency by viewModel.homeCurrency.collectAsStateWithLifecycle()
+    val suggestions = state.valueOrNull?.suggestions ?: return
+    Column(modifier) {
+        suggestions.forEachIndexed { index, contract ->
+            key(contract.signature) {
+                SuggestionItem(
+                    contract,
+                    index,
+                    suggestions.size,
+                    isIncome = false,
+                    currency,
+                    viewModel
+                ) {}
+            }
+        }
+    }
+}
+
+/** A suggested contract with the buttons to confirm or reject it */
+@Composable
+private fun SuggestionItem(
+    contract: Contract,
+    index: Int,
+    count: Int,
+    isIncome: Boolean,
+    currency: CurrencyInfo,
+    actions: ContractActions,
+    onOpen: () -> Unit
+) {
+    val dismissLabel =
+        stringResource(
+            if (isIncome) R.string.next_income_dismiss else R.string.next_contracts_dismiss
+        )
+    val confirmLabel =
+        stringResource(
+            if (isIncome) R.string.next_income_confirm else R.string.next_contracts_confirm
+        )
+    ContractItem(
+        contract = contract,
+        currency = currency,
+        isFirst = index == 0,
+        isLast = index == count - 1,
+        onClick = onOpen,
+        editAction = null,
+        suggestionActions = SuggestionActions(
+            confirm = EditAction(Icons.Default.Check, confirmLabel) { actions.confirm(contract) },
+            reject = EditAction(Icons.Default.Close, dismissLabel) { actions.dismiss(contract) }
+        ),
+        accessibilityActions = emptyList(),
+        isFaded = false,
+        badge = when {
+            isIncome -> null
+            contract.isReserve -> stringResource(R.string.next_reserve)
+            else -> contract.area?.label()
+        }
+    )
 }
 
 internal class EditAction(
