@@ -8,6 +8,7 @@ import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import org.totschnig.myexpenses.util.TransactionImports
@@ -28,6 +29,7 @@ import org.totschnig.myexpenses.next.data.contracts.ContractRepository
 import org.totschnig.myexpenses.next.data.contracts.ContractStore
 import org.totschnig.myexpenses.next.insights.ProviderLedgerSource
 import org.totschnig.myexpenses.next.insights.today
+import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import kotlinx.coroutines.flow.Flow
@@ -40,6 +42,9 @@ import org.totschnig.myexpenses.next.data.budgets.BudgetStore
 import org.totschnig.myexpenses.next.data.tips.SavingTipsRepository
 import org.totschnig.myexpenses.next.data.tips.TipStore
 import org.totschnig.myexpenses.next.data.guidance.DataReadinessRepository
+import org.totschnig.myexpenses.next.data.setup.SetupContracts
+import org.totschnig.myexpenses.next.data.setup.SetupRepository
+import org.totschnig.myexpenses.next.data.setup.SetupStore
 import org.totschnig.myexpenses.next.data.merchants.MerchantLogoConsent
 import org.totschnig.myexpenses.next.data.merchants.MerchantLogoStore
 import org.totschnig.myexpenses.next.data.merchants.PayeeDomainStore
@@ -116,6 +121,21 @@ class NextData private constructor(context: Context) {
     )
 
     val readiness = DataReadinessRepository(ledgerSource, receiptFacts, scope, unclearTransactions)
+
+    /**
+     * What the setup knows about contracts, nothing while loading; `flowOf(SetupContracts.None)`
+     * without contracts
+     */
+    val setupContracts: Flow<SetupContracts> = contracts.expenses.mapNotNull { state ->
+        when (state) {
+            AnalysisState.Loading -> null
+            AnalysisState.Declined -> SetupContracts.None
+            is AnalysisState.Ready -> SetupContracts.Available(state.value.suggestions.size)
+        }
+    }
+
+    val setup =
+        SetupRepository(ledgerSource, categories, SetupStore(dataStore), scope, setupContracts)
 
     /** The logos of payees, loaded only with consent, see [keepLogosOnlyWithConsent] */
     val merchantLogos = MerchantLogoStore(context.noBackupFilesDir.resolve("merchant-logos"))

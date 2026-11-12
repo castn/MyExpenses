@@ -33,6 +33,7 @@ package "next/data" as pNextData {
     [:merchants] as mNextDataMerchants
     [:portfolio] as mNextDataPortfolio
     [:receipts] as mNextDataReceipts
+    [:setup] as mNextDataSetup
     [:tags] as mNextDataTags
     [:tips] as mNextDataTips
     [:transactions] as mNextDataTransactions
@@ -78,6 +79,7 @@ mNextDataPortfolio --> mNextCoreCommon
 mNextDataReceipts --> mItemGroupModel
 mNextDataReceipts --> mNextDataCategories
 mNextDataReceipts --> mOcrModel
+mNextDataSetup --> mNextDataCategories
 mNextDataTags --> mNextDataCategories
 mNextDataTags --> mNextDataContracts
 mNextDataTips --> mNextDataBudgets
@@ -100,4 +102,5 @@ mNextFeatureTags --> mNextDataTags
 mNextFeatureTips --> mNextDataTips
 mNextFeatureTransactions --> mNextDataTransactions
 mUiNext --> mMyExpenses
+mUiNext --> mNextDataSetup
 @enduml

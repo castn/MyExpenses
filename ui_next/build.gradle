@@ -50,6 +50,7 @@ dependencies {
     implementation project(':next:data:merchants')
     implementation project(':next:data:portfolio')
     implementation project(':next:data:receipts')
+    implementation project(':next:data:setup')
     implementation project(':next:data:tags')
     implementation project(':next:data:tips')
     implementation project(':next:data:transactions')
