@@ -40,12 +40,15 @@ object Engine : org.totschnig.ocr.MlkitEngine {
         }
     }
 
-    private fun getOptions(script: Script) =
-        try {
-            (Class.forName("org.totschnig.mlkit_${script.name.lowercase(Locale.ROOT)}.Options").kotlin.objectInstance as RecognizerProvider).textRecognizerOptions
-        } catch (e: Exception) {
-            throw java.lang.IllegalStateException("Recognizer for ${script.name} not found")
+    private fun getOptions(script: Script): TextRecognizerOptionsInterface {
+        val provider = try {
+            Class.forName("org.totschnig.mlkit_${script.name.lowercase(Locale.ROOT)}.Options").kotlin.objectInstance
+        } catch (e: ClassNotFoundException) {
+            throw IllegalStateException("Recognizer for ${script.name} not found", e)
         }
+        return (provider as? RecognizerProvider ?: error("Recognizer for ${script.name} not found"))
+            .textRecognizerOptions
+    }
 
     private fun options(
         context: Context,

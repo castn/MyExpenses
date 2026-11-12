@@ -1,3 +1,5 @@
+@file:Suppress("PackageNaming") // Engine loads org.totschnig.mlkit_<script>.Options by name
+
 package org.totschnig.mlkit_latn
 
 import androidx.annotation.Keep
