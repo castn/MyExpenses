@@ -4,12 +4,9 @@ plugins {
     id 'com.android.application'
 }
 
-def getPropertyIfDefined(property, defaultValue) {
-    if (project.hasProperty(property)) {
-        return project.properties[property]
-    }
-    return defaultValue
-}
+// Release signing from Gradle properties: the release workflow passes them as ORG_GRADLE_PROJECT_RELEASE_*,
+// locally they can go into ~/.gradle/gradle.properties. Without RELEASE_STORE_FILE the release APK stays unsigned.
+def releaseStoreFile = providers.gradleProperty('RELEASE_STORE_FILE').orNull
 
 android {
     compileSdk project.compileSdkVersion
@@ -30,22 +27,25 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
-    /*signingConfigs {
-        release {
-            storeFile file(getPropertyIfDefined("RELEASE_STORE_FILE", "unknown"))
-            storePassword getPropertyIfDefined("RELEASE_STORE_PASSWORD", "unknown")
-            keyAlias getPropertyIfDefined("RELEASE_KEY_ALIAS", "unknown")
-            keyPassword getPropertyIfDefined("RELEASE_KEY_PASSWORD", "unknown")
-
+    signingConfigs {
+        if (releaseStoreFile) {
+            release {
+                storeFile = file(releaseStoreFile)
+                storePassword = providers.gradleProperty('RELEASE_STORE_PASSWORD').get()
+                keyAlias = providers.gradleProperty('RELEASE_KEY_ALIAS').get()
+                keyPassword = providers.gradleProperty('RELEASE_KEY_PASSWORD').get()
+            }
         }
-    }*/
+    }
 
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), project(':myExpenses').file('proguard-project.txt')
-            //signingConfig signingConfigs.release
+            if (releaseStoreFile) {
+                signingConfig = signingConfigs.release
+            }
             applicationIdSuffix project.releaseApplicationIdSuffix
             //ndk.debugSymbolLevel = 'FULL'
         }
