@@ -100,7 +100,6 @@
         <item quantity="one">until the end of the month in %d day</item>
         <item quantity="other">until the end of the month in %d days</item>
     </plurals>
-    <string name="next_balance_consent">See at a glance how much is left until your next salary. For this, regular payments are detected in your transactions. The analysis runs only on your device.</string>
     <string name="next_balance_details">In detail</string>
     <string name="next_balance_contracts_upcoming">%1$s of it still to come</string>
     <string name="next_balance_savings">Reserves</string>

@@ -100,7 +100,6 @@
         <item quantity="one">bis zum Monatsende in %d Tag</item>
         <item quantity="other">bis zum Monatsende in %d Tagen</item>
     </plurals>
-    <string name="next_balance_consent">Sieh auf einen Blick, wie viel dir bis zum nächsten Gehalt bleibt. Dafür werden regelmäßige Zahlungen in deinen Buchungen erkannt. Die Auswertung passiert nur auf deinem Gerät.</string>
     <string name="next_balance_details">Im Detail</string>
     <string name="next_balance_contracts_upcoming">davon %1$s noch offen</string>
     <string name="next_balance_savings">Rücklagen</string>

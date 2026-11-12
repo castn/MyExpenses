@@ -44,7 +44,6 @@ class BalanceFeature(
             state = balance,
             currency = homeCurrency,
             onOpen = { navigation.show(NextKey.Balance) },
-            onConsent = { data.ledgerSource.setConsent(true) },
             modifier = Modifier
         )
     }

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -36,36 +35,20 @@ import org.totschnig.myexpenses.next.data.balance.MonthlyBalance
 
 /**
  * Card of the overview: income and expenses of the current salary cycle and what is left.
- * Before transactions may be analysed, it asks for consent. Shows nothing when declined, and its
- * outline while loading, so that the cards below do not jump.
+ * Shows nothing when the user turned off that transactions are analysed, and its outline while
+ * loading, so that the cards below do not jump.
  */
 @Composable
 fun MonthlyBalanceCard(
     state: AnalysisState<BalanceOverview>,
     currency: CurrencyInfo,
     onOpen: () -> Unit,
-    onConsent: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     when (state) {
-        AnalysisState.Declined -> {}
+        AnalysisState.AskConsent, AnalysisState.Declined -> {}
         AnalysisState.Loading -> LoadingBalanceCard(modifier)
-        AnalysisState.AskConsent -> ConsentCard(onConsent, modifier)
         is AnalysisState.Ready -> BalanceCard(state.value.balance, state.value.today, currency, onOpen, modifier)
-    }
-}
-
-@Composable
-private fun ConsentCard(onConsent: () -> Unit, modifier: Modifier) {
-    OverviewCard(stringResource(R.string.next_balance_title), modifier) {
-        Text(
-            stringResource(R.string.next_balance_consent),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-        Button(onClick = onConsent, modifier = Modifier.padding(top = 12.dp)) {
-            Text(stringResource(R.string.next_contracts_consent_accept))
-        }
     }
 }
 
@@ -201,7 +184,6 @@ private fun MonthlyBalanceCardPreview() {
                 state = AnalysisState.Ready(BalanceOverview(previewBalance(), LocalDate.now())),
                 currency = CurrencyInfo.Preview,
                 onOpen = {},
-                onConsent = {},
                 modifier = Modifier.padding(16.dp)
             )
         }
