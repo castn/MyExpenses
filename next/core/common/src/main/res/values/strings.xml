@@ -1254,4 +1254,66 @@
     <string name="next_onboarding_done_title">All set</string>
     <string name="next_onboarding_done_text">Add your first transaction with the plus button. The more precisely you choose categories and the more receipts you scan, the more the app shows you. Everything else can be changed in the settings at any time.</string>
     <string name="next_onboarding_start">Get started</string>
+    <string name="next_setup_title">Set up</string>
+    <string name="next_setup_intro">A few decisions, and the app can tell you much more about your money. You can stop at any time and go on later from the overview.</string>
+    <string name="next_setup_step_categories">Categories</string>
+    <string name="next_setup_step_contracts">Contracts</string>
+    <plurals name="next_setup_payees">
+        <item quantity="one">%d payee</item>
+        <item quantity="other">%d payees</item>
+    </plurals>
+    <plurals name="next_setup_contracts">
+        <item quantity="one">%d contract to confirm</item>
+        <item quantity="other">%d contracts to confirm</item>
+    </plurals>
+    <plurals name="next_setup_minutes">
+        <item quantity="one">about %d min.</item>
+        <item quantity="other">about %d min.</item>
+    </plurals>
+    <string name="next_setup_step_text">%1$s · %2$s</string>
+    <string name="next_setup_nothing_to_do">Nothing to do</string>
+    <string name="next_setup_state_done">Done</string>
+    <string name="next_setup_state_skipped">Skipped</string>
+    <string name="next_setup_start">Get started</string>
+    <string name="next_setup_skip_all">Skip setup</string>
+    <string name="next_setup_skip_step">Skip step</string>
+    <string name="next_setup_coverage">Spending with a category</string>
+    <plurals name="next_setup_payees_left">
+        <item quantity="one">%d payee left</item>
+        <item quantity="other">%d payees left</item>
+    </plurals>
+    <plurals name="next_setup_backlog_text">
+        <item quantity="one">%d transaction can be categorized for sure, because you almost always chose the same category for its payee.</item>
+        <item quantity="other">%d transactions can be categorized for sure, because you almost always chose the same category for their payees.</item>
+    </plurals>
+    <plurals name="next_setup_payee_transactions">
+        <item quantity="one">%1$d transaction since %2$s</item>
+        <item quantity="other">%1$d transactions since %2$s</item>
+    </plurals>
+    <string name="next_setup_suggestion">Suggestion</string>
+    <string name="next_setup_other_category">Other category</string>
+    <string name="next_setup_choose_category">Choose category</string>
+    <string name="next_setup_accept">Use</string>
+    <string name="next_setup_always">Also for later transactions</string>
+    <string name="next_setup_unclear">Don\'t know</string>
+    <string name="next_setup_later">Later</string>
+    <string name="next_setup_more">More</string>
+    <string name="next_setup_less">Less</string>
+    <string name="next_setup_target_title">Most of your spending has a category</string>
+    <string name="next_setup_target_text">That is enough for the analyses. You can go on with the other payees, now or later.</string>
+    <string name="next_setup_no_more_title">No more payees to decide on</string>
+    <string name="next_setup_no_more_text">The rest of your spending has no payee to decide on, e.g. purchases through a payment service without merchant. Give them a category in their details.</string>
+    <string name="next_setup_skipped_title">Payees put off</string>
+    <string name="next_setup_skipped_text">You put off the remaining payees. Show them again, or go on and come back later.</string>
+    <string name="next_setup_show_again">Show again</string>
+    <string name="next_setup_go_on">Go on</string>
+    <string name="next_setup_next">Next</string>
+    <string name="next_setup_automatic_title">Automatic from now on</string>
+    <string name="next_setup_automatic_text">%1$s of your expenses of the last three months would now get their category without asking.</string>
+    <string name="next_setup_automatic_hint">The more you decide, the more the app does by itself. New transactions of a payee you decided on get the category right after the import.</string>
+    <string name="next_setup_contracts_text">Confirm the regular payments the app found, so that they count in your monthly balance.</string>
+    <string name="next_setup_finish_step">Done</string>
+    <string name="next_setup_done_title">All set</string>
+    <string name="next_setup_done_text">Your analyses now have something to tell. Steps you skipped wait for you on the overview.</string>
+    <string name="next_setup_to_overview">To the overview</string>
 </resources>

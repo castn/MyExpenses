@@ -1254,4 +1254,66 @@
     <string name="next_onboarding_done_title">Alles bereit</string>
     <string name="next_onboarding_done_text">Erfasse deine erste Buchung mit dem Plus-Knopf. Je genauer du Kategorien vergibst und je mehr Kassenzettel du scannst, desto mehr zeigt dir die App. Alles andere kannst du jederzeit in den Einstellungen ändern.</string>
     <string name="next_onboarding_start">Los geht\'s</string>
+    <string name="next_setup_title">Einrichten</string>
+    <string name="next_setup_intro">Ein paar Entscheidungen, und die App kann dir viel mehr über dein Geld sagen. Du kannst jederzeit aufhören und später von der Übersicht aus weitermachen.</string>
+    <string name="next_setup_step_categories">Kategorien</string>
+    <string name="next_setup_step_contracts">Verträge</string>
+    <plurals name="next_setup_payees">
+        <item quantity="one">%d Empfänger</item>
+        <item quantity="other">%d Empfänger</item>
+    </plurals>
+    <plurals name="next_setup_contracts">
+        <item quantity="one">%d Vertrag zu bestätigen</item>
+        <item quantity="other">%d Verträge zu bestätigen</item>
+    </plurals>
+    <plurals name="next_setup_minutes">
+        <item quantity="one">ca. %d Min.</item>
+        <item quantity="other">ca. %d Min.</item>
+    </plurals>
+    <string name="next_setup_step_text">%1$s · %2$s</string>
+    <string name="next_setup_nothing_to_do">Nichts zu tun</string>
+    <string name="next_setup_state_done">Erledigt</string>
+    <string name="next_setup_state_skipped">Übersprungen</string>
+    <string name="next_setup_start">Los geht\'s</string>
+    <string name="next_setup_skip_all">Einrichtung überspringen</string>
+    <string name="next_setup_skip_step">Schritt überspringen</string>
+    <string name="next_setup_coverage">Ausgaben mit Kategorie</string>
+    <plurals name="next_setup_payees_left">
+        <item quantity="one">noch %d Empfänger</item>
+        <item quantity="other">noch %d Empfänger</item>
+    </plurals>
+    <plurals name="next_setup_backlog_text">
+        <item quantity="one">%d Buchung lässt sich sicher zuordnen, weil du beim selben Empfänger bisher fast immer dieselbe Kategorie gewählt hast.</item>
+        <item quantity="other">%d Buchungen lassen sich sicher zuordnen, weil du beim selben Empfänger bisher fast immer dieselbe Kategorie gewählt hast.</item>
+    </plurals>
+    <plurals name="next_setup_payee_transactions">
+        <item quantity="one">%1$d Buchung seit %2$s</item>
+        <item quantity="other">%1$d Buchungen seit %2$s</item>
+    </plurals>
+    <string name="next_setup_suggestion">Vorschlag</string>
+    <string name="next_setup_other_category">Andere Kategorie</string>
+    <string name="next_setup_choose_category">Kategorie wählen</string>
+    <string name="next_setup_accept">Übernehmen</string>
+    <string name="next_setup_always">Auch für spätere Buchungen</string>
+    <string name="next_setup_unclear">Weiß ich nicht</string>
+    <string name="next_setup_later">Später</string>
+    <string name="next_setup_more">Mehr</string>
+    <string name="next_setup_less">Weniger</string>
+    <string name="next_setup_target_title">Der Großteil deiner Ausgaben hat eine Kategorie</string>
+    <string name="next_setup_target_text">Das reicht für die Auswertungen. Du kannst mit den übrigen Empfängern weitermachen, jetzt oder später.</string>
+    <string name="next_setup_no_more_title">Keine Empfänger mehr offen</string>
+    <string name="next_setup_no_more_text">Der Rest deiner Ausgaben hat keinen Empfänger, über den du entscheiden kannst, etwa Einkäufe über einen Zahlungsdienst ohne Händler. Gib ihnen in ihren Details eine Kategorie.</string>
+    <string name="next_setup_skipped_title">Zurückgestellte Empfänger</string>
+    <string name="next_setup_skipped_text">Die übrigen Empfänger hast du zurückgestellt. Zeig sie noch einmal, oder mach weiter und komm später zurück.</string>
+    <string name="next_setup_show_again">Noch einmal zeigen</string>
+    <string name="next_setup_go_on">Weitermachen</string>
+    <string name="next_setup_next">Weiter</string>
+    <string name="next_setup_automatic_title">Ab jetzt automatisch</string>
+    <string name="next_setup_automatic_text">%1$s deiner Ausgaben der letzten drei Monate bekämen jetzt ohne Nachfrage ihre Kategorie.</string>
+    <string name="next_setup_automatic_hint">Je mehr du entscheidest, desto mehr erledigt die App selbst. Neue Buchungen eines Empfängers, über den du entschieden hast, bekommen die Kategorie gleich nach dem Import.</string>
+    <string name="next_setup_contracts_text">Bestätige die regelmäßigen Zahlungen, die die App gefunden hat, damit sie in deiner Monatsbilanz zählen.</string>
+    <string name="next_setup_finish_step">Fertig</string>
+    <string name="next_setup_done_title">Alles eingerichtet</string>
+    <string name="next_setup_done_text">Deine Auswertungen haben jetzt etwas zu sagen. Übersprungene Schritte warten auf der Übersicht auf dich.</string>
+    <string name="next_setup_to_overview">Zur Übersicht</string>
 </resources>

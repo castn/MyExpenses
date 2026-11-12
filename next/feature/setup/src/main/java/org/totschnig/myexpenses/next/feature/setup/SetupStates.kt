@@ -38,7 +38,8 @@ data class SetupOverview(val steps: List<StepInfo>, val next: SetupStep?, val se
 /**
  * The steps there are with what they take
  *
- * @param available the steps there are, see [org.totschnig.myexpenses.next.data.setup.SetupRepository.steps]
+ * @param available the steps there are, see
+ * [org.totschnig.myexpenses.next.data.setup.SetupRepository.steps]
  */
 fun setupOverview(
     available: List<SetupStep>,
