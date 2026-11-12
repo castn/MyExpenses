@@ -1,0 +1,12 @@
+plugins {
+    id 'next.data'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.data.setup'
+}
+
+// The guided setup: the payees to categorize first, how much is categorized, time estimates and progress.
+dependencies {
+    implementation project(':next:data:categories')
+}
