@@ -14,6 +14,7 @@ import org.totschnig.myexpenses.util.TransactionImports
 import org.totschnig.myexpenses.next.categories.ProviderCategoryWriting
 import org.totschnig.myexpenses.next.data.categories.CategoryRepository
 import org.totschnig.myexpenses.next.data.categories.CategoryStore
+import org.totschnig.myexpenses.next.data.categories.categoryInput
 import org.totschnig.myexpenses.next.data.transactions.CategorySuggestions
 import org.totschnig.myexpenses.next.transactions.AnalysisCategorySuggestions
 import org.totschnig.myexpenses.next.tags.RepositoryTagDatabase
@@ -28,6 +29,7 @@ import org.totschnig.myexpenses.next.data.contracts.ContractStore
 import org.totschnig.myexpenses.next.insights.ProviderLedgerSource
 import org.totschnig.myexpenses.next.insights.today
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import kotlinx.coroutines.flow.Flow
 import org.totschnig.myexpenses.myApplication
 import org.totschnig.myexpenses.next.receipts.ProviderReceiptDatabase
@@ -80,6 +82,17 @@ class NextData private constructor(context: Context) {
     /** Categories for a transaction that is typed; [CategorySuggestions.None] without categories */
     val categorySuggestions: CategorySuggestions = AnalysisCategorySuggestions(categories)
 
+    /**
+     * Ids of the transactions the user knows no category for ("Weiß ich nicht"), see
+     * [CategoryRepository.unclear]; `flowOf(emptySet())` without categories
+     */
+    val unclearTransactions: Flow<Set<Long>> = categories.unclear
+
+    /** Whether the user knows no category for the counterpart of a transaction; `{ false }` without categories */
+    val isCategoryUnclear: suspend (LedgerTransaction) -> Boolean = {
+        categories.isUnclear(it.categoryInput())
+    }
+
     val receipts = ReceiptRepository(
         ProviderReceiptDatabase(
             context.myApplication,
@@ -102,7 +115,7 @@ class NextData private constructor(context: Context) {
         ledgerSource, TipStore(dataStore), contracts.facts, tags.facts, receiptFacts, scope, budgets.facts
     )
 
-    val readiness = DataReadinessRepository(ledgerSource, receiptFacts, scope)
+    val readiness = DataReadinessRepository(ledgerSource, receiptFacts, scope, unclearTransactions)
 
     /** The logos of payees, loaded only with consent, see [keepLogosOnlyWithConsent] */
     val merchantLogos = MerchantLogoStore(context.noBackupFilesDir.resolve("merchant-logos"))

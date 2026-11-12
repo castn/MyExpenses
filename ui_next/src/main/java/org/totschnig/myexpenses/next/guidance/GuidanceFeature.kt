@@ -45,7 +45,13 @@ class GuidanceFeature(
     private val explained: NextKey? = null,
 ) : NextFeature {
     val hints by activity.viewModelsOf {
-        HintsViewModel(data.ledgerSource, data.receiptFacts, data.readiness.readiness, HintStore(data.dataStore))
+        HintsViewModel(
+            data.ledgerSource,
+            data.receiptFacts,
+            data.readiness.readiness,
+            HintStore(data.dataStore),
+            data.isCategoryUnclear
+        )
     }
     val readiness by activity.viewModelsOf { DataReadinessViewModel(data.readiness) }
 
