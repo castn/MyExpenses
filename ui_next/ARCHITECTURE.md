@@ -412,7 +412,7 @@ re-computation catches an input that is too broad (reruns always) or too narrow 
 ### `analysis-shared-flow` — Facts other features read are shared flows
 
 Facts that other features read are a shared flow with `replay = 1` (`shareWhileShown`). A fact that
-is null means loading or no consent; screens turn it into an `AnalysisState` with
+is null means loading or that the user turned off the analysis; screens turn it into an `AnalysisState` with
 `analysisState(consent, value)`.
 
 **Why:** A cold flow would restart its computation for each collector. A shared flow with replay

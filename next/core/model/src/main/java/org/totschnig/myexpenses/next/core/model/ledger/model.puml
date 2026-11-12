@@ -6,7 +6,7 @@ skinparam defaultFontName sans-serif
 hide empty members
 
 interface LedgerSource {
-  consent: Flow<Boolean?>
+  consent: Flow<Boolean>
   ledger: Flow<Ledger?>
   catalog: Flow<Catalog>
   today: Flow<LocalDate>
@@ -65,21 +65,19 @@ class "Memo<I, O>" as Memo {
 
 class "AnalysisState<T>" as AnalysisState <<sealed>>
 class Loading
-class AskConsent
 class Declined
 class "Ready<T>" as Ready {
   value: T
 }
 
-LedgerSource --> Ledger : null while loading\nor without consent
-LedgerSource --> Catalog : also without consent
+LedgerSource --> Ledger : null while loading\nor turned off
+LedgerSource --> Catalog : also when turned off
 Ledger *-- "*" LedgerTransaction
 Ledger *-- OwnAccounts
 LedgerTransaction *-- "*" LedgerPart : only analyses\nby category use them
 Catalog *-- "*" CategoryInfo
 
 AnalysisState <|-- Loading
-AnalysisState <|-- AskConsent
 AnalysisState <|-- Declined
 AnalysisState <|-- Ready
 
@@ -91,7 +89,7 @@ end note
 
 note bottom of AnalysisState
   analysisState(consent, value):
-  null consent → AskConsent, false → Declined,
+  consent false (turned off) → Declined,
   null value → Loading, else Ready(value)
 end note
 

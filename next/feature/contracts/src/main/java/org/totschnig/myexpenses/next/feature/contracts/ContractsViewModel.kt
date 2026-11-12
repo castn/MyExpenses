@@ -193,7 +193,7 @@ class ContractsViewModel(
         combine(ledgerSource.consent, repository.analysis) { consent, analysis ->
             when {
                 analysis != null -> analysis.infoFor(transactionId)
-                consent == true -> PaymentContractInfo.Loading
+                consent -> PaymentContractInfo.Loading
                 else -> PaymentContractInfo.Unavailable
             }
         }

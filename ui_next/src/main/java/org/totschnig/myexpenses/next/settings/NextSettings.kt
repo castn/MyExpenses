@@ -368,7 +368,7 @@ class NextSettings : ProtectedFragmentActivity() {
     private fun insightControl(setting: InsightSetting): SettingControl? =
         if (setting == InsightSetting.CONSENT) {
             SettingControl.Switch(
-                checked = ledgerSource.consent.collectAsState(null).value == true,
+                checked = ledgerSource.consent.collectAsState(true).value,
                 summary = stringResource(NextR.string.next_settings_consent_summary),
                 isEnabled = true,
                 onChange = ledgerSource::setConsent

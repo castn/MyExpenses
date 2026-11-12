@@ -224,10 +224,8 @@ class BudgetActionsTest {
 
     @Test
     fun overviewFollowsTheConsent() = withViewModel(
-        source = FakeLedgerSource(consent = null, ledger = null, catalog = catalog, today = today)
+        source = FakeLedgerSource(consent = false, ledger = null, catalog = catalog, today = today)
     ) {
-        viewModel.overview.first { it == AnalysisState.AskConsent }
-        source.setConsent(false)
         viewModel.overview.first { it == AnalysisState.Declined }
         source.setConsent(true)
         // Still no ledger

@@ -55,7 +55,7 @@ class CategoryRepository(
 
     /** Null without consent or while loading */
     val analysis: SharedFlow<CategoryAnalysis?> =
-        ledgerSource.consent.map { it == true }.distinctUntilChanged()
+        ledgerSource.consent
             .flatMapLatest { hasConsent ->
                 if (hasConsent) combine(inputs, categories, decisions) { inputs, categories, decisions ->
                     val suggestions = suggestionMemo.of(SuggestionInput(inputs, decisions.rules, categories))

@@ -8,7 +8,7 @@ import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 
 /** A [LedgerSource] whose values a test sets */
 class FakeLedgerSource(
-    consent: Boolean? = true,
+    consent: Boolean = true,
     ledger: Ledger? = null,
     catalog: Catalog = Catalog(),
     today: LocalDate = LocalDate.now(),

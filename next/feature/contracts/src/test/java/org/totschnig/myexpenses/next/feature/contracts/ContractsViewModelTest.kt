@@ -177,22 +177,12 @@ class ContractsViewModelTest {
     }
 
     @Test
-    fun asksForConsentBeforeAnalysing() =
-        withViewModel(FakeLedgerSource(consent = null, ledger = null)) {
-            assertEquals(
-                AnalysisState.AskConsent,
-                viewModel.state.first { it != AnalysisState.Loading }
-            )
-            assertEquals(
-                AnalysisState.AskConsent,
-                viewModel.incomeState.first { it != AnalysisState.Loading }
-            )
-            assertEquals(PaymentContractInfo.Unavailable, viewModel.paymentInfo(1).first())
-        }
-
-    @Test
     fun showsDeclinedConsent() = withViewModel(FakeLedgerSource(consent = false, ledger = null)) {
         assertEquals(AnalysisState.Declined, viewModel.state.first { it != AnalysisState.Loading })
+        assertEquals(
+            AnalysisState.Declined,
+            viewModel.incomeState.first { it != AnalysisState.Loading }
+        )
         assertEquals(PaymentContractInfo.Unavailable, viewModel.paymentInfo(1).first())
     }
 

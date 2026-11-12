@@ -110,13 +110,11 @@ class MoneyFlowViewModelTest {
     }
 
     @Test
-    fun asksForConsentOrTellsItWasDeclined() = withViewModel(
-        FakeLedgerSource(consent = null, ledger = ledger, catalog = catalog, today = today)
+    fun tellsTheAnalysisIsTurnedOff() = withViewModel(
+        FakeLedgerSource(consent = false, ledger = ledger, catalog = catalog, today = today)
     ) {
-        assertSame(AnalysisState.AskConsent, viewModel.flow.value)
-        assertSame(AnalysisState.AskConsent, viewModel.lastTwelveMonths.value)
-        source.setConsent(false)
         assertSame(AnalysisState.Declined, viewModel.flow.value)
+        assertSame(AnalysisState.Declined, viewModel.lastTwelveMonths.value)
         source.setConsent(true)
         assertEquals(300000, flow.earned)
     }

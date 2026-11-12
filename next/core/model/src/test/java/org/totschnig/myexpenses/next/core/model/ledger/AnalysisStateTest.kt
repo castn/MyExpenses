@@ -7,8 +7,7 @@ import org.junit.Test
 class AnalysisStateTest {
 
     @Test
-    fun showsResultOnlyWithConsent() {
-        assertEquals(AnalysisState.AskConsent, analysisState(null, 1))
+    fun showsResultUnlessTurnedOff() {
         assertEquals(AnalysisState.Declined, analysisState(false, 1))
         assertEquals(AnalysisState.Loading, analysisState<Int>(true, null))
         assertEquals(AnalysisState.Ready(1), analysisState(true, 1))

@@ -7,8 +7,11 @@ import kotlinx.coroutines.flow.Flow
  * The [Ledger] with what it depends on, loaded once for all features of the new UI
  */
 interface LedgerSource {
-    /** Null as long as the user has not been asked whether transactions may be analysed */
-    val consent: Flow<Boolean?>
+    /**
+     * Whether transactions may be analysed. On unless the user turned it off in the settings: all
+     * analyses run on the device only, and the new UI is of little use without them.
+     */
+    val consent: Flow<Boolean>
 
     /** Null while loading or without consent */
     val ledger: Flow<Ledger?>

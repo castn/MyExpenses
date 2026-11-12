@@ -94,7 +94,7 @@ fun AnalysisScreen(
                 CircularProgressIndicator()
             }
 
-            AnalysisState.AskConsent, AnalysisState.Declined -> PromptCard(
+            AnalysisState.Declined -> PromptCard(
                 icon = Icons.Default.Insights,
                 title = stringResource(R.string.next_analysis_consent_title),
                 text = stringResource(R.string.next_analysis_consent_text),

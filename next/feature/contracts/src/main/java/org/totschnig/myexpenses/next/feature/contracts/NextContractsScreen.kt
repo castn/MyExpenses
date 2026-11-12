@@ -321,7 +321,7 @@ private fun ContractsHome(content: ContractsContent, backStack: NavBackStack<Nav
                     .wrapContentSize()
             )
 
-            AnalysisState.AskConsent, AnalysisState.Declined -> DeclinedCard(
+            AnalysisState.Declined -> DeclinedCard(
                 onConsent = content.onConsent,
                 modifier = contentModifier
             )

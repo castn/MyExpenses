@@ -97,8 +97,8 @@ import org.totschnig.myexpenses.next.core.model.ledger.TagInfo
  * as [LedgerSource], see the README of the ledger package. Its flows run in [scope] while they are
  * collected.
  *
- * Transactions are read unless the user turned it off in the settings: all analyses run on the
- * device only. The choice is stored in the data store, which is part of the backup.
+ * Transactions are read unless the user turned it off, see [LedgerSource.consent]. The choice is
+ * stored in the data store, which is part of the backup.
  */
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 class ProviderLedgerSource(
@@ -109,7 +109,7 @@ class ProviderLedgerSource(
     today: Flow<LocalDate>,
 ) : LedgerSource {
 
-    override val consent: Flow<Boolean?> =
+    override val consent: Flow<Boolean> =
         dataStore.data.map { it[KEY_CONSENT] ?: true }.distinctUntilChanged()
 
     override fun setConsent(consent: Boolean) {
@@ -247,7 +247,7 @@ class ProviderLedgerSource(
     private var latestLedger: Ledger? = null
 
     override val ledger: Flow<Ledger?> =
-        combine(consent.map { it == true }.distinctUntilChanged(), today, ::Pair).flatMapLatest { (hasConsent, today) ->
+        combine(consent, today, ::Pair).flatMapLatest { (hasConsent, today) ->
             if (hasConsent) combine(
                 contentResolver.observeQuery(
                     uri = TRANSACTIONS_URI,

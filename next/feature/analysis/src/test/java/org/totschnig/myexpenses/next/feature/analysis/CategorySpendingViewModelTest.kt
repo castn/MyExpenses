@@ -106,13 +106,11 @@ class CategorySpendingViewModelTest {
     }
 
     @Test
-    fun asksForConsentOrTellsItWasDeclined() = withViewModel(
-        FakeLedgerSource(consent = null, ledger = ledger, catalog = catalog)
+    fun tellsTheAnalysisIsTurnedOff() = withViewModel(
+        FakeLedgerSource(consent = false, ledger = ledger, catalog = catalog)
     ) {
-        assertSame(AnalysisState.AskConsent, viewModel.analysis.value)
-        assertSame(AnalysisState.AskConsent, viewModel.currentMonth.value)
-        source.setConsent(false)
         assertSame(AnalysisState.Declined, viewModel.analysis.value)
+        assertSame(AnalysisState.Declined, viewModel.currentMonth.value)
         source.setConsent(true)
         assertEquals(8000, analysis.total)
     }

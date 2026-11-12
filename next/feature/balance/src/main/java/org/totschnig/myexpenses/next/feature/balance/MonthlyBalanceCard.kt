@@ -46,7 +46,7 @@ fun MonthlyBalanceCard(
     modifier: Modifier = Modifier,
 ) {
     when (state) {
-        AnalysisState.AskConsent, AnalysisState.Declined -> {}
+        AnalysisState.Declined -> {}
         AnalysisState.Loading -> LoadingBalanceCard(modifier)
         is AnalysisState.Ready -> BalanceCard(state.value.balance, state.value.today, currency, onOpen, modifier)
     }

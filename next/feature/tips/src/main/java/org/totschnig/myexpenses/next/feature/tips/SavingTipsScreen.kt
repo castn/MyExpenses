@@ -124,7 +124,7 @@ fun SavingTipsScreen(
                 CircularProgressIndicator()
             }
 
-            AnalysisState.AskConsent, AnalysisState.Declined -> PromptCard(
+            AnalysisState.Declined -> PromptCard(
                 icon = Icons.Default.Search,
                 title = stringResource(R.string.next_tips_consent_title),
                 text = stringResource(R.string.next_tips_consent_text),

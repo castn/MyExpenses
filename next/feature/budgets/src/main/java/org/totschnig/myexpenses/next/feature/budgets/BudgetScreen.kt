@@ -107,7 +107,7 @@ fun BudgetScreen(
                 CircularProgressIndicator()
             }
 
-            AnalysisState.AskConsent, AnalysisState.Declined -> PromptCard(
+            AnalysisState.Declined -> PromptCard(
                 icon = Icons.Outlined.Savings,
                 title = stringResource(R.string.next_budget_title),
                 text = stringResource(R.string.next_budget_consent),

@@ -135,7 +135,7 @@ class SavingTipsActionsTest {
     }
 
     private fun withViewModel(
-        consent: Boolean? = true,
+        consent: Boolean = true,
         contracts: ContractFacts? = contractFacts,
         budget: BudgetFacts? = budget(PotsOverspent.PERIODS),
         block: suspend Fixture.() -> Unit
@@ -165,12 +165,7 @@ class SavingTipsActionsTest {
     }
 
     @Test
-    fun asksForConsentBeforeShowingTips() = withViewModel(consent = null) {
-        assertEquals(
-            AnalysisState.AskConsent,
-            awaitValue(viewModel.savingTips) { it == AnalysisState.AskConsent }
-        )
-        source.setConsent(false)
+    fun showsTipsOnceTheAnalysisIsTurnedOn() = withViewModel(consent = false) {
         assertEquals(
             AnalysisState.Declined,
             awaitValue(viewModel.savingTips) { it == AnalysisState.Declined }

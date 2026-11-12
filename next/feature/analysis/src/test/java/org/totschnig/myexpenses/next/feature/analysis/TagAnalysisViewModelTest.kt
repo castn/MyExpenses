@@ -106,11 +106,9 @@ class TagAnalysisViewModelTest {
     }
 
     @Test
-    fun asksForConsentOrTellsItWasDeclined() = withViewModel(
-        FakeLedgerSource(consent = null, ledger = ledger, catalog = catalog, today = today)
+    fun tellsTheAnalysisIsTurnedOff() = withViewModel(
+        FakeLedgerSource(consent = false, ledger = ledger, catalog = catalog, today = today)
     ) {
-        assertSame(AnalysisState.AskConsent, viewModel.analysis.value)
-        source.setConsent(false)
         assertSame(AnalysisState.Declined, viewModel.analysis.value)
         source.setConsent(true)
         assertEquals(listOf(dog.id), analysis.themes.map { it.tagId })

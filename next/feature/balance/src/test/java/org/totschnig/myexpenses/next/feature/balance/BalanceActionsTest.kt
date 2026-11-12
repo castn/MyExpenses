@@ -130,7 +130,7 @@ class BalanceActionsTest {
     }
 
     private fun withViewModel(
-        consent: Boolean? = true,
+        consent: Boolean = true,
         ledger: Ledger? = this.ledger,
         contracts: ContractFacts? = salaryAndRent,
         block: suspend Fixture.() -> Unit
@@ -153,10 +153,10 @@ class BalanceActionsTest {
     }
 
     @Test
-    fun showsTheBalanceOnceConsentIsGiven() = withViewModel(consent = null) {
+    fun showsTheBalanceOnceTheAnalysisIsTurnedOn() = withViewModel(consent = false) {
         assertEquals(
-            AnalysisState.AskConsent,
-            awaitValue(viewModel.balance) { it == AnalysisState.AskConsent }
+            AnalysisState.Declined,
+            awaitValue(viewModel.balance) { it == AnalysisState.Declined }
         )
         source.setConsent(true)
         assertEquals(today, ready().today)

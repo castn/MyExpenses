@@ -38,13 +38,11 @@ class BalanceViewModelTest {
     }
 
     @Test
-    fun asksForConsentAndShowsDeclined() = runTest {
-        val source = FakeLedgerSource(consent = null)
+    fun showsDeclinedWhenTurnedOff() = runTest {
+        val source = FakeLedgerSource(consent = false)
         val repository = BalanceRepository(source, MutableStateFlow(facts), backgroundScope)
         val viewModel = BalanceViewModel(repository)
-        assertEquals(AnalysisState.AskConsent, viewModel.balance.first { it != AnalysisState.Loading })
-        source.setConsent(false)
-        assertEquals(AnalysisState.Declined, viewModel.balance.first { it != AnalysisState.AskConsent })
+        assertEquals(AnalysisState.Declined, viewModel.balance.first { it != AnalysisState.Loading })
     }
 
     @Test
