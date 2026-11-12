@@ -17,12 +17,14 @@ class CategoryStoreTest {
         store.update { it.copy(firstNewId = 100, rules = listOf(CategoryRule("r", setOf(1), 10))) }
         store.update { it.rejecting(transactionId = 7, categoryId = 10) }
         store.update { it.copy(firstNewId = null, backlogAnswered = true) }
+        store.update { it.withUnclear(Counterpart("p:2", "Shop", payeeId = 2)) }
         assertEquals(
             CategoryDecisions(
                 rules = listOf(CategoryRule("r", setOf(1), 10)),
                 firstNewId = null,
                 backlogAnswered = true,
-                rejected = mapOf(7L to 10L)
+                rejected = mapOf(7L to 10L),
+                unclear = setOf("p:2")
             ),
             store.decisions.first()
         )

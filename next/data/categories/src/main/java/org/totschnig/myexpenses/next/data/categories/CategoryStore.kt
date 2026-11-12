@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -36,12 +37,16 @@ class CategoryStore(private val dataStore: DataStore<Preferences>) {
         /** JSON object mapping transaction ids to the category applied without asking */
         val KEY_AUTOMATIC = stringPreferencesKey("next_category_automatic")
 
+        /** [Counterpart.key]s the user knows no category for */
+        val KEY_UNCLEAR = stringSetPreferencesKey("next_category_unclear")
+
         fun Preferences.toDecisions() = CategoryDecisions(
             rules = this[KEY_RULES]?.let(::parseRules) ?: emptyList(),
             firstNewId = this[KEY_FIRST_NEW_ID],
             backlogAnswered = this[KEY_BACKLOG_ANSWERED] ?: false,
             rejected = this[KEY_REJECTED]?.let(::parseIdMap) ?: emptyMap(),
-            automatic = this[KEY_AUTOMATIC]?.let(::parseIdMap) ?: emptyMap()
+            automatic = this[KEY_AUTOMATIC]?.let(::parseIdMap) ?: emptyMap(),
+            unclear = this[KEY_UNCLEAR] ?: emptySet()
         )
 
         /** Only what changed is written */
@@ -53,6 +58,7 @@ class CategoryStore(private val dataStore: DataStore<Preferences>) {
             if (new.backlogAnswered != old.backlogAnswered) this[KEY_BACKLOG_ANSWERED] = new.backlogAnswered
             if (new.rejected != old.rejected) this[KEY_REJECTED] = serializeIdMap(new.rejected)
             if (new.automatic != old.automatic) this[KEY_AUTOMATIC] = serializeIdMap(new.automatic)
+            if (new.unclear != old.unclear) this[KEY_UNCLEAR] = new.unclear
         }
     }
 }
