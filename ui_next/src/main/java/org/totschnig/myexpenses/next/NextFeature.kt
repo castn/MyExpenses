@@ -39,6 +39,13 @@ interface NextFeature {
     @Composable
     fun OverviewCard(navigation: NextNavigation) {}
 
+    /**
+     * Whether the area takes over the overview for now, e.g. the setup after the first start: the
+     * overview then shows only the banners and cards of the areas that do, and the accounts
+     */
+    @Composable
+    fun takesOverOverview(): Boolean = false
+
     /** The budgets of the overview, only from the feature that has them */
     @Composable
     fun overviewBudgets(navigation: NextNavigation): OverviewBudgets? = null

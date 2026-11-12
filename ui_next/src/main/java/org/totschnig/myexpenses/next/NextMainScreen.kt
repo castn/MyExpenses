@@ -446,15 +446,18 @@ private fun OverviewPane(
     val context = LocalContext.current
     val format = LocalCurrencyFormatter.current
     val resources = LocalResources.current
+    // Asked of every feature in each composition, so that the calls keep their order
+    val takingOver = features.filter { it.takesOverOverview() }
+    val shown = takingOver.ifEmpty { features }
     Box(Modifier.fillMaxSize()) {
         NextOverviewScreen(
             header = { modifier ->
                 Column(modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Column { features.forEach { it.OverviewBanner(navigation) } }
-                    features.forEach { it.OverviewCard(navigation) }
+                    Column { shown.forEach { it.OverviewBanner(navigation) } }
+                    shown.forEach { it.OverviewCard(navigation) }
                 }
             },
-            budgets = features.mapNotNull { it.overviewBudgets(navigation) }.firstOrNull(),
+            budgets = shown.mapNotNull { it.overviewBudgets(navigation) }.firstOrNull(),
             sections = overviewSections(
                 accounts.filter { it.visible }, accountGrouping, context, resources
             ) { amount, currency -> format.convAmount(amount, currency) },
@@ -539,4 +542,8 @@ sealed interface NextKey : NavKey {
     /** @param openDebt id of a debt shown from the start */
     @Serializable
     data class Debts(val openDebt: Long? = null) : NextKey
+
+    /** The guided setup after the first start, opened from its card on the overview */
+    @Serializable
+    data object Setup : NextKey
 }
