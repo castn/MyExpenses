@@ -31,7 +31,7 @@ data class ItemGroupModelRelease(
          * `{"models": [{"language": "de", "version": "2026.10-de-1", "format": 2, "url": "…",
          * "sha256": "…", "size": 1929216}]}`
          */
-        const val MANIFEST_URL = "https://codeberg.org/castn/product-group-modell/raw/branch/main/models.json"
+        const val MANIFEST_URL = "https://raw.githubusercontent.com/castn/product-group-modell/main/models.json"
 
         /** Format the copied [ProductGroupModel] reads */
         const val FORMAT = 2

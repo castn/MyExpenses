@@ -655,7 +655,7 @@
     <string name="next_item_group_model_decline">Nein danke</string>
     <string name="next_item_group_model_title">Erkennungsmodell</string>
     <string name="next_item_group_model_text">Das Modell arbeitet nur auf diesem Gerät, deine Kassenzettel werden nicht übertragen. Es wurde mit Daten von Open Food Facts (openfoodfacts.org) trainiert, die unter der Open Database License (ODbL) stehen.</string>
-    <string name="next_item_group_model_source_text">Herunterladen lädt es einmal von codeberg.org und hält es aktuell. Oder wähle eine Modelldatei (.bin), die schon auf dem Telefon liegt, z. B. im Download-Ordner.</string>
+    <string name="next_item_group_model_source_text">Herunterladen lädt es einmal von GitHub und hält es aktuell. Oder wähle eine Modelldatei (.bin), die schon auf dem Telefon liegt, z. B. im Download-Ordner.</string>
     <string name="next_item_group_model_download">Herunterladen</string>
     <string name="next_item_group_model_pick_file">Datei wählen</string>
     <string name="next_item_group_model_working">Modell wird geladen …</string>
@@ -670,7 +670,7 @@
     <string name="next_item_group_model_source_download">Heruntergeladen, wird aktuell gehalten</string>
     <string name="next_item_group_model_source_file">Aus einer Datei, wird nicht aktualisiert</string>
     <string name="next_item_group_model_check">Nach Updates suchen</string>
-    <string name="next_item_group_model_check_hint">Sucht auf codeberg.org nach einem neuen Modell</string>
+    <string name="next_item_group_model_check_hint">Sucht auf GitHub nach einem neuen Modell</string>
     <string name="next_item_group_model_checking">Suche nach Updates …</string>
     <string name="next_item_group_model_up_to_date">Das Modell ist aktuell.</string>
     <string name="next_item_group_model_download_version">Version %s herunterladen</string>
