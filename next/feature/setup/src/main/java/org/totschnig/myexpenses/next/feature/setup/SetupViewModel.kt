@@ -45,6 +45,15 @@ class SetupViewModel(
         ::setupOverview
     ).stateWhileShown(viewModelScope, null)
 
+    /**
+     * Whether the overview offers the setup: it is not closed and an open step has something to
+     * decide, so that it is not offered to users whose transactions are described already
+     */
+    val isOffered: StateFlow<Boolean> = combine(repository.progress, overview) { progress, steps ->
+        !progress.closed &&
+            steps?.steps.orEmpty().any { it.state != StepState.DONE && it.decisions > 0 }
+    }.stateWhileShown(viewModelScope, false)
+
     private data class Visit(
         val decided: Set<String>,
         val skipped: Set<String>,

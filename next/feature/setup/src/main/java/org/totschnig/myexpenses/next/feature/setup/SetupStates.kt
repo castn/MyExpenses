@@ -33,7 +33,11 @@ data class StepInfo(
  * @param next the step to go on with, null when all are done
  * @param seconds all open steps take
  */
-data class SetupOverview(val steps: List<StepInfo>, val next: SetupStep?, val seconds: Long)
+data class SetupOverview(val steps: List<StepInfo>, val next: SetupStep?, val seconds: Long) {
+    /** A step was gone through or skipped, so the setup is resumed rather than started */
+    val hasStarted: Boolean
+        get() = steps.any { it.state == StepState.DONE || it.state == StepState.SKIPPED }
+}
 
 /**
  * The steps there are with what they take

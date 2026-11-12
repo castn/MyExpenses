@@ -1316,4 +1316,6 @@
     <string name="next_setup_done_title">Alles eingerichtet</string>
     <string name="next_setup_done_text">Deine Auswertungen haben jetzt etwas zu sagen. Übersprungene Schritte warten auf der Übersicht auf dich.</string>
     <string name="next_setup_to_overview">Zur Übersicht</string>
+    <string name="next_setup_card_title">App einrichten</string>
+    <string name="next_setup_card_text">Ein paar Entscheidungen, damit dir die Auswertungen etwas sagen können, %1$s.</string>
 </resources>

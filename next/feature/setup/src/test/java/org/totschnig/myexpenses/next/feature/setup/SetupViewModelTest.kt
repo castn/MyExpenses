@@ -146,6 +146,17 @@ class SetupViewModelTest {
     }
 
     @Test
+    fun isOfferedUntilClosed() = withTestDataStore { dataStore ->
+        runTest {
+            val viewModel = backgroundScope.setup(dataStore).viewModel
+            viewModel.isOffered.launchIn(backgroundScope)
+            assertEquals(true, viewModel.isOffered.first { it })
+            viewModel.close()
+            assertEquals(false, viewModel.isOffered.first { !it })
+        }
+    }
+
+    @Test
     fun remembersSkippedAndFinishedSteps() = withTestDataStore { dataStore ->
         runTest {
             val setup = backgroundScope.setup(dataStore)

@@ -1316,4 +1316,6 @@
     <string name="next_setup_done_title">All set</string>
     <string name="next_setup_done_text">Your analyses now have something to tell. Steps you skipped wait for you on the overview.</string>
     <string name="next_setup_to_overview">To the overview</string>
+    <string name="next_setup_card_title">Set up the app</string>
+    <string name="next_setup_card_text">A few decisions so that the analyses can tell you something, %1$s.</string>
 </resources>

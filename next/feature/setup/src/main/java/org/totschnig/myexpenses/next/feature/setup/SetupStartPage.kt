@@ -26,9 +26,6 @@ internal fun SetupStartPage(
     onSkipAll: () -> Unit,
     onBack: () -> Unit
 ) {
-    val hasStarted = overview?.steps?.any {
-        it.state == StepState.DONE || it.state == StepState.SKIPPED
-    }
     IntroColumn(onBack) {
         IntroPage(
             title = stringResource(R.string.next_setup_title),
@@ -47,7 +44,11 @@ internal fun SetupStartPage(
         }
         IntroBottomBar(
             nextLabel = stringResource(
-                if (hasStarted == true) R.string.next_setup_go_on else R.string.next_setup_start
+                if (overview?.hasStarted == true) {
+                    R.string.next_setup_go_on
+                } else {
+                    R.string.next_setup_start
+                }
             ),
             onNext = onStart,
             nextEnabled = overview != null,
