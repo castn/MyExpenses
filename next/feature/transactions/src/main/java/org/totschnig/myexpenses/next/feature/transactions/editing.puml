@@ -7,7 +7,7 @@ skinparam shadowing false
 skinparam defaultFontName sans-serif
 top to bottom direction
 
-database "Database\n(transactions, payees, tags)" as db
+database "Database\n(transactions, templates, payees, tags)" as db
 
 package "ui_next (shell)" {
   [MainActivity\nplus button] as main
@@ -15,6 +15,8 @@ package "ui_next (shell)" {
   [TransactionEditorActivity] as activity
   [widgets, shortcuts,\nscreens of :myExpenses] as entries
   [NewTransactionForReceipt] as receipt
+  [TemplatesActivity\nNextTemplateScreens] as templatesActivity
+  [RepositoryTemplateStore] as templateStoreImpl
   [RepositoryTransactionStore] as store
   [AnalysisCategorySuggestions] as suggestionsImpl
   [TagsFeature.TagField] as tagField
@@ -22,6 +24,8 @@ package "ui_next (shell)" {
 
 package "feature.transactions" {
   [TransactionEditorFlow] as flow
+  [TemplatesFlow] as templatesFlow
+  [TemplatesViewModel] as templatesVm
   [TransactionForm] as form
   [TransactionEditViewModel] as vm
 }
@@ -29,6 +33,8 @@ package "feature.transactions" {
 package "data.transactions" {
   [TransactionDraft\nEditValues] as draft
   interface TransactionStore
+  interface TemplateStore
+  [Templates\nTemplateValues] as templateRules
   interface CategorySuggestions
 }
 
@@ -39,6 +45,16 @@ package "data.categories" {
 main --> activity : newTransactionIntent
 entries --> activity : TransactionEditorEntry
 receipt --> activity : newTransactionIntent
+templatesActivity --> templatesFlow
+templatesFlow --> activity : fromTemplate
+templatesFlow --> form
+templatesFlow --> templatesVm
+templatesFlow --> vm : template draft
+templatesVm --> TemplateStore
+vm --> TemplateStore
+vm --> templateRules
+templateStoreImpl ..|> TemplateStore
+templateStoreImpl --> db
 activity --> flow
 flow --> form
 sheet --> form

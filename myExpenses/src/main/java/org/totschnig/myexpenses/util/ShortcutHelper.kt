@@ -2,6 +2,8 @@ package org.totschnig.myexpenses.util
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
@@ -48,6 +50,21 @@ object ShortcutHelper {
                 putExtra(EXTRA_START_FROM_WIDGET, true)
                 putExtra(EXTRA_START_FROM_WIDGET_DATA_ENTRY, true)
             }
+
+    /** Lets the pinned shortcut of template [templateId], if there is one, do [templateAction] */
+    fun updatePinnedTemplateShortcut(context: Context, templateId: Long, templateAction: Action) {
+        val id = idTemplate(templateId)
+        val isPinned = ShortcutManagerCompat.getShortcuts(context, ShortcutManagerCompat.FLAG_MATCH_PINNED)
+            .any { it.id == id }
+        if (!isPinned) return
+        context.getSystemService(ShortcutManager::class.java).updateShortcuts(
+            listOf(
+                ShortcutInfo.Builder(context, id)
+                    .setIntent(buildTemplateIntent(context, templateId, templateAction))
+                    .build()
+            )
+        )
+    }
 
     fun buildTemplateShortcut(context: Context, templateInfo: TemplateInfo): ShortcutInfoCompat {
         val title = templateInfo.title.takeIf { it.isNotEmpty() } ?: context.getString(R.string.template)

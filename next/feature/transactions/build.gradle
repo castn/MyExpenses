@@ -1,5 +1,6 @@
 plugins {
     id 'next.feature'
+    alias libs.plugins.kotlin.serialization
 }
 
 android {
@@ -7,7 +8,7 @@ android {
 }
 
 // The form of a transaction: a new expense or income on a screen of its own, and changing one in
-// its details.
+// its details; the templates, entered in the same form.
 dependencies {
     implementation project(':next:data:transactions')
 }

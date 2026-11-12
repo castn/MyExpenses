@@ -1031,7 +1031,7 @@ abstract class BaseMyExpenses<T : MyExpensesViewModel> : LaunchActivity(),
         }
     }
 
-    protected fun createTemplate(transaction: Transaction2) {
+    protected open fun createTemplate(transaction: Transaction2) {
         lifecycleScope.launch {
             if (checkSealed(listOf(transaction.id))) {
                 if (transaction.isSplit && !prefHandler.getBoolean(

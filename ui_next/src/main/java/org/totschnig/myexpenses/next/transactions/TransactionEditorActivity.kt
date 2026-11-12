@@ -1,5 +1,6 @@
 package org.totschnig.myexpenses.next.transactions
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -23,13 +24,14 @@ import org.totschnig.myexpenses.provider.KEY_ACCOUNTID
 import org.totschnig.myexpenses.provider.KEY_AMOUNT
 import org.totschnig.myexpenses.provider.KEY_CURRENCY
 import org.totschnig.myexpenses.provider.KEY_ROWID
+import org.totschnig.myexpenses.provider.KEY_TEMPLATEID
 
 /**
  * The screen for a new expense or income and for changing one outside of its details, see
- * [TransactionEditorFlow]. An activity of its own, so that the main screen, the receipts, widgets,
- * launcher shortcuts and the screens of :myExpenses open it alike; they build its intent with
- * [newTransactionIntent], see [TransactionEditorEntry]. Its result is OK with [KEY_ROWID] of the
- * transaction saved last, if one was saved.
+ * [TransactionEditorFlow]. An activity of its own, so that the main screen, the receipts, the
+ * templates, widgets, launcher shortcuts and the screens of :myExpenses open it alike; they build its
+ * intent with [newTransactionIntent], see [TransactionEditorEntry], the templates with [fromTemplate].
+ * Its result is OK with [KEY_ROWID] of the transaction saved last, if one was saved.
  */
 class TransactionEditorActivity : ProtectedFragmentActivity() {
 
@@ -53,11 +55,19 @@ class TransactionEditorActivity : ProtectedFragmentActivity() {
             }
         }
     }
+
+    companion object {
+        /** For a new transaction filled with template [templateId] */
+        fun fromTemplate(context: Context, templateId: Long): Intent =
+            Intent(context, TransactionEditorActivity::class.java)
+                .putExtra(KEY_TEMPLATEID, templateId)
+    }
 }
 
 /**
- * What a new transaction starts with, from the extras described at [TransactionEditorEntry]. A
- * scanned receipt gives amount, day and payee; its amount is read with two decimals.
+ * What a new transaction starts with, from the extras described at [TransactionEditorEntry] and
+ * [KEY_TEMPLATEID] of [TransactionEditorActivity.fromTemplate]. A scanned receipt gives amount, day
+ * and payee; its amount is read with two decimals.
  */
 private fun Intent.toNewTransaction(): NewTransaction {
     val ocr = IntentCompat.getParcelableExtra(this, KEY_OCR_RESULT, OcrResultFlat::class.java)
@@ -73,6 +83,7 @@ private fun Intent.toNewTransaction(): NewTransaction {
                 it != Long.MIN_VALUE
             }?.let(LocalDate::ofEpochDay)
                 ?: ocr?.date?.first,
-        payee = getStringExtra(EXTRA_PAYEE_NAME) ?: ocr?.payee?.name
+        payee = getStringExtra(EXTRA_PAYEE_NAME) ?: ocr?.payee?.name,
+        templateId = getLongExtra(KEY_TEMPLATEID, 0L).takeIf { it > 0L }
     )
 }

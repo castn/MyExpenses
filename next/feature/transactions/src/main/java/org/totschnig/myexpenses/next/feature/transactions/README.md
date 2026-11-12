@@ -34,6 +34,26 @@ payment method, note) and offers to undo them. What is typed is a `TransactionDr
 yet survives. `toValues` in `:next:data:transactions` turns it into `EditValues`; these rules are
 pure and tested there.
 
+## Templates
+
+A template holds what is entered often, e.g. the rent paid in cash. It is entered in the same
+`TransactionForm`: the draft carries `TemplateFields` (title, "save without asking") and has no
+day. `TemplatesFlow` in `TemplatesActivity` of the shell lists them, the ones used most first, and
+holds their form on its own back stack. A tap saves a transaction dated today at once, if the
+template says so, or opens `TransactionEditorActivity` filled with it; the other way is in the
+actions of the row. The form of a new transaction offers the templates used most as chips; a chip
+fills the draft but keeps its day, and saving counts as a use of the template.
+
+- Templates of the classic form that are a split or a transfer are listed, but can only be saved
+  at once (`instantiateTemplate` of the app) and deleted.
+- "Create template" in the menu of a transaction opens the form of a new template with its
+  values; a split or a transfer is saved as a template at once.
+- The template widget and pinned shortcuts of :myExpenses open these screens through
+  `TemplateScreens`, which `:app` hands in. Saving at once from them stays in :myExpenses.
+
+The rules (`toDraft`, `withTemplate`, `toTemplateValues`, `forChips`) are pure and tested in
+`:next:data:transactions`; `TemplateStore` is implemented by `RepositoryTemplateStore` of the shell.
+
 ## What comes from elsewhere
 
 - `TransactionStore`, by `RepositoryTransactionStore` of the shell: loads and saves on the

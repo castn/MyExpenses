@@ -389,15 +389,6 @@
         <error line="612" column="88" source="standard:trailing-comma-on-call-site" />
         <error line="614" column="6" source="standard:trailing-comma-on-call-site" />
     </file>
-    <file name="src/main/java/org/totschnig/myexpenses/next/NextRouter.kt">
-        <error line="30" column="74" source="standard:argument-list-wrapping" />
-        <error line="30" column="81" source="standard:argument-list-wrapping" />
-        <error line="30" column="91" source="standard:argument-list-wrapping" />
-        <error line="30" column="101" source="standard:max-line-length" />
-        <error line="30" column="115" source="standard:argument-list-wrapping" />
-        <error line="30" column="116" source="standard:argument-list-wrapping" />
-        <error line="33" column="1" source="standard:blank-line-between-when-conditions" />
-    </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/NextTheme.kt">
         <error line="24" column="5" source="standard:function-signature" />
         <error line="25" column="5" source="standard:function-signature" />

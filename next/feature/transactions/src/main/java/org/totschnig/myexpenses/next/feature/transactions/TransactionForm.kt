@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AutoAwesome
+import androidx.compose.material.icons.outlined.ContentCopy
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -32,6 +33,7 @@ import org.totschnig.myexpenses.designsystem.HintRow
 import org.totschnig.myexpenses.designsystem.LabelChip
 import org.totschnig.myexpenses.designsystem.SingleChoiceDialog
 import org.totschnig.myexpenses.designsystem.Spacing
+import org.totschnig.myexpenses.designsystem.SwitchRow
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.ui.LabelIcons
 import org.totschnig.myexpenses.next.core.ui.categories.LocalCategoryPicker
@@ -50,8 +52,9 @@ typealias TagField = @Composable (tagIds: List<Long>, onChange: (List<Long>) -> 
 
 /**
  * All fields of a transaction, for a new one on its own screen and for changing one in its
- * details. A transaction from the bank import starts with a warning. Saving is left to the
- * screen around it.
+ * details. A transaction from the bank import starts with a warning. A new transaction offers the
+ * templates used most as chips. For a template it has a title and whether it is saved without
+ * asking instead of a day. Saving is left to the screen around it.
  *
  * @param currencySymbol after the amount
  * @param tagField the tags, left out where the area of the tags is
@@ -85,10 +88,35 @@ fun TransactionForm(
                 isWarning = true
             )
         }
+        val template = draft.template
         Column(
             modifier = Modifier.padding(horizontal = Spacing.screen, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            if (draft.isNewTransaction && state.templates.isNotEmpty()) {
+                ChipRow(stringResource(R.string.next_template_chips)) {
+                    state.templates.forEach { summary ->
+                        ActionChip(
+                            text = summary.title,
+                            icon = Icons.Outlined.ContentCopy,
+                            onClick = { actions.applyTemplate(summary.id) }
+                        )
+                    }
+                }
+            }
+            if (template != null) {
+                FormTextField(
+                    label = stringResource(R.string.next_template_title),
+                    value = template.title,
+                    onValueChange = { onChange(draft.copy(template = template.copy(title = it))) },
+                    isError = state.isTitleMissing,
+                    supportingText = if (state.isTitleMissing) {
+                        stringResource(R.string.next_template_title_missing)
+                    } else {
+                        null
+                    }
+                )
+            }
             if (state.accounts.size > 1) {
                 FormPickerField(
                     label = stringResource(R.string.next_transaction_account),
@@ -118,6 +146,8 @@ fun TransactionForm(
 
                     !isAmountEditable -> stringResource(R.string.next_transaction_amount_foreign)
 
+                    template != null -> stringResource(R.string.next_template_amount_empty)
+
                     else -> null
                 },
                 trailing = { Text(currencySymbol) }
@@ -143,11 +173,13 @@ fun TransactionForm(
                 }
             }
             tagField?.invoke(draft.tagIds) { onChange(draft.copy(tagIds = it)) }
-            FormPickerField(
-                label = stringResource(R.string.next_transaction_date),
-                value = dateFormatter.format(draft.day),
-                onClick = { showDate = true }
-            )
+            if (template == null) {
+                FormPickerField(
+                    label = stringResource(R.string.next_transaction_date),
+                    value = dateFormatter.format(draft.day),
+                    onClick = { showDate = true }
+                )
+            }
             if (state.methods.isNotEmpty() || draft.methodId != null) {
                 FormPickerField(
                     label = stringResource(R.string.next_transaction_method),
@@ -161,6 +193,17 @@ fun TransactionForm(
                 value = draft.comment,
                 onValueChange = { onChange(draft.copy(comment = it)) },
                 singleLine = false
+            )
+        }
+        if (template != null) {
+            SwitchRow(
+                label = stringResource(R.string.next_template_save_directly),
+                checked = template.saveDirectly,
+                onCheckedChange = {
+                    onChange(draft.copy(template = template.copy(saveDirectly = it)))
+                },
+                supportingText = stringResource(R.string.next_template_save_directly_hint),
+                isFirst = true
             )
         }
     }

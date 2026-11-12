@@ -26,6 +26,7 @@ import org.totschnig.myexpenses.next.data.transactions.MethodOption
 import org.totschnig.myexpenses.next.data.transactions.NewTransaction
 import org.totschnig.myexpenses.next.data.transactions.SplitPart
 import org.totschnig.myexpenses.next.data.transactions.SuggestedCategory
+import org.totschnig.myexpenses.next.data.transactions.TemplateStore
 import org.totschnig.myexpenses.next.data.transactions.TransactionStore
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -35,7 +36,7 @@ class TransactionEditViewModelTest {
 
     private val now = LocalDate.of(2026, 3, 10).atTime(9, 15).toInstant(ZoneOffset.UTC)
 
-    private class FakeStore(var stored: EditableTransaction? = null) : TransactionStore {
+    internal class FakeStore(var stored: EditableTransaction? = null) : TransactionStore {
         val saved = mutableListOf<Pair<EditValues, EditValues>>()
         val created = mutableListOf<EditValues>()
         val methodsAsked = mutableListOf<Pair<Long, Boolean>>()
@@ -92,8 +93,9 @@ class TransactionEditViewModelTest {
     private fun viewModel(
         store: TransactionStore,
         savedState: SavedStateHandle = SavedStateHandle(),
-        suggestions: CategorySuggestions = CategorySuggestions.None
-    ) = TransactionEditViewModel(store, suggestions, savedState, ',', {
+        suggestions: CategorySuggestions = CategorySuggestions.None,
+        templates: TemplateStore = FakeTemplateStore()
+    ) = TransactionEditViewModel(store, suggestions, templates, savedState, ',', {
         ZoneOffset.UTC
     }, { now }, dispatcher)
 
@@ -450,7 +452,7 @@ class TransactionEditViewModelTest {
     }
 }
 
-private fun transaction(id: Long = 1) = EditableTransaction(
+internal fun transaction(id: Long = 1) = EditableTransaction(
     id = id,
     values = EditValues(
         accountId = 1,

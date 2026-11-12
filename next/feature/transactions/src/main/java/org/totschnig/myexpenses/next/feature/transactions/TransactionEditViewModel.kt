@@ -12,6 +12,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,13 +25,20 @@ import org.totschnig.myexpenses.next.data.transactions.MethodOption
 import org.totschnig.myexpenses.next.data.transactions.NewTransaction
 import org.totschnig.myexpenses.next.data.transactions.SplitPart
 import org.totschnig.myexpenses.next.data.transactions.SuggestedCategory
+import org.totschnig.myexpenses.next.data.transactions.TemplateFields
+import org.totschnig.myexpenses.next.data.transactions.TemplateStore
+import org.totschnig.myexpenses.next.data.transactions.TemplateSummary
 import org.totschnig.myexpenses.next.data.transactions.TransactionDraft
 import org.totschnig.myexpenses.next.data.transactions.TransactionStore
 import org.totschnig.myexpenses.next.data.transactions.Undo
+import org.totschnig.myexpenses.next.data.transactions.forChips
 import org.totschnig.myexpenses.next.data.transactions.next
 import org.totschnig.myexpenses.next.data.transactions.toDraft
+import org.totschnig.myexpenses.next.data.transactions.toTemplateDraft
+import org.totschnig.myexpenses.next.data.transactions.toTemplateValues
 import org.totschnig.myexpenses.next.data.transactions.toValues
 import org.totschnig.myexpenses.next.data.transactions.withDay
+import org.totschnig.myexpenses.next.data.transactions.withTemplate
 
 /**
  * What the form and the details of a transaction show for entering or changing it
@@ -53,6 +61,10 @@ import org.totschnig.myexpenses.next.data.transactions.withDay
  * @param saved a transaction saved from the form, new or changed, until
  * [TransactionFormActions.savedShown]
  * @param splitParts the parts of an opened split, which is only shown
+ * @param templates offered as chips in the form of a new transaction, the ones used most
+ * @param isTitleMissing the draft of a template has no title, it is not saved then
+ * @param savedTemplate a template that was saved, until [TemplateEditActions.templateSavedShown]
+ * @param isTemplateGone the template to change was deleted meanwhile, or cannot be changed here
  */
 data class TransactionEditState(
     val transaction: EditableTransaction? = null,
@@ -66,7 +78,11 @@ data class TransactionEditState(
     val isSaveFailed: Boolean = false,
     val undo: Undo? = null,
     val saved: Long? = null,
-    val splitParts: List<SplitPart> = emptyList()
+    val splitParts: List<SplitPart> = emptyList(),
+    val templates: List<TemplateSummary> = emptyList(),
+    val isTitleMissing: Boolean = false,
+    val savedTemplate: Long? = null,
+    val isTemplateGone: Boolean = false
 ) {
     /** The account of the draft, e.g. for the symbol of its currency */
     val draftAccount: AccountOption?
@@ -91,6 +107,9 @@ interface TransactionFormActions {
     fun edit(transactionId: Long)
 
     fun changeDraft(draft: TransactionDraft)
+
+    /** Fills the draft of a new transaction with template [id], see [withTemplate] */
+    fun applyTemplate(id: Long)
 
     /** Takes the [TransactionEditState.suggestion] as the category of the draft */
     fun acceptSuggestion()
@@ -125,22 +144,42 @@ interface TransactionEditActions : TransactionFormActions {
     fun undoShown()
 }
 
+/** What the user can do to enter a template in the form, saved with [saveDraft] */
+interface TemplateEditActions : TransactionFormActions {
+    /**
+     * The form for template [templateId], or a new one if null, unless a template is typed
+     * already, e.g. after Android ended the process
+     */
+    fun startTemplate(templateId: Long?)
+
+    /**
+     * The form for a new template with the values of transaction [transactionId]. A split or a
+     * transfer, which the form cannot show, is saved as a template at once.
+     */
+    fun startTemplateFrom(transactionId: Long)
+
+    fun templateSavedShown()
+}
+
 /**
  * Enters a new expense or income and changes a transaction from its details, see
- * [TransactionEditActions]. The draft of the form is kept in [savedState], so that it survives
- * when Android ends the process. A category is suggested from the payee and the note while the
- * draft has none, see [CategorySuggestions]; a certain suggestion is taken right away.
+ * [TransactionEditActions], and enters templates in the same form, see [TemplateEditActions]. The
+ * draft of the form is kept in [savedState], so that it survives when Android ends the process. A
+ * category is suggested from the payee and the note while the draft has none, see
+ * [CategorySuggestions]; a certain suggestion is taken right away.
  */
 class TransactionEditViewModel(
     private val store: TransactionStore,
     private val suggestions: CategorySuggestions,
+    private val templates: TemplateStore,
     private val savedState: SavedStateHandle,
     private val decimalSeparator: Char,
     private val zone: () -> ZoneId = { ZoneId.systemDefault() },
     private val now: () -> Instant = Instant::now,
     private val io: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel(),
-    TransactionEditActions {
+    TransactionEditActions,
+    TemplateEditActions {
 
     private val _state = MutableStateFlow(TransactionEditState(draft = savedState[KEY_DRAFT]))
     val state: StateFlow<TransactionEditState> = _state.asStateFlow()
@@ -154,12 +193,13 @@ class TransactionEditViewModel(
     private var editOnLoad = false
 
     init {
-        // A new transaction typed before Android ended the process
+        // A new transaction or a template typed before Android ended the process
         _state.value.draft?.takeIf { it.isNew }?.let { draft ->
             viewModelScope.launch {
                 loadAccounts(null)
                 loadMethods(draft)
                 suggest(draft)
+                if (draft.isNewTransaction) loadTemplateChips()
             }
         }
     }
@@ -229,40 +269,79 @@ class TransactionEditViewModel(
     }
 
     override fun startNew(prefill: NewTransaction) {
-        if (_state.value.draft?.isNew == true) return
+        if (_state.value.draft?.isNewTransaction == true) return
         viewModelScope.launch {
-            // The account asked for, else the one used last, of the currency asked for if any
-            val account = loadAccounts(null).let { accounts ->
-                accounts.find { it.id == prefill.accountId }
-                    ?: accounts.firstOrNull { it.currency == prefill.currency }
-                    ?: accounts.firstOrNull()
+            val draft = newDraft(prefill) ?: return@launch
+            setDraft(draft)
+            loadMethods(draft)
+            suggest(draft)
+            prefill.templateId?.let { fillFromTemplate(it) }
+            loadTemplateChips()
+        }
+    }
+
+    override fun applyTemplate(id: Long) {
+        viewModelScope.launch { fillFromTemplate(id) }
+    }
+
+    override fun startTemplate(templateId: Long?) {
+        if (_state.value.draft?.template?.id == (templateId ?: TransactionDraft.NEW)) return
+        _state.update {
+            it.copy(isTemplateGone = false, isTitleMissing = false, isAmountInvalid = false)
+        }
+        viewModelScope.launch {
+            val draft = if (templateId == null) {
+                newDraft(NewTransaction())?.copy(
+                    template = TemplateFields(TransactionDraft.NEW, "", saveDirectly = false)
+                ) ?: return@launch
+            } else {
+                loadAccounts(null)
+                val template = withContext(io) { templates.load(templateId) }
+                if (template == null) {
+                    _state.update { it.copy(isTemplateGone = true) }
+                    return@launch
+                }
+                template.toDraft(decimalSeparator, today())
             }
-            if (account == null) {
-                _state.update { it.copy(hasNoAccount = true) }
-                return@launch
-            }
-            val tagIds = withContext(io) { store.defaultTags(account.id) }
-            val draft = prefill.toDraft(
-                account.id,
-                tagIds,
-                now().atZone(zone()).toLocalDate(),
-                decimalSeparator
-            )
             setDraft(draft)
             loadMethods(draft)
             suggest(draft)
         }
     }
 
+    override fun startTemplateFrom(transactionId: Long) {
+        if (_state.value.draft?.template?.isNew == true) return
+        viewModelScope.launch {
+            loadAccounts(null)
+            val transaction = withContext(io) { store.load(transactionId) }
+            if (transaction == null) {
+                // A split or a transfer is kept as it is
+                val created =
+                    withContext(io) { runCatching { templates.createFrom(transactionId) } }
+                _state.update {
+                    it.copy(savedTemplate = created.getOrNull(), isSaveFailed = created.isFailure)
+                }
+                return@launch
+            }
+            val draft = transaction.toTemplateDraft(decimalSeparator, today())
+            setDraft(draft)
+            loadMethods(draft)
+        }
+    }
+
+    override fun templateSavedShown() = _state.update { it.copy(savedTemplate = null) }
+
     override fun changeDraft(draft: TransactionDraft) {
         val previous = _state.value.draft
         setDraft(draft)
-        _state.update { it.copy(isAmountInvalid = false, isSaveFailed = false) }
+        _state.update {
+            it.copy(isAmountInvalid = false, isSaveFailed = false, isTitleMissing = false)
+        }
         if (previous == null) return
         if (draft.isIncome != previous.isIncome || draft.accountId != previous.accountId) {
             viewModelScope.launch { loadMethods(draft) }
         }
-        if (draft.isNew && draft.accountId != previous.accountId) {
+        if (draft.isNewTransaction && draft.accountId != previous.accountId) {
             viewModelScope.launch { followAccountTags(previous.accountId, draft.accountId) }
         }
         if (draft.payee != previous.payee || draft.comment != previous.comment ||
@@ -290,6 +369,10 @@ class TransactionEditViewModel(
     override fun saveDraft(andNew: Boolean) {
         val draft = _state.value.draft ?: return
         if (isSaving) return
+        if (draft.template != null) {
+            saveTemplate(draft)
+            return
+        }
         if (draft.isNew) {
             create(draft, andNew)
             return
@@ -312,7 +395,14 @@ class TransactionEditViewModel(
 
     override fun cancelEditing() {
         setDraft(null)
-        _state.update { it.copy(suggestion = null, isAmountInvalid = false, isSaveFailed = false) }
+        _state.update {
+            it.copy(
+                suggestion = null,
+                isAmountInvalid = false,
+                isSaveFailed = false,
+                isTitleMissing = false
+            )
+        }
         _state.value.transaction?.let { transaction ->
             viewModelScope.launch {
                 loadMethods(
@@ -348,6 +438,9 @@ class TransactionEditViewModel(
                 _state.update { it.copy(isSaveFailed = true) }
                 return@launch
             }
+            draft.fromTemplateId?.let { templateId ->
+                withContext(io) { runCatching { templates.used(templateId) } }
+            }
             if (andNew) {
                 val next = draft.next(withContext(io) { store.defaultTags(account.id) })
                 setDraft(next)
@@ -358,6 +451,78 @@ class TransactionEditViewModel(
             }
         }
     }
+
+    /** The draft for [prefill] in its account or the one used last, null if there is no account */
+    private suspend fun newDraft(prefill: NewTransaction): TransactionDraft? {
+        // The account asked for, else the one used last, of the currency asked for if any
+        val account = loadAccounts(null).let { accounts ->
+            accounts.find { it.id == prefill.accountId }
+                ?: accounts.firstOrNull { it.currency == prefill.currency }
+                ?: accounts.firstOrNull()
+        }
+        if (account == null) {
+            _state.update { it.copy(hasNoAccount = true) }
+            return null
+        }
+        val tagIds = withContext(io) { store.defaultTags(account.id) }
+        return prefill.toDraft(account.id, tagIds, today(), decimalSeparator)
+    }
+
+    private suspend fun fillFromTemplate(id: Long) {
+        val template = withContext(io) { templates.load(id) } ?: return
+        val draft = _state.value.draft?.takeIf { it.isNewTransaction } ?: return
+        val accounts = _state.value.accounts
+        val filled = draft.withTemplate(template, decimalSeparator) { accountId ->
+            accounts.any { it.id == accountId }
+        }
+        setDraft(filled)
+        _state.update { it.copy(suggestion = null, isAmountInvalid = false) }
+        loadMethods(filled)
+        suggest(filled)
+    }
+
+    private suspend fun loadTemplateChips() {
+        val chips = withContext(io) { templates.templates().first() }.forChips()
+        _state.update { it.copy(templates = chips) }
+    }
+
+    private fun saveTemplate(draft: TransactionDraft) {
+        val fields = draft.template ?: return
+        if (fields.title.isBlank()) {
+            _state.update { it.copy(isTitleMissing = true) }
+            return
+        }
+        val fractionDigits = _state.value.accounts.find { it.id == draft.accountId }?.fractionDigits
+            ?: return
+        val values = draft.toTemplateValues(fractionDigits)
+        if (values == null) {
+            _state.update { it.copy(isAmountInvalid = true) }
+            return
+        }
+        isSaving = true
+        viewModelScope.launch {
+            val saved = withContext(io) {
+                runCatching {
+                    if (fields.isNew) {
+                        templates.create(values)
+                    } else {
+                        templates.save(fields.id, values)
+                        fields.id
+                    }
+                }
+            }
+            isSaving = false
+            saved.fold(
+                onSuccess = { id ->
+                    setDraft(null)
+                    _state.update { it.copy(savedTemplate = id, suggestion = null) }
+                },
+                onFailure = { _state.update { it.copy(isSaveFailed = true) } }
+            )
+        }
+    }
+
+    private fun today() = now().atZone(zone()).toLocalDate()
 
     private fun quickChange(field: ChangedField, change: (EditValues) -> EditValues) {
         val transaction = _state.value.transaction ?: return

@@ -22,6 +22,10 @@
             android:name="org.totschnig.myexpenses.next.transactions.TransactionEditorActivity"
             android:parentActivityName="org.totschnig.myexpenses.next.MainActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="org.totschnig.myexpenses.next.transactions.TemplatesActivity"
+            android:parentActivityName="org.totschnig.myexpenses.next.MainActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- Up from the editors of :myExpenses leads to the main screen -->
         <activity

@@ -80,6 +80,7 @@ import org.totschnig.myexpenses.next.settings.NextSettings
 import org.totschnig.myexpenses.next.settings.SettingsGroup
 import org.totschnig.myexpenses.next.transactions.AppFixedTransactions
 import org.totschnig.myexpenses.next.transactions.FixedTransactionsViewModel
+import org.totschnig.myexpenses.next.transactions.TemplatesActivity
 import org.totschnig.myexpenses.next.transactions.TransactionActions
 import org.totschnig.myexpenses.next.transactions.TransactionEditing
 import org.totschnig.myexpenses.next.transactions.toShown
@@ -721,6 +722,11 @@ class MainActivity : BaseMyExpenses<MainViewModel>() {
         ) {
             super.contribFeatureCalled(feature, tag)
         }
+    }
+
+    /** A new template from [transaction] in the form of the templates, see [TemplatesActivity] */
+    override fun createTemplate(transaction: Transaction2) {
+        startActivity(TemplatesActivity.fromTransaction(this, transaction.id))
     }
 
     override fun dispatchCommand(command: Int, tag: Any?): Boolean =
