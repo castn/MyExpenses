@@ -884,6 +884,29 @@ private fun GuideShowcase() {
                     onClick = {}
                 )
             }
+            DecisionCard(
+                title = "Decision card",
+                value = "1.240 €",
+                supportingText = "12 transactions since March",
+                leading = { PayeeTile("Decision card", logo = null) {} },
+                modifier = Modifier.padding(horizontal = Spacing.screen),
+                content = {
+                    QuotedText(
+                        "Quoted text, e.g. the purpose from the bank: SEPA-Lastschrift Ihr " +
+                            "Einkauf bei Beispiel GmbH, Mandatsreferenz 4711, Gläubiger-ID " +
+                            "DE98ZZZ09999999999, End-to-End-Referenz 2026-11-12-0815",
+                        expandLabel = "More",
+                        collapseLabel = "Less"
+                    )
+                    ChipRow("Suggestion") {
+                        LabelChip(text = "Groceries", placeholder = "Category", onClick = {})
+                    }
+                },
+                actions = {
+                    TextButton(onClick = {}) { Text("Don't know") }
+                    Button(onClick = {}) { Text("Choose") }
+                }
+            )
         }
     }
 }
