@@ -1,5 +1,6 @@
 package org.totschnig.myexpenses.next.data.categories
 
+import java.util.UUID
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -87,6 +88,28 @@ class CategoryRepository(
     /** The user knows no category for [counterpart] ("Weiß ich nicht"), see [CategoryDecisions.unclear] */
     suspend fun markUnclear(counterpart: Counterpart) {
         store.update { it.withUnclear(counterpart) }
+    }
+
+    /**
+     * The user chose [categoryId] for [counterpart]: those of [transactionIds] without category get
+     * it, and with [always] the transactions of the counterpart get it from now on ("Immer so
+     * machen"), if a rule can name it, see [CategoryRule]. The counterpart is no longer unclear.
+     */
+    suspend fun categorize(
+        counterpart: Counterpart,
+        transactionIds: List<Long>,
+        categoryId: Long,
+        always: Boolean
+    ) {
+        writing.setMissingCategory(transactionIds, categoryId)
+        val canHaveRule = counterpart.payeeId != null || counterpart.merchant != null
+        store.update { decisions ->
+            if (always && canHaveRule) {
+                decisions.withRule(counterpart, categoryId) { UUID.randomUUID().toString() }
+            } else {
+                decisions.withoutUnclear(counterpart)
+            }
+        }
     }
 
     /** Takes back [markUnclear] */

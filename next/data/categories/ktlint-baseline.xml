@@ -45,40 +45,40 @@
         <error line="127" column="117" source="standard:function-literal" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/data/categories/CategoryRepository.kt">
-        <error line="35" column="26" source="standard:trailing-comma-on-declaration-site" />
-        <error line="39" column="81" source="standard:function-literal" />
-        <error line="39" column="82" source="standard:wrapping" />
-        <error line="39" column="97" source="standard:function-literal" />
-        <error line="39" column="100" source="standard:max-line-length" />
-        <error line="48" column="43" source="standard:trailing-comma-on-declaration-site" />
-        <error line="54" column="27" source="standard:argument-list-wrapping" />
-        <error line="54" column="35" source="standard:argument-list-wrapping" />
-        <error line="54" column="42" source="standard:argument-list-wrapping" />
-        <error line="54" column="52" source="standard:argument-list-wrapping" />
-        <error line="54" column="65" source="standard:argument-list-wrapping" />
-        <error line="54" column="79" source="standard:function-literal" />
-        <error line="54" column="97" source="standard:binary-expression-wrapping" />
-        <error line="54" column="101" source="standard:max-line-length" />
-        <error line="54" column="103" source="standard:function-literal" />
-        <error line="54" column="104" source="standard:argument-list-wrapping" />
-        <error line="61" column="33" source="standard:multiline-if-else" />
-        <error line="61" column="41" source="standard:argument-list-wrapping" />
-        <error line="61" column="49" source="standard:argument-list-wrapping" />
-        <error line="61" column="61" source="standard:argument-list-wrapping" />
-        <error line="61" column="70" source="standard:argument-list-wrapping" />
-        <error line="61" column="74" source="standard:function-literal" />
-        <error line="61" column="82" source="standard:function-literal" />
-        <error line="61" column="94" source="standard:function-literal" />
-        <error line="61" column="101" source="standard:max-line-length" />
-        <error line="61" column="104" source="standard:function-literal" />
-        <error line="62" column="57" source="standard:argument-list-wrapping" />
-        <error line="62" column="73" source="standard:argument-list-wrapping" />
-        <error line="62" column="81" source="standard:argument-list-wrapping" />
-        <error line="62" column="98" source="standard:argument-list-wrapping" />
+        <error line="36" column="26" source="standard:trailing-comma-on-declaration-site" />
+        <error line="40" column="81" source="standard:function-literal" />
+        <error line="40" column="82" source="standard:wrapping" />
+        <error line="40" column="97" source="standard:function-literal" />
+        <error line="40" column="100" source="standard:max-line-length" />
+        <error line="49" column="43" source="standard:trailing-comma-on-declaration-site" />
+        <error line="55" column="27" source="standard:argument-list-wrapping" />
+        <error line="55" column="35" source="standard:argument-list-wrapping" />
+        <error line="55" column="42" source="standard:argument-list-wrapping" />
+        <error line="55" column="52" source="standard:argument-list-wrapping" />
+        <error line="55" column="65" source="standard:argument-list-wrapping" />
+        <error line="55" column="79" source="standard:function-literal" />
+        <error line="55" column="97" source="standard:binary-expression-wrapping" />
+        <error line="55" column="101" source="standard:max-line-length" />
+        <error line="55" column="103" source="standard:function-literal" />
+        <error line="55" column="104" source="standard:argument-list-wrapping" />
+        <error line="62" column="33" source="standard:multiline-if-else" />
+        <error line="62" column="41" source="standard:argument-list-wrapping" />
+        <error line="62" column="49" source="standard:argument-list-wrapping" />
+        <error line="62" column="61" source="standard:argument-list-wrapping" />
+        <error line="62" column="70" source="standard:argument-list-wrapping" />
+        <error line="62" column="74" source="standard:function-literal" />
+        <error line="62" column="82" source="standard:function-literal" />
+        <error line="62" column="94" source="standard:function-literal" />
         <error line="62" column="101" source="standard:max-line-length" />
-        <error line="62" column="108" source="standard:argument-list-wrapping" />
-        <error line="62" column="109" source="standard:argument-list-wrapping" />
-        <error line="71" column="24" source="standard:multiline-if-else" />
+        <error line="62" column="104" source="standard:function-literal" />
+        <error line="63" column="57" source="standard:argument-list-wrapping" />
+        <error line="63" column="73" source="standard:argument-list-wrapping" />
+        <error line="63" column="81" source="standard:argument-list-wrapping" />
+        <error line="63" column="98" source="standard:argument-list-wrapping" />
+        <error line="63" column="101" source="standard:max-line-length" />
+        <error line="63" column="108" source="standard:argument-list-wrapping" />
+        <error line="63" column="109" source="standard:argument-list-wrapping" />
+        <error line="72" column="24" source="standard:multiline-if-else" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/data/categories/CategoryStore.kt">
         <error line="20" column="65" source="standard:function-literal" />

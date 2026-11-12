@@ -75,6 +75,27 @@ class CategoryRepositoryTest {
     }
 
     @Test
+    fun categorizesACounterpartWithOrWithoutRule() = withTestDataStore { dataStore ->
+        runTest {
+            val store = CategoryStore(dataStore)
+            val writing = FakeWriting()
+            val repository = CategoryRepository(FakeLedgerSource(), store, writing, backgroundScope)
+            val rewe = Counterpart("p:5", "REWE", payeeId = 5)
+            repository.markUnclear(rewe)
+            repository.categorize(rewe, listOf(1, 2), 10, always = false)
+            assertEquals(listOf(listOf(1L, 2L) to 10L), writing.set)
+            assertEquals(CategoryDecisions(), store.decisions.first())
+            repository.categorize(rewe, listOf(3), 11, always = true)
+            val rule = store.decisions.first().rules.single { it.categoryId == 11L }
+            assertEquals(setOf(5L), rule.payeeIds)
+            // A payee without id cannot be named by a rule
+            val byName = Counterpart("n:kiosk", "Kiosk")
+            repository.categorize(byName, listOf(4), 12, always = true)
+            assertEquals(1, store.decisions.first().rules.size)
+        }
+    }
+
+    @Test
     fun suggestsForATransactionThatIsTyped() = withTestDataStore { dataStore ->
         runTest {
             val source = FakeLedgerSource(
