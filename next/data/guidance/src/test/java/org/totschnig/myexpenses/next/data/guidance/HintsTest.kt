@@ -31,6 +31,18 @@ class HintsTest {
     }
 
     @Test
+    fun noCategoryHintWhenTheUserKnowsNone() {
+        val unclear = purchase(categoryId = null, payee = "Bäckerei")
+        assertNull(hintAfterSave(unclear, hasReceipt = false, emptySet(), isUnclear = true))
+        // A receipt is still worth scanning
+        val atSupermarket = purchase(categoryId = null)
+        assertEquals(
+            HintTopic.RECEIPT,
+            hintAfterSave(atSupermarket, hasReceipt = false, emptySet(), isUnclear = true)
+        )
+    }
+
+    @Test
     fun noHintAfterSavingWhatNeedsNone() {
         assertNull(hintAfterSave(purchase(), hasReceipt = true, emptySet()))
         assertNull(hintAfterSave(purchase(payee = "Bäckerei"), hasReceipt = false, emptySet()))

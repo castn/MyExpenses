@@ -50,6 +50,17 @@ class DataReadinessTest {
         (1L..4).map { debit(it * 7, payee = "REWE") } + (1L..6).map { debit(100 + it * 30, payee = "REWE") }
 
     @Test
+    fun transactionsTheUserKnowsNoCategoryForAreNoGap() {
+        val unclear = (1L..5).map { debit(it, categoryId = null, categoryPath = null) }
+        val ledger = Ledger(wellDescribed() + unclear, OwnAccounts(emptySet(), emptyMap()))
+        val unclearIds = unclear.mapTo(HashSet()) { it.id }
+        val readiness = dataReadiness(ledger, ReceiptFacts.None, today, unclearIds)
+        assertEquals(25, readiness.debits)
+        assertTrue(readiness.uncategorized.isEmpty())
+        assertEquals(emptyList<DataGap>(), readiness.gaps)
+    }
+
+    @Test
     fun wellDescribedDataHasNoGaps() {
         val receipts = enoughReceipts()
         assertEquals(emptyList<DataGap>(), readiness(wellDescribed() + receipts, receipts).gaps)

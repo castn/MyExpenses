@@ -14,7 +14,7 @@ import java.time.LocalDate
  * The analyses keep their own thresholds; this only counts, and [gaps] tells what is missing.
  *
  * @param debits of the last [RECENT_MONTHS] months that can have a category
- * @param uncategorized ids of [debits] without category
+ * @param uncategorized ids of [debits] without category, except those the user knows none for
  * @param vague ids of [debits] in a catch-all category, e.g. "Sonstiges"
  * @param supermarketPurchases ids of [debits] at a supermarket chain
  * @param unscanned ids of [supermarketPurchases] without a scanned receipt
@@ -144,8 +144,15 @@ private fun LedgerTransaction.isCategorizableDebit() = amount < 0 && transferAcc
 
 /**
  * @param receipts the transactions with a scanned receipt are the keys
+ * @param unclear ids of transactions the user knows no category for, which are not counted as
+ * uncategorized
  */
-fun dataReadiness(ledger: Ledger, receipts: ReceiptFacts, today: LocalDate): DataReadiness {
+fun dataReadiness(
+    ledger: Ledger,
+    receipts: ReceiptFacts,
+    today: LocalDate,
+    unclear: Set<Long> = emptySet()
+): DataReadiness {
     val debits = ledger.transactions.filter { it.amount < 0 && !it.date.isAfter(today) }
     val recentStart = today.minusMonths(DataReadiness.RECENT_MONTHS)
     val recent = debits.filter { it.isCategorizableDebit() && it.date.isAfter(recentStart) }
@@ -155,7 +162,7 @@ fun dataReadiness(ledger: Ledger, receipts: ReceiptFacts, today: LocalDate): Dat
     val supermarket = recent.filter { supermarketOf(it.payeeName) != null }
     return DataReadiness(
         debits = recent.size,
-        uncategorized = recent.filter { it.categoryId == null }.map { it.id },
+        uncategorized = recent.filter { it.categoryId == null && it.id !in unclear }.map { it.id },
         vague = recent.filter { DataReadiness.isCatchAll(it.categoryPath) }.map { it.id },
         supermarketPurchases = supermarket.map { it.id },
         unscanned = supermarket.filter { it.id !in receipts.items }.map { it.id },

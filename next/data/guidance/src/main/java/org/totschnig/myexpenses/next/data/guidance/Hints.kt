@@ -26,18 +26,21 @@ enum class HintTopic {
  * @param hasReceipt a receipt is scanned for it
  * @param hidden topics closed by the user or shown often enough after saving
  * @param canScanReceipts whether receipts can be scanned at all, without no hint asks for one
+ * @param isUnclear the user knows no category for the counterpart of [transaction], none is asked for
  */
 fun hintAfterSave(
     transaction: LedgerTransaction,
     hasReceipt: Boolean,
     hidden: Set<HintTopic>,
     canScanReceipts: Boolean = true,
+    isUnclear: Boolean = false
 ): HintTopic? {
     val isPurchase = transaction.amount < 0 && transaction.transferAccountId == null &&
             transaction.targetAccountId == null && !transaction.isSplit && !transaction.isSealed
     if (!isPurchase) return null
     return when {
-        transaction.categoryId == null && HintTopic.CATEGORY !in hidden -> HintTopic.CATEGORY
+        transaction.categoryId == null && !isUnclear && HintTopic.CATEGORY !in hidden ->
+            HintTopic.CATEGORY
         canScanReceipts && isSupermarket(transaction.payeeName) && !hasReceipt && HintTopic.RECEIPT !in hidden ->
             HintTopic.RECEIPT
         else -> null

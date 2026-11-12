@@ -44,24 +44,16 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/feature/guidance/HintsViewModel.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="34" column="33" source="standard:trailing-comma-on-declaration-site" />
-        <error line="38" column="81" source="standard:argument-list-wrapping" />
-        <error line="38" column="97" source="standard:argument-list-wrapping" />
-        <error line="38" column="101" source="standard:argument-list-wrapping" />
-        <error line="38" column="101" source="standard:max-line-length" />
-        <error line="45" column="68" source="standard:function-literal" />
-        <error line="45" column="94" source="standard:function-literal" />
-        <error line="45" column="95" source="standard:wrapping" />
-        <error line="45" column="101" source="standard:max-line-length" />
-        <error line="45" column="110" source="standard:function-literal" />
-        <error line="45" column="112" source="standard:function-literal" />
-        <error line="64" column="25" source="standard:binary-expression-wrapping" />
-        <error line="64" column="39" source="standard:argument-list-wrapping" />
-        <error line="64" column="52" source="standard:argument-list-wrapping" />
-        <error line="64" column="64" source="standard:argument-list-wrapping" />
-        <error line="64" column="95" source="standard:argument-list-wrapping" />
-        <error line="64" column="101" source="standard:max-line-length" />
-        <error line="64" column="111" source="standard:argument-list-wrapping" />
+        <error line="42" column="81" source="standard:argument-list-wrapping" />
+        <error line="42" column="97" source="standard:argument-list-wrapping" />
+        <error line="42" column="101" source="standard:argument-list-wrapping" />
+        <error line="42" column="101" source="standard:max-line-length" />
+        <error line="49" column="68" source="standard:function-literal" />
+        <error line="49" column="94" source="standard:function-literal" />
+        <error line="49" column="95" source="standard:wrapping" />
+        <error line="49" column="101" source="standard:max-line-length" />
+        <error line="49" column="110" source="standard:function-literal" />
+        <error line="49" column="112" source="standard:function-literal" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/feature/guidance/PendingTipsSection.kt">
         <error line="3" column="1" source="standard:import-ordering" />

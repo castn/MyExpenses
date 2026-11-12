@@ -22,16 +22,6 @@
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/data/guidance/DataReadinessRepository.kt">
         <error line="3" column="1" source="standard:import-ordering" />
-        <error line="25" column="26" source="standard:trailing-comma-on-declaration-site" />
-        <error line="27" column="39" source="standard:parameter-list-wrapping" />
-        <error line="27" column="39" source="standard:class-signature" />
-        <error line="27" column="59" source="standard:parameter-list-wrapping" />
-        <error line="27" column="59" source="standard:class-signature" />
-        <error line="27" column="87" source="standard:parameter-list-wrapping" />
-        <error line="27" column="87" source="standard:class-signature" />
-        <error line="27" column="101" source="standard:max-line-length" />
-        <error line="27" column="107" source="standard:parameter-list-wrapping" />
-        <error line="27" column="107" source="standard:class-signature" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/data/guidance/HintStore.kt">
         <error line="56" column="42" source="standard:argument-list-wrapping" />
@@ -44,15 +34,14 @@
         <error line="56" column="106" source="standard:function-literal" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/data/guidance/Hints.kt">
-        <error line="34" column="36" source="standard:trailing-comma-on-declaration-site" />
-        <error line="37" column="1" source="standard:indent" />
-        <error line="41" column="1" source="standard:blank-line-between-when-conditions" />
-        <error line="41" column="42" source="standard:argument-list-wrapping" />
-        <error line="41" column="63" source="standard:argument-list-wrapping" />
-        <error line="41" column="82" source="standard:binary-expression-wrapping" />
-        <error line="41" column="101" source="standard:max-line-length" />
-        <error line="41" column="104" source="standard:binary-expression-wrapping" />
-        <error line="43" column="1" source="standard:blank-line-between-when-conditions" />
+        <error line="39" column="1" source="standard:indent" />
+        <error line="44" column="1" source="standard:blank-line-between-when-conditions" />
+        <error line="44" column="42" source="standard:argument-list-wrapping" />
+        <error line="44" column="63" source="standard:argument-list-wrapping" />
+        <error line="44" column="82" source="standard:binary-expression-wrapping" />
+        <error line="44" column="101" source="standard:max-line-length" />
+        <error line="44" column="104" source="standard:binary-expression-wrapping" />
+        <error line="46" column="1" source="standard:blank-line-between-when-conditions" />
     </file>
     <file name="src/main/java/org/totschnig/myexpenses/next/data/guidance/PendingTips.kt">
         <error line="1" column="1" source="standard:filename" />
@@ -106,47 +95,47 @@
         <error line="50" column="101" source="standard:max-line-length" />
         <error line="50" column="106" source="standard:argument-list-wrapping" />
         <error line="50" column="108" source="standard:function-literal" />
-        <error line="69" column="45" source="standard:trailing-comma-on-call-site" />
-        <error line="79" column="20" source="standard:binary-expression-wrapping" />
-        <error line="79" column="37" source="standard:binary-expression-wrapping" />
-        <error line="79" column="50" source="standard:function-literal" />
-        <error line="79" column="58" source="standard:argument-list-wrapping" />
-        <error line="79" column="62" source="standard:argument-list-wrapping" />
-        <error line="79" column="81" source="standard:argument-list-wrapping" />
-        <error line="79" column="100" source="standard:argument-list-wrapping" />
-        <error line="79" column="101" source="standard:max-line-length" />
-        <error line="79" column="102" source="standard:function-literal" />
-        <error line="82" column="29" source="standard:argument-list-wrapping" />
-        <error line="82" column="67" source="standard:argument-list-wrapping" />
-        <error line="82" column="75" source="standard:argument-list-wrapping" />
-        <error line="82" column="101" source="standard:max-line-length" />
-        <error line="96" column="20" source="standard:binary-expression-wrapping" />
-        <error line="96" column="20" source="standard:argument-list-wrapping" />
-        <error line="96" column="44" source="standard:argument-list-wrapping" />
-        <error line="96" column="54" source="standard:function-literal" />
-        <error line="96" column="55" source="standard:wrapping" />
-        <error line="96" column="62" source="standard:function-literal" />
-        <error line="96" column="65" source="standard:argument-list-wrapping" />
-        <error line="96" column="67" source="standard:argument-list-wrapping" />
-        <error line="96" column="71" source="standard:binary-expression-wrapping" />
-        <error line="96" column="82" source="standard:binary-expression-wrapping" />
-        <error line="96" column="82" source="standard:argument-list-wrapping" />
-        <error line="96" column="99" source="standard:binary-expression-wrapping" />
-        <error line="96" column="101" source="standard:max-line-length" />
-        <error line="96" column="105" source="standard:argument-list-wrapping" />
-        <error line="96" column="111" source="standard:argument-list-wrapping" />
-        <error line="133" column="20" source="standard:argument-list-wrapping" />
-        <error line="133" column="30" source="standard:argument-list-wrapping" />
-        <error line="133" column="42" source="standard:function-literal" />
-        <error line="133" column="43" source="standard:wrapping" />
-        <error line="133" column="50" source="standard:argument-list-wrapping" />
-        <error line="133" column="54" source="standard:argument-list-wrapping" />
-        <error line="133" column="73" source="standard:argument-list-wrapping" />
-        <error line="133" column="92" source="standard:argument-list-wrapping" />
-        <error line="133" column="94" source="standard:function-literal" />
-        <error line="133" column="95" source="standard:argument-list-wrapping" />
-        <error line="133" column="101" source="standard:max-line-length" />
-        <error line="133" column="111" source="standard:argument-list-wrapping" />
+        <error line="80" column="45" source="standard:trailing-comma-on-call-site" />
+        <error line="90" column="20" source="standard:binary-expression-wrapping" />
+        <error line="90" column="37" source="standard:binary-expression-wrapping" />
+        <error line="90" column="50" source="standard:function-literal" />
+        <error line="90" column="58" source="standard:argument-list-wrapping" />
+        <error line="90" column="62" source="standard:argument-list-wrapping" />
+        <error line="90" column="81" source="standard:argument-list-wrapping" />
+        <error line="90" column="100" source="standard:argument-list-wrapping" />
+        <error line="90" column="101" source="standard:max-line-length" />
+        <error line="90" column="102" source="standard:function-literal" />
+        <error line="93" column="29" source="standard:argument-list-wrapping" />
+        <error line="93" column="67" source="standard:argument-list-wrapping" />
+        <error line="93" column="75" source="standard:argument-list-wrapping" />
+        <error line="93" column="101" source="standard:max-line-length" />
+        <error line="107" column="20" source="standard:binary-expression-wrapping" />
+        <error line="107" column="20" source="standard:argument-list-wrapping" />
+        <error line="107" column="44" source="standard:argument-list-wrapping" />
+        <error line="107" column="54" source="standard:function-literal" />
+        <error line="107" column="55" source="standard:wrapping" />
+        <error line="107" column="62" source="standard:function-literal" />
+        <error line="107" column="65" source="standard:argument-list-wrapping" />
+        <error line="107" column="67" source="standard:argument-list-wrapping" />
+        <error line="107" column="71" source="standard:binary-expression-wrapping" />
+        <error line="107" column="82" source="standard:binary-expression-wrapping" />
+        <error line="107" column="82" source="standard:argument-list-wrapping" />
+        <error line="107" column="99" source="standard:binary-expression-wrapping" />
+        <error line="107" column="101" source="standard:max-line-length" />
+        <error line="107" column="105" source="standard:argument-list-wrapping" />
+        <error line="107" column="111" source="standard:argument-list-wrapping" />
+        <error line="144" column="20" source="standard:argument-list-wrapping" />
+        <error line="144" column="30" source="standard:argument-list-wrapping" />
+        <error line="144" column="42" source="standard:function-literal" />
+        <error line="144" column="43" source="standard:wrapping" />
+        <error line="144" column="50" source="standard:argument-list-wrapping" />
+        <error line="144" column="54" source="standard:argument-list-wrapping" />
+        <error line="144" column="73" source="standard:argument-list-wrapping" />
+        <error line="144" column="92" source="standard:argument-list-wrapping" />
+        <error line="144" column="94" source="standard:function-literal" />
+        <error line="144" column="95" source="standard:argument-list-wrapping" />
+        <error line="144" column="101" source="standard:max-line-length" />
+        <error line="144" column="111" source="standard:argument-list-wrapping" />
     </file>
     <file name="src/test/java/org/totschnig/myexpenses/next/data/guidance/HintsTest.kt">
         <error line="3" column="1" source="standard:import-ordering" />
@@ -175,51 +164,51 @@
         <error line="29" column="100" source="standard:argument-list-wrapping" />
         <error line="29" column="101" source="standard:argument-list-wrapping" />
         <error line="29" column="101" source="standard:max-line-length" />
-        <error line="37" column="20" source="standard:argument-list-wrapping" />
-        <error line="37" column="34" source="standard:argument-list-wrapping" />
-        <error line="37" column="43" source="standard:argument-list-wrapping" />
-        <error line="37" column="62" source="standard:argument-list-wrapping" />
-        <error line="37" column="75" source="standard:argument-list-wrapping" />
-        <error line="37" column="78" source="standard:argument-list-wrapping" />
-        <error line="37" column="98" source="standard:argument-list-wrapping" />
-        <error line="37" column="101" source="standard:max-line-length" />
-        <error line="37" column="108" source="standard:argument-list-wrapping" />
-        <error line="37" column="109" source="standard:argument-list-wrapping" />
-        <error line="39" column="27" source="standard:argument-list-wrapping" />
-        <error line="39" column="36" source="standard:argument-list-wrapping" />
-        <error line="39" column="53" source="standard:argument-list-wrapping" />
-        <error line="39" column="60" source="standard:argument-list-wrapping" />
-        <error line="39" column="81" source="standard:argument-list-wrapping" />
-        <error line="39" column="84" source="standard:argument-list-wrapping" />
-        <error line="39" column="101" source="standard:max-line-length" />
-        <error line="39" column="104" source="standard:argument-list-wrapping" />
-        <error line="39" column="114" source="standard:argument-list-wrapping" />
-        <error line="41" column="20" source="standard:argument-list-wrapping" />
-        <error line="41" column="34" source="standard:argument-list-wrapping" />
-        <error line="41" column="43" source="standard:argument-list-wrapping" />
-        <error line="41" column="60" source="standard:argument-list-wrapping" />
-        <error line="41" column="63" source="standard:argument-list-wrapping" />
-        <error line="41" column="83" source="standard:argument-list-wrapping" />
-        <error line="41" column="101" source="standard:max-line-length" />
-        <error line="41" column="108" source="standard:argument-list-wrapping" />
-        <error line="41" column="109" source="standard:argument-list-wrapping" />
-        <error line="42" column="20" source="standard:argument-list-wrapping" />
-        <error line="42" column="34" source="standard:argument-list-wrapping" />
-        <error line="42" column="46" source="standard:argument-list-wrapping" />
-        <error line="42" column="66" source="standard:argument-list-wrapping" />
-        <error line="42" column="78" source="standard:argument-list-wrapping" />
-        <error line="42" column="101" source="standard:argument-list-wrapping" />
-        <error line="42" column="101" source="standard:max-line-length" />
-        <error line="42" column="102" source="standard:argument-list-wrapping" />
-        <error line="62" column="22" source="standard:argument-list-wrapping" />
-        <error line="62" column="50" source="standard:argument-list-wrapping" />
-        <error line="62" column="63" source="standard:argument-list-wrapping" />
-        <error line="62" column="74" source="standard:argument-list-wrapping" />
-        <error line="62" column="80" source="standard:argument-list-wrapping" />
-        <error line="62" column="98" source="standard:argument-list-wrapping" />
-        <error line="62" column="99" source="standard:argument-list-wrapping" />
-        <error line="62" column="101" source="standard:max-line-length" />
-        <error line="62" column="109" source="standard:argument-list-wrapping" />
+        <error line="49" column="20" source="standard:argument-list-wrapping" />
+        <error line="49" column="34" source="standard:argument-list-wrapping" />
+        <error line="49" column="43" source="standard:argument-list-wrapping" />
+        <error line="49" column="62" source="standard:argument-list-wrapping" />
+        <error line="49" column="75" source="standard:argument-list-wrapping" />
+        <error line="49" column="78" source="standard:argument-list-wrapping" />
+        <error line="49" column="98" source="standard:argument-list-wrapping" />
+        <error line="49" column="101" source="standard:max-line-length" />
+        <error line="49" column="108" source="standard:argument-list-wrapping" />
+        <error line="49" column="109" source="standard:argument-list-wrapping" />
+        <error line="51" column="27" source="standard:argument-list-wrapping" />
+        <error line="51" column="36" source="standard:argument-list-wrapping" />
+        <error line="51" column="53" source="standard:argument-list-wrapping" />
+        <error line="51" column="60" source="standard:argument-list-wrapping" />
+        <error line="51" column="81" source="standard:argument-list-wrapping" />
+        <error line="51" column="84" source="standard:argument-list-wrapping" />
+        <error line="51" column="101" source="standard:max-line-length" />
+        <error line="51" column="104" source="standard:argument-list-wrapping" />
+        <error line="51" column="114" source="standard:argument-list-wrapping" />
+        <error line="53" column="20" source="standard:argument-list-wrapping" />
+        <error line="53" column="34" source="standard:argument-list-wrapping" />
+        <error line="53" column="43" source="standard:argument-list-wrapping" />
+        <error line="53" column="60" source="standard:argument-list-wrapping" />
+        <error line="53" column="63" source="standard:argument-list-wrapping" />
+        <error line="53" column="83" source="standard:argument-list-wrapping" />
+        <error line="53" column="101" source="standard:max-line-length" />
+        <error line="53" column="108" source="standard:argument-list-wrapping" />
+        <error line="53" column="109" source="standard:argument-list-wrapping" />
+        <error line="54" column="20" source="standard:argument-list-wrapping" />
+        <error line="54" column="34" source="standard:argument-list-wrapping" />
+        <error line="54" column="46" source="standard:argument-list-wrapping" />
+        <error line="54" column="66" source="standard:argument-list-wrapping" />
+        <error line="54" column="78" source="standard:argument-list-wrapping" />
+        <error line="54" column="101" source="standard:argument-list-wrapping" />
+        <error line="54" column="101" source="standard:max-line-length" />
+        <error line="54" column="102" source="standard:argument-list-wrapping" />
+        <error line="74" column="22" source="standard:argument-list-wrapping" />
+        <error line="74" column="50" source="standard:argument-list-wrapping" />
+        <error line="74" column="63" source="standard:argument-list-wrapping" />
+        <error line="74" column="74" source="standard:argument-list-wrapping" />
+        <error line="74" column="80" source="standard:argument-list-wrapping" />
+        <error line="74" column="98" source="standard:argument-list-wrapping" />
+        <error line="74" column="99" source="standard:argument-list-wrapping" />
+        <error line="74" column="101" source="standard:max-line-length" />
+        <error line="74" column="109" source="standard:argument-list-wrapping" />
     </file>
     <file name="src/test/java/org/totschnig/myexpenses/next/data/guidance/PendingTipsTest.kt">
         <error line="17" column="44" source="standard:trailing-comma-on-declaration-site" />

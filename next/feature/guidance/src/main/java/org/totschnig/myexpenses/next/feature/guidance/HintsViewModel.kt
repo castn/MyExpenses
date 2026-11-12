@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
 import org.totschnig.myexpenses.next.core.common.stateWhileShown
 import org.totschnig.myexpenses.next.data.guidance.DataGap
@@ -26,12 +27,15 @@ import org.totschnig.myexpenses.next.data.guidance.topic
  * transaction and after saving one, see [HintTopic]. At most one at a time in each place.
  *
  * @param readiness see [DataReadinessViewModel.readiness]
+ * @param isUnclear whether the user knows no category for the counterpart of a transaction, which
+ * gets no hint about categories then
  */
 class HintsViewModel(
     private val ledgerSource: LedgerSource,
     private val receiptFacts: Flow<ReceiptFacts>,
     readiness: Flow<DataReadiness?>,
     private val store: HintStore,
+    private val isUnclear: suspend (LedgerTransaction) -> Boolean = { false }
 ) : ViewModel() {
 
     /** Topics the user closed */
@@ -61,8 +65,13 @@ class HintsViewModel(
             val transaction = ledger.transactions.find { it.id == transactionId } ?: return@launch
             val receipts = receiptFacts.first()
             val hasReceipt = transactionId in receipts.items
-            val topic = hintAfterSave(transaction, hasReceipt, store.hiddenAfterSave.first(), receipts.canScan)
-                ?: return@launch
+            val topic = hintAfterSave(
+                transaction,
+                hasReceipt,
+                store.hiddenAfterSave.first(),
+                receipts.canScan,
+                isUnclear = transaction.categoryId == null && isUnclear(transaction)
+            ) ?: return@launch
             store.shownAfterSave(topic)
             show(topic)
         }
