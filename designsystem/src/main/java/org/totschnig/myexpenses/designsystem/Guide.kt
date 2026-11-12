@@ -133,7 +133,8 @@ private fun StepNumber(number: Int, status: GuideStepStatus) {
 
 /**
  * The head of a step of a guide: how far it is, e.g. "62 %" of the money with a category, on a bar
- * with a mark at the [target], and what is left, e.g. "about 3 min. left"
+ * with a mark at the [target], and what is left, e.g. "about 3 min. left". Without horizontal
+ * padding of its own, e.g. for the header of a [DetailScaffold].
  *
  * @param progress from 0 to 1
  * @param value [progress] in words, e.g. "62 %", read out with the bar
@@ -153,7 +154,7 @@ fun GuideProgressHeader(
     Column(
         modifier
             .fillMaxWidth()
-            .padding(horizontal = Spacing.screen, vertical = 12.dp)
+            .padding(vertical = 12.dp)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(

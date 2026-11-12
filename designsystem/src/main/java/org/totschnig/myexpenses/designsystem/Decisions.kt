@@ -4,8 +4,9 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -28,7 +29,8 @@ import androidx.compose.ui.unit.dp
 /**
  * A card that asks for one decision, e.g. the category of a payee in the setup: [leading] tile,
  * [title] and [value] in the head, then [content] that helps to decide, e.g. the purpose and a
- * suggestion, and the [actions] at the bottom, the main one last
+ * suggestion, and the [actions] at the bottom, the main one last, wrapped into lines where there
+ * is little room
  *
  * @param supportingText below the title, e.g. "12 transactions since March"
  */
@@ -40,7 +42,7 @@ fun DecisionCard(
     modifier: Modifier = Modifier,
     supportingText: String? = null,
     content: @Composable ColumnScope.() -> Unit = {},
-    actions: @Composable RowScope.() -> Unit
+    actions: @Composable FlowRowScope.() -> Unit
 ) {
     Surface(
         shape = Shapes.card,
@@ -81,12 +83,12 @@ fun DecisionCard(
                 verticalArrangement = Arrangement.spacedBy(Spacing.small),
                 content = content
             )
-            Row(
+            FlowRow(
                 Modifier
                     .fillMaxWidth()
                     .padding(top = 12.dp),
                 horizontalArrangement = Arrangement.spacedBy(Spacing.small, Alignment.End),
-                verticalAlignment = Alignment.CenterVertically,
+                itemVerticalAlignment = Alignment.CenterVertically,
                 content = actions
             )
         }

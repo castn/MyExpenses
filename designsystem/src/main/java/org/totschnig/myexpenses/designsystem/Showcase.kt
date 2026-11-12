@@ -838,7 +838,10 @@ private fun IllustrationShowcase() {
 @Composable
 private fun GuideShowcase() {
     DesignSystemTheme {
-        Column(verticalArrangement = Arrangement.spacedBy(Spacing.content)) {
+        Column(
+            Modifier.padding(horizontal = Spacing.screen),
+            verticalArrangement = Arrangement.spacedBy(Spacing.content)
+        ) {
             GuideProgressHeader(
                 title = "Guide progress header",
                 value = "62 %",
@@ -852,7 +855,7 @@ private fun GuideShowcase() {
                 progress = 0.84f,
                 target = 0.8f
             )
-            DetailCard(Modifier.padding(horizontal = Spacing.screen)) {
+            DetailCard {
                 GuideStepRow(
                     1,
                     "Done step",
@@ -889,7 +892,6 @@ private fun GuideShowcase() {
                 value = "1.240 €",
                 supportingText = "12 transactions since March",
                 leading = { PayeeTile("Decision card", logo = null) {} },
-                modifier = Modifier.padding(horizontal = Spacing.screen),
                 content = {
                     QuotedText(
                         "Quoted text, e.g. the purpose from the bank: SEPA-Lastschrift Ihr " +
