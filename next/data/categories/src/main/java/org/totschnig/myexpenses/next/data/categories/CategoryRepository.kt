@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
@@ -59,17 +60,45 @@ class CategoryRepository(
             .flatMapLatest { hasConsent ->
                 if (hasConsent) combine(inputs, categories, decisions) { inputs, categories, decisions ->
                     val suggestions = suggestionMemo.of(SuggestionInput(inputs, decisions.rules, categories))
+                    val unclear = unclearIds(inputs, decisions.unclear)
                     CategoryAnalysis(
                         inputs,
                         decisions,
-                        decisions.plan(suggestions),
-                        categories
+                        decisions.plan(suggestions, unclear),
+                        categories,
+                        unclear
                     )
                 } else flowOf(null)
             }
             .logTimings("categories: suggestions")
             .flowOn(Dispatchers.Default)
             .shareWhileShown(scope)
+
+    /**
+     * Ids of the transactions without category whose counterpart the user knows no category for, see
+     * [CategoryDecisions.unclear]. Also without consent to the analysis, it is a decision of the user.
+     */
+    val unclear: SharedFlow<Set<Long>> =
+        combine(inputs, decisions.map { it.unclear }.distinctUntilChanged(), ::unclearIds)
+            .distinctUntilChanged()
+            .flowOn(Dispatchers.Default)
+            .shareWhileShown(scope)
+
+    /** The user knows no category for [counterpart] ("Weiß ich nicht"), see [CategoryDecisions.unclear] */
+    suspend fun markUnclear(counterpart: Counterpart) {
+        store.update { it.withUnclear(counterpart) }
+    }
+
+    /** Takes back [markUnclear] */
+    suspend fun unmarkUnclear(counterpart: Counterpart) {
+        store.update { it.withoutUnclear(counterpart) }
+    }
+
+    /** Whether the user knows no category for the counterpart of [transaction], see [CategoryDecisions.unclear] */
+    suspend fun isUnclear(transaction: CategoryInput): Boolean {
+        val unclear = decisions.first().unclear
+        return unclear.isNotEmpty() && transaction.counterpart()?.key in unclear
+    }
 
     /** The analysis the automatic decisions were last made for */
     @Volatile
@@ -109,12 +138,14 @@ class CategoryRepository(
  *
  * @param inputs the transactions analysed, to find those of a payee
  * @param categories the categories there are, to show and suggest them
+ * @param unclear ids of the transactions without category the user knows none for, see [CategoryDecisions.unclear]
  */
 class CategoryAnalysis(
     val inputs: List<CategoryInput>,
     val decisions: CategoryDecisions,
     val plan: CategoryPlan,
-    val categories: List<CategoryInfo>
+    val categories: List<CategoryInfo>,
+    val unclear: Set<Long> = emptySet()
 ) {
     /** Paths of the categories by id, to show suggestions */
     val paths: Map<Long, String> = categories.associate { it.id to it.path }

@@ -2,6 +2,7 @@ package org.totschnig.myexpenses.next.data.categories
 
 import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.data.merchants.EATING_OUT
 import org.totschnig.myexpenses.next.data.merchants.SUPERMARKETS
 import org.totschnig.myexpenses.next.core.model.words.Words
@@ -25,7 +26,11 @@ data class CategoryInput(
  */
 fun categoryInputs(ledger: Ledger) = ledger.transactions
     .filter { it.transferAccountId == null && !it.isSplit && !it.isSealed }
-    .map { CategoryInput(it.id, it.amount, it.payeeId, it.payeeName, it.comment, it.categoryId) }
+    .map { it.categoryInput() }
+
+/** The transaction as input for [CategorySuggester], e.g. to look at its counterpart */
+fun LedgerTransaction.categoryInput() =
+    CategoryInput(id, amount, payeeId, payeeName, comment, categoryId)
 
 /**
  * The user decided: transactions with these counterparts always get this category ("Immer so machen")

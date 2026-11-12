@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.totschnig.myexpenses.next.core.common.withTestDataStore
 import org.totschnig.myexpenses.next.core.model.FakeLedgerSource
@@ -47,6 +48,29 @@ class CategoryRepositoryTest {
             source.ledger.value = ledger(1, 2)
             assertEquals(10L, store.decisions.first { 2L in it.automatic }.automatic[2])
             assertEquals(listOf(listOf(2L) to 10L), writing.set)
+        }
+    }
+
+    @Test
+    fun unclearCounterpartIsNotAppliedOrSuggested() = withTestDataStore { dataStore ->
+        runTest {
+            val catalog = Catalog(listOf(CategoryInfo(10, "Food", "Food")))
+            val source = FakeLedgerSource(ledger = ledger(1, 2), catalog = catalog)
+            val store = CategoryStore(dataStore)
+            val rule = CategoryRule("r", setOf(5), 10)
+            store.update { it.copy(firstNewId = 2, rules = listOf(rule)) }
+            val repository = CategoryRepository(source, store, FakeWriting(), backgroundScope)
+            val rewe = source.ledger.value!!.transactions.first().categoryInput()
+            assertEquals(false, repository.isUnclear(rewe))
+            repository.markUnclear(rewe.counterpart()!!)
+            assertEquals(setOf(1L, 2L), repository.unclear.first { it.isNotEmpty() })
+            assertEquals(true, repository.isUnclear(rewe))
+            val analysis = repository.analysis.first { it?.unclear?.isNotEmpty() == true }!!
+            assertEquals(setOf(1L, 2L), analysis.unclear)
+            assertTrue(analysis.plan.apply.isEmpty() && analysis.plan.backlog.isEmpty())
+            assertTrue(analysis.plan.suggestions.isEmpty())
+            repository.unmarkUnclear(rewe.counterpart()!!)
+            assertEquals(emptySet<Long>(), repository.unclear.first { it.isEmpty() })
         }
     }
 
