@@ -7,20 +7,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.OpenInNew
 import androidx.compose.material.icons.outlined.AccountBalance
 import androidx.compose.material.icons.outlined.AddCircleOutline
 import androidx.compose.material.icons.outlined.CloudSync
 import androidx.compose.material.icons.outlined.FolderOpen
 import androidx.compose.material.icons.outlined.Key
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.PhoneAndroid
 import androidx.compose.material.icons.outlined.PhonelinkLock
 import androidx.compose.material.icons.outlined.SettingsBackupRestore
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -70,7 +75,7 @@ internal fun StartPage(selected: StartChoice, offersBanking: Boolean, onSelect: 
             Choice(
                 StartChoice.NEW_ACCOUNT, Icons.Outlined.AddCircleOutline,
                 NextR.string.next_onboarding_start_new, NextR.string.next_onboarding_start_new_text
-            )
+            ) { ManualHint() }
             ChoiceCard(
                 icon = Icons.Outlined.SettingsBackupRestore,
                 title = stringResource(NextR.string.next_onboarding_restore),
@@ -112,6 +117,35 @@ private fun RestoreOptions(selected: StartChoice, onSelect: (StartChoice) -> Uni
     }
 }
 
+/**
+ * The suggestions need the transactions of a bank: someone who enters everything by hand is
+ * pointed to the classic MyExpenses, the way stays open
+ */
+@Composable
+private fun ManualHint() {
+    val uriHandler = LocalUriHandler.current
+    Column {
+        Text(
+            stringResource(NextR.string.next_onboarding_manual_hint),
+            style = MaterialTheme.typography.bodyMedium
+        )
+        TextButton(onClick = { uriHandler.openUri(CLASSIC_URL) }) {
+            Icon(
+                Icons.AutoMirrored.Outlined.OpenInNew,
+                contentDescription = null,
+                modifier = Modifier.size(ButtonDefaults.IconSize)
+            )
+            Text(
+                stringResource(NextR.string.next_onboarding_manual_link),
+                modifier = Modifier.padding(start = ButtonDefaults.IconSpacing)
+            )
+        }
+    }
+}
+
+/** The website of MyExpenses, which shows the classic app */
+private const val CLASSIC_URL = "https://www.myexpenses.mobi/"
+
 /** What loading from the bank means, for someone who never heard of FinTS */
 @Composable
 private fun BankExplanation() {
@@ -123,6 +157,10 @@ private fun BankExplanation() {
         ExplanationRow(Icons.Outlined.Key, stringResource(NextR.string.next_onboarding_bank_credentials))
         ExplanationRow(Icons.Outlined.PhonelinkLock, stringResource(NextR.string.next_onboarding_bank_tan))
         ExplanationRow(Icons.Outlined.Lock, stringResource(NextR.string.next_onboarding_bank_direct))
+        ExplanationRow(
+            Icons.Outlined.PhoneAndroid,
+            stringResource(NextR.string.next_onboarding_bank_on_device)
+        )
     }
 }
 

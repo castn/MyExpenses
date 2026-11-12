@@ -1231,10 +1231,13 @@
     <string name="next_onboarding_start_text">Start from scratch or bring the data you already have.</string>
     <string name="next_onboarding_start_new">Start from scratch</string>
     <string name="next_onboarding_start_new_text">Create your first account, e.g. your cash</string>
+    <string name="next_onboarding_manual_hint">The suggestions and analyses of this app learn from the transactions of your bank. If you want to enter everything by hand, the classic MyExpenses suits you better.</string>
+    <string name="next_onboarding_manual_link">Classic MyExpenses</string>
     <string name="next_onboarding_bank_how">The app connects directly to your bank, just like your bank\'s own app. It uses FinTS, a standard procedure that most German banks and savings banks offer.</string>
     <string name="next_onboarding_bank_credentials">You need the login details of your online banking: bank code, login name and PIN.</string>
     <string name="next_onboarding_bank_tan">As usual, your bank asks you to confirm with a TAN, e.g. in its app.</string>
     <string name="next_onboarding_bank_direct">Your data only travels between this device and your bank. The app does not store your PIN.</string>
+    <string name="next_onboarding_bank_on_device">Everything stays on your device: your transactions, categories and analyses are stored and computed only here, not on a server.</string>
     <string name="next_onboarding_account_title">Your first account</string>
     <string name="next_onboarding_account_text">One is enough to begin with, e.g. your cash or your current account. You can add more accounts later.</string>
     <string name="next_onboarding_account_name">Name</string>
