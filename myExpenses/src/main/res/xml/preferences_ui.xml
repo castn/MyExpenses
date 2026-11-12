@@ -54,7 +54,7 @@
         android:title="@string/menu" />
 
     <ListPreference
-        android:defaultValue="LastVisited"
+        android:defaultValue="Accounts"
         android:entries="@array/pref_start_screen_entries"
         android:entryValues="@array/pref_start_screen_values"
         android:key="@string/pref_ui_start_screen_key"

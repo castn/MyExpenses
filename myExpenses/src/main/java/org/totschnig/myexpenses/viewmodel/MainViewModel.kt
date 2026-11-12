@@ -460,7 +460,7 @@ open class MainViewModel(
     }
 
     private val _startScreen: StartScreen by lazy {
-        prefHandler.enumValueOrDefault(PrefKey.UI_START_SCREEN, StartScreen.LastVisited)
+        prefHandler.enumValueOrDefault(PrefKey.UI_START_SCREEN, StartScreen.Accounts)
     }
 
     val startScreen: StartScreen by lazy {
