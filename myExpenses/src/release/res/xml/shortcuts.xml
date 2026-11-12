@@ -8,7 +8,7 @@
         <intent
             android:action="android.intent.action.MAIN"
             android:targetClass="org.totschnig.myexpenses.activity.SplashActivity"
-            android:targetPackage="org.totschnig.myexpenses">
+            android:targetPackage="de.ausgabenpilot">
             <extra android:name="startFromWidgetDataEntry" android:value="true" />
         </intent>
     </shortcut>

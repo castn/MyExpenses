@@ -54,7 +54,7 @@ android {
             manifestPlaceholders["appName"] = "@string/app_name"
         }
         debug {
-            manifestPlaceholders["appName"] = "My Expenses Debug"
+            manifestPlaceholders["appName"] = "Ausgabenpilot Debug"
             // Constant, so that a new commit does not rebuild the module; release gets the real date below
             buildConfigField "java.time.LocalDateTime", "BUILD_DATE", "java.time.LocalDateTime.of(2000, 1, 1, 0, 0)"
             buildConfigField "int", "TEST_SCENARIO", getPropertyIfDefined('testScenario', "1")

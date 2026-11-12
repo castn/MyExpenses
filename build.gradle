@@ -16,7 +16,7 @@ plugins {
 ext {
     resConfig = ['en', 'en-rGB', 'ar', 'be', 'bg', 'bn', 'ca', 'cs', 'da', 'de', 'de-rDE', 'el', 'es', 'eu', 'fr', 'fr-rCA', "in", 'iw', 'hr', 'hu', 'it', 'ja', 'km', 'kn', 'ko', 'ms', 'nl', 'pl', 'pt-rBR', 'pt-rPT', 'ro', 'ru', 'si', 'sv', 'ta', 'te', 'th', 'tr', 'uk', 'ur', 'vi', 'zh-rCN', 'zh-rHK', 'zh-rTW']
     // Shared by :app (the installed package) and :myExpenses (BuildConfig, resources)
-    applicationId = 'org.totschnig.myexpenses'
+    applicationId = 'de.ausgabenpilot'
     debugApplicationIdSuffix = '.debug'
     releaseApplicationIdSuffix = ''
     versionCode = 889

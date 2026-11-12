@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Overrides app_name of :myExpenses, also in every language it is translated to -->
+    <string name="app_name">Ausgabenpilot</string>
+</resources>
