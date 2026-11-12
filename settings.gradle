@@ -20,8 +20,8 @@ dependencyResolutionManagement {
         maven { url "https://central.sonatype.com/repository/maven-snapshots/" }
     }
 }
-//include ':mlkit'
-//include ':mlkit_latn'
+include ':mlkit'
+include ':mlkit_latn'
 //include ':mlkit_han'
 //include ':mlkit_deva'
 //include ':mlkit_jpan'

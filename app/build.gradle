@@ -101,6 +101,9 @@ dependencies {
     // Features built in as libraries, their implementations are handed in by AppFeatureModule
     implementation project(':sqlcrypt')
     implementation project(':ocr')
+    // receipt scanner and text recognition for Latin script, :ocr loads them by class name
+    internImplementation project(':mlkit')
+    internImplementation project(':mlkit_latn')
     implementation project(':fints')
     implementation project(':webdav')
     implementation project(':dropbox')

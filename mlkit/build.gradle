@@ -1,4 +1,4 @@
-apply plugin: "com.android.dynamic-feature"
+apply plugin: "com.android.library"
 
 android {
     namespace 'org.totschnig.mlkit'
@@ -19,6 +19,7 @@ android {
 
 dependencies {
     api project(":ocr")
+    implementation project(':myExpenses')
     implementation libs.kotlinx.coroutines.android
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
