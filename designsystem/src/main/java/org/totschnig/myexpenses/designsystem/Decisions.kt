@@ -1,6 +1,5 @@
 package org.totschnig.myexpenses.designsystem
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -14,10 +13,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.heading
@@ -28,9 +23,9 @@ import androidx.compose.ui.unit.dp
 
 /**
  * A card that asks for one decision, e.g. the category of a payee in the setup: [leading] tile,
- * [title] and [value] in the head, then [content] that helps to decide, e.g. the purpose and a
- * suggestion, and the [actions] at the bottom, the main one last, wrapped into lines where there
- * is little room
+ * [title] and [value] in the head, then [content] that helps to decide, e.g. the last
+ * transactions and a suggestion, and the [actions] at the bottom, the main one last, wrapped into
+ * lines where there is little room
  *
  * @param supportingText below the title, e.g. "12 transactions since March"
  */
@@ -95,50 +90,57 @@ fun DecisionCard(
     }
 }
 
+/** One entry of an [EntryPreview], e.g. a transaction with its purpose as [text] */
+data class PreviewEntry(val date: String, val text: String?, val amount: String)
+
 /**
- * A text from elsewhere, shown as it is, e.g. the purpose of a transaction from the bank: muted on
- * a tile, at first [collapsedLines] lines, all of it after tapping [expandLabel]
+ * The last [entries] of what a decision is about, e.g. the transactions of a payee, muted on a
+ * tile: date, text in at most two lines, e.g. the purpose from the bank, and amount
+ *
+ * @param moreLabel shows all of them with [onMore], e.g. "Show all 7 transactions"
  */
 @Composable
-fun QuotedText(
-    text: String,
-    expandLabel: String,
-    collapseLabel: String,
+fun EntryPreview(
+    entries: List<PreviewEntry>,
     modifier: Modifier = Modifier,
-    collapsedLines: Int = 2
+    moreLabel: String? = null,
+    onMore: () -> Unit = {}
 ) {
-    var isExpanded by rememberSaveable(text) { mutableStateOf(false) }
-    var canExpand by rememberSaveable(text) { mutableStateOf(false) }
     Surface(
         shape = Shapes.tile,
         color = MaterialTheme.colorScheme.surfaceContainer,
         modifier = modifier.fillMaxWidth()
     ) {
         Column(
-            Modifier
-                .animateContentSize()
-                .padding(
-                    start = 12.dp,
-                    top = 8.dp,
-                    end = 4.dp,
-                    bottom = if (canExpand) 0.dp else 8.dp
-                )
+            Modifier.padding(
+                start = 12.dp,
+                top = 8.dp,
+                end = 12.dp,
+                bottom = if (moreLabel != null) 0.dp else 8.dp
+            ),
+            verticalArrangement = Arrangement.spacedBy(Spacing.small)
         ) {
-            Text(
-                text,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = if (isExpanded) Int.MAX_VALUE else collapsedLines,
-                overflow = TextOverflow.Ellipsis,
-                onTextLayout = { if (!isExpanded) canExpand = it.hasVisualOverflow },
-                modifier = Modifier.padding(end = 8.dp)
-            )
-            if (canExpand) {
-                TextButton(
-                    onClick = { isExpanded = !isExpanded },
-                    modifier = Modifier.align(Alignment.End)
-                ) {
-                    Text(if (isExpanded) collapseLabel else expandLabel)
+            entries.forEach { entry ->
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text(
+                        entry.date,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Text(
+                        entry.text.orEmpty(),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Text(entry.amount, style = MaterialTheme.typography.bodySmall)
+                }
+            }
+            if (moreLabel != null) {
+                TextButton(onClick = onMore, modifier = Modifier.align(Alignment.End)) {
+                    Text(moreLabel)
                 }
             }
         }

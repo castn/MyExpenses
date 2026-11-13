@@ -23,21 +23,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import java.time.format.FormatStyle
 import org.totschnig.myexpenses.designsystem.ActionCard
 import org.totschnig.myexpenses.designsystem.Banner
 import org.totschnig.myexpenses.designsystem.ChipRow
 import org.totschnig.myexpenses.designsystem.DecisionCard
 import org.totschnig.myexpenses.designsystem.DetailScaffold
+import org.totschnig.myexpenses.designsystem.EntryPreview
 import org.totschnig.myexpenses.designsystem.GuideProgressHeader
 import org.totschnig.myexpenses.designsystem.LabelChip
 import org.totschnig.myexpenses.designsystem.PayeeTile
-import org.totschnig.myexpenses.designsystem.QuotedText
+import org.totschnig.myexpenses.designsystem.PreviewEntry
 import org.totschnig.myexpenses.designsystem.Spacing
 import org.totschnig.myexpenses.designsystem.ToggleChip
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.ui.categories.LocalCategoryPicker
 import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
+import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
 import org.totschnig.myexpenses.next.core.ui.rememberMonthFormatter
 import org.totschnig.myexpenses.next.core.ui.rememberPercentFormat
 import org.totschnig.myexpenses.next.data.setup.TARGET_SHARE
@@ -167,7 +170,7 @@ private fun BacklogQuestion(count: Int, actions: SetupActions) {
     }
 }
 
-/** One payee with its purpose and a suggestion, see [SetupActions] for what the user can do */
+/** One payee with its last transactions and a suggestion, see [SetupActions] for what the user can do */
 @Composable
 private fun PayeeDecision(
     card: PayeeCard,
@@ -177,6 +180,7 @@ private fun PayeeDecision(
 ) {
     val amount = rememberAmountFormat(currency)
     val month = rememberMonthFormatter()
+    val date = rememberDateFormatter(FormatStyle.SHORT)
     val pick = rememberLauncherForActivityResult(LocalCategoryPicker.current) { picked ->
         actions.picked(picked?.first)
     }
@@ -203,11 +207,11 @@ private fun PayeeDecision(
             }
         },
         content = {
-            payee.purpose?.let {
-                QuotedText(
-                    it,
-                    expandLabel = stringResource(R.string.next_setup_more),
-                    collapseLabel = stringResource(R.string.next_setup_less)
+            if (payee.recent.isNotEmpty()) {
+                EntryPreview(
+                    payee.recent.map {
+                        PreviewEntry(date.format(it.date), it.purpose, amount(it.amount))
+                    }
                 )
             }
             card.suggestionPath?.let { path ->

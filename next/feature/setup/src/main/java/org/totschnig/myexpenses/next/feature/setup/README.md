@@ -19,10 +19,11 @@ A step that is over leaves the back stack, so that back returns to the overview 
 
 ## A payee
 
-The card shows the payee, the money spent there without category, since when, and the last
-purpose from the bank (`QuotedText`), which tells e.g. the merchant behind a direct debit. With a
-suggestion "Use" takes it and "Other category" opens the category picker, else "Choose category"
-does. "Also for later transactions" adds a rule ("Immer so machen"), on at first.
+The card shows the payee, the money spent there without category, since when, and its last three
+debits with the purposes from the bank (`EntryPreview`), which tell e.g. the merchant behind a
+direct debit. With a suggestion "Use" takes it and "Other category" opens the category picker,
+else "Choose category" does. "Also for later transactions" adds a rule ("Immer so machen"), on at
+first.
 
 - "Don't know" marks the payee as unclear (`CategoryDecisions.unclear`): its money no longer counts
   and nothing asks about it again.

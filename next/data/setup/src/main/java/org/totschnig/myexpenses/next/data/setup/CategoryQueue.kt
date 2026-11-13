@@ -15,14 +15,31 @@ import org.totschnig.myexpenses.next.data.categories.counterpart
  * currency, positive
  * @param transactionIds the debits without category
  * @param since the date of the first of them
- * @param purpose of the last of them that has one, as the bank wrote it, which helps to tell what
- * the payee is, e.g. the merchant behind PayPal
+ * @param recent the last [RECENT] of them, whose purposes help to tell what the payee is, e.g. the
+ * merchant behind PayPal
  */
 data class SetupPayee(
     val counterpart: Counterpart,
     val amount: Long,
     val transactionIds: List<Long>,
     val since: LocalDate,
+    val recent: List<SetupTransaction> = emptyList()
+) {
+    companion object {
+        const val RECENT = 3
+    }
+}
+
+/**
+ * A debit of a [SetupPayee]
+ *
+ * @param amount in minor units of the home currency, positive
+ * @param purpose as the bank wrote it
+ */
+data class SetupTransaction(
+    val id: Long,
+    val date: LocalDate,
+    val amount: Long,
     val purpose: String? = null
 )
 
@@ -84,6 +101,7 @@ fun categoryQueue(
         categorized = debits.filter { it.categoryId != null }.sumOf { -it.homeAmount },
         unclear = unclearDebits.sumOf { (transaction, _) -> -transaction.homeAmount }
     )
+    val byLatest = compareByDescending<LedgerTransaction> { it.date }.thenByDescending { it.id }
     val payees = toDecide
         .mapNotNull { (transaction, counterpart) -> counterpart?.let { transaction to it } }
         .groupBy { (_, counterpart) -> counterpart.key }
@@ -93,9 +111,17 @@ fun categoryQueue(
                 amount = group.sumOf { (transaction, _) -> -transaction.homeAmount },
                 transactionIds = group.map { (transaction, _) -> transaction.id },
                 since = group.minOf { (transaction, _) -> transaction.date },
-                purpose = group.map { it.first }
-                    .filter { !it.comment.isNullOrBlank() }
-                    .maxByOrNull { it.date }?.comment
+                recent = group.map { it.first }
+                    .sortedWith(byLatest)
+                    .take(SetupPayee.RECENT)
+                    .map {
+                        SetupTransaction(
+                            it.id,
+                            it.date,
+                            -it.homeAmount,
+                            it.comment?.takeIf { comment -> comment.isNotBlank() }
+                        )
+                    }
             )
         }
         .sortedWith(compareByDescending<SetupPayee> { it.amount }.thenBy { it.counterpart.name })

@@ -79,16 +79,23 @@ class CategoryQueueTest {
     }
 
     @Test
-    fun tellsSinceWhenAndTheLastPurpose() {
+    fun tellsSinceWhenAndTheLastTransactions() {
         val first = debit(1, "Stadtwerke", 30)
-            .copy(date = today.minusDays(40), comment = "Abschlag Juli")
+            .copy(id = 1, date = today.minusDays(40), comment = "Abschlag Juli")
+        val second = debit(1, "Stadtwerke", 25).copy(id = 2, date = today.minusDays(10))
         val last = debit(1, "Stadtwerke", 20)
-            .copy(date = today.minusDays(5), comment = "Abschlag November")
-        val withoutPurpose = debit(1, "Stadtwerke", 10).copy(date = today.minusDays(1))
-        val ledger = ledger(first, last, withoutPurpose)
+            .copy(id = 3, date = today.minusDays(5), comment = "Abschlag November")
+        val withoutPurpose = debit(1, "Stadtwerke", 10)
+            .copy(id = 4, date = today.minusDays(1), comment = " ")
+        val ledger = ledger(first, second, last, withoutPurpose)
         val payee = categoryQueue(ledger, unclear = emptySet()).all.single()
         assertEquals(today.minusDays(40), payee.since)
-        assertEquals("Abschlag November", payee.purpose)
+        val expected = listOf(
+            SetupTransaction(4, today.minusDays(1), 10),
+            SetupTransaction(3, today.minusDays(5), 20, "Abschlag November"),
+            SetupTransaction(2, today.minusDays(10), 25)
+        )
+        assertEquals(expected, payee.recent)
     }
 
     @Test

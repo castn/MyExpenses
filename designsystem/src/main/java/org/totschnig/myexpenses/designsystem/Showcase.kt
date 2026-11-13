@@ -893,12 +893,18 @@ private fun GuideShowcase() {
                 supportingText = "12 transactions since March",
                 leading = { PayeeTile("Decision card", logo = null) {} },
                 content = {
-                    QuotedText(
-                        "Quoted text, e.g. the purpose from the bank: SEPA-Lastschrift Ihr " +
-                            "Einkauf bei Beispiel GmbH, Mandatsreferenz 4711, Gläubiger-ID " +
-                            "DE98ZZZ09999999999, End-to-End-Referenz 2026-11-12-0815",
-                        expandLabel = "More",
-                        collapseLabel = "Less"
+                    EntryPreview(
+                        listOf(
+                            PreviewEntry(
+                                "12.11.",
+                                "Entry preview, e.g. the purpose from the bank: SEPA-Lastschrift " +
+                                    "Ihr Einkauf bei Beispiel GmbH, Mandatsreferenz 4711",
+                                "89,90 €"
+                            ),
+                            PreviewEntry("28.10.", null, "12,00 €"),
+                            PreviewEntry("03.10.", "Einkauf bei Beispiel GmbH", "240,00 €")
+                        ),
+                        moreLabel = "Show all 12 transactions"
                     )
                     ChipRow("Suggestion") {
                         LabelChip(text = "Groceries", placeholder = "Category", onClick = {})

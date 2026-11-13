@@ -1301,8 +1301,6 @@
     <string name="next_setup_unclear">Don\'t know</string>
     <string name="next_setup_later">Later</string>
     <string name="next_setup_back">Change last decision</string>
-    <string name="next_setup_more">More</string>
-    <string name="next_setup_less">Less</string>
     <string name="next_setup_target_title">Most of your spending has a category</string>
     <string name="next_setup_target_text">That is enough for the analyses. You can go on with the other payees, now or later.</string>
     <string name="next_setup_no_more_title">No more payees to decide on</string>

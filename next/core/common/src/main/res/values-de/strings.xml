@@ -1301,8 +1301,6 @@
     <string name="next_setup_unclear">Weiß ich nicht</string>
     <string name="next_setup_later">Später</string>
     <string name="next_setup_back">Letzte Entscheidung ändern</string>
-    <string name="next_setup_more">Mehr</string>
-    <string name="next_setup_less">Weniger</string>
     <string name="next_setup_target_title">Der Großteil deiner Ausgaben hat eine Kategorie</string>
     <string name="next_setup_target_text">Das reicht für die Auswertungen. Du kannst mit den übrigen Empfängern weitermachen, jetzt oder später.</string>
     <string name="next_setup_no_more_title">Keine Empfänger mehr offen</string>
