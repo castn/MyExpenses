@@ -1307,6 +1307,16 @@
     <string name="next_setup_back">Letzte Entscheidung ändern</string>
     <string name="next_setup_differs">Unterschiedlich</string>
     <string name="next_setup_differs_text">Wähle die Buchungen, die zusammengehören, und gib ihnen eine Kategorie. Das gilt nur für sie, spätere Buchungen des Empfängers werden wieder gefragt.</string>
+    <string name="next_setup_cash_title">Bargeld</string>
+    <string name="next_setup_cash_per_month">Etwa %1$s im Monat seit %2$s</string>
+    <string name="next_setup_cash_question">Wie willst du Bargeld führen?</string>
+    <string name="next_setup_cash_account">Bargeldkonto anlegen</string>
+    <string name="next_setup_cash_account_text">Abhebungen sind ab jetzt Umbuchungen auf das Konto. Was du bar bezahlst, trägst du dort ein.</string>
+    <string name="next_setup_cash_spending">Als Ausgabe zählen</string>
+    <string name="next_setup_cash_spending_text">Jede Abhebung bekommt die Kategorie, auch spätere.</string>
+    <string name="next_setup_cash_balance">Bargeld, das du gerade hast</string>
+    <string name="next_setup_cash_so_far">Bisherige Abhebungen</string>
+    <string name="next_setup_cash_category">Kategorie</string>
     <plurals name="next_setup_transactions_chosen">
         <item quantity="one">%d Buchung gewählt</item>
         <item quantity="other">%d Buchungen gewählt</item>

@@ -103,6 +103,7 @@ mNextFeatureMerchants --> mNextDataMerchants
 mNextFeaturePortfolio --> mNextDataPortfolio
 mNextFeatureReceipts --> mNextDataReceipts
 mNextFeatureSetup --> mNextDataSetup
+mNextFeatureSetup --> mNextDataTransactions
 mNextFeatureTags --> mNextDataTags
 mNextFeatureTips --> mNextDataTips
 mNextFeatureTransactions --> mNextDataTransactions

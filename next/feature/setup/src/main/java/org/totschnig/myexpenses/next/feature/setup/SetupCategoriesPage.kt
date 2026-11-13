@@ -123,6 +123,9 @@ internal fun SetupCategoriesPage(
                     onDiffers
                 )
 
+                current.cashCard != null ->
+                    CashDecision(current.cashCard, currency, viewModel, viewModel::picked)
+
                 current.isTargetReached || !current.hasSkipped -> ActionCard(
                     icon = Icons.Outlined.CheckCircle,
                     title = stringResource(
@@ -156,7 +159,8 @@ internal fun SetupCategoriesPage(
                     onDismiss = onSkip
                 )
             }
-            if (!current.isTargetReached && (card != null || current.backlog > 0)) {
+            val isDeciding = card != null || current.cashCard != null || current.backlog > 0
+            if (!current.isTargetReached && isDeciding) {
                 TextButton(onClick = onSkip) {
                     Text(stringResource(R.string.next_setup_skip_step))
                 }

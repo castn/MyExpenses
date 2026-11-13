@@ -12,6 +12,7 @@ README): which payees come first, how much of the money has a category, time est
 | `Start` | what the setup brings, the steps with what they take (`GuideStepRow`), "Get started" or "Go on", "Skip setup" closes it for good |
 | `Categories` | `GuideProgressHeader` with the share of the money with a category, a mark at 80 % and the time left; first the backlog question (`Banner`), then one payee after the other (`DecisionCard`), at the target "Next" or "Go on" |
 | `Transactions` | the debits without category of one payee, through the `FixedTransactions` of the shell (`SetupTransactions`); it leaves once they all have a category |
+| `Differs` | the debits without category of one payee with checkboxes ("Different"), to give those that belong together a category without a rule; it leaves once they all have one |
 | `Automatic` | how many of the recent debits now get their category without asking |
 | `Contracts` | the suggestions of contracts the shell hands in (`contracts`), finish or skip |
 | `Done` | back to the overview; the setup is closed if no step is left |
@@ -33,9 +34,18 @@ first. "Show all 7 transactions" opens the debits without category with their de
   and shows its payee first again, with the category chosen before as the suggestion. Pressed
   again, it goes further back.
 
+## Cash
+
+Cash withdrawals are not shown with their payee but on a card of their own (`CashDecision`, `CashCard`),
+where their money puts them among the payees: the money taken, about how much a month and since
+when. The user keeps them in a new cash account, telling what it holds now, or counts them as
+spending; the withdrawals so far get the category on the card either way, suggested if possible
+("Bargeldabhebung"). Without a way to create a cash account, or with one already, only the category
+is asked. "Later" and "Change last decision" work as for a payee (`CashActions`).
+
 ## State
 
-`SetupViewModel` implements `SetupActions`. `setupOverview` and `categoriesStep` are pure functions
+`SetupViewModel` implements `SetupActions` and `CashActions`. `setupOverview` and `categoriesStep` are pure functions
 of the repository's flows and the visit:
 
 - Payees decided on in this visit are hidden at once and their money counted in, since the ledger

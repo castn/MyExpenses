@@ -12,4 +12,6 @@ android {
 dependencies {
     implementation project(':next:data:setup')
     implementation project(':next:data:categories')
+    // Reads the cash the user has as it is typed, like the form of transactions
+    implementation project(':next:data:transactions')
 }
