@@ -70,10 +70,19 @@ interface CashActions {
     /** The category picker is opened for the cash withdrawals, its choice shows on the card */
     fun pickCashCategory()
 
+    /** The suggestion offered on [card] is filled in, see [CashCard.offer] */
+    fun takeCashSuggestion(card: CashCard)
+
+    /** The user chose to keep cash in a new cash account, or else as spending */
+    fun chooseCashAccount(toAccount: Boolean)
+
+    /** The user typed [text] as what the cash account holds now */
+    fun setCashBalance(text: String)
+
     /**
-     * The cash withdrawals so far get the category of [card]. With [balance], what the user holds
-     * in cash now in minor units of the home currency, a cash account is created for later ones;
-     * otherwise they get the category too.
+     * The cash withdrawals so far get the category of [card] ("Next"). With [balance], what the
+     * user holds in cash now in minor units of the home currency, a cash account is created for
+     * later ones; otherwise they get the category too.
      */
     fun keepCash(card: CashCard, balance: Long?)
 

@@ -237,4 +237,27 @@ class SetupStatesTest {
             categoriesStep(queue, analysis, other, Pace(), 0).card!!.answer
         )
     }
+
+    @Test
+    fun keepsCashInAnAccountAtFirstAndFillsInOnlyCertainSuggestions() {
+        val decided = setOf("p:1")
+        val step = { visit: SetupVisit, canOpen: Boolean, analysis: CategoryAnalysis? ->
+            categoriesStep(withCash, analysis, visit, Pace(), 0, canOpen).cashCard!!
+        }
+        val certain = analysis(suggestion(7, 10, true), suggestion(8, 10, true))
+        val card = step(SetupVisit(decided = decided), true, certain)
+        assertTrue(card.toAccount)
+        assertEquals(10L, card.categoryId)
+        assertTrue(card.isSuggested)
+        // Without a way to create an account, as spending
+        assertFalse(step(SetupVisit(decided = decided), false, certain).toAccount)
+        val uncertain =
+            step(SetupVisit(decided = decided), true, analysis(suggestion(7, 11, false)))
+        assertEquals(null, uncertain.categoryId)
+        assertEquals(11L, uncertain.offer)
+        val typed = SetupVisit(decided = decided, cashDraft = CashDraft(false, "120"))
+        val draft = step(typed, true, null)
+        assertFalse(draft.toAccount)
+        assertEquals("120", draft.balanceText)
+    }
 }

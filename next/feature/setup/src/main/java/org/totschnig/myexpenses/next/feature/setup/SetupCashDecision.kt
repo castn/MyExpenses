@@ -1,27 +1,24 @@
 package org.totschnig.myexpenses.next.feature.setup
 
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Payments
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import org.totschnig.myexpenses.designsystem.ChipRow
 import org.totschnig.myexpenses.designsystem.DecisionCard
+import org.totschnig.myexpenses.designsystem.FormPickerField
 import org.totschnig.myexpenses.designsystem.FormTextField
 import org.totschnig.myexpenses.designsystem.LabelChip
 import org.totschnig.myexpenses.designsystem.PayeeTile
-import org.totschnig.myexpenses.designsystem.RadioRow
+import org.totschnig.myexpenses.designsystem.SegmentedChoice
+import org.totschnig.myexpenses.designsystem.Spacing
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.ui.categories.LocalCategoryPicker
@@ -30,10 +27,11 @@ import org.totschnig.myexpenses.next.core.ui.rememberMonthFormatter
 import org.totschnig.myexpenses.next.data.transactions.parseAmountText
 
 /**
- * The cash withdrawals: kept in a cash account, with what the user holds now, or as spending; the
- * withdrawals so far get a category either way, see [CashActions]
+ * The cash withdrawals: kept in a new cash account, with what the user holds now, or as spending;
+ * the withdrawals so far get a category either way. Nothing here decides: "Next" in the bar of the
+ * page confirms it, see [CashActions].
  *
- * @param onPicked the category picker returned a category, see [SetupActions.picked]
+ * @param onPicked the category picker returned a category, see [PayeeCardActions.picked]
  */
 @Composable
 internal fun CashDecision(
@@ -52,10 +50,6 @@ internal fun CashDecision(
         // Expenses only, cash withdrawals are debits
         pick.launch(false)
     }
-    var toAccount by rememberSaveable { mutableStateOf(card.canOpenAccount) }
-    var balanceText by rememberSaveable { mutableStateOf("") }
-    val balance = parseAmountText(balanceText, currency.fractionDigits)
-    val isToAccount = toAccount && card.canOpenAccount
     val cash = card.cash
     val title = stringResource(R.string.next_setup_cash_title)
     DecisionCard(
@@ -70,62 +64,93 @@ internal fun CashDecision(
             PayeeTile(title, logo = null) {
                 Icon(Icons.Outlined.Payments, contentDescription = null)
             }
-        },
-        content = {
-            if (card.canOpenAccount) {
-                Text(
-                    stringResource(R.string.next_setup_cash_question),
-                    style = MaterialTheme.typography.titleSmall
-                )
-                Column {
-                    RadioRow(
-                        title = stringResource(R.string.next_setup_cash_account),
-                        supportingText = stringResource(R.string.next_setup_cash_account_text),
-                        selected = isToAccount,
-                        onClick = { toAccount = true },
-                        isFirst = true
-                    )
-                    RadioRow(
-                        title = stringResource(R.string.next_setup_cash_spending),
-                        supportingText = stringResource(R.string.next_setup_cash_spending_text),
-                        selected = !isToAccount,
-                        onClick = { toAccount = false }
-                    )
-                }
-                if (isToAccount) {
-                    FormTextField(
-                        label = stringResource(R.string.next_setup_cash_balance),
-                        value = balanceText,
-                        onValueChange = { balanceText = it },
-                        keyboardType = KeyboardType.Decimal,
-                        isError = balanceText.isNotBlank() && balance == null,
-                        trailing = { Text(currency.symbol) }
-                    )
-                }
-            }
-            val categoryLabel = if (isToAccount) {
-                R.string.next_setup_cash_so_far
-            } else {
-                R.string.next_setup_cash_category
-            }
-            ChipRow(stringResource(categoryLabel)) {
-                LabelChip(
-                    text = card.categoryPath,
-                    placeholder = stringResource(R.string.next_setup_choose_category),
-                    onClick = pickCategory
-                )
-            }
-        },
-        actions = {
-            TextButton(onClick = actions::leaveCash) {
-                Text(stringResource(R.string.next_setup_later))
-            }
-            Button(
-                onClick = { actions.keepCash(card, balance.takeIf { isToAccount }) },
-                enabled = card.categoryId != null && (!isToAccount || balance != null)
-            ) {
-                Text(stringResource(R.string.next_setup_accept))
-            }
         }
+    ) {
+        if (card.canOpenAccount) {
+            SegmentedChoice(
+                options = listOf(true, false),
+                selected = card.toAccount,
+                onSelect = actions::chooseCashAccount,
+                label = { stringResource(if (it) ACCOUNT_LABEL else SPENDING_LABEL) },
+                title = stringResource(R.string.next_setup_cash_question)
+            ) { toAccount ->
+                if (toAccount) {
+                    AccountAnswer(card, currency, actions, pickCategory)
+                } else {
+                    SpendingAnswer(card, actions, pickCategory)
+                }
+            }
+        } else {
+            SpendingAnswer(card, actions, pickCategory)
+        }
+    }
+}
+
+/** What the cash account holds now, then the category of the withdrawals so far */
+@Composable
+private fun AccountAnswer(
+    card: CashCard,
+    currency: CurrencyInfo,
+    actions: CashActions,
+    onPick: () -> Unit
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
+        Hint(R.string.next_setup_cash_account_text)
+        FormTextField(
+            label = stringResource(R.string.next_setup_cash_balance),
+            value = card.balanceText,
+            onValueChange = actions::setCashBalance,
+            keyboardType = KeyboardType.Decimal,
+            isError = card.balanceText.isNotBlank() && card.balance(currency) == null,
+            trailing = { Text(currency.symbol) }
+        )
+        CashCategory(card, R.string.next_setup_cash_so_far, actions, onPick)
+    }
+}
+
+/** The category of the withdrawals, the later ones too */
+@Composable
+private fun SpendingAnswer(card: CashCard, actions: CashActions, onPick: () -> Unit) {
+    Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
+        Hint(R.string.next_setup_cash_spending_text)
+        CashCategory(card, R.string.next_setup_category, actions, onPick)
+    }
+}
+
+@Composable
+private fun CashCategory(card: CashCard, label: Int, actions: CashActions, onPick: () -> Unit) {
+    FormPickerField(
+        label = stringResource(label),
+        value = card.categoryPath.orEmpty(),
+        onClick = onPick,
+        placeholder = stringResource(R.string.next_setup_choose_category),
+        supportingText = stringResource(R.string.next_setup_suggestion).takeIf { card.isSuggested }
+    )
+    card.offerPath?.let { path ->
+        ChipRow(stringResource(R.string.next_setup_suggestion)) {
+            LabelChip(text = path, placeholder = path, onClick = {
+                actions.takeCashSuggestion(card)
+            })
+        }
+    }
+}
+
+@Composable
+private fun Hint(text: Int) {
+    Text(
+        stringResource(text),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant
     )
 }
+
+/** What the cash account holds as typed, in minor units of [currency]; null if it is no amount */
+internal fun CashCard.balance(currency: CurrencyInfo): Long? =
+    parseAmountText(balanceText, currency.fractionDigits)
+
+/** "Next" can confirm: a category, and for a cash account what it holds */
+internal fun CashCard.canConfirm(currency: CurrencyInfo): Boolean =
+    categoryId != null && (!toAccount || balance(currency) != null)
+
+private val ACCOUNT_LABEL = R.string.next_setup_cash_account
+private val SPENDING_LABEL = R.string.next_setup_cash_spending

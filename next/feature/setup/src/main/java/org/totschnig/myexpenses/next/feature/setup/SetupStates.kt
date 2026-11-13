@@ -126,18 +126,41 @@ data class PayeeCard(
 }
 
 /**
+ * How the user keeps cash on the card of the cash withdrawals, not confirmed yet. [Serializable]
+ * for the saved state.
+ *
+ * @param toAccount in a new cash account, else as spending; null keeps what the card fills in
+ * @param balanceText what the cash account holds now, as typed
+ */
+data class CashDraft(val toAccount: Boolean? = null, val balanceText: String = "") : Serializable {
+    private companion object {
+        private const val serialVersionUID = 1L
+    }
+}
+
+/**
  * The cash withdrawals to decide on, see [SetupCash]
  *
  * @param categoryId for the withdrawals so far: the one the user picked, else the one chosen before
- * for a decision the user went back to, else the one suggested; null if none, with its path
+ * for a decision the user went back to, else a certain suggestion; null if none, with its path
  * @param canOpenAccount a cash account can be created for them, see
  * [org.totschnig.myexpenses.next.data.setup.SetupRepository.canOpenCashAccount]
+ * @param isSuggested [categoryId] is the certain suggestion, not changed by the user
+ * @param offer an uncertain suggestion, only offered to take while there is no [categoryId]
+ * @param toAccount they go to a new cash account rather than count as spending, at first whenever
+ * one can be created
+ * @param balanceText what the cash account holds now, as typed
  */
 data class CashCard(
     val cash: SetupCash,
     val categoryId: Long?,
     val categoryPath: String?,
-    val canOpenAccount: Boolean
+    val canOpenAccount: Boolean,
+    val isSuggested: Boolean = false,
+    val offer: Long? = null,
+    val offerPath: String? = null,
+    val toAccount: Boolean = false,
+    val balanceText: String = ""
 )
 
 /**
@@ -153,6 +176,7 @@ data class CashCard(
  * @param last the decision to go back to, null if there is none
  * @param cashCategory the category the user picked for the cash withdrawals, not yet decided on
  * @param draft the answer chosen on the card shown, not confirmed yet
+ * @param cashDraft how the user keeps cash on its card, not confirmed yet
  */
 data class SetupVisit(
     val decided: Set<String> = emptySet(),
@@ -162,7 +186,8 @@ data class SetupVisit(
     val revisit: Revisit? = null,
     val last: SetupDecision? = null,
     val cashCategory: Long? = null,
-    val draft: PayeeDraft? = null
+    val draft: PayeeDraft? = null,
+    val cashDraft: CashDraft? = null
 )
 
 /**
@@ -364,10 +389,23 @@ private fun SetupVisit.cashCard(
     analysis: CategoryAnalysis?,
     canOpenAccount: Boolean
 ): CashCard {
-    val categoryId = cashCategory
-        ?: revisit?.takeIf { it.key == SetupCash.KEY }?.categoryId
-        ?: analysis?.let { suggestionFor(cash, it.plan.suggestions, it.categories)?.categoryId }
-    return CashCard(cash, categoryId, categoryId?.let { analysis?.paths?.get(it) }, canOpenAccount)
+    val before = revisit?.takeIf { it.key == SetupCash.KEY }
+    val suggestion = analysis?.let { suggestionFor(cash, it.plan.suggestions, it.categories) }
+    val filledIn = before?.categoryId ?: suggestion?.takeIf { it.isCertain }?.categoryId
+    val categoryId = cashCategory ?: filledIn
+    val offer = suggestion?.categoryId?.takeIf { categoryId == null }
+    val path = { id: Long? -> id?.let { analysis?.paths?.get(it) } }
+    return CashCard(
+        cash = cash,
+        categoryId = categoryId,
+        categoryPath = path(categoryId),
+        canOpenAccount = canOpenAccount,
+        isSuggested = before == null && cashCategory == null && categoryId != null,
+        offer = offer,
+        offerPath = path(offer),
+        toAccount = canOpenAccount && (cashDraft?.toAccount ?: true),
+        balanceText = cashDraft?.balanceText.orEmpty()
+    )
 }
 
 private fun coverageShare(coverage: CategoryCoverage, decided: Long, unclear: Long): Double {

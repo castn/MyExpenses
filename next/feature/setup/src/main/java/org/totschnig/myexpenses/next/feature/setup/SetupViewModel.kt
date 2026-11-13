@@ -46,6 +46,7 @@ class SetupViewModel(
     private val revisit = savedState.getStateFlow<Revisit?>(KEY_REVISIT, null)
     private val cashCategory = savedState.getStateFlow<Long?>(KEY_CASH_CATEGORY, null)
     private val draft = savedState.getStateFlow<PayeeDraft?>(KEY_DRAFT, null)
+    private val cashDraft = savedState.getStateFlow<CashDraft?>(KEY_CASH_DRAFT, null)
 
     /** The decisions of this visit, the last one last, see [back] */
     private val history = savedState.getStateFlow(KEY_HISTORY, ArrayList<SetupDecision>())
@@ -87,9 +88,9 @@ class SetupViewModel(
         beyondTarget,
         combine(revisit, draft, ::Pair),
         history,
-        cashCategory
-    ) { (d, s, u), beyond, (revisit, draft), history, cashCategory ->
-        SetupVisit(d, s, u, beyond, revisit, history.lastOrNull(), cashCategory, draft)
+        combine(cashCategory, cashDraft, ::Pair)
+    ) { (d, s, u), beyond, (revisit, draft), history, (cashCategory, cashDraft) ->
+        SetupVisit(d, s, u, beyond, revisit, history.lastOrNull(), cashCategory, draft, cashDraft)
     }
 
     /** Null while loading */
@@ -192,10 +193,24 @@ class SetupViewModel(
     override fun keepCash(card: CashCard, balance: Long?) {
         val categoryId = card.categoryId ?: return
         savedState[KEY_CASH_CATEGORY] = null
+        savedState[KEY_CASH_DRAFT] = null
         decide(SetupCash.KEY) { repository.keepCash(card.cash, categoryId, balance) }
     }
 
+    override fun takeCashSuggestion(card: CashCard) {
+        card.offer?.let { savedState[KEY_CASH_CATEGORY] = it }
+    }
+
+    override fun chooseCashAccount(toAccount: Boolean) {
+        savedState[KEY_CASH_DRAFT] = (cashDraft.value ?: CashDraft()).copy(toAccount = toAccount)
+    }
+
+    override fun setCashBalance(text: String) {
+        savedState[KEY_CASH_DRAFT] = (cashDraft.value ?: CashDraft()).copy(balanceText = text)
+    }
+
     override fun leaveCash() {
+        savedState[KEY_CASH_DRAFT] = null
         putOff(SetupCash.KEY)
     }
 
@@ -306,6 +321,7 @@ class SetupViewModel(
         const val KEY_PENDING_IDS = "setup_pending_ids"
         const val KEY_CASH_CATEGORY = "setup_cash_category"
         const val KEY_DRAFT = "setup_draft"
+        const val KEY_CASH_DRAFT = "setup_cash_draft"
 
         /** Decisions kept to go back to, so that the saved state stays small */
         const val MAX_HISTORY = 30

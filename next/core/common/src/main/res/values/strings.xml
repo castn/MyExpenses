@@ -1308,7 +1308,6 @@
     </plurals>
     <string name="next_setup_suggestion">Suggestion</string>
     <string name="next_setup_choose_category">Choose category</string>
-    <string name="next_setup_accept">Use</string>
     <string name="next_setup_always">Also for later transactions</string>
     <string name="next_setup_unclear">Don\'t know</string>
     <string name="next_setup_later">Later</string>
@@ -1336,7 +1335,6 @@
     <string name="next_setup_cash_spending_text">Every withdrawal gets the category, later ones too.</string>
     <string name="next_setup_cash_balance">Cash you have now</string>
     <string name="next_setup_cash_so_far">Withdrawals so far</string>
-    <string name="next_setup_cash_category">Category</string>
     <plurals name="next_setup_transactions_chosen">
         <item quantity="one">%d transaction chosen</item>
         <item quantity="other">%d transactions chosen</item>

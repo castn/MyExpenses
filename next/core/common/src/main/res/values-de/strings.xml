@@ -1308,7 +1308,6 @@
     </plurals>
     <string name="next_setup_suggestion">Vorschlag</string>
     <string name="next_setup_choose_category">Kategorie wählen</string>
-    <string name="next_setup_accept">Übernehmen</string>
     <string name="next_setup_always">Auch für spätere Buchungen</string>
     <string name="next_setup_unclear">Weiß ich nicht</string>
     <string name="next_setup_later">Später</string>
@@ -1336,7 +1335,6 @@
     <string name="next_setup_cash_spending_text">Jede Abhebung bekommt die Kategorie, auch spätere.</string>
     <string name="next_setup_cash_balance">Bargeld, das du gerade hast</string>
     <string name="next_setup_cash_so_far">Bisherige Abhebungen</string>
-    <string name="next_setup_cash_category">Kategorie</string>
     <plurals name="next_setup_transactions_chosen">
         <item quantity="one">%d Buchung gewählt</item>
         <item quantity="other">%d Buchungen gewählt</item>

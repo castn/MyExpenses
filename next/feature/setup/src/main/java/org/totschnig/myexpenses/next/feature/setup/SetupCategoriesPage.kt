@@ -58,6 +58,7 @@ internal fun SetupCategoriesPage(
     val always by viewModel.always.collectAsStateWithLifecycle()
     val current = step
     val card = current?.card?.takeIf { current.backlog == 0 }
+    val cashCard = current?.cashCard?.takeIf { current.backlog == 0 && card == null }
     Column(Modifier.fillMaxSize()) {
         DetailScaffold(
             onBack = onBack,
@@ -106,6 +107,22 @@ internal fun SetupCategoriesPage(
                 nextEnabled = card.canConfirm,
                 skipLabel = stringResource(R.string.next_setup_later),
                 onSkip = { viewModel.later(card) }
+            )
+        } else if (cashCard != null) {
+            IntroBottomBar(
+                nextLabel = stringResource(R.string.next_setup_next),
+                onNext = {
+                    viewModel.keepCash(
+                        cashCard,
+                        cashCard.balance(currency)?.takeIf {
+                            cashCard.toAccount
+                        }
+                    )
+                },
+                modifier = Modifier.background(MaterialTheme.colorScheme.surfaceContainer),
+                nextEnabled = cashCard.canConfirm(currency),
+                skipLabel = stringResource(R.string.next_setup_later),
+                onSkip = viewModel::leaveCash
             )
         }
     }
