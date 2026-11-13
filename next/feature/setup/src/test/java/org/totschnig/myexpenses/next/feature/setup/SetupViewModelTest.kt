@@ -80,7 +80,8 @@ class SetupViewModelTest {
     private fun CoroutineScope.setup(
         dataStore: DataStore<Preferences>,
         savedState: SavedStateHandle = SavedStateHandle(),
-        clock: () -> Long = { 0 }
+        clock: () -> Long = { 0 },
+        ledger: Ledger = this@SetupViewModelTest.ledger
     ): Setup {
         val catalog = Catalog(listOf(CategoryInfo(10, "Wohnen", "Wohnen")))
         val source = FakeLedgerSource(ledger = ledger, catalog = catalog, today = today)
@@ -175,6 +176,32 @@ class SetupViewModelTest {
             val again = viewModel.categories.first { it?.canGoBack == false }!!
             assertEquals(null, again.card!!.suggestion)
             assertEquals(listOf(1L to 10L), setup.writing.removed)
+        }
+    }
+
+    @Test
+    fun keepsCashWithTheCategoryPicked() = withTestDataStore { dataStore ->
+        runTest {
+            val cash = debit(2, 2, "Sparkasse", 400).copy(methodLabel = "BARGELDAUSZAHLUNG")
+            val ledger = Ledger(listOf(debit(1, 1, "Vermieter", 600), cash), ledger.ownAccounts)
+            val setup = backgroundScope.setup(dataStore, ledger = ledger)
+            val viewModel = setup.viewModel
+            viewModel.categories.launchIn(backgroundScope)
+            val rent = viewModel.categories.first { it?.card != null }!!.card!!
+            viewModel.leave(rent, unclear = false)
+            viewModel.categories.first { it?.cashCard != null }
+            viewModel.pickCashCategory()
+            viewModel.picked(10)
+            val card = viewModel.categories.first { it?.cashCard?.categoryId == 10L }!!.cashCard!!
+            // Nothing is written until the user decides
+            assertEquals(emptyList<Pair<List<Long>, Long>>(), setup.writing.set)
+            viewModel.keepCash(card, balance = null)
+            viewModel.categories.first { it?.cashCard == null }
+            assertEquals(listOf(listOf(2L) to 10L), setup.writing.set)
+            viewModel.back()
+            val again = viewModel.categories.first { it?.cashCard != null }!!.cashCard!!
+            assertEquals(10L, again.categoryId)
+            assertEquals(listOf(2L to 10L), setup.writing.removed)
         }
     }
 

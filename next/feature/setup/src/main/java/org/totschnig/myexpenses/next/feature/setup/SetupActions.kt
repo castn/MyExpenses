@@ -45,3 +45,20 @@ interface SetupActions {
     /** The user finished or skipped the whole setup, which is not offered anymore */
     fun close()
 }
+
+/** What the user can do with the cash withdrawals in the setup, see [CashCard] */
+interface CashActions {
+
+    /** The category picker is opened for the cash withdrawals, its choice shows on the card */
+    fun pickCashCategory()
+
+    /**
+     * The cash withdrawals so far get the category of [card]. With [balance], what the user holds
+     * in cash now in minor units of the home currency, a cash account is created for later ones;
+     * otherwise they get the category too.
+     */
+    fun keepCash(card: CashCard, balance: Long?)
+
+    /** The cash withdrawals come again after the payees ("Später") */
+    fun leaveCash()
+}

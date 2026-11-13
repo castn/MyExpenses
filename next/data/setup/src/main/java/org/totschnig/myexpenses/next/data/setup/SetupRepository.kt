@@ -142,10 +142,6 @@ class SetupRepository(
     val canOpenCashAccount: Flow<Boolean> =
         cash?.account?.map { it == null }?.distinctUntilChanged() ?: flowOf(false)
 
-    /** The category suggested for the cash withdrawals, see [suggestionFor] */
-    fun cashSuggestion(cash: SetupCash, analysis: CategoryAnalysis?): Long? =
-        analysis?.let { suggestionFor(cash, it.plan.suggestions, it.categories) }
-
     /**
      * The withdrawals of [cash] get [categoryId]. With [balance], what the user holds in cash now in
      * minor units of the home currency, a cash account is created holding it, which later

@@ -10,6 +10,7 @@ import org.totschnig.myexpenses.next.data.categories.Counterpart
 import org.totschnig.myexpenses.next.data.setup.CategoryCoverage
 import org.totschnig.myexpenses.next.data.setup.CategoryQueue
 import org.totschnig.myexpenses.next.data.setup.Pace
+import org.totschnig.myexpenses.next.data.setup.SetupCash
 import org.totschnig.myexpenses.next.data.setup.SetupContracts
 import org.totschnig.myexpenses.next.data.setup.SetupPayee
 import org.totschnig.myexpenses.next.data.setup.SetupProgress
@@ -120,5 +121,53 @@ class SetupStatesTest {
         // Until the ledger has its transactions without category again, the next payee is shown
         val before = queue.copy(optional = emptyList())
         assertEquals("p:1", categoriesStep(before, null, visit, Pace(), backlog = 0).card?.key)
+    }
+
+    /** 1000 spent: 500 rent, 300 cash, 200 cinema; rent and cash reach the target */
+    private val withCash = CategoryQueue(
+        CategoryCoverage(spent = 1000, categorized = 0),
+        required = listOf(payee(1, 500)),
+        optional = listOf(payee(3, 200)),
+        cash = SetupCash(300, listOf(7, 8), LocalDate.of(2026, 1, 1), LocalDate.of(2026, 3, 1)),
+        isCashRequired = true
+    )
+
+    private fun cashStep(visit: SetupVisit = SetupVisit(), canOpen: Boolean = true) =
+        categoriesStep(withCash, null, visit, Pace(), backlog = 0, canOpenCashAccount = canOpen)
+
+    @Test
+    fun showsTheCashWithdrawalsWhereTheirMoneyPutsThem() {
+        val first = cashStep()
+        assertEquals("p:1", first.card?.key)
+        assertNull(first.cashCard)
+        assertEquals(2, first.left)
+        val cash = cashStep(SetupVisit(decided = setOf("p:1")))
+        assertNull(cash.card)
+        assertEquals(300L, cash.cashCard!!.cash.amount)
+        assertTrue(cash.cashCard!!.canOpenAccount)
+        assertEquals(1, cash.left)
+        // Decided on, their money counts and the target is reached
+        val done = cashStep(SetupVisit(decided = setOf("p:1", SetupCash.KEY)))
+        assertTrue(done.isTargetReached)
+        assertNull(done.cashCard)
+        assertEquals(0.8, done.share, 0.001)
+        val overview = setupOverview(
+            SetupStep.entries,
+            SetupProgress(),
+            withCash,
+            SetupContracts.None
+        )
+        assertEquals(2, overview.steps.first().decisions)
+    }
+
+    @Test
+    fun cashWithdrawalsCanBePutOffAndGoneBackTo() {
+        val putOff = cashStep(SetupVisit(decided = setOf("p:1"), skipped = setOf(SetupCash.KEY)))
+        assertEquals("p:3", putOff.card?.key)
+        assertTrue(putOff.hasSkipped)
+        // Gone back to, they come first with the category chosen before, unless one was picked
+        val revisit = SetupVisit(revisit = Revisit(SetupCash.KEY, categoryId = 10))
+        assertEquals(10L, cashStep(revisit).cashCard?.categoryId)
+        assertEquals(11L, cashStep(revisit.copy(cashCategory = 11)).cashCard?.categoryId)
     }
 }

@@ -5,6 +5,7 @@ import org.totschnig.myexpenses.next.data.categories.CategoryAnalysis
 import org.totschnig.myexpenses.next.data.setup.CategoryCoverage
 import org.totschnig.myexpenses.next.data.setup.CategoryQueue
 import org.totschnig.myexpenses.next.data.setup.Pace
+import org.totschnig.myexpenses.next.data.setup.SetupCash
 import org.totschnig.myexpenses.next.data.setup.SetupContracts
 import org.totschnig.myexpenses.next.data.setup.SetupPayee
 import org.totschnig.myexpenses.next.data.setup.SetupProgress
@@ -55,7 +56,7 @@ fun setupOverview(
     val next = progress.next(available)
     val steps = available.map { step ->
         val decisions = when (step) {
-            SetupStep.CATEGORIES -> queue.required.size
+            SetupStep.CATEGORIES -> queue.required.size + if (queue.isCashRequired) 1 else 0
             SetupStep.CONTRACTS -> (contracts as? SetupContracts.Available)?.suggestions ?: 0
         }
         val state = when {
@@ -81,15 +82,32 @@ data class PayeeCard(val payee: SetupPayee, val suggestion: Long?, val suggestio
 }
 
 /**
+ * The cash withdrawals to decide on, see [SetupCash]
+ *
+ * @param categoryId for the withdrawals so far: the one the user picked, else the one chosen before
+ * for a decision the user went back to, else the one suggested; null if none, with its path
+ * @param canOpenAccount a cash account can be created for them, see
+ * [org.totschnig.myexpenses.next.data.setup.SetupRepository.canOpenCashAccount]
+ */
+data class CashCard(
+    val cash: SetupCash,
+    val categoryId: Long?,
+    val categoryPath: String?,
+    val canOpenAccount: Boolean
+)
+
+/**
  * What the user did in this visit of the categories step. Payees decided on ([decided]) are left
  * out at once and their money counted in, since the ledger knows their categories only a moment
- * later; payees put off ([skipped]) come last.
+ * later; payees put off ([skipped]) come last. The cash withdrawals take part under
+ * [SetupCash.KEY].
  *
  * @param unclear of [decided], the payees the user knows no category for: their money no longer
  * counts
  * @param beyondTarget the user wants to go on after the target
  * @param revisit the payee the user went back to, shown first
  * @param canGoBack there is a decision to go back to
+ * @param cashCategory the category the user picked for the cash withdrawals, not yet decided on
  */
 data class SetupVisit(
     val decided: Set<String> = emptySet(),
@@ -97,7 +115,8 @@ data class SetupVisit(
     val unclear: Set<String> = emptySet(),
     val beyondTarget: Boolean = false,
     val revisit: Revisit? = null,
-    val canGoBack: Boolean = false
+    val canGoBack: Boolean = false,
+    val cashCategory: Long? = null
 )
 
 /**
@@ -117,8 +136,9 @@ data class Revisit(val key: String, val categoryId: Long?) : Serializable {
  * The categories step
  *
  * @param share of the money with a category, decisions already made counted in
- * @param card the payee to decide on, null when none is left for now
- * @param left payees still to decide on up to the target
+ * @param card the payee to decide on, null when none is left for now or [cashCard] is shown
+ * @param cashCard the cash withdrawals to decide on instead of a payee, see [CashCard]
+ * @param left payees still to decide on up to the target, the cash withdrawals counted as one
  * @param seconds [left] take at the pace of the user
  * @param isTargetReached [share] reached [TARGET_SHARE]
  * @param hasSkipped payees the user put off in this visit
@@ -136,48 +156,104 @@ data class CategoriesStep(
     val hasSkipped: Boolean,
     val hasMore: Boolean,
     val backlog: Int,
-    val canGoBack: Boolean = false
+    val canGoBack: Boolean = false,
+    val cashCard: CashCard? = null
 )
 
-/** What the categories step shows after what the user did in this [visit] */
+/**
+ * What the categories step shows after what the user did in this [visit]. The cash withdrawals come
+ * where their money puts them among the payees.
+ *
+ * @param canOpenCashAccount see [CashCard.canOpenAccount]
+ */
 fun categoriesStep(
     queue: CategoryQueue,
     analysis: CategoryAnalysis?,
     visit: SetupVisit,
     pace: Pace,
-    backlog: Int
+    backlog: Int,
+    canOpenCashAccount: Boolean = false
 ): CategoriesStep = with(visit) {
-    val amountOf = { keys: Set<String> ->
-        queue.all.filter { it.counterpart.key in keys }.sumOf { it.amount }
-    }
-    val unclearAmount = amountOf(unclear)
-    val decidedAmount = amountOf(decided - unclear)
-    val coverage = queue.coverage
-    val share = coverageShare(coverage, decidedAmount, unclearAmount)
+    val share =
+        coverageShare(queue.coverage, queue.amountOf(decided - unclear), queue.amountOf(unclear))
     val isTargetReached = share >= TARGET_SHARE
     val open = { payees: List<SetupPayee> -> payees.filter { it.counterpart.key !in decided } }
-    val required = open(queue.required)
-    val left = if (isTargetReached) 0 else required.size
-    val candidates = if (isTargetReached && !beyondTarget) emptyList() else open(queue.all)
+    val openCash = queue.cash?.takeIf { SetupCash.KEY !in decided }
+    val left = if (isTargetReached) 0 else queue.requiredLeft(decided)
+    val isClosed = isTargetReached && !beyondTarget
+    val candidates = if (isClosed) emptyList() else open(queue.all)
     val revisited = revisit?.let { revisit ->
         open(queue.all).find { it.counterpart.key == revisit.key }
     }
     val next = revisited ?: candidates.firstOrNull { it.counterpart.key !in skipped }
+    val isCashNext = isCashNext(openCash, isClosed, revisited, next)
+    val cashCandidates = listOfNotNull(openCash?.takeIf { !isClosed }).map { SetupCash.KEY }
     CategoriesStep(
         share = share,
-        card = next?.let { payee ->
-            val suggestion = revisited?.let { revisit?.categoryId }
-                ?: analysis?.let { suggestionFor(payee, it.plan.suggestions) }
-            PayeeCard(payee, suggestion, suggestion?.let { analysis?.paths?.get(it) })
-        },
+        card = next?.takeIf { !isCashNext }?.let { payeeCard(it, it == revisited, analysis) },
         left = left,
         seconds = pace.secondsFor(left),
         isTargetReached = isTargetReached,
-        hasSkipped = candidates.any { it.counterpart.key in skipped },
-        hasMore = !beyondTarget && open(queue.optional).isNotEmpty(),
+        hasSkipped = (candidates.map { it.counterpart.key } + cashCandidates).any { it in skipped },
+        hasMore = !beyondTarget && queue.hasOptionalLeft(decided),
         backlog = backlog,
-        canGoBack = canGoBack
+        canGoBack = canGoBack,
+        cashCard = openCash?.takeIf { isCashNext }?.let {
+            cashCard(it, analysis, canOpenCashAccount)
+        }
     )
+}
+
+/** The payees up to the target not decided on, the cash withdrawals counted as one */
+private fun CategoryQueue.requiredLeft(decided: Set<String>): Int =
+    required.count { it.counterpart.key !in decided } +
+        if (isCashRequired && cash != null && SetupCash.KEY !in decided) 1 else 0
+
+/** Whether payees or cash withdrawals beyond the target are not decided on */
+private fun CategoryQueue.hasOptionalLeft(decided: Set<String>): Boolean =
+    optional.any { it.counterpart.key !in decided } ||
+        (cash != null && !isCashRequired && SetupCash.KEY !in decided)
+
+/** The money of the payees of [keys], and of the cash withdrawals with [SetupCash.KEY] */
+private fun CategoryQueue.amountOf(keys: Set<String>): Long =
+    all.filter { it.counterpart.key in keys }.sumOf { it.amount } +
+        (cash?.takeIf { SetupCash.KEY in keys }?.amount ?: 0)
+
+/**
+ * Whether the open cash withdrawals [cash] come before the payee [next]: when gone back to, else
+ * if they are not put off and their money is more
+ */
+private fun SetupVisit.isCashNext(
+    cash: SetupCash?,
+    isClosed: Boolean,
+    revisited: SetupPayee?,
+    next: SetupPayee?
+): Boolean = when {
+    cash == null -> false
+    revisit?.key == SetupCash.KEY -> true
+    revisited != null || isClosed || SetupCash.KEY in skipped -> false
+    else -> cash.amount >= (next?.amount ?: 0)
+}
+
+private fun SetupVisit.payeeCard(
+    payee: SetupPayee,
+    isRevisited: Boolean,
+    analysis: CategoryAnalysis?
+): PayeeCard {
+    val suggestion = revisit?.categoryId?.takeIf { isRevisited }
+        ?: analysis?.let { suggestionFor(payee, it.plan.suggestions) }
+    return PayeeCard(payee, suggestion, suggestion?.let { analysis?.paths?.get(it) })
+}
+
+private fun SetupVisit.cashCard(
+    cash: SetupCash,
+    analysis: CategoryAnalysis?,
+    canOpenAccount: Boolean
+): CashCard {
+    val categoryId = cashCategory
+        ?: revisit?.takeIf { it.key == SetupCash.KEY }?.categoryId
+        ?: analysis?.let { suggestionFor(cash, it.plan.suggestions, it.categories) }
+    return CashCard(cash, categoryId, categoryId?.let { analysis?.paths?.get(it) }, canOpenAccount)
 }
 
 private fun coverageShare(coverage: CategoryCoverage, decided: Long, unclear: Long): Double {

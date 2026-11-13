@@ -13,6 +13,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.totschnig.myexpenses.next.core.common.stateWhileShown
 import org.totschnig.myexpenses.next.data.setup.AutomaticShare
+import org.totschnig.myexpenses.next.data.setup.SetupCash
 import org.totschnig.myexpenses.next.data.setup.SetupDecision
 import org.totschnig.myexpenses.next.data.setup.SetupPayee
 import org.totschnig.myexpenses.next.data.setup.SetupRepository
@@ -30,13 +31,15 @@ class SetupViewModel(
     private val savedState: SavedStateHandle,
     private val clock: () -> Long = System::currentTimeMillis
 ) : ViewModel(),
-    SetupActions {
+    SetupActions,
+    CashActions {
 
     private val decided = savedState.getStateFlow(KEY_DECIDED, ArrayList<String>())
     private val skipped = savedState.getStateFlow(KEY_SKIPPED, ArrayList<String>())
     private val unclear = savedState.getStateFlow(KEY_UNCLEAR, ArrayList<String>())
     private val beyondTarget = savedState.getStateFlow(KEY_BEYOND_TARGET, false)
     private val revisit = savedState.getStateFlow<Revisit?>(KEY_REVISIT, null)
+    private val cashCategory = savedState.getStateFlow<Long?>(KEY_CASH_CATEGORY, null)
 
     /** The decisions of this visit, the last one last, see [back] */
     private val history = savedState.getStateFlow(KEY_HISTORY, ArrayList<SetupDecision>())
@@ -69,9 +72,10 @@ class SetupViewModel(
         combine(decided, skipped, unclear) { d, s, u -> Triple(d.toSet(), s.toSet(), u.toSet()) },
         beyondTarget,
         revisit,
-        history
-    ) { (d, s, u), beyond, revisit, history ->
-        SetupVisit(d, s, u, beyond, revisit, canGoBack = history.isNotEmpty())
+        history,
+        cashCategory
+    ) { (d, s, u), beyond, revisit, history, cashCategory ->
+        SetupVisit(d, s, u, beyond, revisit, canGoBack = history.isNotEmpty(), cashCategory)
     }
 
     /** Null while loading */
@@ -80,9 +84,10 @@ class SetupViewModel(
         repository.analysis,
         visit,
         repository.progress.map { it.pace },
-        repository.backlog,
-        ::categoriesStep
-    ).stateWhileShown(viewModelScope, null)
+        combine(repository.backlog, repository.canOpenCashAccount, ::Pair)
+    ) { queue, analysis, visit, pace, (backlog, canOpenCashAccount) ->
+        categoriesStep(queue, analysis, visit, pace, backlog, canOpenCashAccount)
+    }.stateWhileShown(viewModelScope, null)
 
     /** The payees to decide on, to look up the transactions of one, null while loading */
     val payees: StateFlow<List<SetupPayee>?> =
@@ -122,6 +127,11 @@ class SetupViewModel(
         savedState.remove<String>(KEY_PENDING)
         savedState.remove<LongArray>(KEY_PENDING_IDS)
         if (categoryId == null) return
+        // For the cash withdrawals the choice only shows on the card until the user decides
+        if (key == SetupCash.KEY) {
+            savedState[KEY_CASH_CATEGORY] = categoryId
+            return
+        }
         viewModelScope.launch {
             val queue = repository.categoryQueue.filterNotNull().first()
             val payee = queue.all.find { it.counterpart.key == key } ?: return@launch
@@ -142,11 +152,31 @@ class SetupViewModel(
             savedState[KEY_UNCLEAR] = ArrayList(this.unclear.value + card.key)
             decide(card.key) { repository.markUnclear(card.payee) }
         } else {
-            savedState[KEY_SKIPPED] = ArrayList(skipped.value + card.key)
-            savedState.remove<Revisit>(KEY_REVISIT)
-            viewModelScope.launch {
-                writes.withLock { remember(SetupDecision.Later(card.key)) }
-            }
+            putOff(card.key)
+        }
+    }
+
+    override fun pickCashCategory() {
+        savedState[KEY_PENDING] = SetupCash.KEY
+        savedState.remove<LongArray>(KEY_PENDING_IDS)
+    }
+
+    override fun keepCash(card: CashCard, balance: Long?) {
+        val categoryId = card.categoryId ?: return
+        savedState.remove<Long>(KEY_CASH_CATEGORY)
+        decide(SetupCash.KEY) { repository.keepCash(card.cash, categoryId, balance) }
+    }
+
+    override fun leaveCash() {
+        putOff(SetupCash.KEY)
+    }
+
+    /** [key] comes again after the others ("Später"), nothing is written */
+    private fun putOff(key: String) {
+        savedState[KEY_SKIPPED] = ArrayList(skipped.value + key)
+        savedState.remove<Revisit>(KEY_REVISIT)
+        viewModelScope.launch {
+            writes.withLock { remember(SetupDecision.Later(key)) }
         }
     }
 
@@ -155,7 +185,11 @@ class SetupViewModel(
             writes.withLock {
                 val last = history.value.lastOrNull() ?: return@withLock
                 val key = last.key
-                val categoryId = (last as? SetupDecision.Categorized)?.categorization?.categoryId
+                val categoryId = when (last) {
+                    is SetupDecision.Categorized -> last.categorization.categoryId
+                    is SetupDecision.Cash -> last.categorization.categoryId
+                    else -> null
+                }
                 // The card comes back with the decided payees, so all else is set before
                 savedState[KEY_REVISIT] = Revisit(key, categoryId)
                 savedState[KEY_HISTORY] = ArrayList(history.value.dropLast(1))
@@ -231,6 +265,7 @@ class SetupViewModel(
         const val KEY_ALWAYS = "setup_always"
         const val KEY_PENDING = "setup_pending"
         const val KEY_PENDING_IDS = "setup_pending_ids"
+        const val KEY_CASH_CATEGORY = "setup_cash_category"
 
         /** Decisions kept to go back to, so that the saved state stays small */
         const val MAX_HISTORY = 30
