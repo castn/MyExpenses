@@ -1344,6 +1344,15 @@
     <string name="next_setup_done_title">Alles eingerichtet</string>
     <string name="next_setup_done_text">Deine Auswertungen haben jetzt etwas zu sagen. Übersprungene Schritte warten auf der Übersicht auf dich.</string>
     <string name="next_setup_to_overview">Zur Übersicht</string>
+    <string name="next_setup_name">Einrichtung</string>
+    <plurals name="next_setup_steps_left">
+        <item quantity="one">Noch %1$d Schritt · %2$s</item>
+        <item quantity="other">Noch %1$d Schritte · %2$s</item>
+    </plurals>
+    <string name="next_setup_remind_later">Später erinnern</string>
+    <string name="next_setup_stop_title">Nicht mehr erinnern?</string>
+    <string name="next_setup_stop_text">Die Einrichtung erscheint nicht mehr auf der Übersicht. Du kannst sie jederzeit in den Einstellungen unter „Einrichtung“ fortsetzen.</string>
+    <string name="next_setup_stop">Nicht mehr erinnern</string>
     <string name="next_setup_card_title">App einrichten</string>
     <string name="next_setup_card_text">Ein paar Entscheidungen, damit dir die Auswertungen etwas sagen können, %1$s.</string>
 </resources>

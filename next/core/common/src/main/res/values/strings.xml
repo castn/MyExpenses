@@ -1344,6 +1344,15 @@
     <string name="next_setup_done_title">All set</string>
     <string name="next_setup_done_text">Your analyses now have something to tell. Steps you skipped wait for you on the overview.</string>
     <string name="next_setup_to_overview">To the overview</string>
+    <string name="next_setup_name">Setup</string>
+    <plurals name="next_setup_steps_left">
+        <item quantity="one">%1$d step left · %2$s</item>
+        <item quantity="other">%1$d steps left · %2$s</item>
+    </plurals>
+    <string name="next_setup_remind_later">Remind me later</string>
+    <string name="next_setup_stop_title">Stop reminding?</string>
+    <string name="next_setup_stop_text">The setup no longer shows on the overview. You can go on with it at any time in the settings under Setup.</string>
+    <string name="next_setup_stop">Stop reminding</string>
     <string name="next_setup_card_title">Set up the app</string>
     <string name="next_setup_card_text">A few decisions so that the analyses can tell you something, %1$s.</string>
 </resources>
