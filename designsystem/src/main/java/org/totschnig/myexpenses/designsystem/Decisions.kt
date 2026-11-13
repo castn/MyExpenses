@@ -1,5 +1,10 @@
 package org.totschnig.myexpenses.designsystem
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -8,7 +13,15 @@ import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.History
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -18,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
@@ -144,5 +158,84 @@ fun EntryPreview(
                 }
             }
         }
+    }
+}
+
+/**
+ * A few answers that change what follows, e.g. whether the debits of a payee are for one category:
+ * segmented buttons in one row, always in the same place, and below them the part of the answer
+ * [selected], which changes with a short animation
+ *
+ * @param title above the buttons, e.g. "What applies?"
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun <T> SegmentedChoice(
+    options: List<T>,
+    selected: T,
+    onSelect: (T) -> Unit,
+    label: @Composable (T) -> String,
+    modifier: Modifier = Modifier,
+    title: String? = null,
+    content: @Composable (T) -> Unit
+) {
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
+        title?.let { Text(it, style = MaterialTheme.typography.titleSmall) }
+        SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
+            options.forEachIndexed { index, option ->
+                SegmentedButton(
+                    selected = option == selected,
+                    onClick = { onSelect(option) },
+                    shape = SegmentedButtonDefaults.itemShape(index, options.size),
+                    // Without the check mark, so that longer answers keep their room
+                    icon = {},
+                    label = {
+                        Text(
+                            label(option),
+                            maxLines = 2,
+                            textAlign = TextAlign.Center,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                )
+            }
+        }
+        AnimatedContent(
+            targetState = selected,
+            transitionSpec = { fadeIn() togetherWith fadeOut() using SizeTransform(clip = false) },
+            label = "segmented choice"
+        ) { content(it) }
+    }
+}
+
+/**
+ * What was decided last, with a way to change it, e.g. "Last: REWE → Groceries" at the top of the
+ * next decision, so that the user sees what a tap did
+ */
+@Composable
+fun LastDecisionRow(
+    text: String,
+    actionLabel: String,
+    onAction: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Icon(
+            Icons.Outlined.History,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(18.dp)
+        )
+        Text(
+            text,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier
+                .weight(1f)
+                .padding(start = Spacing.small)
+        )
+        TextButton(onClick = onAction) { Text(actionLabel) }
     }
 }

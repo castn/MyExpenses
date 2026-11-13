@@ -1078,6 +1078,34 @@ private fun GuideShowcase() {
                     Button(onClick = {}) { Text("Choose") }
                 }
             )
+            LastDecisionRow("Last decision row: REWE → Groceries", "Change", onAction = {})
+            var answer by remember { mutableStateOf("One category") }
+            SegmentedChoice(
+                options = listOf("One category", "Different", "Don't know"),
+                selected = answer,
+                onSelect = { answer = it },
+                label = { it },
+                title = "Segmented choice"
+            ) { selected ->
+                if (selected == "One category") {
+                    Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
+                        FormPickerField(
+                            label = "Category",
+                            value = "Groceries",
+                            onClick = {},
+                            supportingText = "Suggestion"
+                        )
+                        FormPickerField(
+                            label = "Category",
+                            value = "",
+                            onClick = {},
+                            placeholder = "Choose category"
+                        )
+                    }
+                } else {
+                    Text("The part of \"$selected\"", style = MaterialTheme.typography.bodyMedium)
+                }
+            }
             SelectionBar("1 chosen", actionLabel = "Choose category", onAction = {}, onCancel = {})
             DetailCard {
                 SelectableEntryRow(
