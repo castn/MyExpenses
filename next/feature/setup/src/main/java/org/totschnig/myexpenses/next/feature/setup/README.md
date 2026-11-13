@@ -1,7 +1,8 @@
 # Setup
 
 The screens of the guided setup after the first start. The logic is in `:next:data:setup` (see its
-README): which payees come first, how much of the money has a category, time estimates, progress.
+README): which steps there are, which payees come first, how much of the money has a category,
+time estimates, progress.
 
 ## Pages
 
@@ -10,11 +11,12 @@ README): which payees come first, how much of the money has a category, time est
 | Page | What it shows |
 | --- | --- |
 | `Start` | what the setup brings, the steps with what they take (`GuideStepRow`), "Get started" or "Go on", "Skip setup" closes it for good |
+| `Income` | the regular incomes to confirm and the choice of the salary the shell hands in (`incomes`), finish or skip; only if incomes were found |
 | `Categories` | `GuideProgressHeader` with the share of the money with a category, a mark at 80 % and the time left; first the backlog question (`Banner`), then one payee after the other (`DecisionCard`), at the target "Next" or "Go on" |
 | `Transactions` | the debits without category of one payee, through the `FixedTransactions` of the shell (`SetupTransactions`); it leaves once they all have a category |
 | `Differs` | the debits without category of one payee with checkboxes ("Different"), to give those that belong together a category without a rule; it leaves once they all have one |
 | `Automatic` | how many of the recent debits now get their category without asking |
-| `Contracts` | the suggestions of contracts the shell hands in (`contracts`), finish or skip |
+| `Contracts` | the suggestions of contracts the shell hands in (`contracts`), finish or skip; `Income` and `Contracts` share `SetupSectionPage` |
 | `Done` | back to the overview; the setup is closed if no step is left |
 
 A step that is over leaves the back stack, so that back returns to the overview of the steps.

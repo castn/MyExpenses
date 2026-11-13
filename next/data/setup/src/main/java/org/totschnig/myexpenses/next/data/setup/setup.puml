@@ -16,7 +16,7 @@ package "cash" {
   database "CashStore\n(cash account, since)" as cashStore
 }
 package "contracts (optional)" {
-  artifact "SetupContracts\n(from NextData)" as setupContracts
+  artifact "SetupContracts\n(contracts, incomes,\nfrom NextData)" as setupContracts
 }
 
 package "setup" {
@@ -46,7 +46,7 @@ repository --> decision
 cashRepository --> cashStore
 Ledger --> cashRepository : withdrawals\nto move
 categoryRepository --> categoryStore
-setupContracts --> repository : steps
+setupContracts --> repository : steps:\nincome, contracts
 store --> repository : progress
 store --> pace
 

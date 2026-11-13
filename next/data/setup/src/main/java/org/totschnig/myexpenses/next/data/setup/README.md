@@ -2,7 +2,8 @@
 
 After the first start and the import from the bank, most transactions have no category, and the
 analyses cannot say much yet. The guided setup leads the user through a few decisions that make
-them useful: first categories, by payee and the most money first, then the contracts detected. It
+them useful: first the regular incomes and the salary, then categories, by payee and the most money
+first, then the contracts detected. It
 is started from a card on the overview, never on its own, and every step and the whole setup can
 be skipped.
 
@@ -51,11 +52,15 @@ comes back (`Categorization`), and an unclear payee is asked about again.
 the last three months, how many `CategorySuggester` would categorize without asking if they came
 again.
 
-## Contracts step
+## Income and contracts steps
 
 The contracts area may be left out (`feat-optional-area`). The shell hands in `SetupContracts`:
-`Available` with the number of contracts detected and not confirmed, or `None`, and then there is
-no contracts step (`SetupRepository.steps`).
+`Available` with the number of contracts detected and not confirmed, of regular incomes detected
+and not confirmed (`incomeSuggestions`) and of those confirmed (`incomes`), or `None`, and then
+there is neither step (`SetupRepository.steps`). The income step comes first, and only if there are
+incomes (`hasIncomes`): one decision per income to confirm and one for the salary
+(`incomeDecisions`), since the monthly balance runs from one salary to the next. The screens of
+both steps come from the contracts area as well.
 
 ## Time and progress
 
