@@ -166,6 +166,24 @@ class SetupRepositoryTest {
     }
 
     @Test
+    fun putsTheCardAwayForThisStartAndRemembersIt() = withTestDataStore { dataStore ->
+        runTest {
+            val source = FakeLedgerSource(ledger = ledger, today = today)
+            val categories =
+                CategoryRepository(source, CategoryStore(dataStore), FakeWriting(), backgroundScope)
+            val store = SetupStore(dataStore)
+            val repository = SetupRepository(source, categories, store, backgroundScope)
+            assertEquals(false, repository.dismissedThisStart.value)
+            repository.dismiss(decisions = 4)
+            assertEquals(true, repository.dismissedThisStart.value)
+            assertEquals(1, store.progress.first().reminder.dismissals)
+            // A new start of the app knows only what was stored
+            val restarted = SetupRepository(source, categories, store, backgroundScope)
+            assertEquals(false, restarted.dismissedThisStart.value)
+        }
+    }
+
+    @Test
     fun appliesTheBacklogOnlyIfTheUserAgrees() = withTestDataStore { dataStore ->
         runTest {
             val catalog = Catalog(listOf(CategoryInfo(10, "Wohnen", "Wohnen")))

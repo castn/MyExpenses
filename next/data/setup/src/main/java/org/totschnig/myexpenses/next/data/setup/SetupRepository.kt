@@ -4,7 +4,9 @@ import java.time.LocalDate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
@@ -94,6 +96,17 @@ class SetupRepository(
             .shareWhileShown(scope)
 
     val progress: Flow<SetupProgress> = store.progress
+
+    private val _dismissedThisStart = MutableStateFlow(false)
+
+    /** The card on the overview was put away since the app started, kept for the process only */
+    val dismissedThisStart: StateFlow<Boolean> = _dismissedThisStart
+
+    /** The card on the overview was put away with [decisions] open, see [SetupReminder.dismissed] */
+    suspend fun dismiss(decisions: Int) {
+        _dismissedThisStart.value = true
+        store.dismiss(ledgerSource.today.first(), decisions)
+    }
 
     /** The steps there are: contracts only with [contracts], incomes only if it found some */
     val steps: Flow<List<SetupStep>> = contracts.map { contracts ->
