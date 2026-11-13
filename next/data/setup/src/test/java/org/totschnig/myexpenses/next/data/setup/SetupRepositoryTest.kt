@@ -188,7 +188,7 @@ class SetupRepositoryTest {
     }
 
     @Test
-    fun offersTheContractsStepOnlyWithContracts() = withTestDataStore { dataStore ->
+    fun offersTheContractsAndIncomeStepsOnlyWithContracts() = withTestDataStore { dataStore ->
         runTest {
             val source = FakeLedgerSource()
             val categories =
@@ -198,7 +198,11 @@ class SetupRepositoryTest {
             assertEquals(listOf(SetupStep.CATEGORIES), without.steps.first())
             val contracts = flowOf(SetupContracts.Available(suggestions = 3))
             val with = SetupRepository(source, categories, store, backgroundScope, contracts)
-            assertEquals(SetupStep.entries, with.steps.first())
+            assertEquals(listOf(SetupStep.CATEGORIES, SetupStep.CONTRACTS), with.steps.first())
+            // The income step comes first, once incomes were found
+            val incomes = flowOf(SetupContracts.Available(suggestions = 3, incomeSuggestions = 1))
+            val all = SetupRepository(source, categories, store, backgroundScope, incomes)
+            assertEquals(SetupStep.entries, all.steps.first())
         }
     }
 }

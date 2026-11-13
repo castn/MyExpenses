@@ -1259,8 +1259,13 @@
     <string name="next_onboarding_start">Los geht\'s</string>
     <string name="next_setup_title">Einrichten</string>
     <string name="next_setup_intro">Ein paar Entscheidungen, und die App kann dir viel mehr über dein Geld sagen. Du kannst jederzeit aufhören und später von der Übersicht aus weitermachen.</string>
+    <string name="next_setup_step_income">Einnahmen</string>
     <string name="next_setup_step_categories">Kategorien</string>
     <string name="next_setup_step_contracts">Verträge</string>
+    <plurals name="next_setup_decisions">
+        <item quantity="one">%d Entscheidung</item>
+        <item quantity="other">%d Entscheidungen</item>
+    </plurals>
     <plurals name="next_setup_payees">
         <item quantity="one">%d Empfänger</item>
         <item quantity="other">%d Empfänger</item>
@@ -1333,6 +1338,7 @@
     <string name="next_setup_automatic_title">Ab jetzt automatisch</string>
     <string name="next_setup_automatic_text">%1$s deiner Ausgaben der letzten drei Monate bekämen jetzt ohne Nachfrage ihre Kategorie.</string>
     <string name="next_setup_automatic_hint">Je mehr du entscheidest, desto mehr erledigt die App selbst. Neue Buchungen eines Empfängers, über den du entschieden hast, bekommen die Kategorie gleich nach dem Import.</string>
+    <string name="next_setup_income_text">Bestätige deine regelmäßigen Einnahmen und wähle dein Gehalt: Die Monatsübersicht läuft von einem Gehalt zum nächsten.</string>
     <string name="next_setup_contracts_text">Bestätige die regelmäßigen Zahlungen, die die App gefunden hat, damit sie in deiner Monatsbilanz zählen.</string>
     <string name="next_setup_finish_step">Fertig</string>
     <string name="next_setup_done_title">Alles eingerichtet</string>

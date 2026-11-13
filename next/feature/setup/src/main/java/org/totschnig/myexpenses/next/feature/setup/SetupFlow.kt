@@ -4,21 +4,26 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.data.setup.SetupStep
 
 /**
  * The guided setup after the first start, on a back stack of its own ([SetupKey]): the overview of
- * the steps, categories by payee up to the target and what that brought, the contracts and the end
+ * the steps, the regular incomes, categories by payee up to the target and what that brought, the
+ * contracts and the end
  *
  * @param currency the home currency, all amounts of the setup are in it
  * @param onClose leaves the setup; it is offered again from the overview unless it was closed
  * @param contracts the suggestions of contracts to confirm, from the contracts area; without it
  * there is no contracts step
+ * @param incomes the regular incomes to confirm and the choice of the salary, from the contracts
+ * area; without it the income step shows only its text
  * @param transactions shows the transactions of a payee; without it the cards show only the last
  * ones
  */
@@ -29,6 +34,7 @@ fun SetupFlow(
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
     contracts: (@Composable ColumnScope.() -> Unit)? = null,
+    incomes: (@Composable ColumnScope.() -> Unit)? = null,
     transactions: SetupTransactions? = null
 ) {
     val overview by viewModel.overview.collectAsStateWithLifecycle()
@@ -98,15 +104,30 @@ fun SetupFlow(
                     }
                 )
             }
+            entry<SetupKey.Income> {
+                SetupSectionPage(
+                    title = stringResource(R.string.next_setup_step_income),
+                    text = stringResource(R.string.next_setup_income_text),
+                    onBack = { backStack.remove(SetupKey.Income) },
+                    onEnd = { skipped ->
+                        viewModel.endStep(SetupStep.INCOME, skipped)
+                        backStack.remove(SetupKey.Income)
+                        goOnAfter(SetupStep.INCOME)
+                    },
+                    section = incomes
+                )
+            }
             entry<SetupKey.Contracts> {
-                SetupContractsPage(
+                SetupSectionPage(
+                    title = stringResource(R.string.next_setup_step_contracts),
+                    text = stringResource(R.string.next_setup_contracts_text),
                     onBack = { backStack.remove(SetupKey.Contracts) },
                     onEnd = { skipped ->
                         viewModel.endStep(SetupStep.CONTRACTS, skipped)
                         backStack.remove(SetupKey.Contracts)
                         goOnAfter(SetupStep.CONTRACTS)
                     },
-                    contracts = contracts
+                    section = contracts
                 )
             }
             entry<SetupKey.Done> {
@@ -123,6 +144,7 @@ fun SetupFlow(
 }
 
 private fun SetupStep.key(): SetupKey = when (this) {
+    SetupStep.INCOME -> SetupKey.Income
     SetupStep.CATEGORIES -> SetupKey.Categories
     SetupStep.CONTRACTS -> SetupKey.Contracts
 }

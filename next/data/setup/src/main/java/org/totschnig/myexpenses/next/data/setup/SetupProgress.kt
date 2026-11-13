@@ -2,6 +2,9 @@ package org.totschnig.myexpenses.next.data.setup
 
 /** The steps of the guided setup, in their order */
 enum class SetupStep {
+    /** Confirming the regular incomes detected and choosing the salary, see [SetupContracts] */
+    INCOME,
+
     /** Categories for the payees with the most money, see [categoryQueue] */
     CATEGORIES,
 

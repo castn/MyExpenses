@@ -9,6 +9,10 @@ sealed interface SetupKey : NavKey {
     @Serializable
     data object Start : SetupKey
 
+    /** Confirming the regular incomes and choosing the salary */
+    @Serializable
+    data object Income : SetupKey
+
     @Serializable
     data object Categories : SetupKey
 

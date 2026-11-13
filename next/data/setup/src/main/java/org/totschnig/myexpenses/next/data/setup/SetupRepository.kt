@@ -95,10 +95,15 @@ class SetupRepository(
 
     val progress: Flow<SetupProgress> = store.progress
 
-    /** The steps there are, the contracts step only with [contracts] */
+    /** The steps there are: contracts only with [contracts], incomes only if it found some */
     val steps: Flow<List<SetupStep>> = contracts.map { contracts ->
+        val available = contracts as? SetupContracts.Available
         SetupStep.entries.filter {
-            it != SetupStep.CONTRACTS || contracts is SetupContracts.Available
+            when (it) {
+                SetupStep.INCOME -> available?.hasIncomes == true
+                SetupStep.CATEGORIES -> true
+                SetupStep.CONTRACTS -> available != null
+            }
         }
     }.distinctUntilChanged()
 

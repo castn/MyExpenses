@@ -34,8 +34,10 @@ class SetupStoreTest {
 
     @Test
     fun goesOnWithTheFirstStepNotSkipped() {
-        val all = SetupStep.entries
+        val all = listOf(SetupStep.CATEGORIES, SetupStep.CONTRACTS)
         assertEquals(SetupStep.CATEGORIES, SetupProgress().next(all))
+        // The income step comes first when there is one
+        assertEquals(SetupStep.INCOME, SetupProgress().next(SetupStep.entries))
         val skipped = SetupProgress(skipped = setOf(SetupStep.CATEGORIES))
         assertEquals(SetupStep.CONTRACTS, skipped.next(all))
         // Without contracts the skipped step is offered again

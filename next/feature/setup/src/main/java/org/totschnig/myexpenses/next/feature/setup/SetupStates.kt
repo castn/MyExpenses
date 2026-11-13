@@ -56,6 +56,7 @@ fun setupOverview(
     val next = progress.next(available)
     val steps = available.map { step ->
         val decisions = when (step) {
+            SetupStep.INCOME -> (contracts as? SetupContracts.Available)?.incomeDecisions ?: 0
             SetupStep.CATEGORIES -> queue.required.size + if (queue.isCashRequired) 1 else 0
             SetupStep.CONTRACTS -> (contracts as? SetupContracts.Available)?.suggestions ?: 0
         }

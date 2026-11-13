@@ -61,10 +61,12 @@ internal fun SetupStartPage(
 @Composable
 private fun StepRow(index: Int, info: StepInfo, onClick: (() -> Unit)?) {
     val title = when (info.step) {
+        SetupStep.INCOME -> R.string.next_setup_step_income
         SetupStep.CATEGORIES -> R.string.next_setup_step_categories
         SetupStep.CONTRACTS -> R.string.next_setup_step_contracts
     }
     val decisions = when (info.step) {
+        SetupStep.INCOME -> R.plurals.next_setup_decisions
         SetupStep.CATEGORIES -> R.plurals.next_setup_payees
         SetupStep.CONTRACTS -> R.plurals.next_setup_contracts
     }

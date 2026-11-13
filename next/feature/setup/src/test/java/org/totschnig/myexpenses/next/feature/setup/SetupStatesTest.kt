@@ -44,7 +44,7 @@ class SetupStatesTest {
 
     @Test
     fun overviewTellsWhatEachStepTakes() {
-        val all = SetupStep.entries
+        val all = listOf(SetupStep.CATEGORIES, SetupStep.CONTRACTS)
         val overview = setupOverview(all, SetupProgress(), queue, SetupContracts.Available(3))
         assertEquals(SetupStep.CATEGORIES, overview.next)
         assertEquals(listOf(StepState.CURRENT, StepState.OPEN), overview.steps.map { it.state })
@@ -54,13 +54,27 @@ class SetupStatesTest {
     }
 
     @Test
+    fun overviewAsksAboutTheIncomesAndTheSalaryFirst() {
+        val contracts = SetupContracts.Available(3, incomeSuggestions = 2, incomes = 1)
+        val overview = setupOverview(SetupStep.entries, SetupProgress(), queue, contracts)
+        assertEquals(SetupStep.INCOME, overview.next)
+        // Two incomes to confirm and the salary
+        assertEquals(listOf(3, 2, 3), overview.steps.map { it.decisions })
+    }
+
+    @Test
     fun overviewCountsNothingForDoneSteps() {
         val progress = SetupProgress(
             finished = setOf(SetupStep.CATEGORIES),
             skipped = setOf(SetupStep.CONTRACTS)
         )
         val overview =
-            setupOverview(SetupStep.entries, progress, queue, SetupContracts.Available(3))
+            setupOverview(
+                listOf(SetupStep.CATEGORIES, SetupStep.CONTRACTS),
+                progress,
+                queue,
+                SetupContracts.Available(3)
+            )
         assertEquals(listOf(StepState.DONE, StepState.CURRENT), overview.steps.map { it.state })
         assertEquals(listOf(0, 3), overview.steps.map { it.decisions })
     }
@@ -152,7 +166,7 @@ class SetupStatesTest {
         assertNull(done.cashCard)
         assertEquals(0.8, done.share, 0.001)
         val overview = setupOverview(
-            SetupStep.entries,
+            listOf(SetupStep.CATEGORIES),
             SetupProgress(),
             withCash,
             SetupContracts.None

@@ -47,28 +47,31 @@ internal fun SetupAutomaticPage(viewModel: SetupViewModel, onBack: () -> Unit, o
 }
 
 /**
- * The contracts step around the suggestions of contracts the contracts area hands in
+ * A step around what another area hands in, e.g. the suggestions of contracts for the contracts
+ * step or the regular incomes for the income step
  *
  * @param onEnd with whether the step was skipped
  */
 @Composable
-internal fun SetupContractsPage(
+internal fun SetupSectionPage(
+    title: String,
+    text: String,
     onBack: () -> Unit,
     onEnd: (skipped: Boolean) -> Unit,
-    contracts: (@Composable ColumnScope.() -> Unit)?
+    section: (@Composable ColumnScope.() -> Unit)?
 ) {
     Column(Modifier.fillMaxSize()) {
         DetailScaffold(
             onBack = onBack,
-            title = stringResource(R.string.next_setup_step_contracts),
+            title = title,
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                stringResource(R.string.next_setup_contracts_text),
+                text,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = Spacing.content)
             )
-            contracts?.invoke(this)
+            section?.invoke(this)
         }
         IntroBottomBar(
             nextLabel = stringResource(R.string.next_setup_finish_step),

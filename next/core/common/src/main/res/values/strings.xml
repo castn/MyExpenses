@@ -1259,8 +1259,13 @@
     <string name="next_onboarding_start">Get started</string>
     <string name="next_setup_title">Set up</string>
     <string name="next_setup_intro">A few decisions, and the app can tell you much more about your money. You can stop at any time and go on later from the overview.</string>
+    <string name="next_setup_step_income">Income</string>
     <string name="next_setup_step_categories">Categories</string>
     <string name="next_setup_step_contracts">Contracts</string>
+    <plurals name="next_setup_decisions">
+        <item quantity="one">%d decision</item>
+        <item quantity="other">%d decisions</item>
+    </plurals>
     <plurals name="next_setup_payees">
         <item quantity="one">%d payee</item>
         <item quantity="other">%d payees</item>
@@ -1333,6 +1338,7 @@
     <string name="next_setup_automatic_title">Automatic from now on</string>
     <string name="next_setup_automatic_text">%1$s of your expenses of the last three months would now get their category without asking.</string>
     <string name="next_setup_automatic_hint">The more you decide, the more the app does by itself. New transactions of a payee you decided on get the category right after the import.</string>
+    <string name="next_setup_income_text">Confirm your regular incomes and choose your salary: the monthly balance runs from one salary to the next.</string>
     <string name="next_setup_contracts_text">Confirm the regular payments the app found, so that they count in your monthly balance.</string>
     <string name="next_setup_finish_step">Done</string>
     <string name="next_setup_done_title">All set</string>
