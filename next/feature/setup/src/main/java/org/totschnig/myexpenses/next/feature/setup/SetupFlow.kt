@@ -67,6 +67,7 @@ fun SetupFlow(
                     onShowTransactions = transactions?.let {
                         { payee -> backStack.add(SetupKey.Transactions(payee.key, payee.name)) }
                     },
+                    onDiffers = { payee -> backStack.add(SetupKey.Differs(payee.key, payee.name)) },
                     onSkip = {
                         viewModel.endStep(SetupStep.CATEGORIES, skipped = true)
                         backStack.remove(SetupKey.Categories)
@@ -83,6 +84,9 @@ fun SetupFlow(
                 transactions?.let {
                     SetupTransactionsPage(viewModel, it, key, onBack = { backStack.remove(key) })
                 }
+            }
+            entry<SetupKey.Differs> { key ->
+                SetupDiffersPage(viewModel, currency, key, onBack = { backStack.remove(key) })
             }
             entry<SetupKey.Automatic> {
                 SetupAutomaticPage(

@@ -1305,6 +1305,12 @@
     <string name="next_setup_unclear">Don\'t know</string>
     <string name="next_setup_later">Later</string>
     <string name="next_setup_back">Change last decision</string>
+    <string name="next_setup_differs">Different</string>
+    <string name="next_setup_differs_text">Choose the transactions that belong together and give them a category. This applies only to them, later transactions of the payee are asked again.</string>
+    <plurals name="next_setup_transactions_chosen">
+        <item quantity="one">%d transaction chosen</item>
+        <item quantity="other">%d transactions chosen</item>
+    </plurals>
     <string name="next_setup_target_title">Most of your spending has a category</string>
     <string name="next_setup_target_text">That is enough for the analyses. You can go on with the other payees, now or later.</string>
     <string name="next_setup_no_more_title">No more payees to decide on</string>

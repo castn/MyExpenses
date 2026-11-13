@@ -51,6 +51,7 @@ import org.totschnig.myexpenses.next.data.setup.TARGET_SHARE
  * then one payee after the other up to the target, with what helps to decide
  *
  * @param onShowTransactions shows the transactions of a payee, if the app can
+ * @param onDiffers shows the transactions of a payee to give them different categories
  */
 @Composable
 internal fun SetupCategoriesPage(
@@ -58,6 +59,7 @@ internal fun SetupCategoriesPage(
     currency: CurrencyInfo,
     onBack: () -> Unit,
     onShowTransactions: ((Counterpart) -> Unit)?,
+    onDiffers: (Counterpart) -> Unit,
     onSkip: () -> Unit,
     onFinish: () -> Unit
 ) {
@@ -112,7 +114,14 @@ internal fun SetupCategoriesPage(
             when {
                 current.backlog > 0 -> BacklogQuestion(current.backlog, viewModel)
 
-                card != null -> PayeeDecision(card, always, currency, viewModel, onShowTransactions)
+                card != null -> PayeeDecision(
+                    card,
+                    always,
+                    currency,
+                    viewModel,
+                    onShowTransactions,
+                    onDiffers
+                )
 
                 current.isTargetReached || !current.hasSkipped -> ActionCard(
                     icon = Icons.Outlined.CheckCircle,
@@ -181,7 +190,8 @@ private fun PayeeDecision(
     always: Boolean,
     currency: CurrencyInfo,
     actions: SetupActions,
-    onShowTransactions: ((Counterpart) -> Unit)?
+    onShowTransactions: ((Counterpart) -> Unit)?,
+    onDiffers: (Counterpart) -> Unit
 ) {
     val amount = rememberAmountFormat(currency)
     val month = rememberMonthFormatter()
@@ -244,6 +254,9 @@ private fun PayeeDecision(
             )
         },
         actions = {
+            TextButton(onClick = { onDiffers(payee.counterpart) }) {
+                Text(stringResource(R.string.next_setup_differs))
+            }
             TextButton(onClick = { actions.leave(card, unclear = true) }) {
                 Text(stringResource(R.string.next_setup_unclear))
             }

@@ -1305,6 +1305,12 @@
     <string name="next_setup_unclear">Weiß ich nicht</string>
     <string name="next_setup_later">Später</string>
     <string name="next_setup_back">Letzte Entscheidung ändern</string>
+    <string name="next_setup_differs">Unterschiedlich</string>
+    <string name="next_setup_differs_text">Wähle die Buchungen, die zusammengehören, und gib ihnen eine Kategorie. Das gilt nur für sie, spätere Buchungen des Empfängers werden wieder gefragt.</string>
+    <plurals name="next_setup_transactions_chosen">
+        <item quantity="one">%d Buchung gewählt</item>
+        <item quantity="other">%d Buchungen gewählt</item>
+    </plurals>
     <string name="next_setup_target_title">Der Großteil deiner Ausgaben hat eine Kategorie</string>
     <string name="next_setup_target_text">Das reicht für die Auswertungen. Du kannst mit den übrigen Empfängern weitermachen, jetzt oder später.</string>
     <string name="next_setup_no_more_title">Keine Empfänger mehr offen</string>
