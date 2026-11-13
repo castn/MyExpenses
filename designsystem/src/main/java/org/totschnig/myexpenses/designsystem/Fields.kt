@@ -137,7 +137,9 @@ fun FormTextField(
  * tapping it calls [onClick]
  *
  * @param placeholder shown while [value] is empty, e.g. "Choose category"
- * @param supportingText below the field, e.g. that the value is a suggestion
+ * @param supportingText below the field, e.g. that the value is a suggestion; in the color of errors
+ * with [isError]
+ * @param isError e.g. while it is empty but needed to go on
  */
 @Composable
 fun FormPickerField(
@@ -147,7 +149,8 @@ fun FormPickerField(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     placeholder: String? = null,
-    supportingText: String? = null
+    supportingText: String? = null,
+    isError: Boolean = false
 ) {
     Box(modifier.fillMaxWidth()) {
         OutlinedTextField(
@@ -159,6 +162,7 @@ fun FormPickerField(
             supportingText = supportingText?.let { { Text(it) } },
             readOnly = true,
             enabled = enabled,
+            isError = isError,
             singleLine = true,
             trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null) }
         )

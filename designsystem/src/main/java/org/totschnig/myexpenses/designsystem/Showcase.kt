@@ -1101,6 +1101,16 @@ private fun GuideShowcase() {
                             onClick = {},
                             placeholder = "Choose category"
                         )
+                        Highlighted(trigger = 0) {
+                            FormPickerField(
+                                label = "Category",
+                                value = "",
+                                onClick = {},
+                                placeholder = "Choose category",
+                                supportingText = "Missing, highlighted on Next",
+                                isError = true
+                            )
+                        }
                     }
                 } else {
                     Text("The part of \"$selected\"", style = MaterialTheme.typography.bodyMedium)

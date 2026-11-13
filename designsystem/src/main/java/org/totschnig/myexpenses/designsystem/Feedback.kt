@@ -40,6 +40,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -484,3 +487,37 @@ fun Highlighted(
         content = content
     )
 }
+
+/**
+ * Lets its content light up for a moment each time [trigger] grows, after scrolling it into view,
+ * e.g. a field that is still empty when the user wants to go on; nothing while [trigger] is 0.
+ * Changes of the content, e.g. an error that appears, are read out by screen readers.
+ */
+@Composable
+fun Highlighted(
+    trigger: Int,
+    modifier: Modifier = Modifier,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    val requester = remember { BringIntoViewRequester() }
+    val light = remember { Animatable(0f) }
+    LaunchedEffect(trigger) {
+        if (trigger == 0) return@LaunchedEffect
+        requester.bringIntoView()
+        light.snapTo(1f)
+        delay(FLASH_HOLD_MILLIS)
+        light.animateTo(0f, tween(durationMillis = FLASH_FADE_MILLIS))
+    }
+    Column(
+        modifier
+            .bringIntoViewRequester(requester)
+            .clip(Shapes.tile)
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.16f * light.value))
+            .semantics { liveRegion = LiveRegionMode.Polite },
+        content = content
+    )
+}
+
+/** How long a field asked for by [Highlighted] stays lit before it fades, and how long it fades */
+private const val FLASH_HOLD_MILLIS = 300L
+private const val FLASH_FADE_MILLIS = 900
