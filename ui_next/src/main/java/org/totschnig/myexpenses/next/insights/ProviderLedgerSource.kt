@@ -57,6 +57,7 @@ import org.totschnig.myexpenses.provider.KEY_DATE
 import org.totschnig.myexpenses.provider.KEY_IBAN
 import org.totschnig.myexpenses.provider.KEY_ICON
 import org.totschnig.myexpenses.provider.KEY_LABEL
+import org.totschnig.myexpenses.provider.KEY_METHOD_LABEL
 import org.totschnig.myexpenses.provider.KEY_ORIGINAL_CURRENCY
 import org.totschnig.myexpenses.provider.KEY_PARENTID
 import org.totschnig.myexpenses.provider.KEY_PATH
@@ -301,6 +302,7 @@ class ProviderLedgerSource(
         payeeId = getLongOrNull(KEY_PAYEEID),
         payeeName = getStringOrNull(KEY_PAYEE_NAME),
         comment = getStringOrNull(KEY_COMMENT),
+        methodLabel = getStringOrNull(KEY_METHOD_LABEL),
         categoryId = getLongOrNull(KEY_CATID),
         categoryPath = getStringOrNull(KEY_PATH),
         categoryIcon = getStringOrNull(KEY_ICON),
@@ -332,6 +334,7 @@ class ProviderLedgerSource(
             KEY_PAYEEID,
             KEY_PAYEE_NAME,
             KEY_COMMENT,
+            KEY_METHOD_LABEL,
             KEY_CATID,
             KEY_PATH,
             KEY_ICON,

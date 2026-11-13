@@ -34,6 +34,11 @@ data class LedgerTransaction(
     val payeeId: Long? = null,
     val payeeName: String? = null,
     val comment: String? = null,
+    /**
+     * The label of the payment method. A bank import keeps the booking text of the bank as payment
+     * method, e.g. "BARGELDAUSZAHLUNG" or "LASTSCHRIFT", see [isCashWithdrawal].
+     */
+    val methodLabel: String? = null,
     val categoryId: Long? = null,
     val categoryPath: String? = null,
     val categoryIcon: String? = null,

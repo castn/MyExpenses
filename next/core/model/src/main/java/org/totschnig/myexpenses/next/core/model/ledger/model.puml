@@ -25,6 +25,7 @@ class LedgerTransaction {
   homeAmount: home currency
   currency, originalCurrency
   payeeId, payeeName, comment
+  methodLabel: booking text of the bank
   categoryId, categoryPath, templateId
   transferAccountId: transfer in the app
   targetAccountId: movement to an own account
