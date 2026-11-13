@@ -1,11 +1,29 @@
 package org.totschnig.myexpenses.next.data.setup
 
+import java.time.LocalDate
 import kotlinx.coroutines.flow.first
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.totschnig.myexpenses.next.core.common.withTestDataStore
 
 class SetupStoreTest {
+
+    @Test
+    fun storesWhatTheUserDidWithTheCard() = withTestDataStore { dataStore ->
+        val store = SetupStore(dataStore)
+        val today = LocalDate.of(2026, 11, 13)
+        store.markOpened()
+        repeat(3) { store.dismiss(today, decisions = 4) }
+        val expected = SetupReminder(
+            opened = true,
+            dismissals = 3,
+            hiddenUntil = today.plusDays(3),
+            decisionsWhenDismissed = 4
+        )
+        assertEquals(expected, store.progress.first().reminder)
+        store.reset()
+        assertEquals(SetupReminder(), store.progress.first().reminder)
+    }
 
     @Test
     fun storesTheProgress() = withTestDataStore { dataStore ->

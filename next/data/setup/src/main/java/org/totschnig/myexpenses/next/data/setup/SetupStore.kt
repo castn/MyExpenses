@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
+import java.time.LocalDate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -21,7 +22,13 @@ class SetupStore(private val dataStore: DataStore<Preferences>) {
             finished = stepsOf(preferences[KEY_FINISHED]),
             skipped = stepsOf(preferences[KEY_SKIPPED]),
             closed = preferences[KEY_CLOSED] ?: false,
-            pace = Pace(preferences[KEY_PACE_DECISIONS] ?: 0, preferences[KEY_PACE_MILLIS] ?: 0)
+            pace = Pace(preferences[KEY_PACE_DECISIONS] ?: 0, preferences[KEY_PACE_MILLIS] ?: 0),
+            reminder = SetupReminder(
+                opened = preferences[KEY_OPENED] ?: false,
+                dismissals = preferences[KEY_DISMISSALS] ?: 0,
+                hiddenUntil = preferences[KEY_HIDDEN_UNTIL]?.let(LocalDate::ofEpochDay),
+                decisionsWhenDismissed = preferences[KEY_DISMISSED_DECISIONS] ?: 0
+            )
         )
     }.distinctUntilChanged()
 
@@ -43,6 +50,24 @@ class SetupStore(private val dataStore: DataStore<Preferences>) {
         dataStore.edit { it[KEY_CLOSED] = true }
     }
 
+    /** The setup was opened, from now on its card on the overview is small */
+    suspend fun markOpened() {
+        dataStore.edit { it[KEY_OPENED] = true }
+    }
+
+    /** The card on the overview was put away on [today] with [decisions] open, see [SetupReminder.dismissed] */
+    suspend fun dismiss(today: LocalDate, decisions: Int) {
+        dataStore.edit {
+            val reminder = SetupReminder(
+                dismissals = it[KEY_DISMISSALS] ?: 0
+            ).dismissed(today, decisions)
+            it[KEY_DISMISSALS] = reminder.dismissals
+            reminder.hiddenUntil?.let { until -> it[KEY_HIDDEN_UNTIL] = until.toEpochDay() }
+                ?: it.remove(KEY_HIDDEN_UNTIL)
+            it[KEY_DISMISSED_DECISIONS] = decisions
+        }
+    }
+
     /** A decision took [millis], see [Pace.with] */
     suspend fun recordDecision(millis: Long) {
         dataStore.edit {
@@ -52,12 +77,16 @@ class SetupStore(private val dataStore: DataStore<Preferences>) {
         }
     }
 
-    /** Offers the setup again from the start; the measured pace is kept */
+    /** Offers the setup again from the start, its card included; the measured pace is kept */
     suspend fun reset() {
         dataStore.edit {
             it.remove(KEY_FINISHED)
             it.remove(KEY_SKIPPED)
             it.remove(KEY_CLOSED)
+            it.remove(KEY_OPENED)
+            it.remove(KEY_DISMISSALS)
+            it.remove(KEY_HIDDEN_UNTIL)
+            it.remove(KEY_DISMISSED_DECISIONS)
         }
     }
 
@@ -68,6 +97,12 @@ class SetupStore(private val dataStore: DataStore<Preferences>) {
         val KEY_CLOSED = booleanPreferencesKey("next_setup_closed")
         val KEY_PACE_DECISIONS = intPreferencesKey("next_setup_pace_decisions")
         val KEY_PACE_MILLIS = longPreferencesKey("next_setup_pace_millis")
+        val KEY_OPENED = booleanPreferencesKey("next_setup_opened")
+        val KEY_DISMISSALS = intPreferencesKey("next_setup_dismissals")
+
+        /** Epoch day */
+        val KEY_HIDDEN_UNTIL = longPreferencesKey("next_setup_hidden_until")
+        val KEY_DISMISSED_DECISIONS = intPreferencesKey("next_setup_dismissed_decisions")
 
         /** Names no longer known are left out */
         fun stepsOf(names: Set<String>?): Set<SetupStep> =
