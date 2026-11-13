@@ -135,6 +135,9 @@ fun FormTextField(
 /**
  * A field of a form whose value is picked in a dialog, e.g. a date: looks like [FormTextField],
  * tapping it calls [onClick]
+ *
+ * @param placeholder shown while [value] is empty, e.g. "Choose category"
+ * @param supportingText below the field, e.g. that the value is a suggestion
  */
 @Composable
 fun FormPickerField(
@@ -142,7 +145,9 @@ fun FormPickerField(
     value: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    placeholder: String? = null,
+    supportingText: String? = null
 ) {
     Box(modifier.fillMaxWidth()) {
         OutlinedTextField(
@@ -150,6 +155,8 @@ fun FormPickerField(
             onValueChange = {},
             modifier = Modifier.fillMaxWidth(),
             label = { Text(label) },
+            placeholder = placeholder?.let { { Text(it) } },
+            supportingText = supportingText?.let { { Text(it) } },
             readOnly = true,
             enabled = enabled,
             singleLine = true,
