@@ -68,9 +68,21 @@ A step shows how long it takes: decisions × seconds per decision (`Pace`). Unti
 `Pace.MIN_DECISIONS` decisions, `Pace.DEFAULT_SECONDS` stands for one, a placeholder until it is
 measured by hand; then the measured pace of the user counts, each decision at most a minute.
 
-`SetupStore` keeps the finished and skipped steps, whether the whole setup is closed, and the pace,
-in the data store, which is part of the backup. `SetupProgress.next` is the step to go on with: the
+`SetupStore` keeps the finished and skipped steps, whether the whole setup is closed, the pace and
+what the user did with its card on the overview (`SetupReminder`), in the data store, which is part of the backup. `SetupProgress.next` is the step to go on with: the
 first one not finished and not skipped, else a skipped one.
 
 `SetupRepository` computes queue and share with a `Memo` each, from the ledger and the decisions
 about categories, and runs once for the process (`NextData.setup`).
+
+## On the overview
+
+`SetupProgress.offer` tells how the overview offers the setup (`SetupOffer`): not at all when it
+is closed or nothing is left to decide; a card that takes the overview over until the setup was
+opened once (`SetupReminder.opened`), so that the first start leads into it; afterwards a small
+card above budgets and balance. Putting the small card away (`SetupRepository.dismiss`) hides it
+until the next start of the app the first two times (`dismissedThisStart`, kept for the process
+only), then for 3, 7 and 14 days (`SetupReminder.dismissed`); it comes back earlier when more is
+left to decide than when it was put away, e.g. after an import. After the longest pause it asks
+whether to stop reminding (`asksToStop`), which closes the setup. `SetupStore.resume`, from the
+settings, shows it again where the user left it; `reset` starts it from the first step.

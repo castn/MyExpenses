@@ -26,8 +26,10 @@ package "setup" {
   artifact AutomaticShare as share
   [SetupRepository] as repository
   artifact "SetupDecision\n(Categorized, Assigned,\nUnclear, Cash, Later)" as decision
-  database "SetupStore\n(steps, pace)" as store
+  database "SetupStore\n(steps, pace,\ncard on the overview)" as store
   artifact "Pace" as pace
+  [offer()] as offerFn
+  artifact SetupOffer as offer
 }
 
 Ledger --> queueFn
@@ -49,5 +51,7 @@ categoryRepository --> categoryStore
 setupContracts --> repository : steps:\nincome, contracts
 store --> repository : progress
 store --> pace
+store --> offerFn : reminder
+offerFn --> offer
 
 @enduml

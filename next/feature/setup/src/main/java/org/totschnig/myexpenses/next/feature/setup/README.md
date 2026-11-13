@@ -59,3 +59,13 @@ of the repository's flows and the visit:
   after a decision finds it.
 - The time of a decision runs from `cardShown` to the decision and goes to `SetupStore.recordDecision`
   (`Pace`); a payee gone back to does not count twice. `clock` is a parameter for tests.
+
+## On the overview
+
+`SetupCard` shows what `SetupViewModel.offer` says: until the setup was opened the big
+`ActionCard` with "Skip setup", while the overview shows nothing else (`takesOverOverview`); then
+an `InviteCard` with the steps left, the time and a ring of the steps done above budgets and
+balance. Its close button puts it away (`SetupCardActions.dismissCard`) or, after the longest
+pause, asks whether to stop reminding (`ConfirmDialog`). Opening the setup marks it as opened
+(`SetupCardActions.opened`). The shell adds "Resume setup" and "Restart setup" to the insights
+settings (`SetupSettings`).
