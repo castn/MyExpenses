@@ -28,6 +28,7 @@ import org.totschnig.myexpenses.next.data.categories.CategoryRepository
 import org.totschnig.myexpenses.next.data.categories.CategoryStore
 import org.totschnig.myexpenses.next.data.categories.CategoryWriting
 import org.totschnig.myexpenses.next.data.setup.Pace
+import org.totschnig.myexpenses.next.data.setup.SetupOffer
 import org.totschnig.myexpenses.next.data.setup.SetupRepository
 import org.totschnig.myexpenses.next.data.setup.SetupStep
 import org.totschnig.myexpenses.next.data.setup.SetupStore
@@ -225,13 +226,18 @@ class SetupViewModelTest {
     }
 
     @Test
-    fun isOfferedUntilClosed() = withTestDataStore { dataStore ->
+    fun offersTheSetupBigThenSmallUntilClosed() = withTestDataStore { dataStore ->
         runTest {
             val viewModel = backgroundScope.setup(dataStore).viewModel
-            viewModel.isOffered.launchIn(backgroundScope)
-            assertEquals(true, viewModel.isOffered.first { it })
+            viewModel.offer.launchIn(backgroundScope)
+            assertEquals(SetupOffer.FULL, viewModel.offer.first { it == SetupOffer.FULL })
+            viewModel.opened()
+            assertEquals(SetupOffer.COMPACT, viewModel.offer.first { it == SetupOffer.COMPACT })
+            // Put away until the next start of the app
+            viewModel.dismissCard()
+            assertEquals(SetupOffer.HIDDEN, viewModel.offer.first { it == SetupOffer.HIDDEN })
             viewModel.close()
-            assertEquals(false, viewModel.isOffered.first { !it })
+            assertEquals(SetupOffer.HIDDEN, viewModel.offer.value)
         }
     }
 

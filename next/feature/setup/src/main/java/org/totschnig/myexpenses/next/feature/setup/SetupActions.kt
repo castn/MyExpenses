@@ -1,5 +1,7 @@
 package org.totschnig.myexpenses.next.feature.setup
 
+import org.totschnig.myexpenses.next.data.setup.SetupOffer
+import org.totschnig.myexpenses.next.data.setup.SetupReminder
 import org.totschnig.myexpenses.next.data.setup.SetupStep
 
 /** What the user can do in the setup */
@@ -61,4 +63,14 @@ interface CashActions {
 
     /** The cash withdrawals come again after the payees ("Später") */
     fun leaveCash()
+}
+
+/** What the user can do with the card of the setup on the overview, see [SetupOffer] */
+interface SetupCardActions {
+
+    /** The setup was opened, from now on its card is small */
+    fun opened()
+
+    /** The small card is put away for a while, see [SetupReminder.dismissed] */
+    fun dismissCard()
 }

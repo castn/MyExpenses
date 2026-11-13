@@ -14,6 +14,7 @@ import org.totschnig.myexpenses.next.NextFeature
 import org.totschnig.myexpenses.next.NextKey
 import org.totschnig.myexpenses.next.NextNavigation
 import org.totschnig.myexpenses.next.NextShell
+import org.totschnig.myexpenses.next.data.setup.SetupOffer
 import org.totschnig.myexpenses.next.feature.setup.SetupCard
 import org.totschnig.myexpenses.next.feature.setup.SetupFlow
 import org.totschnig.myexpenses.next.feature.setup.SetupTransactions
@@ -38,7 +39,7 @@ class SetupFeature(
 
     @Composable
     override fun takesOverOverview(): Boolean =
-        viewModel.isOffered.collectAsStateWithLifecycle().value
+        viewModel.offer.collectAsStateWithLifecycle().value == SetupOffer.FULL
 
     @Composable
     override fun OverviewBanner(navigation: NextNavigation) {

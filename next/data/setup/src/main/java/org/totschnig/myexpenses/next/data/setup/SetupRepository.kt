@@ -97,6 +97,9 @@ class SetupRepository(
 
     val progress: Flow<SetupProgress> = store.progress
 
+    /** Today, to tell whether the card on the overview is still put away, see [SetupReminder] */
+    val today: Flow<LocalDate> = ledgerSource.today
+
     private val _dismissedThisStart = MutableStateFlow(false)
 
     /** The card on the overview was put away since the app started, kept for the process only */

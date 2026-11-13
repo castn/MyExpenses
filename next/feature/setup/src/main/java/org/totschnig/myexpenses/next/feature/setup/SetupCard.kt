@@ -9,17 +9,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.totschnig.myexpenses.designsystem.ActionCard
 import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.data.setup.SetupOffer
 
 /**
  * The card on the overview that starts or resumes the setup, while it is offered, see
- * [SetupViewModel.isOffered]; "Skip setup" closes it for good
+ * [SetupViewModel.offer]; "Skip setup" closes it for good
  */
 @Composable
 fun SetupCard(viewModel: SetupViewModel, onOpen: () -> Unit, modifier: Modifier = Modifier) {
-    val isOffered by viewModel.isOffered.collectAsStateWithLifecycle()
+    val offer by viewModel.offer.collectAsStateWithLifecycle()
     val overview by viewModel.overview.collectAsStateWithLifecycle()
     val current = overview
-    if (!isOffered || current == null) return
+    if (offer == SetupOffer.HIDDEN || current == null) return
     ActionCard(
         icon = Icons.Outlined.Checklist,
         title = stringResource(R.string.next_setup_card_title),

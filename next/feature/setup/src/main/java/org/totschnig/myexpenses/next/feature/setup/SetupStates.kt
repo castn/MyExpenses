@@ -265,3 +265,7 @@ private fun coverageShare(coverage: CategoryCoverage, decided: Long, unclear: Lo
         ((coverage.categorized + decided).toDouble() / countable).coerceAtMost(1.0)
     }
 }
+
+/** The decisions in the steps not done yet, 0 while loading */
+fun openDecisions(overview: SetupOverview?): Int =
+    overview?.steps.orEmpty().filter { it.state != StepState.DONE }.sumOf { it.decisions }

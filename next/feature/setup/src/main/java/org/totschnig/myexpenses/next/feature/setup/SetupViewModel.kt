@@ -15,9 +15,12 @@ import org.totschnig.myexpenses.next.core.common.stateWhileShown
 import org.totschnig.myexpenses.next.data.setup.AutomaticShare
 import org.totschnig.myexpenses.next.data.setup.SetupCash
 import org.totschnig.myexpenses.next.data.setup.SetupDecision
+import org.totschnig.myexpenses.next.data.setup.SetupOffer
 import org.totschnig.myexpenses.next.data.setup.SetupPayee
+import org.totschnig.myexpenses.next.data.setup.SetupReminder
 import org.totschnig.myexpenses.next.data.setup.SetupRepository
 import org.totschnig.myexpenses.next.data.setup.SetupStep
+import org.totschnig.myexpenses.next.data.setup.offer
 
 /**
  * The pages of the setup, see [SetupFlow]. What the user did in this visit, the payees decided on
@@ -32,7 +35,8 @@ class SetupViewModel(
     private val clock: () -> Long = System::currentTimeMillis
 ) : ViewModel(),
     SetupActions,
-    CashActions {
+    CashActions,
+    SetupCardActions {
 
     private val decided = savedState.getStateFlow(KEY_DECIDED, ArrayList<String>())
     private val skipped = savedState.getStateFlow(KEY_SKIPPED, ArrayList<String>())
@@ -60,13 +64,21 @@ class SetupViewModel(
     ).stateWhileShown(viewModelScope, null)
 
     /**
-     * Whether the overview offers the setup: it is not closed and an open step has something to
-     * decide, so that it is not offered to users whose transactions are described already
+     * How the overview offers the setup, see [offer]: not to users whose transactions are described
+     * already, since only decisions in steps not done count
      */
-    val isOffered: StateFlow<Boolean> = combine(repository.progress, overview) { progress, steps ->
-        !progress.closed &&
-            steps?.steps.orEmpty().any { it.state != StepState.DONE && it.decisions > 0 }
-    }.stateWhileShown(viewModelScope, false)
+    val offer: StateFlow<SetupOffer> = combine(
+        repository.progress,
+        overview,
+        repository.today,
+        repository.dismissedThisStart
+    ) { progress, overview, today, dismissedThisStart ->
+        progress.offer(openDecisions(overview), today, dismissedThisStart)
+    }.stateWhileShown(viewModelScope, SetupOffer.HIDDEN)
+
+    /** Putting the card away once more asks whether it should not come again, see [SetupReminder.asksToStop] */
+    val asksToStop: StateFlow<Boolean> = repository.progress.map { it.reminder.asksToStop }
+        .stateWhileShown(viewModelScope, false)
 
     private val visit = combine(
         combine(decided, skipped, unclear) { d, s, u -> Triple(d.toSet(), s.toSet(), u.toSet()) },
@@ -217,6 +229,14 @@ class SetupViewModel(
 
     override fun close() {
         viewModelScope.launch { repository.store.close() }
+    }
+
+    override fun opened() {
+        viewModelScope.launch { repository.store.markOpened() }
+    }
+
+    override fun dismissCard() {
+        viewModelScope.launch { repository.dismiss(openDecisions(overview.value)) }
     }
 
     private fun categorize(payee: SetupPayee, categoryId: Long) {

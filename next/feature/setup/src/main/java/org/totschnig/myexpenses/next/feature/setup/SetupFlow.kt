@@ -2,6 +2,7 @@ package org.totschnig.myexpenses.next.feature.setup
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -37,6 +38,8 @@ fun SetupFlow(
     incomes: (@Composable ColumnScope.() -> Unit)? = null,
     transactions: SetupTransactions? = null
 ) {
+    // From now on the card on the overview is small and leaves the rest of the overview shown
+    LaunchedEffect(Unit) { viewModel.opened() }
     val overview by viewModel.overview.collectAsStateWithLifecycle()
     val backStack = rememberNavBackStack(SetupKey.Start)
     // The step after [step] that is not done, else the end. A step that is over leaves the back
