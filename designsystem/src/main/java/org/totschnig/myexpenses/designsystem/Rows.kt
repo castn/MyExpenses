@@ -1185,6 +1185,53 @@ fun SelectableTextRow(
 }
 
 /**
+ * An [entry] to choose, e.g. a transaction of a payee to give a category: checkbox, date above
+ * the text in at most three lines, and amount; tapping the row toggles it
+ */
+@Composable
+fun SelectableEntryRow(
+    entry: PreviewEntry,
+    selected: Boolean,
+    onToggle: () -> Unit,
+    isFirst: Boolean = false
+) {
+    if (!isFirst) RowDivider()
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .toggleable(value = selected, role = Role.Checkbox, onValueChange = { onToggle() })
+            .padding(horizontal = Spacing.content, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = selected,
+            onCheckedChange = null,
+            modifier = Modifier.padding(end = 12.dp)
+        )
+        Column(Modifier.weight(1f)) {
+            Text(
+                entry.date,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            entry.text?.let {
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodyMedium,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+        }
+        Text(
+            entry.amount,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(start = Spacing.content)
+        )
+    }
+}
+
+/**
  * Shown while several entries are chosen: how many, cancel and what to do with them
  *
  * @param text e.g. "3 rows chosen"

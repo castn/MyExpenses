@@ -1068,6 +1068,29 @@ private fun GuideShowcase() {
                     Button(onClick = {}) { Text("Choose") }
                 }
             )
+            SelectionBar("1 chosen", actionLabel = "Choose category", onAction = {}, onCancel = {})
+            DetailCard {
+                SelectableEntryRow(
+                    PreviewEntry(
+                        "12.11.",
+                        "Selectable entry row: Bargeldauszahlung GAA 4711",
+                        "200,00 €"
+                    ),
+                    selected = true,
+                    onToggle = {},
+                    isFirst = true
+                )
+                SelectableEntryRow(
+                    PreviewEntry("03.11.", "Umbuchung auf Tagesgeld", "500,00 €"),
+                    selected = false,
+                    onToggle = {}
+                )
+                SelectableEntryRow(
+                    PreviewEntry("28.10.", null, "4,90 €"),
+                    selected = false,
+                    onToggle = {}
+                )
+            }
         }
     }
 }
