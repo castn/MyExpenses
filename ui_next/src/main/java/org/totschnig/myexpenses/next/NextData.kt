@@ -155,7 +155,8 @@ class NextData private constructor(context: Context) {
     }
 
     /** The cash account of the user, created from the setup */
-    val cash = CashRepository(CashStore(dataStore), ProviderCashWriting(context))
+    val cash =
+        CashRepository(CashStore(dataStore), ProviderCashWriting(context), ledgerSource, scope)
 
     val setup = SetupRepository(
         ledgerSource,
@@ -170,14 +171,16 @@ class NextData private constructor(context: Context) {
     val merchantLogos = MerchantLogoStore(context.noBackupFilesDir.resolve("merchant-logos"))
 
     /**
-     * Makes the automatic decisions of the areas while it runs: contracts, the rules of tags and
-     * certain categories for new transactions. Called while the app is shown and after an import,
-     * so that nothing is analysed in the background otherwise.
+     * Makes the automatic decisions of the areas while it runs: contracts, the rules of tags,
+     * certain categories for new transactions and cash withdrawals moved to the cash account.
+     * Called while the app is shown and after an import, so that nothing is analysed in the
+     * background otherwise.
      */
     suspend fun applyAutomaticDecisions(): Nothing = coroutineScope {
         launch { contracts.analysis.collect() }
         launch { tags.appliedRules.collect() }
         launch { categories.appliedAutomatically.collect() }
+        launch { cash.movedToAccount.collect() }
         awaitCancellation()
     }
 
