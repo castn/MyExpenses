@@ -1,8 +1,11 @@
 package org.totschnig.myexpenses.next.data.setup
 
 import java.time.LocalDate
+import java.time.YearMonth
+import java.time.temporal.ChronoUnit
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
+import org.totschnig.myexpenses.next.core.model.ledger.isCashWithdrawal
 import org.totschnig.myexpenses.next.data.categories.Counterpart
 import org.totschnig.myexpenses.next.data.categories.categoryInput
 import org.totschnig.myexpenses.next.data.categories.counterpart
@@ -68,15 +71,41 @@ data class CategoryCoverage(val spent: Long, val categorized: Long, val unclear:
 }
 
 /**
+ * The cash withdrawals without category, decided on once for all of them rather than with their
+ * payee, e.g. the own bank
+ *
+ * @param amount taken, in minor units of the home currency, positive
+ * @param since the date of the first withdrawal
+ * @param until the date of the last one
+ */
+data class SetupCash(
+    val amount: Long,
+    val transactionIds: List<Long>,
+    val since: LocalDate,
+    val until: LocalDate
+) {
+    /** The calendar months from [since] to [until], both counted */
+    val months: Long
+        get() = ChronoUnit.MONTHS.between(YearMonth.from(since), YearMonth.from(until)) + 1
+
+    /** About the money taken in a month */
+    val perMonth: Long get() = amount / months
+}
+
+/**
  * The payees of the categories step, the most money first
  *
  * @param required decided on, they bring [coverage] up to the target of [categoryQueue]
  * @param optional the others, decided on to come closer to all of the money
+ * @param cash the cash withdrawals without category, null if there are none
+ * @param isCashRequired [cash] is needed for the target, like the payees in [required]
  */
 data class CategoryQueue(
     val coverage: CategoryCoverage,
     val required: List<SetupPayee>,
-    val optional: List<SetupPayee>
+    val optional: List<SetupPayee>,
+    val cash: SetupCash? = null,
+    val isCashRequired: Boolean = false
 ) {
     val all: List<SetupPayee> get() = required + optional
 }
@@ -89,7 +118,8 @@ const val TARGET_SHARE = 0.8
  * a few decisions cover most of the money: rent and supermarket come first. Payees the user knows
  * no category for ([unclear], see [Counterpart.key]) are left out and their money does not count.
  * Debits without counterpart, e.g. through a payment service without merchant, count, but cannot be
- * decided on by payee.
+ * decided on by payee. Cash withdrawals are not decided on with their payee, e.g. the own bank,
+ * but once for all of them, see [SetupCash].
  */
 fun categoryQueue(
     ledger: Ledger,
@@ -97,18 +127,47 @@ fun categoryQueue(
     target: Double = TARGET_SHARE
 ): CategoryQueue {
     val debits = ledger.transactions.filter { it.isCategorizableDebit() }
-    val open = debits.filter { it.categoryId == null }
-        .map { it to it.categoryInput().counterpart() }
-    val (unclearDebits, toDecide) = open.partition { (_, counterpart) ->
-        counterpart?.key in unclear
-    }
+    val (cashDebits, open) = debits.filter { it.categoryId == null }
+        .partition { it.isCashWithdrawal }
+    val (unclearDebits, toDecide) = open.map { it to it.categoryInput().counterpart() }
+        .partition { (_, counterpart) -> counterpart?.key in unclear }
     val coverage = CategoryCoverage(
         spent = debits.sumOf { -it.homeAmount },
         categorized = debits.filter { it.categoryId != null }.sumOf { -it.homeAmount },
         unclear = unclearDebits.sumOf { (transaction, _) -> -transaction.homeAmount }
     )
+    val payees = setupPayees(toDecide)
+    val cash = cashDebits.takeIf { it.isNotEmpty() }?.let { withdrawals ->
+        SetupCash(
+            amount = withdrawals.sumOf { -it.homeAmount },
+            transactionIds = withdrawals.map { it.id },
+            since = withdrawals.minOf { it.date },
+            until = withdrawals.maxOf { it.date }
+        )
+    }
+    // The payees and the cash withdrawals, the most money first, until the target is reached
+    val goal = target * coverage.countable
+    var covered = coverage.categorized.toDouble()
+    val required = mutableListOf<SetupPayee>()
+    var isCashRequired = false
+    while (covered < goal) {
+        val payee = payees.getOrNull(required.size)
+        if (cash != null && !isCashRequired && cash.amount >= (payee?.amount ?: 0)) {
+            isCashRequired = true
+            covered += cash.amount
+        } else if (payee != null) {
+            required += payee
+            covered += payee.amount
+        } else {
+            break
+        }
+    }
+    return CategoryQueue(coverage, required, payees.drop(required.size), cash, isCashRequired)
+}
+
+private fun setupPayees(debits: List<Pair<LedgerTransaction, Counterpart?>>): List<SetupPayee> {
     val byLatest = compareByDescending<LedgerTransaction> { it.date }.thenByDescending { it.id }
-    val payees = toDecide
+    return debits
         .mapNotNull { (transaction, counterpart) -> counterpart?.let { transaction to it } }
         .groupBy { (_, counterpart) -> counterpart.key }
         .map { (_, group) ->
@@ -130,12 +189,6 @@ fun categoryQueue(
             )
         }
         .sortedWith(compareByDescending<SetupPayee> { it.amount }.thenBy { it.counterpart.name })
-    val goal = target * coverage.countable
-    var covered = coverage.categorized.toDouble()
-    val required = payees.takeWhile { payee ->
-        (covered < goal).also { covered += payee.amount }
-    }
-    return CategoryQueue(coverage, required, payees.drop(required.size))
 }
 
 /**

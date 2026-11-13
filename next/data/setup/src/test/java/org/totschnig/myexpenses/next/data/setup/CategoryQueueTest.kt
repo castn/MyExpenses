@@ -66,6 +66,42 @@ class CategoryQueueTest {
     }
 
     @Test
+    fun takesCashWithdrawalsOutOfTheirPayee() {
+        val cash = { amount: Long, date: LocalDate ->
+            debit(1, "Sparkasse", amount).copy(methodLabel = "BARGELDAUSZAHLUNG", date = date)
+        }
+        val ledger = ledger(
+            cash(200, today.minusMonths(2)),
+            cash(100, today),
+            debit(1, "Sparkasse", 50),
+            debit(2, "Vermieter", 500),
+            debit(3, "Kino", 150)
+        )
+        val queue = categoryQueue(ledger, unclear = emptySet())
+        // The bank keeps only its other debits
+        val bank = queue.all.single { it.counterpart.name == "Sparkasse" }
+        assertEquals(50L, bank.amount)
+        assertEquals(SetupCash(300, listOf(1, 2), today.minusMonths(2), today), queue.cash)
+        assertEquals(3L, queue.cash!!.months)
+        assertEquals(100L, queue.cash!!.perMonth)
+        // 500 + 300 of 1000 reach 80 %: the cash comes after the rent, before the cinema
+        assertEquals(listOf("Vermieter"), queue.required.map { it.counterpart.name })
+        assertTrue(queue.isCashRequired)
+    }
+
+    @Test
+    fun cashIsNotRequiredWhenThePayeesReachTheTarget() {
+        val ledger = ledger(
+            debit(1, "Vermieter", 900),
+            debit(2, "Bank", 100).copy(methodLabel = "GAA-AUSZAHLUNG")
+        )
+        val queue = categoryQueue(ledger, unclear = emptySet())
+        assertEquals(listOf("Vermieter"), queue.required.map { it.counterpart.name })
+        assertEquals(false, queue.isCashRequired)
+        assertEquals(100L, queue.cash!!.amount)
+    }
+
+    @Test
     fun leavesOutWhatCannotHaveACategoryOrPayee() {
         val credit = debit(1, "Arbeitgeber", -2000)
         val transfer = debit(2, "Sparkonto", 300).copy(transferAccountId = 9)

@@ -21,9 +21,13 @@ source [`setup.puml`](setup.puml) next to this file.
   are, so that PayPal purchases are decided on per merchant.
 - `required` are the payees that bring the coverage to `TARGET_SHARE` (80 %), usually 20 to 30
   decisions. `optional` are the others, for users who want to come closer to all of the money.
-- A `SetupPayee` tells since when it is paid and its last three debits (`recent`), whose purposes
-  help to tell what the payee is, and `suggestionFor` gives the category most of its debits are
-  suggested.
+- A `SetupPayee` tells since when it is paid and its debits without category (`transactions`);
+  the last three (`recent`) have purposes that help to tell what the payee is, and `suggestionFor`
+  gives the category most of its debits are suggested.
+- Cash withdrawals (`isCashWithdrawal` of `:next:core:model`, by the booking text of the bank or
+  the purpose) are taken out of their payee, e.g. the own bank, and decided on once for all of
+  them (`SetupCash`). They count towards the target like a payee: `isCashRequired` says whether
+  they are needed for it.
 - Debits without counterpart, e.g. Amazon through a payment service, count, but cannot be decided
   on by payee.
 
@@ -32,7 +36,8 @@ the transactions from before the suggestions started that can be categorized for
 
 A decision goes to `CategoryRepository.categorize`: the debits of the payee without category get
 it, and with "Immer so machen" a rule gives it to later ones. "Weiß ich nicht" goes to
-`CategoryRepository.markUnclear`. `SetupRepository` returns each as a `SetupDecision`, which `takeBack`
+`CategoryRepository.markUnclear`. When the debits of a payee are for different things ("Unterschiedlich"),
+`assign` gives only the chosen ones a category, without a rule. `SetupRepository` returns each as a `SetupDecision`, which `takeBack`
 undoes: the debits lose the category again, if they still have it, the rule the payee had before
 comes back (`Categorization`), and an unclear payee is asked about again.
 

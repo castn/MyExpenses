@@ -17,7 +17,7 @@ package "contracts (optional)" {
 
 package "setup" {
   [categoryQueue()] as queueFn
-  artifact "CategoryQueue\n(coverage, required,\noptional)" as queue
+  artifact "CategoryQueue\n(coverage, required,\noptional, cash)" as queue
   [automaticShare()] as shareFn
   artifact AutomaticShare as share
   [SetupRepository] as repository
