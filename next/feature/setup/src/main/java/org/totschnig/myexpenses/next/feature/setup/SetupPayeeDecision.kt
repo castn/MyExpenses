@@ -112,6 +112,11 @@ private fun CategoryAnswer(
 ) {
     val isMissing = input.missingTaps > 0 && card.categoryId == null
     Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
+        ToggleChip(
+            text = stringResource(R.string.next_setup_always),
+            selected = input.always,
+            onClick = { actions.setAlways(!input.always) }
+        )
         // Lights up when "Next" is tapped without a category, with the suggestion to take
         Highlighted(trigger = if (card.categoryId == null) input.missingTaps else 0) {
             FormPickerField(
@@ -134,11 +139,6 @@ private fun CategoryAnswer(
                 }
             }
         }
-        ToggleChip(
-            text = stringResource(R.string.next_setup_always),
-            selected = input.always,
-            onClick = { actions.setAlways(!input.always) }
-        )
     }
 }
 
