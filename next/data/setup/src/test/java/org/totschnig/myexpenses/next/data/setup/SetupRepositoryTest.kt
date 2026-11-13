@@ -37,7 +37,10 @@ class SetupRepositoryTest {
             fromCategoryId: Long?,
             categoryId: Long
         ) = Unit
-        override suspend fun removeCategory(transactionId: Long, categoryId: Long) = Unit
+        val removed = mutableListOf<Pair<Long, Long>>()
+        override suspend fun removeCategory(transactionId: Long, categoryId: Long) {
+            removed += transactionId to categoryId
+        }
         override suspend fun setMissingCategory(transactionIds: List<Long>, categoryId: Long) {
             set += transactionIds to categoryId
         }
@@ -62,6 +65,27 @@ class SetupRepositoryTest {
             repository.markUnclear(queue.optional.single())
             val unclear = repository.categoryQueue.first { it?.coverage?.unclear == 200L }!!
             assertEquals(emptyList<SetupPayee>(), unclear.optional)
+        }
+    }
+
+    @Test
+    fun takesBackDecisions() = withTestDataStore { dataStore ->
+        runTest {
+            val source = FakeLedgerSource(ledger = ledger, today = today)
+            val categoryStore = CategoryStore(dataStore)
+            val writing = FakeWriting()
+            val categories = CategoryRepository(source, categoryStore, writing, backgroundScope)
+            val store = SetupStore(dataStore)
+            val repository = SetupRepository(source, categories, store, backgroundScope)
+            val queue = repository.categoryQueue.first { it != null }!!
+            val rent = repository.categorize(queue.required.single(), 10, always = true)
+            assertEquals("p:1", rent.key)
+            repository.takeBack(rent)
+            assertEquals(listOf(1L to 10L), writing.removed)
+            assertEquals(emptyList<CategoryRule>(), categoryStore.decisions.first().rules)
+            val unclear = repository.markUnclear(queue.optional.single())
+            repository.takeBack(unclear)
+            assertEquals(emptySet<String>(), categoryStore.decisions.first().unclear)
         }
     }
 

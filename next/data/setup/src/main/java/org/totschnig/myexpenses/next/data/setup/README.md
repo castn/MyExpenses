@@ -31,7 +31,9 @@ the transactions from before the suggestions started that can be categorized for
 
 A decision goes to `CategoryRepository.categorize`: the debits of the payee without category get
 it, and with "Immer so machen" a rule gives it to later ones. "Weiß ich nicht" goes to
-`CategoryRepository.markUnclear`.
+`CategoryRepository.markUnclear`. `SetupRepository` returns each as a `SetupDecision`, which `takeBack`
+undoes: the debits lose the category again, if they still have it, the rule the payee had before
+comes back (`Categorization`), and an unclear payee is asked about again.
 
 `automaticShare(ledger, rules, categories, today)` tells what the step brings: of the debits of
 the last three months, how many `CategorySuggester` would categorize without asking if they came

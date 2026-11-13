@@ -34,7 +34,7 @@ suggester --> shareFn : certain?
 shareFn --> share
 repository --> queueFn : Memo
 repository --> shareFn : Memo
-repository --> categoryRepository : categorize,\nmark unclear
+repository --> categoryRepository : categorize,\nmark unclear,\ntake back
 categoryRepository --> categoryStore
 setupContracts --> repository : steps
 store --> repository : progress
