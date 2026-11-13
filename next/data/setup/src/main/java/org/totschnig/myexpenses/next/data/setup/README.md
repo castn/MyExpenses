@@ -24,7 +24,8 @@ source [`setup.puml`](setup.puml) next to this file.
   decisions. `optional` are the others, for users who want to come closer to all of the money.
 - A `SetupPayee` tells since when it is paid and its debits without category (`transactions`);
   the last three (`recent`) have purposes that help to tell what the payee is, and `suggestionFor`
-  gives the category most of its debits are suggested.
+  gives the category most of its debits are suggested (`SetupSuggestion`), certain only when all
+  of them get it for sure: the card fills in only a certain one.
 - Cash withdrawals (`isCashWithdrawal` of `:next:core:model`, by the booking text of the bank or
   the purpose) are taken out of their payee, e.g. the own bank, and decided on once for all of
   them (`SetupCash`). They count towards the target like a payee: `isCashRequired` says whether
