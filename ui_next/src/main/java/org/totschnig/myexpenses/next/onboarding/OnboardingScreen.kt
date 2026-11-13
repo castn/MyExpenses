@@ -60,7 +60,10 @@ internal fun OnboardingScreen(
 ) {
     val steps = OnboardingStep.entries
     var current by rememberSaveable { mutableStateOf(OnboardingStep.WELCOME) }
-    var startChoice by rememberSaveable { mutableStateOf(StartChoice.NEW_ACCOUNT) }
+    // The bank first, as the new UI learns from imported transactions, where the app offers it
+    var startChoice by rememberSaveable {
+        mutableStateOf(if (offersBanking) StartChoice.BANK else StartChoice.BACKUP_FILE)
+    }
     var draft by rememberSaveable(stateSaver = AccountDraft.Saver) { mutableStateOf(initialDraft) }
     val pagerState = rememberPagerState(initialPage = current.ordinal) { steps.size }
     LaunchedEffect(current) { pagerState.animateScrollToPage(current.ordinal) }
