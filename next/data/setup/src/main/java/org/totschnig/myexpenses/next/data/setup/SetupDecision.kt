@@ -52,6 +52,9 @@ sealed interface SetupDecision : Serializable {
         SetupDecision {
         override val key get() = SetupCash.KEY
 
+        /** A cash account was created for later withdrawals */
+        val hasAccount: Boolean get() = account != null
+
         private companion object {
             private const val serialVersionUID = 1L
         }
