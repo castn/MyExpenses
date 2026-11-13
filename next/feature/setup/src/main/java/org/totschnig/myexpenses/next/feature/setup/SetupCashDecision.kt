@@ -15,6 +15,7 @@ import org.totschnig.myexpenses.designsystem.ChipRow
 import org.totschnig.myexpenses.designsystem.DecisionCard
 import org.totschnig.myexpenses.designsystem.FormPickerField
 import org.totschnig.myexpenses.designsystem.FormTextField
+import org.totschnig.myexpenses.designsystem.Highlighted
 import org.totschnig.myexpenses.designsystem.LabelChip
 import org.totschnig.myexpenses.designsystem.PayeeTile
 import org.totschnig.myexpenses.designsystem.SegmentedChoice
@@ -31,11 +32,13 @@ import org.totschnig.myexpenses.next.data.transactions.parseAmountText
  * the withdrawals so far get a category either way. Nothing here decides: "Next" in the bar of the
  * page confirms it, see [CashActions].
  *
+ * @param missingTaps see [CardInput.missingTaps]
  * @param onPicked the category picker returned a category, see [PayeeCardActions.picked]
  */
 @Composable
 internal fun CashDecision(
     card: CashCard,
+    missingTaps: Int,
     currency: CurrencyInfo,
     actions: CashActions,
     onPicked: (Long?) -> Unit
@@ -50,6 +53,11 @@ internal fun CashDecision(
         // Expenses only, cash withdrawals are debits
         pick.launch(false)
     }
+    val missing = CashMissing(
+        missingTaps,
+        balance = card.toAccount && card.balance(currency) == null,
+        category = card.categoryId == null
+    )
     val cash = card.cash
     val title = stringResource(R.string.next_setup_cash_title)
     DecisionCard(
@@ -75,13 +83,13 @@ internal fun CashDecision(
                 title = stringResource(R.string.next_setup_cash_question)
             ) { toAccount ->
                 if (toAccount) {
-                    AccountAnswer(card, currency, actions, pickCategory)
+                    AccountAnswer(card, currency, missing, actions, pickCategory)
                 } else {
-                    SpendingAnswer(card, actions, pickCategory)
+                    SpendingAnswer(card, missing, actions, pickCategory)
                 }
             }
         } else {
-            SpendingAnswer(card, actions, pickCategory)
+            SpendingAnswer(card, missing, actions, pickCategory)
         }
     }
 }
@@ -91,48 +99,83 @@ internal fun CashDecision(
 private fun AccountAnswer(
     card: CashCard,
     currency: CurrencyInfo,
+    missing: CashMissing,
     actions: CashActions,
     onPick: () -> Unit
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
         Hint(R.string.next_setup_cash_account_text)
-        FormTextField(
-            label = stringResource(R.string.next_setup_cash_balance),
-            value = card.balanceText,
-            onValueChange = actions::setCashBalance,
-            keyboardType = KeyboardType.Decimal,
-            isError = card.balanceText.isNotBlank() && card.balance(currency) == null,
-            trailing = { Text(currency.symbol) }
-        )
-        CashCategory(card, R.string.next_setup_cash_so_far, actions, onPick)
+        Highlighted(trigger = missing.balanceTrigger) {
+            FormTextField(
+                label = stringResource(R.string.next_setup_cash_balance),
+                value = card.balanceText,
+                onValueChange = actions::setCashBalance,
+                keyboardType = KeyboardType.Decimal,
+                isError = missing.showsBalance ||
+                    (card.balanceText.isNotBlank() && card.balance(currency) == null),
+                supportingText = stringResource(R.string.next_setup_cash_balance_missing)
+                    .takeIf { missing.showsBalance },
+                trailing = { Text(currency.symbol) }
+            )
+        }
+        CashCategory(card, R.string.next_setup_cash_so_far, missing, actions, onPick)
     }
 }
 
 /** The category of the withdrawals, the later ones too */
 @Composable
-private fun SpendingAnswer(card: CashCard, actions: CashActions, onPick: () -> Unit) {
+private fun SpendingAnswer(
+    card: CashCard,
+    missing: CashMissing,
+    actions: CashActions,
+    onPick: () -> Unit
+) {
     Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
         Hint(R.string.next_setup_cash_spending_text)
-        CashCategory(card, R.string.next_setup_category, actions, onPick)
+        CashCategory(card, R.string.next_setup_category, missing, actions, onPick)
     }
 }
 
 @Composable
-private fun CashCategory(card: CashCard, label: Int, actions: CashActions, onPick: () -> Unit) {
-    FormPickerField(
-        label = stringResource(label),
-        value = card.categoryPath.orEmpty(),
-        onClick = onPick,
-        placeholder = stringResource(R.string.next_setup_choose_category),
-        supportingText = stringResource(R.string.next_setup_suggestion).takeIf { card.isSuggested }
-    )
-    card.offerPath?.let { path ->
-        ChipRow(stringResource(R.string.next_setup_suggestion)) {
-            LabelChip(text = path, placeholder = path, onClick = {
-                actions.takeCashSuggestion(card)
-            })
+private fun CashCategory(
+    card: CashCard,
+    label: Int,
+    missing: CashMissing,
+    actions: CashActions,
+    onPick: () -> Unit
+) {
+    Highlighted(trigger = missing.categoryTrigger) {
+        FormPickerField(
+            label = stringResource(label),
+            value = card.categoryPath.orEmpty(),
+            onClick = onPick,
+            placeholder = stringResource(R.string.next_setup_choose_category),
+            supportingText = when {
+                missing.showsCategory -> stringResource(R.string.next_setup_category_missing)
+                card.isSuggested -> stringResource(R.string.next_setup_suggestion)
+                else -> null
+            },
+            isError = missing.showsCategory
+        )
+        card.offerPath?.let { path ->
+            ChipRow(stringResource(R.string.next_setup_suggestion)) {
+                LabelChip(text = path, placeholder = path, onClick = {
+                    actions.takeCashSuggestion(card)
+                })
+            }
         }
     }
+}
+
+/**
+ * What is missing on the cash card after "Next" was tapped [taps] times without it: the field
+ * higher up lights up first, both show their error
+ */
+private class CashMissing(val taps: Int, val balance: Boolean, val category: Boolean) {
+    val balanceTrigger: Int get() = if (balance) taps else 0
+    val categoryTrigger: Int get() = if (category && !balance) taps else 0
+    val showsBalance: Boolean get() = taps > 0 && balance
+    val showsCategory: Boolean get() = taps > 0 && category
 }
 
 @Composable

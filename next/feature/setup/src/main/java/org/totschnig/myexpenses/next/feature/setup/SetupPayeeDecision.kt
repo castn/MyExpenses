@@ -17,6 +17,7 @@ import org.totschnig.myexpenses.designsystem.ChipRow
 import org.totschnig.myexpenses.designsystem.DecisionCard
 import org.totschnig.myexpenses.designsystem.EntryPreview
 import org.totschnig.myexpenses.designsystem.FormPickerField
+import org.totschnig.myexpenses.designsystem.Highlighted
 import org.totschnig.myexpenses.designsystem.LabelChip
 import org.totschnig.myexpenses.designsystem.PayeeTile
 import org.totschnig.myexpenses.designsystem.PreviewEntry
@@ -39,7 +40,7 @@ import org.totschnig.myexpenses.next.data.categories.Counterpart
 @Composable
 internal fun PayeeDecision(
     card: PayeeCard,
-    always: Boolean,
+    input: CardInput,
     currency: CurrencyInfo,
     actions: PayeeCardActions,
     onShowTransactions: ((Counterpart) -> Unit)?
@@ -76,7 +77,7 @@ internal fun PayeeDecision(
             title = stringResource(R.string.next_setup_question)
         ) { answer ->
             when (answer) {
-                PayeeAnswer.CATEGORY -> CategoryAnswer(card, always, actions) {
+                PayeeAnswer.CATEGORY -> CategoryAnswer(card, input, actions) {
                     actions.pickCategory(card)
                     // Expenses only, the payees of the setup are those of debits
                     pick.launch(false)
@@ -105,31 +106,38 @@ internal fun PayeeDecision(
 @Composable
 private fun CategoryAnswer(
     card: PayeeCard,
-    always: Boolean,
+    input: CardInput,
     actions: PayeeCardActions,
     onPick: () -> Unit
 ) {
+    val isMissing = input.missingTaps > 0 && card.categoryId == null
     Column(verticalArrangement = Arrangement.spacedBy(Spacing.small)) {
-        FormPickerField(
-            label = stringResource(R.string.next_setup_category),
-            value = card.categoryPath.orEmpty(),
-            onClick = onPick,
-            placeholder = stringResource(R.string.next_setup_choose_category),
-            supportingText = stringResource(R.string.next_setup_suggestion).takeIf {
-                card.isSuggested
-            }
-        )
-        card.offerPath?.let { path ->
-            ChipRow(stringResource(R.string.next_setup_suggestion)) {
-                LabelChip(text = path, placeholder = path, onClick = {
-                    actions.takeSuggestion(card)
-                })
+        // Lights up when "Next" is tapped without a category, with the suggestion to take
+        Highlighted(trigger = if (card.categoryId == null) input.missingTaps else 0) {
+            FormPickerField(
+                label = stringResource(R.string.next_setup_category),
+                value = card.categoryPath.orEmpty(),
+                onClick = onPick,
+                placeholder = stringResource(R.string.next_setup_choose_category),
+                supportingText = when {
+                    isMissing -> stringResource(R.string.next_setup_category_missing)
+                    card.isSuggested -> stringResource(R.string.next_setup_suggestion)
+                    else -> null
+                },
+                isError = isMissing
+            )
+            card.offerPath?.let { path ->
+                ChipRow(stringResource(R.string.next_setup_suggestion)) {
+                    LabelChip(text = path, placeholder = path, onClick = {
+                        actions.takeSuggestion(card)
+                    })
+                }
             }
         }
         ToggleChip(
             text = stringResource(R.string.next_setup_always),
-            selected = always,
-            onClick = { actions.setAlways(!always) }
+            selected = input.always,
+            onClick = { actions.setAlways(!input.always) }
         )
     }
 }

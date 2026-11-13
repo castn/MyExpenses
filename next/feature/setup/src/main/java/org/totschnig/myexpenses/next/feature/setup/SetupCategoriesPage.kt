@@ -19,7 +19,12 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -59,6 +64,9 @@ internal fun SetupCategoriesPage(
     val current = step
     val card = current?.card?.takeIf { current.backlog == 0 }
     val cashCard = current?.cashCard?.takeIf { current.backlog == 0 && card == null }
+    // Taps on "Next" while something is missing on the card shown, see [CardInput.missingTaps]
+    var missingTaps by remember(card?.key, cashCard != null) { mutableIntStateOf(0) }
+    val haptic = LocalHapticFeedback.current
     Column(Modifier.fillMaxSize()) {
         DetailScaffold(
             onBack = onBack,
@@ -78,7 +86,7 @@ internal fun SetupCategoriesPage(
                 StepContent(
                     current,
                     card,
-                    always,
+                    CardInput(always, missingTaps),
                     currency,
                     viewModel,
                     onShowTransactions,
@@ -93,36 +101,33 @@ internal fun SetupCategoriesPage(
                 }
             }
         }
+        // "Next" stays enabled: tapped while something is missing, the card lights it up
+        val refuse = {
+            missingTaps++
+            haptic.performHapticFeedback(HapticFeedbackType.Reject)
+        }
         if (card != null) {
-            IntroBottomBar(
-                nextLabel = stringResource(R.string.next_setup_next),
+            DecisionBar(
                 onNext = {
-                    if (card.answer == PayeeAnswer.DIFFERS) {
-                        onDiffers(card.payee.counterpart)
-                    } else {
-                        viewModel.confirm(card)
+                    when {
+                        !card.canConfirm -> refuse()
+                        card.answer == PayeeAnswer.DIFFERS -> onDiffers(card.payee.counterpart)
+                        else -> viewModel.confirm(card)
                     }
                 },
-                modifier = Modifier.background(MaterialTheme.colorScheme.surfaceContainer),
-                nextEnabled = card.canConfirm,
-                skipLabel = stringResource(R.string.next_setup_later),
-                onSkip = { viewModel.later(card) }
+                onLater = { viewModel.later(card) }
             )
         } else if (cashCard != null) {
-            IntroBottomBar(
-                nextLabel = stringResource(R.string.next_setup_next),
+            DecisionBar(
                 onNext = {
-                    viewModel.keepCash(
-                        cashCard,
-                        cashCard.balance(currency)?.takeIf {
-                            cashCard.toAccount
-                        }
-                    )
+                    if (cashCard.canConfirm(currency)) {
+                        val balance = cashCard.balance(currency)?.takeIf { cashCard.toAccount }
+                        viewModel.keepCash(cashCard, balance)
+                    } else {
+                        refuse()
+                    }
                 },
-                modifier = Modifier.background(MaterialTheme.colorScheme.surfaceContainer),
-                nextEnabled = cashCard.canConfirm(currency),
-                skipLabel = stringResource(R.string.next_setup_later),
-                onSkip = viewModel::leaveCash
+                onLater = viewModel::leaveCash
             )
         }
     }
@@ -153,7 +158,7 @@ private fun CoverageHeader(step: CategoriesStep) {
 private fun StepContent(
     current: CategoriesStep,
     card: PayeeCard?,
-    always: Boolean,
+    input: CardInput,
     currency: CurrencyInfo,
     viewModel: SetupViewModel,
     onShowTransactions: ((Counterpart) -> Unit)?,
@@ -173,11 +178,17 @@ private fun StepContent(
             },
             label = "payee card"
         ) { shown ->
-            PayeeDecision(shown, always, currency, viewModel, onShowTransactions)
+            PayeeDecision(shown, input, currency, viewModel, onShowTransactions)
         }
 
         current.cashCard != null ->
-            CashDecision(current.cashCard, currency, viewModel, viewModel::picked)
+            CashDecision(
+                current.cashCard,
+                input.missingTaps,
+                currency,
+                viewModel,
+                viewModel::picked
+            )
 
         current.isTargetReached || !current.hasSkipped -> ActionCard(
             icon = Icons.Outlined.CheckCircle,
@@ -234,3 +245,24 @@ private fun BacklogQuestion(count: Int, actions: SetupActions) {
 
 /** A new card slides in from this part of its width */
 private const val SLIDE_PART = 3
+
+/**
+ * What the cards need besides their state
+ *
+ * @param always see [SetupViewModel.always]
+ * @param missingTaps how often "Next" was tapped on the card shown while something was missing,
+ * which lights it up
+ */
+internal class CardInput(val always: Boolean, val missingTaps: Int)
+
+/** The bar below the cards: "Later" and "Next", which is always enabled */
+@Composable
+private fun DecisionBar(onNext: () -> Unit, onLater: () -> Unit) {
+    IntroBottomBar(
+        nextLabel = stringResource(R.string.next_setup_next),
+        onNext = onNext,
+        modifier = Modifier.background(MaterialTheme.colorScheme.surfaceContainer),
+        skipLabel = stringResource(R.string.next_setup_later),
+        onSkip = onLater
+    )
+}

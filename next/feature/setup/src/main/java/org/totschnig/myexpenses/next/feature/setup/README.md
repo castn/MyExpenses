@@ -42,9 +42,13 @@ places, so that a tap does what it did on the card before (`PayeeDecision`, `Pay
   the merchant behind a direct debit; "Show all 7 transactions" opens them with their details.
   They come last, so that their length moves nothing above.
 - A bar at the bottom of the page, outside the card: "Later" puts the payee off until the others
-  are done, "Next" confirms the answer, only with a category for one category. "Different" opens
-  the page of its debits, "Don't know" marks the payee as unclear (`CategoryDecisions.unclear`): its
-  money no longer counts and nothing asks about it again.
+  are done, "Next" confirms the answer. "Different" opens the page of its debits, "Don't know"
+  marks the payee as unclear (`CategoryDecisions.unclear`): its money no longer counts and nothing
+  asks about it again.
+- "Next" is never disabled, since a disabled button takes no tap. Tapped while something is
+  missing, e.g. the category, it vibrates and the field lights up (`Highlighted`), scrolled into
+  view, with an error below it that screen readers read out (`CardInput.missingTaps`); on the cash
+  card the field higher up lights up first.
 
 ## Cash
 

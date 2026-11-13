@@ -1312,6 +1312,8 @@
     <string name="next_setup_unclear">Don\'t know</string>
     <string name="next_setup_later">Later</string>
     <string name="next_setup_differs">Different</string>
+    <string name="next_setup_category_missing">Choose a category to go on</string>
+    <string name="next_setup_cash_balance_missing">Enter how much cash you have now</string>
     <string name="next_setup_question">What applies?</string>
     <string name="next_setup_answer_category">One category</string>
     <string name="next_setup_category">Category</string>
