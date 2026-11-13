@@ -15,16 +15,22 @@ import org.totschnig.myexpenses.next.data.categories.counterpart
  * currency, positive
  * @param transactionIds the debits without category
  * @param since the date of the first of them
- * @param recent the last [RECENT] of them, whose purposes help to tell what the payee is, e.g. the
- * merchant behind PayPal
+ * @param transactions the debits without category, the latest first, to assign them one by one if
+ * they are for different things
  */
 data class SetupPayee(
     val counterpart: Counterpart,
     val amount: Long,
     val transactionIds: List<Long>,
     val since: LocalDate,
-    val recent: List<SetupTransaction> = emptyList()
+    val transactions: List<SetupTransaction> = emptyList()
 ) {
+    /**
+     * The last [RECENT] [transactions], whose purposes help to tell what the payee is, e.g. the
+     * merchant behind PayPal
+     */
+    val recent: List<SetupTransaction> get() = transactions.take(RECENT)
+
     companion object {
         const val RECENT = 3
     }
@@ -111,9 +117,8 @@ fun categoryQueue(
                 amount = group.sumOf { (transaction, _) -> -transaction.homeAmount },
                 transactionIds = group.map { (transaction, _) -> transaction.id },
                 since = group.minOf { (transaction, _) -> transaction.date },
-                recent = group.map { it.first }
+                transactions = group.map { it.first }
                     .sortedWith(byLatest)
-                    .take(SetupPayee.RECENT)
                     .map {
                         SetupTransaction(
                             it.id,

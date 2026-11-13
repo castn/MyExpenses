@@ -96,6 +96,7 @@ class CategoryQueueTest {
             SetupTransaction(2, today.minusDays(10), 25)
         )
         assertEquals(expected, payee.recent)
+        assertEquals(listOf(4L, 3L, 2L, 1L), payee.transactions.map { it.id })
     }
 
     @Test
