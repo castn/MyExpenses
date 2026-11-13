@@ -954,6 +954,10 @@
     <string name="next_settings_tag_rules">Tag-Regeln</string>
     <string name="next_settings_consent_summary">Findet Verträge, regelmäßige Einnahmen, Vorschläge und Spartipps. Nur auf deinem Gerät.</string>
     <string name="next_settings_rejected_suggestions">Abgelehnte Vorschläge</string>
+    <string name="next_settings_setup_resume">Einrichtung fortsetzen</string>
+    <string name="next_settings_setup_steps">%1$d von %2$d Schritten erledigt</string>
+    <string name="next_settings_setup_restart">Einrichtung neu starten</string>
+    <string name="next_settings_setup_restart_value">Ab dem ersten Schritt, deine Entscheidungen bleiben</string>
     <string name="next_settings_closed_hints">Hinweise wieder anzeigen</string>
     <plurals name="next_settings_closed_hints_count">
         <item quantity="one">%d Art von Hinweisen geschlossen</item>
@@ -1351,7 +1355,7 @@
     </plurals>
     <string name="next_setup_remind_later">Später erinnern</string>
     <string name="next_setup_stop_title">Nicht mehr erinnern?</string>
-    <string name="next_setup_stop_text">Die Einrichtung erscheint nicht mehr auf der Übersicht. Du kannst sie jederzeit in den Einstellungen unter „Einrichtung“ fortsetzen.</string>
+    <string name="next_setup_stop_text">Die Einrichtung erscheint nicht mehr auf der Übersicht. Du kannst sie jederzeit in den Einstellungen unter „Auswertungen“ fortsetzen.</string>
     <string name="next_setup_stop">Nicht mehr erinnern</string>
     <string name="next_setup_card_title">App einrichten</string>
     <string name="next_setup_card_text">Ein paar Entscheidungen, damit dir die Auswertungen etwas sagen können, %1$s.</string>

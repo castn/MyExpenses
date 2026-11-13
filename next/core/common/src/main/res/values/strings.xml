@@ -954,6 +954,10 @@
     <string name="next_settings_tag_rules">Tag rules</string>
     <string name="next_settings_consent_summary">Finds contracts, regular income, suggestions and saving tips. Only on your device.</string>
     <string name="next_settings_rejected_suggestions">Rejected suggestions</string>
+    <string name="next_settings_setup_resume">Resume setup</string>
+    <string name="next_settings_setup_steps">%1$d of %2$d steps done</string>
+    <string name="next_settings_setup_restart">Restart setup</string>
+    <string name="next_settings_setup_restart_value">From the first step, your decisions stay</string>
     <string name="next_settings_closed_hints">Show hints again</string>
     <plurals name="next_settings_closed_hints_count">
         <item quantity="one">%d kind of hint closed</item>
@@ -1351,7 +1355,7 @@
     </plurals>
     <string name="next_setup_remind_later">Remind me later</string>
     <string name="next_setup_stop_title">Stop reminding?</string>
-    <string name="next_setup_stop_text">The setup no longer shows on the overview. You can go on with it at any time in the settings under Setup.</string>
+    <string name="next_setup_stop_text">The setup no longer shows on the overview. You can resume it at any time in the settings under Insights.</string>
     <string name="next_setup_stop">Stop reminding</string>
     <string name="next_setup_card_title">Set up the app</string>
     <string name="next_setup_card_text">A few decisions so that the analyses can tell you something, %1$s.</string>
