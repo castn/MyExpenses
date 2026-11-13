@@ -9,6 +9,12 @@ class BudgetIconsTest {
 
     @Test
     fun everyIconOfATemplateExistsInFontAwesome() {
-        assertEquals(emptyList<String>(), PotTemplate.entries.map { it.icon }.filter { it !in FontAwesomeIcons })
+        assertEquals(
+            emptyList<String>(),
+            PotTemplate.entries.map { it.icon }.filter {
+                it !in
+                    FontAwesomeIcons
+            }
+        )
     }
 }

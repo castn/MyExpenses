@@ -13,7 +13,7 @@ fun searchSettings(
     entries: List<SettingEntry>,
     title: (SettingEntry) -> String,
     place: (SettingEntry) -> String,
-    details: (SettingEntry) -> String,
+    details: (SettingEntry) -> String
 ): List<SettingEntry> {
     val words = query.normalized().split(' ').filter { it.isNotEmpty() }
     if (words.isEmpty()) return emptyList()

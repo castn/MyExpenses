@@ -30,7 +30,8 @@ class BudgetStoreTest {
         icon = "gamepad"
     )
 
-    private val plain = Pot(id = "running", name = "Ausgehen", kind = PotKind.RUNNING, amount = 15000)
+    private val plain =
+        Pot(id = "running", name = "Ausgehen", kind = PotKind.RUNNING, amount = 15000)
 
     @Test
     fun codecKeepsAllFields() {
@@ -39,7 +40,8 @@ class BudgetStoreTest {
 
     @Test
     fun unknownKindIsLeftOut() {
-        val json = """[{"id":"a","name":"A","kind":"LATER"},{"id":"b","name":"B","kind":"RUNNING"}]"""
+        val json =
+            """[{"id":"a","name":"A","kind":"LATER"},{"id":"b","name":"B","kind":"RUNNING"}]"""
         assertEquals(listOf(Pot(id = "b", name = "B", kind = PotKind.RUNNING)), parsePots(json))
     }
 

@@ -30,12 +30,13 @@ import org.totschnig.myexpenses.next.data.receipts.ItemGroupModels
 class ItemGroupModelSettingsViewModelTest {
     private val dispatcher = UnconfinedTestDispatcher()
 
-    private fun release(version: String) = ItemGroupModelRelease("de", version, 1, "https://example.com/m.bin", "", 1)
+    private fun release(version: String) =
+        ItemGroupModelRelease("de", version, 1, "https://example.com/m.bin", "", 1)
 
     private class FakeModels(
         var installed: String? = null,
         private val release: ItemGroupModelRelease? = null,
-        private val online: Boolean = true,
+        private val online: Boolean = true
     ) : ItemGroupModels {
         var downloads = 0
 
@@ -108,14 +109,20 @@ class ItemGroupModelSettingsViewModelTest {
             viewModel.installer.download()
             // Written by the data store in its own scope
             viewModel.installer.setup.first { it == ModelSetup.Done }
-            assertEquals(ModelStatus("4", ItemGroupModelSetupStore.Source.DOWNLOAD), viewModel.status.first())
+            assertEquals(
+                ModelStatus("4", ItemGroupModelSetupStore.Source.DOWNLOAD),
+                viewModel.status.first()
+            )
         }
     }
 
     @Test
     fun noReleaseIsReported() = withViewModel(FakeModels(installed = "3")) { viewModel ->
         viewModel.installer.checkForUpdate()
-        assertEquals(ModelSetup.Failed(ModelSetup.Reason.NoRelease), viewModel.installer.setup.value)
+        assertEquals(
+            ModelSetup.Failed(ModelSetup.Reason.NoRelease),
+            viewModel.installer.setup.value
+        )
     }
 
     @Test

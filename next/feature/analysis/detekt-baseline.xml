@@ -4,6 +4,7 @@
   <CurrentIssues>
     <ID>ComplexCondition:AnalysisScreen.kt:analysis.isEmpty &amp;&amp; !hasSpending &amp;&amp; !hasMoneyFlow &amp;&amp; gaps.isEmpty()</ID>
     <ID>CyclomaticComplexMethod:MoneyFlowChart.kt:MoneyFlowChart.Companion$fun of: MoneyFlowChart</ID>
+    <ID>LongMethod:MoneyFlowChart.kt:MoneyFlowChart.Companion$fun of: MoneyFlowChart</ID>
     <ID>MagicNumber:AnalysisScreen.kt:10</ID>
     <ID>MagicNumber:AnalysisScreen.kt:11</ID>
     <ID>MagicNumber:AnalysisScreen.kt:12</ID>

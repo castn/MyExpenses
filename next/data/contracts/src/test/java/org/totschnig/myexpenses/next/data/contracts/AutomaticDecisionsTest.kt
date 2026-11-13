@@ -16,19 +16,26 @@ class AutomaticDecisionsTest {
 
     private fun monthly(count: Int, amount: Long, payeeId: Long) = (0 until count).map {
         ContractTransaction(
-            id = nextId++, date = today.minusDays(3).minus(Period.ofMonths(count - 1 - it)), amount = amount,
-            accountId = 1, payeeId = payeeId, payeeName = "Payee $payeeId"
+            id = nextId++,
+            date = today.minusDays(3).minus(Period.ofMonths(count - 1 - it)),
+            amount = amount,
+            accountId = 1,
+            payeeId = payeeId,
+            payeeName = "Payee $payeeId"
         )
     }
 
     private val rent = monthly(12, -80000, payeeId = 1)
 
-    private fun analysis(rules: List<ContractRule>, transactions: List<ContractTransaction> = rent) =
-        ContractAnalysis.of(transactions, rules, today)
+    private fun analysis(
+        rules: List<ContractRule>,
+        transactions: List<ContractTransaction> = rent
+    ) = ContractAnalysis.of(transactions, rules, today)
 
     @Test
     fun firstAnalysisTakesOverOldDecisionsAndConfirmsWithoutNews() {
-        val decisions = automaticDecisions(ContractSettings(), emptyList(), analysis(emptyList()), today)
+        val decisions =
+            automaticDecisions(ContractSettings(), emptyList(), analysis(emptyList()), today)
         assertTrue(decisions.marksMigration)
         assertNotNull(decisions.migratedSalary)
         assertEquals(setOf(1L), decisions.rules.flatMap { it.payeeIds }.toSet())
@@ -49,7 +56,12 @@ class AutomaticDecisionsTest {
     @Test
     fun confirmedContractIsNotConfirmedAgain() {
         val first =
-            automaticDecisions(ContractSettings(rulesMigrated = true), emptyList(), analysis(emptyList()), today)
+            automaticDecisions(
+                ContractSettings(rulesMigrated = true),
+                emptyList(),
+                analysis(emptyList()),
+                today
+            )
         val settings = ContractSettings(rulesMigrated = true, rules = first.rules)
         val second = automaticDecisions(settings, first.news, analysis(first.rules), today)
         assertEquals(first.rules, second.rules)

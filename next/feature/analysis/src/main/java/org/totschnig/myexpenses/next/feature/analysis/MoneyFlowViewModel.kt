@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
+import org.totschnig.myexpenses.next.core.common.stateWhileShown
 import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 import org.totschnig.myexpenses.next.core.model.ledger.analysisState
-import org.totschnig.myexpenses.next.core.common.stateWhileShown
-import org.totschnig.myexpenses.next.data.tags.TagFacts
 import org.totschnig.myexpenses.next.data.analysis.MoneyFlow
 import org.totschnig.myexpenses.next.data.analysis.MoneyFlowAnalyzer
 import org.totschnig.myexpenses.next.data.analysis.PeriodKind
+import org.totschnig.myexpenses.next.data.tags.TagFacts
 
 /**
  * Where the money came from and went to, see [MoneyFlowAnalyzer]: the last twelve months for the
@@ -30,23 +30,34 @@ class MoneyFlowViewModel(
     private val compute: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
 
-    private data class Selection(val kind: PeriodKind = PeriodKind.TWELVE_MONTHS, val offset: Int = 0)
+    private data class Selection(
+        val kind: PeriodKind = PeriodKind.TWELVE_MONTHS,
+        val offset: Int = 0
+    )
 
     private val selection = MutableStateFlow(Selection())
 
-    private fun flows(selection: Flow<Selection>): StateFlow<AnalysisState<MoneyFlow>> =
-        combine(
-            ledgerSource.ledger, ledgerSource.catalog, tagFacts, ledgerSource.today, selection
-        ) { ledger, catalog, tags, today, selected ->
-            ledger?.let {
-                MoneyFlowAnalyzer.analyse(
-                    it, tags.excludedFromSpending, catalog.categoriesById, selected.kind, selected.offset, today
-                )
-            }
+    private fun flows(selection: Flow<Selection>): StateFlow<AnalysisState<MoneyFlow>> = combine(
+        ledgerSource.ledger,
+        ledgerSource.catalog,
+        tagFacts,
+        ledgerSource.today,
+        selection
+    ) { ledger, catalog, tags, today, selected ->
+        ledger?.let {
+            MoneyFlowAnalyzer.analyse(
+                it,
+                tags.excludedFromSpending,
+                catalog.categoriesById,
+                selected.kind,
+                selected.offset,
+                today
+            )
         }
-            .combine(ledgerSource.consent) { flow, consent -> analysisState(consent, flow) }
-            .flowOn(compute)
-            .stateWhileShown(viewModelScope, AnalysisState.Loading)
+    }
+        .combine(ledgerSource.consent) { flow, consent -> analysisState(consent, flow) }
+        .flowOn(compute)
+        .stateWhileShown(viewModelScope, AnalysisState.Loading)
 
     /** The last twelve months */
     val lastTwelveMonths: StateFlow<AnalysisState<MoneyFlow>> = flows(MutableStateFlow(Selection()))

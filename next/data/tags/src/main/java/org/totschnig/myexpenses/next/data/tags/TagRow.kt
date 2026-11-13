@@ -1,9 +1,9 @@
 package org.totschnig.myexpenses.next.data.tags
 
+import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.data.categories.CategoryInput
 import org.totschnig.myexpenses.next.data.categories.Counterpart
 import org.totschnig.myexpenses.next.data.categories.counterpart
-import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 
 /**
  * A debit or credit of the ledger as the analyses of tags read it: refunds and trips are found by
@@ -15,9 +15,16 @@ data class TagRow(
     val refund: RefundInput,
     val isForeign: Boolean,
     val learnFrom: Counterpart?,
-    val tagIds: Set<Long>,
+    val tagIds: Set<Long>
 ) {
-    fun toTripInput() = TripInput(refund.id, refund.date, refund.amount, refund.payeeName, refund.comment, isForeign)
+    fun toTripInput() = TripInput(
+        refund.id,
+        refund.date,
+        refund.amount,
+        refund.payeeName,
+        refund.comment,
+        isForeign
+    )
 
     fun toTagInput() = TagInput(refund.id, learnFrom?.key, learnFrom?.name, tagIds)
 }

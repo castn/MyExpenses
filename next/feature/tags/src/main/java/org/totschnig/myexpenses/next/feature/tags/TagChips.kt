@@ -12,8 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -27,10 +27,10 @@ import org.totschnig.myexpenses.designsystem.LabelChip
 import org.totschnig.myexpenses.designsystem.MultiChoiceSheet
 import org.totschnig.myexpenses.designsystem.SingleChoiceDialog
 import org.totschnig.myexpenses.designsystem.ToggleChip
-import org.totschnig.myexpenses.next.core.ui.LabelIcons
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.ledger.TagInfo
 import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
+import org.totschnig.myexpenses.next.core.ui.LabelIcons
 import org.totschnig.myexpenses.next.data.tags.TagMeaning
 
 @Composable
@@ -51,7 +51,11 @@ fun TagMeaning?.label() = stringResource(
  * the markers are switched on and off.
  */
 @Composable
-fun TagChips(viewModel: TagsViewModel, transaction: ShownTransaction, modifier: Modifier = Modifier) {
+fun TagChips(
+    viewModel: TagsViewModel,
+    transaction: ShownTransaction,
+    modifier: Modifier = Modifier
+) {
     TagChipRows(
         viewModel = viewModel,
         tags = transaction.tags,
@@ -118,11 +122,19 @@ private fun TagChipRows(
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(12.dp)) {
         ChipRow(stringResource(R.string.next_tags_belongs_to)) {
             tags.filter { it.id in groupIds }.forEach { tag ->
-                LabelChip(text = tag.label, placeholder = "", onClick = { editingId = tag.id }, icon = LabelIcons.group)
+                LabelChip(text = tag.label, placeholder = "", onClick = {
+                    editingId = tag.id
+                }, icon = LabelIcons.group)
             }
-            LabelChip(text = null, placeholder = stringResource(R.string.next_tag_add), onClick = { picking = true })
+            LabelChip(text = null, placeholder = stringResource(R.string.next_tag_add), onClick = {
+                picking =
+                    true
+            })
         }
-        ChipRow(stringResource(R.string.next_markers), hint = stringResource(R.string.next_markers_hint)) {
+        ChipRow(
+            stringResource(R.string.next_markers),
+            hint = stringResource(R.string.next_markers_hint)
+        ) {
             markerLabels.forEach { (meaning, label) ->
                 val marked = markerIds.any { meanings[it] == meaning }
                 ToggleChip(
@@ -191,7 +203,7 @@ private fun GroupPickerSheet(
     viewModel: TagsViewModel,
     initial: Set<Long>,
     onConfirm: (Set<Long>) -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     val tags by viewModel.tags.collectAsStateWithLifecycle()
     val meanings by viewModel.meanings.collectAsStateWithLifecycle()
@@ -225,7 +237,10 @@ private fun GroupPickerSheet(
             )
         },
         footer = {
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(top = 8.dp)
+            ) {
                 OutlinedTextField(
                     value = newLabel,
                     onValueChange = {
@@ -246,15 +261,20 @@ private fun GroupPickerSheet(
                         }
                         val marker = tags.find { it.label.equals(label, ignoreCase = true) }
                             ?.let { meanings[it.id] }?.takeIf { it.isMarker }
-                            ?: markerNames.entries.find { it.key.equals(label, ignoreCase = true) }?.value
+                            ?: markerNames.entries.find {
+                                it.key.equals(label, ignoreCase = true)
+                            }?.value
                         if (marker != null) {
                             warning = NameWarning.Marker(label, marker)
                             return@TextButton
                         }
                         scope.launch {
                             val category = viewModel.categoryNamed(label)
-                            if (category != null) warning = NameWarning.Category(label, category)
-                            else create(label)
+                            if (category != null) {
+                                warning = NameWarning.Category(label, category)
+                            } else {
+                                create(label)
+                            }
                         }
                     },
                     enabled = newLabel.isNotBlank() && current !is NameWarning.Marker
@@ -263,7 +283,11 @@ private fun GroupPickerSheet(
                         stringResource(
                             if (
                                 current is NameWarning.Category
-                            ) R.string.next_group_create_anyway else R.string.next_tag_create
+                            ) {
+                                R.string.next_group_create_anyway
+                            } else {
+                                R.string.next_tag_create
+                            }
                         )
                     )
                 }
@@ -271,8 +295,15 @@ private fun GroupPickerSheet(
             warning?.let {
                 Text(
                     when (it) {
-                        is NameWarning.Category -> stringResource(R.string.next_group_name_is_category, it.category)
-                        is NameWarning.Marker -> stringResource(R.string.next_group_name_is_marker, it.meaning.label())
+                        is NameWarning.Category -> stringResource(
+                            R.string.next_group_name_is_category,
+                            it.category
+                        )
+
+                        is NameWarning.Marker -> stringResource(
+                            R.string.next_group_name_is_marker,
+                            it.meaning.label()
+                        )
                     },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.error,

@@ -41,7 +41,7 @@ class SavingTipsFeature(
     private val data: NextData,
     private val contracts: ContractsFeature,
     private val tags: TagsFeature,
-    private val footer: @Composable (AnalysisState<SavingTipsOverview>) -> Unit = {},
+    private val footer: @Composable (AnalysisState<SavingTipsOverview>) -> Unit = {}
 ) : NextFeature {
     val viewModel by activity.viewModelsOf { SavingTipsViewModel(data.savingTips) }
 
@@ -56,20 +56,27 @@ class SavingTipsFeature(
         )
     }
 
-    override val tab = NextTab(Icons.Default.Percent, R.string.next_tab_saving_tips, NextKey.SavingTips)
+    override val tab =
+        NextTab(Icons.Default.Percent, R.string.next_tab_saving_tips, NextKey.SavingTips)
 
     /** Saving tips the user has not seen yet */
     @Composable
-    override fun hasNews() =
-        viewModel.savingTips.collectAsStateWithLifecycle().value.valueOrNull?.newIds?.isNotEmpty() == true
+    override fun hasNews(): Boolean {
+        val tips = viewModel.savingTips.collectAsStateWithLifecycle().value.valueOrNull
+        return tips?.newIds?.isNotEmpty() == true
+    }
 
     override fun EntryProviderScope<NavKey>.pages(shell: NextShell) {
         entry<NextKey.SavingTips> {
             BehindStatusBar(MaterialTheme.colorScheme.surfaceContainer) {
                 val homeCurrency by data.homeCurrency.collectAsStateWithLifecycle()
                 SavingTipsFlow(
-                    viewModel, shell.fixedTransactions, homeCurrency,
-                    onOpenContract = { signature -> shell.navigation.show(NextKey.Contracts(signature)) },
+                    viewModel,
+                    shell.fixedTransactions,
+                    homeCurrency,
+                    onOpenContract = { signature ->
+                        shell.navigation.show(NextKey.Contracts(signature))
+                    },
                     onInsightSettings = shell.openInsightSettings,
                     transactionDetails = { transaction, isOutlier ->
                         contracts.TransactionSections(transaction)

@@ -24,33 +24,35 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
      * Debits and credits are analysed separately, so that e.g. a refund never joins the series
      * of debits of the same payee.
      */
-    fun detect(transactions: List<ContractTransaction>): List<Contract> =
-        transactions
-            .filter { it.amount != 0L }
-            .mapNotNull { transaction -> transaction.groupKey()?.let { it to transaction } }
-            .groupBy({ it.first }, { it.second })
-            .flatMap { (key, group) ->
-                val sorted = group.sortedWith(compareBy({ it.date }, { it.id }))
-                detectInGroup(key, sorted)
-            }
-            .sortedByDescending { it.monthlyAmount }
+    fun detect(transactions: List<ContractTransaction>): List<Contract> = transactions
+        .filter { it.amount != 0L }
+        .mapNotNull { transaction -> transaction.groupKey()?.let { it to transaction } }
+        .groupBy({ it.first }, { it.second })
+        .flatMap { (key, group) ->
+            val sorted = group.sortedWith(compareBy({ it.date }, { it.id }))
+            detectInGroup(key, sorted)
+        }
+        .sortedByDescending { it.monthlyAmount }
 
     private data class GroupKey(
         val direction: ContractDirection,
         val isTemplate: Boolean,
         val id: Long,
-        val isTargetAccount: Boolean = false,
+        val isTargetAccount: Boolean = false
     ) {
         /**
          * Contracts keep the signatures they had before credits were analysed,
          * so that the stored decisions of the user still apply
          */
-        override fun toString() = (if (direction == ContractDirection.INCOME) INCOME_PREFIX else "") +
-                (when {
-                    isTargetAccount -> TARGET_ACCOUNT_PREFIX
-                    isTemplate -> TEMPLATE_PREFIX
-                    else -> PAYEE_PREFIX
-                }) + id
+        override fun toString() =
+            (if (direction == ContractDirection.INCOME) INCOME_PREFIX else "") +
+                (
+                    when {
+                        isTargetAccount -> TARGET_ACCOUNT_PREFIX
+                        isTemplate -> TEMPLATE_PREFIX
+                        else -> PAYEE_PREFIX
+                    }
+                    ) + id
     }
 
     /**
@@ -66,38 +68,62 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
 
     private fun detectInGroup(
         groupKey: GroupKey,
-        group: List<ContractTransaction>,
+        group: List<ContractTransaction>
     ): List<Contract> {
         val key = groupKey.toString()
         val isTemplate = groupKey.isTemplate
         // Transactions created from a template belong together, whatever their amount
         val series = if (isTemplate || group.hasSimilarAmounts(GROUP_AMOUNT_TOLERANCE)) {
             detectSeries(group, groupKey.direction)?.let { listOf(it) }
-        } else null
-        return (series ?: if (isTemplate) emptyList() else
-            group.clusterByAmount(CLUSTER_AMOUNT_TOLERANCE).let { clusters ->
-                // Only a payee with a clear rhythm, e.g. an employer, continues a series with other
-                // amounts. For shops, joining single purchases would invent contracts.
-                val interval = group.usualInterval()
-                if (interval == null) clusters
-                else clusters.flatMap { cluster ->
-                    // A cluster with a rhythm of its own is a separate contract, e.g. a yearly one
-                    val own = regularInterval(cluster)
-                    if (own != null && own != interval) listOf(cluster) else cluster.splitAtGaps(interval)
-                }.joinConsecutive(interval)
-            }.mapNotNull { detectSeries(it, groupKey.direction) })
+        } else {
+            null
+        }
+        return (
+            series ?: if (isTemplate) {
+                emptyList()
+            } else {
+                group.clusterByAmount(CLUSTER_AMOUNT_TOLERANCE).let { clusters ->
+                    // Only a payee with a clear rhythm, e.g. an employer, continues a series with other
+                    // amounts. For shops, joining single purchases would invent contracts.
+                    val interval = group.usualInterval()
+                    if (interval == null) {
+                        clusters
+                    } else {
+                        clusters.flatMap { cluster ->
+                            // A cluster with a rhythm of its own is a separate contract, e.g. a yearly one
+                            val own = regularInterval(cluster)
+                            if (own != null && own != interval) {
+                                listOf(cluster)
+                            } else {
+                                cluster.splitAtGaps(interval)
+                            }
+                        }.joinConsecutive(interval)
+                    }
+                }.mapNotNull { detectSeries(it, groupKey.direction) }
+            }
+            )
             .withSignatures(key, groupKey.direction, isTemplate)
     }
 
-    private class Series(val interval: ContractInterval, val transactions: List<ContractTransaction>)
+    private class Series(
+        val interval: ContractInterval,
+        val transactions: List<ContractTransaction>
+    )
 
     /**
      * @param transactions sorted by date
      */
-    private fun detectSeries(transactions: List<ContractTransaction>, direction: ContractDirection): Series? {
+    private fun detectSeries(
+        transactions: List<ContractTransaction>,
+        direction: ContractDirection
+    ): Series? {
         val interval = regularInterval(transactions) ?: return null
         if (transactions.size < interval.minOccurrences) return null
-        if (direction == ContractDirection.INCOME && !transactions.isLikelyRareIncome(interval)) return null
+        if (direction == ContractDirection.INCOME &&
+            !transactions.isLikelyRareIncome(interval)
+        ) {
+            return null
+        }
         return Series(interval, transactions)
     }
 
@@ -107,13 +133,20 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
      * With only two payments, they must therefore come on the expected day and with the same amount.
      */
     private fun List<ContractTransaction>.isLikelyRareIncome(interval: ContractInterval): Boolean {
-        if (interval != ContractInterval.YEARLY && interval != ContractInterval.HALF_YEARLY) return true
+        if (interval != ContractInterval.YEARLY &&
+            interval != ContractInterval.HALF_YEARLY
+        ) {
+            return true
+        }
         if (size > 2) return true
         val (first, second) = this
-        val daysOff = ChronoUnit.DAYS.between(first.date.plus(interval.step), second.date).absoluteValue
+        val daysOff = ChronoUnit.DAYS.between(
+            first.date.plus(interval.step),
+            second.date
+        ).absoluteValue
         val amounts = listOf(first.amount.absoluteValue, second.amount.absoluteValue)
         return daysOff <= RARE_INCOME_MAX_DAYS_OFF &&
-                amounts.max() <= amounts.min() * (1 + RARE_INCOME_AMOUNT_TOLERANCE)
+            amounts.max() <= amounts.min() * (1 + RARE_INCOME_AMOUNT_TOLERANCE)
     }
 
     /**
@@ -143,12 +176,16 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
      * months then do not end up in one cluster, which would hide that the series continued
      * with other amounts.
      */
-    private fun List<ContractTransaction>.splitAtGaps(interval: ContractInterval): List<List<ContractTransaction>> {
+    private fun List<ContractTransaction>.splitAtGaps(
+        interval: ContractInterval
+    ): List<List<ContractTransaction>> {
         val runs = mutableListOf(mutableListOf(first()))
         zipWithNext().forEach { (previous, next) ->
             if (
                 ChronoUnit.DAYS.between(previous.date, next.date) > interval.maxDays
-            ) runs += mutableListOf<ContractTransaction>()
+            ) {
+                runs += mutableListOf<ContractTransaction>()
+            }
             runs.last() += next
         }
         return runs
@@ -169,8 +206,11 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
             val predecessor = series.indices
                 .filter { series[it].isContinuedBy(cluster, interval) }
                 .maxByOrNull { series[it].last().date }
-            if (predecessor != null) series[predecessor] = series[predecessor] + cluster
-            else series += cluster
+            if (predecessor != null) {
+                series[predecessor] = series[predecessor] + cluster
+            } else {
+                series += cluster
+            }
         }
         return series
     }
@@ -189,22 +229,31 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
      * The signature is made of group key and interval. In the rare case that a payee has several
      * contracts with the same interval, they are told apart by the order of their amounts.
      */
-    private fun List<Series>.withSignatures(key: String, direction: ContractDirection, isTemplate: Boolean) =
-        groupBy { it.interval }.flatMap { (interval, sameInterval) ->
-            sameInterval.sortedBy { series -> series.transactions.minOf { it.amount.absoluteValue } }
-                .mapIndexed { index, series ->
-                    toContract(
-                        signature = "$key|${interval.name}" + if (index > 0) "|$index" else "",
-                        series = series,
-                        direction = direction,
-                        isTemplate = isTemplate
-                    )
-                }
+    private fun List<Series>.withSignatures(
+        key: String,
+        direction: ContractDirection,
+        isTemplate: Boolean
+    ) = groupBy { it.interval }.flatMap { (interval, sameInterval) ->
+        sameInterval.sortedBy { series ->
+            series.transactions.minOf { it.amount.absoluteValue }
         }
+            .mapIndexed { index, series ->
+                toContract(
+                    signature = "$key|${interval.name}" + if (index > 0) "|$index" else "",
+                    series = series,
+                    direction = direction,
+                    isTemplate = isTemplate
+                )
+            }
+    }
 
-    private fun toContract(signature: String, series: Series, direction: ContractDirection, isTemplate: Boolean) =
-        contractOf(signature, series.transactions, series.interval, direction, today)
-            .copy(isConfident = isTemplate || series.isRegularEnoughToConfirm())
+    private fun toContract(
+        signature: String,
+        series: Series,
+        direction: ContractDirection,
+        isTemplate: Boolean
+    ) = contractOf(signature, series.transactions, series.interval, direction, today)
+        .copy(isConfident = isTemplate || series.isRegularEnoughToConfirm())
 
     /**
      * Many payments that nearly all follow the interval: a contract without doubt
@@ -218,13 +267,16 @@ class ContractDetector(private val today: LocalDate = LocalDate.now()) {
     private fun List<ContractTransaction>.hasSimilarAmounts(tolerance: Double): Boolean {
         val amounts = map { it.amount.absoluteValue }.sorted()
         val median = amounts[amounts.size / 2]
-        return amounts.first() >= median * (1 - tolerance) && amounts.last() <= median * (1 + tolerance)
+        return amounts.first() >= median * (1 - tolerance) &&
+            amounts.last() <= median * (1 + tolerance)
     }
 
     /**
      * Splits into clusters of similar amounts, each sorted by date.
      */
-    private fun List<ContractTransaction>.clusterByAmount(tolerance: Double): List<List<ContractTransaction>> {
+    private fun List<ContractTransaction>.clusterByAmount(
+        tolerance: Double
+    ): List<List<ContractTransaction>> {
         val clusters = mutableListOf<MutableList<ContractTransaction>>()
         var clusterStart = 0L
         sortedBy { it.amount.absoluteValue }.forEach {

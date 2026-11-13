@@ -40,7 +40,12 @@ class SavingTipsViewModelTest {
         runTest {
             val store = TipStore(dataStore)
             val repository = SavingTipsRepository(
-                FakeLedgerSource(), store, flowOf(null), flowOf(TagFacts()), emptyFlow(), backgroundScope
+                FakeLedgerSource(),
+                store,
+                flowOf(null),
+                flowOf(TagFacts()),
+                emptyFlow(),
+                backgroundScope
             )
             val viewModel = SavingTipsViewModel(repository)
             viewModel.markTipsSeen(listOf(tip))

@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 import org.totschnig.myexpenses.next.core.common.stateWhileShown
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 import org.totschnig.myexpenses.next.data.categories.CategoryAnalysis
 import org.totschnig.myexpenses.next.data.categories.CategoryDecisions
 import org.totschnig.myexpenses.next.data.categories.CategoryRepository
@@ -85,21 +85,25 @@ class CategorySuggestionsViewModel(private val repository: CategoryRepository) :
      * @param currentCategoryId the category the transaction had when it was loaded. The transaction
      * is looked up in the analysis, so that the state follows changes made meanwhile.
      */
-    fun stateOf(transactionId: Long, currentCategoryId: Long?): Flow<CategoryState> = analysis.map { analysis ->
-        analysis ?: return@map CategoryState.None
-        val input = analysis.inputs.find { it.id == transactionId }
-        val categoryId = if (input != null) input.categoryId else currentCategoryId
-        if (categoryId != null) {
-            analysis.decisions.automatic[transactionId]?.takeIf { it == categoryId }
-                ?.let { id -> analysis.paths[id]?.let { CategoryState.Automatic(id, it) } } ?: CategoryState.None
-        } else {
-            analysis.plan.suggestions[transactionId]
-                ?.let { suggestion ->
-                    analysis.paths[suggestion.categoryId]?.let { CategoryState.Suggested(suggestion, it) }
-                }
-                ?: CategoryState.None
+    fun stateOf(transactionId: Long, currentCategoryId: Long?): Flow<CategoryState> =
+        analysis.map { analysis ->
+            analysis ?: return@map CategoryState.None
+            val input = analysis.inputs.find { it.id == transactionId }
+            val categoryId = if (input != null) input.categoryId else currentCategoryId
+            if (categoryId != null) {
+                analysis.decisions.automatic[transactionId]?.takeIf { it == categoryId }
+                    ?.let { id -> analysis.paths[id]?.let { CategoryState.Automatic(id, it) } }
+                    ?: CategoryState.None
+            } else {
+                analysis.plan.suggestions[transactionId]
+                    ?.let { suggestion ->
+                        analysis.paths[suggestion.categoryId]?.let {
+                            CategoryState.Suggested(suggestion, it)
+                        }
+                    }
+                    ?: CategoryState.None
+            }
         }
-    }
 
     /** Paths of the suggested categories by transaction, to show them in lists */
     val suggestedPaths: StateFlow<Map<Long, String>> =
@@ -124,8 +128,9 @@ class CategorySuggestionsViewModel(private val repository: CategoryRepository) :
         CounterpartInfo(
             counterpart,
             analysis.inputs.filter {
-                it.id != transactionId && it.categoryId == null && (it.amount < 0) == (input.amount < 0) &&
-                        it.counterpart()?.key == counterpart.key
+                it.id != transactionId && it.categoryId == null &&
+                    (it.amount < 0) == (input.amount < 0) &&
+                    it.counterpart()?.key == counterpart.key
             }.map { it.id }
         )
     }
@@ -159,18 +164,26 @@ class CategorySuggestionsViewModel(private val repository: CategoryRepository) :
     fun change(transactionId: Long, fromCategoryId: Long?, categoryId: Long) {
         viewModelScope.launch {
             writing.changeCategory(transactionId, fromCategoryId, categoryId)
-            if (fromCategoryId != null) store.update { decisions ->
-                if (
-                    decisions.automatic[transactionId] == fromCategoryId
-                ) decisions.rejecting(transactionId, fromCategoryId)
-                else decisions
+            if (fromCategoryId != null) {
+                store.update { decisions ->
+                    if (decisions.automatic[transactionId] == fromCategoryId) {
+                        decisions.rejecting(transactionId, fromCategoryId)
+                    } else {
+                        decisions
+                    }
+                }
             }
         }
     }
 
     /** The suggestion is not made again for this transaction */
     fun reject(suggestion: CategorySuggestion) {
-        update { it.copy(rejected = it.rejected + (suggestion.transactionId to suggestion.categoryId)) }
+        update {
+            it.copy(
+                rejected =
+                    it.rejected + (suggestion.transactionId to suggestion.categoryId)
+            )
+        }
     }
 
     /**

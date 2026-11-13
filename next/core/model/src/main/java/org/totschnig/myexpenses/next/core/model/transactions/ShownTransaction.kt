@@ -20,7 +20,7 @@ data class ShownTransaction(
     val tags: List<TagInfo> = emptyList(),
     val isSplit: Boolean = false,
     val isSplitPart: Boolean = false,
-    val isTransfer: Boolean = false,
+    val isTransfer: Boolean = false
 ) {
     /** A debit that is no transfer and no part of a split transaction, so a receipt can belong to it */
     val canHaveReceipt: Boolean

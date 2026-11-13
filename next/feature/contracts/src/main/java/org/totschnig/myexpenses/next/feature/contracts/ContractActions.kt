@@ -7,7 +7,6 @@ import org.totschnig.myexpenses.next.data.contracts.CustomArea
 import org.totschnig.myexpenses.next.data.contracts.SalaryChoice
 import org.totschnig.myexpenses.next.data.contracts.icon
 
-
 /**
  * What the user can do with contracts and incomes on their screens, see [ContractsViewModel].
  * Changing a suggestion confirms it. Does nothing by default, e.g. in previews.

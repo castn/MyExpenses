@@ -13,19 +13,19 @@ import org.totschnig.myexpenses.next.data.receipts.ItemGroupModelSetupStore
 import org.totschnig.myexpenses.next.data.receipts.ItemGroupModelStore
 import org.totschnig.myexpenses.next.feature.receipts.ItemGroupModelPage
 import org.totschnig.myexpenses.next.feature.receipts.ItemGroupModelSettingsViewModel
-import org.totschnig.myexpenses.next.feature.receipts.itemGroupModelValue
-import org.totschnig.myexpenses.next.settings.AreaSettings
-import org.totschnig.myexpenses.next.settings.InsightSetting
-import org.totschnig.myexpenses.next.settings.SettingControl
-import org.totschnig.myexpenses.next.settings.SettingKind
-import org.totschnig.myexpenses.next.settings.SettingsGroup
+import org.totschnig.myexpenses.next.feature.receipts.LocalNewTransactionEditor
 import org.totschnig.myexpenses.next.feature.receipts.ReceiptChip
 import org.totschnig.myexpenses.next.feature.receipts.ReceiptPhotoLoader
 import org.totschnig.myexpenses.next.feature.receipts.ReceiptScanAction
 import org.totschnig.myexpenses.next.feature.receipts.ReceiptSection
 import org.totschnig.myexpenses.next.feature.receipts.ReceiptViewModel
 import org.totschnig.myexpenses.next.feature.receipts.WaitingReceiptsBanner
-import org.totschnig.myexpenses.next.feature.receipts.LocalNewTransactionEditor
+import org.totschnig.myexpenses.next.feature.receipts.itemGroupModelValue
+import org.totschnig.myexpenses.next.settings.AreaSettings
+import org.totschnig.myexpenses.next.settings.InsightSetting
+import org.totschnig.myexpenses.next.settings.SettingControl
+import org.totschnig.myexpenses.next.settings.SettingKind
+import org.totschnig.myexpenses.next.settings.SettingsGroup
 import org.totschnig.myexpenses.next.viewModelsOf
 
 /**
@@ -91,7 +91,11 @@ class ReceiptSettings(activity: ComponentActivity) : AreaSettings {
     @Composable
     override fun control(setting: InsightSetting): SettingControl? {
         if (setting != MODEL) return null
-        return SettingControl.Page(value = itemGroupModelValue(viewModel), isEnabled = true, setting = setting)
+        return SettingControl.Page(
+            value = itemGroupModelValue(viewModel),
+            isEnabled = true,
+            setting = setting
+        )
     }
 
     @Composable

@@ -15,12 +15,16 @@ class ContractAnalysis(
     val transactions: List<ContractTransaction>,
     val contracts: List<Contract>,
     val dismissed: List<Contract>,
-    val today: LocalDate,
+    val today: LocalDate
 ) {
     val suggestions: List<Contract> get() = contracts.filter { !it.isConfirmed }
 
     companion object {
-        fun of(transactions: List<ContractTransaction>, rules: List<ContractRule>, today: LocalDate): ContractAnalysis {
+        fun of(
+            transactions: List<ContractTransaction>,
+            rules: List<ContractRule>,
+            today: LocalDate
+        ): ContractAnalysis {
             val match = RuleMatcher(today).apply(rules, transactions)
             val rulesById = rules.associateBy { it.id }
             return ContractAnalysis(
@@ -50,11 +54,14 @@ fun ContractAnalysis.automaticRules(existing: List<ContractRule>): List<Contract
 /**
  * Like [automaticRules], with the suggestion each rule confirms
  */
-fun ContractAnalysis.automaticConfirmations(existing: List<ContractRule>): List<Pair<Contract, ContractRule>> =
-    suggestions
-        .filter { it.isConfident && it.isActive }
-        .filter { contract -> contract.transactions.none { payment -> existing.any { it.matches(payment) } } }
-        .map { it to ContractRule.of(it, transactions) }
+fun ContractAnalysis.automaticConfirmations(
+    existing: List<ContractRule>
+): List<Pair<Contract, ContractRule>> = suggestions
+    .filter { it.isConfident && it.isActive }
+    .filter { contract ->
+        contract.transactions.none { payment -> existing.any { it.matches(payment) } }
+    }
+    .map { it to ContractRule.of(it, transactions) }
 
 /**
  * Takes over the decisions the user made before there were rules: they were stored by the
@@ -63,20 +70,28 @@ fun ContractAnalysis.automaticConfirmations(existing: List<ContractRule>): List<
  * @param analysis of all transactions without any rules
  * @return the rules, and the salary choice with signatures replaced by the keys of the rules
  */
-fun migrateToRules(settings: ContractSettings, analysis: ContractAnalysis): Pair<List<ContractRule>, SalaryChoice> {
+fun migrateToRules(
+    settings: ContractSettings,
+    analysis: ContractAnalysis
+): Pair<List<ContractRule>, SalaryChoice> {
     val salarySignatures = (settings.salary as? SalaryChoice.Fixed)?.signatures.orEmpty()
     val keys = mutableMapOf<String, String>()
     val rules = analysis.contracts.mapNotNull { contract ->
         val signature = contract.signature
         val kind = when {
             signature in settings.dismissed -> ContractRule.Kind.IGNORE
-            signature in settings.names || signature in settings.areas || signature in salarySignatures ->
+
+            signature in settings.names || signature in settings.areas ||
+                signature in salarySignatures ->
                 ContractRule.Kind.CONTRACT
 
             else -> return@mapNotNull null
         }
         ContractRule.of(
-            contract.copy(customName = settings.names[signature], areaChoice = settings.areaChoice(signature)),
+            contract.copy(
+                customName = settings.names[signature],
+                areaChoice = settings.areaChoice(signature)
+            ),
             analysis.transactions,
             kind
         ).also { keys[signature] = it.key }
@@ -98,7 +113,7 @@ fun migrateToRules(settings: ContractSettings, analysis: ContractAnalysis): Pair
 fun List<ContractRule>.withRuleFor(
     contract: Contract,
     transactions: List<ContractTransaction>,
-    change: (ContractRule) -> ContractRule = { it },
+    change: (ContractRule) -> ContractRule = { it }
 ): Pair<List<ContractRule>, ContractRule> {
     val existing = find { it.key == contract.signature }
     return if (existing != null) {
@@ -113,10 +128,16 @@ fun List<ContractRule>.withRuleFor(
 /**
  * The user declares [contract] as no contract: its rule, if confirmed, turns into one that ignores its payments
  */
-fun List<ContractRule>.dismissing(contract: Contract, transactions: List<ContractTransaction>): List<ContractRule> {
+fun List<ContractRule>.dismissing(
+    contract: Contract,
+    transactions: List<ContractTransaction>
+): List<ContractRule> {
     val existing = find { it.key == contract.signature }
-    return if (existing != null) map { if (it === existing) it.copy(kind = ContractRule.Kind.IGNORE) else it }
-    else this + ContractRule.of(contract, transactions, ContractRule.Kind.IGNORE)
+    return if (existing != null) {
+        map { if (it === existing) it.copy(kind = ContractRule.Kind.IGNORE) else it }
+    } else {
+        this + ContractRule.of(contract, transactions, ContractRule.Kind.IGNORE)
+    }
 }
 
 /**
@@ -136,21 +157,26 @@ fun List<ContractRule>.restoring(contract: Contract): List<ContractRule> =
 fun List<ContractRule>.merging(
     target: Contract,
     other: Contract,
-    transactions: List<ContractTransaction>,
+    transactions: List<ContractTransaction>
 ): Pair<List<ContractRule>, ContractRule> {
     val otherRule = find { it.key == other.signature } ?: ContractRule.of(other, transactions)
     return filterNot { it.key == other.signature }.withRuleFor(target, transactions) { rule ->
         rule.copy(
             // Payments of a second template can only be matched through their payees
             payeeIds = rule.payeeIds + otherRule.payeeIds +
-                    if (otherRule.templateId != null && otherRule.templateId != rule.templateId)
-                        other.transactions.mapNotNull { it.payeeId } else emptyList(),
+                if (otherRule.templateId != null && otherRule.templateId != rule.templateId) {
+                    other.transactions.mapNotNull { it.payeeId }
+                } else {
+                    emptyList()
+                },
             templateId = rule.templateId ?: otherRule.templateId,
             // Joining payments to a savings account with the movements to it keeps both
             targetAccountIds = rule.targetAccountIds + otherRule.targetAccountIds,
             // Only if both contracts were limited to amounts, the joined one stays so
             amountRange = rule.amountRange?.let { range ->
-                otherRule.amountRange?.let { minOf(range.first, it.first)..maxOf(range.last, it.last) }
+                otherRule.amountRange?.let {
+                    minOf(range.first, it.first)..maxOf(range.last, it.last)
+                }
             }
         )
     }
@@ -180,9 +206,16 @@ sealed interface PaymentContractInfo {
 }
 
 fun ContractAnalysis.infoFor(transactionId: Long): PaymentContractInfo {
-    val payment = transactions.find { it.id == transactionId } ?: return PaymentContractInfo.Unavailable
+    val payment =
+        transactions.find { it.id == transactionId } ?: return PaymentContractInfo.Unavailable
     contracts.find { contract -> contract.transactions.any { it.id == transactionId } }?.let {
-        return if (it.isConfirmed) PaymentContractInfo.Confirmed(it) else PaymentContractInfo.Suggested(it)
+        return if (it.isConfirmed) {
+            PaymentContractInfo.Confirmed(
+                it
+            )
+        } else {
+            PaymentContractInfo.Suggested(it)
+        }
     }
     dismissed.find { contract -> contract.transactions.any { it.id == transactionId } }?.let {
         return PaymentContractInfo.Dismissed(it)
@@ -190,7 +223,9 @@ fun ContractAnalysis.infoFor(transactionId: Long): PaymentContractInfo {
     if (payment.payeeId == null && payment.templateId == null && payment.targetAccountId == null) {
         return PaymentContractInfo.NoPayee
     }
-    return PaymentContractInfo.Markable(ContractDirection.of(payment.amount) == ContractDirection.INCOME)
+    return PaymentContractInfo.Markable(
+        ContractDirection.of(payment.amount) == ContractDirection.INCOME
+    )
 }
 
 /**
@@ -201,9 +236,10 @@ fun List<ContractRule>.marking(
     transactionId: Long,
     interval: ContractInterval,
     transactions: List<ContractTransaction>,
-    today: LocalDate,
+    today: LocalDate
 ): List<ContractRule> {
     val payment = transactions.find { it.id == transactionId } ?: return this
-    val contract = contractOf("", listOf(payment), interval, ContractDirection.of(payment.amount), today)
+    val contract =
+        contractOf("", listOf(payment), interval, ContractDirection.of(payment.amount), today)
     return this + ContractRule.of(contract, transactions)
 }

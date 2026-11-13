@@ -1,19 +1,24 @@
 package org.totschnig.myexpenses.next.data.receipts
 
+import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.time.LocalDate
 
 class ReceiptMatcherTest {
 
     private val day = LocalDate.of(2026, 10, 9)
     private val today = LocalDate.of(2026, 10, 11)
 
-    private fun booked(id: Long, amount: Long, payee: String? = null, daysAfter: Long = 1, comment: String? = null) =
-        BookedTransaction(id, day.plusDays(daysAfter), amount, payee, comment)
+    private fun booked(
+        id: Long,
+        amount: Long,
+        payee: String? = null,
+        daysAfter: Long = 1,
+        comment: String? = null
+    ) = BookedTransaction(id, day.plusDays(daysAfter), amount, payee, comment)
 
     private fun candidates(receipt: ReceiptHeader, vararg transactions: BookedTransaction) =
         ReceiptMatcher.candidates(receipt, transactions.toList(), today)
@@ -34,7 +39,8 @@ class ReceiptMatcherTest {
 
     @Test
     fun twoEqualCandidatesAreNotSure() {
-        val result = candidates(rewe, booked(1, -1215, "REWE"), booked(2, -1215, "REWE", daysAfter = 3))
+        val result =
+            candidates(rewe, booked(1, -1215, "REWE"), booked(2, -1215, "REWE", daysAfter = 3))
         assertEquals(listOf(1L, 2L), result.map { it.transaction.id })
         assertNull(ReceiptMatcher.sure(result))
     }
@@ -72,7 +78,12 @@ class ReceiptMatcherTest {
         val result = candidates(
             rewe.copy(date = null),
             BookedTransaction(1, today.minusDays(3), -1215, "REWE"),
-            BookedTransaction(2, today.minusDays(ReceiptMatcher.DAYS_WITHOUT_DATE + 1), -1215, "REWE")
+            BookedTransaction(
+                2,
+                today.minusDays(ReceiptMatcher.DAYS_WITHOUT_DATE + 1),
+                -1215,
+                "REWE"
+            )
         )
         assertEquals(listOf(1L), result.map { it.transaction.id })
         assertNull(result.single().daysAfter)

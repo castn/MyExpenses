@@ -11,7 +11,7 @@ data class TagInput(
     val id: Long,
     val counterpart: String?,
     val counterpartName: String?,
-    val tags: Set<Long>,
+    val tags: Set<Long>
 )
 
 /**
@@ -26,7 +26,7 @@ data class TagSuggestion(
     val counterpart: String,
     val counterpartName: String,
     val tagged: Int,
-    val others: List<Long>,
+    val others: List<Long>
 ) {
     /** Identifies the suggestion, e.g. to remember that the user said no */
     val key: String get() = "$transactionId:$tagId"
@@ -47,7 +47,9 @@ data class TagRule(val counterpart: String, val tagId: Long, val afterId: Long) 
             parts[0].takeIf { it.isNotEmpty() }?.let { TagRule(it, tagId, afterId) }
         }
 
-        fun encode(rules: List<TagRule>) = rules.joinToString(";") { "${it.counterpart}|${it.tagId}|${it.afterId}" }
+        fun encode(rules: List<TagRule>) = rules.joinToString(";") {
+            "${it.counterpart}|${it.tagId}|${it.afterId}"
+        }
     }
 }
 
@@ -68,7 +70,7 @@ object TagLearner {
     fun suggest(
         inputs: List<TagInput>,
         learnable: (Long) -> Boolean,
-        rejected: Set<String> = emptySet(),
+        rejected: Set<String> = emptySet()
     ): Map<Long, TagSuggestion> = inputs
         .filter { it.counterpart != null }
         .groupBy { it.counterpart!! }
@@ -81,9 +83,15 @@ object TagLearner {
                     val others = transactions.filter { tagId !in it.tags }
                     others.map { transaction ->
                         TagSuggestion(
-                            transaction.id, tagId, counterpart,
-                            transactions.firstNotNullOfOrNull { it.counterpartName?.takeIf(String::isNotBlank) } ?: "",
-                            count, others.map { it.id }
+                            transaction.id,
+                            tagId,
+                            counterpart,
+                            transactions.firstNotNullOfOrNull {
+                                it.counterpartName?.takeIf(String::isNotBlank)
+                            }
+                                ?: "",
+                            count,
+                            others.map { it.id }
                         )
                     }
                 }
@@ -95,7 +103,10 @@ object TagLearner {
     /** Tags to add by [rules], by transaction id */
     fun applyRules(inputs: List<TagInput>, rules: List<TagRule>): Map<Long, Set<Long>> = inputs
         .mapNotNull { input ->
-            rules.filter { it.counterpart == input.counterpart && input.id > it.afterId && it.tagId !in input.tags }
+            rules.filter {
+                it.counterpart == input.counterpart && input.id > it.afterId &&
+                    it.tagId !in input.tags
+            }
                 .takeIf { it.isNotEmpty() }
                 ?.let { matching -> input.id to matching.mapTo(HashSet()) { it.tagId } }
         }

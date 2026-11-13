@@ -5,15 +5,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
-import org.totschnig.myexpenses.next.core.model.ledger.Ledger
-import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 import org.totschnig.myexpenses.next.core.common.ledger.Memo
 import org.totschnig.myexpenses.next.core.common.ledger.mapMemo
 import org.totschnig.myexpenses.next.core.common.logTimings
 import org.totschnig.myexpenses.next.core.common.shareWhileShown
+import org.totschnig.myexpenses.next.core.model.ledger.Ledger
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 
 /**
  * What the tags of the user mean for the analyses, once for the process: the rows the analyses of
@@ -24,7 +24,7 @@ class TagRepository(
     val ledgerSource: LedgerSource,
     val store: TagStore,
     scope: CoroutineScope,
-    private val tagDatabase: TagDatabase,
+    private val tagDatabase: TagDatabase
 ) {
     /**
      * The transactions as the analyses of tags read them, computed once for suggestions, trips and
@@ -45,7 +45,12 @@ class TagRepository(
     val facts: SharedFlow<TagFacts> =
         combine(ledgerSource.ledger, store.meanings) { ledger, meanings ->
             // Without consent there is nothing to exclude, and tips are not shown
-            TagFacts(ledger?.let { excludedMemo.of(ExcludedInput(it, meanings)) }.orEmpty(), meanings)
+            TagFacts(
+                ledger?.let {
+                    excludedMemo.of(ExcludedInput(it, meanings))
+                }.orEmpty(),
+                meanings
+            )
         }
             .distinctUntilChanged()
             .logTimings("tags: facts")
@@ -68,12 +73,17 @@ class TagRepository(
     val appliedRules: SharedFlow<Map<Long, Set<Long>>> =
         combine(tagInputs.filterNotNull(), store.rules) { inputs, rules ->
             // Inputs reused after a restart were applied already
-            if (applied?.let { it.first === inputs && it.second == rules } == true) emptyMap()
-            else TagLearner.applyRules(inputs, rules).also { applied = inputs to rules }
+            if (applied?.let { it.first === inputs && it.second == rules } == true) {
+                emptyMap()
+            } else {
+                TagLearner.applyRules(inputs, rules).also { applied = inputs to rules }
+            }
         }
             .distinctUntilChanged()
             .onEach { additions ->
-                additions.forEach { (transactionId, tagIds) -> tagDatabase.addTags(transactionId, tagIds) }
+                additions.forEach { (transactionId, tagIds) ->
+                    tagDatabase.addTags(transactionId, tagIds)
+                }
             }
             .flowOn(Dispatchers.IO)
             .shareWhileShown(scope)

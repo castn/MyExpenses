@@ -64,7 +64,9 @@ class ReceiptTokensTest {
 
     @Test
     fun amounts() {
-        val (weight, price) = ReceiptTokens.tokens("0,344 kg x 3,99").filterIsInstance<Token.Number>()
+        val (weight, price) = ReceiptTokens.tokens(
+            "0,344 kg x 3,99"
+        ).filterIsInstance<Token.Number>()
         assertEquals(false, weight.isAmount)
         assertEquals(true, price.isAmount)
         assertEquals(399L, price.cents)

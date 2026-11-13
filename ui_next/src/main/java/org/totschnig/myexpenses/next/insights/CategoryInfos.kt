@@ -11,8 +11,10 @@ class RawCategory(val id: Long, val parentId: Long?, val label: String, val type
 fun categoryInfos(raw: List<RawCategory>): List<CategoryInfo> {
     val byId = raw.associateBy { it.id }
     fun pathOf(category: RawCategory): String =
-        category.parentId?.let(byId::get)?.let { "${pathOf(it)} > ${category.label}" } ?: category.label
-    fun rootOf(category: RawCategory): RawCategory = category.parentId?.let(byId::get)?.let(::rootOf) ?: category
+        category.parentId?.let(byId::get)?.let { "${pathOf(it)} > ${category.label}" }
+            ?: category.label
+    fun rootOf(category: RawCategory): RawCategory =
+        category.parentId?.let(byId::get)?.let(::rootOf) ?: category
     return raw.map { category ->
         val root = rootOf(category)
         // The type is set on main categories

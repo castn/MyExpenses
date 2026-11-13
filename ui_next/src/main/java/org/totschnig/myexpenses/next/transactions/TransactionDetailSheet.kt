@@ -1,6 +1,5 @@
 package org.totschnig.myexpenses.next.transactions
 
-import org.totschnig.myexpenses.next.core.ui.merchants.TransactionTile
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,6 +29,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.FormatStyle
+import org.totschnig.myexpenses.activity.canBeEdited
+import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
 import org.totschnig.myexpenses.compose.Menu
 import org.totschnig.myexpenses.designsystem.AdaptiveSheet
 import org.totschnig.myexpenses.designsystem.ChipRow
@@ -40,22 +44,18 @@ import org.totschnig.myexpenses.designsystem.Spacing
 import org.totschnig.myexpenses.designsystem.TextDialog
 import org.totschnig.myexpenses.next.MenuActionSheet
 import org.totschnig.myexpenses.next.SignedAmount
-import org.totschnig.myexpenses.activity.canBeEdited
-import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
-import org.totschnig.myexpenses.util.convAmount
+import org.totschnig.myexpenses.next.core.common.NO_NAME
+import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.ui.merchants.PayeeImage
+import org.totschnig.myexpenses.next.core.ui.merchants.TransactionTile
+import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
 import org.totschnig.myexpenses.next.data.transactions.EditableTransaction
 import org.totschnig.myexpenses.next.data.transactions.SplitPart
 import org.totschnig.myexpenses.next.feature.transactions.MethodDialog
 import org.totschnig.myexpenses.next.feature.transactions.TransactionForm
 import org.totschnig.myexpenses.next.feature.transactions.UndoSnackbar
+import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.viewmodel.data.Transaction2
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.FormatStyle
-import org.totschnig.myexpenses.next.core.ui.merchants.PayeeImage
-import org.totschnig.myexpenses.next.core.common.NO_NAME
-import org.totschnig.myexpenses.next.core.common.R
-import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
 
 /**
  * Details of a transaction in a sheet above the list, the rows straight on the sheet:
@@ -82,7 +82,7 @@ fun TransactionDetailSheet(
     image: PayeeImage? = null,
     onImageClick: (() -> Unit)? = null,
     editing: TransactionEditing? = null,
-    content: @Composable () -> Unit = {},
+    content: @Composable () -> Unit = {}
 ) {
     val editable = editing?.state?.transaction?.takeIf { it.id == transaction.id }
     val draft = editing?.state?.draft?.takeIf { it.id == transaction.id && editable != null }
@@ -103,20 +103,32 @@ fun TransactionDetailSheet(
                     Text(stringResource(R.string.next_transaction_save))
                 }
             }
-        } else null,
+        } else {
+            null
+        },
         skipPartiallyExpanded = false,
-        snackbarHostState = snackbar,
+        snackbarHostState = snackbar
     ) {
         if (editing != null && editable != null && draft != null) {
             TransactionForm(
                 state = editing.state,
                 draft = draft,
                 actions = editing.actions,
-                currencySymbol = (transaction.amount ?: transaction.displayAmount).currencyUnit.symbol,
+                currencySymbol =
+                    (transaction.amount ?: transaction.displayAmount).currencyUnit.symbol,
                 tagField = editing.tagField
             )
         } else {
-            TransactionDetails(transaction, menu, categoryChip, tagChips, image, onImageClick, editing, content)
+            TransactionDetails(
+                transaction,
+                menu,
+                categoryChip,
+                tagChips,
+                image,
+                onImageClick,
+                editing,
+                content
+            )
         }
     }
 }
@@ -130,7 +142,7 @@ private fun TransactionDetails(
     image: PayeeImage?,
     onImageClick: (() -> Unit)?,
     editing: TransactionEditing?,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     // What the details can change, null while it loads or if they cannot change it
     val editable = editing?.state?.transaction?.takeIf { it.id == transaction.id && menu != null }
@@ -142,20 +154,30 @@ private fun TransactionDetails(
             // whether the details can change them
             if (editing != null && menu != null && transaction.canBeEdited) {
                 IconButton(onClick = editing.actions::startEditing, enabled = editable != null) {
-                    Icon(Icons.Outlined.Edit, contentDescription = stringResource(R.string.next_transaction_edit))
+                    Icon(
+                        Icons.Outlined.Edit,
+                        contentDescription = stringResource(R.string.next_transaction_edit)
+                    )
                 }
             }
             if (menu != null) {
                 val showMenu = rememberSaveable { mutableStateOf(false) }
                 IconButton(onClick = { showMenu.value = true }) {
-                    Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.next_transaction_actions))
+                    Icon(
+                        Icons.Default.MoreVert,
+                        contentDescription = stringResource(R.string.next_transaction_actions)
+                    )
                 }
                 MenuActionSheet(showMenu, menu, title = transaction.party?.displayName)
             }
         }
         if (categoryChip != null || tagChips != null) {
             Column(
-                modifier = Modifier.padding(start = Spacing.screen, end = Spacing.screen, bottom = 16.dp),
+                modifier = Modifier.padding(
+                    start = Spacing.screen,
+                    end = Spacing.screen,
+                    bottom = 16.dp
+                ),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 categoryChip?.let { chip ->
@@ -190,8 +212,11 @@ private fun DetailRows(
     var showMethod by rememberSaveable { mutableStateOf(false) }
     var showComment by rememberSaveable { mutableStateOf(false) }
     val change = editing?.actions?.takeIf { editable != null }
-    val day = editable?.values?.date?.let { Instant.ofEpochSecond(it).atZone(ZoneId.systemDefault()).toLocalDate() }
-        ?: transaction.date.toLocalDate()
+    val day =
+        editable?.values?.date?.let {
+            Instant.ofEpochSecond(it).atZone(ZoneId.systemDefault()).toLocalDate()
+        }
+            ?: transaction.date.toLocalDate()
     InfoRow(
         stringResource(R.string.next_transaction_date),
         dateFormatter.format(day),
@@ -207,12 +232,20 @@ private fun DetailRows(
         val loaded = editing?.state?.takeIf { it.loadedId == transaction.id }
         SplitParts(loaded?.splitParts.orEmpty(), transaction)
     }
-    if (withCategory) transaction.categoryPath?.let {
-        InfoRow(stringResource(R.string.next_contracts_transaction_category), it)
+    if (withCategory) {
+        transaction.categoryPath?.let {
+            InfoRow(stringResource(R.string.next_contracts_transaction_category), it)
+        }
     }
     val methods = editing?.state?.methods.orEmpty()
-    val methodLabel = if (editable == null) transaction.methodLabel
-    else editable.values.methodId?.let { id -> methods.find { it.id == id }?.label ?: transaction.methodLabel }
+    val methodLabel = if (editable == null) {
+        transaction.methodLabel
+    } else {
+        editable.values.methodId?.let { id ->
+            methods.find { it.id == id }?.label
+                ?: transaction.methodLabel
+        }
+    }
     if (methodLabel != null || (change != null && methods.isNotEmpty())) {
         InfoRow(
             stringResource(R.string.next_transaction_method),
@@ -221,7 +254,13 @@ private fun DetailRows(
             onClick = change?.let { { showMethod = true } }
         )
     }
-    val comment = (if (editable != null) editable.values.comment else transaction.comment)?.takeIf { it.isNotBlank() }
+    val comment = (
+        if (editable != null) {
+            editable.values.comment
+        } else {
+            transaction.comment
+        }
+        )?.takeIf { it.isNotBlank() }
     if (comment != null || change != null) {
         InfoRow(
             stringResource(R.string.next_transaction_comment),
@@ -267,11 +306,16 @@ private fun Header(
     transaction: Transaction2,
     image: PayeeImage?,
     onImageClick: (() -> Unit)?,
-    actions: @Composable () -> Unit,
+    actions: @Composable () -> Unit
 ) {
     Column(
         // Little space at the top, the drag handle of the sheet already keeps its distance
-        modifier = Modifier.padding(start = Spacing.screen, end = Spacing.screen, top = 0.dp, bottom = 16.dp),
+        modifier = Modifier.padding(
+            start = Spacing.screen,
+            end = Spacing.screen,
+            top = 0.dp,
+            bottom = 16.dp
+        ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // The amount first, centered above payee and menu and about twice as large as the name
@@ -284,10 +328,20 @@ private fun Header(
                     stringResource(R.string.next_payee_image_change),
                     background = MaterialTheme.colorScheme.surfaceContainerLow
                 ) {
-                    TransactionTile(transaction.party?.displayName, image, transaction.icon, isLarge = true)
+                    TransactionTile(
+                        transaction.party?.displayName,
+                        image,
+                        transaction.icon,
+                        isLarge = true
+                    )
                 }
             } else {
-                TransactionTile(transaction.party?.displayName, image, transaction.icon, isLarge = true)
+                TransactionTile(
+                    transaction.party?.displayName,
+                    image,
+                    transaction.icon,
+                    isLarge = true
+                )
             }
             Spacer(Modifier.width(16.dp))
             Text(

@@ -16,8 +16,10 @@ class CategoryAnalyzerTest {
 
     private val today = LocalDate.of(2026, 10, 12)
     private val food = CategoryInfo(10, "Essen", "Essen", isIncome = false)
-    private val restaurant = CategoryInfo(11, "Restaurant", "Essen > Restaurant", isIncome = false, mainId = 10)
-    private val lunch = CategoryInfo(12, "Mittag", "Essen > Restaurant > Mittag", isIncome = false, mainId = 10)
+    private val restaurant =
+        CategoryInfo(11, "Restaurant", "Essen > Restaurant", isIncome = false, mainId = 10)
+    private val lunch =
+        CategoryInfo(12, "Mittag", "Essen > Restaurant > Mittag", isIncome = false, mainId = 10)
     private val home = CategoryInfo(20, "Wohnen", "Wohnen", isIncome = false)
     private val salary = CategoryInfo(30, "Gehalt", "Gehalt", isExpense = false)
     private val categories = listOf(food, restaurant, lunch, home, salary).associateBy { it.id }
@@ -28,7 +30,7 @@ class CategoryAnalyzerTest {
         amount: Long,
         category: CategoryInfo? = null,
         parts: List<LedgerPart> = emptyList(),
-        transferAccountId: Long? = null,
+        transferAccountId: Long? = null
     ) = LedgerTransaction(
         nextId++, date, amount = amount, homeAmount = amount, accountId = 1,
         categoryId = category?.id, transferAccountId = transferAccountId,
@@ -39,10 +41,14 @@ class CategoryAnalyzerTest {
         vararg transactions: LedgerTransaction,
         kind: PeriodKind = PeriodKind.MONTH,
         offset: Int = 0,
-        excluded: Set<Long> = emptySet(),
+        excluded: Set<Long> = emptySet()
     ) = CategoryAnalyzer.analyse(
         Ledger(transactions.toList(), OwnAccounts(emptySet(), emptyMap())),
-        excluded, categories, kind, offset, today
+        excluded,
+        categories,
+        kind,
+        offset,
+        today
     )
 
     @Test
@@ -51,7 +57,7 @@ class CategoryAnalyzerTest {
             transaction(today, -3000, restaurant),
             transaction(today.minusDays(1), -1000, lunch),
             transaction(today.minusDays(2), -2000, food),
-            transaction(today.minusDays(3), -50000, home),
+            transaction(today.minusDays(3), -50000, home)
         )
         assertEquals(56000, analysis.total)
         assertEquals(listOf(20L, 10L), analysis.categories.map { it.mainCategoryId })
@@ -61,7 +67,7 @@ class CategoryAnalyzerTest {
             listOf(
                 SubcategorySpending(11, "Restaurant", 3000),
                 SubcategorySpending(10, "Essen", 2000),
-                SubcategorySpending(12, "Restaurant > Mittag", 1000),
+                SubcategorySpending(12, "Restaurant > Mittag", 1000)
             ),
             essen.subcategories
         )
@@ -71,7 +77,7 @@ class CategoryAnalyzerTest {
     fun creditsInACategoryReduceItsSpending() {
         val analysis = analyse(
             transaction(today, -5000, food),
-            transaction(today, 1500, food),
+            transaction(today, 1500, food)
         )
         assertEquals(3500, analysis.categories.single().amount)
     }
@@ -94,7 +100,7 @@ class CategoryAnalyzerTest {
     fun withoutCategoryOnlyDebitsCount() {
         val analysis = analyse(
             transaction(today, -2000),
-            transaction(today, 250000),
+            transaction(today, 250000)
         )
         val none = analysis.categories.single()
         assertNull(none.mainCategoryId)
@@ -106,10 +112,12 @@ class CategoryAnalyzerTest {
     @Test
     fun splitTransactionsCountWithTheirParts() {
         val split = transaction(
-            today, -10000, parts = listOf(
+            today,
+            -10000,
+            parts = listOf(
                 LedgerPart(-6000, categoryId = food.id),
                 LedgerPart(-3000, categoryId = home.id),
-                LedgerPart(-1000, transferAccountId = 2),
+                LedgerPart(-1000, transferAccountId = 2)
             )
         )
         val analysis = analyse(split)
@@ -124,7 +132,7 @@ class CategoryAnalyzerTest {
             transaction(today, -1000, food),
             transaction(LocalDate.of(2026, 9, 30), -4000, food),
             transaction(LocalDate.of(2026, 9, 1), -500, home),
-            transaction(LocalDate.of(2026, 8, 31), -9999, food),
+            transaction(LocalDate.of(2026, 8, 31), -9999, food)
         )
         assertEquals(LocalDate.of(2026, 10, 1), analysis.period.start)
         assertEquals(today, analysis.period.end)
@@ -141,7 +149,12 @@ class CategoryAnalyzerTest {
         assertEquals(1000, analysis.total)
         assertFalse(analysis.isCurrent)
 
-        val year = analyse(transaction(LocalDate.of(2025, 3, 1), -1000, food), kind = PeriodKind.YEAR, offset = 1)
+        val year =
+            analyse(
+                transaction(LocalDate.of(2025, 3, 1), -1000, food),
+                kind = PeriodKind.YEAR,
+                offset = 1
+            )
         assertEquals(LocalDate.of(2025, 1, 1), year.period.start)
         assertEquals(LocalDate.of(2025, 12, 31), year.period.end)
         assertEquals(1000, year.total)

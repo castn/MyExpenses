@@ -15,7 +15,9 @@ import kotlinx.coroutines.flow.map
  */
 class MerchantLogoConsent(private val dataStore: DataStore<Preferences>) {
 
-    val isGiven: Flow<Boolean> = dataStore.data.map { it[KEY_CONSENT] == true }.distinctUntilChanged()
+    val isGiven: Flow<Boolean> = dataStore.data.map {
+        it[KEY_CONSENT] == true
+    }.distinctUntilChanged()
 
     suspend fun set(consent: Boolean) {
         dataStore.edit { it[KEY_CONSENT] = consent }

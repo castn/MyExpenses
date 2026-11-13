@@ -1,19 +1,20 @@
 package org.totschnig.myexpenses.next.data.receipts
 
+import java.math.BigDecimal
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.math.BigDecimal
 
 /** Rows as recognized on the receipts of the fixtures */
 class RowKindsTest {
 
     private val kinds = RowKinds(ReceiptVocabulary.GERMAN)
 
-    private fun price(text: String) =
-        kinds.price(kinds.tokens(text))?.let { "${it.cents} ${it.taxClass} ${text.substring(0, it.start).trim()}" }
+    private fun price(text: String) = kinds.price(kinds.tokens(text))?.let {
+        "${it.cents} ${it.taxClass} ${text.substring(0, it.start).trim()}"
+    }
 
     @Test
     fun price() {

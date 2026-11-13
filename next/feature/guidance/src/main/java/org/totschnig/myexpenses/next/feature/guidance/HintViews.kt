@@ -38,19 +38,33 @@ fun OverviewHint(viewModel: HintsViewModel, onOpen: (() -> Unit)?, modifier: Mod
     val current = gap ?: return
     val topic = current.topic ?: return
     val (title, text) = when (current) {
-        is DataGap.Uncategorized -> stringResource(R.string.next_hint_overview_uncategorized_title) to
-                pluralStringResource(R.plurals.next_hint_overview_uncategorized_text, current.count, current.count)
+        is DataGap.Uncategorized -> stringResource(
+            R.string.next_hint_overview_uncategorized_title
+        ) to
+            pluralStringResource(
+                R.plurals.next_hint_overview_uncategorized_text,
+                current.count,
+                current.count
+            )
 
         is DataGap.VagueCategories -> stringResource(R.string.next_hint_overview_vague_title) to
-                pluralStringResource(R.plurals.next_hint_overview_vague_text, current.count, current.count)
+            pluralStringResource(
+                R.plurals.next_hint_overview_vague_text,
+                current.count,
+                current.count
+            )
 
         is DataGap.FewReceipts -> stringResource(R.string.next_hint_overview_receipts_title) to
-                stringResource(R.string.next_hint_overview_receipts_text)
+            stringResource(R.string.next_hint_overview_receipts_text)
 
         DataGap.NoTags -> return
     }
     InviteCard(
-        icon = if (topic == HintTopic.RECEIPT) Icons.Outlined.DocumentScanner else Icons.Outlined.Category,
+        icon = if (topic == HintTopic.RECEIPT) {
+            Icons.Outlined.DocumentScanner
+        } else {
+            Icons.Outlined.Category
+        },
         title = title,
         text = text,
         onClick = onOpen,
@@ -65,12 +79,20 @@ fun OverviewHint(viewModel: HintsViewModel, onOpen: (() -> Unit)?, modifier: Mod
  * Nothing once the user closed it.
  */
 @Composable
-fun ReceiptHint(viewModel: HintsViewModel, transaction: ShownTransaction, modifier: Modifier = Modifier) {
+fun ReceiptHint(
+    viewModel: HintsViewModel,
+    transaction: ShownTransaction,
+    modifier: Modifier = Modifier
+) {
     if (!transaction.canHaveReceipt || !isSupermarket(transaction.payeeName)) return
     val dismissed by viewModel.dismissed.collectAsStateWithLifecycle()
     val scanned by viewModel.scanned.collectAsStateWithLifecycle()
     // Nothing while either is loading, so that the hint does not flash up, and nothing when receipts cannot be scanned
-    if (dismissed?.contains(HintTopic.RECEIPT) != false || scanned?.contains(transaction.id) != false) return
+    if (dismissed?.contains(HintTopic.RECEIPT) != false ||
+        scanned?.contains(transaction.id) != false
+    ) {
+        return
+    }
     HintCard(
         text = stringResource(R.string.next_hint_details_receipt),
         dismissLabel = stringResource(R.string.next_hint_never),

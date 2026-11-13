@@ -1,18 +1,19 @@
 package org.totschnig.myexpenses.next.settings
 
 import androidx.annotation.StringRes
-import org.totschnig.myexpenses.next.core.common.R as NextR
+import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.next.NextFeatures
+import org.totschnig.myexpenses.next.core.common.R as NextR
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.preference.PrefKey.ACCOUNT_LIST_DISPLAY_CONFIGURATION
 import org.totschnig.myexpenses.preference.PrefKey.APP_DIR
 import org.totschnig.myexpenses.preference.PrefKey.ATTACHMENT_MIME_TYPES
+import org.totschnig.myexpenses.preference.PrefKey.AUTOMATIC_EXCHANGE_RATE_DOWNLOAD
 import org.totschnig.myexpenses.preference.PrefKey.AUTO_BACKUP
 import org.totschnig.myexpenses.preference.PrefKey.AUTO_BACKUP_CLOUD
 import org.totschnig.myexpenses.preference.PrefKey.AUTO_BACKUP_CLOUD_SETUP
 import org.totschnig.myexpenses.preference.PrefKey.AUTO_BACKUP_TIME
 import org.totschnig.myexpenses.preference.PrefKey.AUTO_BACKUP_UNENCRYPTED_INFO
-import org.totschnig.myexpenses.preference.PrefKey.AUTOMATIC_EXCHANGE_RATE_DOWNLOAD
 import org.totschnig.myexpenses.preference.PrefKey.BACKUP
 import org.totschnig.myexpenses.preference.PrefKey.BACKUP_FILE_PREFIX
 import org.totschnig.myexpenses.preference.PrefKey.BANKING_FINTS
@@ -33,14 +34,14 @@ import org.totschnig.myexpenses.preference.PrefKey.CSV_EXPORT_ORIGINAL_EQUIVALEN
 import org.totschnig.myexpenses.preference.PrefKey.CSV_EXPORT_SPLIT_AMOUNT
 import org.totschnig.myexpenses.preference.PrefKey.CSV_EXPORT_SPLIT_CATEGORIES
 import org.totschnig.myexpenses.preference.PrefKey.CSV_EXPORT_SPLIT_DATE_TIME
+import org.totschnig.myexpenses.preference.PrefKey.CUSTOMIZE_MENU_V2
 import org.totschnig.myexpenses.preference.PrefKey.CUSTOM_DATE_FORMAT
 import org.totschnig.myexpenses.preference.PrefKey.CUSTOM_DATE_FORMAT_NEW_TRANSACTION_LIST
 import org.totschnig.myexpenses.preference.PrefKey.CUSTOM_DECIMAL_FORMAT
-import org.totschnig.myexpenses.preference.PrefKey.CUSTOMIZE_MENU_V2
 import org.totschnig.myexpenses.preference.PrefKey.DB_SAFE_MODE
 import org.totschnig.myexpenses.preference.PrefKey.DEBUG_ADS
-import org.totschnig.myexpenses.preference.PrefKey.DEBUG_LOG_SHARE
 import org.totschnig.myexpenses.preference.PrefKey.DEBUG_LOGGING
+import org.totschnig.myexpenses.preference.PrefKey.DEBUG_LOG_SHARE
 import org.totschnig.myexpenses.preference.PrefKey.DEBUG_REPAIR_987
 import org.totschnig.myexpenses.preference.PrefKey.DEFAULT_ACTION
 import org.totschnig.myexpenses.preference.PrefKey.DEFAULT_TRANSFER_CATEGORY
@@ -135,7 +136,6 @@ import org.totschnig.myexpenses.preference.PrefKey.UI_THEME
 import org.totschnig.myexpenses.preference.PrefKey.UNMAPPED_TRANSACTION_AS_TRANSFER
 import org.totschnig.myexpenses.preference.PrefKey.WEBDAV_ALLOW_UNVERIFIED_HOST
 import org.totschnig.myexpenses.preference.PrefKey.WEBDAV_TIMEOUT
-import org.totschnig.myexpenses.R
 
 /** Groups of the start page of the settings, in their order */
 enum class SettingsGroup(val section: Section) {
@@ -194,19 +194,23 @@ class InsightSetting(
     val group: SettingsGroup,
     val kind: SettingKind,
     @param:StringRes val title: Int,
-    @param:StringRes val summary: Int? = null,
+    @param:StringRes val summary: Int? = null
 ) {
     override fun toString() = id
 
     companion object {
         /** Whether the transactions may be analysed at all, the consent the ledger asks for */
         val CONSENT = InsightSetting(
-            "CONSENT", SettingsGroup.INSIGHTS, SettingKind.SWITCH,
-            NextR.string.next_settings_consent, NextR.string.next_settings_consent_summary
+            "CONSENT",
+            SettingsGroup.INSIGHTS,
+            SettingKind.SWITCH,
+            NextR.string.next_settings_consent,
+            NextR.string.next_settings_consent_summary
         )
 
         /** The consent and then those of the areas, in the order of [NextFeatures.settings] */
-        val all: List<InsightSetting> get() = listOf(CONSENT) + NextFeatures.settings.flatMap { it.settings }
+        val all: List<InsightSetting> get() = listOf(CONSENT) +
+            NextFeatures.settings.flatMap { it.settings }
     }
 }
 
@@ -220,7 +224,18 @@ sealed interface SettingKey {
 }
 
 /** How a setting is changed, after the widget of the old settings */
-enum class SettingKind { SWITCH, CHOICE, MULTI_CHOICE, TEXT, NUMBER, SLIDER, TIME, PASSWORD, ACTION, INFO }
+enum class SettingKind {
+    SWITCH,
+    CHOICE,
+    MULTI_CHOICE,
+    TEXT,
+    NUMBER,
+    SLIDER,
+    TIME,
+    PASSWORD,
+    ACTION,
+    INFO
+}
 
 /**
  * The screen of the old settings that holds a setting, opened with its [header] as initial screen
@@ -525,7 +540,8 @@ object SettingsCatalog {
         FAB_STYLE to "the plus button of the new account page has one style only, with its label",
         UI_MAIN_SCREEN_VERSION to "hidden since the old main screen V1 is gone",
         ACCOUNT_LIST_DISPLAY_CONFIGURATION to "account list of the old main screen V1",
-        UI_ITEM_RENDERER_CATEGORY_ICON to "only the old transaction list, the new one has its own icons",
+        UI_ITEM_RENDERER_CATEGORY_ICON to
+            "only the old transaction list, the new one has its own icons",
         TAG_STYLE to "only the old transaction list, the new one shows tags as chips of its own",
         CUSTOM_DATE_FORMAT_NEW_TRANSACTION_LIST to "only the old transaction list",
         SCROLL_TO_CURRENT_DATE to "only the old transaction list",
@@ -533,9 +549,11 @@ object SettingsCatalog {
         OCR_TOTAL_INDICATORS to "only the old scan, receipts have their own parser",
         OCR_DATE_FORMATS to "only the old scan, receipts have their own parser",
         OCR_TIME_FORMATS to "only the old scan, receipts have their own parser",
-        SHARE_TARGET_USERNAME to "needs a field that stores in the secure data store, the upload URL can hold the " +
+        SHARE_TARGET_USERNAME to
+            "needs a field that stores in the secure data store, the upload URL can hold the " +
             "login",
-        SHARE_TARGET_PASSWORD to "needs a field that stores in the secure data store, the upload URL can hold the login"
+        SHARE_TARGET_PASSWORD to
+            "needs a field that stores in the secure data store, the upload URL can hold the login"
     )
 
     fun of(group: SettingsGroup) = entries.filter { it.group == group }
@@ -569,7 +587,10 @@ private class ScreenScope(
     fun info(key: PrefKey) = add(SettingKind.INFO, SettingKey.Pref(key))
 }
 
-private class GroupScope(private val group: SettingsGroup, private val entries: MutableList<SettingEntry>) {
+private class GroupScope(
+    private val group: SettingsGroup,
+    private val entries: MutableList<SettingEntry>
+) {
     private var section: SettingsSection? = null
 
     fun section(section: SettingsSection, block: GroupScope.() -> Unit) {

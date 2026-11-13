@@ -13,24 +13,24 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
+import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
-import org.totschnig.myexpenses.next.core.common.R
-import org.totschnig.myexpenses.next.data.guidance.DataGap
-import kotlinx.coroutines.flow.StateFlow
-import org.totschnig.myexpenses.next.data.guidance.DataReadiness
-import org.totschnig.myexpenses.next.feature.analysis.gapTitle
-import org.totschnig.myexpenses.next.core.ui.shownOrLeave
-import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
 import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
-import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactionsScreen
+import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
+import org.totschnig.myexpenses.next.core.ui.shownOrLeave
 import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactions
+import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactionsScreen
 import org.totschnig.myexpenses.next.data.analysis.CategoryAnalysis
 import org.totschnig.myexpenses.next.data.analysis.CategorySpending
 import org.totschnig.myexpenses.next.data.analysis.MoneyFlow
 import org.totschnig.myexpenses.next.data.analysis.TagAnalysis
 import org.totschnig.myexpenses.next.data.analysis.TagGroup
+import org.totschnig.myexpenses.next.data.guidance.DataGap
+import org.totschnig.myexpenses.next.data.guidance.DataReadiness
+import org.totschnig.myexpenses.next.feature.analysis.gapTitle
 
 /** The pages of the tab "Analyse", the overview at the bottom of the back stack */
 @Serializable
@@ -87,7 +87,7 @@ fun AnalysisFlow(
     onInsightSettings: () -> Unit,
     modifier: Modifier = Modifier,
     readiness: StateFlow<DataReadiness?>? = null,
-    transactionDetails: (@Composable (ShownTransaction) -> Unit)? = null,
+    transactionDetails: (@Composable (ShownTransaction) -> Unit)? = null
 ) {
     val content = AnalysisContent(
         viewModel = viewModel,
@@ -101,8 +101,9 @@ fun AnalysisFlow(
         state = viewModel.analysis.collectAsStateWithLifecycle().value,
         currentMonth = spendingViewModel.currentMonth.collectAsStateWithLifecycle().value,
         spendingState = spendingViewModel.analysis.collectAsStateWithLifecycle().value,
-        moneyFlowOverview = moneyFlowViewModel.lastTwelveMonths.collectAsStateWithLifecycle().value.valueOrNull,
-        moneyFlowState = moneyFlowViewModel.flow.collectAsStateWithLifecycle().value,
+        moneyFlowOverview =
+            moneyFlowViewModel.lastTwelveMonths.collectAsStateWithLifecycle().value.valueOrNull,
+        moneyFlowState = moneyFlowViewModel.flow.collectAsStateWithLifecycle().value
     )
     val backStack = rememberNavBackStack(AnalysisKey.Home)
     // The entries read the latest values, whenever NavDisplay creates their content
@@ -115,10 +116,14 @@ fun AnalysisFlow(
             entry<AnalysisKey.Home> { AnalysisHome(current, backStack) }
             entry<AnalysisKey.Gap> { key -> GapEntry(current, backStack, key) }
             entry<AnalysisKey.Tag> { key -> TagEntry(current, backStack, key) }
-            entry<AnalysisKey.TagTransactions> { key -> TagTransactionsEntry(current, backStack, key) }
+            entry<AnalysisKey.TagTransactions> { key ->
+                TagTransactionsEntry(current, backStack, key)
+            }
             entry<AnalysisKey.Spending> { SpendingEntry(current, backStack) }
             entry<AnalysisKey.Category> { key -> CategoryEntry(current, backStack, key) }
-            entry<AnalysisKey.CategoryTransactions> { key -> CategoryTransactionsEntry(current, backStack, key) }
+            entry<AnalysisKey.CategoryTransactions> { key ->
+                CategoryTransactionsEntry(current, backStack, key)
+            }
             entry<AnalysisKey.MoneyFlow> { MoneyFlowEntry(current, backStack) }
             entry<AnalysisKey.FlowTransactions> { key ->
                 Transactions(current, key.title, key.ids) { backStack.remove(key) }
@@ -142,15 +147,18 @@ private class AnalysisContent(
     val currentMonth: AnalysisState<CategoryAnalysis>,
     val spendingState: AnalysisState<CategoryAnalysis>,
     val moneyFlowOverview: MoneyFlow?,
-    val moneyFlowState: AnalysisState<MoneyFlow>,
+    val moneyFlowState: AnalysisState<MoneyFlow>
 ) {
     val analysis = state.valueOrNull
     val spending = spendingState.valueOrNull
     val moneyFlow = moneyFlowState.valueOrNull
 
     /** Looked up in the current analysis, so that it follows changes, e.g. of the year */
-    fun evaluationOf(tagId: Long) =
-        analysis?.let { (it.trips + it.themes + it.business).find { evaluation -> evaluation.tagId == tagId } }
+    fun evaluationOf(tagId: Long) = analysis?.let {
+        (it.trips + it.themes + it.business).find { evaluation ->
+            evaluation.tagId == tagId
+        }
+    }
 
     /** Looked up in the period of [spending] */
     fun categoryOf(key: Long) = spending?.categories?.find { it.key == key }
@@ -159,7 +167,12 @@ private class AnalysisContent(
 private val AnalysisState<*>.isLoaded get() = this != AnalysisState.Loading
 
 @Composable
-private fun Transactions(content: AnalysisContent, title: String, ids: List<Long>, onBack: () -> Unit) {
+private fun Transactions(
+    content: AnalysisContent,
+    title: String,
+    ids: List<Long>,
+    onBack: () -> Unit
+) {
     LaunchedEffect(ids) { content.fixedTransactions.show(title, ids) }
     FixedTransactionsScreen(
         title = title,
@@ -171,19 +184,29 @@ private fun Transactions(content: AnalysisContent, title: String, ids: List<Long
 }
 
 @Composable
-private fun GapEntry(content: AnalysisContent, backStack: NavBackStack<NavKey>, key: AnalysisKey.Gap) {
+private fun GapEntry(
+    content: AnalysisContent,
+    backStack: NavBackStack<NavKey>,
+    key: AnalysisKey.Gap
+) {
     // Looked up in the current gaps: once fixed, the gap and its list go away
-    val gap = shownOrLeave(content.gaps?.find { it.key == key.key }, isLoaded = content.gaps != null) {
-        backStack.remove(key)
-    } ?: return
+    val gap =
+        shownOrLeave(content.gaps?.find { it.key == key.key }, isLoaded = content.gaps != null) {
+            backStack.remove(key)
+        } ?: return
     Transactions(content, gapTitle(gap), gap.transactionIds) { backStack.remove(key) }
 }
 
 @Composable
-private fun TagEntry(content: AnalysisContent, backStack: NavBackStack<NavKey>, key: AnalysisKey.Tag) {
-    val evaluation = shownOrLeave(content.evaluationOf(key.tagId), isLoaded = content.state.isLoaded) {
-        backStack.remove(key)
-    } ?: return
+private fun TagEntry(
+    content: AnalysisContent,
+    backStack: NavBackStack<NavKey>,
+    key: AnalysisKey.Tag
+) {
+    val evaluation =
+        shownOrLeave(content.evaluationOf(key.tagId), isLoaded = content.state.isLoaded) {
+            backStack.remove(key)
+        } ?: return
     val analysis = content.analysis ?: return
     TagEvaluationScreen(
         evaluation = evaluation,
@@ -192,7 +215,11 @@ private fun TagEntry(content: AnalysisContent, backStack: NavBackStack<NavKey>, 
         onShowTransactions = { backStack.add(AnalysisKey.TagTransactions(key.tagId)) },
         years = analysis.businessYears,
         year = analysis.year,
-        onSelectYear = if (evaluation.group == TagGroup.BUSINESS) content.viewModel::selectYear else null
+        onSelectYear = if (evaluation.group == TagGroup.BUSINESS) {
+            content.viewModel::selectYear
+        } else {
+            null
+        }
     )
 }
 
@@ -202,16 +229,19 @@ private fun TagTransactionsEntry(
     backStack: NavBackStack<NavKey>,
     key: AnalysisKey.TagTransactions
 ) {
-    val evaluation = shownOrLeave(content.evaluationOf(key.tagId), isLoaded = content.state.isLoaded) {
-        backStack.remove(key)
-    } ?: return
+    val evaluation =
+        shownOrLeave(content.evaluationOf(key.tagId), isLoaded = content.state.isLoaded) {
+            backStack.remove(key)
+        } ?: return
     Transactions(content, evaluation.label, evaluation.transactionIds) { backStack.remove(key) }
 }
 
 @Composable
 private fun SpendingEntry(content: AnalysisContent, backStack: NavBackStack<NavKey>) {
     val leave = { backStack -= AnalysisKey.Spending }
-    val spending = shownOrLeave(content.spending, isLoaded = content.spendingState.isLoaded, onGone = leave) ?: return
+    val spending =
+        shownOrLeave(content.spending, isLoaded = content.spendingState.isLoaded, onGone = leave)
+            ?: return
     val spendingViewModel = content.spendingViewModel
     CategorySpendingScreen(
         analysis = spending,
@@ -225,10 +255,15 @@ private fun SpendingEntry(content: AnalysisContent, backStack: NavBackStack<NavK
 }
 
 @Composable
-private fun CategoryEntry(content: AnalysisContent, backStack: NavBackStack<NavKey>, key: AnalysisKey.Category) {
-    val category = shownOrLeave(content.categoryOf(key.key), isLoaded = content.spendingState.isLoaded) {
-        backStack.remove(key)
-    } ?: return
+private fun CategoryEntry(
+    content: AnalysisContent,
+    backStack: NavBackStack<NavKey>,
+    key: AnalysisKey.Category
+) {
+    val category =
+        shownOrLeave(content.categoryOf(key.key), isLoaded = content.spendingState.isLoaded) {
+            backStack.remove(key)
+        } ?: return
     val spending = content.spending ?: return
     CategoryDetailScreen(
         analysis = spending,
@@ -245,9 +280,10 @@ private fun CategoryTransactionsEntry(
     backStack: NavBackStack<NavKey>,
     key: AnalysisKey.CategoryTransactions
 ) {
-    val category = shownOrLeave(content.categoryOf(key.key), isLoaded = content.spendingState.isLoaded) {
-        backStack.remove(key)
-    } ?: return
+    val category =
+        shownOrLeave(content.categoryOf(key.key), isLoaded = content.spendingState.isLoaded) {
+            backStack.remove(key)
+        } ?: return
     Transactions(
         content,
         category.label ?: stringResource(R.string.next_analysis_no_category),
@@ -261,7 +297,8 @@ private fun CategoryTransactionsEntry(
 private fun MoneyFlowEntry(content: AnalysisContent, backStack: NavBackStack<NavKey>) {
     val leave = { backStack -= AnalysisKey.MoneyFlow }
     val moneyFlow =
-        shownOrLeave(content.moneyFlow, isLoaded = content.moneyFlowState.isLoaded, onGone = leave) ?: return
+        shownOrLeave(content.moneyFlow, isLoaded = content.moneyFlowState.isLoaded, onGone = leave)
+            ?: return
     val moneyFlowViewModel = content.moneyFlowViewModel
     MoneyFlowScreen(
         flow = moneyFlow,
@@ -270,7 +307,9 @@ private fun MoneyFlowEntry(content: AnalysisContent, backStack: NavBackStack<Nav
         onSelectKind = moneyFlowViewModel::selectKind,
         onEarlier = moneyFlowViewModel::showEarlier,
         onLater = moneyFlowViewModel::showLater,
-        onShowTransactions = { title, ids -> backStack.add(AnalysisKey.FlowTransactions(title, ids)) }
+        onShowTransactions = { title, ids ->
+            backStack.add(AnalysisKey.FlowTransactions(title, ids))
+        }
     )
 }
 

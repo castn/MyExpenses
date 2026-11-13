@@ -31,7 +31,7 @@ class TagSettingsViewModel(
     private val categoryStore: CategoryStore,
     private val repository: Repository,
     /** Where the database is read */
-    private val io: CoroutineDispatcher = Dispatchers.IO,
+    private val io: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     val rules: StateFlow<List<RuleItem>?> = tagStore.rules
@@ -45,7 +45,7 @@ class TagSettingsViewModel(
     /** How many suggestions the user said no to */
     val rejectedCount: StateFlow<Int> = combine(
         listOf(categoryStore.decisions.map { it.rejected.size }) +
-                TagStore.Rejected.entries.map { kind -> tagStore.rejected(kind).map { it.size } }
+            TagStore.Rejected.entries.map { kind -> tagStore.rejected(kind).map { it.size } }
     ) { it.sum() }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
     fun resetRejected() {
@@ -58,17 +58,25 @@ class TagSettingsViewModel(
     /** See [TagRule.decode] for the counterpart: "p:" and the id of a payee or "m:" and a merchant */
     private fun TagRule.toItem(tags: Map<Long, String>) = RuleItem(
         counterpart = when {
-            counterpart.startsWith("p:") -> counterpart.removePrefix("p:").toLongOrNull()?.let(repository::getPartyName)
+            counterpart.startsWith(
+                "p:"
+            ) -> counterpart.removePrefix("p:").toLongOrNull()?.let(repository::getPartyName)
+
             else -> null
         } ?: counterpart.substringAfter(':'),
         target = tags[tagId] ?: "",
         remove = { viewModelScope.launch { tagStore.removeRule(this@toItem) } }
     )
 
-    private fun tagLabels(): Map<Long, String> =
-        repository.contentResolver.query(TAGS_URI, arrayOf(KEY_ROWID, KEY_LABEL), null, null, null)?.use { cursor ->
-            buildMap {
-                while (cursor.moveToNext()) put(cursor.getLong(0), cursor.getString(KEY_LABEL))
-            }
-        } ?: emptyMap()
+    private fun tagLabels(): Map<Long, String> = repository.contentResolver.query(
+        TAGS_URI,
+        arrayOf(KEY_ROWID, KEY_LABEL),
+        null,
+        null,
+        null
+    )?.use { cursor ->
+        buildMap {
+            while (cursor.moveToNext()) put(cursor.getLong(0), cursor.getString(KEY_LABEL))
+        }
+    } ?: emptyMap()
 }

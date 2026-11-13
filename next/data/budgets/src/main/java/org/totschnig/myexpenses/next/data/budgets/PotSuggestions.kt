@@ -12,11 +12,7 @@ import org.totschnig.myexpenses.next.data.contracts.Contract
  * @param contracts confirmed contracts whose category the pot holds and that no other pot lists,
  * e.g. the gym for Fitness
  */
-data class PotSuggestion(
-    val amount: Long?,
-    val periods: Int,
-    val contracts: List<Contract>,
-) {
+data class PotSuggestion(val amount: Long?, val periods: Int, val contracts: List<Contract>) {
     companion object {
         const val BASIS_PERIODS = 3
     }
@@ -30,7 +26,12 @@ object PotSuggestions {
      */
     fun suggest(input: BudgetInput, pot: Pot): PotSuggestion {
         // As running pot without start, so that the history covers all periods
-        val candidate = pot.copy(kind = PotKind.RUNNING, start = null, rollover = false, contractRuleIds = emptySet())
+        val candidate = pot.copy(
+            kind = PotKind.RUNNING,
+            start = null,
+            rollover = false,
+            contractRuleIds = emptySet()
+        )
         val others = input.pots.filter { it.id != pot.id }
         val status = BudgetAnalyzer.analyse(input.copy(pots = others + candidate, offset = 0))
             .pots.single { it.pot.id == pot.id }
@@ -50,14 +51,16 @@ object PotSuggestions {
         val contracts = input.contracts.filter { contract ->
             val ruleId = contract.rule?.id
             ruleId != null && ruleId !in listed && !contract.isIncome && !contract.isReserve &&
-                    contract.isActive && !contract.isCancelled &&
-                    contract.categoryPath?.let(categoryIds::get)?.let { holds(input, pot, it) } == true
+                contract.isActive && !contract.isCancelled &&
+                contract.categoryPath?.let(categoryIds::get)?.let { holds(input, pot, it) } == true
         }
         return PotSuggestion(amount?.let(::roundUp), periods, contracts)
     }
 
     private fun holds(input: BudgetInput, pot: Pot, categoryId: Long) =
-        generateSequence(categoryId) { input.categories[it]?.parentId }.take(20).any { it in pot.categoryIds }
+        generateSequence(categoryId) { input.categories[it]?.parentId }.take(20).any {
+            it in pot.categoryIds
+        }
 
     /** To full 5 below 100, else to full 10, in minor units of a currency with 2 fraction digits */
     internal fun roundUp(amount: Long): Long {

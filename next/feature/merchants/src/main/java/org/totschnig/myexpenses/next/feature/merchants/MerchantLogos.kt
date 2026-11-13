@@ -69,12 +69,17 @@ class MerchantLogos(
     /** The logo or icon of each payee that has one; a logo only once it is loaded */
     val images: StateFlow<Map<Long, PayeeImage>> =
         combine(looks, byDomain) { looks, byDomain ->
-            looks.values.filterIsInstance<PayeeLook.Domain>().mapTo(HashSet()) { it.domain }.forEach(::request)
+            looks.values.filterIsInstance<PayeeLook.Domain>().mapTo(HashSet()) {
+                it.domain
+            }.forEach(::request)
             buildMap {
                 looks.forEach { (payeeId, look) ->
                     when (look) {
                         is PayeeLook.Icon -> put(payeeId, PayeeImage.Icon(look.name))
-                        is PayeeLook.Domain -> byDomain[look.domain]?.let { put(payeeId, PayeeImage.Logo(it)) }
+
+                        is PayeeLook.Domain -> byDomain[look.domain]?.let {
+                            put(payeeId, PayeeImage.Logo(it))
+                        }
                     }
                 }
             }

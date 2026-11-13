@@ -32,16 +32,30 @@ class CategorySuggestionsViewModelTest {
     /** Two payments to the supermarket without category, from before suggestions were started */
     private val ledger = Ledger(
         listOf(1L, 2L)
-            .map { LedgerTransaction(it, today, amount = -2000, accountId = 1, payeeId = 5, payeeName = "REWE") },
+            .map {
+                LedgerTransaction(
+                    it,
+                    today,
+                    amount = -2000,
+                    accountId = 1,
+                    payeeId = 5,
+                    payeeName = "REWE"
+                )
+            },
         OwnAccounts(emptySet(), emptyMap())
     )
 
-    private val catalog = Catalog(listOf(CategoryInfo(10, "Food", "Food"), CategoryInfo(11, "Drinks", "Drinks")))
+    private val catalog =
+        Catalog(listOf(CategoryInfo(10, "Food", "Food"), CategoryInfo(11, "Drinks", "Drinks")))
 
     private class FakeWriting : CategoryWriting {
         val set = mutableListOf<Pair<List<Long>, Long>>()
         val removed = mutableListOf<Pair<Long, Long>>()
-        override suspend fun changeCategory(transactionId: Long, fromCategoryId: Long?, categoryId: Long) = Unit
+        override suspend fun changeCategory(
+            transactionId: Long,
+            fromCategoryId: Long?,
+            categoryId: Long
+        ) = Unit
         override suspend fun removeCategory(transactionId: Long, categoryId: Long) {
             removed += transactionId to categoryId
         }
@@ -61,21 +75,22 @@ class CategorySuggestionsViewModelTest {
         Dispatchers.resetMain()
     }
 
-    private fun withViewModel(block: suspend (CategorySuggestionsViewModel, CategoryStore, FakeWriting) -> Unit) =
-        withTestDataStore { dataStore ->
-            runTest {
-                val store = CategoryStore(dataStore)
-                store.update { it.copy(rules = listOf(CategoryRule("r", setOf(5), 10))) }
-                val writing = FakeWriting()
-                val repository = CategoryRepository(
-                    FakeLedgerSource(ledger = ledger, catalog = catalog),
-                    store,
-                    writing,
-                    backgroundScope
-                )
-                block(CategorySuggestionsViewModel(repository), store, writing)
-            }
+    private fun withViewModel(
+        block: suspend (CategorySuggestionsViewModel, CategoryStore, FakeWriting) -> Unit
+    ) = withTestDataStore { dataStore ->
+        runTest {
+            val store = CategoryStore(dataStore)
+            store.update { it.copy(rules = listOf(CategoryRule("r", setOf(5), 10))) }
+            val writing = FakeWriting()
+            val repository = CategoryRepository(
+                FakeLedgerSource(ledger = ledger, catalog = catalog),
+                store,
+                writing,
+                backgroundScope
+            )
+            block(CategorySuggestionsViewModel(repository), store, writing)
         }
+    }
 
     @Test
     fun appliesBacklogOnlyWhenTheUserAgrees() = withViewModel { viewModel, store, writing ->
@@ -95,7 +110,9 @@ class CategorySuggestionsViewModelTest {
         viewModel.declineBacklog()
         store.decisions.first { it.backlogAnswered }
         viewModel.backlog.first { it == null }
-        val state = viewModel.stateOf(1, null).first { it is CategorySuggestionsViewModel.CategoryState.Suggested }
+        val state = viewModel.stateOf(1, null).first {
+            it is CategorySuggestionsViewModel.CategoryState.Suggested
+        }
         assertEquals("Food", (state as CategorySuggestionsViewModel.CategoryState.Suggested).path)
         assertEquals(emptyList<Any>(), writing.set)
     }
@@ -110,7 +127,9 @@ class CategorySuggestionsViewModelTest {
     fun ruleMovesCounterpartToOtherCategory() = withViewModel { viewModel, store, _ ->
         val counterpart = viewModel.counterpartOf(1).first { it != null }!!.counterpart
         viewModel.addRule(counterpart, 11)
-        val rules = store.decisions.first { decisions -> decisions.rules.any { it.categoryId == 11L } }.rules
+        val rules = store.decisions.first { decisions ->
+            decisions.rules.any { it.categoryId == 11L }
+        }.rules
         assertEquals(listOf(11L), rules.map { it.categoryId })
     }
 

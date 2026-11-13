@@ -1,10 +1,10 @@
 package org.totschnig.myexpenses.next.data.receipts
 
+import java.io.File
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.totschnig.myexpenses.feature.expectedReceiptFromJson
 import org.totschnig.myexpenses.feature.recognizedTextFromJson
-import java.io.File
 
 /**
  * Checks every receipt that comes with `<name>.expected.json`, as written by the fixture collector,
@@ -20,15 +20,26 @@ class ReceiptFixturesTest {
     fun expectedFixtures() {
         val differences = mutableListOf<String>()
         fun check(name: String, what: String, actual: Any?, expected: Any?) {
-            if (actual != expected) differences += "$name, $what: expected <$expected> but was <$actual>"
+            if (actual != expected) {
+                differences += "$name, $what: expected <$expected> but was <$actual>"
+            }
         }
-        dir.listFiles { file -> file.name.endsWith(".expected.json") }.orEmpty().sortedBy { it.name }.forEach { file ->
+        dir.listFiles { file ->
+            file.name.endsWith(".expected.json")
+        }.orEmpty().sortedBy { it.name }.forEach { file ->
             val name = file.name.removeSuffix(".expected.json")
             val expected = expectedReceiptFromJson(file.readText())
-            val receipt = ReceiptParser.parse(recognizedTextFromJson(File(dir, "$name.json").readText()))
+            val receipt = ReceiptParser.parse(
+                recognizedTextFromJson(File(dir, "$name.json").readText())
+            )
 
             // Recognition splits words ("RE WE") and adds marks ("Backshoo -")
-            check(name, "merchant", receipt.merchant?.let(::letters), expected.merchant?.let(::letters))
+            check(
+                name,
+                "merchant",
+                receipt.merchant?.let(::letters),
+                expected.merchant?.let(::letters)
+            )
             check(
                 name,
                 "items",
@@ -43,8 +54,12 @@ class ReceiptFixturesTest {
                     wanted.quantity.toBigDecimal().stripTrailingZeros()
                 )
                 wanted.unit?.let { check(name, "unit of ${wanted.name}", item.unit, it) }
-                wanted.unitPrice?.let { check(name, "unit price of ${wanted.name}", item.unitPrice, it) }
-                wanted.taxClass?.let { check(name, "tax class of ${wanted.name}", item.taxClass, it) }
+                wanted.unitPrice?.let {
+                    check(name, "unit price of ${wanted.name}", item.unitPrice, it)
+                }
+                wanted.taxClass?.let {
+                    check(name, "tax class of ${wanted.name}", item.taxClass, it)
+                }
             }
             check(name, "total", receipt.total, expected.total)
             check(name, "item count", receipt.itemCount, expected.itemCount)

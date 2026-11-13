@@ -21,11 +21,23 @@ fun OneOffSection(viewModel: TagsViewModel, transaction: ShownTransaction) {
     val isOneOff = transaction.tags.any { meanings[it.id] == TagMeaning.ONE_OFF }
     val label = stringResource(R.string.next_tag_meaning_one_off)
     Banner(
-        title = stringResource(if (isOneOff) R.string.next_tag_one_off_done else R.string.next_tag_one_off_question),
+        title = stringResource(
+            if (isOneOff) R.string.next_tag_one_off_done else R.string.next_tag_one_off_question
+        ),
         messages = listOf(stringResource(R.string.next_tag_one_off_text))
     ) {
-        TextButton(onClick = { viewModel.setMarked(transaction, TagMeaning.ONE_OFF, !isOneOff, label) }) {
-            Text(stringResource(if (isOneOff) R.string.next_tag_one_off_undo else R.string.next_tag_one_off_action))
+        TextButton(onClick = {
+            viewModel.setMarked(transaction, TagMeaning.ONE_OFF, !isOneOff, label)
+        }) {
+            Text(
+                stringResource(
+                    if (isOneOff) {
+                        R.string.next_tag_one_off_undo
+                    } else {
+                        R.string.next_tag_one_off_action
+                    }
+                )
+            )
         }
     }
 }

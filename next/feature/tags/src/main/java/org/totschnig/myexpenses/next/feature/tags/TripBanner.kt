@@ -15,14 +15,14 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
-import org.totschnig.myexpenses.designsystem.Banner
-import org.totschnig.myexpenses.designsystem.MultiChoiceSheet
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
-import org.totschnig.myexpenses.next.core.common.R
 import java.time.format.FormatStyle
 import kotlin.math.absoluteValue
+import org.totschnig.myexpenses.designsystem.Banner
+import org.totschnig.myexpenses.designsystem.MultiChoiceSheet
 import org.totschnig.myexpenses.next.core.common.NO_NAME
+import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
 import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
 import org.totschnig.myexpenses.next.core.ui.rememberMonthFormatter
 import org.totschnig.myexpenses.next.data.tags.Trip
@@ -35,18 +35,27 @@ private const val EXAMPLES = 2
  * with a new tag for this trip, after choosing a name and leaving out expenses that do not belong.
  */
 @Composable
-fun TripBanner(viewModel: TagDetectionsViewModel, currency: CurrencyInfo, modifier: Modifier = Modifier) {
+fun TripBanner(
+    viewModel: TagDetectionsViewModel,
+    currency: CurrencyInfo,
+    modifier: Modifier = Modifier
+) {
     val trip = viewModel.trips.collectAsStateWithLifecycle().value.firstOrNull() ?: return
     var reviewing by rememberSaveable(trip.key) { mutableStateOf(false) }
     val dateFormatter = rememberDateFormatter(FormatStyle.LONG)
-    val examples = trip.signals.mapNotNull { it.payeeName?.takeIf(String::isNotBlank) }.distinct().take(EXAMPLES)
+    val examples = trip.signals.mapNotNull {
+        it.payeeName?.takeIf(String::isNotBlank)
+    }.distinct().take(EXAMPLES)
     val count = trip.transactions.size
     Banner(
         title = stringResource(R.string.next_trip_question),
         messages = listOfNotNull(
             pluralStringResource(
-                R.plurals.next_trip_text, count,
-                dateFormatter.format(trip.start), dateFormatter.format(trip.end), count
+                R.plurals.next_trip_text,
+                count,
+                dateFormatter.format(trip.start),
+                dateFormatter.format(trip.end),
+                count
             ),
             examples.takeIf { it.isNotEmpty() }?.let {
                 stringResource(R.string.next_trip_examples, it.joinToString(", "))
@@ -54,8 +63,12 @@ fun TripBanner(viewModel: TagDetectionsViewModel, currency: CurrencyInfo, modifi
         ),
         modifier = modifier
     ) {
-        TextButton(onClick = { viewModel.rejectTrip(trip) }) { Text(stringResource(R.string.next_trip_reject)) }
-        TextButton(onClick = { reviewing = true }) { Text(stringResource(R.string.next_trip_accept)) }
+        TextButton(onClick = {
+            viewModel.rejectTrip(trip)
+        }) { Text(stringResource(R.string.next_trip_reject)) }
+        TextButton(onClick = {
+            reviewing = true
+        }) { Text(stringResource(R.string.next_trip_accept)) }
     }
     if (reviewing) {
         TripSheet(
@@ -78,12 +91,14 @@ private fun TripSheet(
     trip: Trip,
     currency: CurrencyInfo,
     onConfirm: (String, Set<Long>) -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     val month = rememberMonthFormatter().format(trip.start)
     val defaultName = stringResource(R.string.next_trip_default_name, month)
     var name by rememberSaveable { mutableStateOf(defaultName) }
-    var selected by rememberSaveable { mutableStateOf(trip.transactions.mapTo(HashSet()) { it.id }.toSet()) }
+    var selected by rememberSaveable {
+        mutableStateOf(trip.transactions.mapTo(HashSet()) { it.id }.toSet())
+    }
     val byId = trip.transactions.associateBy { it.id }
     val dateFormatter = rememberDateFormatter(FormatStyle.SHORT)
     val formatter = LocalAmountFormatter.current
@@ -95,9 +110,14 @@ private fun TripSheet(
         label = { id ->
             val transaction = byId.getValue(id)
             dateFormatter.format(transaction.date) + " · " +
-                    (transaction.payeeName?.takeIf(String::isNotBlank) ?: transaction.comment ?: NO_NAME)
+                (
+                    transaction.payeeName?.takeIf(String::isNotBlank) ?: transaction.comment
+                        ?: NO_NAME
+                    )
         },
-        supportingText = { id -> formatter.format(byId.getValue(id).amount.absoluteValue, currency) },
+        supportingText = { id ->
+            formatter.format(byId.getValue(id).amount.absoluteValue, currency)
+        },
         onConfirm = { onConfirm(name.trim(), selected) },
         onDismiss = onDismiss,
         confirmEnabled = name.isNotBlank() && selected.isNotEmpty(),

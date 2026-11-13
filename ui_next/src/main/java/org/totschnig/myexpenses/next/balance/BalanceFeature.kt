@@ -32,7 +32,7 @@ import org.totschnig.myexpenses.next.viewModelsOf
 class BalanceFeature(
     activity: ComponentActivity,
     private val data: NextData,
-    private val contracts: ContractsFeature,
+    private val contracts: ContractsFeature
 ) : NextFeature {
     val viewModel by activity.viewModelsOf { BalanceViewModel(data.balance) }
 
@@ -58,10 +58,15 @@ class BalanceFeature(
                     BalanceIncomes(
                         state = contractsViewModel.incomeState,
                         news = contractsViewModel.news,
-                        page = { onBack -> IncomeFlow(contractsViewModel, shell.fixedTransactions, onBack) },
-                        salarySheet = { onDismiss -> SalaryChoiceSheet(contractsViewModel, onDismiss) }
+                        page = { onBack ->
+                            IncomeFlow(contractsViewModel, shell.fixedTransactions, onBack)
+                        },
+                        salarySheet = { onDismiss ->
+                            SalaryChoiceSheet(contractsViewModel, onDismiss)
+                        }
                     ),
-                    homeCurrency, shell.fixedTransactions,
+                    homeCurrency,
+                    shell.fixedTransactions,
                     onBack = { shell.navigation.close(NextKey.Balance) },
                     onOpenContracts = { shell.navigation.show(NextKey.Contracts()) }
                 ) { transaction ->

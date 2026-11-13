@@ -1,11 +1,11 @@
 package org.totschnig.myexpenses.next.search
 
+import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
 import org.totschnig.myexpenses.provider.filter.DateCriterion
 import org.totschnig.myexpenses.provider.filter.Operation
-import java.time.LocalDate
 
 class SearchValuesTest {
 
@@ -13,16 +13,33 @@ class SearchValuesTest {
 
     @Test
     fun presetsCoverWholeMonthsAndYears() {
-        assertEquals(LocalDate.of(2026, 3, 1) to LocalDate.of(2026, 3, 31), PeriodPreset.ThisMonth.range(today))
-        assertEquals(LocalDate.of(2026, 2, 1) to LocalDate.of(2026, 2, 28), PeriodPreset.LastMonth.range(today))
+        assertEquals(
+            LocalDate.of(2026, 3, 1) to LocalDate.of(2026, 3, 31),
+            PeriodPreset.ThisMonth.range(today)
+        )
+        assertEquals(
+            LocalDate.of(2026, 2, 1) to LocalDate.of(2026, 2, 28),
+            PeriodPreset.LastMonth.range(today)
+        )
         assertEquals(LocalDate.of(2026, 2, 14) to today, PeriodPreset.Last30Days.range(today))
-        assertEquals(LocalDate.of(2025, 1, 1) to LocalDate.of(2025, 12, 31), PeriodPreset.LastYear.range(today))
+        assertEquals(
+            LocalDate.of(2025, 1, 1) to LocalDate.of(2025, 12, 31),
+            PeriodPreset.LastYear.range(today)
+        )
     }
 
     @Test
     fun recognizesAPreset() {
-        assertEquals(PeriodPreset.ThisYear, PeriodPreset.of(PeriodPreset.ThisYear.criterion(today), today))
-        assertNull(PeriodPreset.of(DateCriterion(LocalDate.of(2026, 3, 2), LocalDate.of(2026, 3, 31)), today))
+        assertEquals(
+            PeriodPreset.ThisYear,
+            PeriodPreset.of(PeriodPreset.ThisYear.criterion(today), today)
+        )
+        assertNull(
+            PeriodPreset.of(
+                DateCriterion(LocalDate.of(2026, 3, 2), LocalDate.of(2026, 3, 31)),
+                today
+            )
+        )
     }
 
     @Test

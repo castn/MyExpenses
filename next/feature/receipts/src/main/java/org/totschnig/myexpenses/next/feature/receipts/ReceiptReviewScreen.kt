@@ -1,20 +1,18 @@
 package org.totschnig.myexpenses.next.feature.receipts
 
-import org.totschnig.myexpenses.designsystem.isWideWindow
-import org.totschnig.myexpenses.designsystem.Spacing
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.layout.ColumnScope
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Refresh
@@ -51,38 +49,40 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import java.math.BigDecimal
+import java.text.DecimalFormatSymbols
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import kotlinx.coroutines.launch
-import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
 import org.totschnig.myexpenses.designsystem.BadgeStyle
 import org.totschnig.myexpenses.designsystem.Banner
 import org.totschnig.myexpenses.designsystem.BannerStyle
 import org.totschnig.myexpenses.designsystem.ChoiceChips
 import org.totschnig.myexpenses.designsystem.ConfirmDialog
-import org.totschnig.myexpenses.designsystem.DetailCard
 import org.totschnig.myexpenses.designsystem.DateDialog
+import org.totschnig.myexpenses.designsystem.DetailCard
 import org.totschnig.myexpenses.designsystem.DetailScaffold
+import org.totschnig.myexpenses.designsystem.EditableItemRow
 import org.totschnig.myexpenses.designsystem.EditableRow
+import org.totschnig.myexpenses.designsystem.FormDialog
+import org.totschnig.myexpenses.designsystem.FormSheet
 import org.totschnig.myexpenses.designsystem.InfoRow
+import org.totschnig.myexpenses.designsystem.LinkRow
+import org.totschnig.myexpenses.designsystem.MarkedPhoto
 import org.totschnig.myexpenses.designsystem.NameDialog
+import org.totschnig.myexpenses.designsystem.PhotoMark
+import org.totschnig.myexpenses.designsystem.ProgressRow
 import org.totschnig.myexpenses.designsystem.SectionHeader
 import org.totschnig.myexpenses.designsystem.SelectableTextRow
 import org.totschnig.myexpenses.designsystem.SelectionBar
-import org.totschnig.myexpenses.designsystem.EditableItemRow
-import org.totschnig.myexpenses.designsystem.FormDialog
-import org.totschnig.myexpenses.designsystem.FormSheet
-import org.totschnig.myexpenses.designsystem.LinkRow
-import org.totschnig.myexpenses.designsystem.MarkedPhoto
-import org.totschnig.myexpenses.designsystem.PhotoMark
-import org.totschnig.myexpenses.designsystem.ProgressRow
 import org.totschnig.myexpenses.designsystem.Shapes
+import org.totschnig.myexpenses.designsystem.Spacing
+import org.totschnig.myexpenses.designsystem.isWideWindow
 import org.totschnig.myexpenses.feature.Box as TextBox
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.common.R
-import java.math.BigDecimal
-import java.text.DecimalFormatSymbols
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
+import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
 import org.totschnig.myexpenses.next.core.ui.receipts.labelRes
 import org.totschnig.myexpenses.next.data.receipts.AmountInput
 import org.totschnig.myexpenses.next.data.receipts.LeftoverRow
@@ -126,7 +126,10 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
         newItem = item to draft.insertionIndex(item.box!!)
         chosenRows = emptySet()
     }
-    val openItem = { index: Int -> editing = index; focused = index }
+    val openItem = { index: Int ->
+        editing = index
+        focused = index
+    }
     // Items without group at the start of going through them, and how far it got
     var walkThrough by rememberSaveable { mutableStateOf<List<Int>?>(null) }
     var walkPosition by rememberSaveable { mutableIntStateOf(0) }
@@ -148,8 +151,14 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
 
     // In wide windows the photo and the rows read from it are side by side, each scrolling by itself
     val isSideBySide = isWideWindow() && photo != null
-    Dialog(onDismissRequest = close, properties = DialogProperties(usePlatformDefaultWidth = false)) {
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surfaceContainer) {
+    Dialog(
+        onDismissRequest = close,
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.surfaceContainer
+        ) {
             Box {
                 DetailScaffold(
                     onBack = close,
@@ -159,13 +168,19 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
                         if (draft.photo != null && viewModel.canRecognize) {
                             IconButton(
                                 onClick = {
-                                    if (draft.isChanged) confirmRecognizeAgain = true else viewModel.recognizeAgain()
+                                    if (draft.isChanged) {
+                                        confirmRecognizeAgain = true
+                                    } else {
+                                        viewModel.recognizeAgain()
+                                    }
                                 },
                                 enabled = !recognizingAgain
                             ) {
                                 Icon(
                                     Icons.Default.Refresh,
-                                    contentDescription = stringResource(R.string.next_receipt_recognize_again)
+                                    contentDescription = stringResource(
+                                        R.string.next_receipt_recognize_again
+                                    )
                                 )
                             }
                         }
@@ -173,46 +188,60 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
                             onClick = viewModel::saveDraft,
                             enabled = draft.items.isNotEmpty() && !recognizingAgain
                         ) {
-                            Icon(Icons.Default.Check, contentDescription = stringResource(R.string.next_receipt_save))
+                            Icon(
+                                Icons.Default.Check,
+                                contentDescription = stringResource(R.string.next_receipt_save)
+                            )
                         }
                     },
                     header = {
-                        if (chosenRows.isNotEmpty()) SelectionBar(
-                            text = pluralStringResource(
-                                R.plurals.next_receipt_rows_chosen,
-                                chosenRows.size,
-                                chosenRows.size
-                            ),
-                            actionLabel = stringResource(R.string.next_receipt_take_rows),
-                            onAction = { takeRows(draft.openLeftoverRows.filter { it in chosenRows }) },
-                            onCancel = { chosenRows = emptySet() }
-                        ) else Column {
-                            if (recognizingAgain) {
-                                DetailCard {
-                                    ProgressRow(stringResource(R.string.next_receipt_reading), isFirst = true)
-                                }
-                            }
-                            recognizeAgainFailed?.let { reason ->
-                                Banner(
-                                    title = stringResource(R.string.next_receipt_failed),
-                                    messages = listOf(stringResource(reason.messageRes)),
-                                    style = BannerStyle.Alert
-                                ) {
-                                    TextButton(onClick = viewModel::dismissRecognizeAgainFailed) {
-                                        Text(stringResource(R.string.next_receipt_close))
+                        if (chosenRows.isNotEmpty()) {
+                            SelectionBar(
+                                text = pluralStringResource(
+                                    R.plurals.next_receipt_rows_chosen,
+                                    chosenRows.size,
+                                    chosenRows.size
+                                ),
+                                actionLabel = stringResource(R.string.next_receipt_take_rows),
+                                onAction = {
+                                    takeRows(draft.openLeftoverRows.filter { it in chosenRows })
+                                },
+                                onCancel = { chosenRows = emptySet() }
+                            )
+                        } else {
+                            Column {
+                                if (recognizingAgain) {
+                                    DetailCard {
+                                        ProgressRow(
+                                            stringResource(R.string.next_receipt_reading),
+                                            isFirst = true
+                                        )
                                     }
                                 }
-                            }
-                            CountBanner(draft.check)
-                            MissingGroupsBanner(draft.itemsWithoutGroup.size) {
-                                walkThrough = draft.itemsWithoutGroup
-                                walkPosition = 0
-                            }
-                            if (offerModel && draft.itemsWithoutGroup.isNotEmpty()) {
-                                ModelOfferBanner(
-                                    onSetUp = { settingUpModel = true },
-                                    onDecline = viewModel.modelInstaller::decline
-                                )
+                                recognizeAgainFailed?.let { reason ->
+                                    Banner(
+                                        title = stringResource(R.string.next_receipt_failed),
+                                        messages = listOf(stringResource(reason.messageRes)),
+                                        style = BannerStyle.Alert
+                                    ) {
+                                        TextButton(
+                                            onClick = viewModel::dismissRecognizeAgainFailed
+                                        ) {
+                                            Text(stringResource(R.string.next_receipt_close))
+                                        }
+                                    }
+                                }
+                                CountBanner(draft.check)
+                                MissingGroupsBanner(draft.itemsWithoutGroup.size) {
+                                    walkThrough = draft.itemsWithoutGroup
+                                    walkPosition = 0
+                                }
+                                if (offerModel && draft.itemsWithoutGroup.isNotEmpty()) {
+                                    ModelOfferBanner(
+                                        onSetUp = { settingUpModel = true },
+                                        onDecline = viewModel.modelInstaller::decline
+                                    )
+                                }
                             }
                         }
                     }
@@ -267,18 +296,30 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
                                             )
                                             if (
                                                 result == SnackbarResult.ActionPerformed
-                                            ) viewModel.insertItem(index, item)
+                                            ) {
+                                                viewModel.insertItem(index, item)
+                                            }
                                         }
                                     },
                                     supportingText = item.quantityText(input, format),
                                     isFirst = index == 0,
                                     badge = when {
                                         item.group != null ->
-                                            ItemGroup.ofId(item.group)?.let { stringResource(it.labelRes) }
-                                        item.amount > 0 -> stringResource(R.string.next_item_group_missing)
+                                            ItemGroup.ofId(item.group)?.let {
+                                                stringResource(it.labelRes)
+                                            }
+
+                                        item.amount > 0 -> stringResource(
+                                            R.string.next_item_group_missing
+                                        )
+
                                         else -> null
                                     },
-                                    badgeStyle = if (item.group == null) BadgeStyle.Missing else BadgeStyle.Outlined
+                                    badgeStyle = if (item.group == null) {
+                                        BadgeStyle.Missing
+                                    } else {
+                                        BadgeStyle.Outlined
+                                    }
                                 )
                             }
                             DifferenceRows(draft, format, isFirst = draft.items.isEmpty())
@@ -293,13 +334,28 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
                             chosen = chosenRows,
                             onTake = { takeRows(listOf(it)) },
                             onChoose =
-                                { row -> chosenRows = if (row in chosenRows) chosenRows - row else chosenRows + row }
+                                { row ->
+                                    chosenRows =
+                                        if (row in chosenRows) {
+                                            chosenRows - row
+                                        } else {
+                                            chosenRows + row
+                                        }
+                                }
                         )
                     }
                     if (isSideBySide) {
-                        Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(Spacing.screen)) {
-                            Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) { photoCard() }
-                            Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), content = receipt)
+                        Row(
+                            Modifier.fillMaxSize(),
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.screen)
+                        ) {
+                            Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
+                                photoCard()
+                            }
+                            Column(
+                                Modifier.weight(1f).verticalScroll(rememberScrollState()),
+                                content = receipt
+                            )
                         }
                     } else {
                         photoCard()
@@ -328,8 +384,11 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
                     photo = photo,
                     input = input,
                     onConfirm = { item ->
-                        if (index == NEW_ITEM) viewModel.insertItem(draft.items.size, item)
-                        else viewModel.updateItem(index, item)
+                        if (index == NEW_ITEM) {
+                            viewModel.insertItem(draft.items.size, item)
+                        } else {
+                            viewModel.updateItem(index, item)
+                        }
                         editing = null
                     },
                     onDismiss = { editing = null }
@@ -337,7 +396,9 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
             }
             walkThrough?.let { queue ->
                 // Choosing a group may also fill later items of the same product
-                val current = queue.drop(walkPosition).firstOrNull { draft.items.getOrNull(it)?.group == null }
+                val current = queue.drop(walkPosition).firstOrNull {
+                    draft.items.getOrNull(it)?.group == null
+                }
                 if (current == null) {
                     walkThrough = null
                 } else {
@@ -367,7 +428,11 @@ fun ReceiptReviewDialog(viewModel: ReceiptViewModel, currency: CurrencyInfo) {
                     onMerchant = viewModel::setMerchant,
                     onDate = viewModel::setDate,
                     onAmount = { amount ->
-                        if (detail == Detail.TOTAL) viewModel.setTotal(amount) else viewModel.setCardAmount(amount)
+                        if (detail == Detail.TOTAL) {
+                            viewModel.setTotal(amount)
+                        } else {
+                            viewModel.setCardAmount(amount)
+                        }
                     }
                 )
             }
@@ -428,7 +493,11 @@ private const val NONE = "–"
  * transaction the items are checked against
  */
 @Composable
-private fun ReceiptDetails(draft: ReceiptDraft, format: (Long) -> String, onEdit: (Detail) -> Unit) {
+private fun ReceiptDetails(
+    draft: ReceiptDraft,
+    format: (Long) -> String,
+    onEdit: (Detail) -> Unit
+) {
     val dateFormat = remember { DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM) }
     DetailCard {
         EditableRow(
@@ -456,7 +525,10 @@ private fun ReceiptDetails(draft: ReceiptDraft, format: (Long) -> String, onEdit
             )
         }
         if (draft.target is ReceiptTarget.Transaction) {
-            InfoRow(stringResource(R.string.next_receipt_transaction_amount), format(draft.transactionAmount))
+            InfoRow(
+                stringResource(R.string.next_receipt_transaction_amount),
+                format(draft.transactionAmount)
+            )
         }
     }
 }
@@ -470,9 +542,15 @@ private fun DifferenceRows(draft: ReceiptDraft, format: (Long) -> String, isFirs
     if (check.itemsDifference != 0L) {
         InfoRow(
             stringResource(
-                if (draft.total != null) R.string.next_receipt_items_difference else R.string.next_receipt_difference
+                if (draft.total != null) {
+                    R.string.next_receipt_items_difference
+                } else {
+                    R.string.next_receipt_difference
+                }
             ),
-            format(check.itemsDifference), isFirst = first, valueColor = error
+            format(check.itemsDifference),
+            isFirst = first,
+            valueColor = error
         )
         first = false
     }
@@ -497,7 +575,7 @@ private fun LeftoverRows(
     rows: List<LeftoverRow>,
     chosen: Set<LeftoverRow>,
     onTake: (LeftoverRow) -> Unit,
-    onChoose: (LeftoverRow) -> Unit,
+    onChoose: (LeftoverRow) -> Unit
 ) {
     if (rows.isEmpty()) return
     SectionHeader(stringResource(R.string.next_receipt_leftover_title), count = rows.size)
@@ -528,7 +606,12 @@ private fun CountBanner(check: ReceiptCheck) {
         title = stringResource(R.string.next_receipt_count_title),
         messages = listOf(
             check.receipt.itemCount!!.let {
-                pluralStringResource(R.plurals.next_receipt_count_differs, it, it, check.receipt.pieces)
+                pluralStringResource(
+                    R.plurals.next_receipt_count_differs,
+                    it,
+                    it,
+                    check.receipt.pieces
+                )
             }
         ),
         style = BannerStyle.Alert
@@ -544,20 +627,26 @@ private fun DetailDialog(
     onDismiss: () -> Unit,
     onMerchant: (String?) -> Unit,
     onDate: (java.time.LocalDate?) -> Unit,
-    onAmount: (Long?) -> Unit,
+    onAmount: (Long?) -> Unit
 ) {
     when (detail) {
         Detail.MERCHANT -> NameDialog(
             title = stringResource(R.string.next_receipt_merchant),
             initialName = draft.merchant.orEmpty(),
-            onConfirm = { onMerchant(it.trim().ifEmpty { null }); onDismiss() },
+            onConfirm = {
+                onMerchant(it.trim().ifEmpty { null })
+                onDismiss()
+            },
             onDismiss = onDismiss,
             allowBlank = true
         )
 
         Detail.DATE -> DateDialog(
             initial = draft.date,
-            onConfirm = { onDate(it); onDismiss() },
+            onConfirm = {
+                onDate(it)
+                onDismiss()
+            },
             onDismiss = onDismiss
         )
 
@@ -567,9 +656,16 @@ private fun DetailDialog(
             val parsed = input.parse(text)
             FormDialog(
                 title = stringResource(
-                    if (detail == Detail.TOTAL) R.string.next_receipt_sum else R.string.next_receipt_card_amount
+                    if (detail == Detail.TOTAL) {
+                        R.string.next_receipt_sum
+                    } else {
+                        R.string.next_receipt_card_amount
+                    }
                 ),
-                onConfirm = { onAmount(parsed); onDismiss() },
+                onConfirm = {
+                    onAmount(parsed)
+                    onDismiss()
+                },
                 onDismiss = onDismiss,
                 confirmEnabled = text.isBlank() || parsed != null
             ) {
@@ -580,7 +676,9 @@ private fun DetailDialog(
                     isError = text.isNotBlank() && parsed == null,
                     supportingText = if (text.isNotBlank() && parsed == null) {
                         { Text(stringResource(R.string.next_amount_invalid)) }
-                    } else null,
+                    } else {
+                        null
+                    },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     modifier = Modifier.fillMaxWidth()
@@ -598,7 +696,9 @@ private fun MissingGroupsBanner(count: Int, onAssign: () -> Unit) {
         title = pluralStringResource(R.plurals.next_item_groups_missing, count, count),
         messages = listOf(stringResource(R.string.next_item_groups_missing_text)),
         actions = {
-            TextButton(onClick = onAssign) { Text(stringResource(R.string.next_item_groups_assign)) }
+            TextButton(onClick = onAssign) {
+                Text(stringResource(R.string.next_item_groups_assign))
+            }
         }
     )
 }
@@ -617,14 +717,18 @@ private fun ItemGroupStepSheet(
     format: (Long) -> String,
     onSelect: (ItemGroup) -> Unit,
     onSkip: () -> Unit,
-    onDone: () -> Unit,
+    onDone: () -> Unit
 ) {
     val skip = stringResource(R.string.next_item_group_skip)
     FormSheet(
         title = stringResource(R.string.next_item_group_step, step, steps),
         onConfirm = if (proposal != null) ({ onSelect(proposal) }) else onSkip,
         onDismiss = onDone,
-        confirmLabel = if (proposal != null) stringResource(R.string.next_item_group_apply) else skip,
+        confirmLabel = if (proposal != null) {
+            stringResource(R.string.next_item_group_apply)
+        } else {
+            skip
+        },
         dismissLabel = stringResource(R.string.next_item_group_done),
         secondaryLabel = skip,
         onSecondary = onSkip.takeIf { proposal != null }
@@ -632,12 +736,19 @@ private fun ItemGroupStepSheet(
         val box = item.box
         if (photo != null && box != null) PhotoExcerpt(photo, box)
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(item.name, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            Text(
+                item.name,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.weight(1f)
+            )
             Text(format(item.amount), style = MaterialTheme.typography.titleMedium)
         }
         if (proposal != null) {
             Text(
-                stringResource(R.string.next_item_group_proposal, stringResource(proposal.labelRes)),
+                stringResource(
+                    R.string.next_item_group_proposal,
+                    stringResource(proposal.labelRes)
+                ),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -667,14 +778,18 @@ private fun ReceiptItemSheet(
     isNew: Boolean = item == null,
     input: AmountInput,
     onConfirm: (ReceiptItem) -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     var name by rememberSaveable { mutableStateOf(item?.name ?: "") }
     var amount by rememberSaveable { mutableStateOf(item?.amount?.let(input::format) ?: "") }
     var showQuantity by rememberSaveable {
-        mutableStateOf(item != null && (item.quantity.compareTo(BigDecimal.ONE) != 0 || item.unitPrice != null))
+        mutableStateOf(
+            item != null && (item.quantity.compareTo(BigDecimal.ONE) != 0 || item.unitPrice != null)
+        )
     }
-    var quantity by rememberSaveable { mutableStateOf(input.formatQuantity(item?.quantity ?: BigDecimal.ONE)) }
+    var quantity by rememberSaveable {
+        mutableStateOf(input.formatQuantity(item?.quantity ?: BigDecimal.ONE))
+    }
     var unitPrice by rememberSaveable { mutableStateOf(item?.unitPrice?.let(input::format) ?: "") }
     var group by rememberSaveable { mutableStateOf(item?.group) }
     // Amount follows quantity and unit price, it can still be overwritten
@@ -687,19 +802,23 @@ private fun ReceiptItemSheet(
     val decimal = KeyboardOptions(keyboardType = KeyboardType.Decimal)
 
     FormSheet(
-        title = stringResource(if (isNew) R.string.next_receipt_add_item else R.string.next_receipt_edit_item),
+        title = stringResource(
+            if (isNew) R.string.next_receipt_add_item else R.string.next_receipt_edit_item
+        ),
         onConfirm = {
             onConfirm(
                 ReceiptItem(
                     name = name.trim(),
                     amount = parsedAmount!!,
-                    quantity = input.parseQuantity(quantity)?.takeIf { showQuantity } ?: BigDecimal.ONE,
+                    quantity =
+                        input.parseQuantity(quantity)?.takeIf { showQuantity } ?: BigDecimal.ONE,
                     unit = item?.unit,
                     unitPrice = input.parse(unitPrice)?.takeIf { showQuantity },
                     taxClass = item?.taxClass,
                     box = item?.box,
                     group = group,
-                    groupByUser = item?.groupByUser == true || (group != null && group != item?.group)
+                    groupByUser =
+                        item?.groupByUser == true || (group != null && group != item?.group)
                 )
             )
         },
@@ -719,7 +838,10 @@ private fun ReceiptItemSheet(
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(
                     value = quantity,
-                    onValueChange = { quantity = it; recalculate() },
+                    onValueChange = {
+                        quantity = it
+                        recalculate()
+                    },
                     label = { Text(stringResource(R.string.next_receipt_item_quantity)) },
                     suffix = item?.unit?.let { { Text(it) } },
                     singleLine = true,
@@ -728,7 +850,10 @@ private fun ReceiptItemSheet(
                 )
                 OutlinedTextField(
                     value = unitPrice,
-                    onValueChange = { unitPrice = it; recalculate() },
+                    onValueChange = {
+                        unitPrice = it
+                        recalculate()
+                    },
                     label = { Text(stringResource(R.string.next_receipt_item_unit_price)) },
                     singleLine = true,
                     keyboardOptions = decimal,
@@ -747,7 +872,9 @@ private fun ReceiptItemSheet(
             isError = amount.isNotEmpty() && parsedAmount == null,
             supportingText = if (amount.isNotEmpty() && parsedAmount == null) {
                 { Text(stringResource(R.string.next_amount_invalid)) }
-            } else null,
+            } else {
+                null
+            },
             singleLine = true,
             keyboardOptions = decimal,
             modifier = Modifier.fillMaxWidth()
@@ -776,10 +903,15 @@ private fun ReceiptPhotoView(
     leftoverRows: List<LeftoverRow>,
     focused: Int?,
     expanded: Boolean,
-    onTapItem: (Int) -> Unit,
+    onTapItem: (Int) -> Unit
 ) {
     val bitmap = remember(photo) { photo.bitmap.asImageBitmap() }
-    fun TextBox.rect() = Rect(left * photo.scale, top * photo.scale, right * photo.scale, bottom * photo.scale)
+    fun TextBox.rect() = Rect(
+        left * photo.scale,
+        top * photo.scale,
+        right * photo.scale,
+        bottom * photo.scale
+    )
     val frame = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
     val highlight = MaterialTheme.colorScheme.primary.copy(alpha = 0.25f)
     val leftover = MaterialTheme.colorScheme.error.copy(alpha = 0.7f)
@@ -787,13 +919,16 @@ private fun ReceiptPhotoView(
     MarkedPhoto(
         bitmap = bitmap,
         marks = items.mapNotNull { item -> item.box?.let { PhotoMark(it.rect(), frame, 1.dp) } } +
-                leftoverRows.map { PhotoMark(it.box.rect(), leftover, 1.dp) } +
-                listOfNotNull(focusRect?.let { PhotoMark(it, highlight, filled = true) }),
+            leftoverRows.map { PhotoMark(it.box.rect(), leftover, 1.dp) } +
+            listOfNotNull(focusRect?.let { PhotoMark(it, highlight, filled = true) }),
         collapsedHeight = if (expanded) null else COLLAPSED_PHOTO,
         focus = focusRect,
         onTap = { point ->
             items.indices
-                .filter { items[it].box?.rect()?.inflate(TAP_TOLERANCE * photo.scale)?.contains(point) == true }
+                .filter {
+                    items[it].box?.rect()?.inflate(TAP_TOLERANCE * photo.scale)?.contains(point) ==
+                        true
+                }
                 .minByOrNull { items[it].box!!.rect().height }
                 ?.let(onTapItem)
         }

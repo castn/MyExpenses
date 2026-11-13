@@ -8,13 +8,13 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
-import org.totschnig.myexpenses.next.core.model.ledger.Ledger
-import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 import org.totschnig.myexpenses.next.core.common.ledger.Memo
 import org.totschnig.myexpenses.next.core.common.ledger.mapMemo
 import org.totschnig.myexpenses.next.core.common.logTimings
-import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
 import org.totschnig.myexpenses.next.core.common.shareWhileShown
+import org.totschnig.myexpenses.next.core.model.ledger.Ledger
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
+import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
 
 /**
  * How well the transactions are described, see [DataReadiness], once for the process. The flows

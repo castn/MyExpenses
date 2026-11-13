@@ -10,6 +10,12 @@ class ContractIconsTest {
 
     @Test
     fun everyIconOfAnAreaExistsInFontAwesome() {
-        assertEquals(emptyList<String>(), BuiltInArea.entries.map { it.icon }.filter { it !in FontAwesomeIcons })
+        assertEquals(
+            emptyList<String>(),
+            BuiltInArea.entries.map { it.icon }.filter {
+                it !in
+                    FontAwesomeIcons
+            }
+        )
     }
 }

@@ -1,9 +1,9 @@
 package org.totschnig.myexpenses.next.data.receipts
 
-import org.totschnig.myexpenses.next.data.receipts.ReceiptLayout.Row
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.Normalizer
+import org.totschnig.myexpenses.next.data.receipts.ReceiptLayout.Row
 
 /** Accents taken apart by [Normalizer], built once since building a regex takes long on Android */
 private val MARKS = Regex("""\p{M}""")
@@ -23,7 +23,10 @@ private val MARKS = Regex("""\p{M}""")
  *    "MEGGLE BAGUET 1,32 € x X 3 3,96 AP"
  * 6. [Assembly.nameOnly]: a name without price waits for its second row (rule 4)
  */
-internal class ReceiptAssembler(private val kinds: RowKinds, private val vocabulary: ReceiptVocabulary) {
+internal class ReceiptAssembler(
+    private val kinds: RowKinds,
+    private val vocabulary: ReceiptVocabulary
+) {
 
     fun items(rows: List<Row>): List<ReceiptItem> = assemble(rows).items
 
@@ -35,10 +38,13 @@ internal class ReceiptAssembler(private val kinds: RowKinds, private val vocabul
 
     /** Count or weight and unit price, applied to an item whose amount they give */
     private class Quantity(val quantity: BigDecimal, val unit: String?, val unitPrice: Long) {
-        fun fits(item: ReceiptItem) = item.quantity.compareTo(BigDecimal.ONE) == 0 && item.unitPrice == null &&
-                (quantity * BigDecimal(unitPrice)).setScale(0, RoundingMode.HALF_UP).toLong() == item.amount
+        fun fits(item: ReceiptItem) =
+            item.quantity.compareTo(BigDecimal.ONE) == 0 && item.unitPrice == null &&
+                (quantity * BigDecimal(unitPrice)).setScale(0, RoundingMode.HALF_UP).toLong() ==
+                item.amount
 
-        fun applyTo(item: ReceiptItem) = item.copy(quantity = quantity, unit = unit, unitPrice = unitPrice)
+        fun applyTo(item: ReceiptItem) =
+            item.copy(quantity = quantity, unit = unit, unitPrice = unitPrice)
     }
 
     private inner class Assembly {
@@ -67,10 +73,19 @@ internal class ReceiptAssembler(private val kinds: RowKinds, private val vocabul
         /** Rule 1 */
         fun nameBelowArticleNumber(row: Row): Boolean {
             val index = nameBelow ?: return false
-            if (readItem(row) != null || quantity(row.text) != null || row.text.none { it.isLetter() }) return false
+            if (readItem(row) != null || quantity(row.text) != null ||
+                row.text.none { it.isLetter() }
+            ) {
+                return false
+            }
             val item = items[index]
             items[index] =
-                item.copy(name = "${item.name} ${row.text}".trim(), box = item.box?.let { union(it, row.box) })
+                item.copy(
+                    name = "${item.name} ${row.text}".trim(),
+                    box = item.box?.let {
+                        union(it, row.box)
+                    }
+                )
             used += row
             return true
         }
@@ -113,7 +128,9 @@ internal class ReceiptAssembler(private val kinds: RowKinds, private val vocabul
         /** Rule 5 */
         fun itemRow(row: Row): Boolean {
             val item = readItem(row) ?: return false
-            if (item.name.isEmpty() && kinds.isArticleNumberOnly(row.text.substring(0, priceOf(row.text)!!.start))) {
+            if (item.name.isEmpty() &&
+                kinds.isArticleNumberOnly(row.text.substring(0, priceOf(row.text)!!.start))
+            ) {
                 nameBelow = items.size
             }
             val above = quantityAbove?.takeIf { it.fits(item) }
@@ -127,7 +144,8 @@ internal class ReceiptAssembler(private val kinds: RowKinds, private val vocabul
 
         /** Rule 6 */
         fun nameOnly(row: Row) {
-            nameRow = row.takeIf { it.text.count(Char::isLetter) >= 2 && kinds.detail(it.text) == null }
+            nameRow =
+                row.takeIf { it.text.count(Char::isLetter) >= 2 && kinds.detail(it.text) == null }
         }
     }
 
@@ -142,7 +160,12 @@ internal class ReceiptAssembler(private val kinds: RowKinds, private val vocabul
         val name = kinds.withoutArticleNumber(text.substring(0, price.start).trim())
             .takeUnless { kinds.isArticleNumberOnly(it) }.orEmpty()
         val item =
-            ReceiptItem(name = name, amount = price.cents, taxClass = price.taxClass?.let(::taxClass), box = row.box)
+            ReceiptItem(
+                name = name,
+                amount = price.cents,
+                taxClass = price.taxClass?.let(::taxClass),
+                box = row.box
+            )
         val inline = kinds.inlineQuantity(kinds.tokens(name)) ?: return item
         return Quantity(inline.count, null, inline.unitPrice)
             .takeIf { it.fits(item) }
@@ -186,7 +209,14 @@ internal class ReceiptAssembler(private val kinds: RowKinds, private val vocabul
         val value = quantity.stripTrailingZeros()
         // Weighed items show the weight with decimals under a "kg" column header
         val weighed = detail.unit == ReceiptUnit.KG || (detail.unit == null && value.scale() > 0)
-        return Quantity(value, "kg".takeIf { weighed }, unitPrice).takeIf { it.fits(item) }?.applyTo(item) ?: item
+        return Quantity(
+            value,
+            "kg".takeIf {
+                weighed
+            },
+            unitPrice
+        ).takeIf { it.fits(item) }?.applyTo(item)
+            ?: item
     }
 
     private fun quantity(text: String) = kinds.quantity(text)?.let {

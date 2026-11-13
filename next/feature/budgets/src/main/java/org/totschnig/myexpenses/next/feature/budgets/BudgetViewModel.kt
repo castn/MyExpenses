@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,16 +16,16 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.totschnig.myexpenses.next.data.contracts.Contract
-import org.totschnig.myexpenses.next.core.model.ledger.Catalog
-import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
-import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
-import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 import org.totschnig.myexpenses.next.core.common.ledger.Memo
-import org.totschnig.myexpenses.next.core.model.ledger.analysisState
 import org.totschnig.myexpenses.next.core.common.logTimings
 import org.totschnig.myexpenses.next.core.common.stateWhileShown
+import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
+import org.totschnig.myexpenses.next.core.model.ledger.Catalog
+import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 import org.totschnig.myexpenses.next.core.model.ledger.TagInfo
+import org.totschnig.myexpenses.next.core.model.ledger.analysisState
 import org.totschnig.myexpenses.next.data.budgets.BudgetAnalyzer
 import org.totschnig.myexpenses.next.data.budgets.BudgetInput
 import org.totschnig.myexpenses.next.data.budgets.BudgetOverview
@@ -38,6 +37,7 @@ import org.totschnig.myexpenses.next.data.budgets.Pot
 import org.totschnig.myexpenses.next.data.budgets.PotKind
 import org.totschnig.myexpenses.next.data.budgets.PotStatus
 import org.totschnig.myexpenses.next.data.budgets.PotSuggestions
+import org.totschnig.myexpenses.next.data.contracts.Contract
 
 /**
  * What the user can do with the pots of the budget
@@ -71,7 +71,8 @@ class BudgetViewModel(
     private val savedState: SavedStateHandle,
     /** Where the analyses run */
     private val compute: CoroutineDispatcher = Dispatchers.Default
-) : ViewModel(), BudgetActions {
+) : ViewModel(),
+    BudgetActions {
 
     /** The user may create a pot, e.g. after the licence was checked, until its editor is opened */
     val newPotGranted: StateFlow<Boolean> = savedState.getStateFlow(KEY_NEW_POT_GRANTED, false)
@@ -94,7 +95,8 @@ class BudgetViewModel(
 
     private val offset = MutableStateFlow(0)
 
-    internal val selectedMemo = Memo<BudgetInput, BudgetOverview>("budget: selected", BudgetAnalyzer::analyse)
+    internal val selectedMemo =
+        Memo<BudgetInput, BudgetOverview>("budget: selected", BudgetAnalyzer::analyse)
 
     private val input: Flow<BudgetInput?>
         get() = repository.input
@@ -124,7 +126,11 @@ class BudgetViewModel(
 
     /** What the editor of a pot offers to choose from, null while loading or without consent */
     val editorData: StateFlow<PotEditorData?> =
-        combine(input, ledgerSource.catalog, repository.canScanReceipts) { input, catalog, canScan ->
+        combine(input, ledgerSource.catalog, repository.canScanReceipts) {
+                input,
+                catalog,
+                canScan
+            ->
             input?.let { PotEditorData.of(it, catalog, canScan) }
         }
             .flowOn(compute)
@@ -133,10 +139,13 @@ class BudgetViewModel(
     /** Budgets of the classic screens to offer to take over, 0 if there are none or they were handled */
     val legacyOffer: StateFlow<Int> =
         combine(legacyCount, store.legacyHandled) { count, handled -> if (handled) 0 else count }
-        .stateWhileShown(viewModelScope, 0)
+            .stateWhileShown(viewModelScope, 0)
 
     /** Whether the user closed the invitation to a first budget, true until known so it does not flash */
-    val inviteDismissed: StateFlow<Boolean> = store.inviteDismissed.stateWhileShown(viewModelScope, true)
+    val inviteDismissed: StateFlow<Boolean> = store.inviteDismissed.stateWhileShown(
+        viewModelScope,
+        true
+    )
 
     fun dismissInvite() {
         viewModelScope.launch { store.dismissInvite() }
@@ -145,8 +154,11 @@ class BudgetViewModel(
     override fun importLegacy() {
         viewModelScope.launch {
             val pots = LegacyBudgets.pots(
-                loadLegacy(), homeCurrency.value.code, ledgerSource.catalog.first()
-                    .categoriesById, ledgerSource.today.first()
+                loadLegacy(),
+                homeCurrency.value.code,
+                ledgerSource.catalog.first()
+                    .categoriesById,
+                ledgerSource.today.first()
             )
             store.addFromLegacy(pots)
         }
@@ -202,22 +214,32 @@ data class PotEditorData(
     val contracts: List<Contract>,
     val reserves: List<Contract>,
     val savingAccounts: Map<Long, String>,
-    val kinds: List<PotKind> = PotKind.entries,
+    val kinds: List<PotKind> = PotKind.entries
 ) {
     companion object {
-        fun of(input: BudgetInput, catalog: Catalog, canScanReceipts: Boolean = true): PotEditorData {
+        fun of(
+            input: BudgetInput,
+            catalog: Catalog,
+            canScanReceipts: Boolean = true
+        ): PotEditorData {
             val (reserves, contracts) = input.contracts
                 .filter { !it.isIncome && it.rule != null && !it.isCancelled }
                 .partition { it.isReserve }
             val accounts = input.ledger.ownAccounts
             return PotEditorData(
                 input = input,
-                categories = catalog.categories.filter { it.isExpense }.sortedBy { it.path.lowercase() },
+                categories = catalog.categories.filter {
+                    it.isExpense
+                }.sortedBy { it.path.lowercase() },
                 tags = catalog.tags,
                 contracts = contracts.sortedBy { it.title.lowercase() },
                 reserves = reserves.sortedBy { it.title.lowercase() },
                 savingAccounts = accounts.labels.filterKeys { it !in accounts.dailyIds },
-                kinds = if (canScanReceipts) PotKind.entries else PotKind.entries - PotKind.ITEM_GROUP
+                kinds = if (canScanReceipts) {
+                    PotKind.entries
+                } else {
+                    PotKind.entries - PotKind.ITEM_GROUP
+                }
             )
         }
     }

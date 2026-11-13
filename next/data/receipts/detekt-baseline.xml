@@ -19,7 +19,6 @@
     <ID>MagicNumber:RowKinds.kt:RowKinds$3</ID>
     <ID>MagicNumber:RowKinds.kt:RowKinds$4</ID>
     <ID>MagicNumber:RowKinds.kt:RowKinds$5</ID>
-    <ID>MatchingDeclarationName:ItemGroupShares.kt:ItemGroupShare</ID>
     <ID>ReturnCount:ItemGroupClassifier.kt:ItemGroupClassifier$private fun classify: ItemGroupSuggestion?</ID>
     <ID>ReturnCount:ReceiptParser.kt:ReceiptParser$private fun total: Total</ID>
     <ID>ReturnCount:ReceiptTokens.kt:ReceiptTokens.Splitter$fun split: List&lt;Token&gt;</ID>

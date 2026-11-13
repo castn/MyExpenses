@@ -19,8 +19,12 @@ fun ModelOfferBanner(onSetUp: () -> Unit, onDecline: () -> Unit) {
         title = stringResource(R.string.next_item_group_model_offer_title),
         messages = listOf(stringResource(R.string.next_item_group_model_offer_text)),
         actions = {
-            TextButton(onClick = onDecline) { Text(stringResource(R.string.next_item_group_model_decline)) }
-            TextButton(onClick = onSetUp) { Text(stringResource(R.string.next_item_group_model_set_up)) }
+            TextButton(onClick = onDecline) {
+                Text(stringResource(R.string.next_item_group_model_decline))
+            }
+            TextButton(onClick = onSetUp) {
+                Text(stringResource(R.string.next_item_group_model_set_up))
+            }
         }
     )
 }
@@ -31,9 +35,10 @@ fun ModelOfferBanner(onSetUp: () -> Unit, onDecline: () -> Unit) {
  */
 @Composable
 fun ModelSetupDialog(viewModel: ReceiptViewModel, state: ModelSetup?, onDismiss: () -> Unit) {
-    val pickFile = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
-        uri?.let(viewModel.modelInstaller::install)
-    }
+    val pickFile =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            uri?.let(viewModel.modelInstaller::install)
+        }
     val working = state == ModelSetup.Working
     FormDialog(
         title = stringResource(R.string.next_item_group_model_title),
@@ -48,8 +53,16 @@ fun ModelSetupDialog(viewModel: ReceiptViewModel, state: ModelSetup?, onDismiss:
         Text(stringResource(R.string.next_item_group_model_text))
         Text(stringResource(R.string.next_item_group_model_source_text))
         when (state) {
-            ModelSetup.Working -> ProgressRow(stringResource(R.string.next_item_group_model_working), isFirst = true)
-            is ModelSetup.Failed -> Text(stringResource(state.reason.text), color = MaterialTheme.colorScheme.error)
+            ModelSetup.Working -> ProgressRow(
+                stringResource(R.string.next_item_group_model_working),
+                isFirst = true
+            )
+
+            is ModelSetup.Failed -> Text(
+                stringResource(state.reason.text),
+                color = MaterialTheme.colorScheme.error
+            )
+
             else -> {}
         }
     }

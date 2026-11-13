@@ -9,14 +9,15 @@ import org.totschnig.myexpenses.model.CurrencyUnit
 import org.totschnig.myexpenses.model.PREDEFINED_NAME_BANK
 import org.totschnig.myexpenses.model.PREDEFINED_NAME_CASH
 import org.totschnig.myexpenses.model.PREDEFINED_NAME_CCARD
-import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.viewmodel.data.FullAccount
 
 /**
  * Account types that are shown together in a single "Daily accounts" section of the overview,
  * when accounts are grouped by type.
  */
-private val dailyAccountTypes = setOf(PREDEFINED_NAME_CASH, PREDEFINED_NAME_BANK, PREDEFINED_NAME_CCARD)
+private val dailyAccountTypes =
+    setOf(PREDEFINED_NAME_CASH, PREDEFINED_NAME_BANK, PREDEFINED_NAME_CCARD)
 
 /**
  * Cash, bank and credit card accounts: where the money for daily life comes from and goes to
@@ -37,20 +38,28 @@ fun isDailyAccountType(typeName: String) = typeName in dailyAccountTypes
 fun groupAccountsForOverview(
     accounts: List<FullAccount>,
     grouping: AccountGrouping<*>,
-    context: Context,
+    context: Context
 ): List<Pair<String, List<FullAccount>>> {
     val sorted = accounts.sortedBy { it.sortKey }
-    val (daily, others) = if (grouping == AccountGrouping.TYPE)
+    val (daily, others) = if (grouping == AccountGrouping.TYPE) {
         sorted.partition { it.isDailyAccount }
-    else emptyList<FullAccount>() to sorted
+    } else {
+        emptyList<FullAccount>() to sorted
+    }
 
     @Suppress("UNCHECKED_CAST")
     val comparator = grouping.comparator as Comparator<in AccountGroupingKey>
     val grouped = others.groupBy { grouping.getGroupKey(it) }
-    val sections = grouped.keys.sortedWith(comparator).map { it.title(context) to grouped.getValue(it) }
+    val sections = grouped.keys.sortedWith(comparator).map {
+        it.title(context) to
+            grouped.getValue(it)
+    }
 
-    return if (daily.isEmpty()) sections
-    else listOf(context.getString(R.string.next_daily_accounts) to daily) + sections
+    return if (daily.isEmpty()) {
+        sections
+    } else {
+        listOf(context.getString(R.string.next_daily_accounts) to daily) + sections
+    }
 }
 
 /**
@@ -63,7 +72,7 @@ fun overviewSections(
     grouping: AccountGrouping<*>,
     context: Context,
     resources: Resources,
-    formatAmount: (Long, CurrencyUnit) -> String,
+    formatAmount: (Long, CurrencyUnit) -> String
 ) = groupAccountsForOverview(accounts, grouping, context).map { (title, groupAccounts) ->
     OverviewSection(
         title = title,
@@ -79,4 +88,3 @@ fun overviewSections(
         }
     )
 }
-

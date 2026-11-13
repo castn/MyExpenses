@@ -11,5 +11,5 @@ package org.totschnig.myexpenses.next.data.tips
 data class SavingTipsOverview(
     val tips: List<SavingTip>,
     val dismissed: List<SavingTip> = emptyList(),
-    val newIds: Set<String> = emptySet(),
+    val newIds: Set<String> = emptySet()
 )

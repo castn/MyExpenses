@@ -3,9 +3,10 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>ComplexCondition:NextMainScreen.kt:forcedAccountPanelLoadingState !is PreferenceState.Loaded || preferredNavModeLoadingState !is PreferenceState.Loaded || accountGroupingLoadingState !is PreferenceState.Loaded || mainMenuLoadingState !is PreferenceState.Loaded</ID>
-    <ID>ComplexCondition:NextSettings.kt:NextSettings$autoBackup &amp;&amp; (prefHandler.getBoolean(PrefKey.PROTECTION_LEGACY, false) || prefHandler.getBoolean(PrefKey.PROTECTION_DEVICE_LOCK_SCREEN, false)) &amp;&amp; prefHandler.getString(PrefKey.EXPORT_PASSWORD, null) == null</ID>
+    <ID>ComplexCondition:NextSettings.kt:NextSettings$autoBackup &amp;&amp; ( prefHandler.getBoolean(PrefKey.PROTECTION_LEGACY, false) || prefHandler.getBoolean(PrefKey.PROTECTION_DEVICE_LOCK_SCREEN, false) ) &amp;&amp; prefHandler.getString(PrefKey.EXPORT_PASSWORD, null) == null</ID>
     <ID>CyclomaticComplexMethod:NextTransactionList.kt:private fun LazyListScope.transactionItems</ID>
     <ID>LongMethod:NextSettings.kt:NextSettings$override fun onCreate</ID>
+    <ID>LongMethod:NextSettings.kt:NextSettings$override fun onSharedPreferenceChanged</ID>
     <ID>LoopWithTooManyJumpStatements:LegacySpecs.kt:LegacySpecs$while</ID>
     <ID>MagicNumber:NextLayout.kt:1.1f</ID>
     <ID>MagicNumber:NextLayout.kt:1.5f</ID>

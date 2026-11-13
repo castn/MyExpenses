@@ -18,7 +18,14 @@ class TagRepositoryTest {
 
     private val ledger = Ledger(
         listOf(1L, 2L).map { id ->
-            LedgerTransaction(id, today, amount = -2000, accountId = 1, payeeId = 5, payeeName = "Hotel Roma")
+            LedgerTransaction(
+                id,
+                today,
+                amount = -2000,
+                accountId = 1,
+                payeeId = 5,
+                payeeName = "Hotel Roma"
+            )
         },
         OwnAccounts(emptySet(), emptyMap())
     )
@@ -40,7 +47,8 @@ class TagRepositoryTest {
             val store = TagStore(dataStore)
             val counterpart = tagRows(ledger).first().toTagInput().counterpart!!
             store.addRule(TagRule(counterpart, tagId = 7, afterId = 1))
-            val repository = TagRepository(FakeLedgerSource(ledger = ledger), store, backgroundScope, database)
+            val repository =
+                TagRepository(FakeLedgerSource(ledger = ledger), store, backgroundScope, database)
             assertNull(database.tags[2])
             assertEquals(mapOf(2L to setOf(7L)), repository.appliedRules.first { it.isNotEmpty() })
             assertEquals(listOf(7L), database.tags[2])

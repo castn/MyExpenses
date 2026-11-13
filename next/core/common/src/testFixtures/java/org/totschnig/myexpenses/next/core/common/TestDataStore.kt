@@ -19,7 +19,9 @@ fun withTestDataStore(block: suspend (DataStore<Preferences>) -> Unit) {
     val directory = createTempDirectory("datastore").toFile()
     val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     try {
-        val dataStore = PreferenceDataStoreFactory.create(scope = scope) { File(directory, "test.preferences_pb") }
+        val dataStore = PreferenceDataStoreFactory.create(scope = scope) {
+            File(directory, "test.preferences_pb")
+        }
         runBlocking { block(dataStore) }
     } finally {
         scope.cancel()

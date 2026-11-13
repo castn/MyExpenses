@@ -69,14 +69,18 @@ private fun ruleOf(json: JSONObject) = with(json) {
         name = if (has("name")) getString("name") else null,
         areaKey = if (has("area")) getString("area") else null,
         cancelledOn = if (has("cancelled")) LocalDate.parse(getString("cancelled")) else null,
-        snapshot = if (has("snapshotName")) ContractRule.Snapshot(
-            getString("snapshotName"),
-            getLong("snapshotAmount"),
-            LocalDate.parse(getString("snapshotDate"))
-        ) else null,
+        snapshot = if (has("snapshotName")) {
+            ContractRule.Snapshot(
+                getString("snapshotName"),
+                getLong("snapshotAmount"),
+                LocalDate.parse(getString("snapshotDate"))
+            )
+        } else {
+            null
+        },
         reserve = if (has("reserve")) getBoolean("reserve") else null,
         targetAccountIds = optJSONArray("targetAccounts")?.longs()
-        // Stored as single account before rules could hold several
+            // Stored as single account before rules could hold several
             ?: if (has("targetAccount")) setOf(getLong("targetAccount")) else emptySet(),
         icon = if (has("icon")) getString("icon") else null
     )
@@ -104,7 +108,12 @@ internal fun serializeRules(rules: List<ContractRule>, previous: String? = null)
                 put("snapshotDate", it.lastDate.toString())
             }
             rule.reserve?.let { put("reserve", it) }
-            if (rule.targetAccountIds.isNotEmpty()) put("targetAccounts", JSONArray(rule.targetAccountIds.toList()))
+            if (rule.targetAccountIds.isNotEmpty()) {
+                put(
+                    "targetAccounts",
+                    JSONArray(rule.targetAccountIds.toList())
+                )
+            }
             rule.icon?.let { put("icon", it) }
         }
     }

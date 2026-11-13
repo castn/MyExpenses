@@ -33,8 +33,8 @@ import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DragHandle
-import androidx.compose.material.icons.filled.Savings
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Savings
 import androidx.compose.material.icons.filled.SwapVert
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -53,22 +53,21 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import java.text.NumberFormat
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.totschnig.myexpenses.designsystem.Shapes
-import org.totschnig.myexpenses.designsystem.theme.LocalSemanticColors
+import java.text.NumberFormat
 import org.totschnig.myexpenses.designsystem.ActionCard
 import org.totschnig.myexpenses.designsystem.GroupItem
 import org.totschnig.myexpenses.designsystem.GroupPosition
@@ -77,13 +76,14 @@ import org.totschnig.myexpenses.designsystem.InviteCard
 import org.totschnig.myexpenses.designsystem.MenuButton
 import org.totschnig.myexpenses.designsystem.MenuEntry
 import org.totschnig.myexpenses.designsystem.OverviewCard
+import org.totschnig.myexpenses.designsystem.Shapes
+import org.totschnig.myexpenses.designsystem.theme.LocalSemanticColors
+import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
+import org.totschnig.myexpenses.next.core.ui.icons.CatalogIcon
 import sh.calvin.reorderable.ReorderableCollectionItemScope
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
-import org.totschnig.myexpenses.next.core.ui.icons.CatalogIcon
-import androidx.compose.ui.semantics.contentDescription
-import org.totschnig.myexpenses.next.core.common.R
-import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 
 /**
  * UI models of the overview screen. They are deliberately independent of the data layer;
@@ -96,7 +96,7 @@ data class OverviewBudget(
     val progress: Float?,
     val icon: ImageVector = Icons.Default.Savings,
     /** Name of an icon of the [org.totschnig.myexpenses.next.icons.IconCatalog] shown in place of [icon] */
-    val catalogIcon: String? = null,
+    val catalogIcon: String? = null
 )
 
 /** The budgets on the overview and what can be done with them, from the feature that has them */
@@ -110,7 +110,7 @@ class OverviewBudgets(
     val onDismissInvite: () -> Unit = {},
     val onClick: (OverviewBudget) -> Unit = {},
     val onShowAll: () -> Unit = {},
-    val onAdd: () -> Unit = {},
+    val onAdd: () -> Unit = {}
 )
 
 data class OverviewAccount(
@@ -120,13 +120,10 @@ data class OverviewAccount(
     val balance: String,
     val isNegative: Boolean,
     val color: Color,
-    val bankId: Long? = null,
+    val bankId: Long? = null
 )
 
-data class OverviewSection(
-    val title: String,
-    val accounts: List<OverviewAccount>,
-)
+data class OverviewSection(val title: String, val accounts: List<OverviewAccount>)
 
 @Composable
 fun NextOverviewScreen(
@@ -141,7 +138,7 @@ fun NextOverviewScreen(
     onReorderAccounts: (List<Long>) -> Unit = {},
     bankIcon: (@Composable (Modifier, Long) -> Unit)? = null,
     /** First card, above the budgets, e.g. the balance of the current month */
-    header: (@Composable (Modifier) -> Unit)? = null,
+    header: (@Composable (Modifier) -> Unit)? = null
 ) {
     var isReordering by rememberSaveable { mutableStateOf(false) }
     BackHandler(enabled = isReordering) { isReordering = false }
@@ -216,15 +213,25 @@ fun NextOverviewScreen(
                                     onAddAccount = onAddAccount,
                                     // Once the invitation is dismissed, budgets are added from here
                                     onAddBudget =
-                                        budgets?.takeIf { it.budgets?.isEmpty() == true && it.inviteDismissed }
-                                        ?.onAdd
+                                        budgets?.takeIf {
+                                            it.budgets?.isEmpty() == true && it.inviteDismissed
+                                        }
+                                            ?.onAdd
                                 )
                             }
-                        } else null
+                        } else {
+                            null
+                        }
                     )
                 }
-                itemsIndexed(section.accounts, key = { _, account -> account.id }) { index, account ->
-                    ReorderableItem(reorderableState, key = account.id, enabled = isReordering) { isDragging ->
+                itemsIndexed(section.accounts, key = { _, account ->
+                    account.id
+                }) { index, account ->
+                    ReorderableItem(
+                        reorderableState,
+                        key = account.id,
+                        enabled = isReordering
+                    ) { isDragging ->
                         AccountItem(
                             account = account,
                             isFirst = index == 0,
@@ -234,12 +241,20 @@ fun NextOverviewScreen(
                             onClick = { onAccountClick(account) }.takeIf { !isReordering },
                             dragHandle = if (isReordering) {
                                 { DragHandle(onDragStopped = ::persistOrder) }
-                            } else null,
-                            accessibilityActions = if (isReordering) moveActions(
-                                previous = section.accounts.getOrNull(index - 1),
-                                next = section.accounts.getOrNull(index + 1),
-                                onMove = { target -> move(account.id, target.id).also { if (it) persistOrder() } }
-                            ) else emptyList(),
+                            } else {
+                                null
+                            },
+                            accessibilityActions = if (isReordering) {
+                                moveActions(
+                                    previous = section.accounts.getOrNull(index - 1),
+                                    next = section.accounts.getOrNull(index + 1),
+                                    onMove = { target ->
+                                        move(account.id, target.id).also { if (it) persistOrder() }
+                                    }
+                                )
+                            } else {
+                                emptyList()
+                            },
                             modifier = Modifier.padding(horizontal = 16.dp)
                         )
                     }
@@ -255,41 +270,54 @@ fun NextOverviewScreen(
  * the same section. Accounts can only be moved within their section, since the section follows
  * from their type.
  */
-private fun moveAccount(sections: List<OverviewSection>, fromId: Long, toId: Long): List<OverviewSection>? {
+private fun moveAccount(
+    sections: List<OverviewSection>,
+    fromId: Long,
+    toId: Long
+): List<OverviewSection>? {
     val sectionIndex = sections.indexOfFirst { section -> section.accounts.any { it.id == fromId } }
     val section = sections.getOrNull(sectionIndex) ?: return null
     val fromIndex = section.accounts.indexOfFirst { it.id == fromId }
     val toIndex = section.accounts.indexOfFirst { it.id == toId }
     if (toIndex == -1) return null
     return sections.toMutableList().apply {
-        set(sectionIndex, section.copy(accounts = section.accounts.toMutableList().apply {
-            add(toIndex, removeAt(fromIndex))
-        }))
+        set(
+            sectionIndex,
+            section.copy(
+                accounts = section.accounts.toMutableList().apply {
+                    add(toIndex, removeAt(fromIndex))
+                }
+            )
+        )
     }
 }
 
 private fun LazyListScope.budgetItem(budgets: OverviewBudgets) {
     // Nothing while loading, so that an invitation does not flash before the budgets
     val shownBudgets = budgets.budgets ?: return
-    if (shownBudgets.isNotEmpty()) item(key = "budgets") {
-        BudgetCard(
-            budgets = shownBudgets,
-            onBudgetClick = budgets.onClick,
-            onShowAll = budgets.onShowAll,
-            onAdd = budgets.onAdd,
-            summary = budgets.summary,
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
-    } else if (!budgets.inviteDismissed) item(key = "budget_invite") {
-        InviteCard(
-            icon = Icons.Default.Savings,
-            title = stringResource(R.string.next_add_budget),
-            text = stringResource(R.string.next_budget_invite_text),
-            onClick = budgets.onAdd,
-            onDismiss = budgets.onDismissInvite,
-            dismissLabel = stringResource(R.string.next_budget_invite_dismiss),
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
+    if (shownBudgets.isNotEmpty()) {
+        item(key = "budgets") {
+            BudgetCard(
+                budgets = shownBudgets,
+                onBudgetClick = budgets.onClick,
+                onShowAll = budgets.onShowAll,
+                onAdd = budgets.onAdd,
+                summary = budgets.summary,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        }
+    } else if (!budgets.inviteDismissed) {
+        item(key = "budget_invite") {
+            InviteCard(
+                icon = Icons.Default.Savings,
+                title = stringResource(R.string.next_add_budget),
+                text = stringResource(R.string.next_budget_invite_text),
+                onClick = budgets.onAdd,
+                onDismiss = budgets.onDismissInvite,
+                dismissLabel = stringResource(R.string.next_budget_invite_dismiss),
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        }
     }
 }
 
@@ -300,7 +328,7 @@ private fun AccountsActions(
     onReorderingChange: (Boolean) -> Unit,
     canReorder: Boolean,
     onAddAccount: () -> Unit,
-    onAddBudget: (() -> Unit)?,
+    onAddBudget: (() -> Unit)?
 ) {
     if (isReordering) {
         IconButton(onClick = { onReorderingChange(false) }) {
@@ -352,13 +380,13 @@ private fun ReorderableCollectionItemScope.DragHandle(onDragStopped: () -> Unit)
 private fun moveActions(
     previous: OverviewAccount?,
     next: OverviewAccount?,
-    onMove: (OverviewAccount) -> Boolean,
+    onMove: (OverviewAccount) -> Boolean
 ): List<CustomAccessibilityAction> {
     val moveUp = stringResource(org.totschnig.myexpenses.R.string.action_move_up)
     val moveDown = stringResource(org.totschnig.myexpenses.R.string.action_move_down)
     return listOfNotNull(
         previous?.let { CustomAccessibilityAction(moveUp) { onMove(it) } },
-        next?.let { CustomAccessibilityAction(moveDown) { onMove(it) } },
+        next?.let { CustomAccessibilityAction(moveDown) { onMove(it) } }
     )
 }
 
@@ -369,7 +397,7 @@ private fun BudgetCard(
     onShowAll: () -> Unit,
     onAdd: () -> Unit,
     summary: String?,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     OverviewCard(
         title = stringResource(R.string.next_budgets),
@@ -427,7 +455,7 @@ private fun BudgetTile(
     label: String?,
     onClick: () -> Unit,
     labelColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
-    circle: @Composable () -> Unit,
+    circle: @Composable () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -458,10 +486,7 @@ private fun BudgetTile(
 }
 
 @Composable
-private fun BudgetRing(
-    budget: OverviewBudget,
-    onClick: () -> Unit,
-) {
+private fun BudgetRing(budget: OverviewBudget, onClick: () -> Unit) {
     val colors = LocalSemanticColors.current
     val progress = budget.progress
     val ringColor = when {
@@ -475,7 +500,11 @@ private fun BudgetRing(
     BudgetTile(
         label = budget.title,
         labelColor =
-            if (progress != null && progress > 1f) colors.expense else MaterialTheme.colorScheme.onSurfaceVariant,
+            if (progress != null && progress > 1f) {
+                colors.expense
+            } else {
+                MaterialTheme.colorScheme.onSurfaceVariant
+            },
         onClick = onClick
     ) {
         Box(
@@ -489,7 +518,12 @@ private fun BudgetRing(
                 val topLeft = Offset(inset, inset)
                 drawArc(trackColor, 0f, 360f, false, topLeft, arcSize, style = Stroke(stroke))
                 drawArc(
-                    ringColor, -90f, 360f * (progress ?: 0f).coerceIn(0f, 1f), false, topLeft, arcSize,
+                    ringColor,
+                    -90f,
+                    360f * (progress ?: 0f).coerceIn(0f, 1f),
+                    false,
+                    topLeft,
+                    arcSize,
                     style = Stroke(stroke, cap = StrokeCap.Round)
                 )
             }
@@ -499,12 +533,14 @@ private fun BudgetRing(
                     budget.catalogIcon,
                     Modifier.semantics { description?.let { contentDescription = it } }
                 )
-            } else Icon(
-                budget.icon,
-                contentDescription = description,
-                modifier = Modifier.size(24.dp),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            } else {
+                Icon(
+                    budget.icon,
+                    contentDescription = description,
+                    modifier = Modifier.size(24.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         }
     }
 }
@@ -519,7 +555,7 @@ private fun AccountItem(
     onClick: (() -> Unit)?,
     dragHandle: (@Composable () -> Unit)?,
     accessibilityActions: List<CustomAccessibilityAction>,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     // Each account is a separate list item so that it can be dragged. Together they look like
     // one card: only the outer corners are rounded, and dividers separate the rows.
@@ -537,7 +573,7 @@ private fun AccountRow(
     account: OverviewAccount,
     bankIcon: (@Composable (Modifier, Long) -> Unit)?,
     onClick: (() -> Unit)?,
-    dragHandle: (@Composable () -> Unit)?,
+    dragHandle: (@Composable () -> Unit)?
 ) {
     Row(
         modifier = Modifier
@@ -577,7 +613,11 @@ private fun AccountRow(
         Text(
             text = account.balance,
             style = MaterialTheme.typography.bodyLarge,
-            color = if (account.isNegative) MaterialTheme.colorScheme.onSurface else LocalSemanticColors.current.income,
+            color = if (account.isNegative) {
+                MaterialTheme.colorScheme.onSurface
+            } else {
+                LocalSemanticColors.current.income
+            },
             modifier = Modifier.padding(start = 8.dp)
         )
         if (dragHandle != null) {
@@ -596,22 +636,24 @@ private val previewBudgets = listOf(
     OverviewBudget("1", "Lebensmittel", 0.8f),
     OverviewBudget("2", "Freizeit", 0.3f),
     OverviewBudget("3", "Urlaub", 0.55f),
-    OverviewBudget("4", "Haushalt", 1.1f),
+    OverviewBudget("4", "Haushalt", 1.1f)
 )
 
 private val previewSections = listOf(
     OverviewSection(
-        "Tägliche Konten", listOf(
+        "Tägliche Konten",
+        listOf(
             OverviewAccount(1, "Girokonto", "3.205,99 €", false, Color(0xFFE53935)),
             OverviewAccount(2, "Kreditkarte", "-256,36 €", true, Color(0xFF1E88E5)),
-            OverviewAccount(3, "PayPal", "32,11 €", false, Color(0xFF283593)),
+            OverviewAccount(3, "PayPal", "32,11 €", false, Color(0xFF283593))
         )
     ),
     OverviewSection(
-        "Investments", listOf(
-            OverviewAccount(4, "Direkt Depot", "12.187,22 €", false, Color(0xFFFB8C00)),
+        "Investments",
+        listOf(
+            OverviewAccount(4, "Direkt Depot", "12.187,22 €", false, Color(0xFFFB8C00))
         )
-    ),
+    )
 )
 
 @Preview(name = "Light", heightDp = 640)

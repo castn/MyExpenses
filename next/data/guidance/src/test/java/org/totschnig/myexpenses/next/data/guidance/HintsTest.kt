@@ -1,32 +1,42 @@
 package org.totschnig.myexpenses.next.data.guidance
 
+import java.time.LocalDate
 import kotlinx.coroutines.flow.first
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
-import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.core.common.withTestDataStore
-import java.time.LocalDate
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 
 class HintsTest {
 
-    private fun purchase(categoryId: Long? = 1, payee: String? = "REWE Markt", amount: Long = -2500) =
-        LedgerTransaction(
-            1,
-            LocalDate.of(2026, 10, 15),
-            amount,
-            accountId = 1,
-            payeeName = payee,
-            categoryId = categoryId
-        )
+    private fun purchase(
+        categoryId: Long? = 1,
+        payee: String? = "REWE Markt",
+        amount: Long = -2500
+    ) = LedgerTransaction(
+        1,
+        LocalDate.of(2026, 10, 15),
+        amount,
+        accountId = 1,
+        payeeName = payee,
+        categoryId = categoryId
+    )
 
     @Test
     fun afterSavingACategoryComesFirst() {
-        assertEquals(HintTopic.CATEGORY, hintAfterSave(purchase(categoryId = null), hasReceipt = false, emptySet()))
+        assertEquals(
+            HintTopic.CATEGORY,
+            hintAfterSave(purchase(categoryId = null), hasReceipt = false, emptySet())
+        )
         assertEquals(HintTopic.RECEIPT, hintAfterSave(purchase(), hasReceipt = false, emptySet()))
         assertEquals(
             HintTopic.RECEIPT,
-            hintAfterSave(purchase(categoryId = null), hasReceipt = false, setOf(HintTopic.CATEGORY))
+            hintAfterSave(
+                purchase(categoryId = null),
+                hasReceipt = false,
+                setOf(HintTopic.CATEGORY)
+            )
         )
     }
 
@@ -46,12 +56,30 @@ class HintsTest {
     fun noHintAfterSavingWhatNeedsNone() {
         assertNull(hintAfterSave(purchase(), hasReceipt = true, emptySet()))
         assertNull(hintAfterSave(purchase(payee = "Bäckerei"), hasReceipt = false, emptySet()))
-        assertNull(hintAfterSave(purchase(categoryId = null, amount = 2500), hasReceipt = false, emptySet()))
         assertNull(
-            hintAfterSave(purchase(categoryId = null).copy(transferAccountId = 2), hasReceipt = false, emptySet())
+            hintAfterSave(
+                purchase(categoryId = null, amount = 2500),
+                hasReceipt = false,
+                emptySet()
+            )
         )
-        assertNull(hintAfterSave(purchase(categoryId = null), hasReceipt = false, HintTopic.entries.toSet()))
-        assertNull(hintAfterSave(purchase(), hasReceipt = false, emptySet(), canScanReceipts = false))
+        assertNull(
+            hintAfterSave(
+                purchase(categoryId = null).copy(transferAccountId = 2),
+                hasReceipt = false,
+                emptySet()
+            )
+        )
+        assertNull(
+            hintAfterSave(
+                purchase(categoryId = null),
+                hasReceipt = false,
+                HintTopic.entries.toSet()
+            )
+        )
+        assertNull(
+            hintAfterSave(purchase(), hasReceipt = false, emptySet(), canScanReceipts = false)
+        )
     }
 
     private fun readiness(uncategorized: Int, unscanned: Int) = DataReadiness(
@@ -71,7 +99,10 @@ class HintsTest {
     fun overviewTellsAboutTheFirstGapNotClosed() {
         val readiness = readiness(uncategorized = 20, unscanned = 5)
         assertEquals(DataGap.Uncategorized::class, overviewHint(readiness, emptySet())!!::class)
-        assertEquals(DataGap.FewReceipts::class, overviewHint(readiness, setOf(HintTopic.CATEGORY))!!::class)
+        assertEquals(
+            DataGap.FewReceipts::class,
+            overviewHint(readiness, setOf(HintTopic.CATEGORY))!!::class
+        )
         assertNull(overviewHint(readiness, HintTopic.entries.toSet()))
         // Neither tags nor receipts without a purchase to scan have a hint
         assertNull(overviewHint(readiness(uncategorized = 0, unscanned = 0), emptySet()))

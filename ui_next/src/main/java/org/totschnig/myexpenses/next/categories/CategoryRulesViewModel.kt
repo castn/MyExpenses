@@ -23,7 +23,7 @@ class CategoryRulesViewModel(
     private val categoryStore: CategoryStore,
     private val repository: Repository,
     /** Where the database is read */
-    private val io: CoroutineDispatcher = Dispatchers.IO,
+    private val io: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     val rules: StateFlow<List<RuleItem>?> = categoryStore.decisions
@@ -32,10 +32,23 @@ class CategoryRulesViewModel(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     private fun CategoryRule.toItem() = RuleItem(
-        counterpart = (payeeIds.mapNotNull { repository.getPartyName(it) } + merchants).joinToString(", "),
+        counterpart = (
+            payeeIds.mapNotNull {
+                repository.getPartyName(it)
+            } + merchants
+            ).joinToString(", "),
         target = repository.getCategoryInfoList(categoryId)?.joinToString(
             DEFAULT_CATEGORY_PATH_SEPARATOR
         ) { it.label }.orEmpty(),
-        remove = { viewModelScope.launch { categoryStore.update { it.copy(rules = it.rules - this@toItem) } } }
+        remove = {
+            viewModelScope.launch {
+                categoryStore.update {
+                    it.copy(
+                        rules =
+                            it.rules - this@toItem
+                    )
+                }
+            }
+        }
     )
 }

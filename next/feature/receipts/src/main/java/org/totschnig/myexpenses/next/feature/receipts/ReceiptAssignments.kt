@@ -35,7 +35,7 @@ data class ReceiptAssignment(
     val itemCount: Int?,
     val waitingId: Long?,
     val candidates: List<ReceiptMatch>,
-    val leftoverRows: List<LeftoverRow> = emptyList(),
+    val leftoverRows: List<LeftoverRow> = emptyList()
 ) {
     val preselected: ReceiptMatch?
         get() = ReceiptMatcher.sure(candidates)
@@ -51,7 +51,11 @@ data class ReceiptAssignment(
  * @param amount negative, as it is an expense
  * @param payee the one of the latest expense at the shop of the receipt, if any
  */
-data class NewTransactionPrefill(val amount: BigDecimal, val date: LocalDate?, val payee: PrefillPayee?)
+data class NewTransactionPrefill(
+    val amount: BigDecimal,
+    val date: LocalDate?,
+    val payee: PrefillPayee?
+)
 
 data class PrefillPayee(val id: Long, val name: String)
 
@@ -70,7 +74,7 @@ class ReceiptAssignments(
     private val scope: CoroutineScope,
     private val io: CoroutineDispatcher,
     private val openDraft: (ReceiptDraft, payee: String?) -> Unit,
-    private val onFailed: (ReceiptTarget) -> Unit,
+    private val onFailed: (ReceiptTarget) -> Unit
 ) {
     private val _assignment = MutableStateFlow<ReceiptAssignment?>(null)
 
@@ -94,13 +98,22 @@ class ReceiptAssignments(
         withContext(io) {
             database.loadWaiting()
                 .map { (id, receipt) -> ReceiptAssignment(receipt, null, id, candidates(receipt)) }
-                .sortedBy { if (it.preselected != null) 0 else if (it.candidates.isNotEmpty()) 1 else 2 }
+                .sortedBy {
+                    if (it.preselected != null) {
+                        0
+                    } else if (it.candidates.isNotEmpty()) {
+                        1
+                    } else {
+                        2
+                    }
+                }
         }
     }
 
     /** Shows a new scan for choosing its transaction; call it on [io], it reads the candidates */
     fun showScan(receipt: Receipt, itemCount: Int?, leftoverRows: List<LeftoverRow>) {
-        _assignment.value = ReceiptAssignment(receipt, itemCount, null, candidates(receipt), leftoverRows)
+        _assignment.value =
+            ReceiptAssignment(receipt, itemCount, null, candidates(receipt), leftoverRows)
     }
 
     /** Opens a waiting receipt for choosing its transaction */
@@ -127,7 +140,8 @@ class ReceiptAssignments(
 
     /** Expenses around the date of the receipt that may be its transaction, best first */
     private fun candidates(receipt: Receipt): List<ReceiptMatch> {
-        val header = ReceiptHeader(receipt.merchant, receipt.date, receipt.total, receipt.cardAmount)
+        val header =
+            ReceiptHeader(receipt.merchant, receipt.date, receipt.total, receipt.cardAmount)
         val today = LocalDate.now()
         val from = header.date?.minusDays(1) ?: today.minusDays(ReceiptMatcher.DAYS_WITHOUT_DATE)
         val to = (header.date?.plusDays(ReceiptMatcher.MAX_DAYS_AFTER) ?: today).plusDays(1)
@@ -152,8 +166,12 @@ class ReceiptAssignments(
             }
         } else {
             val draft = ReceiptDraft.of(
-                ReceiptTarget.Transaction(transaction.id), -transaction.amount, assignment.receipt,
-                isNewPhoto = true, assignment.itemCount, assignment.leftoverRows
+                ReceiptTarget.Transaction(transaction.id),
+                -transaction.amount,
+                assignment.receipt,
+                isNewPhoto = true,
+                assignment.itemCount,
+                assignment.leftoverRows
             ).copy(isStandalone = true)
             standaloneCurrency = transaction.currency ?: homeCurrency.value
             scope.launch(io) { openDraft(draft, transaction.payeeName) }
@@ -166,8 +184,12 @@ class ReceiptAssignments(
         close()
         if (assignment.waitingId != null) return
         val draft = ReceiptDraft.of(
-            ReceiptTarget.Waiting(null), assignment.receiptAmount, assignment.receipt,
-            isNewPhoto = true, assignment.itemCount, assignment.leftoverRows
+            ReceiptTarget.Waiting(null),
+            assignment.receiptAmount,
+            assignment.receipt,
+            isNewPhoto = true,
+            assignment.itemCount,
+            assignment.leftoverRows
         ).copy(isStandalone = true)
         standaloneCurrency = homeCurrency.value
         scope.launch(io) { openDraft(draft, null) }
@@ -190,7 +212,11 @@ class ReceiptAssignments(
                     ?.let { PrefillPayee(it.payeeId!!, it.payeeName.orEmpty()) }
             }
         }
-        return NewTransactionPrefill(BigDecimal.valueOf(-amount, currency.fractionDigits), receipt.date, payee)
+        return NewTransactionPrefill(
+            BigDecimal.valueOf(-amount, currency.fractionDigits),
+            receipt.date,
+            payee
+        )
     }
 
     /** After a transaction was created for the receipt, it is among the candidates */
@@ -214,7 +240,9 @@ class ReceiptAssignments(
     fun loadOtherExpenses() {
         val assignment = _assignment.value ?: return
         scope.launch(io) {
-            val end = (assignment.receipt.date ?: LocalDate.now()).plusDays(ReceiptMatcher.MAX_DAYS_AFTER + 1)
+            val end = (assignment.receipt.date ?: LocalDate.now()).plusDays(
+                ReceiptMatcher.MAX_DAYS_AFTER + 1
+            )
             _otherExpenses.value = database.loadExpenses(end.minusDays(OTHER_EXPENSES_DAYS), end)
                 .filter { !it.isTransfer && !it.hasReceipt }
         }

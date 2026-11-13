@@ -1,5 +1,6 @@
 package org.totschnig.myexpenses.next.search
 
+import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -14,7 +15,6 @@ import org.totschnig.myexpenses.provider.filter.NotCriterion
 import org.totschnig.myexpenses.provider.filter.OrCriterion
 import org.totschnig.myexpenses.provider.filter.PayeeCriterion
 import org.totschnig.myexpenses.provider.filter.SearchTextCriterion
-import java.time.LocalDate
 
 class SearchFilterTest {
 
@@ -31,9 +31,14 @@ class SearchFilterTest {
 
     @Test
     fun readsSingleAndJoinedCriteria() {
-        assertEquals(SearchPart(groceries), (SearchFilter.of(groceries) as SearchFilter.Simple)[SearchKind.Category])
+        assertEquals(
+            SearchPart(groceries),
+            (SearchFilter.of(groceries) as SearchFilter.Simple)[SearchKind.Category]
+        )
 
-        val filter = SearchFilter.of(AndCriterion(setOf(rewe, NotCriterion(groceries)))) as SearchFilter.Simple
+        val filter = SearchFilter.of(
+            AndCriterion(setOf(rewe, NotCriterion(groceries)))
+        ) as SearchFilter.Simple
         assertEquals(SearchPart(rewe), filter[SearchKind.Payee])
         assertEquals(SearchPart(groceries, excluded = true), filter[SearchKind.Category])
     }
@@ -51,7 +56,10 @@ class SearchFilterTest {
             .with(SearchKind.Payee, SearchPart(rewe))
             .with(SearchKind.Period, SearchPart(october))
         assertEquals(listOf(SearchKind.Period, SearchKind.Payee), filter.parts.keys.toList())
-        assertEquals(listOf(october, rewe), (filter.toCriterion() as AndCriterion).criteria.toList())
+        assertEquals(
+            listOf(october, rewe),
+            (filter.toCriterion() as AndCriterion).criteria.toList()
+        )
     }
 
     @Test
@@ -77,7 +85,8 @@ class SearchFilterTest {
         val twice = AndCriterion(setOf(CommentCriterion("a"), CommentCriterion("b")))
         assertEquals(SearchFilter.Advanced(twice), SearchFilter.of(twice))
 
-        val nested = AndCriterion(setOf(rewe, NotCriterion(AndCriterion(setOf(groceries, october)))))
+        val nested =
+            AndCriterion(setOf(rewe, NotCriterion(AndCriterion(setOf(groceries, october)))))
         assertEquals(SearchFilter.Advanced(nested), SearchFilter.of(nested))
     }
 
@@ -85,8 +94,13 @@ class SearchFilterTest {
     fun readsAllKinds() {
         val status = CrStatusCriterion(listOf(CrStatus.CLEARED))
         val text = SearchTextCriterion("Rewe")
-        val filter = SearchFilter.of(AndCriterion(setOf(status, CommentCriterion("x"), text))) as SearchFilter.Simple
-        assertEquals(listOf(SearchKind.Text, SearchKind.Status, SearchKind.Comment), filter.parts.keys.toList())
+        val filter = SearchFilter.of(
+            AndCriterion(setOf(status, CommentCriterion("x"), text))
+        ) as SearchFilter.Simple
+        assertEquals(
+            listOf(SearchKind.Text, SearchKind.Status, SearchKind.Comment),
+            filter.parts.keys.toList()
+        )
     }
 
     @Test

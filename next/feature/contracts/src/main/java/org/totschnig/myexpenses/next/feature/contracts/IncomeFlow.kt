@@ -11,7 +11,11 @@ import org.totschnig.myexpenses.next.data.contracts.contractTransactions
  * so that it does not depend on the screens of the contracts
  */
 @Composable
-fun IncomeFlow(viewModel: ContractsViewModel, fixedTransactions: FixedTransactions, onBack: () -> Unit) {
+fun IncomeFlow(
+    viewModel: ContractsViewModel,
+    fixedTransactions: FixedTransactions,
+    onBack: () -> Unit
+) {
     NextContractsScreen(
         state = viewModel.incomeState.collectAsStateWithLifecycle().value,
         currency = viewModel.homeCurrency.collectAsStateWithLifecycle().value,

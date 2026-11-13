@@ -14,7 +14,9 @@ class CategoryDecisionsTest {
 
     @Test
     fun certainForNewTransactionsAreApplied() {
-        val plan = CategoryDecisions(firstNewId = 100).plan(listOf(certain(99), certain(100), uncertain(101)))
+        val plan = CategoryDecisions(
+            firstNewId = 100
+        ).plan(listOf(certain(99), certain(100), uncertain(101)))
         assertEquals(listOf(certain(100)), plan.apply)
         assertEquals(listOf(certain(99)), plan.backlog)
         assertEquals(setOf(99L, 101L), plan.suggestions.keys)
@@ -29,7 +31,10 @@ class CategoryDecisionsTest {
 
     @Test
     fun answeredBacklogIsNotAskedAgain() {
-        val plan = CategoryDecisions(firstNewId = 100, backlogAnswered = true).plan(listOf(certain(99)))
+        val plan = CategoryDecisions(
+            firstNewId = 100,
+            backlogAnswered = true
+        ).plan(listOf(certain(99)))
         assertTrue(plan.backlog.isEmpty())
         // Still suggested in the details
         assertEquals(certain(99), plan.suggestions[99])
@@ -37,7 +42,8 @@ class CategoryDecisionsTest {
 
     @Test
     fun rejectedSuggestionIsDropped() {
-        val decisions = CategoryDecisions(firstNewId = 100, rejected = mapOf(100L to 1L, 101L to 1L))
+        val decisions =
+            CategoryDecisions(firstNewId = 100, rejected = mapOf(100L to 1L, 101L to 1L))
         val plan = decisions.plan(listOf(certain(100), uncertain(101), uncertain(102)))
         assertTrue(plan.apply.isEmpty())
         assertEquals(setOf(102L), plan.suggestions.keys)
@@ -46,7 +52,10 @@ class CategoryDecisionsTest {
     @Test
     fun anotherCategoryThanTheRejectedOneIsSuggested() {
         val plan =
-            CategoryDecisions(firstNewId = 100, rejected = mapOf(100L to 1L)).plan(listOf(certain(100, categoryId = 2)))
+            CategoryDecisions(
+                firstNewId = 100,
+                rejected = mapOf(100L to 1L)
+            ).plan(listOf(certain(100, categoryId = 2)))
         assertEquals(listOf(certain(100, categoryId = 2)), plan.apply)
     }
 

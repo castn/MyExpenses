@@ -1,6 +1,5 @@
 package org.totschnig.myexpenses.next.data.contracts
 
-
 /**
  * Decisions of the user about detected contracts.
  *
@@ -21,7 +20,7 @@ data class ContractSettings(
     val customAreas: List<CustomArea> = emptyList(),
     val salary: SalaryChoice = SalaryChoice.Automatic,
     val rules: List<ContractRule> = emptyList(),
-    val rulesMigrated: Boolean = false,
+    val rulesMigrated: Boolean = false
 ) {
     fun areaChoice(signature: String) = areaChoiceOf(areas[signature])
 
@@ -32,7 +31,9 @@ data class ContractSettings(
         if (key == null) return AreaChoice.Automatic
         if (key == AREA_NONE) return AreaChoice.Fixed(null)
         // A deleted custom category falls back to the suggestion
-        val area = BuiltInArea.fromKey(key) ?: customAreas.find { it.key == key } ?: return AreaChoice.Automatic
+        val area =
+            BuiltInArea.fromKey(key) ?: customAreas.find { it.key == key }
+                ?: return AreaChoice.Automatic
         return AreaChoice.Fixed(area)
     }
 
@@ -61,7 +62,7 @@ data class ContractsOverview(
     /** Marked as cancelled by the user, last cancelled first. They do not count in any sums. */
     val cancelled: List<Contract> = emptyList(),
     val customAreas: List<CustomArea> = emptyList(),
-    val salaryChoice: SalaryChoice = SalaryChoice.Automatic,
+    val salaryChoice: SalaryChoice = SalaryChoice.Automatic
 ) {
     /** The regular incomes that are salaries, highest first, see [SalaryChoice] */
     val salaries: List<Contract> get() = active.salaries(salaryChoice)
@@ -69,15 +70,16 @@ data class ContractsOverview(
     fun isSalary(contract: Contract) = salaries.any { it.signature == contract.signature }
 
     val isEmpty: Boolean
-        get() = active.isEmpty() && ended.isEmpty() && dismissed.isEmpty() && suggestions.isEmpty() &&
-                cancelled.isEmpty()
+        get() = active.isEmpty() && ended.isEmpty() && dismissed.isEmpty() &&
+            suggestions.isEmpty() && cancelled.isEmpty()
 
     /**
      * Categories that get a tab: built-in ones only if they contain contracts,
      * custom ones always, so that a new category can be filled.
      */
     val areas: List<ContractArea>
-        get() = BuiltInArea.entries.filter { area -> (active + ended).any { it.area == area } } + customAreas
+        get() = BuiltInArea.entries.filter { area -> (active + ended).any { it.area == area } } +
+            customAreas
 
     /** All categories a contract can be put into */
     val selectableAreas: List<ContractArea> get() = BuiltInArea.entries + customAreas
@@ -102,7 +104,7 @@ data class ContractsOverview(
 fun buildContractsState(
     contracts: List<Contract>,
     settings: ContractSettings,
-    dismissed: List<Contract> = emptyList(),
+    dismissed: List<Contract> = emptyList()
 ): ContractsOverview {
     val rules = settings.rules.associateBy { it.key }
     fun Contract.withDecisions() = rules[signature]?.let { rule ->
@@ -121,7 +123,11 @@ fun buildContractsState(
         active = active.sortedByDescending { it.monthlyAmount },
         cancelled = cancelled.sortedByDescending { it.cancelledOn },
         ended = ended.sortedByDescending { it.lastDate },
-        dismissed = (dismissedBefore + dismissed.map { it.withDecisions() }).sortedBy { it.displayName.lowercase() },
+        dismissed = (
+            dismissedBefore + dismissed.map {
+                it.withDecisions()
+            }
+            ).sortedBy { it.displayName.lowercase() },
         customAreas = settings.customAreas,
         salaryChoice = settings.salary
     )

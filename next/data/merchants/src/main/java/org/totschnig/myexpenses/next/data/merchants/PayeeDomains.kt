@@ -4,17 +4,20 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import java.net.IDN
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import org.json.JSONException
 import org.json.JSONObject
-import java.net.IDN
 
 /**
  * A text per payee, kept as JSON object by id in the data store, which is part of the backup
  */
-open class PayeeTextStore(private val dataStore: DataStore<Preferences>, private val key: Preferences.Key<String>) {
+open class PayeeTextStore(
+    private val dataStore: DataStore<Preferences>,
+    private val key: Preferences.Key<String>
+) {
 
     /** Text by payee id */
     val values: Flow<Map<Long, String>> =
@@ -31,7 +34,12 @@ open class PayeeTextStore(private val dataStore: DataStore<Preferences>, private
 
     private fun parse(json: String?): Map<Long, String> = try {
         json?.let(::JSONObject)?.let { obj ->
-            obj.keys().asSequence().mapNotNull { key -> key.toLongOrNull()?.let { it to obj.getString(key) } }.toMap()
+            obj.keys().asSequence().mapNotNull { key ->
+                key.toLongOrNull()?.let {
+                    it to
+                        obj.getString(key)
+                }
+            }.toMap()
         } ?: emptyMap()
     } catch (_: JSONException) {
         emptyMap()
@@ -97,25 +105,37 @@ fun payeeLooks(
     payees: List<RawPayee>,
     entered: Map<Long, String>,
     icons: Map<Long, String>,
-    withCatalog: Boolean,
+    withCatalog: Boolean
 ): Map<Long, PayeeLook> {
     val merchants = Merchants.ofPayees(payees)
-    fun chosen(id: Long): PayeeLook? = icons[id]?.let(PayeeLook::Icon) ?: entered[id]?.let(PayeeLook::Domain)
-    fun ofMerchant(merchant: Merchant): PayeeLook? =
-        if (withCatalog) PayeeLook.Domain(merchant.domain) else MerchantIcons.of(merchant)?.let(PayeeLook::Icon)
+    fun chosen(id: Long): PayeeLook? =
+        icons[id]?.let(PayeeLook::Icon) ?: entered[id]?.let(PayeeLook::Domain)
+    fun ofMerchant(merchant: Merchant): PayeeLook? = if (withCatalog) {
+        PayeeLook.Domain(
+            merchant.domain
+        )
+    } else {
+        MerchantIcons.of(merchant)?.let(PayeeLook::Icon)
+    }
     return buildMap {
         payees.forEach { payee ->
-            (chosen(payee.id) ?: payee.parentId?.let(::chosen) ?: merchants[payee.id]?.let(::ofMerchant))
+            (
+                chosen(payee.id) ?: payee.parentId?.let(::chosen)
+                    ?: merchants[payee.id]?.let(::ofMerchant)
+                )
                 ?.let { put(payee.id, it) }
         }
     }
 }
 
 /** The domains of [payeeLooks] without icons */
-fun payeeDomains(payees: List<RawPayee>, entered: Map<Long, String>, withCatalog: Boolean): Map<Long, String> =
-    payeeLooks(
-        payees,
-        entered,
-        emptyMap(),
-        withCatalog
-    ).mapNotNull { (id, look) -> (look as? PayeeLook.Domain)?.let { id to it.domain } }.toMap()
+fun payeeDomains(
+    payees: List<RawPayee>,
+    entered: Map<Long, String>,
+    withCatalog: Boolean
+): Map<Long, String> = payeeLooks(
+    payees,
+    entered,
+    emptyMap(),
+    withCatalog
+).mapNotNull { (id, look) -> (look as? PayeeLook.Domain)?.let { id to it.domain } }.toMap()

@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.totschnig.myexpenses.next.core.common.stateWhileShown
 import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
-import org.totschnig.myexpenses.next.core.common.stateWhileShown
 import org.totschnig.myexpenses.next.data.tips.SavingTip
 import org.totschnig.myexpenses.next.data.tips.SavingTipsOverview
 import org.totschnig.myexpenses.next.data.tips.SavingTipsRepository

@@ -28,11 +28,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -41,14 +40,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.totschnig.myexpenses.designsystem.BadgedTopBarAction
 import org.totschnig.myexpenses.designsystem.EmptyState
 import org.totschnig.myexpenses.designsystem.HighlightCard
 import org.totschnig.myexpenses.designsystem.PageTopBar
+import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
-import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
 import org.totschnig.myexpenses.next.data.contracts.Contract
 import org.totschnig.myexpenses.next.data.contracts.ContractArea
 import org.totschnig.myexpenses.next.data.contracts.ContractNews
@@ -74,7 +74,7 @@ internal fun ContractList(
     onOpenNews: (() -> Unit)?,
     /** Opens the suggestions of [state] to decide on them */
     onOpenSuggestions: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val contractsWithNews = news.mapTo(HashSet()) { it.contractKey }
     // Contracts are only removed from the list of all contracts, where the user has the full picture
@@ -100,9 +100,13 @@ internal fun ContractList(
     Column(modifier.fillMaxSize()) {
         // News and suggestions are counted on icons of the toolbar, each opens a page of its own
         val openNews = onOpenNews.takeIf { area == null && !isEditing }
-        val openSuggestions = onOpenSuggestions.takeIf { state.suggestions.isNotEmpty() && !isEditing }
+        val openSuggestions = onOpenSuggestions.takeIf {
+            state.suggestions.isNotEmpty() && !isEditing
+        }
         // Toolbar only if it has something to offer
-        val hasToolbar = area is CustomArea || canEdit && !state.isEmpty || openNews != null || openSuggestions != null
+        val hasToolbar =
+            area is CustomArea || (canEdit && !state.isEmpty) || openNews != null ||
+                openSuggestions != null
         if (hasToolbar) {
             ListToolbar(
                 area = area as? CustomArea,
@@ -118,25 +122,32 @@ internal fun ContractList(
 
         // All contracts removed: nothing to show outside of the edit mode
         if (
-            state.isEmpty || !isEditing &&
-                state.active.isEmpty() &&
-                state.ended.isEmpty() &&
-                state.suggestions.isEmpty() &&
-            state.cancelled.isEmpty()
+            state.isEmpty ||
+            (
+                !isEditing && state.active.isEmpty() &&
+                    state.ended.isEmpty() && state.suggestions.isEmpty() &&
+                    state.cancelled.isEmpty()
+                )
         ) {
             ContractsEmptyState(isArea, Modifier.weight(1f), isIncome)
             return@Column
         }
 
         val dismissLabel =
-            stringResource(if (isIncome) R.string.next_income_dismiss else R.string.next_contracts_dismiss)
+            stringResource(
+                if (isIncome) R.string.next_income_dismiss else R.string.next_contracts_dismiss
+            )
         val confirmLabel =
-            stringResource(if (isIncome) R.string.next_income_confirm else R.string.next_contracts_confirm)
+            stringResource(
+                if (isIncome) R.string.next_income_confirm else R.string.next_contracts_confirm
+            )
         val restoreLabel = stringResource(R.string.next_contracts_restore)
         val renameLabel = stringResource(R.string.next_contracts_rename)
 
         fun LazyListScope.section(contracts: List<Contract>, isDismissed: Boolean) {
-            itemsIndexed(contracts, key = { _, contract -> contract.signature }) { index, contract ->
+            itemsIndexed(contracts, key = { _, contract ->
+                contract.signature
+            }) { index, contract ->
                 ContractItem(
                     contract = contract,
                     currency = currency,
@@ -148,21 +159,40 @@ internal fun ContractList(
                         { onOpen(contract) }
                     },
                     editAction = if (isEditing) {
-                        if (isDismissed) EditAction(Icons.Default.Restore, restoreLabel) { actions.restore(contract) }
-                        else EditAction(Icons.Default.RemoveCircleOutline, dismissLabel) { actions.dismiss(contract) }
-                    } else null,
+                        if (isDismissed) {
+                            EditAction(Icons.Default.Restore, restoreLabel) {
+                                actions.restore(contract)
+                            }
+                        } else {
+                            EditAction(Icons.Default.RemoveCircleOutline, dismissLabel) {
+                                actions.dismiss(contract)
+                            }
+                        }
+                    } else {
+                        null
+                    },
                     // Tapping the row renames it in edit mode, the action is announced as well
-                    accessibilityActions = if (isEditing) listOf(
-                        CustomAccessibilityAction(renameLabel) { renaming = contract.signature; true }
-                    ) else emptyList(),
+                    accessibilityActions = if (isEditing) {
+                        listOf(
+                            CustomAccessibilityAction(renameLabel) {
+                                renaming = contract.signature
+                                true
+                            }
+                        )
+                    } else {
+                        emptyList()
+                    },
                     isFaded = isDismissed || !contract.isActive,
                     hasNews = contract.signature in contractsWithNews,
                     badge = when {
                         isIncome -> stringResource(R.string.next_salary)
                             .takeIf { state.isSalary(contract) }
+
                         contract.isReserve -> stringResource(R.string.next_reserve)
+
                         // Within the tab of a category, it goes without saying
                         area == null -> contract.area?.label()
+
                         else -> null
                     }
                 )
@@ -172,7 +202,12 @@ internal fun ContractList(
         LazyColumn(
             modifier = Modifier.weight(1f),
             contentPadding =
-                PaddingValues(start = 16.dp, end = 16.dp, top = if (hasToolbar) 0.dp else 16.dp, bottom = 16.dp)
+                PaddingValues(
+                    start = 16.dp,
+                    end = 16.dp,
+                    top = if (hasToolbar) 0.dp else 16.dp,
+                    bottom = 16.dp
+                )
         ) {
             if (state.active.isNotEmpty()) {
                 item(key = "summary") {
@@ -182,7 +217,9 @@ internal fun ContractList(
                         count = state.active.size,
                         currency = currency,
                         isIncome = isIncome,
-                        reservesMonthlyAmount = state.active.filter { it.isReserve }.sumOf { it.monthlyAmount }
+                        reservesMonthlyAmount = state.active.filter {
+                            it.isReserve
+                        }.sumOf { it.monthlyAmount }
                     )
                 }
             }
@@ -201,7 +238,11 @@ internal fun ContractList(
                 item(key = "header_cancelled") {
                     SectionHeader(
                         title = stringResource(
-                            if (isIncome) R.string.next_income_cancelled else R.string.next_contracts_cancelled
+                            if (isIncome) {
+                                R.string.next_income_cancelled
+                            } else {
+                                R.string.next_contracts_cancelled
+                            }
                         ),
                         count = state.cancelled.size,
                         total = null,
@@ -254,7 +295,7 @@ private fun ListToolbar(
     unreadNews: Int,
     onOpenNews: (() -> Unit)?,
     suggestions: Int,
-    onOpenSuggestions: (() -> Unit)?,
+    onOpenSuggestions: (() -> Unit)?
 ) {
     Row(
         modifier = Modifier
@@ -266,8 +307,15 @@ private fun ListToolbar(
             val title = stringResource(R.string.next_news)
             BadgedTopBarAction(
                 Icons.Outlined.Notifications,
-                contentDescription = if (unreadNews == 0) title
-                else "$title, ${pluralStringResource(R.plurals.next_news_unread_count, unreadNews, unreadNews)}",
+                contentDescription = if (unreadNews == 0) {
+                    title
+                } else {
+                    "$title, ${pluralStringResource(
+                        R.plurals.next_news_unread_count,
+                        unreadNews,
+                        unreadNews
+                    )}"
+                },
                 count = unreadNews,
                 onClick = onOpenNews
             )
@@ -276,7 +324,11 @@ private fun ListToolbar(
             BadgedTopBarAction(
                 Icons.Outlined.Lightbulb,
                 contentDescription = "${stringResource(R.string.next_contracts_suggestions)}, " +
-                        pluralStringResource(R.plurals.next_contracts_suggestions_count, suggestions, suggestions),
+                    pluralStringResource(
+                        R.plurals.next_contracts_suggestions_count,
+                        suggestions,
+                        suggestions
+                    ),
                 count = suggestions,
                 onClick = onOpenSuggestions,
                 isAlert = false
@@ -285,26 +337,32 @@ private fun ListToolbar(
         if (area != null) {
             EditAreaButton(area, actions::renameArea, actions::deleteArea)
         }
-        if (onToggleEditing != null) IconButton(onClick = onToggleEditing) {
-            if (isEditing) {
-                Icon(
-                    Icons.Default.Check,
-                    contentDescription = stringResource(R.string.next_done),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            } else {
-                Icon(
-                    Icons.AutoMirrored.Filled.List,
-                    contentDescription = stringResource(R.string.next_contracts_edit),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+        if (onToggleEditing != null) {
+            IconButton(onClick = onToggleEditing) {
+                if (isEditing) {
+                    Icon(
+                        Icons.Default.Check,
+                        contentDescription = stringResource(R.string.next_done),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                } else {
+                    Icon(
+                        Icons.AutoMirrored.Filled.List,
+                        contentDescription = stringResource(R.string.next_contracts_edit),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-private fun ContractsEmptyState(isArea: Boolean, modifier: Modifier = Modifier, isIncome: Boolean = false) {
+private fun ContractsEmptyState(
+    isArea: Boolean,
+    modifier: Modifier = Modifier,
+    isIncome: Boolean = false
+) {
     EmptyState(
         title = stringResource(
             when {
@@ -331,7 +389,7 @@ private fun ContractsEmptyState(isArea: Boolean, modifier: Modifier = Modifier, 
 private fun EditAreaButton(
     area: CustomArea,
     onRename: (CustomArea, String) -> Unit,
-    onDelete: (CustomArea) -> Unit,
+    onDelete: (CustomArea) -> Unit
 ) {
     var showDialog by rememberSaveable { mutableStateOf(false) }
     IconButton(onClick = { showDialog = true }) {
@@ -365,12 +423,14 @@ private fun SummaryCard(
     currency: CurrencyInfo,
     isIncome: Boolean,
     /** Part of [monthlyAmount] that is put aside, see [Reserve] */
-    reservesMonthlyAmount: Long = 0,
+    reservesMonthlyAmount: Long = 0
 ) {
     val formatter = LocalAmountFormatter.current
     HighlightCard {
         Text(
-            stringResource(if (isIncome) R.string.next_income_per_month else R.string.next_contracts_per_month),
+            stringResource(
+                if (isIncome) R.string.next_income_per_month else R.string.next_contracts_per_month
+            ),
             style = MaterialTheme.typography.labelLarge
         )
         Text(
@@ -393,7 +453,9 @@ private fun SummaryCard(
                 R.string.next_contracts_per_year,
                 formatter.format(yearlyAmount, currency)
             ) + " · " + pluralStringResource(
-                if (isIncome) R.plurals.next_income_count else R.plurals.next_contracts_count, count, count
+                if (isIncome) R.plurals.next_income_count else R.plurals.next_contracts_count,
+                count,
+                count
             ),
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(top = 4.dp)
@@ -402,12 +464,7 @@ private fun SummaryCard(
 }
 
 @Composable
-private fun SectionHeader(
-    title: String,
-    count: Int,
-    total: Long?,
-    currency: CurrencyInfo,
-) {
+private fun SectionHeader(title: String, count: Int, total: Long?, currency: CurrencyInfo) {
     org.totschnig.myexpenses.designsystem.SectionHeader(
         title = title,
         count = count,
@@ -429,7 +486,7 @@ internal fun ContractSuggestionsScreen(
     actions: ContractActions,
     onOpen: (Contract) -> Unit,
     onBack: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     LaunchedEffect(suggestions.isEmpty()) { if (suggestions.isEmpty()) onBack() }
     Column(
@@ -450,7 +507,9 @@ internal fun ContractSuggestionsScreen(
                     modifier = Modifier.padding(start = 4.dp, end = 4.dp, bottom = 12.dp)
                 )
             }
-            itemsIndexed(suggestions, key = { _, contract -> contract.signature }) { index, contract ->
+            itemsIndexed(suggestions, key = { _, contract ->
+                contract.signature
+            }) { index, contract ->
                 SuggestionItem(contract, index, suggestions.size, isIncome, currency, actions) {
                     onOpen(contract)
                 }
@@ -524,8 +583,4 @@ private fun SuggestionItem(
     )
 }
 
-internal class EditAction(
-    val icon: ImageVector,
-    val label: String,
-    val onClick: () -> Unit,
-)
+internal class EditAction(val icon: ImageVector, val label: String, val onClick: () -> Unit)

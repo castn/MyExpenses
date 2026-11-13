@@ -3,31 +3,31 @@ package org.totschnig.myexpenses.next.categories
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.totschnig.myexpenses.injector
+import org.totschnig.myexpenses.next.NextData
+import org.totschnig.myexpenses.next.NextFeature
+import org.totschnig.myexpenses.next.NextNavigation
+import org.totschnig.myexpenses.next.RowDecorations
 import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
+import org.totschnig.myexpenses.next.core.ui.categories.LocalCategoryPicker
 import org.totschnig.myexpenses.next.data.categories.CategoryStore
+import org.totschnig.myexpenses.next.feature.categories.CategoryBacklogBanner
+import org.totschnig.myexpenses.next.feature.categories.CategoryChip
+import org.totschnig.myexpenses.next.feature.categories.CategorySuggestionSection
+import org.totschnig.myexpenses.next.feature.categories.CategorySuggestionsViewModel
+import org.totschnig.myexpenses.next.feature.categories.hasCategoryChoice
 import org.totschnig.myexpenses.next.settings.AreaSettings
 import org.totschnig.myexpenses.next.settings.InsightSetting
 import org.totschnig.myexpenses.next.settings.RulesPage
 import org.totschnig.myexpenses.next.settings.SettingControl
 import org.totschnig.myexpenses.next.settings.SettingKind
 import org.totschnig.myexpenses.next.settings.SettingsGroup
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.totschnig.myexpenses.next.NextData
-import org.totschnig.myexpenses.next.NextFeature
-import org.totschnig.myexpenses.next.NextNavigation
-import org.totschnig.myexpenses.next.RowDecorations
-import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
-import org.totschnig.myexpenses.next.feature.categories.CategoryBacklogBanner
-import org.totschnig.myexpenses.next.feature.categories.CategoryChip
-import org.totschnig.myexpenses.next.core.ui.categories.LocalCategoryPicker
-import org.totschnig.myexpenses.next.feature.categories.hasCategoryChoice
 import org.totschnig.myexpenses.next.transactions.toShown
-import org.totschnig.myexpenses.next.feature.categories.CategorySuggestionSection
-import org.totschnig.myexpenses.next.feature.categories.CategorySuggestionsViewModel
 import org.totschnig.myexpenses.next.viewModelsOf
 
 /** Categories: suggestions for transactions without one */
@@ -57,7 +57,9 @@ class CategoriesFeature(activity: ComponentActivity, data: NextData) : NextFeatu
                 val shown = transaction.toShown()
                 if (shown.hasCategoryChoice()) {
                     { modifier -> CategoryChip(viewModel, shown, modifier) }
-                } else null
+                } else {
+                    null
+                }
             }
         )
     }
@@ -71,7 +73,10 @@ class CategoriesFeature(activity: ComponentActivity, data: NextData) : NextFeatu
 /** The rules of categories in the settings */
 class CategorySettings(activity: ComponentActivity) : AreaSettings {
     private val viewModel by activity.viewModelsOf {
-        CategoryRulesViewModel(CategoryStore(activity.injector.preferencesDataStore()), activity.injector.repository())
+        CategoryRulesViewModel(
+            CategoryStore(activity.injector.preferencesDataStore()),
+            activity.injector.repository()
+        )
     }
 
     @Composable
@@ -79,7 +84,9 @@ class CategorySettings(activity: ComponentActivity) : AreaSettings {
         if (setting != RULES) return null
         val rules = viewModel.rules.collectAsState().value
         return SettingControl.Page(
-            value = rules?.let { pluralStringResource(R.plurals.next_settings_rules, it.size, it.size) },
+            value = rules?.let {
+                pluralStringResource(R.plurals.next_settings_rules, it.size, it.size)
+            },
             isEnabled = true,
             setting = setting
         )

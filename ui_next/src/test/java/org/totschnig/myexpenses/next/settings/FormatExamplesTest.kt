@@ -1,10 +1,10 @@
 package org.totschnig.myexpenses.next.settings
 
+import java.util.Calendar
+import java.util.Locale
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
-import java.util.Calendar
-import java.util.Locale
 
 class FormatExamplesTest {
 
@@ -27,10 +27,19 @@ class FormatExamplesTest {
         val default = Locale.getDefault()
         Locale.setDefault(Locale.GERMANY)
         try {
-            assertEquals("1.234,56 €", numberExample(localizedNumberPattern("#,##0.00 ¤"), "EUR", "€"))
-            assertEquals("€ 1.234,56", numberExample(localizedNumberPattern("¤ #,##0.00"), "EUR", "€"))
+            assertEquals(
+                "1.234,56 €",
+                numberExample(localizedNumberPattern("#,##0.00 ¤"), "EUR", "€")
+            )
+            assertEquals(
+                "€ 1.234,56",
+                numberExample(localizedNumberPattern("¤ #,##0.00"), "EUR", "€")
+            )
             assertEquals("1234,56 €", numberExample(localizedNumberPattern("#0.00 ¤"), "EUR", "€"))
-            assertEquals("1.234,56 EUR", numberExample(localizedNumberPattern("#,##0.00 ¤¤"), "EUR", "€"))
+            assertEquals(
+                "1.234,56 EUR",
+                numberExample(localizedNumberPattern("#,##0.00 ¤¤"), "EUR", "€")
+            )
         } finally {
             Locale.setDefault(default)
         }
@@ -45,7 +54,11 @@ class FormatExamplesTest {
             region = { "$it (region)" }
         )
         assertEquals(
-            listOf("dd.MM.yy" to "01.10.26 (region)", "dd.MM.yyyy" to "01.10.2026", "d.M.yyyy" to "1.10.2026"),
+            listOf(
+                "dd.MM.yy" to "01.10.26 (region)",
+                "dd.MM.yyyy" to "01.10.2026",
+                "d.M.yyyy" to "1.10.2026"
+            ),
             options
         )
     }

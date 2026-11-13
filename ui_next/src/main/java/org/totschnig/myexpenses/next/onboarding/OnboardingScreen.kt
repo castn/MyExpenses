@@ -24,14 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.totschnig.myexpenses.designsystem.FeatureRow
-import org.totschnig.myexpenses.designsystem.R as DesignR
 import org.totschnig.myexpenses.designsystem.HeroIllustration
 import org.totschnig.myexpenses.designsystem.IntroBottomBar
 import org.totschnig.myexpenses.designsystem.IntroPage
+import org.totschnig.myexpenses.designsystem.R as DesignR
 import org.totschnig.myexpenses.designsystem.Spacing
 import org.totschnig.myexpenses.designsystem.StepIndicator
-import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 import org.totschnig.myexpenses.next.core.common.R as NextR
+import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 
 /** The pages of the first start, in their order */
 internal enum class OnboardingStep { WELCOME, PRIVACY, START, ACCOUNT, DONE }
@@ -56,7 +56,7 @@ internal fun OnboardingScreen(
     initialDraft: AccountDraft,
     accountChoices: AccountChoices,
     isStarting: Boolean,
-    onStart: (AccountDraft) -> Unit,
+    onStart: (AccountDraft) -> Unit
 ) {
     val steps = OnboardingStep.entries
     var current by rememberSaveable { mutableStateOf(OnboardingStep.WELCOME) }
@@ -76,7 +76,11 @@ internal fun OnboardingScreen(
             StepIndicator(
                 count = steps.size,
                 current = current.ordinal,
-                description = stringResource(NextR.string.next_onboarding_step, current.ordinal + 1, steps.size),
+                description = stringResource(
+                    NextR.string.next_onboarding_step,
+                    current.ordinal + 1,
+                    steps.size
+                ),
                 modifier = Modifier.padding(Spacing.screen)
             )
             HorizontalPager(
@@ -86,9 +90,21 @@ internal fun OnboardingScreen(
             ) { page ->
                 when (steps[page]) {
                     OnboardingStep.WELCOME -> WelcomePage()
-                    OnboardingStep.PRIVACY -> privacyChoices?.let { PrivacyPage(it, onPrivacyChange) }
-                    OnboardingStep.START -> StartPage(startChoice, offersBanking, onSelect = { startChoice = it })
-                    OnboardingStep.ACCOUNT -> AccountPage(draft, accountChoices, onDraftChange = { draft = it })
+
+                    OnboardingStep.PRIVACY -> privacyChoices?.let {
+                        PrivacyPage(it, onPrivacyChange)
+                    }
+
+                    OnboardingStep.START -> StartPage(startChoice, offersBanking, onSelect = {
+                        startChoice =
+                            it
+                    })
+
+                    OnboardingStep.ACCOUNT -> AccountPage(draft, accountChoices, onDraftChange = {
+                        draft =
+                            it
+                    })
+
                     OnboardingStep.DONE -> DonePage()
                 }
             }
@@ -105,8 +121,11 @@ internal fun OnboardingScreen(
                 OnboardingStep.START -> IntroBottomBar(
                     nextLabel = stringResource(NextR.string.next_onboarding_next),
                     onNext = {
-                        if (startChoice == StartChoice.NEW_ACCOUNT) current = OnboardingStep.ACCOUNT
-                        else onRestore(startChoice)
+                        if (startChoice == StartChoice.NEW_ACCOUNT) {
+                            current = OnboardingStep.ACCOUNT
+                        } else {
+                            onRestore(startChoice)
+                        }
                     }
                 )
 

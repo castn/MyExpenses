@@ -12,13 +12,13 @@ import org.totschnig.myexpenses.designsystem.DetailCard
 import org.totschnig.myexpenses.designsystem.PendingRow
 import org.totschnig.myexpenses.designsystem.SectionHeader
 import org.totschnig.myexpenses.designsystem.Spacing
-import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
-import org.totschnig.myexpenses.next.data.tips.SavingTipsOverview
+import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 import org.totschnig.myexpenses.next.data.guidance.PendingTip
 import org.totschnig.myexpenses.next.data.guidance.pendingTips
+import org.totschnig.myexpenses.next.data.tips.SavingTipsOverview
 
 /**
  * The saving tips that lack data, below the tips. Nothing while loading or if none lacks data.
@@ -55,10 +55,10 @@ private fun PendingTips(pending: List<PendingTip>) {
                         )
 
                     PendingTip.OUTLIERS -> stringResource(R.string.next_pending_outliers) to
-                            stringResource(
-                                R.string.next_pending_outliers_text,
-                                stringResource(R.string.next_tab_analysis)
-                            )
+                        stringResource(
+                            R.string.next_pending_outliers_text,
+                            stringResource(R.string.next_tab_analysis)
+                        )
                 }
                 PendingRow(title, text, isFirst = index == 0)
             }

@@ -8,5 +8,5 @@ package org.totschnig.myexpenses.next.data.tags
  */
 data class TagFacts(
     val excludedFromSpending: Set<Long> = emptySet(),
-    val meanings: Map<Long, TagMeaning> = emptyMap(),
+    val meanings: Map<Long, TagMeaning> = emptyMap()
 )

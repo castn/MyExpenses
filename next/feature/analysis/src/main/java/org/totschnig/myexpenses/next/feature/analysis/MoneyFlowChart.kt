@@ -14,7 +14,12 @@ import org.totschnig.myexpenses.next.data.analysis.MoneyFlow
  * @param title e.g. "Eating out → McDonald's"
  * @param count of the transactions, null for what is no group of transactions, e.g. what is left
  */
-data class FlowItem(val title: String, val amount: Long, val count: Int?, val transactionIds: List<Long>)
+data class FlowItem(
+    val title: String,
+    val amount: Long,
+    val count: Int?,
+    val transactionIds: List<Long>
+)
 
 /** The texts of a [MoneyFlowChart] that do not come from the data */
 data class FlowLabels(
@@ -25,7 +30,7 @@ data class FlowLabels(
     /** E.g. "3 more" */
     val otherActors: (Int) -> String,
     val left: String,
-    val savings: String,
+    val savings: String
 )
 
 /**
@@ -37,7 +42,7 @@ class MoneyFlowChart private constructor(
     val nodes: List<SankeyNode>,
     val flows: List<SankeyFlow>,
     private val nodeItems: List<FlowItem>,
-    private val flowItems: List<FlowItem>,
+    private val flowItems: List<FlowItem>
 ) {
     fun itemOf(hit: SankeyHit): FlowItem? = when (hit) {
         is SankeyHit.Node -> nodeItems.getOrNull(hit.index)
@@ -50,8 +55,21 @@ class MoneyFlowChart private constructor(
             val items = mutableListOf<FlowItem>()
             val flows = mutableListOf<SankeyFlow>()
             val flowItems = mutableListOf<FlowItem>()
-            fun node(label: String, value: Long, column: Int, color: ChartColor, item: FlowItem): Int {
-                nodes += SankeyNode(label, format(value), column, color, "${item.title}: ${format(value)}")
+            fun node(
+                label: String,
+                value: Long,
+                column: Int,
+                color: ChartColor,
+                item: FlowItem
+            ): Int {
+                nodes +=
+                    SankeyNode(
+                        label,
+                        format(value),
+                        column,
+                        color,
+                        "${item.title}: ${format(value)}"
+                    )
                 items += item
                 return nodes.lastIndex
             }
@@ -63,17 +81,35 @@ class MoneyFlowChart private constructor(
             fun FlowGroup.item() = FlowItem(name(), amount, count, transactionIds)
 
             val incomeNodes = flow.incomes.map { income ->
-                node(income.name(), income.amount, 0, ChartColor.Series(ChartPalette.GREEN), income.item()) to income
+                node(
+                    income.name(),
+                    income.amount,
+                    0,
+                    ChartColor.Series(ChartPalette.GREEN),
+                    income.item()
+                ) to
+                    income
             }
             val savings = (-flow.left).takeIf { it > 0 }?.let {
-                node(labels.savings, it, 0, ChartColor.Neutral, FlowItem(labels.savings, it, null, emptyList()))
+                node(
+                    labels.savings,
+                    it,
+                    0,
+                    ChartColor.Neutral,
+                    FlowItem(labels.savings, it, null, emptyList())
+                )
             }
             val total = maxOf(flow.earned, flow.spent)
             val accounts = node(
-                labels.accounts, total, 1, ChartColor.Neutral,
+                labels.accounts,
+                total,
+                1,
+                ChartColor.Neutral,
                 FlowItem(labels.accounts, total, null, emptyList())
             )
-            incomeNodes.forEach { (index, income) -> link(index, accounts, income.amount, income.item()) }
+            incomeNodes.forEach { (index, income) ->
+                link(index, accounts, income.amount, income.item())
+            }
             savings?.let { link(it, accounts, -flow.left, items[it]) }
 
             val colors = colorsOf(flow.expenses, flow.expenseOrder)
@@ -82,15 +118,33 @@ class MoneyFlowChart private constructor(
                 val category = node(expense.name(), expense.amount, 2, color, expense.item())
                 link(accounts, category, expense.amount, expense.item())
                 expense.actors.forEach { actor ->
-                    val name = if (actor.isRest) labels.otherActors(actor.others) else actor.name ?: labels.noPayee
+                    val name = if (actor.isRest) {
+                        labels.otherActors(actor.others)
+                    } else {
+                        actor.name
+                            ?: labels.noPayee
+                    }
                     val item = FlowItem(name, actor.amount, actor.count, actor.transactionIds)
-                    val target = node(name, actor.amount, 3, color, item.copy(title = "${expense.name()} → $name"))
+                    val target =
+                        node(
+                            name,
+                            actor.amount,
+                            3,
+                            color,
+                            item.copy(title = "${expense.name()} → $name")
+                        )
                     link(category, target, actor.amount, item)
                 }
             }
             flow.left.takeIf { it > 0 }?.let { left ->
                 val node =
-                    node(labels.left, left, 2, ChartColor.Neutral, FlowItem(labels.left, left, null, emptyList()))
+                    node(
+                        labels.left,
+                        left,
+                        2,
+                        ChartColor.Neutral,
+                        FlowItem(labels.left, left, null, emptyList())
+                    )
                 link(accounts, node, left, items[node])
             }
             return MoneyFlowChart(nodes, flows, items, flowItems)
@@ -104,7 +158,10 @@ class MoneyFlowChart private constructor(
             val slots = ChartPalette.withoutGreen
             val fixed = expenses.filterNot { it.isRest }
                 .mapNotNull { expense ->
-                    order.indexOf(expense.key).takeIf { it in slots.indices }?.let { expense.key to slots[it] }
+                    order.indexOf(expense.key).takeIf { it in slots.indices }?.let {
+                        expense.key to
+                            slots[it]
+                    }
                 }
                 .toMap()
             val free = (slots - fixed.values.toSet()).iterator()

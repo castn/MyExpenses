@@ -14,9 +14,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.totschnig.myexpenses.designsystem.IconPickerOption
 import org.totschnig.myexpenses.designsystem.IconTile
 import org.totschnig.myexpenses.designsystem.PayeeTile
-import org.totschnig.myexpenses.next.core.ui.icons.CatalogIconPicker
-import org.totschnig.myexpenses.next.core.common.icons.IconCatalog
 import org.totschnig.myexpenses.next.core.common.R as NextR
+import org.totschnig.myexpenses.next.core.common.icons.IconCatalog
+import org.totschnig.myexpenses.next.core.ui.icons.CatalogIconPicker
 import org.totschnig.myexpenses.next.core.ui.merchants.PayeeImage
 import org.totschnig.myexpenses.next.data.merchants.Payee
 
@@ -33,21 +33,22 @@ fun PayeeImageDialog(
     payee: Payee,
     categoryPath: String?,
     categoryIcon: String?,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     val payeeId = payee.id ?: return
     val chosen = logos.chosenIcons.collectAsStateWithLifecycle().value[payeeId]
     val entered = logos.enteredDomains.collectAsStateWithLifecycle().value[payeeId]
-    val logo = (logos.images.collectAsStateWithLifecycle().value[payeeId] as? PayeeImage.Logo)?.bitmap
+    val logo =
+        (logos.images.collectAsStateWithLifecycle().value[payeeId] as? PayeeImage.Logo)?.bitmap
     var showAddress by rememberSaveable { mutableStateOf(false) }
     CatalogIconPicker(
         title = stringResource(NextR.string.next_icons_title, payee.displayName),
         selected = chosen,
         suggestions = listOfNotNull(categoryIcon) +
-                IconCatalog.suggest(
-                    payee.displayName,
-                    *categoryPath?.split('>')?.asReversed()?.toTypedArray().orEmpty()
-                ),
+            IconCatalog.suggest(
+                payee.displayName,
+                *categoryPath?.split('>')?.asReversed()?.toTypedArray().orEmpty()
+            ),
         onSelect = { icon ->
             if (icon == null) logos.useAutomatic(payeeId) else logos.setIcon(payeeId, icon)
             onDismiss()
@@ -59,17 +60,21 @@ fun PayeeImageDialog(
         header = {
             IconPickerOption(
                 title = stringResource(NextR.string.next_payee_image_address),
-                supportingText = entered ?: stringResource(NextR.string.next_payee_image_address_hint),
+                supportingText =
+                    entered ?: stringResource(NextR.string.next_payee_image_address_hint),
                 isSelected = entered != null,
                 onClick = { showAddress = true }
             ) {
-                if (entered != null && logo != null) PayeeTile(payee.displayName, logo) {}
-                else IconTile {
-                    Icon(
-                        Icons.Outlined.Language,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                if (entered != null && logo != null) {
+                    PayeeTile(payee.displayName, logo) {}
+                } else {
+                    IconTile {
+                        Icon(
+                            Icons.Outlined.Language,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
             }
         }

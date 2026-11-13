@@ -13,14 +13,19 @@ internal fun navigationSuiteType(
     mode: MenuItem.NavigationMode,
     calculated: NavigationSuiteType,
     isNavigationVisible: Boolean,
-    isLandscape: Boolean,
+    isLandscape: Boolean
 ): NavigationSuiteType = when (mode) {
-    MenuItem.NavigationMode.DEFAULT -> calculated // should not happen
+    MenuItem.NavigationMode.DEFAULT -> calculated
+
+    // should not happen
     // which is either ShortNavigationBarCompact or ShortNavigationBarMedium for phone
     MenuItem.NavigationMode.FIXED_BOTTOM -> calculated
+
     MenuItem.NavigationMode.TOGGLEABLE_RAIL ->
         if (isNavigationVisible) NavigationSuiteType.NavigationRail else NavigationSuiteType.None
+
     MenuItem.NavigationMode.ALWAYS_RAIL -> NavigationSuiteType.WideNavigationRailCollapsed
+
     MenuItem.NavigationMode.ADAPTIVE ->
         if (isLandscape) {
             NavigationSuiteType.WideNavigationRailCollapsed
@@ -29,10 +34,9 @@ internal fun navigationSuiteType(
         }
 }
 
-internal fun NavigationSuiteType.isBar(): Boolean =
-    this == NavigationSuiteType.NavigationBar ||
-            this == NavigationSuiteType.ShortNavigationBarMedium ||
-            this == NavigationSuiteType.ShortNavigationBarCompact
+internal fun NavigationSuiteType.isBar(): Boolean = this == NavigationSuiteType.NavigationBar ||
+    this == NavigationSuiteType.ShortNavigationBarMedium ||
+    this == NavigationSuiteType.ShortNavigationBarCompact
 
 /**
  * How many actions of the account page are shown in its top bar, the others go to its overflow
@@ -43,7 +47,7 @@ internal fun visibleActionItems(
     isExpanded: Boolean,
     isMedium: Boolean,
     is2Pane: Boolean,
-    fontScale: Float,
+    fontScale: Float
 ) = when {
     isExpanded -> if (is2Pane) 4 else 6
     isMedium && !is2Pane -> 4

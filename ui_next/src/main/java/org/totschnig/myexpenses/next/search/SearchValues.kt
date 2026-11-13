@@ -1,11 +1,11 @@
 package org.totschnig.myexpenses.next.search
 
 import androidx.annotation.StringRes
+import java.time.LocalDate
+import java.time.temporal.TemporalAdjusters
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.provider.filter.DateCriterion
 import org.totschnig.myexpenses.provider.filter.Operation
-import java.time.LocalDate
-import java.time.temporal.TemporalAdjusters
 
 /** Periods that are searched often, offered before a custom one */
 enum class PeriodPreset(@param:StringRes val label: Int) {
@@ -17,24 +17,43 @@ enum class PeriodPreset(@param:StringRes val label: Int) {
 
     fun range(today: LocalDate): Pair<LocalDate, LocalDate> = when (this) {
         ThisMonth -> today.withDayOfMonth(1) to today.with(TemporalAdjusters.lastDayOfMonth())
-        LastMonth -> today.minusMonths(1).let { it.withDayOfMonth(1) to it.with(TemporalAdjusters.lastDayOfMonth()) }
+
+        LastMonth -> today.minusMonths(1).let {
+            it.withDayOfMonth(1) to
+                it.with(TemporalAdjusters.lastDayOfMonth())
+        }
+
         Last30Days -> today.minusDays(29) to today
+
         ThisYear -> today.withDayOfYear(1) to today.with(TemporalAdjusters.lastDayOfYear())
-        LastYear -> today.minusYears(1).let { it.withDayOfYear(1) to it.with(TemporalAdjusters.lastDayOfYear()) }
+
+        LastYear -> today.minusYears(1).let {
+            it.withDayOfYear(1) to
+                it.with(TemporalAdjusters.lastDayOfYear())
+        }
     }
 
     fun criterion(today: LocalDate) = range(today).let { (start, end) -> DateCriterion(start, end) }
 
     companion object {
-        fun of(criterion: DateCriterion, today: LocalDate) = entries.find { it.criterion(today) == criterion }
+        fun of(criterion: DateCriterion, today: LocalDate) = entries.find {
+            it.criterion(today) == criterion
+        }
     }
 }
 
 /** A period with an open start or end, as the date filter stores it */
 fun periodCriterion(start: LocalDate?, end: LocalDate?): DateCriterion? = when {
-    start != null && end != null -> if (start <= end) DateCriterion(start, end) else DateCriterion(end, start)
+    start != null && end != null -> if (start <= end) {
+        DateCriterion(start, end)
+    } else {
+        DateCriterion(end, start)
+    }
+
     start != null -> DateCriterion(Operation.GTE, start)
+
     end != null -> DateCriterion(Operation.LTE, end)
+
     else -> null
 }
 
@@ -55,8 +74,14 @@ sealed interface PeriodShape {
             if (criterion.operation != Operation.BTW) return null
             val (start, end) = criterion.values
             return when {
-                start.dayOfMonth == 1 && end == start.with(TemporalAdjusters.lastDayOfMonth()) -> Month(start)
-                start.dayOfYear == 1 && end == start.with(TemporalAdjusters.lastDayOfYear()) -> Year(start.year)
+                start.dayOfMonth == 1 && end == start.with(
+                    TemporalAdjusters.lastDayOfMonth()
+                ) -> Month(start)
+
+                start.dayOfYear == 1 && end == start.with(
+                    TemporalAdjusters.lastDayOfYear()
+                ) -> Year(start.year)
+
                 else -> null
             }
         }

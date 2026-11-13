@@ -4,15 +4,18 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Autorenew
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Flag
-import androidx.compose.material.icons.outlined.ShoppingBasket
 import androidx.compose.material.icons.outlined.Savings
+import androidx.compose.material.icons.outlined.ShoppingBasket
 import androidx.compose.material.icons.outlined.Workspaces
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -31,6 +34,7 @@ import org.totschnig.myexpenses.designsystem.ActionCard
 import org.totschnig.myexpenses.designsystem.DetailCard
 import org.totschnig.myexpenses.designsystem.DetailScaffold
 import org.totschnig.myexpenses.designsystem.HintRow
+import org.totschnig.myexpenses.designsystem.IconTile
 import org.totschnig.myexpenses.designsystem.InfoRow
 import org.totschnig.myexpenses.designsystem.LinkRow
 import org.totschnig.myexpenses.designsystem.MeterRow
@@ -42,20 +46,16 @@ import org.totschnig.myexpenses.designsystem.SectionTitle
 import org.totschnig.myexpenses.designsystem.Spacing
 import org.totschnig.myexpenses.designsystem.TopBarAction
 import org.totschnig.myexpenses.designsystem.theme.LocalSemanticColors
+import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
-import org.totschnig.myexpenses.next.core.common.R
-import org.totschnig.myexpenses.next.data.balance.BalancePeriod
+import org.totschnig.myexpenses.next.core.ui.icons.CatalogIcon
 import org.totschnig.myexpenses.next.core.ui.periodLabel
-import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
 import org.totschnig.myexpenses.next.core.ui.rememberAxisAmountFormat
 import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
-import org.totschnig.myexpenses.next.core.ui.icons.CatalogIcon
-import org.totschnig.myexpenses.designsystem.IconTile
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import org.totschnig.myexpenses.next.data.balance.BalancePeriod
 import org.totschnig.myexpenses.next.data.budgets.BudgetFrame
 import org.totschnig.myexpenses.next.data.budgets.BudgetOverview
 import org.totschnig.myexpenses.next.data.budgets.Pot
@@ -80,7 +80,7 @@ fun BudgetScreen(
     onAddPot: () -> Unit = {},
     legacyCount: Int = 0,
     onImportLegacy: () -> Unit = {},
-    onDismissLegacy: () -> Unit = {},
+    onDismissLegacy: () -> Unit = {}
 ) {
     val overview = (state as? AnalysisState.Ready)?.value
     DetailScaffold(
@@ -119,7 +119,11 @@ fun BudgetScreen(
                 if (legacyCount > 0) {
                     ActionCard(
                         icon = Icons.Outlined.Savings,
-                        title = pluralStringResource(R.plurals.next_budget_legacy_title, legacyCount, legacyCount),
+                        title = pluralStringResource(
+                            R.plurals.next_budget_legacy_title,
+                            legacyCount,
+                            legacyCount
+                        ),
                         text = stringResource(R.string.next_budget_legacy_text),
                         confirmLabel = stringResource(R.string.next_budget_legacy_import),
                         onConfirm = onImportLegacy,
@@ -165,21 +169,28 @@ private fun FrameRows(frame: BudgetFrame, amount: (Long) -> String) {
     InfoRow(stringResource(R.string.next_budget_fixed), "−" + amount(frame.fixed))
     InfoRow(stringResource(R.string.next_budget_planned), "−" + amount(frame.planned))
     InfoRow(
-        stringResource(R.string.next_budget_unplanned), amount(frame.unplanned),
+        stringResource(R.string.next_budget_unplanned),
+        amount(frame.unplanned),
         valueColor = colors.amountColor(frame.unplanned.compareTo(0))
     )
     if (frame.spentOutsidePots > 0) {
         InfoRow(stringResource(R.string.next_budget_outside), amount(frame.spentOutsidePots))
     }
     InfoRow(
-        stringResource(R.string.next_budget_free), amount(frame.free),
+        stringResource(R.string.next_budget_free),
+        amount(frame.free),
         valueColor = colors.amountColor(frame.free.compareTo(0))
     )
 }
 
 /** A pot in the list of the budget, with a meter of what is used */
 @Composable
-internal fun PotRow(status: PotStatus, amount: (Long) -> String, isFirst: Boolean, onClick: (() -> Unit)?) {
+internal fun PotRow(
+    status: PotStatus,
+    amount: (Long) -> String,
+    isFirst: Boolean,
+    onClick: (() -> Unit)?
+) {
     val pot = status.pot
     val total = when (pot.kind) {
         PotKind.GOAL -> pot.amount
@@ -190,23 +201,41 @@ internal fun PotRow(status: PotStatus, amount: (Long) -> String, isFirst: Boolea
         return
     }
     val value = when {
-        pot.kind == PotKind.GOAL -> stringResource(R.string.next_budget_to_save, amount(status.left.coerceAtLeast(0)))
+        pot.kind == PotKind.GOAL -> stringResource(
+            R.string.next_budget_to_save,
+            amount(status.left.coerceAtLeast(0))
+        )
+
         status.isOverspent -> stringResource(R.string.next_budget_over, amount(-status.left))
+
         else -> stringResource(R.string.next_budget_left, amount(status.left))
     }
     val supporting = buildList {
         add(
-            if (pot.kind == PotKind.GOAL) stringResource(
-                R.string.next_budget_saved_of,
-                amount(status.saved),
-                amount(pot.amount)
-            )
-            else stringResource(R.string.next_budget_of, amount(total))
+            if (pot.kind == PotKind.GOAL) {
+                stringResource(
+                    R.string.next_budget_saved_of,
+                    amount(status.saved),
+                    amount(pot.amount)
+                )
+            } else {
+                stringResource(R.string.next_budget_of, amount(total))
+            }
         )
-        if (status.upcoming > 0) add(stringResource(R.string.next_budget_due, amount(status.upcoming)))
-        status.projected?.takeIf { it > total }?.let { add(stringResource(R.string.next_budget_projected, amount(it))) }
+        if (status.upcoming > 0) {
+            add(stringResource(R.string.next_budget_due, amount(status.upcoming)))
+        }
+        status.projected?.takeIf {
+            it > total
+        }?.let { add(stringResource(R.string.next_budget_projected, amount(it))) }
     }.joinToString(" · ")
-    fun share(value: Long) = if (total > 0) value.toFloat() / total else if (value > 0) 1f else 0f
+    fun share(value: Long) = if (total > 0) {
+        value.toFloat() / total
+    } else if (value > 0) {
+        1f
+    } else {
+        0f
+    }
     MeterRow(
         label = pot.name,
         value = value,
@@ -229,12 +258,25 @@ private fun ItemGroupRow(status: PotStatus, isFirst: Boolean, onClick: (() -> Un
     MeterRow(
         label = status.pot.name,
         value =
-            if (share != null) stringResource(R.string.next_budget_share, percent.format(share), percent.format(max))
-        else stringResource(R.string.next_budget_max_share, percent.format(max)),
+            if (share != null) {
+                stringResource(
+                    R.string.next_budget_share,
+                    percent.format(share),
+                    percent.format(max)
+                )
+            } else {
+                stringResource(R.string.next_budget_max_share, percent.format(max))
+            },
         used = if (share != null && max > 0f) share / max else 0f,
         supportingText = if (status.scannedPurchases > 0) {
-            pluralStringResource(R.plurals.next_budget_scanned, status.scannedPurchases, status.scannedPurchases)
-        } else stringResource(R.string.next_budget_no_receipts),
+            pluralStringResource(
+                R.plurals.next_budget_scanned,
+                status.scannedPurchases,
+                status.scannedPurchases
+            )
+        } else {
+            stringResource(R.string.next_budget_no_receipts)
+        },
         leadingIcon = { PotIcon(status.pot) },
         isFirst = isFirst,
         onClick = onClick
@@ -245,13 +287,16 @@ private fun ItemGroupRow(status: PotStatus, isFirst: Boolean, onClick: (() -> Un
 @Composable
 internal fun PotIcon(pot: Pot, isLarge: Boolean = false) {
     val name = pot.iconName
-    if (name != null) CatalogIcon(name, isLarge = isLarge)
-    else Icon(
-        pot.kind.icon,
-        contentDescription = null,
-        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier.size(if (isLarge) 28.dp else 24.dp)
-    )
+    if (name != null) {
+        CatalogIcon(name, isLarge = isLarge)
+    } else {
+        Icon(
+            pot.kind.icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(if (isLarge) 28.dp else 24.dp)
+        )
+    }
 }
 
 /** [PotIcon] on an [IconTile] */
@@ -281,7 +326,7 @@ fun PotDetailScreen(
     onShowTransactions: () -> Unit,
     onShowOneOffs: () -> Unit,
     modifier: Modifier = Modifier,
-    onEdit: () -> Unit = {},
+    onEdit: () -> Unit = {}
 ) {
     val amount = rememberAmountFormat(currency)
     val pot = status.pot
@@ -293,14 +338,19 @@ fun PotDetailScreen(
             PageSubtitle(
                 when (pot.kind) {
                     PotKind.RUNNING -> periodLabel(overview.period.start, overview.period.end)
+
                     else -> listOfNotNull(
                         stringResource(pot.kind.labelRes),
-                        pot.end?.let { stringResource(R.string.next_budget_until, dates.format(it)) }
+                        pot.end?.let {
+                            stringResource(R.string.next_budget_until, dates.format(it))
+                        }
                     ).joinToString(" · ")
                 }
             )
         },
-        actions = { TopBarAction(Icons.Outlined.Edit, stringResource(R.string.next_budget_edit), onEdit) },
+        actions = {
+            TopBarAction(Icons.Outlined.Edit, stringResource(R.string.next_budget_edit), onEdit)
+        },
         modifier = modifier
     ) {
         DetailCard {
@@ -343,35 +393,56 @@ private fun PotFigures(status: PotStatus, amount: (Long) -> String) {
     val pot = status.pot
     when (pot.kind) {
         PotKind.ITEM_GROUP -> {
-            InfoRow(stringResource(R.string.next_budget_in_groups), amount(status.spent), isFirst = true)
+            InfoRow(
+                stringResource(R.string.next_budget_in_groups),
+                amount(status.spent),
+                isFirst = true
+            )
             InfoRow(stringResource(R.string.next_budget_allowed), amount(status.planned))
         }
 
         PotKind.GOAL -> {
             InfoRow(stringResource(R.string.next_budget_target), amount(pot.amount), isFirst = true)
             InfoRow(stringResource(R.string.next_budget_saved), amount(status.saved))
-            if (status.spent != 0L) InfoRow(stringResource(R.string.next_budget_spent), amount(status.spent))
+            if (status.spent != 0L) {
+                InfoRow(stringResource(R.string.next_budget_spent), amount(status.spent))
+            }
         }
 
         else -> {
             InfoRow(
                 stringResource(
-                    if (pot.kind == PotKind.YEARLY) R.string.next_budget_added else R.string.next_budget_planned_amount
+                    if (pot.kind == PotKind.YEARLY) {
+                        R.string.next_budget_added
+                    } else {
+                        R.string.next_budget_planned_amount
+                    }
                 ),
                 amount(status.planned),
                 isFirst = true
             )
-            if (status.carried != 0L) InfoRow(stringResource(R.string.next_budget_carried), amount(status.carried))
-            InfoRow(stringResource(R.string.next_budget_spent), amount(status.spent))
-            if (status.fixedSpent != 0L) InfoRow(
-                stringResource(R.string.next_budget_contracts),
-                amount(status.fixedSpent)
-            )
-            if (status.upcoming != 0L) InfoRow(stringResource(R.string.next_budget_upcoming), amount(status.upcoming))
-            if (pot.kind != PotKind.RUNNING && status.spentInPeriod != status.spent) {
-                InfoRow(stringResource(R.string.next_budget_spent_in_period), amount(status.spentInPeriod))
+            if (status.carried != 0L) {
+                InfoRow(stringResource(R.string.next_budget_carried), amount(status.carried))
             }
-            status.projected?.let { InfoRow(stringResource(R.string.next_budget_projection), amount(it)) }
+            InfoRow(stringResource(R.string.next_budget_spent), amount(status.spent))
+            if (status.fixedSpent != 0L) {
+                InfoRow(
+                    stringResource(R.string.next_budget_contracts),
+                    amount(status.fixedSpent)
+                )
+            }
+            if (status.upcoming != 0L) {
+                InfoRow(stringResource(R.string.next_budget_upcoming), amount(status.upcoming))
+            }
+            if (pot.kind != PotKind.RUNNING && status.spentInPeriod != status.spent) {
+                InfoRow(
+                    stringResource(R.string.next_budget_spent_in_period),
+                    amount(status.spentInPeriod)
+                )
+            }
+            status.projected?.let {
+                InfoRow(stringResource(R.string.next_budget_projection), amount(it))
+            }
         }
     }
 }
@@ -407,22 +478,46 @@ private val previewOverview = BudgetOverview(
     period = BalancePeriod(LocalDate.of(2026, 9, 28), LocalDate.of(2026, 10, 28), true),
     offset = 0,
     hasEarlier = true,
-    frame = BudgetFrame(income = 320000, fixed = 145000, planned = 90000, spentOutsidePots = 12000, free = 41000),
+    frame = BudgetFrame(
+        income = 320000,
+        fixed = 145000,
+        planned = 90000,
+        spentOutsidePots = 12000,
+        free = 41000
+    ),
     pots = listOf(
         PotStatus(
             Pot(name = "Täglicher Bedarf", kind = PotKind.RUNNING, amount = 45000),
-            planned = 45000, spent = 31000, projected = 47000, history = listOf(42000, 44000, 39000)
+            planned = 45000,
+            spent = 31000,
+            projected = 47000,
+            history = listOf(42000, 44000, 39000)
         ),
         PotStatus(
             Pot(name = "Fitness", kind = PotKind.RUNNING, amount = 5000),
-            planned = 5000, upcoming = 3500
+            planned = 5000,
+            upcoming = 3500
         ),
-        PotStatus(Pot(name = "Ausgehen", kind = PotKind.RUNNING, amount = 15000), planned = 15000, spent = 17500),
-        PotStatus(Pot(name = "Geschenke", kind = PotKind.YEARLY, amount = 60000), planned = 50000, spent = 21000),
         PotStatus(
-            Pot(name = "Neues Spiel", kind = PotKind.GOAL, amount = 7000, end = LocalDate.of(2026, 12, 24)),
-            planned = 7000, saved = 4000
+            Pot(name = "Ausgehen", kind = PotKind.RUNNING, amount = 15000),
+            planned = 15000,
+            spent = 17500
         ),
+        PotStatus(
+            Pot(name = "Geschenke", kind = PotKind.YEARLY, amount = 60000),
+            planned = 50000,
+            spent = 21000
+        ),
+        PotStatus(
+            Pot(
+                name = "Neues Spiel",
+                kind = PotKind.GOAL,
+                amount = 7000,
+                end = LocalDate.of(2026, 12, 24)
+            ),
+            planned = 7000,
+            saved = 4000
+        )
     )
 )
 
@@ -439,7 +534,7 @@ private fun BudgetScreenPreview() {
 @Composable
 private fun PotDetailScreenPreview() {
     NextPreviewTheme {
-        PotDetailScreen(previewOverview, previewOverview.pots.first(), CurrencyInfo.Preview, {}, {}, {})
+        PotDetailScreen(previewOverview, previewOverview.pots.first(), CurrencyInfo.Preview, {
+        }, {}, {})
     }
 }
-

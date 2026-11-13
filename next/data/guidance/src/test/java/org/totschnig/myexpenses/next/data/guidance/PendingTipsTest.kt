@@ -14,7 +14,7 @@ class PendingTipsTest {
         scannedRecent: Int = 0,
         scannedUsual: Int = 0,
         scannedLastYear: Int = 0,
-        scannedSupermarketLastYear: Int = 0,
+        scannedSupermarketLastYear: Int = 0
     ) = DataReadiness(
         debits = 50,
         uncategorized = List(uncategorized) { it.toLong() },
@@ -58,8 +58,16 @@ class PendingTipsTest {
     @Test
     fun receiptsOfOtherShopsDoNotCountForTheSupermarket() {
         val readiness =
-            readiness(scannedRecent = 4, scannedUsual = 6, scannedLastYear = 10, scannedSupermarketLastYear = 1)
-        assertEquals(listOf(PendingTip.DRUGSTORE_IN_SUPERMARKETS), pendingTips(readiness, emptySet()))
+            readiness(
+                scannedRecent = 4,
+                scannedUsual = 6,
+                scannedLastYear = 10,
+                scannedSupermarketLastYear = 1
+            )
+        assertEquals(
+            listOf(PendingTip.DRUGSTORE_IN_SUPERMARKETS),
+            pendingTips(readiness, emptySet())
+        )
     }
 
     @Test

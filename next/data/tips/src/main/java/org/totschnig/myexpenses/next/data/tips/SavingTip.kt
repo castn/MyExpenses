@@ -1,21 +1,21 @@
 package org.totschnig.myexpenses.next.data.tips
 
+import java.time.LocalDate
+import kotlin.math.absoluteValue
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import org.totschnig.myexpenses.next.core.common.strings
+import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
 import org.totschnig.myexpenses.next.core.model.receipts.ScannedItem
+import org.totschnig.myexpenses.next.data.budgets.BudgetFacts
 import org.totschnig.myexpenses.next.data.contracts.BuiltInArea
 import org.totschnig.myexpenses.next.data.contracts.Contract
-import org.totschnig.myexpenses.next.data.budgets.BudgetFacts
 import org.totschnig.myexpenses.next.data.contracts.ContractFacts
 import org.totschnig.myexpenses.next.data.contracts.ContractNews
 import org.totschnig.myexpenses.next.data.contracts.ContractTransaction
 import org.totschnig.myexpenses.next.data.contracts.SNAPSHOT_TRANSACTION_ID
-import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
 import org.totschnig.myexpenses.next.data.tags.TagFacts
-import org.totschnig.myexpenses.next.core.common.strings
-import java.time.LocalDate
-import kotlin.math.absoluteValue
 
 /**
  * A hint where the user could spend less. Tips only state what was booked, they do not estimate
@@ -66,7 +66,9 @@ sealed interface SavingTip {
     data class BankFees(val groups: List<BankFeeGroup>) : SavingTip {
         override val id: String get() = ID
         override val yearlyAmount: Long get() = groups.sumOf { it.amount }
-        override val facts: Set<String> get() = groups.mapTo(HashSet()) { "${it.kind.name}:${level(it.amount)}" }
+        override val facts: Set<String> get() = groups.mapTo(HashSet()) {
+            "${it.kind.name}:${level(it.amount)}"
+        }
         override val transactionGroups: Map<String, List<ContractTransaction>>
             get() = groups.associate { keyOf(it.kind) to it.transactions }
 
@@ -78,7 +80,6 @@ sealed interface SavingTip {
             const val MIN_AMOUNT = 1000L
 
             fun keyOf(kind: BankFeeKind) = "$ID:${kind.name}"
-
         }
     }
 
@@ -88,7 +89,8 @@ sealed interface SavingTip {
      *
      * @param contracts highest yearly amount first
      */
-    data class DuplicateContracts(val kind: ContractKind, val contracts: List<Contract>) : SavingTip {
+    data class DuplicateContracts(val kind: ContractKind, val contracts: List<Contract>) :
+        SavingTip {
         override val id: String get() = "$ID_PREFIX${kind.name}"
         override val yearlyAmount: Long get() = contracts.sumOf { it.yearlyAmount }
         val monthlyAmount: Long get() = yearlyAmount / 12
@@ -154,7 +156,7 @@ data class PriceIncrease(
     val before: Long,
     val after: Long,
     val since: LocalDate,
-    val sinceTransactionId: Long,
+    val sinceTransactionId: Long
 ) {
     val yearlyAmount: Long get() = (after - before) * contract.interval.perYear
 }
@@ -194,28 +196,32 @@ fun savingTips(
     contractPayments: Set<Long> = emptySet(),
     excludedFromSpending: Set<Long> = emptySet(),
     receipts: Map<Long, List<ScannedItem>> = emptyMap(),
-    budget: BudgetFacts? = null,
+    budget: BudgetFacts? = null
 ): List<SavingTip> {
     val spending = spending(transactions, contractPayments, today, excludedFromSpending)
     val scanned = scannedPurchases(spending, receipts)
-    return (listOfNotNull(
-        priceIncreases(contracts, today),
-        bankFees(transactions, today),
-        longRunningContracts(contracts, today),
-        frequentPayments(contracts),
-        smallPurchases(spending, today),
-        eatingOut(spending, today),
-        supermarkets(spending, today),
-        outliers(spending, today),
-        depositNotReturned(scanned, today),
-        drugstoreInSupermarkets(scanned, today),
-        potsOverspent(budget)
-    ) + duplicateContracts(contracts) + itemGroupsRising(scanned, today))
+    return (
+        listOfNotNull(
+            priceIncreases(contracts, today),
+            bankFees(transactions, today),
+            longRunningContracts(contracts, today),
+            frequentPayments(contracts),
+            smallPurchases(spending, today),
+            eatingOut(spending, today),
+            supermarkets(spending, today),
+            outliers(spending, today),
+            depositNotReturned(scanned, today),
+            drugstoreInSupermarkets(scanned, today),
+            potsOverspent(budget)
+        ) + duplicateContracts(contracts) + itemGroupsRising(scanned, today)
+        )
         .sortedByDescending { it.yearlyAmount }
 }
 
 /** Contracts that cost money: no reserves, not cancelled, still paid */
-private fun List<Contract>.costs() = filter { !it.isIncome && !it.isReserve && !it.isCancelled && it.isActive }
+private fun List<Contract>.costs() = filter {
+    !it.isIncome && !it.isReserve && !it.isCancelled && it.isActive
+}
 
 /**
  * Contracts that cost money (no reserves, not cancelled), grouped by [ContractKind]
@@ -224,9 +230,11 @@ internal fun duplicateContracts(contracts: List<Contract>): List<SavingTip.Dupli
     contracts.costs()
         .groupBy { ContractKind.of(it) }
         .mapNotNull { (kind, group) ->
-            if (kind != null && kind.isUsuallyOne && group.size >= 2)
+            if (kind != null && kind.isUsuallyOne && group.size >= 2) {
                 SavingTip.DuplicateContracts(kind, group.sortedByDescending { it.yearlyAmount })
-            else null
+            } else {
+                null
+            }
         }
 
 /**
@@ -234,17 +242,29 @@ internal fun duplicateContracts(contracts: List<Contract>): List<SavingTip.Dupli
  * is left out, paying more into a savings plan is no cost. A contract whose last two payments differ
  * has no stable new price, e.g. a bill depending on consumption.
  */
-internal fun priceIncreases(contracts: List<Contract>, today: LocalDate): SavingTip.PriceIncreases? {
+internal fun priceIncreases(
+    contracts: List<Contract>,
+    today: LocalDate
+): SavingTip.PriceIncreases? {
     val start = today.minusMonths(SavingTip.PriceIncreases.WINDOW_MONTHS)
     fun differ(a: Long, b: Long) = (a - b).absoluteValue > b * ContractNews.PRICE_CHANGE_TOLERANCE
-    val increases = contracts.filter { !it.isIncome && !it.isReserve && !it.isCancelled }.mapNotNull { contract ->
-        val payments = contract.transactions.filter { it.id != SNAPSHOT_TRANSACTION_ID && !it.date.isAfter(today) }
+    val increases = contracts.filter {
+        !it.isIncome && !it.isReserve && !it.isCancelled
+    }.mapNotNull { contract ->
+        val payments = contract.transactions.filter {
+            it.id != SNAPSHOT_TRANSACTION_ID && !it.date.isAfter(today)
+        }
         val reference =
-            payments.lastOrNull { !it.date.isAfter(start) } ?: payments.firstOrNull() ?: return@mapNotNull null
+            payments.lastOrNull { !it.date.isAfter(start) } ?: payments.firstOrNull()
+                ?: return@mapNotNull null
         val recent = payments.filter { it.date.isAfter(reference.date) }
         val before = reference.amount.absoluteValue
         val after = recent.lastOrNull()?.amount?.absoluteValue ?: return@mapNotNull null
-        if (recent.size >= 2 && differ(recent[recent.size - 2].amount.absoluteValue, after)) return@mapNotNull null
+        if (recent.size >= 2 &&
+            differ(recent[recent.size - 2].amount.absoluteValue, after)
+        ) {
+            return@mapNotNull null
+        }
         if (after <= before || !differ(after, before)) return@mapNotNull null
         val since = recent.first { differ(it.amount.absoluteValue, before) }
         PriceIncrease(contract, before, after, since.date, since.id)
@@ -263,13 +283,14 @@ internal fun priceIncreases(contracts: List<Contract>, today: LocalDate): Saving
  */
 data class TipDecisions(
     val dismissed: Map<String, Set<String>> = emptyMap(),
-    val seen: Map<String, Set<String>> = emptyMap(),
+    val seen: Map<String, Set<String>> = emptyMap()
 ) {
     fun isDismissed(tip: SavingTip) = dismissed.covers(tip)
 
     fun isNew(tip: SavingTip) = !seen.covers(tip)
 
-    private fun Map<String, Set<String>>.covers(tip: SavingTip) = this[tip.id]?.containsAll(tip.facts) == true
+    private fun Map<String, Set<String>>.covers(tip: SavingTip) =
+        this[tip.id]?.containsAll(tip.facts) == true
 
     companion object {
         /** Adds the facts of [tips] to those known */
@@ -285,12 +306,16 @@ data class TipDecisions(
             emptyMap()
         }
 
-        fun serialize(map: Map<String, Set<String>>) =
-            JSONObject().apply { map.forEach { (id, facts) -> put(id, JSONArray(facts.toList())) } }.toString()
+        fun serialize(map: Map<String, Set<String>>) = JSONObject().apply {
+            map.forEach { (id, facts) -> put(id, JSONArray(facts.toList())) }
+        }.toString()
     }
 }
 
-internal fun longRunningContracts(contracts: List<Contract>, today: LocalDate): SavingTip.LongRunningContracts? {
+internal fun longRunningContracts(
+    contracts: List<Contract>,
+    today: LocalDate
+): SavingTip.LongRunningContracts? {
     val limit = today.minusYears(SavingTip.LongRunningContracts.MIN_YEARS)
     return contracts.costs()
         .filter { ContractKind.of(it)?.isSwitchable == true }
@@ -314,10 +339,13 @@ internal fun frequentPayments(contracts: List<Contract>): SavingTip.FrequentPaym
         .filter { contract ->
             val text = ContractKind.textOf(contract)
             val kind = ContractKind.of(contract)
-            val isInsurance = contract.area == BuiltInArea.INSURANCE || INSURANCE_WORDS.any { it in text } ||
+            val isInsurance =
+                contract.area == BuiltInArea.INSURANCE || INSURANCE_WORDS.any { it in text } ||
                     kind in INSURANCE_KINDS
-            val isSubscription = kind?.isSubscription == true || contract.area == BuiltInArea.SOFTWARE
-            contract.interval.perYear > 1 && (isInsurance || isSubscription) && MONTHLY_BY_NATURE.none { it in text }
+            val isSubscription =
+                kind?.isSubscription == true || contract.area == BuiltInArea.SOFTWARE
+            contract.interval.perYear > 1 && (isInsurance || isSubscription) &&
+                MONTHLY_BY_NATURE.none { it in text }
         }
         .sortedByDescending { it.yearlyAmount }
         .takeIf { it.isNotEmpty() }

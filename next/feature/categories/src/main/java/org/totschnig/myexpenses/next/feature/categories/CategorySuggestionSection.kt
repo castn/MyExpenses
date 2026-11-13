@@ -23,13 +23,13 @@ import org.totschnig.myexpenses.designsystem.InfoRow
 import org.totschnig.myexpenses.designsystem.LabelChip
 import org.totschnig.myexpenses.designsystem.LinkRow
 import org.totschnig.myexpenses.designsystem.SectionTitle
+import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
 import org.totschnig.myexpenses.next.core.ui.LabelIcons
 import org.totschnig.myexpenses.next.core.ui.categories.LocalCategoryPicker
-import org.totschnig.myexpenses.next.core.common.R
-import org.totschnig.myexpenses.next.feature.categories.CategorySuggestionsViewModel.CategoryState
-import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
-import org.totschnig.myexpenses.next.data.categories.counterpart
 import org.totschnig.myexpenses.next.data.categories.SuggestionSource
+import org.totschnig.myexpenses.next.data.categories.counterpart
+import org.totschnig.myexpenses.next.feature.categories.CategorySuggestionsViewModel.CategoryState
 
 /**
  * Opens the category selection of the app, filtered to the direction of [transaction]
@@ -37,7 +37,10 @@ import org.totschnig.myexpenses.next.data.categories.SuggestionSource
  * @param onPicked with id and path of the category chosen
  */
 @Composable
-private fun rememberCategoryPicker(transaction: ShownTransaction, onPicked: (Long, String) -> Unit): () -> Unit {
+private fun rememberCategoryPicker(
+    transaction: ShownTransaction,
+    onPicked: (Long, String) -> Unit
+): () -> Unit {
     val launcher = rememberLauncherForActivityResult(LocalCategoryPicker.current) { picked ->
         picked?.let { (id, path) -> onPicked(id, path) }
     }
@@ -76,10 +79,16 @@ fun CategoryChip(
  * give it to the other transactions of the counterpart.
  */
 @Composable
-fun CategorySuggestionSection(viewModel: CategorySuggestionsViewModel, transaction: ShownTransaction) {
+fun CategorySuggestionSection(
+    viewModel: CategorySuggestionsViewModel,
+    transaction: ShownTransaction
+) {
     if (!transaction.hasCategoryChoice()) return
-    val state by remember(transaction.id) { viewModel.stateOf(transaction.id, transaction.categoryId) }
+    val state by remember(transaction.id) {
+        viewModel.stateOf(transaction.id, transaction.categoryId)
+    }
         .collectAsStateWithLifecycle(CategoryState.None)
+
     /** Payee, or the merchant for a payment through PayPal and alike */
     val counterpartInfo by remember(transaction.id) { viewModel.counterpartOf(transaction.id) }
         .collectAsStateWithLifecycle(null)
@@ -102,6 +111,7 @@ fun CategorySuggestionSection(viewModel: CategorySuggestionsViewModel, transacti
 
     when (val current = state) {
         CategoryState.None -> {}
+
         is CategoryState.Suggested -> Banner(
             title = stringResource(R.string.next_category_suggested, current.path),
             messages = listOf(current.suggestion.source.reason(counterpart?.name))
@@ -112,7 +122,11 @@ fun CategorySuggestionSection(viewModel: CategorySuggestionsViewModel, transacti
             Button(
                 onClick = {
                     viewModel.accept(listOf(transaction.id), current.suggestion.categoryId)
-                    viewModel.markApplied(transaction.id, current.suggestion.categoryId, current.path)
+                    viewModel.markApplied(
+                        transaction.id,
+                        current.suggestion.categoryId,
+                        current.path
+                    )
                 },
                 modifier = Modifier.padding(start = 8.dp)
             ) {
@@ -124,7 +138,11 @@ fun CategorySuggestionSection(viewModel: CategorySuggestionsViewModel, transacti
         is CategoryState.Automatic -> {
             SectionTitle(stringResource(R.string.next_contracts_transaction_category))
             DetailCard {
-                InfoRow(stringResource(R.string.next_category_automatic), current.path, isFirst = true)
+                InfoRow(
+                    stringResource(R.string.next_category_automatic),
+                    current.path,
+                    isFirst = true
+                )
                 LinkRow(
                     stringResource(R.string.next_category_undo),
                     onClick = { viewModel.undoAutomatic(transaction.id, current.categoryId) }
@@ -137,9 +155,14 @@ fun CategorySuggestionSection(viewModel: CategorySuggestionsViewModel, transacti
 @Composable
 private fun SuggestionSource.reason(counterpartName: String?): String = when (this) {
     SuggestionSource.RULE -> stringResource(R.string.next_category_reason_rule)
-    SuggestionSource.PAYEE -> counterpartName?.let { stringResource(R.string.next_category_reason_payee, it) }
+
+    SuggestionSource.PAYEE -> counterpartName?.let {
+        stringResource(R.string.next_category_reason_payee, it)
+    }
         ?: stringResource(R.string.next_category_reason_words)
+
     SuggestionSource.WORDS -> stringResource(R.string.next_category_reason_words)
+
     SuggestionSource.MERCHANT -> stringResource(R.string.next_category_reason_merchant)
 }
 
@@ -155,7 +178,7 @@ private fun FollowUp(
     counterpartName: String?,
     others: List<Long>,
     onApplyToOthers: (List<Long>) -> Unit,
-    onAddRule: () -> Unit,
+    onAddRule: () -> Unit
 ) {
     var appliedCount by rememberSaveable { mutableStateOf<Int?>(null) }
     var ruleAdded by rememberSaveable { mutableStateOf(false) }
@@ -168,7 +191,12 @@ private fun FollowUp(
             InfoRow(stringResource(R.string.next_category_applied_others, name), applied.toString())
         } else if (others.isNotEmpty()) {
             LinkRow(
-                pluralStringResource(R.plurals.next_category_apply_others, others.size, others.size, name),
+                pluralStringResource(
+                    R.plurals.next_category_apply_others,
+                    others.size,
+                    others.size,
+                    name
+                ),
                 onClick = {
                     onApplyToOthers(others)
                     appliedCount = others.size

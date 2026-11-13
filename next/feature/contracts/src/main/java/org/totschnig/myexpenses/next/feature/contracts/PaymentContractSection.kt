@@ -3,10 +3,10 @@ package org.totschnig.myexpenses.next.feature.contracts
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EventRepeat
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -24,10 +24,17 @@ import org.totschnig.myexpenses.next.data.contracts.icon
 
 /** What is known about the contract of [transaction], transfers are not analysed */
 @Composable
-private fun rememberPaymentInfo(viewModel: ContractsViewModel, transaction: ShownTransaction): PaymentContractInfo {
+private fun rememberPaymentInfo(
+    viewModel: ContractsViewModel,
+    transaction: ShownTransaction
+): PaymentContractInfo {
     val info by remember(transaction.id) { viewModel.paymentInfo(transaction.id) }
         .collectAsStateWithLifecycle(
-            if (transaction.isTransfer) PaymentContractInfo.Unavailable else PaymentContractInfo.Loading
+            if (transaction.isTransfer) {
+                PaymentContractInfo.Unavailable
+            } else {
+                PaymentContractInfo.Loading
+            }
         )
     return info
 }
@@ -37,12 +44,14 @@ private fun rememberPaymentInfo(viewModel: ContractsViewModel, transaction: Show
  * be pointless. Null while it is not known yet.
  */
 @Composable
-fun rememberIsContractPayment(viewModel: ContractsViewModel, transaction: ShownTransaction): Boolean? =
-    when (rememberPaymentInfo(viewModel, transaction)) {
-        PaymentContractInfo.Loading -> null
-        is PaymentContractInfo.Confirmed, is PaymentContractInfo.Suggested -> true
-        else -> false
-    }
+fun rememberIsContractPayment(
+    viewModel: ContractsViewModel,
+    transaction: ShownTransaction
+): Boolean? = when (rememberPaymentInfo(viewModel, transaction)) {
+    PaymentContractInfo.Loading -> null
+    is PaymentContractInfo.Confirmed, is PaymentContractInfo.Suggested -> true
+    else -> false
+}
 
 /**
  * Part of the details of a transaction: the contract (or regular income) it belongs to, if there
@@ -61,7 +70,7 @@ fun PaymentContractSection(viewModel: ContractsViewModel, transaction: ShownTran
 fun PaymentContractSection(
     info: PaymentContractInfo,
     onConfirm: (Contract) -> Unit,
-    onRestore: (Contract) -> Unit,
+    onRestore: (Contract) -> Unit
 ) {
     val contract = when (info) {
         is PaymentContractInfo.Confirmed -> info.contract
@@ -70,30 +79,58 @@ fun PaymentContractSection(
         else -> return
     }
     val isIncome = contract.isIncome
-    SectionTitle(stringResource(if (isIncome) R.string.next_income_title else R.string.next_tab_contracts))
+    SectionTitle(
+        stringResource(if (isIncome) R.string.next_income_title else R.string.next_tab_contracts)
+    )
     DetailCard {
         when (info) {
             is PaymentContractInfo.Suggested -> {
-                InfoRow(stringResource(R.string.next_payment_suggested), contract.title, isFirst = true)
+                InfoRow(
+                    stringResource(R.string.next_payment_suggested),
+                    contract.title,
+                    isFirst = true
+                )
                 LinkRow(
-                    stringResource(if (isIncome) R.string.next_income_confirm else R.string.next_contracts_confirm),
+                    stringResource(
+                        if (isIncome) {
+                            R.string.next_income_confirm
+                        } else {
+                            R.string.next_contracts_confirm
+                        }
+                    ),
                     onClick = { onConfirm(contract) }
                 )
             }
 
             is PaymentContractInfo.Dismissed -> {
                 InfoRow(
-                    stringResource(if (isIncome) R.string.next_income_dismiss else R.string.next_contracts_dismiss),
+                    stringResource(
+                        if (isIncome) {
+                            R.string.next_income_dismiss
+                        } else {
+                            R.string.next_contracts_dismiss
+                        }
+                    ),
                     contract.title,
                     isFirst = true
                 )
                 LinkRow(
-                    stringResource(if (isIncome) R.string.next_income_confirm else R.string.next_contracts_confirm),
+                    stringResource(
+                        if (isIncome) {
+                            R.string.next_income_confirm
+                        } else {
+                            R.string.next_contracts_confirm
+                        }
+                    ),
                     onClick = { onRestore(contract) }
                 )
             }
 
-            else -> InfoRow(stringResource(R.string.next_payment_part_of), contract.title, isFirst = true)
+            else -> InfoRow(
+                stringResource(R.string.next_payment_part_of),
+                contract.title,
+                isFirst = true
+            )
         }
     }
 }
@@ -125,7 +162,11 @@ fun PaymentContractChip(info: PaymentContractInfo, onMark: (ContractInterval) ->
     }
     ActionChip(
         text = stringResource(
-            if (info.isIncome) R.string.next_payment_mark_income else R.string.next_payment_mark_contract
+            if (info.isIncome) {
+                R.string.next_payment_mark_income
+            } else {
+                R.string.next_payment_mark_contract
+            }
         ),
         icon = Icons.Default.EventRepeat,
         onClick = { showIntervalDialog = true }

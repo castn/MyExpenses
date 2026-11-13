@@ -1,9 +1,9 @@
 package org.totschnig.myexpenses.next.data.receipts
 
 import android.net.Uri
-import org.totschnig.myexpenses.feature.Box
 import java.math.BigDecimal
 import java.time.LocalDate
+import org.totschnig.myexpenses.feature.Box
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
 
 /**
@@ -19,7 +19,7 @@ data class Receipt(
     /** Day of the purchase printed on the receipt */
     val date: LocalDate? = null,
     /** Amount paid by card, differs from [total] by cash back or coupons */
-    val cardAmount: Long? = null,
+    val cardAmount: Long? = null
 )
 
 /**

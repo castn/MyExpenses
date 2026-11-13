@@ -3,6 +3,5 @@
   <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>MatchingDeclarationName:Hints.kt:HintTopic</ID>
-    <ID>MatchingDeclarationName:PendingTips.kt:PendingTip</ID>
   </CurrentIssues>
 </SmellBaseline>

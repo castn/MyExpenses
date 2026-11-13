@@ -18,11 +18,11 @@ import androidx.compose.ui.unit.dp
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.designsystem.AutocompleteField
 import org.totschnig.myexpenses.designsystem.HeroIllustration
-import org.totschnig.myexpenses.designsystem.R as DesignR
 import org.totschnig.myexpenses.designsystem.IntroPage
+import org.totschnig.myexpenses.designsystem.R as DesignR
+import org.totschnig.myexpenses.next.core.common.R as NextR
 import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 import org.totschnig.myexpenses.viewmodel.data.Currency
-import org.totschnig.myexpenses.next.core.common.R as NextR
 
 /** What the first account can be set up with */
 @Immutable
@@ -32,7 +32,7 @@ data class AccountChoices(val currencies: List<Currency>)
 internal fun AccountPage(
     draft: AccountDraft,
     choices: AccountChoices,
-    onDraftChange: (AccountDraft) -> Unit,
+    onDraftChange: (AccountDraft) -> Unit
 ) {
     IntroPage(
         title = stringResource(NextR.string.next_onboarding_account_title),
@@ -46,7 +46,10 @@ internal fun AccountPage(
                 label = { Text(stringResource(NextR.string.next_onboarding_account_name)) },
                 singleLine = true,
                 keyboardOptions =
-                    KeyboardOptions(capitalization = KeyboardCapitalization.Sentences, imeAction = ImeAction.Next),
+                    KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Sentences,
+                        imeAction = ImeAction.Next
+                    ),
                 modifier = Modifier.fillMaxWidth()
             )
             val selected = choices.currencies.find { it.code == draft.currency }
@@ -72,12 +75,18 @@ internal fun AccountPage(
                 supportingText = {
                     Text(
                         stringResource(
-                            if (isInvalid) NextR.string.next_onboarding_amount_invalid
-                            else NextR.string.next_onboarding_amount_hint
+                            if (isInvalid) {
+                                NextR.string.next_onboarding_amount_invalid
+                            } else {
+                                NextR.string.next_onboarding_amount_hint
+                            }
                         )
                     )
                 },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal, imeAction = ImeAction.Done),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Decimal,
+                    imeAction = ImeAction.Done
+                ),
                 modifier = Modifier.fillMaxWidth()
             )
         }

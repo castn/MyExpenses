@@ -10,8 +10,16 @@ import org.totschnig.myexpenses.next.data.budgets.PotStatus
 
 class BudgetTipsTest {
 
-    private fun status(id: String, amount: Long, vararg history: Long, kind: PotKind = PotKind.RUNNING) =
-        PotStatus(Pot(id = id, name = id, kind = kind, amount = amount), planned = amount, history = history.toList())
+    private fun status(
+        id: String,
+        amount: Long,
+        vararg history: Long,
+        kind: PotKind = PotKind.RUNNING
+    ) = PotStatus(
+        Pot(id = id, name = id, kind = kind, amount = amount),
+        planned = amount,
+        history = history.toList()
+    )
 
     @Test
     fun findsPotsOverspentInMostOfTheLastPeriods() {
@@ -25,7 +33,7 @@ class BudgetTipsTest {
                     status("gifts", 5000, 6000, 4000, 7000, 3000),
                     // Too new
                     status("new", 1000, 2000, 2000, 2000),
-                    status("yearly", 1000, 2000, 2000, 2000, 2000, kind = PotKind.YEARLY),
+                    status("yearly", 1000, 2000, 2000, 2000, 2000, kind = PotKind.YEARLY)
                 )
             )
         )!!

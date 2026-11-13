@@ -27,7 +27,7 @@ import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 class PotMatcher(
     pots: List<Pot>,
     private val categories: Map<Long, CategoryInfo>,
-    private val contractRules: Map<Long, String>,
+    private val contractRules: Map<Long, String>
 ) {
     private val pots = pots.filter { it.holdsTransactions }
 
@@ -42,7 +42,9 @@ class PotMatcher(
                 specificity(pot, transaction, contractRule, ancestors)?.let { pot to it }
             }
             // maxBy keeps the first of equal ones
-            .maxByOrNull { (pot, specificity) -> (if (pot.kind.isPurpose) PURPOSE else 0) + specificity }
+            .maxByOrNull { (pot, specificity) ->
+                (if (pot.kind.isPurpose) PURPOSE else 0) + specificity
+            }
             ?.first
     }
 
@@ -59,11 +61,14 @@ class PotMatcher(
         pot: Pot,
         transaction: LedgerTransaction,
         contractRule: String?,
-        ancestors: List<Long>,
+        ancestors: List<Long>
     ): Int? = when {
         contractRule != null -> if (contractRule in pot.contractRuleIds) CONTRACT else null
+
         transaction.payeeId != null && transaction.payeeId in pot.payeeIds -> PAYEE
+
         transaction.tagIds.any { it in pot.tagIds } -> TAG
+
         else -> ancestors.indexOfFirst { it in pot.categoryIds }.takeIf { it >= 0 }?.let { index ->
             // The deeper the category of the pot, the more specific
             CATEGORY + (ancestors.size - 1 - index)

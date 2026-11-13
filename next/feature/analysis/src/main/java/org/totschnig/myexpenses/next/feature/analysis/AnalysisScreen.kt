@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.filled.Insights
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -29,17 +29,15 @@ import org.totschnig.myexpenses.designsystem.EmptyState
 import org.totschnig.myexpenses.designsystem.HintRow
 import org.totschnig.myexpenses.designsystem.NavigationRow
 import org.totschnig.myexpenses.designsystem.PageTopBar
-import org.totschnig.myexpenses.designsystem.TopBarAction
 import org.totschnig.myexpenses.designsystem.PromptCard
 import org.totschnig.myexpenses.designsystem.SectionHeader
 import org.totschnig.myexpenses.designsystem.Spacing
+import org.totschnig.myexpenses.designsystem.TopBarAction
+import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
-import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.ui.formatRange
-import org.totschnig.myexpenses.next.data.guidance.DataGap
-import org.totschnig.myexpenses.next.feature.analysis.ReadinessBox
-import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
 import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
 import org.totschnig.myexpenses.next.data.analysis.CategoryAmount
@@ -50,6 +48,8 @@ import org.totschnig.myexpenses.next.data.analysis.MonthAmount
 import org.totschnig.myexpenses.next.data.analysis.TagAnalysis
 import org.totschnig.myexpenses.next.data.analysis.TagEvaluation
 import org.totschnig.myexpenses.next.data.analysis.TagGroup
+import org.totschnig.myexpenses.next.data.guidance.DataGap
+import org.totschnig.myexpenses.next.feature.analysis.ReadinessBox
 
 /**
  * Content of the tab "Analyse": spending by category of the current month, and what was spent on
@@ -76,7 +76,7 @@ fun AnalysisScreen(
     onOpenSpending: () -> Unit = {},
     onOpenMoneyFlow: () -> Unit = {},
     gaps: List<DataGap> = emptyList(),
-    onShowGap: (DataGap) -> Unit = {},
+    onShowGap: (DataGap) -> Unit = {}
 ) {
     Column(modifier.fillMaxSize()) {
         PageTopBar(onBack = null, title = stringResource(R.string.next_tab_analysis), actions = {
@@ -90,7 +90,10 @@ fun AnalysisScreen(
         })
         val contentModifier = Modifier.weight(1f)
         when (state) {
-            AnalysisState.Loading -> Box(contentModifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            AnalysisState.Loading -> Box(
+                contentModifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
                 CircularProgressIndicator()
             }
 
@@ -104,7 +107,8 @@ fun AnalysisScreen(
             )
 
             is AnalysisState.Ready -> AnalysisList(
-                state.value, spending, moneyFlow, currency, onOpen, onOpenCategory, onOpenSpending, onOpenMoneyFlow,
+                state.value, spending, moneyFlow, currency, onOpen, onOpenCategory, onOpenSpending,
+                onOpenMoneyFlow,
                 gaps, onShowGap, contentModifier
             )
         }
@@ -123,7 +127,7 @@ private fun AnalysisList(
     onOpenMoneyFlow: () -> Unit,
     gaps: List<DataGap>,
     onShowGap: (DataGap) -> Unit,
-    modifier: Modifier,
+    modifier: Modifier
 ) {
     val hasSpending = spending != null && spending.categories.isNotEmpty()
     val hasMoneyFlow = moneyFlow != null && !moneyFlow.isEmpty
@@ -186,7 +190,7 @@ private fun LazyListScope.section(
     evaluations: List<TagEvaluation>,
     onOpen: (TagEvaluation) -> Unit,
     amount: (Long) -> String,
-    supportingText: @Composable (TagEvaluation) -> String,
+    supportingText: @Composable (TagEvaluation) -> String
 ) {
     if (evaluations.isEmpty()) return
     item(key = title) {
@@ -206,29 +210,65 @@ private fun LazyListScope.section(
 }
 
 internal fun previewAnalysis(): TagAnalysis {
-    fun evaluation(id: Long, label: String, group: TagGroup, start: LocalDate, end: LocalDate, total: Long) =
-        TagEvaluation(
-            tagId = id, label = label, color = null, group = group, start = start, end = end, total = total,
-            months = generateSequence(YearMonth.from(start)) { it.plusMonths(1) }
-                .takeWhile { !it.isAfter(YearMonth.from(end)) }
-                .mapIndexed { index, month -> MonthAmount(month, total / 12 + index * 500) }
-                .toList(),
-            byCategory = listOf(
-                CategoryAmount(1, "Essen", total * 3 / 5), CategoryAmount(2, "Reisen", total / 5),
-                CategoryAmount(null, null, total / 5)
-            ),
-            transactionIds = (1L..12L).toList()
-        )
+    fun evaluation(
+        id: Long,
+        label: String,
+        group: TagGroup,
+        start: LocalDate,
+        end: LocalDate,
+        total: Long
+    ) = TagEvaluation(
+        tagId = id, label = label, color = null, group = group, start = start, end = end,
+        total = total,
+        months = generateSequence(YearMonth.from(start)) { it.plusMonths(1) }
+            .takeWhile { !it.isAfter(YearMonth.from(end)) }
+            .mapIndexed { index, month -> MonthAmount(month, total / 12 + index * 500) }
+            .toList(),
+        byCategory = listOf(
+            CategoryAmount(1, "Essen", total * 3 / 5),
+            CategoryAmount(2, "Reisen", total / 5),
+            CategoryAmount(null, null, total / 5)
+        ),
+        transactionIds = (1L..12L).toList()
+    )
     return TagAnalysis(
         trips = listOf(
-            evaluation(1, "Urlaub Italien", TagGroup.TRIP, LocalDate.of(2026, 8, 1), LocalDate.of(2026, 8, 14), 184000),
-            evaluation(2, "Hamburg", TagGroup.TRIP, LocalDate.of(2026, 3, 6), LocalDate.of(2026, 3, 8), 42050)
+            evaluation(
+                1,
+                "Urlaub Italien",
+                TagGroup.TRIP,
+                LocalDate.of(2026, 8, 1),
+                LocalDate.of(2026, 8, 14),
+                184000
+            ),
+            evaluation(
+                2,
+                "Hamburg",
+                TagGroup.TRIP,
+                LocalDate.of(2026, 3, 6),
+                LocalDate.of(2026, 3, 8),
+                42050
+            )
         ),
         themes = listOf(
-            evaluation(3, "Hund", TagGroup.THEME, LocalDate.of(2025, 11, 1), LocalDate.of(2026, 10, 5), 96000)
+            evaluation(
+                3,
+                "Hund",
+                TagGroup.THEME,
+                LocalDate.of(2025, 11, 1),
+                LocalDate.of(2026, 10, 5),
+                96000
+            )
         ),
         business = listOf(
-            evaluation(4, "Beruflich", TagGroup.BUSINESS, LocalDate.of(2026, 1, 1), LocalDate.of(2026, 10, 5), 31200)
+            evaluation(
+                4,
+                "Beruflich",
+                TagGroup.BUSINESS,
+                LocalDate.of(2026, 1, 1),
+                LocalDate.of(2026, 10, 5),
+                31200
+            )
         ),
         businessYears = listOf(2026, 2025),
         year = 2026
@@ -242,7 +282,9 @@ private fun AnalysisScreenPreview() {
     NextPreviewTheme {
         Surface(color = MaterialTheme.colorScheme.surfaceContainer) {
             AnalysisScreen(
-                AnalysisState.Ready(previewAnalysis()), previewSpending(), CurrencyInfo.Preview,
+                AnalysisState.Ready(previewAnalysis()),
+                previewSpending(),
+                CurrencyInfo.Preview,
                 gaps = listOf(DataGap.Uncategorized(List(12) { it.toLong() }, 96))
             )
         }
@@ -255,7 +297,9 @@ private fun AnalysisEmptyPreview() {
     NextPreviewTheme {
         Surface(color = MaterialTheme.colorScheme.surfaceContainer) {
             AnalysisScreen(
-                AnalysisState.Ready(TagAnalysis(emptyList(), emptyList(), emptyList(), emptyList(), 2026)),
+                AnalysisState.Ready(
+                    TagAnalysis(emptyList(), emptyList(), emptyList(), emptyList(), 2026)
+                ),
                 null,
                 CurrencyInfo.Preview
             )

@@ -1,13 +1,13 @@
 package org.totschnig.myexpenses.next.data.tips
 
+import java.time.LocalDate
+import java.time.YearMonth
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.totschnig.myexpenses.next.data.contracts.ContractTransaction
-import java.time.LocalDate
-import java.time.YearMonth
 
 class SpendingTipsTest {
 
@@ -20,15 +20,28 @@ class SpendingTipsTest {
         payee: String? = null,
         category: String? = null,
         comment: String? = null,
-        targetAccountId: Long? = null,
+        targetAccountId: Long? = null
     ) = ContractTransaction(
-        id = nextId++, date = date, amount = -amount, accountId = 1, payeeName = payee, comment = comment,
-        categoryPath = category, targetAccountId = targetAccountId
+        id = nextId++,
+        date = date,
+        amount = -amount,
+        accountId = 1,
+        payeeName = payee,
+        comment = comment,
+        categoryPath = category,
+        targetAccountId = targetAccountId
     )
 
     /** One debit every [everyDays] days within the last [days] days */
-    private fun series(amount: Long, payee: String, days: Int = 360, everyDays: Int = 3, category: String? = null) =
-        (1..days step everyDays).map { debit(amount, today.minusDays(it.toLong()), payee, category) }
+    private fun series(
+        amount: Long,
+        payee: String,
+        days: Int = 360,
+        everyDays: Int = 3,
+        category: String? = null
+    ) = (1..days step everyDays).map {
+        debit(amount, today.minusDays(it.toLong()), payee, category)
+    }
 
     @Test
     fun spendingLeavesOutContractsMovementsCreditsAndFuture() {
@@ -36,7 +49,8 @@ class SpendingTipsTest {
         val kept = debit(350, today, "Bäckerei")
         val spending = spending(
             listOf(
-                contract, kept,
+                contract,
+                kept,
                 debit(5000, today, "→ Depot", targetAccountId = 2),
                 ContractTransaction(nextId++, today, 250000, 1, payeeName = "Arbeitgeber"),
                 debit(350, today.plusDays(1), "Bäckerei")
@@ -51,15 +65,18 @@ class SpendingTipsTest {
     fun smallPurchasesWithTopPayees() {
         val tip = smallPurchases(
             series(350, "Bäckerei Müller") + series(480, "Coffee Fellows", everyDays = 7) +
-                    series(4500, "REWE", everyDays = 7) +
-                    listOf(debit(300, today.minusMonths(13), "Bäckerei Müller")),
+                series(4500, "REWE", everyDays = 7) +
+                listOf(debit(300, today.minusMonths(13), "Bäckerei Müller")),
             today
         )!!
         assertEquals(listOf("Bäckerei Müller", "Coffee Fellows"), tip.payees.map { it.label })
         assertEquals(120 + 52, tip.count)
         assertEquals(120 * 350L + 52 * 480L, tip.yearlyAmount)
         assertEquals("SMALL_PURCHASES:Bäckerei Müller", tip.payees.first().key)
-        assertEquals(tip.payees.first().transactions, tip.transactionGroups.getValue("SMALL_PURCHASES:Bäckerei Müller"))
+        assertEquals(
+            tip.payees.first().transactions,
+            tip.transactionGroups.getValue("SMALL_PURCHASES:Bäckerei Müller")
+        )
     }
 
     @Test
@@ -72,7 +89,11 @@ class SpendingTipsTest {
         val tip = smallPurchases(series(350, "Bäckerei"), today)!!
         val decisions = TipDecisions(dismissed = mapOf(tip.id to tip.facts))
         assertTrue(decisions.isDismissed(smallPurchases(series(360, "Bäckerei"), today)!!))
-        assertFalse(decisions.isDismissed(smallPurchases(series(700, "Bäckerei") + series(700, "Kiosk"), today)!!))
+        assertFalse(
+            decisions.isDismissed(
+                smallPurchases(series(700, "Bäckerei") + series(700, "Kiosk"), today)!!
+            )
+        )
     }
 
     @Test
@@ -85,7 +106,9 @@ class SpendingTipsTest {
 
     @Test
     fun eatingOutMoreThanUsual() {
-        val usual = (40..390 step 10).map { debit(3000, today.minusDays(it.toLong()), "Lieferando") }
+        val usual = (40..390 step 10).map {
+            debit(3000, today.minusDays(it.toLong()), "Lieferando")
+        }
         val recent = (1..28 step 4).map { debit(3000, today.minusDays(it.toLong()), "Lieferando") }
         val tip = eatingOut(usual + recent, today)!!
         assertEquals(7 * 3000L, tip.recent)
@@ -97,19 +120,34 @@ class SpendingTipsTest {
 
     @Test
     fun eatingOutAsUsualIsNoTip() {
-        assertNull(eatingOut((1..390 step 10).map { debit(3000, today.minusDays(it.toLong()), "Lieferando") }, today))
+        assertNull(
+            eatingOut(
+                (1..390 step 10).map {
+                    debit(3000, today.minusDays(it.toLong()), "Lieferando")
+                },
+                today
+            )
+        )
     }
 
     @Test
     fun eatingOutWithoutHistoryIsNoTip() {
-        assertNull(eatingOut((1..28 step 2).map { debit(3000, today.minusDays(it.toLong()), "Lieferando") }, today))
+        assertNull(
+            eatingOut(
+                (1..28 step 2).map {
+                    debit(3000, today.minusDays(it.toLong()), "Lieferando")
+                },
+                today
+            )
+        )
     }
 
     @Test
     fun averagePurchasePerSupermarket() {
         val tip = supermarkets(
-            series(4300, "REWE Markt GmbH", everyDays = 7) + series(2600, "ALDI SUED", everyDays = 7) +
-                    series(1500, "Penny", everyDays = 100) + series(350, "Bäckerei"),
+            series(4300, "REWE Markt GmbH", everyDays = 7) +
+                series(2600, "ALDI SUED", everyDays = 7) +
+                series(1500, "Penny", everyDays = 100) + series(350, "Bäckerei"),
             today
         )!!
         assertEquals(listOf("REWE", "ALDI"), tip.chains.map { it.label })
@@ -126,7 +164,18 @@ class SpendingTipsTest {
     fun outlierInLastCompleteMonth() {
         val months = (1L..12L).map { YearMonth.from(today).minusMonths(it) }
         val leisure =
-            months.map { debit(if (it == months.first()) 42000 else 18000, it.atDay(10), "Kino", "Freizeit > Kino") }
+            months.map {
+                debit(
+                    if (it == months.first()) {
+                        42000
+                    } else {
+                        18000
+                    },
+                    it.atDay(10),
+                    "Kino",
+                    "Freizeit > Kino"
+                )
+            }
         val food = months.map { debit(40000, it.atDay(12), "REWE", "Essen > Supermarkt") }
         val tip = outliers(leisure + food + debit(9000, today, "Kino", "Freizeit"), today)!!
         assertEquals(YearMonth.of(2026, 8), tip.month)
@@ -142,7 +191,10 @@ class SpendingTipsTest {
     fun excludedDebitsAreNoSpending() {
         val oneOff = debit(80000, today, "Möbelhaus")
         val kept = debit(350, today, "Bäckerei")
-        assertEquals(listOf(kept), spending(listOf(oneOff, kept), emptySet(), today, excluded = setOf(oneOff.id)))
+        assertEquals(
+            listOf(kept),
+            spending(listOf(oneOff, kept), emptySet(), today, excluded = setOf(oneOff.id))
+        )
     }
 
     @Test
@@ -151,8 +203,13 @@ class SpendingTipsTest {
         val leisure = months.map { debit(18000, it.atDay(10), "Kino", "Freizeit > Kino") }
         val concert = debit(24000, months.first().atDay(20), "Konzertkasse", "Freizeit > Konzert")
         val transactions = leisure + concert
-        assertEquals("Freizeit", outliers(spending(transactions, emptySet(), today), today)!!.categories.single().label)
-        assertNull(outliers(spending(transactions, emptySet(), today, excluded = setOf(concert.id)), today))
+        assertEquals(
+            "Freizeit",
+            outliers(spending(transactions, emptySet(), today), today)!!.categories.single().label
+        )
+        assertNull(
+            outliers(spending(transactions, emptySet(), today, excluded = setOf(concert.id)), today)
+        )
     }
 
     @Test

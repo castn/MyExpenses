@@ -1,5 +1,6 @@
 package org.totschnig.myexpenses.next.data.receipts
 
+import java.io.File
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -7,6 +8,7 @@ import org.junit.Assume.assumeTrue
 import org.junit.Test
 import org.totschnig.itemgroupmodel.ProductGroupModel
 import org.totschnig.myexpenses.feature.recognizedTextFromJson
+import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup.BAKERY
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup.DAIRY
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup.DEPOSIT
@@ -23,8 +25,6 @@ import org.totschnig.myexpenses.next.data.receipts.ItemGroupSource.MODEL
 import org.totschnig.myexpenses.next.data.receipts.ItemGroupSource.PRODUCT
 import org.totschnig.myexpenses.next.data.receipts.ItemGroupSource.RULE
 import org.totschnig.myexpenses.next.data.receipts.ItemGroupSource.WORDS
-import java.io.File
-import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
 
 class ItemGroupClassifierTest {
 
@@ -37,7 +37,10 @@ class ItemGroupClassifierTest {
 
     @Test
     fun joinedAndShortenedWords() {
-        assertEquals(ItemGroupSuggestion(DAIRY, DICTIONARY), classifier.groupOf("GAZI H.GRILLKAESE"))
+        assertEquals(
+            ItemGroupSuggestion(DAIRY, DICTIONARY),
+            classifier.groupOf("GAZI H.GRILLKAESE")
+        )
         assertEquals(DAIRY, classifier.groupOf("G&G SCHLAGSAH")?.group)
         assertEquals(HOUSEHOLD, classifier.groupOf("G&G TOILETTENPAP.")?.group)
         assertEquals(PANTRY, classifier.groupOf("HAFERFL. KERNIG")?.group)
@@ -74,17 +77,23 @@ class ItemGroupClassifierTest {
     fun depositAndDiscounts() {
         val groups = classifier.classify(
             listOf(
-                item("FRISCHE FEIGE", 312), item("SCHW.FRISCHMILCH", 358), item("Preisänderung", -178),
-                item("PFAND 0,25", 25), item("LEERGUT", -25), item("Feigen 1 Euro", -112)
+                item("FRISCHE FEIGE", 312),
+                item("SCHW.FRISCHMILCH", 358),
+                item("Preisänderung", -178),
+                item("PFAND 0,25", 25),
+                item("LEERGUT", -25),
+                item("Feigen 1 Euro", -112)
             ),
             merchant = null
         )
         assertEquals(
             listOf(
-                ItemGroupSuggestion(PRODUCE, DICTIONARY), ItemGroupSuggestion(DAIRY, DICTIONARY),
+                ItemGroupSuggestion(PRODUCE, DICTIONARY),
+                ItemGroupSuggestion(DAIRY, DICTIONARY),
                 // the item above
                 ItemGroupSuggestion(DAIRY, RULE),
-                ItemGroupSuggestion(DEPOSIT, RULE), ItemGroupSuggestion(DEPOSIT, RULE),
+                ItemGroupSuggestion(DEPOSIT, RULE),
+                ItemGroupSuggestion(DEPOSIT, RULE),
                 // the item it names
                 ItemGroupSuggestion(PRODUCE, RULE)
             ),
@@ -108,7 +117,10 @@ class ItemGroupClassifierTest {
     @Test
     fun learnedProductWinsOverDictionary() {
         val learning = ItemGroupClassifier(
-            listOf(LearnedItemGroup("Meggle Baguet", BAKERY), LearnedItemGroup("MEGGLE BAGUET", READY_MEALS))
+            listOf(
+                LearnedItemGroup("Meggle Baguet", BAKERY),
+                LearnedItemGroup("MEGGLE BAGUET", READY_MEALS)
+            )
         )
         // the latest choice, independent of case and punctuation
         assertEquals(ItemGroupSuggestion(READY_MEALS, PRODUCT), learning.groupOf("Meggle Baguet."))
@@ -116,7 +128,10 @@ class ItemGroupClassifierTest {
 
     @Test
     fun learnedWordsNeedSeveralChoices() {
-        val once = ItemGroupClassifier(listOf(LearnedItemGroup("Sportness Riegel", ItemGroup.SWEETS_SNACKS)))
+        val once =
+            ItemGroupClassifier(
+                listOf(LearnedItemGroup("Sportness Riegel", ItemGroup.SWEETS_SNACKS))
+            )
         assertNull(once.groupOf("Sportness NatEnergy"))
         val twice = ItemGroupClassifier(
             listOf(
@@ -124,20 +139,38 @@ class ItemGroupClassifierTest {
                 LearnedItemGroup("Sportness Proteinriegel", ItemGroup.SWEETS_SNACKS)
             )
         )
-        assertEquals(ItemGroupSuggestion(ItemGroup.SWEETS_SNACKS, WORDS), twice.groupOf("Sportness NatEnergy"))
+        assertEquals(
+            ItemGroupSuggestion(ItemGroup.SWEETS_SNACKS, WORDS),
+            twice.groupOf("Sportness NatEnergy")
+        )
     }
 
     @Test
     fun modelBeforeDictionary() {
-        val model = ItemGroupClassifier(emptyList(), TestModels.constant(0.95f, "drinks", "dairy", "produce"))
+        val model =
+            ItemGroupClassifier(
+                emptyList(),
+                TestModels.constant(0.95f, "drinks", "dairy", "produce")
+            )
         assertEquals(ItemGroupSuggestion(DRINKS, MODEL), model.groupOf("GAZI H.GRILLKAESE"))
     }
 
     @Test
     fun modelBelowSureThresholdIsNotConfident() {
-        val model = ItemGroupClassifier(emptyList(), TestModels.constant(0.7f, "drinks", "dairy", "produce"))
-        assertEquals(ItemGroupSuggestion(DRINKS, MODEL, confident = false), model.groupOf("GAZI H.GRILLKAESE"))
-        val unsure = ItemGroupClassifier(emptyList(), TestModels.constant(0.4f, "drinks", "dairy", "produce"))
+        val model =
+            ItemGroupClassifier(
+                emptyList(),
+                TestModels.constant(0.7f, "drinks", "dairy", "produce")
+            )
+        assertEquals(
+            ItemGroupSuggestion(DRINKS, MODEL, confident = false),
+            model.groupOf("GAZI H.GRILLKAESE")
+        )
+        val unsure =
+            ItemGroupClassifier(
+                emptyList(),
+                TestModels.constant(0.4f, "drinks", "dairy", "produce")
+            )
         assertEquals(ItemGroupSuggestion(DAIRY, DICTIONARY), unsure.groupOf("GAZI H.GRILLKAESE"))
     }
 
@@ -154,20 +187,34 @@ class ItemGroupClassifierTest {
                 ItemGroupSuggestion(DRINKS, RULE),
                 ItemGroupSuggestion(DEPOSIT, RULE)
             ),
-            model.classify(listOf(item("Saft"), item("Rabatt", -20), item("PFAND 0,25", 25)), merchant = null)
+            model.classify(
+                listOf(item("Saft"), item("Rabatt", -20), item("PFAND 0,25", 25)),
+                merchant = null
+            )
         )
     }
 
     @Test
     fun modelGetsMerchant() {
-        val model = ItemGroupClassifier(emptyList(), TestModels.byChain("REWE", "drinks", "dairy", "produce"))
-        assertEquals(ItemGroupSuggestion(DRINKS, MODEL), model.groupOf("Haarspange Glitzer", "REWE Markt GmbH"))
+        val model =
+            ItemGroupClassifier(
+                emptyList(),
+                TestModels.byChain("REWE", "drinks", "dairy", "produce")
+            )
+        assertEquals(
+            ItemGroupSuggestion(DRINKS, MODEL),
+            model.groupOf("Haarspange Glitzer", "REWE Markt GmbH")
+        )
         assertNull(model.groupOf("Haarspange Glitzer"))
     }
 
     @Test
     fun groupsUnknownToTheAppAreSkipped() {
-        val model = ItemGroupClassifier(emptyList(), TestModels.constant(0.95f, "future_group", "dairy", "produce"))
+        val model =
+            ItemGroupClassifier(
+                emptyList(),
+                TestModels.constant(0.95f, "future_group", "dairy", "produce")
+            )
         assertEquals(ItemGroupSuggestion(DAIRY, DICTIONARY), model.groupOf("GAZI H.GRILLKAESE"))
     }
 
@@ -175,14 +222,19 @@ class ItemGroupClassifierTest {
 
     /** Merchants of the fixtures whose photos were cut to the items */
     private val merchants = mapOf(
-        "dm" to "dm-drogerie markt", "metzger" to "Metzgerei", "baecker" to "Bäckerei", "baumarkt" to "Baumarkt"
+        "dm" to "dm-drogerie markt",
+        "metzger" to "Metzgerei",
+        "baecker" to "Bäckerei",
+        "baumarkt" to "Baumarkt"
     )
 
     private fun labelled(): Map<String, Pair<String?, List<Labelled>>> {
         val labels = File(ReceiptFixtures.dir(), "item-groups.csv").readText().lines().drop(1)
             .filter { it.isNotBlank() }
             .map { line ->
-                line.split(";").let { (receipt, name, group) -> Triple(receipt, name, ItemGroup.ofId(group)!!) }
+                line.split(";").let { (receipt, name, group) ->
+                    Triple(receipt, name, ItemGroup.ofId(group)!!)
+                }
             }
         return labels.groupBy { it.first }.mapValues { (receipt, rows) ->
             val parsed = ReceiptParser.parse(
@@ -190,12 +242,21 @@ class ItemGroupClassifierTest {
             )
             val expected = rows.associate { it.second to it.third }
             (merchants[receipt] ?: parsed.merchant) to parsed.items.map { item ->
-                Labelled(receipt, item, expected[item.name] ?: error("No label for ${item.name} in $receipt"))
+                Labelled(
+                    receipt,
+                    item,
+                    expected[item.name] ?: error("No label for ${item.name} in $receipt")
+                )
             }
         }
     }
 
-    private class Result(val total: Int, val assigned: Int, val correct: Int, val errors: List<String>)
+    private class Result(
+        val total: Int,
+        val assigned: Int,
+        val correct: Int,
+        val errors: List<String>
+    )
 
     private fun evaluate(classifierFor: (String) -> ItemGroupClassifier): Result {
         var total = 0
@@ -208,9 +269,13 @@ class ItemGroupClassifierTest {
             items.zip(groups).forEach { (labelled, suggestion) ->
                 total++
                 if (suggestion != null) assigned++
-                if (suggestion?.group == labelled.expected) correct++
-                else errors += "$receipt: ${labelled.item.name} → ${suggestion?.group} (${suggestion?.source}), " +
-                    "expected ${labelled.expected}"
+                if (suggestion?.group == labelled.expected) {
+                    correct++
+                } else {
+                    errors +=
+                        "$receipt: ${labelled.item.name} → ${suggestion?.group} " +
+                        "(${suggestion?.source}), expected ${labelled.expected}"
+                }
             }
         }
         return Result(total, assigned, correct, errors)

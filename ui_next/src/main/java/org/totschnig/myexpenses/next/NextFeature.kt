@@ -5,12 +5,12 @@ import androidx.compose.runtime.ProvidedValue
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
-import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
-import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactions
-import org.totschnig.myexpenses.next.core.ui.merchants.PayeeImage
-import org.totschnig.myexpenses.ui.DisplayParty
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model.ContribPayload
+import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
+import org.totschnig.myexpenses.next.core.ui.merchants.PayeeImage
+import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactions
+import org.totschnig.myexpenses.ui.DisplayParty
 import org.totschnig.myexpenses.viewmodel.data.Transaction2
 
 /**
@@ -105,7 +105,7 @@ class NextShell(
     /** What all areas add to the details of a transaction */
     val transactionDetails: @Composable (ShownTransaction) -> Unit,
     /** Opens the settings of the insights, e.g. from an analysis */
-    val openInsightSettings: () -> Unit,
+    val openInsightSettings: () -> Unit
 )
 
 /**
@@ -122,5 +122,5 @@ class RowDecorations(
     val payeeImage: ((payeeId: Long) -> PayeeImage?)? = null,
     val payeeImageDialog: (
         @Composable (payee: DisplayParty, transaction: Transaction2?, onDismiss: () -> Unit) -> Unit
-    )? = null,
+    )? = null
 )

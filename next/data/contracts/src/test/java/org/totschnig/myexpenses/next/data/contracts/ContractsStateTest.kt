@@ -1,9 +1,9 @@
 package org.totschnig.myexpenses.next.data.contracts
 
+import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.time.LocalDate
 
 class ContractsStateTest {
 
@@ -15,13 +15,19 @@ class ContractsStateTest {
         isActive: Boolean = true,
         last: LocalDate = today,
         category: String? = null,
-        isConfirmed: Boolean = true,
+        isConfirmed: Boolean = true
     ) = Contract(
         signature = signature,
         name = signature,
         interval = ContractInterval.MONTHLY,
         transactions = listOf(
-            ContractTransaction(id = 1, date = last, amount = -amount, accountId = 1, categoryPath = category)
+            ContractTransaction(
+                id = 1,
+                date = last,
+                amount = -amount,
+                accountId = 1,
+                categoryPath = category
+            )
         ),
         nextExpectedDate = last.plusMonths(1),
         isActive = isActive,
@@ -36,7 +42,7 @@ class ContractsStateTest {
                 contract("big", 900),
                 contract("oldEnded", 500, isActive = false, last = today.minusMonths(6)),
                 contract("newEnded", 500, isActive = false, last = today.minusMonths(3)),
-                contract("wrong", 300),
+                contract("wrong", 300)
             ),
             ContractSettings(dismissed = setOf("wrong", "notDetectedAnyMore"))
         )
@@ -65,7 +71,7 @@ class ContractsStateTest {
                 contract("phone", 300, category = "Kommunikation"),
                 contract("notInsurance", 200, category = "Versicherungen"),
                 contract("studio", 50, category = "Freizeit"),
-                contract("deletedArea", 40, category = "Wohnen"),
+                contract("deletedArea", 40, category = "Wohnen")
             ),
             ContractSettings(
                 areas = mapOf(
@@ -77,7 +83,12 @@ class ContractsStateTest {
                 customAreas = listOf(gym)
             )
         )
-        assertEquals(listOf("liability"), state.forArea(BuiltInArea.INSURANCE).active.map { it.signature })
+        assertEquals(
+            listOf("liability"),
+            state.forArea(BuiltInArea.INSURANCE).active.map {
+                it.signature
+            }
+        )
         assertEquals(
             listOf("rent", "phone", "deletedArea"),
             state.forArea(BuiltInArea.HOUSING).active.map { it.signature }
@@ -90,7 +101,10 @@ class ContractsStateTest {
     fun showsTabsForUsedBuiltInAndAllCustomAreas() {
         val empty = CustomArea("1", "Empty")
         val state = buildContractsState(
-            listOf(contract("rent", 900, category = "Wohnen > Miete"), contract("tv", 100, category = "Streaming")),
+            listOf(
+                contract("rent", 900, category = "Wohnen > Miete"),
+                contract("tv", 100, category = "Streaming")
+            ),
             ContractSettings(customAreas = listOf(empty))
         )
         assertEquals(listOf(BuiltInArea.HOUSING, BuiltInArea.STREAMING, empty), state.areas)
@@ -103,7 +117,7 @@ class ContractsStateTest {
                 contract("confirmed", 100),
                 contract("small", 50, isConfirmed = false),
                 contract("big", 500, isConfirmed = false, category = "Wohnen"),
-                contract("endedSuggestion", 300, isActive = false, isConfirmed = false),
+                contract("endedSuggestion", 300, isActive = false, isConfirmed = false)
             ),
             ContractSettings()
         )
@@ -120,13 +134,22 @@ class ContractsStateTest {
         val state = buildContractsState(
             listOf(
                 contract("running", 100),
-                contract("cancelledEarlier", 200, isActive = false).copy(cancelledOn = today.minusMonths(2)),
-                contract("cancelledNow", 300, isActive = false).copy(cancelledOn = today),
+                contract(
+                    "cancelledEarlier",
+                    200,
+                    isActive = false
+                ).copy(cancelledOn = today.minusMonths(2)),
+                contract("cancelledNow", 300, isActive = false).copy(cancelledOn = today)
             ),
             ContractSettings()
         )
         assertEquals(listOf("running"), state.active.map { it.signature })
-        assertEquals(listOf("cancelledNow", "cancelledEarlier"), state.cancelled.map { it.signature })
+        assertEquals(
+            listOf("cancelledNow", "cancelledEarlier"),
+            state.cancelled.map {
+                it.signature
+            }
+        )
         assertTrue(state.ended.isEmpty())
     }
 }

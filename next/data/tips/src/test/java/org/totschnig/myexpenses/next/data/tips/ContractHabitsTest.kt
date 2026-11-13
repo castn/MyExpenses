@@ -1,5 +1,6 @@
 package org.totschnig.myexpenses.next.data.tips
 
+import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -10,7 +11,6 @@ import org.totschnig.myexpenses.next.data.contracts.BuiltInArea
 import org.totschnig.myexpenses.next.data.contracts.Contract
 import org.totschnig.myexpenses.next.data.contracts.ContractInterval
 import org.totschnig.myexpenses.next.data.contracts.ContractTransaction
-import java.time.LocalDate
 
 class ContractHabitsTest {
 
@@ -25,11 +25,13 @@ class ContractHabitsTest {
         interval: ContractInterval = ContractInterval.MONTHLY,
         amount: Long = 5000,
         area: BuiltInArea? = null,
-        reserve: Boolean? = null,
+        reserve: Boolean? = null
     ): Contract {
         val transactions = generateSequence(since) { it.plus(interval.step) }
             .takeWhile { !it.isAfter(today.minusDays(3)) }
-            .map { ContractTransaction(nextId++, it, -amount, 1, payeeName = payee, comment = comment) }
+            .map {
+                ContractTransaction(nextId++, it, -amount, 1, payeeName = payee, comment = comment)
+            }
             .toList()
         return Contract(
             signature = "r:$nextId",
@@ -46,12 +48,21 @@ class ContractHabitsTest {
 
     @Test
     fun carInsuranceIsSwitchableButNoDuplicate() {
-        assertEquals(ContractKind.CAR_INSURANCE, ContractKind.of(contract("HUK-COBURG", "Kfz-Versicherung KA-AB 123")))
-        assertEquals(ContractKind.CAR_INSURANCE, ContractKind.of(contract("Allianz", "Kfz-Haftpflicht")))
+        assertEquals(
+            ContractKind.CAR_INSURANCE,
+            ContractKind.of(contract("HUK-COBURG", "Kfz-Versicherung KA-AB 123"))
+        )
+        assertEquals(
+            ContractKind.CAR_INSURANCE,
+            ContractKind.of(contract("Allianz", "Kfz-Haftpflicht"))
+        )
         assertNull(ContractKind.of(contract("Bundeskasse", "Kfz-Steuer")))
         assertTrue(
             duplicateContracts(
-                listOf(contract("HUK", "Kfz-Versicherung Golf"), contract("HUK", "Kfz-Versicherung Polo"))
+                listOf(
+                    contract("HUK", "Kfz-Versicherung Golf"),
+                    contract("HUK", "Kfz-Versicherung Polo")
+                )
             ).isEmpty()
         )
     }
@@ -75,7 +86,12 @@ class ContractHabitsTest {
 
     @Test
     fun noLongRunningTipForYoungContracts() {
-        assertNull(longRunningContracts(listOf(contract("Vattenfall", since = today.minusMonths(20))), today))
+        assertNull(
+            longRunningContracts(
+                listOf(contract("Vattenfall", since = today.minusMonths(20))),
+                today
+            )
+        )
     }
 
     @Test
@@ -107,8 +123,12 @@ class ContractHabitsTest {
 
     @Test
     fun reservesAreNoFrequentPayments() {
-        assertNull(frequentPayments(listOf(contract("Allianz", "Rentenversicherung", reserve = true))))
-        assertNull(frequentPayments(listOf(contract("Allianz", "Lebensversicherung", reserve = true))))
+        assertNull(
+            frequentPayments(listOf(contract("Allianz", "Rentenversicherung", reserve = true)))
+        )
+        assertNull(
+            frequentPayments(listOf(contract("Allianz", "Lebensversicherung", reserve = true)))
+        )
     }
 
     @Test

@@ -2,14 +2,14 @@ package org.totschnig.myexpenses.next.data.merchants
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * The logos of [Merchants], loaded once per domain and kept as files in [dir]. A domain the icon
@@ -26,7 +26,7 @@ class MerchantLogoStore(
     private val dir: File,
     private val fetch: suspend (domain: String) -> Fetched = ::fetchFromDuckDuckGo,
     private val prepare: (ByteArray) -> Lookup = ::preparePng,
-    private val now: () -> Long = System::currentTimeMillis,
+    private val now: () -> Long = System::currentTimeMillis
 ) {
     sealed interface Fetched {
         class Icon(val bytes: ByteArray) : Fetched
@@ -64,25 +64,33 @@ class MerchantLogoStore(
      * Like [logo], but says why there is none. A domain asked recently without usable logo is
      * [Lookup.Missing], whatever the reason was.
      */
-    suspend fun lookup(domain: String, retry: Boolean = false): Lookup = withContext(Dispatchers.IO) {
-        val logo = File(dir, "$domain.png")
-        val missing = File(dir, "$domain.missing")
-        when {
-            logo.exists() -> Lookup.Found(logo.readBytes())
-            !retry && missing.exists() && now() - missing.lastModified() < RETRY_AFTER_MS -> Lookup.Missing
-            else -> when (val fetched = fetch(domain)) {
-                is Fetched.Icon -> prepare(fetched.bytes).also {
-                    if (it is Lookup.Found) {
-                        dir.mkdirs()
-                        logo.writeBytes(it.bytes)
-                        missing.delete()
-                    } else markMissing(missing)
+    suspend fun lookup(domain: String, retry: Boolean = false): Lookup =
+        withContext(Dispatchers.IO) {
+            val logo = File(dir, "$domain.png")
+            val missing = File(dir, "$domain.missing")
+            when {
+                logo.exists() -> Lookup.Found(logo.readBytes())
+
+                !retry && missing.exists() && now() - missing.lastModified() < RETRY_AFTER_MS ->
+                    Lookup.Missing
+
+                else -> when (val fetched = fetch(domain)) {
+                    is Fetched.Icon -> prepare(fetched.bytes).also {
+                        if (it is Lookup.Found) {
+                            dir.mkdirs()
+                            logo.writeBytes(it.bytes)
+                            missing.delete()
+                        } else {
+                            markMissing(missing)
+                        }
+                    }
+
+                    Fetched.Missing -> Lookup.Missing.also { markMissing(missing) }
+
+                    Fetched.Failed -> Lookup.Failed
                 }
-                Fetched.Missing -> Lookup.Missing.also { markMissing(missing) }
-                Fetched.Failed -> Lookup.Failed
             }
         }
-    }
 
     private fun markMissing(file: File) {
         dir.mkdirs()
@@ -116,36 +124,58 @@ class MerchantLogoStore(
  * Asks the icon service of DuckDuckGo, which answers 404 with a placeholder for domains without
  * an icon. Only the domain is sent.
  */
-private suspend fun fetchFromDuckDuckGo(domain: String): MerchantLogoStore.Fetched = withContext(Dispatchers.IO) {
-    try {
-        val connection = URL("https://icons.duckduckgo.com/ip3/$domain.ico").openConnection() as HttpURLConnection
+private suspend fun fetchFromDuckDuckGo(domain: String): MerchantLogoStore.Fetched =
+    withContext(Dispatchers.IO) {
         try {
-            connection.connectTimeout = 10_000
-            connection.readTimeout = 10_000
-            when (connection.responseCode) {
-                HttpURLConnection.HTTP_OK ->
-                    MerchantLogoStore.Fetched.Icon(connection.inputStream.use { it.readBytes() })
-                HttpURLConnection.HTTP_NOT_FOUND -> MerchantLogoStore.Fetched.Missing
-                else -> MerchantLogoStore.Fetched.Failed
+            val connection = URL(
+                "https://icons.duckduckgo.com/ip3/$domain.ico"
+            ).openConnection() as HttpURLConnection
+            try {
+                connection.connectTimeout = 10_000
+                connection.readTimeout = 10_000
+                when (connection.responseCode) {
+                    HttpURLConnection.HTTP_OK ->
+                        MerchantLogoStore.Fetched.Icon(
+                            connection.inputStream.use {
+                                it.readBytes()
+                            }
+                        )
+
+                    HttpURLConnection.HTTP_NOT_FOUND -> MerchantLogoStore.Fetched.Missing
+
+                    else -> MerchantLogoStore.Fetched.Failed
+                }
+            } finally {
+                connection.disconnect()
             }
-        } finally {
-            connection.disconnect()
+        } catch (_: IOException) {
+            MerchantLogoStore.Fetched.Failed
         }
-    } catch (_: IOException) {
-        MerchantLogoStore.Fetched.Failed
     }
-}
 
 /** Decodes an icon of any format Android reads, e.g. ICO, PNG, WebP, and stores it as PNG */
 private fun preparePng(bytes: ByteArray): MerchantLogoStore.Lookup {
-    val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size) ?: return MerchantLogoStore.Lookup.Unreadable
-    if (minOf(bitmap.width, bitmap.height) < MerchantLogoStore.MIN_SIZE) return MerchantLogoStore.Lookup.TooSmall
+    val bitmap =
+        BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            ?: return MerchantLogoStore.Lookup.Unreadable
+    if (minOf(bitmap.width, bitmap.height) < MerchantLogoStore.MIN_SIZE) {
+        return MerchantLogoStore.Lookup.TooSmall
+    }
     val scale = MerchantLogoStore.MAX_SIZE.toFloat() / maxOf(bitmap.width, bitmap.height)
-    val scaled = if (scale < 1) Bitmap.createScaledBitmap(
-        bitmap, (bitmap.width * scale).toInt(), (bitmap.height * scale).toInt(), true
-    ) else bitmap
-    return MerchantLogoStore.Lookup.Found(ByteArrayOutputStream().use {
-        scaled.compress(Bitmap.CompressFormat.PNG, 100, it)
-        it.toByteArray()
-    })
+    val scaled = if (scale < 1) {
+        Bitmap.createScaledBitmap(
+            bitmap,
+            (bitmap.width * scale).toInt(),
+            (bitmap.height * scale).toInt(),
+            true
+        )
+    } else {
+        bitmap
+    }
+    return MerchantLogoStore.Lookup.Found(
+        ByteArrayOutputStream().use {
+            scaled.compress(Bitmap.CompressFormat.PNG, 100, it)
+            it.toByteArray()
+        }
+    )
 }

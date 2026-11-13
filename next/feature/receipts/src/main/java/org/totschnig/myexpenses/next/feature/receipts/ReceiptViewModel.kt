@@ -1,17 +1,15 @@
 package org.totschnig.myexpenses.next.feature.receipts
 
-import org.totschnig.myexpenses.next.core.common.logTimings
-import org.totschnig.myexpenses.next.core.common.measured
-import androidx.lifecycle.ViewModel
 import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import org.totschnig.itemgroupmodel.ProductGroupModel
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import java.time.LocalDate
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -22,13 +20,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.totschnig.itemgroupmodel.ProductGroupModel
+import org.totschnig.myexpenses.next.core.common.logTimings
+import org.totschnig.myexpenses.next.core.common.measured
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
-import timber.log.Timber
-import java.time.LocalDate
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
 import org.totschnig.myexpenses.next.data.receipts.ItemGroupClassifier
-import org.totschnig.myexpenses.next.data.receipts.ItemGroupModels
 import org.totschnig.myexpenses.next.data.receipts.ItemGroupModelSetupStore
+import org.totschnig.myexpenses.next.data.receipts.ItemGroupModels
 import org.totschnig.myexpenses.next.data.receipts.LearnedItemGroup
 import org.totschnig.myexpenses.next.data.receipts.ParsedReceipt
 import org.totschnig.myexpenses.next.data.receipts.Receipt
@@ -39,6 +38,7 @@ import org.totschnig.myexpenses.next.data.receipts.ReceiptMatcher
 import org.totschnig.myexpenses.next.data.receipts.ReceiptParser
 import org.totschnig.myexpenses.next.data.receipts.ReceiptTarget
 import org.totschnig.myexpenses.next.data.receipts.withSuggestedGroups
+import timber.log.Timber
 
 sealed interface ReceiptScanState {
     val target: ReceiptTarget
@@ -50,8 +50,10 @@ sealed interface ReceiptScanState {
     enum class Reason {
         /** Text recognition is not installed or happens in an external app */
         NoRecognition,
+
         /** Recognition or saving went wrong */
         Error,
+
         /** No item found on the photo */
         NoItems
     }
@@ -87,7 +89,7 @@ class ReceiptViewModel(
     /** Where the database, the files and the network are read */
     private val io: CoroutineDispatcher = Dispatchers.IO,
     /** The text recognition, null while its module is not installed */
-    private val textRecognitionProvider: () -> TextRecognition?,
+    private val textRecognitionProvider: () -> TextRecognition?
 ) : ViewModel() {
 
     private val textRecognition: TextRecognition? get() = textRecognitionProvider()
@@ -115,7 +117,8 @@ class ReceiptViewModel(
     private val _recognizeAgainFailed = MutableStateFlow<ReceiptScanState.Reason?>(null)
 
     /** Why reading the photo of [draft] again gave nothing, until the user closes the notice */
-    val recognizeAgainFailed: StateFlow<ReceiptScanState.Reason?> = _recognizeAgainFailed.asStateFlow()
+    val recognizeAgainFailed: StateFlow<ReceiptScanState.Reason?> =
+        _recognizeAgainFailed.asStateFlow()
 
     /** Receipts can be read, so scanning one on its own makes sense */
     val canRecognize: Boolean
@@ -131,9 +134,15 @@ class ReceiptViewModel(
 
     /** Receipts scanned on their own or waiting, whose transaction the user chooses */
     val assignments = ReceiptAssignments(
-        database, homeCurrency, viewModelScope, io,
+        database,
+        homeCurrency,
+        viewModelScope,
+        io,
         openDraft = { draft, payee -> open(draft.classified(payee)) },
-        onFailed = { target -> _scan.value = ReceiptScanState.Failed(target, ReceiptScanState.Reason.Error) }
+        onFailed = { target ->
+            _scan.value =
+                ReceiptScanState.Failed(target, ReceiptScanState.Reason.Error)
+        }
     )
 
     init {
@@ -155,22 +164,30 @@ class ReceiptViewModel(
     }
 
     /** @param payee of the transaction, tells the kind of shop when the receipt does not show it */
-    fun receipt(transactionId: Long, payee: String?): Flow<Receipt?> = database.changesOf(transactionId).map {
-        withContext(io) {
-            measured("receipts: load $transactionId") {
-                database.load(transactionId)?.let { classifiedOnce(transactionId, it, payee) }
+    fun receipt(transactionId: Long, payee: String?): Flow<Receipt?> =
+        database.changesOf(transactionId).map {
+            withContext(io) {
+                measured("receipts: load $transactionId") {
+                    database.load(transactionId)?.let { classifiedOnce(transactionId, it, payee) }
+                }
             }
-        }
-    }.logTimings("receipts: receipt $transactionId")
+        }.logTimings("receipts: receipt $transactionId")
 
     /**
      * Receipts saved before there were groups get them once. Items no source knows stay without
      * group, so saving happens only when something was found, and the saved receipt is stable.
      */
     private fun classifiedOnce(transactionId: Long, receipt: Receipt, payee: String?): Receipt {
-        if (receipt.items.none { it.group == null && !it.groupByUser && it.amount > 0 }) return receipt
+        if (receipt.items.none {
+                it.group == null && !it.groupByUser && it.amount > 0
+            }
+        ) {
+            return receipt
+        }
         val items =
-            receipt.items.withSuggestedGroups(classifier().classify(receipt.items, shopHint(receipt.merchant, payee)))
+            receipt.items.withSuggestedGroups(
+                classifier().classify(receipt.items, shopHint(receipt.merchant, payee))
+            )
         if (items == receipt.items) return receipt
         return receipt.copy(items = items).also { database.save(transactionId, it) }
     }
@@ -194,7 +211,8 @@ class ReceiptViewModel(
 
     /** The classifier of the last learned groups and model, kept as long as neither changes */
     @Volatile
-    private var classifierCache: Triple<List<LearnedItemGroup>, ProductGroupModel?, ItemGroupClassifier>? = null
+    private var classifierCache:
+        Triple<List<LearnedItemGroup>, ProductGroupModel?, ItemGroupClassifier>? = null
 
     /** Learns from all groups the user chose so far, uses the model if there is one */
     private fun classifier(): ItemGroupClassifier {
@@ -202,10 +220,14 @@ class ReceiptViewModel(
             ItemGroup.ofId(id)?.let { LearnedItemGroup(name, it) }
         }
         val model = modelStore.model()
-        classifierCache?.takeIf { it.first == learned && it.second === model }?.let { return it.third }
-        return ItemGroupClassifier(learned, model).also { classifierCache = Triple(learned, model, it) }
+        classifierCache?.takeIf {
+            it.first == learned && it.second === model
+        }?.let { return it.third }
+        return ItemGroupClassifier(learned, model).also {
+            classifierCache =
+                Triple(learned, model, it)
+        }
     }
-
 
     /**
      * Groups for the items without one. The merchant printed on the receipt and the payee of the
@@ -222,7 +244,9 @@ class ReceiptViewModel(
         draftPayee = payee
         val target = ReceiptTarget.Transaction(transactionId)
         recognize(target, photo) { receipt ->
-            open(ReceiptDraft.recognized(target, transactionAmount, receipt, photo).classified(payee))
+            open(
+                ReceiptDraft.recognized(target, transactionAmount, receipt, photo).classified(payee)
+            )
         }
     }
 
@@ -234,7 +258,11 @@ class ReceiptViewModel(
         }
     }
 
-    private fun recognize(target: ReceiptTarget, photo: Uri, onRecognized: (ParsedReceipt) -> Unit) {
+    private fun recognize(
+        target: ReceiptTarget,
+        photo: Uri,
+        onRecognized: (ParsedReceipt) -> Unit
+    ) {
         _scan.value = ReceiptScanState.Recognizing(target)
         viewModelScope.launch(io) {
             _scan.value = try {
@@ -263,7 +291,11 @@ class ReceiptViewModel(
 
     /** Opens the saved receipt for corrections; receipts saved before there were groups get them now */
     fun edit(transactionId: Long, transactionAmount: Long, payee: String?, receipt: Receipt) {
-        val draft = ReceiptDraft.saved(ReceiptTarget.Transaction(transactionId), transactionAmount, receipt)
+        val draft = ReceiptDraft.saved(
+            ReceiptTarget.Transaction(transactionId),
+            transactionAmount,
+            receipt
+        )
         draftPayee = payee
         open(draft)
         if (draft.itemsWithoutGroup.isNotEmpty()) {
@@ -281,7 +313,11 @@ class ReceiptViewModel(
             _photo.value = null
             draft.photo?.let { uri ->
                 viewModelScope.launch(io) {
-                    loadPhoto(uri)?.let { photo -> if (_draft.value?.photo == uri) _photo.value = photo }
+                    loadPhoto(uri)?.let { photo ->
+                        if (_draft.value?.photo == uri) {
+                            _photo.value = photo
+                        }
+                    }
                 }
             }
         }
@@ -301,12 +337,26 @@ class ReceiptViewModel(
                 val text = textRecognition?.recognize(photo)
                 val parsed = text?.let(ReceiptParser::parse)
                 when {
-                    text == null -> _recognizeAgainFailed.value = ReceiptScanState.Reason.NoRecognition
-                    parsed == null || parsed.items.isEmpty() -> _recognizeAgainFailed.value =
-                        ReceiptScanState.Reason.NoItems
+                    text == null ->
+                        _recognizeAgainFailed.value =
+                            ReceiptScanState.Reason.NoRecognition
+
+                    parsed == null || parsed.items.isEmpty() ->
+                        _recognizeAgainFailed.value =
+                            ReceiptScanState.Reason.NoItems
+
                     else -> {
-                        val again = ReceiptDraft.recognized(draft.target, draft.transactionAmount, parsed, photo)
-                            .copy(isNewPhoto = draft.isNewPhoto, isStandalone = draft.isStandalone, isChanged = true)
+                        val again = ReceiptDraft.recognized(
+                            draft.target,
+                            draft.transactionAmount,
+                            parsed,
+                            photo
+                        )
+                            .copy(
+                                isNewPhoto = draft.isNewPhoto,
+                                isStandalone = draft.isStandalone,
+                                isChanged = true
+                            )
                             .classified(draftPayee)
                         _draft.update { if (it?.photo == photo) again else it }
                     }
@@ -330,7 +380,9 @@ class ReceiptViewModel(
 
     fun setTotal(total: Long?) = _draft.update { it?.withDetails(total = total) }
 
-    fun setCardAmount(cardAmount: Long?) = _draft.update { it?.withDetails(cardAmount = cardAmount) }
+    fun setCardAmount(cardAmount: Long?) = _draft.update {
+        it?.withDetails(cardAmount = cardAmount)
+    }
 
     fun updateItem(index: Int, item: ReceiptItem) = _draft.update { it?.update(index, item) }
 
@@ -362,7 +414,9 @@ class ReceiptViewModel(
                 val shot = draft.photo
                 val photo = if (draft.isNewPhoto && shot != null) {
                     database.keepPhoto(shot, (draft.target as? ReceiptTarget.Transaction)?.id)
-                } else shot
+                } else {
+                    shot
+                }
                 val receipt = draft.receipt.copy(photo = photo)
                 when (val target = draft.target) {
                     is ReceiptTarget.Transaction -> database.save(target.id, receipt)

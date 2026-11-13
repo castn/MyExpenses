@@ -1,6 +1,5 @@
 package org.totschnig.myexpenses.next.feature.tags
 
-import org.totschnig.myexpenses.next.core.common.ledger.Memo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
@@ -13,8 +12,9 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import org.totschnig.myexpenses.next.data.categories.counterpart
+import org.totschnig.myexpenses.next.core.common.ledger.Memo
 import org.totschnig.myexpenses.next.core.common.stateWhileShown
+import org.totschnig.myexpenses.next.data.categories.counterpart
 import org.totschnig.myexpenses.next.data.tags.TagDatabase
 import org.totschnig.myexpenses.next.data.tags.TagInput
 import org.totschnig.myexpenses.next.data.tags.TagLearner

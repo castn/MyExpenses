@@ -91,25 +91,25 @@ import org.totschnig.myexpenses.compose.main.validatedBalanceType
 import org.totschnig.myexpenses.compose.transactions.Action
 import org.totschnig.myexpenses.compose.transactions.ActionMenu
 import org.totschnig.myexpenses.compose.transactions.ViewOptionsMenu
+import org.totschnig.myexpenses.designsystem.DetailCard
 import org.totschnig.myexpenses.designsystem.FabMenuItem
 import org.totschnig.myexpenses.designsystem.MenuFab
 import org.totschnig.myexpenses.designsystem.SearchTopBar
 import org.totschnig.myexpenses.designsystem.Shapes
-import org.totschnig.myexpenses.next.search.SearchFilterChips
-import org.totschnig.myexpenses.next.search.TransactionSearch
-import org.totschnig.myexpenses.next.search.rememberTransactionSearch
-import org.totschnig.myexpenses.viewmodel.SumInfo
 import org.totschnig.myexpenses.dialog.MenuItem
 import org.totschnig.myexpenses.model.BalanceType
 import org.totschnig.myexpenses.next.core.common.R as NextR
+import org.totschnig.myexpenses.next.search.SearchFilterChips
+import org.totschnig.myexpenses.next.search.TransactionSearch
+import org.totschnig.myexpenses.next.search.rememberTransactionSearch
 import org.totschnig.myexpenses.preference.PreferenceState
 import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.util.enumValueOrDefault
 import org.totschnig.myexpenses.viewmodel.MainViewModel
+import org.totschnig.myexpenses.viewmodel.SumInfo
 import org.totschnig.myexpenses.viewmodel.data.BaseAccount
 import org.totschnig.myexpenses.viewmodel.data.FullAccount
 import org.totschnig.myexpenses.viewmodel.data.PageAccount
-import org.totschnig.myexpenses.designsystem.DetailCard
 
 /**
  * Account page of the new design, showing the transactions of the selected account.
@@ -136,7 +136,7 @@ fun NextAccountScreen(
     windowInsets: WindowInsets,
     bankIcon: (@Composable (Modifier, Long) -> Unit)? = null,
     /** Back to the overview, null if both are shown side by side */
-    onBack: (() -> Unit)? = null,
+    onBack: (() -> Unit)? = null
 ) {
     LaunchedEffect(Unit) {
         viewModel.setLastVisited(StartScreen.Transactions)
@@ -153,7 +153,9 @@ fun NextAccountScreen(
     val pageAccount = remember(currentAccount) { currentAccount.toPageAccount(context) }
     val search = rememberTransactionSearch(
         accountId = currentAccount.id,
-        persistence = remember(currentAccount.id) { viewModel.filterPersistence.getValue(currentAccount.id) },
+        persistence = remember(currentAccount.id) {
+            viewModel.filterPersistence.getValue(currentAccount.id)
+        },
         fractionDigits = currentAccount.currencyUnit.fractionDigits,
         scope = viewModel.viewModelScope
     )
@@ -166,7 +168,11 @@ fun NextAccountScreen(
     val fabScroll = remember {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                if (available.y < -1f) isFabExtended = false else if (available.y > 1f) isFabExtended = true
+                if (available.y < -1f) {
+                    isFabExtended = false
+                } else if (available.y > 1f) {
+                    isFabExtended = true
+                }
                 return Offset.Zero
             }
         }
@@ -196,7 +202,9 @@ fun NextAccountScreen(
                         onClose = search::close,
                         closeLabel = stringResource(NextR.string.next_search_close),
                         clearLabel = stringResource(NextR.string.next_search_clear),
-                        windowInsets = windowInsets.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top),
+                        windowInsets = windowInsets.only(
+                            WindowInsetsSides.Horizontal + WindowInsetsSides.Top
+                        )
                     )
                 } else {
                     AccountTopBar(
@@ -241,23 +249,38 @@ fun NextAccountScreen(
             if (isSearching) {
                 val sumInfo by viewModel.sumInfo(pageAccount).collectAsState(SumInfo.EMPTY)
                 SearchFilterChips(search, pageAccount, sumInfo)
-            } else BalanceHeader(
-                account = currentAccount,
-                bankIcon = bankIcon,
-                onDisplayBalanceTypeChange = if (isPortfolio) null else viewModel::persistBalanceType,
-                onCopyBalance = { onEvent(AppEvent.CopyToClipBoard(it)) },
-                onSetNewBalance = if (isPortfolio) null else {
-                    { onEvent(AppEvent.MenuItemClicked(R.id.NEW_BALANCE_COMMAND)) }
-                },
-                onAccountEvent = onAccountEvent,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
+            } else {
+                BalanceHeader(
+                    account = currentAccount,
+                    bankIcon = bankIcon,
+                    onDisplayBalanceTypeChange = if (isPortfolio) {
+                        null
+                    } else {
+                        viewModel::persistBalanceType
+                    },
+                    onCopyBalance = { onEvent(AppEvent.CopyToClipBoard(it)) },
+                    onSetNewBalance = if (isPortfolio) {
+                        null
+                    } else {
+                        { onEvent(AppEvent.MenuItemClicked(R.id.NEW_BALANCE_COMMAND)) }
+                    },
+                    onAccountEvent = onAccountEvent,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
             Box(
                 Modifier
                     .weight(1f)
                     .nestedScroll(fabScroll)
             ) {
-                if (pageAccount.isPortfolio) pageContent(pageAccount, true) else transactionList(pageAccount, search)
+                if (pageAccount.isPortfolio) {
+                    pageContent(
+                        pageAccount,
+                        true
+                    )
+                } else {
+                    transactionList(pageAccount, search)
+                }
             }
         }
     }
@@ -269,7 +292,7 @@ private fun AccountTopBar(
     title: String,
     windowInsets: WindowInsets,
     onBack: (() -> Unit)?,
-    actions: @Composable RowScope.() -> Unit,
+    actions: @Composable RowScope.() -> Unit
 ) {
     TopAppBar(
         windowInsets = windowInsets.only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top),
@@ -324,7 +347,7 @@ private fun NewTransactionFab(
     accountColor: Color,
     onEvent: AppEventHandler,
     /** Opens the trade screen for an action of a portfolio */
-    onTrade: (Action) -> Unit,
+    onTrade: (Action) -> Unit
 ) {
     // Transfers and splits are no longer entered by hand, they come from the import
     val actions = if (isPortfolio) {
@@ -333,11 +356,14 @@ private fun NewTransactionFab(
         Action.STANDARD_ACTIONS.filter { it != Action.Transfer && it != Action.Split }
     }
     // A fixed action from the settings is started by a tap, otherwise a tap opens the menu
-    val staticAction = if (isPortfolio) null else
+    val staticAction = if (isPortfolio) {
+        null
+    } else {
         viewModel.defaultAction.collectAsState("LastVisited").value
             .takeIf { it != "LastVisited" }
             ?.let { enumValueOrDefault(it, Action.Expense) }
             ?.takeIf { it in actions }
+    }
     fun start(action: Action) {
         if (action in Action.PORTFOLIO_ACTIONS) {
             onTrade(action)
@@ -346,7 +372,9 @@ private fun NewTransactionFab(
         }
     }
     MenuFab(
-        label = staticAction?.let { stringResource(it.label) } ?: stringResource(NextR.string.next_fab_new),
+        label =
+            staticAction?.let { stringResource(it.label) }
+                ?: stringResource(NextR.string.next_fab_new),
         icon = Icons.Default.Add,
         items = actions.map { action ->
             FabMenuItem(
@@ -376,7 +404,7 @@ private fun SelectionTopBar(
     currentAccount: BaseAccount,
     windowInsets: WindowInsets,
     onEvent: AppEventHandler,
-    onPrepareContextMenuItem: (Int) -> Boolean,
+    onPrepareContextMenuItem: (Int) -> Boolean
 ) {
     BackHandler {
         viewModel.clearSelection()
@@ -428,15 +456,19 @@ private fun AccountActions(
     onEvent: AppEventHandler,
     onPrepareMenuItem: (Int) -> Boolean,
     /** Opens the search of the new UI instead of the filter dialog of the classic one, null for the classic one */
-    onSearch: (() -> Unit)?,
+    onSearch: (() -> Unit)?
 ) {
     val onEvent = remember(onEvent, onSearch) {
         object : AppEventHandler {
             override fun invoke(event: AppEvent) {
                 if (
-                    onSearch != null && event is AppEvent.MenuItemClicked && event.itemId == R.id.SEARCH_COMMAND
-                ) onSearch()
-                else onEvent(event)
+                    onSearch != null && event is AppEvent.MenuItemClicked &&
+                    event.itemId == R.id.SEARCH_COMMAND
+                ) {
+                    onSearch()
+                } else {
+                    onEvent(event)
+                }
             }
         }
     }
@@ -447,8 +479,9 @@ private fun AccountActions(
             .whereFilter
             .collectAsState(null).value != null
 
-        MenuItem.ShowStatusHandle -> viewModel.showStatusHandle.flow
-            .collectAsState(initial = false).value
+        MenuItem.ShowStatusHandle ->
+            viewModel.showStatusHandle.flow
+                .collectAsState(initial = false).value
 
         else -> false
     }
@@ -459,7 +492,11 @@ private fun AccountActions(
 
     val filteredItems = menuConfig.value.filter { onPrepareMenuItem(it.id) }
     // no need to show overflow menu if there is only one item
-    val quickItems = if (filteredItems.size > 1) filteredItems.take(visibleActionItems) else filteredItems
+    val quickItems = if (filteredItems.size > 1) {
+        filteredItems.take(visibleActionItems)
+    } else {
+        filteredItems
+    }
     val overflowItems = filteredItems - quickItems.toSet()
 
     quickItems.forEach { menuItem ->
@@ -493,19 +530,24 @@ private fun BalanceHeader(
     onCopyBalance: (String) -> Unit,
     onSetNewBalance: (() -> Unit)?,
     onAccountEvent: AccountEventHandler,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     var isExpanded by rememberSaveable { mutableStateOf(false) }
     val rotation by animateFloatAsState(if (isExpanded) 180f else 0f)
     val balanceType = account.validatedBalanceType
-    val displayBalance = if ((account as? FullAccount)?.isPortfolio == true)
-        account.effectiveBalance else account.balanceForType
+    val displayBalance = if ((account as? FullAccount)?.isPortfolio == true) {
+        account.effectiveBalance
+    } else {
+        account.balanceForType
+    }
 
     Column(modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
                 .clip(Shapes.chip)
-                .clickable(onClickLabel = stringResource(R.string.content_description_show_balance_details)) {
+                .clickable(
+                    onClickLabel = stringResource(R.string.content_description_show_balance_details)
+                ) {
                     isExpanded = !isExpanded
                 }
                 .padding(vertical = 4.dp),
@@ -522,7 +564,9 @@ private fun BalanceHeader(
                 // Only non-default balance types are worth pointing out
                 Icon(
                     imageVector = balanceType.icon,
-                    contentDescription = stringResource(account.getBalanceContentDescription(balanceType)),
+                    contentDescription = stringResource(
+                        account.getBalanceContentDescription(balanceType)
+                    ),
                     modifier = Modifier
                         .padding(start = 8.dp)
                         .size(16.dp),
@@ -549,7 +593,9 @@ private fun BalanceHeader(
                             AccountIndicator(account, bankIcon)
                             Spacer(Modifier.width(12.dp))
                             Text(
-                                text = stringResource(account.getBalanceContentDescription(balanceType)),
+                                text = stringResource(
+                                    account.getBalanceContentDescription(balanceType)
+                                ),
                                 style = MaterialTheme.typography.titleSmall
                             )
                         }
@@ -566,7 +612,9 @@ private fun BalanceHeader(
                         horizontalArrangement = Arrangement.End
                     ) {
                         TextButton(onClick = {
-                            onCopyBalance(currencyFormatter.convAmount(displayBalance, account.currencyUnit))
+                            onCopyBalance(
+                                currencyFormatter.convAmount(displayBalance, account.currencyUnit)
+                            )
                         }) {
                             Icon(Icons.Default.ContentCopy, contentDescription = null)
                             Spacer(Modifier.width(8.dp))

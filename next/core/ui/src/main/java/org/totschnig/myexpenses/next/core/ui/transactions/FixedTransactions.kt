@@ -38,7 +38,7 @@ fun FixedTransactionsScreen(
     subtitle: String?,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
-    transactionList: @Composable (Modifier) -> Unit,
+    transactionList: @Composable (Modifier) -> Unit
 ) {
     Column(
         modifier = modifier

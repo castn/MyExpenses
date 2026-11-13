@@ -38,19 +38,25 @@ internal class ReceiptVocabulary(
     /** The months, January first, by the start of their names in small letters ("aug" for "Aug.") */
     val months: List<String>,
     /** Letters recognition reads instead of others, as wrong to right */
-    private val confusions: Map<Char, Char>,
+    private val confusions: Map<Char, Char>
 ) {
 
     fun isTotal(text: String): Boolean {
         val letters = letters(text)
         if (isSubtotal(text)) return false
-        return totalStarts.any { letters.startsWith(it) } ||
-                words(text).any { word -> word in totalWords || misreadTotalWords.any { looksLike(word, it) } }
+        return totalStarts.any { letters.startsWith(it) } || words(text).any { word ->
+            word in totalWords ||
+                misreadTotalWords.any { looksLike(word, it) }
+        }
     }
 
-    fun isSubtotal(text: String) = letters(text).let { letters -> subtotalStarts.any { letters.startsWith(it) } }
+    fun isSubtotal(text: String) = letters(text).let { letters ->
+        subtotalStarts.any { letters.startsWith(it) }
+    }
 
-    fun isPayment(text: String) = letters(text).let { letters -> paymentWords.any { it in letters } }
+    fun isPayment(text: String) = letters(text).let { letters ->
+        paymentWords.any { it in letters }
+    }
 
     fun isCard(text: String) = words(text).any { word -> cardWords.any { it in word } }
 
@@ -61,9 +67,12 @@ internal class ReceiptVocabulary(
      * umlauts may be read without dots ("Mar" for "Mär")
      */
     fun monthOf(word: String): Int? = foldUmlauts(word.lowercase()).takeIf { it.length >= 3 }
-        ?.let { name -> months.indexOfFirst { name.startsWith(foldUmlauts(it)) } }?.takeIf { it >= 0 }?.plus(1)
+        ?.let { name ->
+            months.indexOfFirst { name.startsWith(foldUmlauts(it)) }
+        }?.takeIf { it >= 0 }?.plus(1)
 
-    private fun foldUmlauts(text: String) = text.replace('ä', 'a').replace('ö', 'o').replace('ü', 'u')
+    private fun foldUmlauts(text: String) =
+        text.replace('ä', 'a').replace('ö', 'o').replace('ü', 'u')
 
     fun unitOf(word: String) = units[word.lowercase().removeSuffix(".")]
 
@@ -73,7 +82,9 @@ internal class ReceiptVocabulary(
      */
     private fun looksLike(word: String, keyword: String) =
         word.length == keyword.length && word.take(2) == keyword.take(2) &&
-                word.map { confusions[it] ?: it }.zip(keyword.toList()).count { (a, b) -> a != b } <= 1
+            word.map {
+                confusions[it] ?: it
+            }.zip(keyword.toList()).count { (a, b) -> a != b } <= 1
 
     private fun words(text: String) = text.split(SPACES).map(::letters)
 
@@ -81,14 +92,22 @@ internal class ReceiptVocabulary(
 
     companion object {
         val GERMAN = ReceiptVocabulary(
-            totalStarts = listOf("SUMME", "ZUZAHLEN", "GESAMT", "TOTAL", "ALDIPREIS", "EINKAUFSWERT"),
+            totalStarts = listOf(
+                "SUMME",
+                "ZUZAHLEN",
+                "GESAMT",
+                "TOTAL",
+                "ALDIPREIS",
+                "EINKAUFSWERT"
+            ),
             totalWords = setOf("SUMME", "TOTAL", "GESAMTSUMME"),
             misreadTotalWords = listOf("SUMME"),
             subtotalStarts = listOf("ZWSUMME", "ZWISCHENSUMME", "SUBTOTAL", "NEUERPREIS"),
             paymentWords = listOf("ZAHLUNG", "ECCASH", "ECASH", "BARGELD", "GEGEBEN"),
             // "ARTENZAHLUNG" and "FCCASH" as misread on dm and REWE receipts
             cardWords = listOf(
-                "ECCASH", "FCCASH", "ECASH", "ECKARTE", "KARTE", "ARTENZAHLUNG", "GIROCARD", "CARD", "VISA",
+                "ECCASH", "FCCASH", "ECASH", "ECKARTE", "KARTE", "ARTENZAHLUNG", "GIROCARD", "CARD",
+                "VISA",
                 "MAESTRO", "VPAY", "KONTAKTLOS", "DEBIT", "AMEX", "APPLEPAY", "GOOGLEPAY"
             ),
             cashWords = setOf("BAR", "BARGELD", "BARZAHLUNG", "RÜCKGELD", "ZURÜCK"),
@@ -97,13 +116,17 @@ internal class ReceiptVocabulary(
             units = mapOf(
                 "kg" to ReceiptUnit.KG, "k9" to ReceiptUnit.KG, "kq" to ReceiptUnit.KG,
                 "stück" to ReceiptUnit.PIECE, "stk" to ReceiptUnit.PIECE, "st" to ReceiptUnit.PIECE,
-                "stuck" to ReceiptUnit.PIECE, "stúck" to ReceiptUnit.PIECE, "stùck" to ReceiptUnit.PIECE,
+                "stuck" to ReceiptUnit.PIECE, "stúck" to ReceiptUnit.PIECE,
+                "stùck" to ReceiptUnit.PIECE,
                 "5tuck" to ReceiptUnit.PIECE, "5tück" to ReceiptUnit.PIECE,
-                "gtuck" to ReceiptUnit.PIECE, "gtúck" to ReceiptUnit.PIECE, "gtück" to ReceiptUnit.PIECE,
+                "gtuck" to ReceiptUnit.PIECE, "gtúck" to ReceiptUnit.PIECE,
+                "gtück" to ReceiptUnit.PIECE
             ),
             currencies = setOf("€", "EUR", "e"),
-            months = listOf("jan", "feb", "mär", "apr", "mai", "jun", "jul", "aug", "sep", "okt", "nov", "dez"),
-            confusions = mapOf('N' to 'M'),
+            months = listOf(
+                "jan", "feb", "mär", "apr", "mai", "jun", "jul", "aug", "sep", "okt", "nov", "dez"
+            ),
+            confusions = mapOf('N' to 'M')
         )
     }
 }

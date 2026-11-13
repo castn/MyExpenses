@@ -1,11 +1,11 @@
 package org.totschnig.myexpenses.next.data.categories
 
+import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.core.model.ledger.OwnAccounts
-import java.time.LocalDate
 
 class CategoryInputsTest {
 
@@ -28,7 +28,7 @@ class CategoryInputsTest {
                 LedgerTransaction(3, today, amount = -3000, accountId = 1, isSplit = true),
                 LedgerTransaction(4, today, amount = -4000, accountId = 1, isSealed = true),
                 // Movements to own accounts imported from the bank can have a category
-                LedgerTransaction(5, today, amount = -5000, accountId = 1, targetAccountId = 2),
+                LedgerTransaction(5, today, amount = -5000, accountId = 1, targetAccountId = 2)
             ),
             OwnAccounts(emptySet(), emptyMap())
         )

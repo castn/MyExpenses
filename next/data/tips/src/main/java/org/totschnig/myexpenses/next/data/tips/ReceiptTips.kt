@@ -1,12 +1,12 @@
 package org.totschnig.myexpenses.next.data.tips
 
-import org.totschnig.myexpenses.next.data.merchants.supermarketOf
-import org.totschnig.myexpenses.next.core.model.receipts.ScannedItem
-import org.totschnig.myexpenses.next.data.contracts.ContractTransaction
-import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
 import java.time.LocalDate
 import java.time.YearMonth
 import kotlin.math.absoluteValue
+import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
+import org.totschnig.myexpenses.next.core.model.receipts.ScannedItem
+import org.totschnig.myexpenses.next.data.contracts.ContractTransaction
+import org.totschnig.myexpenses.next.data.merchants.supermarketOf
 
 /*
  * Tips from the items of scanned receipts. Only some purchases are scanned, so the tips compare
@@ -25,8 +25,12 @@ internal class ScannedPurchase(val transaction: ContractTransaction, val items: 
  *
  * @param receipts items by transaction
  */
-internal fun scannedPurchases(spending: List<ContractTransaction>, receipts: Map<Long, List<ScannedItem>>) =
-    spending.mapNotNull { transaction -> receipts[transaction.id]?.let { ScannedPurchase(transaction, it) } }
+internal fun scannedPurchases(
+    spending: List<ContractTransaction>,
+    receipts: Map<Long, List<ScannedItem>>
+) = spending.mapNotNull { transaction ->
+    receipts[transaction.id]?.let { ScannedPurchase(transaction, it) }
+}
 
 /**
  * A kind of goods that is easy to buy less of, e.g. sweets, took a clearly larger share of the
@@ -41,7 +45,7 @@ data class ItemGroupRising(
     val usualShare: Float,
     override val yearlyAmount: Long,
     val transactions: List<ContractTransaction>,
-    val month: YearMonth,
+    val month: YearMonth
 ) : SavingTip {
     override val id: String get() = "$ID_PREFIX${group.id}"
 
@@ -75,7 +79,8 @@ data class ItemGroupRising(
         }
 
         /** Enough scanned purchases in both periods to compare them */
-        fun hasEnough(recent: Int, usual: Int) = recent >= MIN_RECENT_PURCHASES && usual >= MIN_USUAL_PURCHASES
+        fun hasEnough(recent: Int, usual: Int) =
+            recent >= MIN_RECENT_PURCHASES && usual >= MIN_USUAL_PURCHASES
     }
 }
 
@@ -87,7 +92,7 @@ data class ItemGroupRising(
 data class DepositNotReturned(
     val paid: Long,
     val returned: Long,
-    val transactions: List<ContractTransaction>,
+    val transactions: List<ContractTransaction>
 ) : SavingTip {
     override val id: String get() = ID
     override val yearlyAmount: Long get() = paid - returned
@@ -108,7 +113,7 @@ data class DepositNotReturned(
 data class DrugstoreInSupermarkets(
     override val yearlyAmount: Long,
     val itemCount: Int,
-    val transactions: List<ContractTransaction>,
+    val transactions: List<ContractTransaction>
 ) : SavingTip {
     override val id: String get() = ID
     override val facts: Set<String> get() = setOf("level:${level(yearlyAmount)}")
@@ -128,7 +133,10 @@ private fun List<ScannedPurchase>.lastYear(today: LocalDate) =
  * Compares the share of each of [ItemGroupRising.WATCHED] in the last [ItemGroupRising.RECENT_MONTHS]
  * months with the year before
  */
-internal fun itemGroupsRising(purchases: List<ScannedPurchase>, today: LocalDate): List<ItemGroupRising> {
+internal fun itemGroupsRising(
+    purchases: List<ScannedPurchase>,
+    today: LocalDate
+): List<ItemGroupRising> {
     val recent = purchases.filter { ItemGroupRising.isRecent(it.transaction.date, today) }
     val usual = purchases.filter { ItemGroupRising.isUsual(it.transaction.date, today) }
     if (!ItemGroupRising.hasEnough(recent.size, usual.size)) return emptyList()
@@ -141,7 +149,7 @@ internal fun itemGroupsRising(purchases: List<ScannedPurchase>, today: LocalDate
         val usualShare = usual.shareOf(group)
         if (
             recentShare < usualShare * ItemGroupRising.MIN_FACTOR ||
-                recentShare - usualShare < ItemGroupRising.MIN_POINTS
+            recentShare - usualShare < ItemGroupRising.MIN_POINTS
         ) {
             return@mapNotNull null
         }
@@ -156,26 +164,42 @@ internal fun itemGroupsRising(purchases: List<ScannedPurchase>, today: LocalDate
     }
 }
 
-internal fun depositNotReturned(purchases: List<ScannedPurchase>, today: LocalDate): DepositNotReturned? {
+internal fun depositNotReturned(
+    purchases: List<ScannedPurchase>,
+    today: LocalDate
+): DepositNotReturned? {
     val deposits = purchases.lastYear(today)
         .map { purchase -> purchase to purchase.items.filter { it.group == ItemGroup.DEPOSIT.id } }
         .filter { (_, items) -> items.isNotEmpty() }
     val paid = deposits.sumOf { (_, items) -> items.filter { it.amount > 0 }.sumOf { it.amount } }
-    val returned = deposits.sumOf { (_, items) -> items.filter { it.amount < 0 }.sumOf { it.amount.absoluteValue } }
+    val returned = deposits.sumOf { (_, items) ->
+        items.filter { it.amount < 0 }.sumOf { it.amount.absoluteValue }
+    }
     if (paid - returned < DepositNotReturned.MIN_AMOUNT) return null
     return DepositNotReturned(
-        paid, returned,
+        paid,
+        returned,
         deposits.filter { (_, items) -> items.any { it.amount > 0 } }.map { it.first.transaction }
     )
 }
 
-internal fun drugstoreInSupermarkets(purchases: List<ScannedPurchase>, today: LocalDate): DrugstoreInSupermarkets? {
+internal fun drugstoreInSupermarkets(
+    purchases: List<ScannedPurchase>,
+    today: LocalDate
+): DrugstoreInSupermarkets? {
     val withDrugstore = purchases.lastYear(today)
-        .filter { supermarketOf(it.transaction.payeeName) != null && it.amountOf(ItemGroup.DRUGSTORE) > 0 }
+        .filter {
+            supermarketOf(it.transaction.payeeName) != null &&
+                it.amountOf(ItemGroup.DRUGSTORE) > 0
+        }
     val amount = withDrugstore.sumOf { it.amountOf(ItemGroup.DRUGSTORE) }
     val itemCount = withDrugstore.sumOf { purchase ->
         purchase.items.count { it.group == ItemGroup.DRUGSTORE.id && it.amount > 0 }
     }
-    if (amount < DrugstoreInSupermarkets.MIN_AMOUNT || itemCount < DrugstoreInSupermarkets.MIN_ITEMS) return null
+    if (amount < DrugstoreInSupermarkets.MIN_AMOUNT ||
+        itemCount < DrugstoreInSupermarkets.MIN_ITEMS
+    ) {
+        return null
+    }
     return DrugstoreInSupermarkets(amount, itemCount, withDrugstore.map { it.transaction })
 }

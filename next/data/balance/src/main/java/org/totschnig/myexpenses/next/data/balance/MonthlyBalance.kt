@@ -1,8 +1,8 @@
 package org.totschnig.myexpenses.next.data.balance
 
-import org.totschnig.myexpenses.next.data.contracts.Contract
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
+import org.totschnig.myexpenses.next.data.contracts.Contract
 
 /**
  * Period the balance is computed for.
@@ -11,11 +11,7 @@ import java.time.temporal.ChronoUnit
  * @param end first day after the period, the day the next salary is expected
  * @param isSalaryCycle true, if the period runs from salary to salary, false for the calendar month
  */
-data class BalancePeriod(
-    val start: LocalDate,
-    val end: LocalDate,
-    val isSalaryCycle: Boolean,
-) {
+data class BalancePeriod(val start: LocalDate, val end: LocalDate, val isSalaryCycle: Boolean) {
     operator fun contains(date: LocalDate) = !date.isBefore(start) && date.isBefore(end)
 
     /** Days from [today] until the end, at least 1 */
@@ -27,11 +23,17 @@ data class BalancePeriod(
          */
         fun of(salary: Contract?, today: LocalDate): BalancePeriod {
             // Salaries booked in advance do not start a new period before they arrive
-            val lastSalary = salary?.transactions?.map { it.date }?.filter { !it.isAfter(today) }?.maxOrNull()
+            val lastSalary = salary?.transactions?.map {
+                it.date
+            }?.filter { !it.isAfter(today) }?.maxOrNull()
             if (salary != null && lastSalary != null) {
                 val next = lastSalary.plus(salary.interval.step)
                 // A late salary is expected any day now
-                return BalancePeriod(lastSalary, if (next.isAfter(today)) next else today.plusDays(1), true)
+                return BalancePeriod(
+                    lastSalary,
+                    if (next.isAfter(today)) next else today.plusDays(1),
+                    true
+                )
             }
             val firstOfMonth = today.withDayOfMonth(1)
             return BalancePeriod(firstOfMonth, firstOfMonth.plusMonths(1), false)
@@ -50,7 +52,7 @@ data class BalanceTransaction(
     val date: LocalDate,
     val amount: Long,
     val accountId: Long,
-    val transferAccountId: Long? = null,
+    val transferAccountId: Long? = null
 )
 
 /**
@@ -74,7 +76,7 @@ data class MonthlyBalance(
     val other: Long,
     val incomeTransactionIds: List<Long>,
     val savingsTransactionIds: List<Long>,
-    val otherTransactionIds: List<Long>,
+    val otherTransactionIds: List<Long>
 ) {
     val income: Long get() = incomeBooked + incomeUpcoming
 
@@ -99,13 +101,19 @@ data class MonthlyBalance(
             transactions: List<BalanceTransaction>,
             dailyAccountIds: Set<Long>,
             contracts: List<Contract>,
-            salaries: List<Contract> = emptyList(),
+            salaries: List<Contract> = emptyList()
         ): MonthlyBalance {
-            val (reserveContracts, expenseContracts) = contracts.filter { !it.isIncome }.partition { it.isReserve }
+            val (reserveContracts, expenseContracts) = contracts.filter {
+                !it.isIncome
+            }.partition { it.isReserve }
             val contractTransactionIds =
-                expenseContracts.flatMapTo(HashSet()) { contract -> contract.transactions.map { it.id } }
+                expenseContracts.flatMapTo(HashSet()) { contract ->
+                    contract.transactions.map { it.id }
+                }
             val reserveTransactionIds =
-                reserveContracts.flatMapTo(HashSet()) { contract -> contract.transactions.map { it.id } }
+                reserveContracts.flatMapTo(HashSet()) { contract ->
+                    contract.transactions.map { it.id }
+                }
             val income = mutableListOf<BalanceTransaction>()
             val contractDebits = mutableListOf<BalanceTransaction>()
             val savings = mutableListOf<BalanceTransaction>()
@@ -119,8 +127,11 @@ data class MonthlyBalance(
                             if (it.transferAccountId !in dailyAccountIds) savings += it
 
                         it.amount > 0 -> income += it
+
                         it.id in contractTransactionIds -> contractDebits += it
+
                         it.id in reserveTransactionIds -> savings += it
+
                         else -> other += it
                     }
                 }

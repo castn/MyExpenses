@@ -1,12 +1,12 @@
 package org.totschnig.myexpenses.next.data.contracts
 
+import java.time.LocalDate
+import java.time.Period
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.time.LocalDate
-import java.time.Period
 
 class ContractAnalysisTest {
 
@@ -19,13 +19,17 @@ class ContractAnalysisTest {
         payeeId: Long,
         templateId: Long? = null,
         last: LocalDate = today.minusDays(3)
-    ) =
-        (0 until count).map {
-            ContractTransaction(
-                id = nextId++, date = last.minus(Period.ofMonths(count - 1 - it)), amount = amount, accountId = 1,
-                payeeId = payeeId, payeeName = "Payee $payeeId", templateId = templateId
-            )
-        }
+    ) = (0 until count).map {
+        ContractTransaction(
+            id = nextId++,
+            date = last.minus(Period.ofMonths(count - 1 - it)),
+            amount = amount,
+            accountId = 1,
+            payeeId = payeeId,
+            payeeName = "Payee $payeeId",
+            templateId = templateId
+        )
+    }
 
     private val rent = monthly(12, -80000, payeeId = 1)
     private val gym = monthly(3, -3000, payeeId = 2)
@@ -35,15 +39,17 @@ class ContractAnalysisTest {
     private fun analysis(
         rules: List<ContractRule> = emptyList(),
         transactions: List<ContractTransaction> = this.transactions
-    ) =
-        ContractAnalysis.of(transactions, rules, today)
+    ) = ContractAnalysis.of(transactions, rules, today)
 
     private fun ContractAnalysis.contract(payeeId: Long) =
         contracts.single { it.transactions.first().payeeId == payeeId }
 
     @Test
     fun confidentWithManyRegularPaymentsOrTemplate() {
-        val analysis = analysis(transactions = transactions + monthly(3, -1000, payeeId = 4, templateId = 7))
+        val analysis = analysis(
+            transactions =
+                transactions + monthly(3, -1000, payeeId = 4, templateId = 7)
+        )
         assertTrue(analysis.contract(1).isConfident)
         assertFalse(analysis.contract(2).isConfident)
         assertTrue(analysis.contract(3).isConfident)
@@ -87,7 +93,10 @@ class ContractAnalysisTest {
 
     @Test
     fun dismissingConfirmedContractKeepsItsDecisions() {
-        val (rules, rule) = emptyList<ContractRule>().withRuleFor(analysis().contract(1), transactions) {
+        val (rules, rule) = emptyList<ContractRule>().withRuleFor(
+            analysis().contract(1),
+            transactions
+        ) {
             it.copy(name = "Rent")
         }
         val confirmed = analysis(rules).contract(1)
@@ -148,7 +157,10 @@ class ContractAnalysisTest {
 
     @Test
     fun stateTakesDecisionsFromRules() {
-        val (rules, _) = emptyList<ContractRule>().withRuleFor(analysis().contract(1), transactions) {
+        val (rules, _) = emptyList<ContractRule>().withRuleFor(
+            analysis().contract(1),
+            transactions
+        ) {
             it.copy(name = "Rent", areaKey = BuiltInArea.HOUSING.key)
         }
         val ignored = rules.dismissing(analysis(rules).contract(2), transactions)
@@ -213,7 +225,9 @@ class ContractAnalysisTest {
             setOf(3),
             interval = ContractInterval.MONTHLY
         )
-        val payments = monthly(3, -900, payeeId = 1) + monthly(3, -1200, payeeId = 2) + monthly(3, -5000, payeeId = 3)
+        val payments =
+            monthly(3, -900, payeeId = 1) + monthly(3, -1200, payeeId = 2) +
+                monthly(3, -5000, payeeId = 3)
         val analysis = analysis(listOf(a, b, c), payments)
         val (_, ab) = listOf(a, b, c).merging(analysis.contract(1), analysis.contract(2), payments)
         assertEquals(700L..1500L, ab.amountRange)
@@ -233,10 +247,14 @@ class ContractAnalysisTest {
                 payeeName = "HUK"
             )
         )
-        val withoutPayee = ContractTransaction(id = 901, date = today.minusDays(5), amount = -500, accountId = 1)
+        val withoutPayee =
+            ContractTransaction(id = 901, date = today.minusDays(5), amount = -500, accountId = 1)
         val payments = transactions + insurance + withoutPayee
         val confirmedRules = analysis(transactions = payments).automaticRules(emptyList())
-        val rules = confirmedRules.dismissing(analysis(confirmedRules, payments).contract(2), payments)
+        val rules = confirmedRules.dismissing(
+            analysis(confirmedRules, payments).contract(2),
+            payments
+        )
         val analysis = analysis(rules, payments)
         assertTrue(analysis.infoFor(rent.first().id) is PaymentContractInfo.Confirmed)
         assertTrue(analysis.infoFor(gym.first().id) is PaymentContractInfo.Dismissed)

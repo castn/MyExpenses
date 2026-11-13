@@ -30,14 +30,14 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import org.totschnig.myexpenses.designsystem.theme.LocalSemanticColors
-import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
 import org.totschnig.myexpenses.designsystem.Dot
 import org.totschnig.myexpenses.designsystem.GroupItem
 import org.totschnig.myexpenses.designsystem.GroupPosition
 import org.totschnig.myexpenses.designsystem.TextBadge
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.designsystem.theme.LocalSemanticColors
 import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
 import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
 import org.totschnig.myexpenses.next.data.contracts.Contract
 import org.totschnig.myexpenses.next.data.contracts.icon
@@ -62,7 +62,7 @@ internal fun ContractItem(
     /** For suggestions: buttons to confirm or reject them, next to the amount */
     suggestionActions: SuggestionActions? = null,
     /** Shows a dot for unread news */
-    hasNews: Boolean = false,
+    hasNews: Boolean = false
 ) {
     val formatter = LocalAmountFormatter.current
     val dateFormatter = rememberDateFormatter()
@@ -72,7 +72,14 @@ internal fun ContractItem(
                 .fillMaxWidth()
                 .clickable(onClick = onClick)
                 .semantics { customActions = accessibilityActions }
-                .padding(start = 16.dp, end = if (editAction != null || suggestionActions != null) 4.dp else 16.dp)
+                .padding(
+                    start = 16.dp,
+                    end = if (editAction != null || suggestionActions != null) {
+                        4.dp
+                    } else {
+                        16.dp
+                    }
+                )
                 .padding(vertical = if (editAction != null) 4.dp else 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -135,10 +142,16 @@ internal fun ContractItem(
                 if (editAction == null) {
                     PriceChangeIndicator(contract, currency)
                     Text(
-                        text = (if (contract.isIncome) "+ " else "") + formatter.format(contract.lastAmount, currency),
+                        text =
+                            (if (contract.isIncome) "+ " else "") +
+                                formatter.format(contract.lastAmount, currency),
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold,
-                        color = if (contract.isIncome) LocalSemanticColors.current.income else Color.Unspecified,
+                        color = if (contract.isIncome) {
+                            LocalSemanticColors.current.income
+                        } else {
+                            Color.Unspecified
+                        },
                         modifier = Modifier.padding(start = 8.dp)
                     )
                 }
@@ -191,7 +204,11 @@ private fun PriceChangeIndicator(contract: Contract, currency: CurrencyInfo) {
         // More money going out is bad, more coming in is good
         tint = if (
             increased != contract.isIncome
-        ) LocalSemanticColors.current.expense else LocalSemanticColors.current.income,
+        ) {
+            LocalSemanticColors.current.expense
+        } else {
+            LocalSemanticColors.current.income
+        },
         modifier = Modifier.size(16.dp)
     )
 }

@@ -26,7 +26,12 @@ fun ReceiptDraft.toJson(): String = JSONObject().apply {
     put("changed", isChanged)
     put("standalone", isStandalone)
     put("leftoverRows", leftoverRows.toJson())
-    put("proposals", JSONObject().apply { proposals.forEach { (key, group) -> put(key, group.id) } })
+    put(
+        "proposals",
+        JSONObject().apply {
+            proposals.forEach { (key, group) -> put(key, group.id) }
+        }
+    )
 }.toString()
 
 /** null if [json] cannot be read */
@@ -71,12 +76,14 @@ fun receiptOf(json: JSONObject): Receipt = with(json) {
     )
 }
 
-fun List<LeftoverRow>.toJson(): JSONArray = JSONArray(map { row ->
-    JSONObject().apply {
-        put("text", row.text)
-        put("box", row.box.toJson())
+fun List<LeftoverRow>.toJson(): JSONArray = JSONArray(
+    map { row ->
+        JSONObject().apply {
+            put("text", row.text)
+            put("box", row.box.toJson())
+        }
     }
-})
+)
 
 fun leftoverRowsOf(json: JSONArray): List<LeftoverRow> = parseJsonArray(json.toString()) {
     LeftoverRow(it.getString("text"), boxOf(it.getJSONArray("box")))
@@ -85,10 +92,12 @@ fun leftoverRowsOf(json: JSONArray): List<LeftoverRow> = parseJsonArray(json.toS
 private fun ReceiptTarget.toJson() = JSONObject().apply {
     when (this@toJson) {
         ReceiptTarget.Unassigned -> put("kind", "unassigned")
+
         is ReceiptTarget.Transaction -> {
             put("kind", "transaction")
             put("id", id)
         }
+
         is ReceiptTarget.Waiting -> {
             put("kind", "waiting")
             id?.let { put("id", it) }
@@ -96,12 +105,13 @@ private fun ReceiptTarget.toJson() = JSONObject().apply {
     }
 }
 
-private fun receiptTargetOf(json: JSONObject): ReceiptTarget = when (val kind = json.getString("kind")) {
-    "unassigned" -> ReceiptTarget.Unassigned
-    "transaction" -> ReceiptTarget.Transaction(json.getLong("id"))
-    "waiting" -> ReceiptTarget.Waiting(if (json.has("id")) json.getLong("id") else null)
-    else -> throw IllegalArgumentException("Unknown target $kind")
-}
+private fun receiptTargetOf(json: JSONObject): ReceiptTarget =
+    when (val kind = json.getString("kind")) {
+        "unassigned" -> ReceiptTarget.Unassigned
+        "transaction" -> ReceiptTarget.Transaction(json.getLong("id"))
+        "waiting" -> ReceiptTarget.Waiting(if (json.has("id")) json.getLong("id") else null)
+        else -> throw IllegalArgumentException("Unknown target $kind")
+    }
 
 private fun ReceiptItem.toJson() = JSONObject().apply {
     put("name", name)
@@ -131,7 +141,8 @@ private fun receiptItemOf(json: JSONObject) = with(json) {
 
 private fun Box.toJson() = JSONArray(listOf(left, top, right, bottom))
 
-private fun boxOf(json: JSONArray) = Box(json.getInt(0), json.getInt(1), json.getInt(2), json.getInt(3))
+private fun boxOf(json: JSONArray) =
+    Box(json.getInt(0), json.getInt(1), json.getInt(2), json.getInt(3))
 
 private fun JSONObject.optStringOrNull(key: String) = if (has(key)) getString(key) else null
 

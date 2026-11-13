@@ -36,7 +36,7 @@ data class CategoryDecisions(
 data class CategoryPlan(
     val apply: List<CategorySuggestion>,
     val backlog: List<CategorySuggestion>,
-    val suggestions: Map<Long, CategorySuggestion>,
+    val suggestions: Map<Long, CategorySuggestion>
 )
 
 /**
@@ -67,20 +67,31 @@ fun CategoryDecisions.plan(
  *
  * @param newId id of a new rule, if there is none for [categoryId] yet
  */
-fun CategoryDecisions.withRule(counterpart: Counterpart, categoryId: Long, newId: () -> String): CategoryDecisions {
+fun CategoryDecisions.withRule(
+    counterpart: Counterpart,
+    categoryId: Long,
+    newId: () -> String
+): CategoryDecisions {
     val payeeIds = setOfNotNull(counterpart.payeeId)
     val merchants = setOfNotNull(counterpart.merchant)
     val others = rulesWithout(counterpart)
     val existing = others.find { it.categoryId == categoryId }
     return copy(
         unclear = unclear - counterpart.key,
-        rules = if (existing != null) others.map {
-            if (it === existing) it.copy(
-                payeeIds = it.payeeIds + payeeIds,
-                merchants = it.merchants + merchants
-            ) else it
+        rules = if (existing != null) {
+            others.map {
+                if (it === existing) {
+                    it.copy(
+                        payeeIds = it.payeeIds + payeeIds,
+                        merchants = it.merchants + merchants
+                    )
+                } else {
+                    it
+                }
+            }
+        } else {
+            others + CategoryRule(newId(), payeeIds, categoryId, merchants)
         }
-        else others + CategoryRule(newId(), payeeIds, categoryId, merchants)
     )
 }
 
@@ -134,5 +145,8 @@ fun CategoryDecisions.rejecting(transactionId: Long, categoryId: Long) = copy(
 /** Remembers [applied] as automatic assignments, keeping the most recent [CategoryDecisions.MAX_AUTOMATIC] */
 fun CategoryDecisions.withAutomatic(applied: List<CategorySuggestion>) = copy(
     automatic = (automatic + applied.associate { it.transactionId to it.categoryId })
-        .entries.sortedByDescending { it.key }.take(CategoryDecisions.MAX_AUTOMATIC).associate { it.key to it.value }
+        .entries.sortedByDescending { it.key }.take(CategoryDecisions.MAX_AUTOMATIC).associate {
+            it.key to
+                it.value
+        }
 )

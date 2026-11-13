@@ -19,12 +19,28 @@ class ReceiptPhotoLoader(private val contentResolver: ContentResolver) {
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
         contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, bounds) }
         var sampleSize = 1
-        while (maxOf(bounds.outWidth, bounds.outHeight) / (sampleSize * 2) >= MAX_PHOTO_SIZE) sampleSize *= 2
+        while (maxOf(bounds.outWidth, bounds.outHeight) / (sampleSize * 2) >= MAX_PHOTO_SIZE) {
+            sampleSize *= 2
+        }
         val decoded = contentResolver.openInputStream(uri)?.use {
-            BitmapFactory.decodeStream(it, null, BitmapFactory.Options().apply { inSampleSize = sampleSize })
+            BitmapFactory.decodeStream(
+                it,
+                null,
+                BitmapFactory.Options().apply {
+                    inSampleSize =
+                        sampleSize
+                }
+            )
         }
         val rotation = contentResolver.openInputStream(uri)?.use {
-            when (ExifInterface(it).getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
+            when (
+                ExifInterface(
+                    it
+                ).getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL
+                )
+            ) {
                 ExifInterface.ORIENTATION_ROTATE_90 -> 90f
                 ExifInterface.ORIENTATION_ROTATE_180 -> 180f
                 ExifInterface.ORIENTATION_ROTATE_270 -> 270f
@@ -32,9 +48,21 @@ class ReceiptPhotoLoader(private val contentResolver: ContentResolver) {
             }
         } ?: 0f
         decoded?.let { bitmap ->
-            val upright = if (rotation == 0f) bitmap else Bitmap.createBitmap(
-                bitmap, 0, 0, bitmap.width, bitmap.height, Matrix().apply { postRotate(rotation) }, true
-            )
+            val upright = if (rotation == 0f) {
+                bitmap
+            } else {
+                Bitmap.createBitmap(
+                    bitmap,
+                    0,
+                    0,
+                    bitmap.width,
+                    bitmap.height,
+                    Matrix().apply {
+                        postRotate(rotation)
+                    },
+                    true
+                )
+            }
             ReceiptPhoto(uri, upright, 1f / sampleSize)
         }
     } catch (e: Exception) {

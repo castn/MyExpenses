@@ -17,7 +17,7 @@ fun ContractsFlow(
     viewModel: ContractsViewModel,
     fixedTransactions: FixedTransactions,
     modifier: Modifier = Modifier,
-    openContract: String? = null,
+    openContract: String? = null
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val news by viewModel.news.collectAsStateWithLifecycle()

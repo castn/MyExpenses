@@ -1,12 +1,12 @@
 package org.totschnig.myexpenses.next.data.tips
 
+import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.totschnig.myexpenses.next.data.contracts.ContractTransaction
-import java.time.LocalDate
 
 class BankFeesTest {
 
@@ -19,10 +19,16 @@ class BankFeesTest {
         comment: String? = null,
         category: String? = null,
         date: LocalDate = today.minusDays(5),
-        targetAccountId: Long? = null,
+        targetAccountId: Long? = null
     ) = ContractTransaction(
-        id = nextId++, date = date, amount = amount, accountId = 1, payeeName = payee, comment = comment,
-        categoryPath = category, targetAccountId = targetAccountId
+        id = nextId++,
+        date = date,
+        amount = amount,
+        accountId = 1,
+        payeeName = payee,
+        comment = comment,
+        categoryPath = category,
+        targetAccountId = targetAccountId
     )
 
     private fun monthlyAccountFee(months: Int = 12) = (0 until months).map {
@@ -44,7 +50,10 @@ class BankFeesTest {
         assertEquals(BankFeeKind.ATM, kind(comment = "Entgelt Fremdabhebung"))
         assertEquals(BankFeeKind.CARD, kind(comment = "Jahres-Kartenentgelt Visa"))
         assertEquals(BankFeeKind.OVERDRAFT, kind(comment = "Abrechnung Dispozinsen"))
-        assertEquals(BankFeeKind.ACCOUNT, kind(payee = "Sparkasse", comment = "Kontoführungsentgelt"))
+        assertEquals(
+            BankFeeKind.ACCOUNT,
+            kind(payee = "Sparkasse", comment = "Kontoführungsentgelt")
+        )
         assertEquals(BankFeeKind.OTHER, kind(category = "Finanzielle Aufwendungen > Bankgebühren"))
         assertEquals(BankFeeKind.OTHER, kind(category = "Financial expenses > Bank charges"))
         assertEquals(BankFeeKind.ACCOUNT, kind(category = "Bankgebühren > Kontoführung"))
@@ -77,7 +86,12 @@ class BankFeesTest {
     @Test
     fun refundsMovementsAndSmallAmountsAreLeftOut() {
         assertNull(bankFees(listOf(transaction(299, comment = "Erstattung Kontoführung")), today))
-        assertNull(bankFees(listOf(transaction(-5000, comment = "Kontoführung", targetAccountId = 2)), today))
+        assertNull(
+            bankFees(
+                listOf(transaction(-5000, comment = "Kontoführung", targetAccountId = 2)),
+                today
+            )
+        )
         assertNull(bankFees(listOf(transaction(-299, comment = "Kontoführung")), today))
     }
 
@@ -87,9 +101,15 @@ class BankFeesTest {
         val tip = bankFees(fees, today)!!
         val decisions = TipDecisions(dismissed = mapOf(tip.id to tip.facts))
         // One more month of the same fee is nothing new
-        assertTrue(decisions.isDismissed(bankFees(fees.drop(1) + transaction(-299, comment = "Kontoführung"), today)!!))
+        assertTrue(
+            decisions.isDismissed(
+                bankFees(fees.drop(1) + transaction(-299, comment = "Kontoführung"), today)!!
+            )
+        )
         assertFalse(
-            decisions.isDismissed(bankFees(fees + transaction(-175, comment = "Auslandseinsatzentgelt"), today)!!)
+            decisions.isDismissed(
+                bankFees(fees + transaction(-175, comment = "Auslandseinsatzentgelt"), today)!!
+            )
         )
         val doubled = fees.map { it.copy(amount = it.amount * 2) }
         assertFalse(decisions.isDismissed(bankFees(doubled, today)!!))

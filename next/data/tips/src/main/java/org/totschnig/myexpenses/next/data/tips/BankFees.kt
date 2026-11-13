@@ -1,8 +1,8 @@
 package org.totschnig.myexpenses.next.data.tips
 
-import org.totschnig.myexpenses.next.data.contracts.ContractTransaction
 import java.time.LocalDate
 import kotlin.math.absoluteValue
+import org.totschnig.myexpenses.next.data.contracts.ContractTransaction
 
 /**
  * What a bank charges for, in the order the fees are shown
@@ -25,11 +25,18 @@ object BankFee {
     /** Checked in this order, the more specific kinds first */
     private val PATTERNS: List<Pair<BankFeeKind, List<String>>> = listOf(
         BankFeeKind.FOREIGN to listOf(
-            "auslandseinsatz", "auslandsentgelt", "fremdwährungsentgelt", "fremdwährungsgebühr",
-            "währungsumrechnungsentgelt", "foreign transaction fee", "foreign exchange fee", "currency conversion fee"
+            "auslandseinsatz",
+            "auslandsentgelt",
+            "fremdwährungsentgelt",
+            "fremdwährungsgebühr",
+            "währungsumrechnungsentgelt",
+            "foreign transaction fee",
+            "foreign exchange fee",
+            "currency conversion fee"
         ),
         BankFeeKind.ATM to listOf(
-            "geldautomatengebühr", "geldautomatenentgelt", "automatenentgelt", "automatengebühr", "fremdabhebung",
+            "geldautomatengebühr", "geldautomatenentgelt", "automatenentgelt", "automatengebühr",
+            "fremdabhebung",
             "abhebegebühr", "abhebungsentgelt", "bargeldentgelt", "atm fee", "cash withdrawal fee"
         ),
         BankFeeKind.CARD to listOf("kartengebühr", "kartenentgelt", "card fee"),
@@ -41,7 +48,8 @@ object BankFee {
             "overdraft"
         ),
         BankFeeKind.ACCOUNT to listOf(
-            "kontoführung", "kontofuehrung", "kontoentgelt", "kontogebühr", "kontopreis", "entgeltabrechnung",
+            "kontoführung", "kontofuehrung", "kontoentgelt", "kontogebühr", "kontopreis",
+            "entgeltabrechnung",
             "rechnungsabschluss", "account fee", "account maintenance"
         ),
         // Categories of the default setup, "Bankgebühren" / "Bank charges"
@@ -56,7 +64,11 @@ object BankFee {
     )
 
     fun kindOf(transaction: ContractTransaction): BankFeeKind? {
-        val text = listOfNotNull(transaction.payeeName, transaction.comment, transaction.categoryPath)
+        val text = listOfNotNull(
+            transaction.payeeName,
+            transaction.comment,
+            transaction.categoryPath
+        )
             .joinToString(" ") { it.lowercase() }
             // Whitespace as in the regex \s, without one, which takes long on Android
             .split(' ', '\t', '\n', '\u000B', '\u000C', '\r')
@@ -72,12 +84,20 @@ object BankFee {
  *
  * @param transactions all transactions of the analysis
  */
-internal fun bankFees(transactions: List<ContractTransaction>, today: LocalDate): SavingTip.BankFees? {
+internal fun bankFees(
+    transactions: List<ContractTransaction>,
+    today: LocalDate
+): SavingTip.BankFees? {
     val start = today.minusMonths(SavingTip.BankFees.WINDOW_MONTHS)
     val groups = transactions
-        .filter { it.amount < 0 && it.targetAccountId == null && it.date.isAfter(start) && !it.date.isAfter(today) }
+        .filter {
+            it.amount < 0 && it.targetAccountId == null && it.date.isAfter(start) &&
+                !it.date.isAfter(today)
+        }
         .groupBy { BankFee.kindOf(it) }
-        .mapNotNull { (kind, fees) -> kind?.let { BankFeeGroup(it, fees.sortedBy(ContractTransaction::date)) } }
+        .mapNotNull { (kind, fees) ->
+            kind?.let { BankFeeGroup(it, fees.sortedBy(ContractTransaction::date)) }
+        }
         .sortedBy { it.kind }
     return SavingTip.BankFees(groups).takeIf { it.yearlyAmount >= SavingTip.BankFees.MIN_AMOUNT }
 }

@@ -1,6 +1,5 @@
 package org.totschnig.myexpenses.next.search
 
-import org.totschnig.myexpenses.next.toInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -26,6 +25,7 @@ import org.totschnig.myexpenses.designsystem.SearchFilterRow
 import org.totschnig.myexpenses.designsystem.SearchResultRow
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
+import org.totschnig.myexpenses.next.toInfo
 import org.totschnig.myexpenses.provider.filter.Criterion
 import org.totschnig.myexpenses.provider.filter.FilterPersistence
 import org.totschnig.myexpenses.viewmodel.SumInfo
@@ -45,7 +45,7 @@ class TransactionSearch internal constructor(
     private val opened: MutableState<Boolean>,
     private val typed: MutableState<String?>,
     private val persistence: FilterPersistence,
-    private val scope: CoroutineScope,
+    private val scope: CoroutineScope
 ) {
     val filter: SearchFilter get() = SearchFilter.of(stored.value)
 
@@ -90,7 +90,7 @@ fun rememberTransactionSearch(
     accountId: Long,
     persistence: FilterPersistence,
     fractionDigits: Int,
-    scope: CoroutineScope,
+    scope: CoroutineScope
 ): TransactionSearch {
     val stored = persistence.whereFilter.collectAsState()
     val opened = rememberSaveable(accountId) { mutableStateOf(false) }
@@ -98,9 +98,13 @@ fun rememberTransactionSearch(
     LaunchedEffect(typed.value) {
         val query = typed.value ?: return@LaunchedEffect
         delay(300)
-        persistence.update { SearchFilter.of(it).withText(searchText(query, fractionDigits)).toCriterion() }
+        persistence.update {
+            SearchFilter.of(it).withText(searchText(query, fractionDigits)).toCriterion()
+        }
     }
-    return remember(accountId, persistence, scope) { TransactionSearch(stored, opened, typed, persistence, scope) }
+    return remember(accountId, persistence, scope) {
+        TransactionSearch(stored, opened, typed, persistence, scope)
+    }
 }
 
 /**
@@ -143,7 +147,10 @@ fun SearchFilterChips(search: TransactionSearch, account: PageAccount, sumInfo: 
             if (confirmRemove) {
                 ConfirmDialog(
                     title = stringResource(R.string.next_search_advanced_title),
-                    text = stringResource(R.string.next_search_advanced_text, filter.criterion.prettyPrint(context)),
+                    text = stringResource(
+                        R.string.next_search_advanced_text,
+                        filter.criterion.prettyPrint(context)
+                    ),
                     confirmLabel = stringResource(R.string.next_search_advanced_remove),
                     onConfirm = {
                         confirmRemove = false
@@ -160,13 +167,19 @@ fun SearchFilterChips(search: TransactionSearch, account: PageAccount, sumInfo: 
                 .distinct().sorted()
             var editing by rememberSaveable { mutableStateOf<SearchKind?>(null) }
             val apply = { kind: SearchKind, part: SearchPart? ->
-                search.update { current -> (current as? SearchFilter.Simple)?.with(kind, part) ?: current }
+                search.update { current ->
+                    (current as? SearchFilter.Simple)?.with(kind, part)
+                        ?: current
+                }
             }
             FilterHandler(account, "nextSearch_${account.id}", { _, newValue ->
                 val kind = newValue?.let { SearchKind.of(it) } ?: return@FilterHandler
                 search.update { current ->
                     (current as? SearchFilter.Simple)
-                        ?.with(kind, SearchPart(newValue, excluded = current[kind]?.excluded == true))
+                        ?.with(
+                            kind,
+                            SearchPart(newValue, excluded = current[kind]?.excluded == true)
+                        )
                         ?: current
                 }
             }) {
@@ -216,8 +229,14 @@ fun SearchResult(headerData: HeaderData, count: Int?, onReset: () -> Unit) {
     val income = headerData.groups.values.sumOf { it.incomeSum.amountMinor }
     val text = listOfNotNull(
         count?.let { pluralStringResource(R.plurals.next_search_count, it, it) },
-        expenses.takeIf { it != 0L }?.let { stringResource(R.string.next_search_expenses, format(it)) },
-        income.takeIf { it != 0L }?.let { stringResource(R.string.next_search_income, format(it)) },
+        expenses.takeIf {
+            it != 0L
+        }?.let { stringResource(R.string.next_search_expenses, format(it)) },
+        income.takeIf { it != 0L }?.let { stringResource(R.string.next_search_income, format(it)) }
     ).joinToString(" · ")
-    SearchResultRow(text, actionLabel = stringResource(R.string.next_search_reset), onAction = onReset)
+    SearchResultRow(
+        text,
+        actionLabel = stringResource(R.string.next_search_reset),
+        onAction = onReset
+    )
 }

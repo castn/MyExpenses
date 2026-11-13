@@ -32,7 +32,9 @@ class TagStore(private val dataStore: DataStore<Preferences>) {
     val meanings: Flow<Map<Long, TagMeaning>> =
         dataStore.data.map { TagMeaning.decode(it[KEY_MEANINGS]) }.distinctUntilChanged()
 
-    val rules: Flow<List<TagRule>> = dataStore.data.map { TagRule.decode(it[KEY_RULES]) }.distinctUntilChanged()
+    val rules: Flow<List<TagRule>> = dataStore.data.map {
+        TagRule.decode(it[KEY_RULES])
+    }.distinctUntilChanged()
 
     fun rejected(kind: Rejected): Flow<Set<String>> =
         dataStore.data.map { decodeKeys(it[kind.preferenceKey]) }.distinctUntilChanged()
@@ -63,11 +65,16 @@ class TagStore(private val dataStore: DataStore<Preferences>) {
 
     /** Suggests again what the user said no to */
     suspend fun clearRejected() {
-        dataStore.edit { preferences -> Rejected.entries.forEach { preferences.remove(it.preferenceKey) } }
+        dataStore.edit { preferences ->
+            Rejected.entries.forEach { preferences.remove(it.preferenceKey) }
+        }
     }
 
     suspend fun reject(kind: Rejected, key: String) {
-        dataStore.edit { it[kind.preferenceKey] = encodeKeys(decodeKeys(it[kind.preferenceKey]) + key) }
+        dataStore.edit {
+            it[kind.preferenceKey] =
+                encodeKeys(decodeKeys(it[kind.preferenceKey]) + key)
+        }
     }
 
     private companion object {
@@ -78,7 +85,8 @@ class TagStore(private val dataStore: DataStore<Preferences>) {
         val KEY_RULES = stringPreferencesKey("next_tag_rules")
 
         /** Keys separated by commas */
-        fun decodeKeys(text: String?) = text.orEmpty().split(',').filterTo(HashSet()) { it.isNotEmpty() }
+        fun decodeKeys(text: String?) =
+            text.orEmpty().split(',').filterTo(HashSet()) { it.isNotEmpty() }
 
         fun encodeKeys(keys: Set<String>) = keys.sorted().joinToString(",")
     }

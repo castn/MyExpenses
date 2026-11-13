@@ -16,7 +16,12 @@ class JsonCodecTest {
     @Test
     fun leavesOutElementsOfUnknownTypes() {
         val json = """[{"kind":"CONTRACT"},{"kind":"FROM_A_LATER_VERSION"}]"""
-        assertEquals(listOf(Kind.CONTRACT), parseJsonArray(json) { Kind.valueOf(it.getString("kind")) })
+        assertEquals(
+            listOf(Kind.CONTRACT),
+            parseJsonArray(json) {
+                Kind.valueOf(it.getString("kind"))
+            }
+        )
     }
 
     @Test

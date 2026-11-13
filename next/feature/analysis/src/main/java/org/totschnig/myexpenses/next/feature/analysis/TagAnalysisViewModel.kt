@@ -1,12 +1,5 @@
 package org.totschnig.myexpenses.next.feature.analysis
 
-import org.totschnig.myexpenses.next.core.common.logTimings
-import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
-import org.totschnig.myexpenses.next.core.model.ledger.Ledger
-import org.totschnig.myexpenses.next.core.common.ledger.Memo
-import org.totschnig.myexpenses.next.core.common.ledger.mapMemo
-import org.totschnig.myexpenses.next.data.tags.TagMeaning
-import org.totschnig.myexpenses.next.core.model.ledger.TagInfo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import java.time.LocalDate
@@ -17,13 +10,20 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
-import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
-import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
-import org.totschnig.myexpenses.next.core.model.ledger.analysisState
+import org.totschnig.myexpenses.next.core.common.ledger.Memo
+import org.totschnig.myexpenses.next.core.common.ledger.mapMemo
+import org.totschnig.myexpenses.next.core.common.logTimings
 import org.totschnig.myexpenses.next.core.common.stateWhileShown
-import org.totschnig.myexpenses.next.data.tags.TagFacts
+import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
+import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
+import org.totschnig.myexpenses.next.core.model.ledger.Ledger
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
+import org.totschnig.myexpenses.next.core.model.ledger.TagInfo
+import org.totschnig.myexpenses.next.core.model.ledger.analysisState
 import org.totschnig.myexpenses.next.data.analysis.TagAnalysis
 import org.totschnig.myexpenses.next.data.analysis.TagAnalyzer
+import org.totschnig.myexpenses.next.data.tags.TagFacts
+import org.totschnig.myexpenses.next.data.tags.TagMeaning
 
 /**
  * What was spent on trips, themes and business expenses, see [TagAnalyzer]
@@ -44,7 +44,7 @@ class TagAnalysisViewModel(
         val meanings: Map<Long, TagMeaning>,
         val categories: Map<Long, CategoryInfo>,
         val today: LocalDate,
-        val year: Int?,
+        val year: Int?
     )
 
     private val memo = Memo<AnalysisInput, TagAnalysis>("analysis: tags") { input ->
@@ -60,11 +60,15 @@ class TagAnalysisViewModel(
             ledgerSource.today,
             year
         ) { ledger, catalog, tags, today, year ->
-            ledger?.let { AnalysisInput(it, catalog.tags, tags.meanings, catalog.categoriesById, today, year) }
+            ledger?.let {
+                AnalysisInput(it, catalog.tags, tags.meanings, catalog.categoriesById, today, year)
+            }
         }
 
     val analysis: StateFlow<AnalysisState<TagAnalysis>> =
-        combine(ledgerSource.consent, input.mapMemo(memo)) { consent, analysis -> analysisState(consent, analysis) }
+        combine(ledgerSource.consent, input.mapMemo(memo)) { consent, analysis ->
+            analysisState(consent, analysis)
+        }
             .logTimings("analysis: tags")
             .flowOn(compute)
             .stateWhileShown(viewModelScope, AnalysisState.Loading)

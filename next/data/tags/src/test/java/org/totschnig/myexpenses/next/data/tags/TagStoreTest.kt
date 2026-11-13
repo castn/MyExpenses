@@ -34,6 +34,8 @@ class TagStoreTest {
         store.removeRule(TagRule("p:1", 5, 100))
         store.clearRejected()
         assertEquals(listOf(TagRule("m:zalando", 6, 100)), store.rules.first())
-        TagStore.Rejected.entries.forEach { assertEquals(emptySet<String>(), store.rejected(it).first()) }
+        TagStore.Rejected.entries.forEach {
+            assertEquals(emptySet<String>(), store.rejected(it).first())
+        }
     }
 }

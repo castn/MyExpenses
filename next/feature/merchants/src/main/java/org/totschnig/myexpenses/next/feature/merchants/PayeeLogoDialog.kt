@@ -41,7 +41,8 @@ import org.totschnig.myexpenses.next.data.merchants.domainOf
 fun PayeeLogoDialog(logos: MerchantLogos, payee: Payee, onDismiss: () -> Unit) {
     val payeeId = payee.id ?: return
     val entered = logos.enteredDomains.collectAsStateWithLifecycle().value[payeeId]
-    val logo = (logos.images.collectAsStateWithLifecycle().value[payeeId] as? PayeeImage.Logo)?.bitmap
+    val logo =
+        (logos.images.collectAsStateWithLifecycle().value[payeeId] as? PayeeImage.Logo)?.bitmap
     var address by rememberSaveable { mutableStateOf(entered ?: "") }
     // The address entered before may come only after the first frame
     var prefilled by rememberSaveable { mutableStateOf(entered != null) }
@@ -74,7 +75,10 @@ fun PayeeLogoDialog(logos: MerchantLogos, payee: Payee, onDismiss: () -> Unit) {
         confirmLabel = stringResource(NextR.string.next_payee_logo_load),
         intro = stringResource(NextR.string.next_payee_logo_intro)
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
             PayeeTile(payee.displayName, logo) {}
             OutlinedTextField(
                 value = address,
@@ -89,14 +93,25 @@ fun PayeeLogoDialog(logos: MerchantLogos, payee: Payee, onDismiss: () -> Unit) {
                 placeholder = { Text("example.com") },
                 isError = notFound != null || (address.isNotBlank() && domain == null),
                 supportingText = when {
-                    notFound != null -> notFound!!.let { (reason, domain) -> stringResource(reason, domain) }
-                    address.isNotBlank() && domain == null -> stringResource(NextR.string.next_payee_logo_invalid)
+                    notFound != null -> notFound!!.let { (reason, domain) ->
+                        stringResource(reason, domain)
+                    }
+
+                    address.isNotBlank() && domain == null -> stringResource(
+                        NextR.string.next_payee_logo_invalid
+                    )
+
                     else -> null
                 }?.let { { Text(it) } },
                 trailingIcon = if (isLoading) {
                     { CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp) }
-                } else null,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri, imeAction = ImeAction.Done),
+                } else {
+                    null
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Uri,
+                    imeAction = ImeAction.Done
+                ),
                 keyboardActions = KeyboardActions(onDone = { load() })
             )
         }

@@ -5,13 +5,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import kotlin.math.roundToInt
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.common.R
-import org.totschnig.myexpenses.next.data.contracts.labelRes
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.ui.receipts.labelRes
 import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
 import org.totschnig.myexpenses.next.core.ui.rememberMonthFormatter
+import org.totschnig.myexpenses.next.data.contracts.labelRes
 import org.totschnig.myexpenses.next.data.tips.BankFeeKind
+import org.totschnig.myexpenses.next.data.tips.ContractKind
 import org.totschnig.myexpenses.next.data.tips.DepositNotReturned
 import org.totschnig.myexpenses.next.data.tips.DrugstoreInSupermarkets
 import org.totschnig.myexpenses.next.data.tips.EatingOut
@@ -21,14 +22,18 @@ import org.totschnig.myexpenses.next.data.tips.PotsOverspent
 import org.totschnig.myexpenses.next.data.tips.SavingTip
 import org.totschnig.myexpenses.next.data.tips.SmallPurchases
 import org.totschnig.myexpenses.next.data.tips.Supermarkets
-import org.totschnig.myexpenses.next.data.tips.ContractKind
 
 /**
  * Title and text of a tip, shared by the list and the card of the overview
  *
  * @param amount shown next to the title
  */
-internal class TipText(val title: String, val message: String, val hint: String?, val amount: String)
+internal class TipText(
+    val title: String,
+    val message: String,
+    val hint: String?,
+    val amount: String
+)
 
 @Composable
 internal fun SavingTip.text(currency: CurrencyInfo): TipText {
@@ -106,7 +111,11 @@ internal fun SavingTip.text(currency: CurrencyInfo): TipText {
 
         is EatingOut -> TipText(
             title = stringResource(R.string.next_tips_eating_out_title),
-            message = stringResource(R.string.next_tips_eating_out_text, amount(recent), amount(usual)),
+            message = stringResource(
+                R.string.next_tips_eating_out_text,
+                amount(recent),
+                amount(usual)
+            ),
             hint = stringResource(R.string.next_tips_eating_out_hint),
             amount = perYear
         )
@@ -115,15 +124,20 @@ internal fun SavingTip.text(currency: CurrencyInfo): TipText {
             title = stringResource(R.string.next_tips_supermarkets_title),
             message = stringResource(
                 R.string.next_tips_supermarkets_text,
-                amount(chains.last().average), chains.last().label,
-                amount(chains.first().average), chains.first().label
+                amount(chains.last().average),
+                chains.last().label,
+                amount(chains.first().average),
+                chains.first().label
             ),
             hint = stringResource(R.string.next_tips_supermarkets_hint),
             amount = perYear
         )
 
         is Outliers -> TipText(
-            title = stringResource(R.string.next_tips_outliers_title, rememberMonthFormatter().format(month)),
+            title = stringResource(
+                R.string.next_tips_outliers_title,
+                rememberMonthFormatter().format(month)
+            ),
             message = pluralStringResource(
                 R.plurals.next_tips_outliers_text,
                 categories.size,
@@ -135,10 +149,18 @@ internal fun SavingTip.text(currency: CurrencyInfo): TipText {
         )
 
         is ItemGroupRising -> TipText(
-            title = stringResource(R.string.next_tips_item_group_rising_title, stringResource(group.labelRes)),
+            title = stringResource(
+                R.string.next_tips_item_group_rising_title,
+                stringResource(group.labelRes)
+            ),
             message = pluralStringResource(
-                R.plurals.next_tips_item_group_rising_text, ItemGroupRising.RECENT_MONTHS.toInt(),
-                (recentShare * 100).roundToInt(), ItemGroupRising.RECENT_MONTHS.toInt(), (usualShare * 100).roundToInt()
+                R.plurals.next_tips_item_group_rising_text,
+                ItemGroupRising.RECENT_MONTHS.toInt(),
+                (recentShare * 100).roundToInt(),
+                ItemGroupRising.RECENT_MONTHS.toInt(),
+                (
+                    usualShare * 100
+                    ).roundToInt()
             ),
             hint = stringResource(R.string.next_tips_scanned_hint),
             amount = perYear
@@ -146,13 +168,22 @@ internal fun SavingTip.text(currency: CurrencyInfo): TipText {
 
         is DepositNotReturned -> TipText(
             title = stringResource(R.string.next_tips_deposit_title),
-            message = stringResource(R.string.next_tips_deposit_text, amount(paid), amount(returned)),
+            message = stringResource(
+                R.string.next_tips_deposit_text,
+                amount(paid),
+                amount(returned)
+            ),
             hint = stringResource(R.string.next_tips_deposit_hint),
             amount = perYear
         )
 
         is PotsOverspent -> TipText(
-            title = pluralStringResource(R.plurals.next_tips_pots_title, pots.size, pots.first().name, pots.size - 1),
+            title = pluralStringResource(
+                R.plurals.next_tips_pots_title,
+                pots.size,
+                pots.first().name,
+                pots.size - 1
+            ),
             message = pluralStringResource(
                 R.plurals.next_tips_pots_text,
                 PotsOverspent.PERIODS,
@@ -166,7 +197,12 @@ internal fun SavingTip.text(currency: CurrencyInfo): TipText {
         is DrugstoreInSupermarkets -> TipText(
             title = stringResource(R.string.next_tips_drugstore_title),
             message =
-                pluralStringResource(R.plurals.next_tips_drugstore_text, itemCount, itemCount, amount(yearlyAmount)),
+                pluralStringResource(
+                    R.plurals.next_tips_drugstore_text,
+                    itemCount,
+                    itemCount,
+                    amount(yearlyAmount)
+                ),
             hint = stringResource(R.string.next_tips_drugstore_hint),
             amount = perYear
         )
@@ -193,11 +229,13 @@ private val ContractKind.titleRes: Int
 @get:StringRes
 private val ContractKind.hintRes: Int
     get() = when (this) {
-        ContractKind.CAR_INSURANCE, ContractKind.LIABILITY_INSURANCE, ContractKind.CONTENTS_INSURANCE,
+        ContractKind.CAR_INSURANCE, ContractKind.LIABILITY_INSURANCE,
+        ContractKind.CONTENTS_INSURANCE,
         ContractKind.LEGAL_INSURANCE ->
             R.string.next_tips_duplicates_hint_insurance
 
-        ContractKind.VIDEO_STREAMING, ContractKind.MUSIC_STREAMING, ContractKind.CLOUD_STORAGE, ContractKind.GYM ->
+        ContractKind.VIDEO_STREAMING, ContractKind.MUSIC_STREAMING, ContractKind.CLOUD_STORAGE,
+        ContractKind.GYM ->
             R.string.next_tips_duplicates_hint_subscription
 
         ContractKind.MOBILE, ContractKind.INTERNET, ContractKind.ELECTRICITY, ContractKind.GAS ->

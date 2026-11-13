@@ -3,15 +3,15 @@ package org.totschnig.myexpenses.next.data.budgets
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import kotlin.math.max
+import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
+import org.totschnig.myexpenses.next.core.model.ledger.Ledger
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.core.model.receipts.ScannedItem
 import org.totschnig.myexpenses.next.data.balance.BalancePeriod
 import org.totschnig.myexpenses.next.data.balance.MonthlyBalance
 import org.totschnig.myexpenses.next.data.balance.balanceTransactions
 import org.totschnig.myexpenses.next.data.balance.upcomingPayments
 import org.totschnig.myexpenses.next.data.contracts.Contract
-import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
-import org.totschnig.myexpenses.next.core.model.ledger.Ledger
-import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.data.tags.TagMeaning
 
 /**
@@ -54,14 +54,18 @@ data class PotStatus(
     val transactionIds: List<Long> = emptyList(),
     val oneOffIds: List<Long> = emptyList(),
     val share: Float? = null,
-    val scannedPurchases: Int = 0,
+    val scannedPurchases: Int = 0
 ) {
     /**
      * What can still be spent: for a goal what is still to be saved. Negative if the pot is
      * overspent. Contract payments still expected are taken off already.
      */
     val left: Long
-        get() = if (pot.kind == PotKind.GOAL) pot.amount - saved else planned + carried - spent - upcoming
+        get() = if (pot.kind == PotKind.GOAL) {
+            pot.amount - saved
+        } else {
+            planned + carried - spent - upcoming
+        }
 
     val isOverspent: Boolean get() = pot.kind != PotKind.GOAL && left < 0
 
@@ -96,7 +100,7 @@ data class BudgetFrame(
     val fixed: Long,
     val planned: Long,
     val spentOutsidePots: Long,
-    val free: Long,
+    val free: Long
 ) {
     /** What is not planned in pots, negative if more is planned than there is */
     val unplanned: Long get() = income - fixed - planned
@@ -114,7 +118,7 @@ data class BudgetOverview(
     val offset: Int,
     val hasEarlier: Boolean,
     val frame: BudgetFrame,
-    val pots: List<PotStatus>,
+    val pots: List<PotStatus>
 ) {
     val isCurrent: Boolean get() = offset == 0
 }
@@ -136,7 +140,7 @@ data class BudgetInput(
     val meanings: Map<Long, TagMeaning>,
     val today: LocalDate,
     val offset: Int = 0,
-    val receipts: Map<Long, List<ScannedItem>> = emptyMap(),
+    val receipts: Map<Long, List<ScannedItem>> = emptyMap()
 )
 
 object BudgetAnalyzer {
@@ -155,15 +159,27 @@ object BudgetAnalyzer {
      * pots, which are for everyday spending, but in all other pots.
      */
     fun analyse(input: BudgetInput): BudgetOverview {
-        val (ledger, pots, categories, contracts, salaries, meanings, today, offset, receipts) = input
-        val periods = budgetPeriods(salaries.firstOrNull(), today, today.minusMonths(Ledger.HISTORY_MONTHS))
+        val (ledger, pots, categories, contracts, salaries, meanings, today, offset, receipts) =
+            input
+        val periods =
+            budgetPeriods(salaries.firstOrNull(), today, today.minusMonths(Ledger.HISTORY_MONTHS))
         val index = (periods.size - 1 - offset).coerceIn(0, periods.size - 1)
         val period = periods[index]
         val isCurrent = index == periods.size - 1
 
-        val contractRules = contracts.mapNotNull { contract -> contract.rule?.id?.let { contract to it } }
+        val contractRules = contracts.mapNotNull { contract ->
+            contract.rule?.id?.let {
+                contract to
+                    it
+            }
+        }
         val paymentRules =
-            contractRules.flatMap { (contract, ruleId) -> contract.transactions.map { it.id to ruleId } }.toMap()
+            contractRules.flatMap { (contract, ruleId) ->
+                contract.transactions.map {
+                    it.id to
+                        ruleId
+                }
+            }.toMap()
         val matcher = PotMatcher(pots, categories, paymentRules)
 
         fun hasMeaning(transaction: LedgerTransaction, meaning: TagMeaning) =
@@ -188,38 +204,69 @@ object BudgetAnalyzer {
 
         val statuses = pots.map { pot ->
             val parts = byPot[pot.id].orEmpty()
-            val potContracts = contractRules.filter { (_, ruleId) -> ruleId in pot.contractRuleIds }.map { it.first }
-            val upcoming = if (isCurrent) potContracts
-                .filter { it.isActive && !it.isCancelled }
-                .sumOf { it.lastAmount * it.upcomingPayments(period) } else 0
+            val potContracts = contractRules.filter { (_, ruleId) ->
+                ruleId in pot.contractRuleIds
+            }.map { it.first }
+            val upcoming = if (isCurrent) {
+                potContracts
+                    .filter { it.isActive && !it.isCancelled }
+                    .sumOf { it.lastAmount * it.upcomingPayments(period) }
+            } else {
+                0
+            }
             when (pot.kind) {
                 PotKind.RUNNING ->
-                    running(pot, parts, period, periods.subList(0, index), upcoming, today.takeIf { isCurrent })
+                    running(
+                        pot,
+                        parts,
+                        period,
+                        periods.subList(0, index),
+                        upcoming,
+                        today.takeIf {
+                            isCurrent
+                        }
+                    )
+
                 PotKind.YEARLY -> yearly(pot, parts, period, upcoming)
+
                 PotKind.GOAL -> goal(
                     pot,
                     parts,
                     period,
                     ledger,
-                    contractRules.filter { (_, ruleId) -> ruleId in pot.reserveRuleIds }.map { it.first }
+                    contractRules.filter { (_, ruleId) ->
+                        ruleId in pot.reserveRuleIds
+                    }.map { it.first }
                 )
+
                 PotKind.PROJECT -> project(pot, parts, period, upcoming)
+
                 PotKind.ITEM_GROUP ->
-                    itemGroup(pot, ledger, receipts, periods, index) { hasMeaning(it, TagMeaning.REIMBURSED) }
+                    itemGroup(pot, ledger, receipts, periods, index) {
+                        hasMeaning(it, TagMeaning.REIMBURSED)
+                    }
             }
         }
 
         val balance = MonthlyBalance.compute(
-            period, balanceTransactions(ledger, period), ledger.ownAccounts.dailyIds, contracts, salaries
+            period,
+            balanceTransactions(ledger, period),
+            ledger.ownAccounts.dailyIds,
+            contracts,
+            salaries
         )
         val inPeriod = counted.filter { it.transaction.date in period }
         val otherIds = balance.otherTransactionIds.toSet()
-        val planned = statuses.map { plannedPerPeriod(it, period, potContractsMonthly(it.pot, contractRules)) }
+        val planned = statuses.map {
+            plannedPerPeriod(it, period, potContractsMonthly(it.pot, contractRules))
+        }
         val frame = BudgetFrame(
             income = balance.income,
             fixed = -(balance.contracts + balance.reserves),
             planned = planned.sum(),
-            spentOutsidePots = inPeriod.filter { it.pot == null && it.transaction.id in otherIds }.sumOf { it.amount },
+            spentOutsidePots = inPeriod.filter {
+                it.pot == null && it.transaction.id in otherIds
+            }.sumOf { it.amount },
             free = balance.available - statuses.zip(planned)
                 .sumOf { (status, plannedInPeriod) -> reserved(status, plannedInPeriod) }
         )
@@ -232,13 +279,15 @@ object BudgetAnalyzer {
         val amount: Long,
         val pot: Pot?,
         val isOneOff: Boolean,
-        val isContractPayment: Boolean,
+        val isContractPayment: Boolean
     )
 
     private fun List<CountedPart>.ids() = map { it.transaction.id }.distinct()
 
-    private fun List<CountedPart>.within(start: LocalDate?, end: LocalDate) =
-        filter { (start == null || !it.transaction.date.isBefore(start)) && it.transaction.date.isBefore(end) }
+    private fun List<CountedPart>.within(start: LocalDate?, end: LocalDate) = filter {
+        (start == null || !it.transaction.date.isBefore(start)) &&
+            it.transaction.date.isBefore(end)
+    }
 
     private fun running(
         pot: Pot,
@@ -246,21 +295,32 @@ object BudgetAnalyzer {
         period: BalancePeriod,
         before: List<BalancePeriod>,
         upcoming: Long,
-        today: LocalDate?,
+        today: LocalDate?
     ): PotStatus {
-        val (oneOffs, everyday) = parts.filter { it.transaction.date in period }.partition { it.isOneOff }
+        val (oneOffs, everyday) = parts.filter {
+            it.transaction.date in period
+        }.partition { it.isOneOff }
         val spent = everyday.sumOf { it.amount }
         val fixedSpent = everyday.filter { it.isContractPayment }.sumOf { it.amount }
         val history = before
             .filter { pot.start == null || it.end.isAfter(pot.start) }
             .takeLast(HISTORY_PERIODS)
-            .map { earlier -> parts.filter { !it.isOneOff && it.transaction.date in earlier }.sumOf { it.amount } }
-        val carried = if (pot.rollover && pot.start != null) history.sumOf { pot.amount - it } else 0
+            .map { earlier ->
+                parts.filter { !it.isOneOff && it.transaction.date in earlier }.sumOf { it.amount }
+            }
+        val carried = if (pot.rollover && pot.start != null) {
+            history.sumOf { pot.amount - it }
+        } else {
+            0
+        }
         val projected = today?.let {
             val days = ChronoUnit.DAYS.between(period.start, period.end)
             val passed = ChronoUnit.DAYS.between(period.start, today) + 1
-            if (passed < MIN_DAYS_FOR_PROJECTION) null
-            else (spent - fixedSpent) * days / passed + fixedSpent + upcoming
+            if (passed < MIN_DAYS_FOR_PROJECTION) {
+                null
+            } else {
+                (spent - fixedSpent) * days / passed + fixedSpent + upcoming
+            }
         }
         return PotStatus(
             pot = pot,
@@ -278,12 +338,23 @@ object BudgetAnalyzer {
         )
     }
 
-    private fun yearly(pot: Pot, parts: List<CountedPart>, period: BalancePeriod, upcoming: Long): PotStatus {
+    private fun yearly(
+        pot: Pot,
+        parts: List<CountedPart>,
+        period: BalancePeriod,
+        upcoming: Long
+    ): PotStatus {
         val counted = parts.within(pot.start, period.end)
         val start = pot.start ?: period.start.withDayOfYear(1)
         // A share is added at the start of each month, the first one in the month the pot starts
         val months =
-            max(0L, ChronoUnit.MONTHS.between(start.withDayOfMonth(1), period.end.minusDays(1).withDayOfMonth(1)) + 1)
+            max(
+                0L,
+                ChronoUnit.MONTHS.between(
+                    start.withDayOfMonth(1),
+                    period.end.minusDays(1).withDayOfMonth(1)
+                ) + 1
+            )
         return PotStatus(
             pot = pot,
             planned = pot.amount * months / 12,
@@ -295,7 +366,12 @@ object BudgetAnalyzer {
         )
     }
 
-    private fun project(pot: Pot, parts: List<CountedPart>, period: BalancePeriod, upcoming: Long): PotStatus {
+    private fun project(
+        pot: Pot,
+        parts: List<CountedPart>,
+        period: BalancePeriod,
+        upcoming: Long
+    ): PotStatus {
         val counted = parts.within(pot.start, period.end)
         return PotStatus(
             pot = pot,
@@ -317,15 +393,20 @@ object BudgetAnalyzer {
         parts: List<CountedPart>,
         period: BalancePeriod,
         ledger: Ledger,
-        reserves: List<Contract>,
+        reserves: List<Contract>
     ): PotStatus {
         val counted = parts.within(pot.start, period.end)
-        fun inRange(date: LocalDate) = (pot.start == null || !date.isBefore(pot.start)) && date.isBefore(period.end)
+        fun inRange(date: LocalDate) =
+            (pot.start == null || !date.isBefore(pot.start)) && date.isBefore(period.end)
         val reservePayments =
-            reserves.flatMap { it.transactions }.filter { inRange(it.date) }.associate { it.id to it.amount }
+            reserves.flatMap { it.transactions }.filter { inRange(it.date) }.associate {
+                it.id to
+                    it.amount
+            }
         val movements = ledger.transactions.filter {
             inRange(it.date) && it.id !in reservePayments &&
-                    it.accountId !in pot.savingAccountIds && it.targetAccountId in pot.savingAccountIds
+                it.accountId !in pot.savingAccountIds &&
+                it.targetAccountId in pot.savingAccountIds
         }
         return PotStatus(
             pot = pot,
@@ -349,11 +430,11 @@ object BudgetAnalyzer {
         receipts: Map<Long, List<ScannedItem>>,
         periods: List<BalancePeriod>,
         index: Int,
-        isReimbursed: (LedgerTransaction) -> Boolean,
+        isReimbursed: (LedgerTransaction) -> Boolean
     ): PotStatus {
         fun purchasesFrom(start: LocalDate) = ledger.transactions.filter {
             it.amount < 0 && it.targetAccountId == null && !isReimbursed(it) && it.id in receipts &&
-                    !it.date.isBefore(start) && it.date.isBefore(periods[index].end)
+                !it.date.isBefore(start) && it.date.isBefore(periods[index].end)
         }
         val purchases = purchasesFrom(periods[index].start).takeIf { it.size >= MIN_SCANNED }
             ?: purchasesFrom(periods[(index - 2).coerceAtLeast(0)].start)
@@ -390,19 +471,35 @@ object BudgetAnalyzer {
             .sumOf { it.first.monthlyAmount }
 
     /** What [status] takes from the income of [period], without its contracts */
-    private fun plannedPerPeriod(status: PotStatus, period: BalancePeriod, contractsMonthly: Long): Long {
+    private fun plannedPerPeriod(
+        status: PotStatus,
+        period: BalancePeriod,
+        contractsMonthly: Long
+    ): Long {
         val pot = status.pot
         val gross = when (pot.kind) {
             PotKind.RUNNING -> pot.amount
+
             PotKind.YEARLY -> pot.amount / 12
+
             PotKind.GOAL ->
-                if (pot.reserveRuleIds.isNotEmpty() || pot.savingAccountIds.isNotEmpty() || pot.end == null) 0
-            else {
-                // Months left including the current one
-                val months =
-                    max(1L, ChronoUnit.MONTHS.between(period.start.withDayOfMonth(1), pot.end.withDayOfMonth(1)) + 1)
-                max(0L, pot.amount - status.saved) / months
-            }
+                if (pot.reserveRuleIds.isNotEmpty() || pot.savingAccountIds.isNotEmpty() ||
+                    pot.end == null
+                ) {
+                    0
+                } else {
+                    // Months left including the current one
+                    val months =
+                        max(
+                            1L,
+                            ChronoUnit.MONTHS.between(
+                                period.start.withDayOfMonth(1),
+                                pot.end.withDayOfMonth(1)
+                            ) + 1
+                        )
+                    max(0L, pot.amount - status.saved) / months
+                }
+
             PotKind.PROJECT, PotKind.ITEM_GROUP -> 0
         }
         return max(0L, gross - contractsMonthly)
@@ -416,8 +513,10 @@ object BudgetAnalyzer {
      */
     private fun reserved(status: PotStatus, plannedInPeriod: Long): Long = when (status.pot.kind) {
         PotKind.RUNNING -> max(0L, status.pot.amount - status.spent - status.upcoming)
+
         // Only watched, the money is in other pots or none
         PotKind.ITEM_GROUP -> 0L
+
         else -> max(0L, plannedInPeriod - status.spentInPeriod)
     }
 }
@@ -428,7 +527,9 @@ object BudgetAnalyzer {
  */
 fun BudgetOverview.paceWarning(): PotStatus? = pots
     .filter { it.pot.kind == PotKind.RUNNING && !it.isOverspent }
-    .mapNotNull { status -> status.projected?.let { status to it - (status.planned + status.carried) } }
+    .mapNotNull { status ->
+        status.projected?.let { status to it - (status.planned + status.carried) }
+    }
     .filter { (_, over) -> over > 0 }
     .maxByOrNull { (_, over) -> over }
     ?.first

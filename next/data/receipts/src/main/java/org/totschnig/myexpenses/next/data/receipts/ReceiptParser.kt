@@ -1,13 +1,13 @@
 package org.totschnig.myexpenses.next.data.receipts
 
-import org.totschnig.myexpenses.feature.Box
-import org.totschnig.myexpenses.feature.RecognizedLine
-import org.totschnig.myexpenses.feature.RecognizedText
-import org.totschnig.myexpenses.next.data.receipts.ReceiptLayout.Row
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDate
 import kotlin.math.abs
+import org.totschnig.myexpenses.feature.Box
+import org.totschnig.myexpenses.feature.RecognizedLine
+import org.totschnig.myexpenses.feature.RecognizedText
+import org.totschnig.myexpenses.next.data.receipts.ReceiptLayout.Row
 
 /** A row among the items no item was read from, e.g. an item the parser missed */
 data class LeftoverRow(val text: String, val box: Box)
@@ -28,14 +28,20 @@ data class ParsedReceipt(
     /** True if paid in cash, false if by card, null if the receipt does not tell */
     val cash: Boolean? = null,
     /** Rows among the items no item was read from, from top to bottom */
-    val leftoverRows: List<LeftoverRow> = emptyList(),
+    val leftoverRows: List<LeftoverRow> = emptyList()
 ) {
     val itemsSum: Long
         get() = items.sumOf { it.amount }
 
     /** Pieces of all items, weighed items count as one, discounts and returned deposit not at all */
     val pieces: Int
-        get() = items.filter { it.amount > 0 }.sumOf { if (it.unit == null) it.quantity.toInt() else 1 }
+        get() = items.filter { it.amount > 0 }.sumOf {
+            if (it.unit == null) {
+                it.quantity.toInt()
+            } else {
+                1
+            }
+        }
 
     fun toReceipt() = Receipt(merchant, total, items, date = date, cardAmount = cardAmount)
 }
@@ -78,7 +84,11 @@ object ReceiptParser {
             merchant = rows.firstOrNull()?.text?.takeIf { amountOf(it) == null },
             items = assembled.items + discounts,
             // Address, phone and column headers above the first item are no items
-            leftoverRows = itemRows.drop(itemRows.indexOfFirst { it in assembled.used }.coerceAtLeast(0))
+            leftoverRows = itemRows.drop(
+                itemRows.indexOfFirst {
+                    it in assembled.used
+                }.coerceAtLeast(0)
+            )
                 .filter {
                     it !in assembled.used &&
                         it.text.count(Char::isLetterOrDigit) >= 2 &&
@@ -103,14 +113,21 @@ object ReceiptParser {
     fun itemOf(rows: List<LeftoverRow>): ReceiptItem {
         require(rows.isNotEmpty())
         val box = rows.map { it.box }.reduce(::union)
-        val layoutRows = rows.map { ReceiptLayout.Row(RecognizedLine(it.text, it.box, emptyList()), it.box, 0.0) }
+        val layoutRows = rows.map {
+            ReceiptLayout.Row(RecognizedLine(it.text, it.box, emptyList()), it.box, 0.0)
+        }
         val assembled = assembler.assemble(layoutRows)
-        if (assembled.used.size == layoutRows.size) assembled.items.singleOrNull()?.let { return it.copy(box = box) }
+        if (assembled.used.size == layoutRows.size) {
+            assembled.items.singleOrNull()?.let { return it.copy(box = box) }
+        }
         val names = mutableListOf<String>()
         var price: RowKinds.Price? = null
         var quantity: RowKinds.Quantity? = null
         for (row in rows) {
-            kinds.quantity(row.text)?.let { quantity = it; continue }
+            kinds.quantity(row.text)?.let {
+                quantity = it
+                continue
+            }
             val rowPrice = kinds.price(kinds.tokens(row.text))
             if (rowPrice == null) {
                 names += row.text.trim()
@@ -121,7 +138,9 @@ object ReceiptParser {
             }
         }
         val counted =
-            quantity?.let { (it.quantity * BigDecimal(it.unitPrice)).setScale(0, RoundingMode.HALF_UP).toLong() }
+            quantity?.let {
+                (it.quantity * BigDecimal(it.unitPrice)).setScale(0, RoundingMode.HALF_UP).toLong()
+            }
         val item = ReceiptItem(
             name = names.filter { it.isNotEmpty() }.joinToString(" "),
             amount = price?.cents ?: counted ?: 0,
@@ -149,7 +168,9 @@ object ReceiptParser {
         val card = rows.indexOfFirst { vocabulary.isCard(it.text) }
         if (card >= 0) {
             val amount = amountOf(rows[card].text)
-                ?: rows.getOrNull(card + 1)?.takeIf { kinds.isAmountOnly(it.text) }?.let { amountOf(it.text) }
+                ?: rows.getOrNull(card + 1)?.takeIf {
+                    kinds.isAmountOnly(it.text)
+                }?.let { amountOf(it.text) }
             return Payment(amount?.let(::abs), cash = false)
         }
         return Payment(null, cash = if (rows.any { vocabulary.isCash(it.text) }) true else null)
@@ -174,7 +195,9 @@ object ReceiptParser {
             amountOf(rows[index].text)?.let { return Total(index, it, index) }
             val above = rows.getOrNull(index - 1)?.takeIf { kinds.isAmountOnly(it.text) }
             val below =
-                rows.getOrNull(index + 1)?.takeIf { kinds.isAmountOnly(it.text) || vocabulary.isPayment(it.text) }
+                rows.getOrNull(index + 1)?.takeIf {
+                    kinds.isAmountOnly(it.text) || vocabulary.isPayment(it.text)
+                }
             val amount = (above ?: below)?.let { amountOf(it.text) }?.let(::abs)
             return Total(index, amount, if (above != null && amount != null) index - 1 else index)
         }
@@ -182,16 +205,24 @@ object ReceiptParser {
         if (payment < 0) return Total(null, null, rows.size)
         val amount = amountOf(rows[payment].text)?.let(::abs)
         val lastPriced = (payment - 1 downTo 0).firstOrNull { amountOf(rows[it].text) != null }
-        return if (lastPriced != null && amount != null && amountOf(rows[lastPriced].text) == amount) {
+        return if (lastPriced != null && amount != null &&
+            amountOf(rows[lastPriced].text) == amount
+        ) {
             Total(lastPriced, amount, lastPriced)
-        } else Total(null, amount, payment)
+        } else {
+            Total(null, amount, payment)
+        }
     }
 
     /**
      * Some tills subtract discounts after the total and print a second total: the discounts and
      * the final total
      */
-    private fun discountsAfterTotal(rows: List<Row>, totalIndex: Int, total: Long?): Pair<List<ReceiptItem>, Long?> {
+    private fun discountsAfterTotal(
+        rows: List<Row>,
+        totalIndex: Int,
+        total: Long?
+    ): Pair<List<ReceiptItem>, Long?> {
         val discounts = mutableListOf<ReceiptItem>()
         var finalTotal: Long? = null
         for (row in rows.drop(totalIndex + 1)) {
@@ -201,7 +232,9 @@ object ReceiptParser {
                 finalTotal = amount
             } else if (amount < 0) {
                 discounts += assembler.readItem(row) ?: continue
-            } else break
+            } else {
+                break
+            }
         }
         if (discounts.isEmpty()) return discounts to total
         return discounts to (finalTotal ?: total?.plus(discounts.sumOf { it.amount }))

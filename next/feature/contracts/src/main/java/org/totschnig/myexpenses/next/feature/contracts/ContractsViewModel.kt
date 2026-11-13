@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import org.totschnig.myexpenses.next.core.common.stateWhileShown
 import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
-import org.totschnig.myexpenses.next.core.common.stateWhileShown
 import org.totschnig.myexpenses.next.data.contracts.AreaChoice
 import org.totschnig.myexpenses.next.data.contracts.Contract
 import org.totschnig.myexpenses.next.data.contracts.ContractAnalysis
@@ -39,8 +39,9 @@ import org.totschnig.myexpenses.next.data.contracts.withRuleFor
 class ContractsViewModel(
     private val repository: ContractRepository,
     /** The home currency, which the user can change */
-    val homeCurrency: StateFlow<CurrencyInfo>,
-) : ViewModel(), ContractActions {
+    val homeCurrency: StateFlow<CurrencyInfo>
+) : ViewModel(),
+    ContractActions {
 
     val ledgerSource: LedgerSource
         get() = repository.ledgerSource
@@ -49,7 +50,10 @@ class ContractsViewModel(
         get() = repository.store
 
     /** News about confirmed contracts, newest first, see [ContractNews] */
-    val news: StateFlow<List<ContractNews>> = repository.news.stateWhileShown(viewModelScope, emptyList())
+    val news: StateFlow<List<ContractNews>> = repository.news.stateWhileShown(
+        viewModelScope,
+        emptyList()
+    )
 
     override fun markNewsRead(ids: Set<String>) {
         edit { editor ->
@@ -71,16 +75,26 @@ class ContractsViewModel(
     override fun setSalary(choice: SalaryChoice) {
         updateRules { rules, analysis, editor ->
             var updated = rules
-            val salary = if (choice is SalaryChoice.Fixed) SalaryChoice.Fixed(
-                choice.signatures.mapTo(HashSet()) { signature ->
-                    val suggestion = analysis.suggestions.find { it.signature == signature }
-                    if (suggestion == null) signature
-                    else updated.withRuleFor(suggestion, analysis.transactions).let { (all, rule) ->
-                        updated = all
-                        rule.key
+            val salary = if (choice is SalaryChoice.Fixed) {
+                SalaryChoice.Fixed(
+                    choice.signatures.mapTo(HashSet()) { signature ->
+                        val suggestion = analysis.suggestions.find { it.signature == signature }
+                        if (suggestion == null) {
+                            signature
+                        } else {
+                            updated.withRuleFor(
+                                suggestion,
+                                analysis.transactions
+                            ).let { (all, rule) ->
+                                updated = all
+                                rule.key
+                            }
+                        }
                     }
-                }
-            ) else choice
+                )
+            } else {
+                choice
+            }
             editor.setSalary(salary)
             updated
         }
@@ -110,7 +124,13 @@ class ContractsViewModel(
      */
     override fun rename(contract: Contract, name: String) {
         val trimmed = name.trim()
-        changeRule(contract) { it.copy(name = trimmed.takeIf { name -> name.isNotEmpty() && name != contract.name }) }
+        changeRule(contract) {
+            it.copy(
+                name = trimmed.takeIf { name ->
+                    name.isNotEmpty() && name != contract.name
+                }
+            )
+        }
     }
 
     /** Confirms a suggestion */
@@ -207,7 +227,9 @@ class ContractsViewModel(
 
     /** Changes the rule of [contract], which confirms a suggestion */
     private fun changeRule(contract: Contract, change: (ContractRule) -> ContractRule) {
-        updateRules { rules, analysis, _ -> rules.withRuleFor(contract, analysis.transactions, change).first }
+        updateRules { rules, analysis, _ ->
+            rules.withRuleFor(contract, analysis.transactions, change).first
+        }
     }
 
     /**
@@ -215,7 +237,7 @@ class ContractsViewModel(
      * since actions can only be triggered on contracts shown from it.
      */
     private fun updateRules(
-        change: (List<ContractRule>, ContractAnalysis, ContractStore.Editor) -> List<ContractRule>,
+        change: (List<ContractRule>, ContractAnalysis, ContractStore.Editor) -> List<ContractRule>
     ) {
         val analysis = repository.latestAnalysis.value ?: return
         edit { editor -> editor.rules = change(editor.rules, analysis, editor) }
@@ -232,7 +254,8 @@ class ContractsViewModel(
 
     override fun renameArea(area: CustomArea, name: String) {
         edit { editor ->
-            editor.customAreas = editor.customAreas.map { if (it.id == area.id) it.copy(name = name.trim()) else it }
+            editor.customAreas =
+                editor.customAreas.map { if (it.id == area.id) it.copy(name = name.trim()) else it }
         }
     }
 
@@ -243,7 +266,8 @@ class ContractsViewModel(
         edit { editor ->
             editor.customAreas = editor.customAreas.filter { it.id != area.id }
             editor.removeAreaBySignature(area.key)
-            editor.rules = editor.rules.map { if (it.areaKey == area.key) it.copy(areaKey = null) else it }
+            editor.rules =
+                editor.rules.map { if (it.areaKey == area.key) it.copy(areaKey = null) else it }
         }
     }
 

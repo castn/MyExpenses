@@ -1,6 +1,5 @@
 package org.totschnig.myexpenses.next.feature.tags
 
-import org.totschnig.myexpenses.next.core.common.ledger.Memo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineDispatcher
@@ -13,9 +12,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.totschnig.myexpenses.next.data.contracts.ContractFacts
-import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
+import org.totschnig.myexpenses.next.core.common.ledger.Memo
 import org.totschnig.myexpenses.next.core.common.stateWhileShown
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
+import org.totschnig.myexpenses.next.data.contracts.ContractFacts
 import org.totschnig.myexpenses.next.data.tags.Refund
 import org.totschnig.myexpenses.next.data.tags.RefundDetector
 import org.totschnig.myexpenses.next.data.tags.TagDatabase
@@ -49,26 +49,38 @@ class TagDetectionsViewModel(
     /** Transactions with a tag of [meaning] */
     private fun taggedAs(meaning: TagMeaning): Flow<Set<Long>> =
         combine(ledgerSource.ledger, store.meanings) { ledger, meanings ->
-            ledger?.let { TagMeaning.taggedWith(it, meanings) { tagMeaning -> tagMeaning == meaning } }.orEmpty()
+            ledger?.let {
+                TagMeaning.taggedWith(it, meanings) { tagMeaning -> tagMeaning == meaning }
+            }.orEmpty()
         }.distinctUntilChanged()
 
     /** Contract payments are no signs of a trip, e.g. a subscription paid in dollars */
     private val contractPayments: Flow<Set<Long>> =
         contractFacts.map { it?.paymentIds.orEmpty() }.distinctUntilChanged()
 
-    private data class RefundSearch(val rows: List<TagRow>, val reimbursed: Set<Long>, val rejected: Set<String>)
+    private data class RefundSearch(
+        val rows: List<TagRow>,
+        val reimbursed: Set<Long>,
+        val rejected: Set<String>
+    )
 
-    private val refundMemo = Memo<RefundSearch, Map<Long, Refund>>("tags: refunds") { (rows, reimbursed, rejected) ->
-        RefundDetector.find(rows.map { it.refund }, reimbursed, rejected)
-            .flatMap { listOf(it.debit.id to it, it.credit.id to it) }
-            .toMap()
-    }
+    private val refundMemo =
+        Memo<RefundSearch, Map<Long, Refund>>("tags: refunds") { (rows, reimbursed, rejected) ->
+            RefundDetector.find(rows.map { it.refund }, reimbursed, rejected)
+                .flatMap { listOf(it.debit.id to it, it.credit.id to it) }
+                .toMap()
+        }
 
-    private data class TripSearch(val expenses: List<TripInput>, val tagged: Set<Long>, val rejected: Set<String>)
+    private data class TripSearch(
+        val expenses: List<TripInput>,
+        val tagged: Set<Long>,
+        val rejected: Set<String>
+    )
 
-    private val tripMemo = Memo<TripSearch, List<Trip>>("tags: trips") { (expenses, tagged, rejected) ->
-        TripDetector.find(expenses, tagged, rejected)
-    }
+    private val tripMemo =
+        Memo<TripSearch, List<Trip>>("tags: trips") { (expenses, tagged, rejected) ->
+            TripDetector.find(expenses, tagged, rejected)
+        }
 
     /** Suggested refunds by the ids of both their transactions */
     val refunds: StateFlow<Map<Long, Refund>> =
@@ -86,12 +98,17 @@ class TagDetectionsViewModel(
     /** Suggested trips, the latest first */
     val trips: StateFlow<List<Trip>> =
         combine(
-            rows, contractPayments, taggedAs(TagMeaning.TRIP), store.rejected(TagStore.Rejected.TRIPS)
+            rows,
+            contractPayments,
+            taggedAs(TagMeaning.TRIP),
+            store.rejected(TagStore.Rejected.TRIPS)
         ) { rows, contractPayments, tagged, rejected ->
             rows ?: return@combine emptyList()
             tripMemo.of(
                 TripSearch(
-                    rows.filter { it.refund.amount < 0 && it.refund.id !in contractPayments }.map { it.toTripInput() },
+                    rows.filter {
+                        it.refund.amount < 0 && it.refund.id !in contractPayments
+                    }.map { it.toTripInput() },
                     tagged,
                     rejected
                 )

@@ -30,7 +30,6 @@ import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
 import org.totschnig.myexpenses.designsystem.ActionChip
 import org.totschnig.myexpenses.designsystem.Banner
 import org.totschnig.myexpenses.designsystem.BannerStyle
@@ -45,13 +44,14 @@ import org.totschnig.myexpenses.designsystem.SectionTitle
 import org.totschnig.myexpenses.designsystem.ShareRow
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
-import timber.log.Timber
+import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
 import org.totschnig.myexpenses.next.core.ui.receipts.labelRes
 import org.totschnig.myexpenses.next.data.receipts.AmountInput
 import org.totschnig.myexpenses.next.data.receipts.Receipt
 import org.totschnig.myexpenses.next.data.receipts.ReceiptItem
 import org.totschnig.myexpenses.next.data.receipts.ReceiptTarget
 import org.totschnig.myexpenses.next.data.receipts.itemGroupShares
+import timber.log.Timber
 
 /** Long receipts show only this many items in the details at first */
 private const val COLLAPSED_ITEMS = 15
@@ -63,24 +63,33 @@ private class LoadedReceipt(val receipt: Receipt?)
  * Starts the document scanner, or the photo picker without it, and hands the photo to [onPhoto]
  */
 @Composable
-internal fun rememberReceiptScanner(viewModel: ReceiptViewModel, onPhoto: (Uri) -> Unit): () -> Unit {
+internal fun rememberReceiptScanner(
+    viewModel: ReceiptViewModel,
+    onPhoto: (Uri) -> Unit
+): () -> Unit {
     val activity = LocalActivity.current
     val scope = rememberCoroutineScope()
-    val scanner = rememberLauncherForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            viewModel.documentScanResult(result.data)?.let(onPhoto)
+    val scanner =
+        rememberLauncherForActivityResult(
+            ActivityResultContracts.StartIntentSenderForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                viewModel.documentScanResult(result.data)?.let(onPhoto)
+            }
         }
-    }
-    val picker = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        uri?.let(onPhoto)
-    }
+    val picker =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            uri?.let(onPhoto)
+        }
     return {
         scope.launch {
             val intentSender = activity?.let { viewModel.documentScanIntent(it) }
             if (intentSender != null) {
                 scanner.launch(IntentSenderRequest.Builder(intentSender).build())
             } else {
-                picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                picker.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
             }
         }
     }
@@ -88,7 +97,10 @@ internal fun rememberReceiptScanner(viewModel: ReceiptViewModel, onPhoto: (Uri) 
 
 /** The saved receipt of [transaction] once loaded, the outer null while it is loading */
 @Composable
-private fun rememberLoadedReceipt(viewModel: ReceiptViewModel, transaction: ShownTransaction): LoadedReceipt? {
+private fun rememberLoadedReceipt(
+    viewModel: ReceiptViewModel,
+    transaction: ShownTransaction
+): LoadedReceipt? {
     val loaded by remember(transaction.id) {
         viewModel.receipt(transaction.id, transaction.payeeName).map(::LoadedReceipt)
     }
@@ -108,9 +120,12 @@ fun ReceiptSection(viewModel: ReceiptViewModel, transaction: ShownTransaction) {
     val loaded = rememberLoadedReceipt(viewModel, transaction)
     val target = ReceiptTarget.Transaction(transaction.id)
     val scan = viewModel.scan.collectAsStateWithLifecycle().value?.takeIf { it.target == target }
-    val draft = viewModel.draft.collectAsStateWithLifecycle().value?.takeIf { it.target == target && !it.isStandalone }
+    val draft = viewModel.draft.collectAsStateWithLifecycle().value?.takeIf {
+        it.target == target && !it.isStandalone
+    }
     val amount = transaction.amount.absoluteValue
-    val startScan = rememberReceiptScanner(viewModel) { viewModel.recognize(transaction.id, amount, payee, it) }
+    val startScan =
+        rememberReceiptScanner(viewModel) { viewModel.recognize(transaction.id, amount, payee, it) }
     val currency = transaction.currency
     val formatter = LocalAmountFormatter.current
     val receipt = loaded?.receipt
@@ -128,15 +143,20 @@ fun ReceiptSection(viewModel: ReceiptViewModel, transaction: ShownTransaction) {
             messages = listOf(
                 stringResource(
                     when (scan.reason) {
-                        ReceiptScanState.Reason.NoRecognition -> R.string.next_receipt_no_recognition
+                        ReceiptScanState.Reason.NoRecognition ->
+                            R.string.next_receipt_no_recognition
+
                         ReceiptScanState.Reason.Error -> R.string.next_receipt_error
+
                         ReceiptScanState.Reason.NoItems -> R.string.next_receipt_no_items
                     }
                 )
             ),
             style = BannerStyle.Alert
         ) {
-            TextButton(onClick = viewModel::dismissScan) { Text(stringResource(R.string.next_receipt_close)) }
+            TextButton(onClick = viewModel::dismissScan) {
+                Text(stringResource(R.string.next_receipt_close))
+            }
             TextButton(onClick = startScan) { Text(stringResource(R.string.next_receipt_retry)) }
         }
 
@@ -145,7 +165,10 @@ fun ReceiptSection(viewModel: ReceiptViewModel, transaction: ShownTransaction) {
             transactionAmount = amount,
             format = { formatter.format(it, currency) },
             input = remember(currency) {
-                AmountInput(currency.fractionDigits, DecimalFormatSymbols.getInstance().decimalSeparator)
+                AmountInput(
+                    currency.fractionDigits,
+                    DecimalFormatSymbols.getInstance().decimalSeparator
+                )
             },
             viewable = viewModel::viewableUri,
             onEdit = { viewModel.edit(transaction.id, amount, payee, receipt) },
@@ -165,7 +188,12 @@ fun ReceiptChip(viewModel: ReceiptViewModel, transaction: ShownTransaction) {
     val scan = viewModel.scan.collectAsStateWithLifecycle().value
         ?.takeIf { it.target == ReceiptTarget.Transaction(transaction.id) }
     val startScan = rememberReceiptScanner(viewModel) {
-        viewModel.recognize(transaction.id, transaction.amount.absoluteValue, transaction.payeeName, it)
+        viewModel.recognize(
+            transaction.id,
+            transaction.amount.absoluteValue,
+            transaction.payeeName,
+            it
+        )
     }
     if (loaded == null || loaded.receipt != null || scan != null) return
     ActionChip(
@@ -180,7 +208,11 @@ fun ReceiptChip(viewModel: ReceiptViewModel, transaction: ShownTransaction) {
  * without type lead to the review, where they can be assigned.
  */
 @Composable
-private fun ItemGroupShares(items: List<ReceiptItem>, format: (Long) -> String, onAssign: () -> Unit) {
+private fun ItemGroupShares(
+    items: List<ReceiptItem>,
+    format: (Long) -> String,
+    onAssign: () -> Unit
+) {
     val shares = itemGroupShares(items)
     if (shares.none { it.group != null }) return
     SectionTitle(stringResource(R.string.next_item_groups))
@@ -189,7 +221,11 @@ private fun ItemGroupShares(items: List<ReceiptItem>, format: (Long) -> String, 
             val group = share.group
             ShareRow(
                 label = group?.let { stringResource(it.labelRes) }
-                    ?: pluralStringResource(R.plurals.next_item_groups_missing, share.itemCount, share.itemCount),
+                    ?: pluralStringResource(
+                        R.plurals.next_item_groups_missing,
+                        share.itemCount,
+                        share.itemCount
+                    ),
                 value = "${format(share.amount)} · ${(share.share * 100).roundToInt()} %",
                 share = share.share,
                 isFirst = index == 0,
@@ -213,7 +249,7 @@ private fun SavedReceipt(
     /** The photo as an uri other apps can open */
     viewable: (Uri) -> Uri,
     onEdit: () -> Unit,
-    onDelete: () -> Unit,
+    onDelete: () -> Unit
 ) {
     val context = LocalContext.current
     var confirmDelete by rememberSaveable { mutableStateOf(false) }
@@ -223,11 +259,17 @@ private fun SavedReceipt(
             title = receipt.merchant,
             itemHeader = stringResource(R.string.next_receipt_column_item),
             amountHeader = stringResource(R.string.next_receipt_column_price),
-            lines = receipt.items.map { ReceiptLine(it.name, format(it.amount), it.quantityText(input, format)) },
+            lines = receipt.items.map {
+                ReceiptLine(it.name, format(it.amount), it.quantityText(input, format))
+            },
             totalLabel = stringResource(R.string.next_receipt_sum),
             total = format(itemsSum),
             collapsedLines = COLLAPSED_ITEMS,
-            showAllLabel = pluralStringResource(R.plurals.next_receipt_show_all, receipt.items.size, receipt.items.size)
+            showAllLabel = pluralStringResource(
+                R.plurals.next_receipt_show_all,
+                receipt.items.size,
+                receipt.items.size
+            )
         )
         if (itemsSum != transactionAmount) {
             InfoRow(
@@ -239,10 +281,12 @@ private fun SavedReceipt(
         receipt.photo?.let { photo ->
             LinkRow(stringResource(R.string.next_receipt_photo), onClick = {
                 try {
-                    context.startActivity(Intent(Intent.ACTION_VIEW).apply {
-                        setDataAndType(viewable(photo), "image/*")
-                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    })
+                    context.startActivity(
+                        Intent(Intent.ACTION_VIEW).apply {
+                            setDataAndType(viewable(photo), "image/*")
+                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        }
+                    )
                 } catch (e: ActivityNotFoundException) {
                     Timber.w(e)
                 }

@@ -19,12 +19,19 @@ fun TransactionTile(
     image: PayeeImage?,
     categoryIcon: String?,
     modifier: Modifier = Modifier,
-    isLarge: Boolean = false,
+    isLarge: Boolean = false
 ) {
     if (image is PayeeImage.Icon) {
         CatalogIconTile(image.name, modifier, isLarge)
     } else {
-        PayeeTile(payee?.takeIf { it.isNotBlank() }, (image as? PayeeImage.Logo)?.bitmap, modifier, isLarge) {
+        PayeeTile(
+            payee?.takeIf {
+                it.isNotBlank()
+            },
+            (image as? PayeeImage.Logo)?.bitmap,
+            modifier,
+            isLarge
+        ) {
             CategoryIconContent(categoryIcon, isLarge)
         }
     }

@@ -1,8 +1,8 @@
 package org.totschnig.myexpenses.next.data.tags
 
-import org.totschnig.myexpenses.next.core.model.words.Words
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
+import org.totschnig.myexpenses.next.core.model.words.Words
 
 /**
  * An expense as seen by [TripDetector]
@@ -15,7 +15,7 @@ data class TripInput(
     val amount: Long,
     val payeeName: String?,
     val comment: String?,
-    val isForeign: Boolean = false,
+    val isForeign: Boolean = false
 )
 
 /**
@@ -27,7 +27,7 @@ data class Trip(
     val start: LocalDate,
     val end: LocalDate,
     val transactions: List<TripInput>,
-    val signals: List<TripInput>,
+    val signals: List<TripInput>
 ) {
     /** Identifies the trip, e.g. to remember that the user said no */
     val key: String get() = "$start:$end"
@@ -46,8 +46,10 @@ object TripDetector {
 
     /** Matched at the start of a word */
     private val WORDS = listOf(
-        "hotel", "hostel", "booking com", "airbnb", "ferienwohnung", "ferienhaus", "camping", "jugendherberge",
-        "lufthansa", "eurowings", "ryanair", "easyjet", "condor", "wizz air", "klm", "air france", "tuifly",
+        "hotel", "hostel", "booking com", "airbnb", "ferienwohnung", "ferienhaus", "camping",
+        "jugendherberge",
+        "lufthansa", "eurowings", "ryanair", "easyjet", "condor", "wizz air", "klm", "air france",
+        "tuifly",
         "flughafen", "airport", "auslandseinsatz", "fremdwährung", "fremdwaehrung"
     )
 
@@ -66,23 +68,36 @@ object TripDetector {
     fun find(
         expenses: List<TripInput>,
         ignored: Set<Long> = emptySet(),
-        rejected: Set<String> = emptySet(),
+        rejected: Set<String> = emptySet()
     ): List<Trip> {
         val signalDays = expenses.filter(::isSignal).map { it.date }.distinct().sorted()
         val ranges = mutableListOf<MutableList<LocalDate>>()
         signalDays.forEach { day ->
             val last = ranges.lastOrNull()
-            if (last != null && ChronoUnit.DAYS.between(last.last(), day) <= MAX_GAP_DAYS + 1) last += day
-            else ranges += mutableListOf(day)
+            if (last != null &&
+                ChronoUnit.DAYS.between(last.last(), day) <= MAX_GAP_DAYS + 1
+            ) {
+                last += day
+            } else {
+                ranges += mutableListOf(day)
+            }
         }
         return ranges
             .filter { it.size >= MIN_SIGNAL_DAYS }
             .map { days ->
                 val inRange = expenses.filter { it.date in days.first()..days.last() }
-                Trip(days.first(), days.last(), inRange.sortedBy { it.date }, inRange.filter(::isSignal))
+                Trip(
+                    days.first(),
+                    days.last(),
+                    inRange.sortedBy {
+                        it.date
+                    },
+                    inRange.filter(::isSignal)
+                )
             }
             .filter { trip ->
-                trip.key !in rejected && trip.transactions.count { it.id in ignored } * 2 < trip.transactions.size
+                trip.key !in rejected &&
+                    trip.transactions.count { it.id in ignored } * 2 < trip.transactions.size
             }
             .sortedByDescending { it.start }
     }

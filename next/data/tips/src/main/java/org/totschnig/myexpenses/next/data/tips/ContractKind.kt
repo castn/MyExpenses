@@ -25,11 +25,12 @@ enum class ContractKind(
     private val excluded: List<String> = emptyList(),
     val isUsuallyOne: Boolean = true,
     val isSwitchable: Boolean = false,
-    val isSubscription: Boolean = false,
+    val isSubscription: Boolean = false
 ) {
     CAR_INSURANCE(
         patterns = listOf(
-            "kfz versicherung", "kfzversicherung", "kfz haftpflicht", "kfzhaftpflicht", "autoversicherung", "teilkasko",
+            "kfz versicherung", "kfzversicherung", "kfz haftpflicht", "kfzhaftpflicht",
+            "autoversicherung", "teilkasko",
             "vollkasko", "car insurance", "motor insurance", "vehicle insurance"
         ),
         isUsuallyOne = false,
@@ -38,7 +39,8 @@ enum class ContractKind(
     LIABILITY_INSURANCE(
         patterns = listOf("privathaftpflicht", "haftpflicht", "personal liability"),
         excluded = listOf(
-            "kfz", "auto", "fahrzeug", "motorrad", "tierhalter", "hunde", "pferde", "bauherr", "berufshaftpflicht",
+            "kfz", "auto", "fahrzeug", "motorrad", "tierhalter", "hunde", "pferde", "bauherr",
+            "berufshaftpflicht",
             "diensthaftpflicht", "amtshaftpflicht", "vermögensschaden", "gewässer", "vehicle"
         )
     ),
@@ -46,7 +48,8 @@ enum class ContractKind(
     LEGAL_INSURANCE(listOf("rechtsschutz", "legal expenses", "legal protection")),
     VIDEO_STREAMING(
         listOf(
-            "netflix", "disney", "dazn", "paramount", "joyn", "rtl+", "rtl plus", "sky ticket", "wow tv", "magenta tv",
+            "netflix", "disney", "dazn", "paramount", "joyn", "rtl+", "rtl plus", "sky ticket",
+            "wow tv", "magenta tv",
             "magentatv", "waipu", "apple tv", "prime video", "crunchyroll", "mubi", "hbo"
         ),
         isSubscription = true
@@ -58,24 +61,44 @@ enum class ContractKind(
     CLOUD_STORAGE(listOf("icloud", "google one", "dropbox", "onedrive"), isSubscription = true),
     MOBILE(
         listOf(
-            "mobilfunk", "handy", "congstar", "aldi talk", "fraenk", "winsim", "simyo", "blau de", "lidl connect",
+            "mobilfunk", "handy", "congstar", "aldi talk", "fraenk", "winsim", "simyo", "blau de",
+            "lidl connect",
             "klarmobil", "smartmobil", "mobile phone", "cell phone"
         ),
         excluded = INSURANCE,
         isSwitchable = true
     ),
-    INTERNET(listOf("dsl", "vdsl", "glasfaser", "internet", "broadband"), excluded = INSURANCE, isSwitchable = true),
-    ELECTRICITY(listOf("strom", "electricity", "vattenfall", "yello", "eprimo"), isSwitchable = true),
-    GAS(listOf("erdgas", "gasabschlag", "gasversorgung"), words = listOf("gas"), isSwitchable = true),
+    INTERNET(
+        listOf("dsl", "vdsl", "glasfaser", "internet", "broadband"),
+        excluded = INSURANCE,
+        isSwitchable = true
+    ),
+    ELECTRICITY(
+        listOf("strom", "electricity", "vattenfall", "yello", "eprimo"),
+        isSwitchable = true
+    ),
+    GAS(
+        listOf("erdgas", "gasabschlag", "gasversorgung"),
+        words = listOf("gas"),
+        isSwitchable = true
+    ),
     GYM(
-        listOf("fitnessstudio", "mcfit", "fitx", "clever fit", "john reed", "fitness first", "urban sports"),
+        listOf(
+            "fitnessstudio",
+            "mcfit",
+            "fitx",
+            "clever fit",
+            "john reed",
+            "fitness first",
+            "urban sports"
+        ),
         words = listOf("gym")
     );
 
     /** @param text see [Words.textOf] */
     private fun matches(text: String) =
         (patterns.any { Words.startsWord(text, it) } || words.any { Words.isWord(text, it) }) &&
-                excluded.none { Words.contains(text, it) }
+            excluded.none { Words.contains(text, it) }
 
     companion object {
         /**
@@ -87,7 +110,12 @@ enum class ContractKind(
         /** See [Words.textOf] */
         internal fun textOf(contract: Contract): String {
             val last = contract.lastTransaction
-            return Words.textOf(contract.customName, last.payeeName, last.comment, last.categoryPath)
+            return Words.textOf(
+                contract.customName,
+                last.payeeName,
+                last.comment,
+                last.categoryPath
+            )
         }
     }
 }

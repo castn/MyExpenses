@@ -20,7 +20,14 @@ class ContractInputTest {
         Ledger(transactions.toList(), OwnAccounts(setOf(giro), emptyMap()))
 
     private val payment =
-        LedgerTransaction(1, day, amount = -1299, accountId = giro, payeeId = 7, payeeName = "Netflix")
+        LedgerTransaction(
+            1,
+            day,
+            amount = -1299,
+            accountId = giro,
+            payeeId = 7,
+            payeeName = "Netflix"
+        )
 
     @Test
     fun tagsDoNotChangeTheInput() {
@@ -33,7 +40,13 @@ class ContractInputTest {
     @Test
     fun newTransactionsAndAmountsChangeTheInput() {
         val before = contractTransactions(ledger(payment))
-        assertNotEquals(before, contractTransactions(ledger(payment.copy(amount = -1499, homeAmount = -1499))))
-        assertNotEquals(before, contractTransactions(ledger(payment, payment.copy(id = 2, date = day.plusMonths(1)))))
+        assertNotEquals(
+            before,
+            contractTransactions(ledger(payment.copy(amount = -1499, homeAmount = -1499)))
+        )
+        assertNotEquals(
+            before,
+            contractTransactions(ledger(payment, payment.copy(id = 2, date = day.plusMonths(1))))
+        )
     }
 }

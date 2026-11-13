@@ -33,8 +33,9 @@ class TagLearnerTest {
     fun tooFewOrMixedTagsAreNotLearned() {
         val few = (1..2).map { transaction("p:fressnapf", dog) } + transaction("p:fressnapf")
         assertTrue(TagLearner.suggest(few, learnable).isEmpty())
-        val mixed = (1..3).map { transaction("p:obi", dog) } + (1..3).map { transaction("p:obi", household) } +
-                transaction("p:obi")
+        val mixed =
+            (1..3).map { transaction("p:obi", dog) } +
+                (1..3).map { transaction("p:obi", household) } + transaction("p:obi")
         assertTrue(TagLearner.suggest(mixed, learnable).isEmpty())
     }
 
@@ -49,7 +50,13 @@ class TagLearnerTest {
     fun rejectedSuggestionIsDropped() {
         val tagged = (1..3).map { transaction("p:fressnapf", dog) }
         val untagged = transaction("p:fressnapf")
-        assertTrue(TagLearner.suggest(tagged + untagged, learnable, rejected = setOf("${untagged.id}:$dog")).isEmpty())
+        assertTrue(
+            TagLearner.suggest(
+                tagged + untagged,
+                learnable,
+                rejected = setOf("${untagged.id}:$dog")
+            ).isEmpty()
+        )
     }
 
     @Test
@@ -69,6 +76,9 @@ class TagLearnerTest {
     fun rulesRoundTrip() {
         val rules = listOf(TagRule("p:12", 7, 5003), TagRule("m:zalando", 9, 10))
         assertEquals(rules, TagRule.decode(TagRule.encode(rules)))
-        assertEquals(listOf(TagRule("n:obi", 1, 2)), TagRule.decode("n:obi|1|2;broken;|3|4;p:1|x|2"))
+        assertEquals(
+            listOf(TagRule("n:obi", 1, 2)),
+            TagRule.decode("n:obi|1|2;broken;|3|4;p:1|x|2")
+        )
     }
 }

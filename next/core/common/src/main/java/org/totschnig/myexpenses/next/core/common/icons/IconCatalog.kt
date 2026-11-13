@@ -32,10 +32,17 @@ object IconCatalog {
 
     val themes: List<IconTheme> = listOf(
         IconTheme(
-            R.string.next_icons_food, listOf(
-                i("cart-shopping", "lebensmittel supermarkt einkauf discounter groceries supermarket"),
+            R.string.next_icons_food,
+            listOf(
+                i(
+                    "cart-shopping",
+                    "lebensmittel supermarkt einkauf discounter groceries supermarket"
+                ),
                 i("basket-shopping", "wochenmarkt markt korb täglicher_bedarf basket market"),
-                i("utensils", "essen restaurant gastro mittagessen abendessen kantine mensa dining meal"),
+                i(
+                    "utensils",
+                    "essen restaurant gastro mittagessen abendessen kantine mensa dining meal"
+                ),
                 i("burger", "imbiss fastfood fast_food burger snack"),
                 i("pizza-slice", "pizza lieferdienst lieferando delivery takeaway"),
                 i("mug-hot", "kaffee coffee café cafe tee =tea"),
@@ -54,11 +61,12 @@ object IconCatalog {
                 i("wine-glass", "wein restaurant wine"),
                 i("beer-mug-empty", "bier kneipe =bar =bars ausgehen =pub beer"),
                 i("martini-glass", "cocktail cocktails ausgehen nightlife"),
-                i("champagne-glasses", "feier party sekt celebration"),
+                i("champagne-glasses", "feier party sekt celebration")
             )
         ),
         IconTheme(
-            R.string.next_icons_shopping, listOf(
+            R.string.next_icons_shopping,
+            listOf(
                 i("bag-shopping", "shopping einkaufen kaufhaus bummel"),
                 i("store", "laden geschäft händler einzelhandel shop retail"),
                 i("shirt", "kleidung =mode textil clothing fashion clothes"),
@@ -77,11 +85,12 @@ object IconCatalog {
                 i("pump-soap", "drogerie körperpflege kosmetik drugstore cosmetics"),
                 i("spray-can-sparkles", "putzmittel reinigung cleaning"),
                 i("receipt", "kassenzettel beleg quittung receipt"),
-                i("cash-register", "kasse kiosk tankstellenshop checkout"),
+                i("cash-register", "kasse kiosk tankstellenshop checkout")
             )
         ),
         IconTheme(
-            R.string.next_icons_home, listOf(
+            R.string.next_icons_home,
+            listOf(
                 i("house", "wohnen haus miete wohnung zuhause =rent housing home"),
                 i("house-chimney", "eigenheim nebenkosten hausgeld homeowner"),
                 i("building", "wohnung vermieter hausverwaltung apartment landlord"),
@@ -99,11 +108,12 @@ object IconCatalog {
                 i("hammer", "handwerker reparatur renovierung repair renovation"),
                 i("paint-roller", "renovierung streichen farbe malern painting"),
                 i("toolbox", "werkzeug instandhaltung maintenance"),
-                i("tower-broadcast", "rundfunk rundfunkbeitrag gez rundfunkgebühr broadcasting"),
+                i("tower-broadcast", "rundfunk rundfunkbeitrag gez rundfunkgebühr broadcasting")
             )
         ),
         IconTheme(
-            R.string.next_icons_mobility, listOf(
+            R.string.next_icons_mobility,
+            listOf(
                 i("car", "auto kfz pkw wagen =car vehicle"),
                 i("car-side", "leasing autokredit car_loan"),
                 i("gas-pump", "tanken tankstelle kraftstoff benzin diesel sprit fuel petrol"),
@@ -122,11 +132,12 @@ object IconCatalog {
                 i("van-shuttle", "carsharing mietwagen autovermietung car_rental"),
                 i("plane", "flug flugzeug airline flight"),
                 i("ship", "fähre schiff kreuzfahrt ferry cruise"),
-                i("ticket", "fahrkarte ticket fahrschein"),
+                i("ticket", "fahrkarte ticket fahrschein")
             )
         ),
         IconTheme(
-            R.string.next_icons_health, listOf(
+            R.string.next_icons_health,
+            listOf(
                 i("heart-pulse", "gesundheit krankenkasse krankenversicherung health"),
                 i("stethoscope", "arzt ärztin praxis doctor"),
                 i("user-doctor", "facharzt behandlung physician"),
@@ -148,11 +159,12 @@ object IconCatalog {
                 i("golf-ball-tee", "golf"),
                 i("person-skiing", "ski skifahren skiing"),
                 i("person-hiking", "wandern bergsport hiking"),
-                i("person-praying", "yoga meditation"),
+                i("person-praying", "yoga meditation")
             )
         ),
         IconTheme(
-            R.string.next_icons_leisure, listOf(
+            R.string.next_icons_leisure,
+            listOf(
                 i("film", "kino film filme cinema movies"),
                 i("tv", "fernsehen streaming serien =tv television"),
                 i("music", "musik musikstreaming music"),
@@ -172,11 +184,12 @@ object IconCatalog {
                 i("palette", "kunst malen basteln =art crafts"),
                 i("chess", "schach verein chess"),
                 i("bowling-ball", "bowling kegeln"),
-                i("trophy", "wettkampf turnier tournament"),
+                i("trophy", "wettkampf turnier tournament")
             )
         ),
         IconTheme(
-            R.string.next_icons_travel, listOf(
+            R.string.next_icons_travel,
+            listOf(
                 i("umbrella-beach", "urlaub strand ferien vacation holiday beach"),
                 i("suitcase-rolling", "reise reisen gepäck travel trip luggage"),
                 i("plane-departure", "flughafen abflug flugreise airport"),
@@ -189,11 +202,12 @@ object IconCatalog {
                 i("caravan", "wohnmobil wohnwagen camper"),
                 i("mountain", "berge alpen mountains"),
                 i("snowflake", "skiurlaub winterurlaub ski_holiday"),
-                i("person-walking-luggage", "geschäftsreise dienstreise business_trip"),
+                i("person-walking-luggage", "geschäftsreise dienstreise business_trip")
             )
         ),
         IconTheme(
-            R.string.next_icons_family, listOf(
+            R.string.next_icons_family,
+            listOf(
                 i("children", "kinder kind nachwuchs children kids"),
                 i("baby", "baby windeln diapers"),
                 i("baby-carriage", "kinderwagen babyausstattung stroller"),
@@ -207,18 +221,22 @@ object IconCatalog {
                 i("horse", "pferd reiten reitstall horse riding"),
                 i("bone", "tierfutter futter pet_food"),
                 i("house-medical", "tierarzt =vet veterinarian"),
-                i("cake-candles", "kindergeburtstag geburtstag party"),
+                i("cake-candles", "kindergeburtstag geburtstag party")
             )
         ),
         IconTheme(
-            R.string.next_icons_money, listOf(
+            R.string.next_icons_money,
+            listOf(
                 i("wallet", "geld portemonnaie bargeld spielraum wallet cash"),
                 i("money-bill-wave", "gehalt lohn einkommen salary income wage"),
                 i("coins", "kleingeld münzen trinkgeld coins tips"),
                 i("piggy-bank", "sparen rücklage sparziel notgroschen savings reserve"),
                 i("sack-dollar", "vermögen =erbe wealth"),
                 i("chart-line", "investieren depot aktien etf sparplan invest stocks"),
-                i("building-columns", "bank kontoführung finanzen sparkasse volksbank banking finance"),
+                i(
+                    "building-columns",
+                    "bank kontoführung finanzen sparkasse volksbank banking finance"
+                ),
                 i("credit-card", "kreditkarte karte kartengebühr credit_card"),
                 i("hand-holding-dollar", "kredit darlehen raten ratenkauf loan installment"),
                 i("house-user", "hypothek baufinanzierung immobilienkredit mortgage"),
@@ -227,18 +245,25 @@ object IconCatalog {
                 i("landmark", "steuer steuern finanzamt behörde amt =tax government"),
                 i("scale-balanced", "anwalt rechtsschutz gericht lawyer legal"),
                 i("shield-halved", "versicherung haftpflicht absicherung insurance"),
-                i("shield-heart", "lebensversicherung risikoleben altersvorsorge rente life_insurance pension"),
+                i(
+                    "shield-heart",
+                    "lebensversicherung risikoleben altersvorsorge rente life_insurance pension"
+                ),
                 i("umbrella", "hausrat hausratversicherung schutz cover"),
                 i("file-contract", "vertrag verträge abo abonnement contract subscription"),
                 i("id-card", "mitgliedschaft mitgliedsbeitrag ausweis membership"),
-                i("hand-holding-heart", "spende spenden patenschaft wohltätigkeit donation charity"),
+                i(
+                    "hand-holding-heart",
+                    "spende spenden patenschaft wohltätigkeit donation charity"
+                ),
                 i("handshake", "verein gewerkschaft partei beitrag union association"),
                 i("vault", "tresor schließfach safe_deposit"),
-                i("arrow-right-arrow-left", "umbuchung überweisung transfer"),
+                i("arrow-right-arrow-left", "umbuchung überweisung transfer")
             )
         ),
         IconTheme(
-            R.string.next_icons_tech, listOf(
+            R.string.next_icons_tech,
+            listOf(
                 i("mobile-screen-button", "handy mobilfunk smartphone handyvertrag mobile phone"),
                 i("phone", "telefon festnetz telephone landline"),
                 i("wifi", "internet dsl glasfaser wlan router broadband"),
@@ -253,22 +278,27 @@ object IconCatalog {
                 i("at", "e-mail email mailbox"),
                 i("satellite-dish", "satellit kabel kabelfernsehen satellite cable"),
                 i("print", "drucker druckerpatronen printer =ink"),
-                i("headset", "support kundenservice service"),
+                i("headset", "support kundenservice service")
             )
         ),
         IconTheme(
-            R.string.next_icons_work, listOf(
+            R.string.next_icons_work,
+            listOf(
                 i("briefcase", "arbeit beruf beruflich job work business"),
                 i("user-tie", "selbstständig freiberuf kunde freelance client"),
-                i("graduation-cap", "studium =uni universität studiengebühren bildung education university"),
+                i(
+                    "graduation-cap",
+                    "studium =uni universität studiengebühren bildung education university"
+                ),
                 i("chalkboard-user", "kurs kurse weiterbildung seminar nachhilfe course training"),
                 i("pen", "schreibwaren büro bürobedarf stationery office"),
                 i("people-group", "team kollegen firma company"),
-                i("helmet-safety", "baustelle handwerk construction"),
+                i("helmet-safety", "baustelle handwerk construction")
             )
         ),
         IconTheme(
-            R.string.next_icons_brands, listOf(
+            R.string.next_icons_brands,
+            listOf(
                 i("amazon", "amazon amzn prime"),
                 i("paypal", "paypal"),
                 i("apple", "apple icloud itunes"),
@@ -292,11 +322,12 @@ object IconCatalog {
                 i("cc-mastercard", "mastercard"),
                 i("dhl", "dhl"),
                 i("ups", "=ups"),
-                i("fedex", "fedex"),
+                i("fedex", "fedex")
             )
         ),
         IconTheme(
-            R.string.next_icons_other, listOf(
+            R.string.next_icons_other,
+            listOf(
                 i("star", "favorit besonders favorite"),
                 i("heart", "partner liebe beziehung love"),
                 i("calendar-days", "jährlich monatlich termin yearly monthly"),
@@ -312,9 +343,9 @@ object IconCatalog {
                 i("bell", "erinnerung reminder"),
                 i("tree", "natur umwelt nature"),
                 i("sun", "sommer solar photovoltaik summer"),
-                i("medal", "auszeichnung prämie bonus"),
+                i("medal", "auszeichnung prämie bonus")
             )
-        ),
+        )
     )
 
     /** Every icon of the catalog once, in the order of [themes] */
@@ -338,7 +369,10 @@ object IconCatalog {
         texts.filterNotNull().filter { it.isNotBlank() }.forEach { text ->
             val normalized = Words.textOf(text)
             icons.mapNotNull { icon ->
-                icon.words.filter { matches(normalized, it) }.maxOfOrNull { it.length }?.let { icon.name to it }
+                icon.words.filter { matches(normalized, it) }.maxOfOrNull { it.length }?.let {
+                    icon.name to
+                        it
+                }
             }
                 // The longest matching word is the most specific, e.g. "kfz-versicherung" before "kfz"
                 .sortedByDescending { it.second }
@@ -359,8 +393,11 @@ object IconCatalog {
         val pattern = Words.normalize(query).trim()
         if (pattern.isEmpty()) return emptyList()
         val curated = icons.filter { icon ->
-            icon.words.any { it.removePrefix("=").startsWith(pattern) || pattern.length >= 3 && pattern in it } ||
-                    all[icon.name]?.let { Words.normalize(it).contains(pattern) } == true
+            icon.words.any {
+                it.removePrefix("=").startsWith(pattern) ||
+                    (pattern.length >= 3 && pattern in it)
+            } ||
+                all[icon.name]?.let { Words.normalize(it).contains(pattern) } == true
         }.map { it.name }
         val others = all.filter { (name, label) ->
             name !in curated && (Words.normalize(label).contains(pattern) || name.contains(pattern))

@@ -1,8 +1,8 @@
 package org.totschnig.myexpenses.next.data.receipts
 
 import android.net.Uri
-import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
+import kotlinx.coroutines.flow.Flow
 
 /**
  * The receipts and expenses in the database of the app, implemented by the shell. Apart from the

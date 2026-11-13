@@ -1,10 +1,10 @@
 package org.totschnig.myexpenses.next.data.tags
 
-import org.totschnig.myexpenses.next.data.categories.CategoryInput
-import org.totschnig.myexpenses.next.data.categories.counterpart
-import org.totschnig.myexpenses.next.core.model.words.Words
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
+import org.totschnig.myexpenses.next.core.model.words.Words
+import org.totschnig.myexpenses.next.data.categories.CategoryInput
+import org.totschnig.myexpenses.next.data.categories.counterpart
 
 /**
  * A transaction as seen by [RefundDetector]
@@ -18,7 +18,7 @@ data class RefundInput(
     val accountId: Long,
     val payeeName: String?,
     val comment: String?,
-    val counterpart: String?,
+    val counterpart: String?
 )
 
 /** A debit that was paid back by [credit] */
@@ -63,7 +63,7 @@ object RefundDetector {
     fun find(
         transactions: List<RefundInput>,
         ignored: Set<Long> = emptySet(),
-        rejected: Set<String> = emptySet(),
+        rejected: Set<String> = emptySet()
     ): List<Refund> {
         val debits = transactions.filter { it.amount < 0 && it.id !in ignored }
         val used = HashSet<Long>()
@@ -75,16 +75,17 @@ object RefundDetector {
                 debits
                     .filter { debit ->
                         debit.id !in used &&
-                                debit.amount == -credit.amount &&
-                                debit.accountId == credit.accountId &&
-                                !debit.date.isAfter(credit.date) &&
-                                ChronoUnit.DAYS.between(debit.date, credit.date) <= MAX_DAYS &&
-                                (
-                                    hasRefundText || (
-                                        credit.counterpart != null && debit.counterpart == credit.counterpart
+                            debit.amount == -credit.amount &&
+                            debit.accountId == credit.accountId &&
+                            !debit.date.isAfter(credit.date) &&
+                            ChronoUnit.DAYS.between(debit.date, credit.date) <= MAX_DAYS &&
+                            (
+                                hasRefundText || (
+                                    credit.counterpart != null &&
+                                        debit.counterpart == credit.counterpart
                                     )
                                 ) &&
-                                "${debit.id}:${credit.id}" !in rejected
+                            "${debit.id}:${credit.id}" !in rejected
                     }
                     // The closest debit, from the same counterpart if there is one
                     .maxWithOrNull(compareBy({ it.counterpart == credit.counterpart }, { it.date }))

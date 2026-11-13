@@ -2,6 +2,5 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>MatchingDeclarationName:TagRows.kt:TagRow</ID>
   </CurrentIssues>
 </SmellBaseline>

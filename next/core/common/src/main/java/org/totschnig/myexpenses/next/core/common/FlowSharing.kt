@@ -15,7 +15,9 @@ import kotlinx.coroutines.flow.stateIn
 private val WhileShown = SharingStarted.WhileSubscribed(5000)
 
 /** A state for screens, see [WhileShown] */
-fun <T> Flow<T>.stateWhileShown(scope: CoroutineScope, initial: T): StateFlow<T> = stateIn(scope, WhileShown, initial)
+fun <T> Flow<T>.stateWhileShown(scope: CoroutineScope, initial: T): StateFlow<T> =
+    stateIn(scope, WhileShown, initial)
 
 /** Computed once for all collectors, e.g. facts other features read, see [WhileShown] */
-fun <T> Flow<T>.shareWhileShown(scope: CoroutineScope): SharedFlow<T> = shareIn(scope, WhileShown, replay = 1)
+fun <T> Flow<T>.shareWhileShown(scope: CoroutineScope): SharedFlow<T> =
+    shareIn(scope, WhileShown, replay = 1)

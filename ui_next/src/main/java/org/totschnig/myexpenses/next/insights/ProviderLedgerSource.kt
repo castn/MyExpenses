@@ -1,32 +1,34 @@
 package org.totschnig.myexpenses.next.insights
 
-import android.database.Cursor
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.core.DataStore
 import android.content.ContentResolver
+import android.database.Cursor
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import app.cash.copper.flow.mapToList
 import app.cash.copper.flow.observeQuery
 import java.text.Collator
 import java.time.LocalDate
-import org.totschnig.myexpenses.next.core.common.ledger.Memo
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import org.totschnig.myexpenses.db2.BankingAttribute
+import org.totschnig.myexpenses.next.core.common.ledger.Memo
+import org.totschnig.myexpenses.next.core.common.logTimings
+import org.totschnig.myexpenses.next.core.common.shareWhileShown
 import org.totschnig.myexpenses.next.core.model.ledger.Catalog
 import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
@@ -34,11 +36,10 @@ import org.totschnig.myexpenses.next.core.model.ledger.LedgerPart
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.core.model.ledger.OwnAccounts
+import org.totschnig.myexpenses.next.core.model.ledger.TagInfo
 import org.totschnig.myexpenses.next.core.model.ledger.normalizeIban
 import org.totschnig.myexpenses.next.core.model.ledger.ownTransferTarget
 import org.totschnig.myexpenses.next.isDailyAccountType
-import org.totschnig.myexpenses.next.core.common.logTimings
-import org.totschnig.myexpenses.next.core.common.shareWhileShown
 import org.totschnig.myexpenses.provider.DatabaseConstants.WHERE_NOT_SPLIT_PART
 import org.totschnig.myexpenses.provider.DatabaseConstants.WHERE_NOT_VOID
 import org.totschnig.myexpenses.provider.KEY_ACCOUNTID
@@ -88,7 +89,6 @@ import org.totschnig.myexpenses.provider.getString
 import org.totschnig.myexpenses.provider.getStringOrNull
 import org.totschnig.myexpenses.util.epoch2LocalDate
 import org.totschnig.myexpenses.util.toEpoch
-import org.totschnig.myexpenses.next.core.model.ledger.TagInfo
 
 /**
  * Loads the [Ledger] once for all features of the new UI from the provider of the app, see
@@ -106,7 +106,7 @@ class ProviderLedgerSource(
     private val dataStore: DataStore<Preferences>,
     private val scope: CoroutineScope,
     /** See [today] */
-    today: Flow<LocalDate>,
+    today: Flow<LocalDate>
 ) : LedgerSource {
 
     override val consent: Flow<Boolean> =
@@ -158,7 +158,9 @@ class ProviderLedgerSource(
             projection = arrayOf(KEY_TRANSACTIONID, KEY_TAGID),
             notifyForDescendants = true
         ).mapToList { it.getLong(KEY_TRANSACTIONID) to it.getLong(KEY_TAGID) }
-            .map { links -> links.groupBy({ it.first }, { it.second }).mapValues { it.value.toSet() } }
+            .map { links ->
+                links.groupBy({ it.first }, { it.second }).mapValues { it.value.toSet() }
+            }
             .logTimings("ledger: tag links query")
 
     private val categories: Flow<List<CategoryInfo>> =
@@ -182,7 +184,9 @@ class ProviderLedgerSource(
             uri = TAGS_URI,
             projection = arrayOf(KEY_ROWID, KEY_LABEL, KEY_COLOR),
             notifyForDescendants = true
-        ).mapToList { TagInfo(it.getLong(KEY_ROWID), it.getString(KEY_LABEL), it.getIntOrNull(KEY_COLOR)) }
+        ).mapToList {
+            TagInfo(it.getLong(KEY_ROWID), it.getString(KEY_LABEL), it.getIntOrNull(KEY_COLOR))
+        }
             .map { tags -> tags.sortedWith { a, b -> collator.compare(a.label, b.label) } }
     }
 
@@ -221,7 +225,7 @@ class ProviderLedgerSource(
         val ibans: Map<String, Long>,
         val accounts: OwnAccounts,
         val tagLinks: Map<Long, Set<Long>>,
-        val splitParts: Map<Long, List<LedgerPart>>,
+        val splitParts: Map<Long, List<LedgerPart>>
     )
 
     private val ledgerMemo = Memo<LedgerInput, Ledger>(
@@ -232,7 +236,10 @@ class ProviderLedgerSource(
                 val transaction = row.transaction
                 transaction.copy(
                     targetAccountId = ownTransferTarget(
-                        transaction.accountId, transaction.transferAccountId, row.iban, ibans
+                        transaction.accountId,
+                        transaction.transferAccountId,
+                        row.iban,
+                        ibans
                     ),
                     tagIds = tagLinks[transaction.id].orEmpty(),
                     parts = splitParts[transaction.id].orEmpty()
@@ -248,30 +255,33 @@ class ProviderLedgerSource(
 
     override val ledger: Flow<Ledger?> =
         combine(consent, today, ::Pair).flatMapLatest { (hasConsent, today) ->
-            if (hasConsent) combine(
-                contentResolver.observeQuery(
-                    uri = TRANSACTIONS_URI,
-                    projection = PROJECTION,
-                    selection = SELECTION,
-                    selectionArgs = arrayOf(historyStart(today)),
-                    sortOrder = "$KEY_DATE ASC",
-                    notifyForDescendants = true
-                ).mapToList { Row(it.toLedgerTransaction(), it.getStringOrNull(KEY_IBAN)) }
-                    .logTimings("ledger: transactions query"),
-                ownIbans,
-                ownAccounts,
-                tagLinks,
-                splitParts(historyStart(today)),
-                ::LedgerInput
-            )
-                // A change, e.g. of the tags of a transaction, notifies several tables at once
-                .debounce(LEDGER_DEBOUNCE_MILLIS)
-                .map<LedgerInput, Ledger?> { ledgerMemo.of(it) }
-                // On a restart, e.g. after the app was in the background, the last ledger stays
-                // until the new one is read, which is the same unless something changed
-                .onStart { if (latestLedger == null) emit(null) }
-                .onEach { latestLedger = it }
-            else flowOf(null).onEach { latestLedger = null }
+            if (hasConsent) {
+                combine(
+                    contentResolver.observeQuery(
+                        uri = TRANSACTIONS_URI,
+                        projection = PROJECTION,
+                        selection = SELECTION,
+                        selectionArgs = arrayOf(historyStart(today)),
+                        sortOrder = "$KEY_DATE ASC",
+                        notifyForDescendants = true
+                    ).mapToList { Row(it.toLedgerTransaction(), it.getStringOrNull(KEY_IBAN)) }
+                        .logTimings("ledger: transactions query"),
+                    ownIbans,
+                    ownAccounts,
+                    tagLinks,
+                    splitParts(historyStart(today)),
+                    ::LedgerInput
+                )
+                    // A change, e.g. of the tags of a transaction, notifies several tables at once
+                    .debounce(LEDGER_DEBOUNCE_MILLIS)
+                    .map<LedgerInput, Ledger?> { ledgerMemo.of(it) }
+                    // On a restart, e.g. after the app was in the background, the last ledger stays
+                    // until the new one is read, which is the same unless something changed
+                    .onStart { if (latestLedger == null) emit(null) }
+                    .onEach { latestLedger = it }
+            } else {
+                flowOf(null).onEach { latestLedger = null }
+            }
         }
             .distinctUntilChanged()
             .logTimings("ledger")
@@ -304,7 +314,8 @@ class ProviderLedgerSource(
         /** Notifications closer than this lead to one ledger */
         private const val LEDGER_DEBOUNCE_MILLIS = 50L
 
-        private fun historyStart(today: LocalDate) = today.minusMonths(Ledger.HISTORY_MONTHS).toEpoch().toString()
+        private fun historyStart(today: LocalDate) =
+            today.minusMonths(Ledger.HISTORY_MONTHS).toEpoch().toString()
 
         /** Allows the analysis of transactions for all features, the key is kept from when only contracts used it */
         private val KEY_CONSENT = booleanPreferencesKey("next_contracts_consent")
@@ -336,8 +347,8 @@ class ProviderLedgerSource(
          * Archived transactions are left out (they are split parts of the archive).
          */
         private val SELECTION = "$KEY_AMOUNT != 0 AND $WHERE_NOT_SPLIT_PART" +
-                " AND $KEY_STATUS NOT IN ($STATUS_UNCOMMITTED, $STATUS_ARCHIVE) AND $WHERE_NOT_VOID" +
-                " AND $KEY_DATE >= ?"
+            " AND $KEY_STATUS NOT IN ($STATUS_UNCOMMITTED, $STATUS_ARCHIVE) AND $WHERE_NOT_VOID" +
+            " AND $KEY_DATE >= ?"
 
         private val PARTS_PROJECTION = arrayOf(
             KEY_PARENTID,

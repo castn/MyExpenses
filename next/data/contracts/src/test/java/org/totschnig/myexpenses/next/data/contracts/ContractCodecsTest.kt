@@ -27,20 +27,27 @@ class ContractCodecsTest {
                 targetAccountIds = setOf(9),
                 icon = "bolt"
             ),
-            ContractRule("r2", ContractRule.Kind.IGNORE, ContractDirection.INCOME, interval = ContractInterval.YEARLY)
+            ContractRule(
+                "r2",
+                ContractRule.Kind.IGNORE,
+                ContractDirection.INCOME,
+                interval = ContractInterval.YEARLY
+            )
         )
         assertEquals(rules, parseRules(serializeRules(rules)))
     }
 
     @Test
     fun readsTargetAccountStoredBeforeRulesHadSeveral() {
-        val json = """[{"id":"r","kind":"CONTRACT","direction":"EXPENSE","interval":"MONTHLY","targetAccount":5}]"""
+        val json =
+            """[{"id":"r","kind":"CONTRACT","direction":"EXPENSE","interval":"MONTHLY","targetAccount":5}]"""
         assertEquals(setOf(5L), parseRules(json).single().targetAccountIds)
     }
 
     @Test
     fun leavesOutRulesFromLaterVersions() {
-        val json = """[{"id":"r","kind":"SOMETHING_NEW","direction":"EXPENSE","interval":"MONTHLY"},""" +
+        val json =
+            """[{"id":"r","kind":"SOMETHING_NEW","direction":"EXPENSE","interval":"MONTHLY"},""" +
                 """{"id":"s","kind":"CONTRACT","direction":"EXPENSE","interval":"MONTHLY"}]"""
         assertEquals(listOf("s"), parseRules(json).map { it.id })
         assertEquals(emptyList<ContractRule>(), parseRules("broken"))
@@ -50,13 +57,18 @@ class ContractCodecsTest {
     fun writesAndReadsNews() {
         val news = listOf(
             ContractNews(
-                id = "n1", type = ContractNews.Type.PRICE_CHANGE, ruleId = "r1", transactionId = 12, date = date,
-                createdAt = date, contractName = "Netflix", isIncome = false, isReserve = false, amount = 1799,
-                previousAmount = 1399, cancelledOn = null, interval = ContractInterval.MONTHLY, isRead = true
+                id = "n1", type = ContractNews.Type.PRICE_CHANGE, ruleId = "r1", transactionId = 12,
+                date = date,
+                createdAt = date, contractName = "Netflix", isIncome = false, isReserve = false,
+                amount = 1799,
+                previousAmount = 1399, cancelledOn = null, interval = ContractInterval.MONTHLY,
+                isRead = true
             ),
             ContractNews(
-                id = "n2", type = ContractNews.Type.PAYMENT_AFTER_CANCELLATION, ruleId = "r2", transactionId = 13,
-                date = date, createdAt = date, contractName = "Gym", isIncome = false, amount = 2900,
+                id = "n2", type = ContractNews.Type.PAYMENT_AFTER_CANCELLATION, ruleId = "r2",
+                transactionId = 13,
+                date = date, createdAt = date, contractName = "Gym", isIncome = false,
+                amount = 2900,
                 cancelledOn = date.minusMonths(1)
             )
         )

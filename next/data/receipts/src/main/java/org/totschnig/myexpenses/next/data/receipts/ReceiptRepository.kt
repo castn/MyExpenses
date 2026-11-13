@@ -16,10 +16,7 @@ import org.totschnig.myexpenses.next.core.model.receipts.ScannedItem
  * The scanned receipts of the user as other features know them, once for the process, read again
  * on each change of [database]. The flows run in [scope] while they are collected.
  */
-class ReceiptRepository(
-    val database: ReceiptDatabase,
-    scope: CoroutineScope,
-) {
+class ReceiptRepository(val database: ReceiptDatabase, scope: CoroutineScope) {
     /** What other features know about scanned receipts */
     val facts: SharedFlow<ReceiptFacts> =
         database.changes()

@@ -42,15 +42,26 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
             // "x2,50" is no price
             if (
                 tokens.getOrNull(i - 1)?.let { it is Token.Times && it.end == number.start } == true
-            ) return@forEachIndexed
+            ) {
+                return@forEachIndexed
+            }
             val start = tokens.getOrNull(i - 1)
                 ?.takeIf { it is Token.Currency && it.end == number.start }?.start ?: number.start
             val rest = tokens.subList(i + 1, tokens.size)
             when {
-                number.isAmount -> taxAfter(rest)?.let { return Price(number.cents, it.taxClass, start) }
+                number.isAmount -> taxAfter(rest)?.let {
+                    return Price(number.cents, it.taxClass, start)
+                }
+
                 number.value.scale() == 3 && rest.isEmpty() -> {
                     val digits = number.text.filter(Char::isDigit)
-                    val cents = digits.dropLast(1).toLong().let { if (number.value.signum() < 0) -it else it }
+                    val cents = digits.dropLast(1).toLong().let {
+                        if (number.value.signum() < 0) {
+                            -it
+                        } else {
+                            it
+                        }
+                    }
                     return Price(cents, digits.takeLast(1), start)
                 }
             }
@@ -59,7 +70,9 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
     }
 
     /** The whole text is a price, e.g. a segment of the price column: "1,10 A", "€1,98 A" */
-    fun isPrice(text: String) = tokens(text).let { tokens -> price(tokens)?.start == tokens.firstOrNull()?.start }
+    fun isPrice(text: String) = tokens(text).let { tokens ->
+        price(tokens)?.start == tokens.firstOrNull()?.start
+    }
 
     /**
      * Only an amount, maybe with currency and tax class, e.g. the total recognized apart from its
@@ -75,7 +88,8 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
     fun isCurrencyOnly(text: String) = tokens(text).singleOrNull() is Token.Currency
 
     /** Only the sign between quantity and price: "x" */
-    fun isLoneSign(text: String) = tokens(text).singleOrNull()?.let { it is Token.Times && it.text.length == 1 } == true
+    fun isLoneSign(text: String) =
+        tokens(text).singleOrNull()?.let { it is Token.Times && it.text.length == 1 } == true
 
     /**
      * A row of its own with count or weight and the price of one: "3 Stk x 0,59",
@@ -93,7 +107,8 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
         if (!withSign && unit == null) return null
         while (tokens.getOrNull(i) is Token.Times) i++
         if (tokens.getOrNull(i) is Token.Currency) i++
-        val unitPrice = (tokens.getOrNull(i++) as? Token.Number)?.takeIf { it.isAmount } ?: return null
+        val unitPrice =
+            (tokens.getOrNull(i++) as? Token.Number)?.takeIf { it.isAmount } ?: return null
         if (tokens.getOrNull(i) is Token.Currency) i++
         val perUnit = tokens.getOrNull(i) is Token.PerUnit
         if (perUnit) i++
@@ -111,7 +126,12 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
     fun inlineQuantity(tokens: List<Token>): InlineQuantity? {
         for (nameEnd in 1 until tokens.size) {
             val rest = tokens.subList(nameEnd, tokens.size)
-            (unitPriceTimesCount(rest, wholeRest = true) ?: countTimesUnitPrice(rest))?.let { (count, unitPrice) ->
+            (
+                unitPriceTimesCount(
+                    rest,
+                    wholeRest = true
+                ) ?: countTimesUnitPrice(rest)
+                )?.let { (count, unitPrice) ->
                 return InlineQuantity(tokens[nameEnd].start, count, unitPrice)
             }
         }
@@ -124,7 +144,10 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
      */
     fun unitPriceTimesCountOnly(tokens: List<Token>): InlineQuantity? {
         for (nameEnd in 1 until tokens.size) {
-            unitPriceTimesCount(tokens.subList(nameEnd, tokens.size), wholeRest = false)?.let { (count, unitPrice) ->
+            unitPriceTimesCount(
+                tokens.subList(nameEnd, tokens.size),
+                wholeRest = false
+            )?.let { (count, unitPrice) ->
                 return InlineQuantity(tokens[nameEnd].start, count, unitPrice)
             }
         }
@@ -153,18 +176,25 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
             i++
             if (tokens.getOrNull(i) is Token.Currency) i++
             if (tokens.getOrNull(i) is Token.PerUnit) i++
-        } else if (currencyBefore) return null
+        } else if (currencyBefore) {
+            return null
+        }
         if (i != tokens.size) return null
         return Detail(quantity.value, unit?.unit, unitPrice?.cents)
     }
 
     /** Only an article number, the name of the item follows below (electronics stores): "2945139" */
-    fun isArticleNumberOnly(text: String) = tokens(text).singleOrNull()?.let { isArticleNumber(it, 5) } == true
+    fun isArticleNumberOnly(text: String) =
+        tokens(text).singleOrNull()?.let { isArticleNumber(it, 5) } == true
 
     /** The name without the article number some tills print before it: "655809 BBQ Grillkäse" */
     fun withoutArticleNumber(name: String): String {
         val tokens = tokens(name)
-        return if (tokens.size > 1 && isArticleNumber(tokens[0], 4)) name.substring(tokens[1].start) else name
+        return if (tokens.size > 1 && isArticleNumber(tokens[0], 4)) {
+            name.substring(tokens[1].start)
+        } else {
+            name
+        }
     }
 
     /**
@@ -175,11 +205,16 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
         val tokens = tokens(text)
         tokens.forEachIndexed { i, token ->
             if (token is Token.Number && isCount(token) &&
-                (tokens.getOrNull(i + 1) as? Token.Word)?.let { word(it) in vocabulary.countAfterNumber } == true
-            ) return token.value.toInt()
+                (tokens.getOrNull(i + 1) as? Token.Word)?.let {
+                    word(it) in vocabulary.countAfterNumber
+                } == true
+            ) {
+                return token.value.toInt()
+            }
             if (token is Token.Word && word(token) in vocabulary.countBeforeNumber) {
-                val next = tokens.getOrNull(i + 1)?.takeUnless { it is Token.Word && it.text == ":" } ?:
-                    tokens.getOrNull(i + 2)
+                val next =
+                    tokens.getOrNull(i + 1)?.takeUnless { it is Token.Word && it.text == ":" }
+                        ?: tokens.getOrNull(i + 2)
                 if (next is Token.Number && isCount(next)) return next.value.toInt()
             }
         }
@@ -192,7 +227,8 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
         return null
     }
 
-    private fun isCount(number: Token.Number) = number.value.scale() == 0 && number.value.signum() >= 0
+    private fun isCount(number: Token.Number) =
+        number.value.scale() == 0 && number.value.signum() >= 0
 
     /** Letters of a word in small letters, "Posten:" → "posten" */
     private fun word(token: Token.Word) = token.text.filter { it.isLetter() }.lowercase()
@@ -201,10 +237,14 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
         token is Token.Number && token.text.length >= digits && token.text.all(Char::isDigit)
 
     /** "1,32 € x X 3", "0,39 € Lx 8": unit price, sign and count; [wholeRest] or followed by anything */
-    private fun unitPriceTimesCount(tokens: List<Token>, wholeRest: Boolean): Pair<BigDecimal, Long>? {
+    private fun unitPriceTimesCount(
+        tokens: List<Token>,
+        wholeRest: Boolean
+    ): Pair<BigDecimal, Long>? {
         var i = 0
         if (tokens.getOrNull(i) is Token.Currency) i++
-        val unitPrice = (tokens.getOrNull(i++) as? Token.Number)?.takeIf { it.isAmount } ?: return null
+        val unitPrice =
+            (tokens.getOrNull(i++) as? Token.Number)?.takeIf { it.isAmount } ?: return null
         if (tokens.getOrNull(i) is Token.Currency) i++
         if (!isTimes(tokens.getOrNull(i))) return null
         while (isTimes(tokens.getOrNull(i))) i++
@@ -224,7 +264,8 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
         if (tokens.getOrNull(i) !is Token.Times) return null
         while (tokens.getOrNull(i) is Token.Times) i++
         if (tokens.getOrNull(i) is Token.Currency) i++
-        val unitPrice = (tokens.getOrNull(i++) as? Token.Number)?.takeIf { it.isAmount } ?: return null
+        val unitPrice =
+            (tokens.getOrNull(i++) as? Token.Number)?.takeIf { it.isAmount } ?: return null
         if (tokens.getOrNull(i) is Token.Currency) i++
         if (i != tokens.size) return null
         return count.value to unitPrice.cents
@@ -232,10 +273,12 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
 
     /** The sign, also with a letter recognition glued to it: "x", "Lx" */
     private fun isTimes(token: Token?) = token is Token.Times ||
+        (
             token is Token.Word &&
                 token.text.length >= 2 &&
                 token.text[0].isLetter() &&
                 token.text.drop(1).all { it in "xX×*" }
+            )
 
     private class Tax(val taxClass: String?)
 
@@ -251,7 +294,12 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
         if (tax != null) {
             i++
             // dm prints the count after the tax class
-            if ((rest.getOrNull(i) as? Token.Number)?.text?.let { it.length == 1 && it[0].isDigit() } == true) i++
+            if ((rest.getOrNull(i) as? Token.Number)?.text?.let {
+                    it.length == 1 && it[0].isDigit()
+                } == true
+            ) {
+                i++
+            }
         }
         return Tax(tax).takeIf { i == rest.size }
     }
@@ -262,11 +310,18 @@ internal class RowKinds(private val vocabulary: ReceiptVocabulary) {
      */
     private fun taxClassOf(token: Token): String? = when (token) {
         is Token.Word -> token.text.trimEnd { it in NOISE }.takeIf { text ->
-            text.length == 1 && (text[0].isUpperCase() || text[0].isLowerCase() && text[0] != 'e') ||
-                    text.length == 2 && text[0].isUpperCase() && (text[1].isUpperCase() || text[1] in "#*")
+            val isSmall = text[0].isLowerCase() && text[0] != 'e'
+            (text.length == 1 && (text[0].isUpperCase() || isSmall)) ||
+                (
+                    text.length == 2 && text[0].isUpperCase() &&
+                        (text[1].isUpperCase() || text[1] in "#*")
+                    )
         }
+
         is Token.Number -> token.text.takeIf { it.length == 1 && it[0].isDigit() }
+
         is Token.Times -> token.text.takeIf { it == "*" }
+
         else -> null
     }
 

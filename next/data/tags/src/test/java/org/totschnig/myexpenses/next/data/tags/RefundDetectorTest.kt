@@ -1,9 +1,9 @@
 package org.totschnig.myexpenses.next.data.tags
 
+import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.time.LocalDate
 
 class RefundDetectorTest {
 
@@ -15,9 +15,14 @@ class RefundDetectorTest {
         daysLater: Long,
         payee: String?,
         comment: String? = null,
-        accountId: Long = 1,
+        accountId: Long = 1
     ) = RefundInput(
-        nextId++, day.plusDays(daysLater), amount, accountId, payee, comment,
+        nextId++,
+        day.plusDays(daysLater),
+        amount,
+        accountId,
+        payee,
+        comment,
         counterpartKey(null, payee, comment)
     )
 
@@ -34,7 +39,8 @@ class RefundDetectorTest {
     @Test
     fun refundWordsMatchAnotherPayee() {
         val debit = transaction(-2599, 0, "AMAZON EU S.A R.L.")
-        val credit = transaction(2599, 20, "Amazon Payments Europe", "Erstattung Bestellung 302-123")
+        val credit =
+            transaction(2599, 20, "Amazon Payments Europe", "Erstattung Bestellung 302-123")
         assertEquals(listOf(Refund(debit, credit)), RefundDetector.find(listOf(debit, credit)))
     }
 
@@ -74,7 +80,12 @@ class RefundDetectorTest {
         val debit = transaction(-4999, 0, "Zalando SE")
         val credit = transaction(4999, 12, "Zalando SE")
         assertTrue(RefundDetector.find(listOf(debit, credit), ignored = setOf(debit.id)).isEmpty())
-        assertTrue(RefundDetector.find(listOf(debit, credit), rejected = setOf("${debit.id}:${credit.id}")).isEmpty())
+        assertTrue(
+            RefundDetector.find(
+                listOf(debit, credit),
+                rejected = setOf("${debit.id}:${credit.id}")
+            ).isEmpty()
+        )
     }
 
     @Test

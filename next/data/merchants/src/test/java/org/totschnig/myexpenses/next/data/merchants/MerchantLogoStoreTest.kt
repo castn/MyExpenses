@@ -24,7 +24,10 @@ class MerchantLogoStoreTest {
 
     private fun store() = MerchantLogoStore(
         dir = folder.root.resolve("logos"),
-        fetch = { asked += it; answer },
+        fetch = {
+            asked += it
+            answer
+        },
         prepare = { if (it.contentEquals(icon)) Lookup.Found(prepared) else Lookup.Unreadable },
         now = { time }
     )

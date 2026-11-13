@@ -30,9 +30,9 @@ import org.totschnig.myexpenses.designsystem.NavigationRow
 import org.totschnig.myexpenses.designsystem.PeriodSwitcher
 import org.totschnig.myexpenses.designsystem.SectionHeader
 import org.totschnig.myexpenses.designsystem.Spacing
+import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
-import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
 import org.totschnig.myexpenses.next.data.analysis.FlowActor
 import org.totschnig.myexpenses.next.data.analysis.FlowGroup
@@ -75,7 +75,7 @@ fun MoneyFlowScreen(
     onEarlier: () -> Unit,
     onLater: () -> Unit,
     onShowTransactions: (String, List<Long>) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val amount = rememberAmountFormat(currency)
     val periodLabel = rememberPeriodLabel()
@@ -124,14 +124,20 @@ fun MoneyFlowScreen(
             val item = selected?.let(chart::itemOf)
             when {
                 item == null -> HintRow(stringResource(R.string.next_flow_hint), isFirst = true)
+
                 item.count == null || item.transactionIds.isEmpty() -> InfoRow(
                     item.title,
                     amount(item.amount),
                     isFirst = true
                 )
+
                 else -> NavigationRow(
                     title = item.title,
-                    supportingText = pluralStringResource(R.plurals.next_analysis_transactions, item.count, item.count),
+                    supportingText = pluralStringResource(
+                        R.plurals.next_analysis_transactions,
+                        item.count,
+                        item.count
+                    ),
                     value = amount(item.amount),
                     onClick = { onShowTransactions(item.title, item.transactionIds) },
                     isFirst = true
@@ -162,7 +168,7 @@ private fun FlowFigures(flow: MoneyFlow, amount: (Long) -> String) {
         listOf(
             KeyFigure(stringResource(R.string.next_flow_earned), amount(flow.earned)),
             KeyFigure(stringResource(R.string.next_flow_spent), amount(flow.spent)),
-            KeyFigure(stringResource(R.string.next_flow_left), amount(flow.left)),
+            KeyFigure(stringResource(R.string.next_flow_left), amount(flow.left))
         )
     )
 }
@@ -200,7 +206,12 @@ internal fun previewFlow(kind: PeriodKind = PeriodKind.TWELVE_MONTHS): MoneyFlow
         hasEarlier = true,
         incomes = listOf(group(1, "Gehalt", 3_000_000), group(2, "Erstattungen", 240_000)),
         expenses = listOf(
-            group(10, "Wohnen", 1_140_000, listOf(actor("Vermieter", 1_080_000, 12), actor("Stadtwerke", 60_000))),
+            group(
+                10,
+                "Wohnen",
+                1_140_000,
+                listOf(actor("Vermieter", 1_080_000, 12), actor("Stadtwerke", 60_000))
+            ),
             group(
                 11,
                 "Lebensmittel",
@@ -211,10 +222,19 @@ internal fun previewFlow(kind: PeriodKind = PeriodKind.TWELVE_MONTHS): MoneyFlow
                 12,
                 "Essen gehen",
                 186_000,
-                listOf(actor("McDonald's", 18_600, 20), actor("Pizzeria", 120_000), actor(null, 47_400, 6, 3))
+                listOf(
+                    actor("McDonald's", 18_600, 20),
+                    actor("Pizzeria", 120_000),
+                    actor(null, 47_400, 6, 3)
+                )
             ),
-            group(13, "Mobilität", 210_000, listOf(actor("Shell", 140_000), actor("Deutsche Bahn", 70_000))),
-            group(MoneyFlow.REST, null, 90_000, listOf(actor(null, 90_000, 8, 6))),
+            group(
+                13,
+                "Mobilität",
+                210_000,
+                listOf(actor("Shell", 140_000), actor("Deutsche Bahn", 70_000))
+            ),
+            group(MoneyFlow.REST, null, 90_000, listOf(actor(null, 90_000, 8, 6)))
         ),
         expenseOrder = listOf(10, 11, 13, 12)
     )
@@ -234,8 +254,14 @@ private fun MoneyFlowOverviewPreview() {
 private fun MoneyFlowScreenPreview() {
     NextPreviewTheme {
         MoneyFlowScreen(
-            previewFlow(), CurrencyInfo.Preview,
-            onBack = {}, onSelectKind = {}, onEarlier = {}, onLater = {}, onShowTransactions = { _, _ -> }
+            previewFlow(),
+            CurrencyInfo.Preview,
+            onBack = {
+            },
+            onSelectKind = {},
+            onEarlier = {},
+            onLater = {},
+            onShowTransactions = { _, _ -> }
         )
     }
 }

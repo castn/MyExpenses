@@ -12,7 +12,7 @@ import java.time.LocalDate
 class RuleMatch(
     val confirmed: List<Contract>,
     val ignored: Map<String, List<ContractTransaction>>,
-    val remaining: List<ContractTransaction>,
+    val remaining: List<ContractTransaction>
 )
 
 /**
@@ -33,8 +33,11 @@ class RuleMatcher(private val today: LocalDate = LocalDate.now()) {
             .sortedWith(compareBy({ it.date }, { it.id }))
             .forEach { transaction ->
                 val rule = ordered.firstOrNull { it.matches(transaction) }
-                if (rule == null) remaining += transaction
-                else matched.getOrPut(rule) { mutableListOf() } += transaction
+                if (rule == null) {
+                    remaining += transaction
+                } else {
+                    matched.getOrPut(rule) { mutableListOf() } += transaction
+                }
             }
         // Cancelled contracts stay visible, also when their payments are older than the analysed period
         val onlyKnownFromSnapshot = rules.filter {
@@ -44,7 +47,9 @@ class RuleMatcher(private val today: LocalDate = LocalDate.now()) {
             confirmed = matched
                 .filterKeys { it.kind == ContractRule.Kind.CONTRACT }
                 .map { (rule, payments) -> rule.toContract(payments) } +
-                    onlyKnownFromSnapshot.map { rule -> rule.toContract(listOf(rule.snapshotPayment())) },
+                onlyKnownFromSnapshot.map { rule ->
+                    rule.toContract(listOf(rule.snapshotPayment()))
+                },
             ignored = matched
                 .filterKeys { it.kind == ContractRule.Kind.IGNORE }
                 .mapKeys { it.key.id },

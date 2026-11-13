@@ -34,7 +34,11 @@ inline fun <T> measured(label: String, block: () -> T): T {
     } finally {
         val cpu = if (
             Thread.currentThread() === thread && cpuStart >= 0
-        ) "${(threadCpuNanos() - cpuStart) / 1_000_000} ms cpu" else "cpu ?"
+        ) {
+            "${(threadCpuNanos() - cpuStart) / 1_000_000} ms cpu"
+        } else {
+            "cpu ?"
+        }
         Timber.tag(PERF_TAG).d("%s: %d ms, %s [%s]", label, millisSince(start), cpu, thread.name)
     }
 }
@@ -54,7 +58,15 @@ fun <T> Flow<T>.logTimings(label: String): Flow<T> = flow {
         count++
         Timber.tag(PERF_TAG).d(
             "%s: value #%d after %d ms (+%d ms)%s",
-            label, count, (now - start) / 1_000_000, (now - previous) / 1_000_000, if (value == null) " null" else ""
+            label,
+            count,
+            (now - start) / 1_000_000,
+            (now - previous) / 1_000_000,
+            if (value == null) {
+                " null"
+            } else {
+                ""
+            }
         )
         previous = now
         emit(value)

@@ -18,7 +18,9 @@ val SimpleAmountFormatter = AmountFormatter { amount, currency ->
         minimumFractionDigits = currency.fractionDigits
         maximumFractionDigits = currency.fractionDigits
     }
-    "${format.format(amount / Math.pow(10.0, currency.fractionDigits.toDouble()))} ${currency.symbol}"
+    "${format.format(
+        amount / Math.pow(10.0, currency.fractionDigits.toDouble())
+    )} ${currency.symbol}"
 }
 
 val LocalAmountFormatter = staticCompositionLocalOf { SimpleAmountFormatter }

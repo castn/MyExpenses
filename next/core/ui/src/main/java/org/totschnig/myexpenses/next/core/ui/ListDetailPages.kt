@@ -29,7 +29,10 @@ fun <T : Any> rememberListDetailPages(): SceneStrategy<T> = rememberListDetailSc
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 fun listPage(@StringRes placeholder: Int): Map<String, Any> = ListDetailSceneStrategy.listPane(
     detailPlaceholder = {
-        EmptyState(stringResource(placeholder), Modifier.background(MaterialTheme.colorScheme.surfaceContainer))
+        EmptyState(
+            stringResource(placeholder),
+            Modifier.background(MaterialTheme.colorScheme.surfaceContainer)
+        )
     }
 )
 

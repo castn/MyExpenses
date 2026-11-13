@@ -10,10 +10,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
+import org.totschnig.myexpenses.next.core.common.stateWhileShown
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
-import org.totschnig.myexpenses.next.core.common.stateWhileShown
 import org.totschnig.myexpenses.next.data.guidance.DataGap
 import org.totschnig.myexpenses.next.data.guidance.DataReadiness
 import org.totschnig.myexpenses.next.data.guidance.HintStore
@@ -39,14 +39,19 @@ class HintsViewModel(
 ) : ViewModel() {
 
     /** Topics the user closed */
-    val dismissed: StateFlow<Set<HintTopic>?> = store.dismissed.stateWhileShown(viewModelScope, null)
+    val dismissed: StateFlow<Set<HintTopic>?> = store.dismissed.stateWhileShown(
+        viewModelScope,
+        null
+    )
 
     /** The gap the overview tells about, null if none */
     val overviewHint: StateFlow<DataGap?> = combine(readiness, store.dismissed, ::overviewHint)
         .stateWhileShown(viewModelScope, null)
 
     /** Ids of the transactions with a scanned receipt, null while loading or when receipts cannot be scanned */
-    val scanned: StateFlow<Set<Long>?> = receiptFacts.map { facts -> facts.items.keys.takeIf { facts.canScan } }
+    val scanned: StateFlow<Set<Long>?> = receiptFacts.map { facts ->
+        facts.items.keys.takeIf { facts.canScan }
+    }
         .stateWhileShown(viewModelScope, null)
 
     /**

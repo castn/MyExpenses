@@ -20,13 +20,26 @@ class CategoryRepositoryTest {
     private val today = LocalDate.of(2026, 10, 26)
 
     private fun ledger(vararg ids: Long) = Ledger(
-        ids.map { LedgerTransaction(it, today, amount = -2000, accountId = 1, payeeId = 5, payeeName = "REWE") },
+        ids.map {
+            LedgerTransaction(
+                it,
+                today,
+                amount = -2000,
+                accountId = 1,
+                payeeId = 5,
+                payeeName = "REWE"
+            )
+        },
         OwnAccounts(emptySet(), emptyMap())
     )
 
     private class FakeWriting : CategoryWriting {
         val set = mutableListOf<Pair<List<Long>, Long>>()
-        override suspend fun changeCategory(transactionId: Long, fromCategoryId: Long?, categoryId: Long) = Unit
+        override suspend fun changeCategory(
+            transactionId: Long,
+            fromCategoryId: Long?,
+            categoryId: Long
+        ) = Unit
         val removed = mutableListOf<Pair<Long, Long>>()
         override suspend fun removeCategory(transactionId: Long, categoryId: Long) {
             removed += transactionId to categoryId
@@ -37,22 +50,26 @@ class CategoryRepositoryTest {
     }
 
     @Test
-    fun appliesCertainCategoriesOnlyToNewTransactionsWhileCollected() = withTestDataStore { dataStore ->
-        runTest {
-            val source =
-                FakeLedgerSource(ledger = ledger(1), catalog = Catalog(listOf(CategoryInfo(10, "Food", "Food"))))
-            val store = CategoryStore(dataStore)
-            store.update { it.copy(rules = listOf(CategoryRule("r", setOf(5), 10))) }
-            val writing = FakeWriting()
-            val repository = CategoryRepository(source, store, writing, backgroundScope)
-            repository.appliedAutomatically.launchIn(backgroundScope)
-            // The transactions so far become the backlog
-            assertEquals(2L, store.decisions.first { it.firstNewId != null }.firstNewId)
-            source.ledger.value = ledger(1, 2)
-            assertEquals(10L, store.decisions.first { 2L in it.automatic }.automatic[2])
-            assertEquals(listOf(listOf(2L) to 10L), writing.set)
+    fun appliesCertainCategoriesOnlyToNewTransactionsWhileCollected() =
+        withTestDataStore { dataStore ->
+            runTest {
+                val source =
+                    FakeLedgerSource(
+                        ledger = ledger(1),
+                        catalog = Catalog(listOf(CategoryInfo(10, "Food", "Food")))
+                    )
+                val store = CategoryStore(dataStore)
+                store.update { it.copy(rules = listOf(CategoryRule("r", setOf(5), 10))) }
+                val writing = FakeWriting()
+                val repository = CategoryRepository(source, store, writing, backgroundScope)
+                repository.appliedAutomatically.launchIn(backgroundScope)
+                // The transactions so far become the backlog
+                assertEquals(2L, store.decisions.first { it.firstNewId != null }.firstNewId)
+                source.ledger.value = ledger(1, 2)
+                assertEquals(10L, store.decisions.first { 2L in it.automatic }.automatic[2])
+                assertEquals(listOf(listOf(2L) to 10L), writing.set)
+            }
         }
-    }
 
     @Test
     fun unclearCounterpartIsNotAppliedOrSuggested() = withTestDataStore { dataStore ->

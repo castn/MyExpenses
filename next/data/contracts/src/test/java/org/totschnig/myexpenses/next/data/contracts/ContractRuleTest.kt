@@ -1,12 +1,12 @@
 package org.totschnig.myexpenses.next.data.contracts
 
+import java.time.LocalDate
+import java.time.Period
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.time.LocalDate
-import java.time.Period
 
 class ContractRuleTest {
 
@@ -17,15 +17,25 @@ class ContractRuleTest {
         date: LocalDate,
         amount: Long,
         payeeId: Long? = 1,
-        templateId: Long? = null,
+        templateId: Long? = null
     ) = ContractTransaction(
-        id = nextId++, date = date, amount = amount, accountId = 1,
-        payeeId = payeeId, payeeName = "Payee $payeeId", templateId = templateId
+        id = nextId++,
+        date = date,
+        amount = amount,
+        accountId = 1,
+        payeeId = payeeId,
+        payeeName = "Payee $payeeId",
+        templateId = templateId
     )
 
     private fun monthly(count: Int, amount: Long, payeeId: Long? = 1, templateId: Long? = null) =
         (0 until count).map {
-            transaction(today.minusDays(3).minus(Period.ofMonths(count - 1 - it)), amount, payeeId, templateId)
+            transaction(
+                today.minusDays(3).minus(Period.ofMonths(count - 1 - it)),
+                amount,
+                payeeId,
+                templateId
+            )
         }
 
     private fun detected(transactions: List<ContractTransaction>) =
@@ -35,10 +45,15 @@ class ContractRuleTest {
         direction: ContractDirection = ContractDirection.EXPENSE,
         payeeIds: Set<Long> = setOf(1),
         templateId: Long? = null,
-        amountRange: LongRange? = null,
+        amountRange: LongRange? = null
     ) = ContractRule(
-        id = "r", kind = ContractRule.Kind.CONTRACT, direction = direction, payeeIds = payeeIds,
-        templateId = templateId, amountRange = amountRange, interval = ContractInterval.MONTHLY
+        id = "r",
+        kind = ContractRule.Kind.CONTRACT,
+        direction = direction,
+        payeeIds = payeeIds,
+        templateId = templateId,
+        amountRange = amountRange,
+        interval = ContractInterval.MONTHLY
     )
 
     @Test
@@ -80,7 +95,11 @@ class ContractRuleTest {
     fun ruleOfContractWithOtherPaymentsOfPayeeHasAmountRange() {
         // Subscription besides single orders
         val subscription = monthly(6, -899)
-        val orders = listOf(transaction(today.minusDays(40), -4599), transaction(today.minusDays(100), -2999))
+        val orders =
+            listOf(
+                transaction(today.minusDays(40), -4599),
+                transaction(today.minusDays(100), -2999)
+            )
         val transactions = subscription + orders
         val rule = ContractRule.of(detected(transactions).single(), transactions)
         assertEquals(719L..1079L, rule.amountRange)

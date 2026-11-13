@@ -34,7 +34,12 @@ internal fun RulesPage(title: String, hint: String, rules: List<RuleItem>?, onBa
             }
             val removeLabel = stringResource(R.string.next_settings_remove_rule)
             rules?.forEach { rule ->
-                RemovableRow(rule.counterpart, rule.target, removeLabel = removeLabel, onRemove = rule.remove)
+                RemovableRow(
+                    rule.counterpart,
+                    rule.target,
+                    removeLabel = removeLabel,
+                    onRemove = rule.remove
+                )
             }
         }
     }

@@ -11,6 +11,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.lifecycleScope
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.totschnig.myexpenses.R
@@ -20,8 +23,9 @@ import org.totschnig.myexpenses.designsystem.PickDialog
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.model.ContribFeature
 import org.totschnig.myexpenses.model2.Account
-import org.totschnig.myexpenses.next.NextTheme
 import org.totschnig.myexpenses.next.NextFeatures
+import org.totschnig.myexpenses.next.NextTheme
+import org.totschnig.myexpenses.next.core.common.R as NextR
 import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.preference.TimePreference
 import org.totschnig.myexpenses.sync.BackendService
@@ -32,10 +36,6 @@ import org.totschnig.myexpenses.util.distrib.DistributionHelper.distribution
 import org.totschnig.myexpenses.util.safeMessage
 import org.totschnig.myexpenses.viewmodel.CurrencyViewModel
 import org.totschnig.myexpenses.viewmodel.OnBoardingDataViewModel
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
-import org.totschnig.myexpenses.next.core.common.R as NextR
 
 /**
  * The first start of the app in the new UI, a few pages.
@@ -81,7 +81,12 @@ class NextOnboarding : OnboardingHostActivity() {
                 showSnackBar(it.safeMessage)
             }
         }
-        val initialDraft = AccountDraft(getString(R.string.default_account_name), currencyViewModel.default.code, "")
+        val initialDraft =
+            AccountDraft(
+                getString(R.string.default_account_name),
+                currencyViewModel.default.code,
+                ""
+            )
         val accountChoices = AccountChoices(currencies = currencyViewModel.currenciesFromEnum)
         val offersBanking = resources.getBoolean(R.bool.fints)
         setContent {
@@ -123,10 +128,19 @@ class NextOnboarding : OnboardingHostActivity() {
 
     private fun readPrivacyChoices() = PrivacyChoices(
         offersReporting = distribution.supportsTrackingAndCrashReporting,
-        autoBackupTime = LocalTime.of(TimePreference.DEFAULT_VALUE / 100, TimePreference.DEFAULT_VALUE % 100)
+        autoBackupTime = LocalTime.of(
+            TimePreference.DEFAULT_VALUE / 100,
+            TimePreference.DEFAULT_VALUE % 100
+        )
             .format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)),
         checked = buildSet {
-            if (prefHandler.getBoolean(PrefKey.CRASHREPORT_ENABLED, true)) add(PrivacySetting.CRASH_REPORTS)
+            if (prefHandler.getBoolean(
+                    PrefKey.CRASHREPORT_ENABLED,
+                    true
+                )
+            ) {
+                add(PrivacySetting.CRASH_REPORTS)
+            }
             if (prefHandler.getBoolean(PrefKey.TRACKING, true)) add(PrivacySetting.TRACKING)
             if (prefHandler.getBoolean(PrefKey.AUTO_BACKUP, false)) add(PrivacySetting.AUTO_BACKUP)
             if (prefHandler.encryptDatabase) add(PrivacySetting.ENCRYPTION)
@@ -149,7 +163,9 @@ class NextOnboarding : OnboardingHostActivity() {
             PrivacySetting.AUTO_BACKUP -> {
                 prefHandler.putBoolean(PrefKey.AUTO_BACKUP, checked)
                 if (checked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    requestNotificationPermission(PermissionHelper.PERMISSIONS_REQUEST_NOTIFICATIONS_AUTO_BACKUP)
+                    requestNotificationPermission(
+                        PermissionHelper.PERMISSIONS_REQUEST_NOTIFICATIONS_AUTO_BACKUP
+                    )
                 }
             }
 
@@ -159,7 +175,13 @@ class NextOnboarding : OnboardingHostActivity() {
             }
         }
         privacyChoices = privacyChoices?.let { choices ->
-            choices.copy(checked = if (checked) choices.checked + setting else choices.checked - setting)
+            choices.copy(
+                checked = if (checked) {
+                    choices.checked + setting
+                } else {
+                    choices.checked - setting
+                }
+            )
         }
     }
 
@@ -173,12 +195,13 @@ class NextOnboarding : OnboardingHostActivity() {
                 }
             )
 
-            StartChoice.SYNC -> syncTargets =
-                GenericAccountService.getAccountNames(this).map { name ->
-                    SyncTarget(name, isSetUp = true) { fetchAccountData(name) }
-                } + BackendService.allAvailable().map { service ->
-                    SyncTarget(service.label, isSetUp = false) { startSetup(service.id) }
-                }
+            StartChoice.SYNC ->
+                syncTargets =
+                    GenericAccountService.getAccountNames(this).map { name ->
+                        SyncTarget(name, isSetUp = true) { fetchAccountData(name) }
+                    } + BackendService.allAvailable().map { service ->
+                        SyncTarget(service.label, isSetUp = false) { startSetup(service.id) }
+                    }
 
             StartChoice.BANK -> contribFeatureCalled(ContribFeature.BANKING, null)
         }
@@ -186,19 +209,24 @@ class NextOnboarding : OnboardingHostActivity() {
 
     private fun createAccountAndStart(draft: AccountDraft) {
         val currency = currencyContext[draft.currency]
-        val openingBalance = draft.openingBalance?.let { toMinorUnits(it, currency.fractionDigits) } ?: run {
-            showSnackBar(NextR.string.next_onboarding_amount_invalid)
-            return
-        }
+        val openingBalance =
+            draft.openingBalance?.let { toMinorUnits(it, currency.fractionDigits) } ?: run {
+                showSnackBar(NextR.string.next_onboarding_amount_invalid)
+                return
+            }
         doWithEncryptionCheck {
             isStarting = true
             prefHandler.putString(PrefKey.HOME_CURRENCY, currency.code)
             // Only now, so that the database is opened after the user decided about its encryption
             lifecycleScope.launch {
-                val cashAccountType = dataViewModel.accountTypesRaw.first().find { it.isCashAccount }
+                val cashAccountType = dataViewModel.accountTypesRaw.first().find {
+                    it.isCashAccount
+                }
                 dataViewModel.saveAccount(
                     Account(
-                        label = draft.label.trim().ifEmpty { getString(R.string.default_account_name) },
+                        label = draft.label.trim().ifEmpty {
+                            getString(R.string.default_account_name)
+                        },
                         currency = currency.code,
                         openingBalance = openingBalance,
                         type = cashAccountType,
@@ -209,5 +237,5 @@ class NextOnboarding : OnboardingHostActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu) = false //skip help
+    override fun onCreateOptionsMenu(menu: Menu) = false // skip help
 }

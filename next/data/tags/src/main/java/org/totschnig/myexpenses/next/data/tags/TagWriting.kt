@@ -30,7 +30,7 @@ suspend fun TagDatabase.addMeaningTag(
     existingTagIds: Set<Long>,
     transactionIds: Collection<Long>,
     meaning: TagMeaning,
-    label: String,
+    label: String
 ) {
     addTag(transactionIds, markerTagId(store, existingTagIds, meaning, label))
 }

@@ -14,15 +14,17 @@ data class Merchant(
     val domain: String,
     val patterns: List<String> = emptyList(),
     val words: List<String> = emptyList(),
-    val kind: Kind = Kind.OTHER,
+    val kind: Kind = Kind.OTHER
 ) {
     enum class Kind { SUPERMARKET, OTHER }
 
     /** Where the merchant is named first in [text] of [Words.textOf], -1 if it is not */
-    internal fun indexIn(text: String): Int =
-        (patterns.map { Words.indexOfWordStart(text, it) } + words.map { Words.indexOfWord(text, it) })
-            .filter { it >= 0 }
-            .minOrNull() ?: -1
+    internal fun indexIn(text: String): Int = (
+        patterns.map { Words.indexOfWordStart(text, it) } +
+            words.map { Words.indexOfWord(text, it) }
+        )
+        .filter { it >= 0 }
+        .minOrNull() ?: -1
 }
 
 /** A payee as stored, see [Merchants.ofPayees] */
@@ -83,7 +85,11 @@ object Merchants {
         Merchant("congstar", "congstar.de", listOf("congstar")),
         Merchant("freenet", "freenet.de", listOf("freenet")),
         // Travel and mobility
-        Merchant("Deutsche Bahn", "bahn.de", listOf("deutsche bahn", "db fernverkehr", "db vertrieb", "db regio")),
+        Merchant(
+            "Deutsche Bahn",
+            "bahn.de",
+            listOf("deutsche bahn", "db fernverkehr", "db vertrieb", "db regio")
+        ),
         Merchant("Shell", "shell.com", words = listOf("shell")),
         Merchant("Aral", "aral.de", words = listOf("aral")),
         Merchant("Esso", "esso.de", words = listOf("esso")),
@@ -137,10 +143,14 @@ object Merchants {
         Merchant("E.ON", "eon.de", words = listOf("e on", "eon")),
         Merchant("EnBW", "enbw.com", words = listOf("enbw")),
         Merchant("LichtBlick", "lichtblick.de", listOf("lichtblick")),
-        Merchant("Rundfunkbeitrag", "rundfunkbeitrag.de", listOf("rundfunk ard", "beitragsservice")),
+        Merchant(
+            "Rundfunkbeitrag",
+            "rundfunkbeitrag.de",
+            listOf("rundfunk ard", "beitragsservice")
+        ),
         // Fitness
         Merchant("McFit", "mcfit.com", listOf("mcfit")),
-        Merchant("Urban Sports Club", "urbansportsclub.com", listOf("urban sports")),
+        Merchant("Urban Sports Club", "urbansportsclub.com", listOf("urban sports"))
     )
 
     val supermarkets = all.filter { it.kind == SUPERMARKET }
@@ -175,9 +185,12 @@ object Merchants {
 
 /** Restaurants and delivery services, matched at the start of a word of payee, purpose or category */
 val EATING_OUT = listOf(
-    "restaurant", "gastronomie", "gaststätte", "pizzeria", "imbiss", "döner", "doener", "sushi", "burger",
-    "mcdonald", "kfc", "subway", "vapiano", "lieferando", "lieferdienst", "wolt", "uber eats", "deliveroo",
-    "just eat", "domino", "takeaway", "take away", "fast food", "essen gehen", "eating out", "dining"
+    "restaurant", "gastronomie", "gaststätte", "pizzeria", "imbiss", "döner", "doener", "sushi",
+    "burger",
+    "mcdonald", "kfc", "subway", "vapiano", "lieferando", "lieferdienst", "wolt", "uber eats",
+    "deliveroo",
+    "just eat", "domino", "takeaway", "take away", "fast food", "essen gehen", "eating out",
+    "dining"
 )
 
 /** Label to the patterns matched at the start of a word of the payee, from [Merchants] */
@@ -186,7 +199,9 @@ val SUPERMARKETS = Merchants.supermarkets.map { it.name to it.patterns }
 /** The supermarket chain of a payee, null for other payees */
 fun supermarketOf(payeeName: String?): String? {
     val text = Words.textOf(payeeName)
-    return SUPERMARKETS.firstOrNull { (_, patterns) -> patterns.any { Words.startsWord(text, it) } }?.first
+    return SUPERMARKETS.firstOrNull { (_, patterns) ->
+        patterns.any { Words.startsWord(text, it) }
+    }?.first
 }
 
 /**

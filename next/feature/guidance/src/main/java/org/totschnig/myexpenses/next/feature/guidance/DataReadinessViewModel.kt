@@ -13,5 +13,8 @@ import org.totschnig.myexpenses.next.data.guidance.DataReadinessRepository
 class DataReadinessViewModel(repository: DataReadinessRepository) : ViewModel() {
 
     /** Null while loading or without consent to the analysis */
-    val readiness: StateFlow<DataReadiness?> = repository.readiness.stateWhileShown(viewModelScope, null)
+    val readiness: StateFlow<DataReadiness?> = repository.readiness.stateWhileShown(
+        viewModelScope,
+        null
+    )
 }

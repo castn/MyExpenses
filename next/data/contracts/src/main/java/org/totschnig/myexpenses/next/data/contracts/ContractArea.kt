@@ -22,7 +22,7 @@ sealed interface ContractArea {
 enum class BuiltInArea(
     private val keywords: List<String> = emptyList(),
     private val prefixes: List<String> = emptyList(),
-    private val words: List<String> = emptyList(),
+    private val words: List<String> = emptyList()
 ) : ContractArea {
     INSURANCE(
         keywords = listOf("versicherung", "insurance"),
@@ -37,7 +37,8 @@ enum class BuiltInArea(
     ),
     TELECOM(
         prefixes = listOf(
-            "internet", "telefon", "mobilfunk", "handy", "festnetz", "telekommunikation", "kommunikation",
+            "internet", "telefon", "mobilfunk", "handy", "festnetz", "telekommunikation",
+            "kommunikation",
             "phone", "telecom", "communication"
         ),
         words = listOf("dsl", "mobile")
@@ -51,7 +52,8 @@ enum class BuiltInArea(
     ),
     MOBILITY(
         prefixes = listOf(
-            "mobilität", "auto", "kfz", "fahrzeug", "leasing", "öpnv", "nahverkehr", "bahn", "ticket",
+            "mobilität", "auto", "kfz", "fahrzeug", "leasing", "öpnv", "nahverkehr", "bahn",
+            "ticket",
             "carsharing", "parken", "mobility", "vehicle", "transport", "parking"
         ),
         words = listOf("car", "cars")
@@ -70,14 +72,23 @@ enum class BuiltInArea(
         prefixes = listOf("zeitung", "zeitschrift", "magazin", "presse", "newspaper", "news")
     ),
     MEMBERSHIP(
-        prefixes = listOf("verein", "mitglied", "gewerkschaft", "partei", "club", "membership", "union")
+        prefixes = listOf(
+            "verein",
+            "mitglied",
+            "gewerkschaft",
+            "partei",
+            "club",
+            "membership",
+            "union"
+        )
     ),
     DONATIONS(
         prefixes = listOf("spende", "patenschaft", "donation", "charity")
     ),
     EDUCATION(
         prefixes = listOf(
-            "kinder", "kita", "schule", "musikschule", "bildung", "kurs", "unterricht", "nachhilfe", "studium",
+            "kinder", "kita", "schule", "musikschule", "bildung", "kurs", "unterricht", "nachhilfe",
+            "studium",
             "education", "school", "tuition", "childcare"
         )
     );
@@ -97,7 +108,8 @@ enum class BuiltInArea(
          * Insurance first, so that e.g. "Kfz-Versicherung" is not taken as mobility,
          * housing last, since it is the broadest.
          */
-        private val MATCH_ORDER = listOf(INSURANCE) + entries.filter { it != INSURANCE && it != HOUSING } + HOUSING
+        private val MATCH_ORDER =
+            listOf(INSURANCE) + entries.filter { it != INSURANCE && it != HOUSING } + HOUSING
 
         /**
          * Suggests a category from the category path of a transaction, e.g. "Wohnen > Internet & Telefon".
@@ -105,10 +117,11 @@ enum class BuiltInArea(
          * Category names are chosen by the user and depend on the language of the setup,
          * so this is only a best guess the user can correct.
          */
-        fun suggest(categoryPath: String?): BuiltInArea? =
-            categoryPath?.lowercase()?.split(CATEGORY_SEPARATOR)?.asReversed()?.firstNotNullOfOrNull { part ->
-                MATCH_ORDER.firstOrNull { it.matches(part) }
-            }
+        fun suggest(categoryPath: String?): BuiltInArea? = categoryPath?.lowercase()?.split(
+            CATEGORY_SEPARATOR
+        )?.asReversed()?.firstNotNullOfOrNull { part ->
+            MATCH_ORDER.firstOrNull { it.matches(part) }
+        }
 
         fun fromKey(key: String) = entries.find { it.key == key }
 

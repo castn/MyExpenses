@@ -2,6 +2,7 @@ package org.totschnig.myexpenses.next.search
 
 import android.content.ContentResolver
 import android.net.Uri
+import java.text.Collator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.totschnig.myexpenses.dialog.select.SelectFromMappedTableDialogFragment.Companion.accountSelection
@@ -15,12 +16,11 @@ import org.totschnig.myexpenses.provider.KEY_PARENTID
 import org.totschnig.myexpenses.provider.KEY_PAYEE_NAME
 import org.totschnig.myexpenses.provider.KEY_ROWID
 import org.totschnig.myexpenses.provider.SPLIT_CATID
-import org.totschnig.myexpenses.provider.getLongOrNull
-import org.totschnig.myexpenses.util.Utils
-import java.text.Collator
 import org.totschnig.myexpenses.provider.TransactionProvider
 import org.totschnig.myexpenses.provider.getLong
+import org.totschnig.myexpenses.provider.getLongOrNull
 import org.totschnig.myexpenses.provider.getString
+import org.totschnig.myexpenses.util.Utils
 import org.totschnig.myexpenses.viewmodel.data.PageAccount
 
 /**
@@ -29,7 +29,12 @@ import org.totschnig.myexpenses.viewmodel.data.PageAccount
  * @param parentId the option above this one, e.g. the main category of a subcategory
  * @param depth how far below the top this option is, 0 for a main category
  */
-data class SearchOption(val id: Long, val label: String, val parentId: Long? = null, val depth: Int = 0)
+data class SearchOption(
+    val id: Long,
+    val label: String,
+    val parentId: Long? = null,
+    val depth: Int = 0
+)
 
 /**
  * The options whose label contains [query], ignoring case and accents, together with the options
@@ -69,54 +74,79 @@ internal fun tree(options: List<SearchOption>): List<SearchOption> {
  * methods and transfer accounts used by its transactions, the accounts of the same currency for an
  * aggregate, and all categories, payees and tags. Categories come as a tree. Empty for other kinds.
  */
-suspend fun ContentResolver.loadSearchOptions(kind: SearchKind, account: PageAccount): List<SearchOption> =
-    withContext(Dispatchers.IO) {
-        when (kind) {
-            SearchKind.Method -> query(TransactionProvider.MAPPED_METHODS_URI, account.mappedSelection())
-            SearchKind.Transfer -> query(TransactionProvider.MAPPED_TRANSFER_ACCOUNTS_URI, account.mappedSelection())
-            SearchKind.Category -> tree(
-                query(
-                    TransactionProvider.CATEGORIES_URI, "$KEY_ROWID != $SPLIT_CATID" to null,
-                    withParent = true
-                )
+suspend fun ContentResolver.loadSearchOptions(
+    kind: SearchKind,
+    account: PageAccount
+): List<SearchOption> = withContext(Dispatchers.IO) {
+    when (kind) {
+        SearchKind.Method -> query(
+            TransactionProvider.MAPPED_METHODS_URI,
+            account.mappedSelection()
+        )
+
+        SearchKind.Transfer -> query(
+            TransactionProvider.MAPPED_TRANSFER_ACCOUNTS_URI,
+            account.mappedSelection()
+        )
+
+        SearchKind.Category -> tree(
+            query(
+                TransactionProvider.CATEGORIES_URI,
+                "$KEY_ROWID != $SPLIT_CATID" to null,
+                withParent = true
             )
+        )
 
-            // Payees below another one are found with it
-            SearchKind.Payee -> tree(
-                query(TransactionProvider.PAYEES_URI, "$KEY_PARENTID IS NULL" to null, labelColumn = KEY_PAYEE_NAME)
+        // Payees below another one are found with it
+        SearchKind.Payee -> tree(
+            query(
+                TransactionProvider.PAYEES_URI,
+                "$KEY_PARENTID IS NULL" to null,
+                labelColumn = KEY_PAYEE_NAME
             )
+        )
 
-            SearchKind.Tag -> tree(query(TransactionProvider.TAGS_URI, null to null))
+        SearchKind.Tag -> tree(query(TransactionProvider.TAGS_URI, null to null))
 
-            SearchKind.Account -> {
-                val currency = account.currency.takeIf { !account.isHomeAggregate }
-                val selection = if (currency == null) "$KEY_PARENTID IS NULL"
-                else "$KEY_PARENTID IS NULL AND $KEY_CURRENCY = ?"
-                query(TransactionProvider.ACCOUNTS_BASE_URI, selection to currency?.let { arrayOf(it) })
+        SearchKind.Account -> {
+            val currency = account.currency.takeIf { !account.isHomeAggregate }
+            val selection = if (currency == null) {
+                "$KEY_PARENTID IS NULL"
+            } else {
+                "$KEY_PARENTID IS NULL AND $KEY_CURRENCY = ?"
             }
-
-            else -> emptyList()
+            query(
+                TransactionProvider.ACCOUNTS_BASE_URI,
+                selection to currency?.let { arrayOf(it) }
+            )
         }
+
+        else -> emptyList()
     }
+}
 
 private fun ContentResolver.query(
     uri: Uri,
     selection: Pair<String?, Array<String>?>,
     labelColumn: String = KEY_LABEL,
-    withParent: Boolean = false,
+    withParent: Boolean = false
 ) = query(
     uri,
     listOfNotNull(KEY_ROWID, labelColumn, KEY_PARENTID.takeIf { withParent }).toTypedArray(),
-    selection.first, selection.second, null
+    selection.first,
+    selection.second,
+    null
 )?.use { cursor ->
     buildList {
-        while (cursor.moveToNext()) add(
-            SearchOption(
-                cursor.getLong(KEY_ROWID),
-                cursor.getString(labelColumn),
-                if (withParent) cursor.getLongOrNull(KEY_PARENTID) else null
+        while (cursor.moveToNext()) {
+            add(
+                SearchOption(
+                    cursor.getLong(KEY_ROWID),
+                    cursor.getString(labelColumn),
+                    if (withParent) cursor.getLongOrNull(KEY_PARENTID) else null
+                )
             )
-        )
+        }
     }
 } ?: emptyList()
 
@@ -131,5 +161,7 @@ private fun PageAccount.mappedSelection(): Pair<String?, Array<String>?> {
             else -> "Unit"
         }
         accountSelectionV2(grouping) to accountSelectionArgsV2(grouping, group)
-    } else accountSelection(id).takeIf { it.isNotEmpty() } to accountSelectionArgs(id)
+    } else {
+        accountSelection(id).takeIf { it.isNotEmpty() } to accountSelectionArgs(id)
+    }
 }

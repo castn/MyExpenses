@@ -13,11 +13,21 @@ class ItemGroupModelReleaseTest {
     @Test
     fun parsesManifestAndSkipsIncompleteEntries() {
         val releases = ItemGroupModelRelease.parseManifest(
-            """{"models": [${release("de-DE", "2026.10-de-1")}, {"market": "fr-FR"}], "schema": 1}"""
+            """{"models": [${release(
+                "de-DE",
+                "2026.10-de-1"
+            )}, {"market": "fr-FR"}], "schema": 1}"""
         )
         assertEquals(
             listOf(
-                ItemGroupModelRelease("de", "2026.10-de-1", 2, "https://example.org/2026.10-de-1.bin", "ab12", 1929216)
+                ItemGroupModelRelease(
+                    "de",
+                    "2026.10-de-1",
+                    2,
+                    "https://example.org/2026.10-de-1.bin",
+                    "ab12",
+                    1929216
+                )
             ),
             releases
         )
@@ -63,7 +73,10 @@ class ItemGroupModelReleaseTest {
 
     @Test
     fun sha256Hex() {
-        assertEquals("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad", sha256("abc".toByteArray()))
+        assertEquals(
+            "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+            sha256("abc".toByteArray())
+        )
     }
 
     private fun assertRejected(reason: InvalidItemGroupModel.Reason, bytes: ByteArray) {

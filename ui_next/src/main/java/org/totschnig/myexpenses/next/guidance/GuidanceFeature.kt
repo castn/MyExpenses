@@ -1,34 +1,34 @@
 package org.totschnig.myexpenses.next.guidance
 
 import androidx.activity.ComponentActivity
-import com.google.android.material.snackbar.Snackbar
-import org.totschnig.myexpenses.activity.BaseActivity
-import org.totschnig.myexpenses.next.feature.guidance.afterSaveText
-import org.totschnig.myexpenses.ui.SnackbarAction
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.res.pluralStringResource
+import com.google.android.material.snackbar.Snackbar
+import org.totschnig.myexpenses.activity.BaseActivity
 import org.totschnig.myexpenses.injector
+import org.totschnig.myexpenses.next.NextData
+import org.totschnig.myexpenses.next.NextFeature
+import org.totschnig.myexpenses.next.NextKey
+import org.totschnig.myexpenses.next.NextNavigation
 import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
+import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
+import org.totschnig.myexpenses.next.data.guidance.HintStore
+import org.totschnig.myexpenses.next.data.tips.SavingTipsOverview
+import org.totschnig.myexpenses.next.feature.guidance.DataReadinessViewModel
+import org.totschnig.myexpenses.next.feature.guidance.HintsViewModel
+import org.totschnig.myexpenses.next.feature.guidance.OverviewHint
+import org.totschnig.myexpenses.next.feature.guidance.PendingTipsSection
+import org.totschnig.myexpenses.next.feature.guidance.ReceiptHint
+import org.totschnig.myexpenses.next.feature.guidance.afterSaveText
 import org.totschnig.myexpenses.next.settings.AreaSettings
 import org.totschnig.myexpenses.next.settings.InsightSetting
 import org.totschnig.myexpenses.next.settings.SettingControl
 import org.totschnig.myexpenses.next.settings.SettingKind
 import org.totschnig.myexpenses.next.settings.SettingsGroup
-import org.totschnig.myexpenses.next.NextData
-import org.totschnig.myexpenses.next.NextFeature
-import org.totschnig.myexpenses.next.NextKey
-import org.totschnig.myexpenses.next.NextNavigation
-import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
-import org.totschnig.myexpenses.next.data.guidance.HintStore
-import org.totschnig.myexpenses.next.feature.guidance.DataReadinessViewModel
-import org.totschnig.myexpenses.next.feature.guidance.HintsViewModel
-import org.totschnig.myexpenses.next.feature.guidance.OverviewHint
-import org.totschnig.myexpenses.next.feature.guidance.PendingTipsSection
-import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
-import org.totschnig.myexpenses.next.data.tips.SavingTipsOverview
-import org.totschnig.myexpenses.next.feature.guidance.ReceiptHint
 import org.totschnig.myexpenses.next.viewModelsOf
+import org.totschnig.myexpenses.ui.SnackbarAction
 
 /**
  * Hints after saving, on the overview and in the details, and what the data is ready for
@@ -42,7 +42,7 @@ class GuidanceFeature(
     private val activity: BaseActivity,
     data: NextData,
     private val isAskingAboutCategories: @Composable () -> Boolean = { false },
-    private val explained: NextKey? = null,
+    private val explained: NextKey? = null
 ) : NextFeature {
     val hints by activity.viewModelsOf {
         HintsViewModel(
@@ -79,7 +79,9 @@ class GuidanceFeature(
             activity.showSnackBar(
                 activity.getString(topic.afterSaveText()),
                 Snackbar.LENGTH_LONG,
-                SnackbarAction(activity.getString(R.string.next_hint_never)) { hints.dismiss(topic) }
+                SnackbarAction(activity.getString(R.string.next_hint_never)) {
+                    hints.dismiss(topic)
+                }
             )
         }
     }

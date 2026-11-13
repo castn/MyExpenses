@@ -10,8 +10,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.totschnig.myexpenses.designsystem.InfoBox
 import org.totschnig.myexpenses.designsystem.InfoPoint
 import org.totschnig.myexpenses.designsystem.Spacing
-import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 import org.totschnig.myexpenses.next.data.guidance.DataGap
 
 /**
@@ -39,14 +39,29 @@ private fun point(gap: DataGap, onShow: () -> Unit): InfoPoint {
     }?.takeIf { gap.transactionIds.isNotEmpty() }?.let { stringResource(it) }
     val text = when (gap) {
         is DataGap.Uncategorized ->
-            pluralStringResource(R.plurals.next_readiness_uncategorized, gap.count, gap.count, gap.total)
+            pluralStringResource(
+                R.plurals.next_readiness_uncategorized,
+                gap.count,
+                gap.count,
+                gap.total
+            )
+
         is DataGap.VagueCategories ->
             pluralStringResource(R.plurals.next_readiness_vague, gap.count, gap.count, gap.total)
+
         is DataGap.FewReceipts -> {
-            val scanned = if (gap.scanned == 0) stringResource(R.string.next_readiness_receipts_none)
-            else pluralStringResource(R.plurals.next_readiness_receipts_few, gap.scanned, gap.scanned)
+            val scanned = if (gap.scanned == 0) {
+                stringResource(R.string.next_readiness_receipts_none)
+            } else {
+                pluralStringResource(
+                    R.plurals.next_readiness_receipts_few,
+                    gap.scanned,
+                    gap.scanned
+                )
+            }
             scanned + " " + stringResource(R.string.next_readiness_receipts_why)
         }
+
         DataGap.NoTags -> stringResource(R.string.next_readiness_no_tags)
     }
     return InfoPoint(text, action, onShow)

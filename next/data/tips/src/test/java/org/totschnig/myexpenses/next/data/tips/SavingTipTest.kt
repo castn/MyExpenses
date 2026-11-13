@@ -1,5 +1,6 @@
 package org.totschnig.myexpenses.next.data.tips
 
+import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -9,7 +10,6 @@ import org.totschnig.myexpenses.next.data.contracts.Contract
 import org.totschnig.myexpenses.next.data.contracts.ContractDirection
 import org.totschnig.myexpenses.next.data.contracts.ContractInterval
 import org.totschnig.myexpenses.next.data.contracts.ContractTransaction
-import java.time.LocalDate
 
 class SavingTipTest {
 
@@ -22,7 +22,7 @@ class SavingTipTest {
         name: String = "Contract",
         interval: ContractInterval = ContractInterval.MONTHLY,
         direction: ContractDirection = ContractDirection.EXPENSE,
-        reserve: Boolean? = null,
+        reserve: Boolean? = null
     ): Contract {
         val last = today.minusDays(3)
         val transactions = amounts.mapIndexed { i, amount ->
@@ -78,7 +78,13 @@ class SavingTipTest {
     @Test
     fun severalIncreasesCountFromThePriceBefore() {
         val increase =
-            increases(contract(List(6) { 1000L } + List(4) { 1100L } + List(4) { 1200L }))!!.increases.single()
+            increases(
+                contract(
+                    List(6) {
+                        1000L
+                    } + List(4) { 1100L } + List(4) { 1200L }
+                )
+            )!!.increases.single()
         assertEquals(1000L, increase.before)
         assertEquals(1200L, increase.after)
     }
@@ -86,7 +92,9 @@ class SavingTipTest {
     @Test
     fun yearlyContract() {
         val increase =
-            increases(contract(listOf(30000L, 36000L), interval = ContractInterval.YEARLY))!!.increases.single()
+            increases(
+                contract(listOf(30000L, 36000L), interval = ContractInterval.YEARLY)
+            )!!.increases.single()
         assertEquals(6000L, increase.yearlyAmount)
     }
 
@@ -96,7 +104,14 @@ class SavingTipTest {
         assertNull(increases(contract(List(10) { 5000L } + listOf(5600L, 6100L))))
         assertNull(increases(contract(List(10) { 5000L } + List(4) { 5010L })))
         assertNull(
-            increases(contract(List(10) { 200000L } + List(4) { 210000L }, direction = ContractDirection.INCOME))
+            increases(
+                contract(
+                    List(10) {
+                        200000L
+                    } + List(4) { 210000L },
+                    direction = ContractDirection.INCOME
+                )
+            )
         )
         assertNull(increases(contract(List(10) { 5000L } + List(4) { 10000L }, reserve = true)))
     }
@@ -107,8 +122,18 @@ class SavingTipTest {
         val first = increases(streaming)!!
         val decisions = TipDecisions(dismissed = mapOf(first.id to first.facts))
         assertTrue(decisions.isDismissed(first))
-        assertTrue(decisions.isDismissed(savingTips(listOf(streaming), emptyList(), today).single()))
-        val second = increases(streaming, contract(List(10) { 4000L } + List(4) { 4500L }, name = "Gym"))!!
+        assertTrue(
+            decisions.isDismissed(savingTips(listOf(streaming), emptyList(), today).single())
+        )
+        val second = increases(
+            streaming,
+            contract(
+                List(10) {
+                    4000L
+                } + List(4) { 4500L },
+                name = "Gym"
+            )
+        )!!
         assertFalse(decisions.isDismissed(second))
     }
 

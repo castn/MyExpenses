@@ -1,10 +1,8 @@
 package org.totschnig.myexpenses.next.transactions
 
-import org.totschnig.myexpenses.model.CurrencyContext
-import org.totschnig.myexpenses.preference.PrefHandler
-import androidx.lifecycle.AndroidViewModel
-import android.content.ContentResolver
 import android.app.Application
+import android.content.ContentResolver
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -14,9 +12,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.totschnig.myexpenses.adapter.TransactionPagingSource
-import org.totschnig.myexpenses.next.core.common.stateWhileShown
 import org.totschnig.myexpenses.db2.tagMapFlow
 import org.totschnig.myexpenses.model.AccountGrouping
+import org.totschnig.myexpenses.model.CurrencyContext
+import org.totschnig.myexpenses.next.core.common.stateWhileShown
+import org.totschnig.myexpenses.preference.PrefHandler
 import org.totschnig.myexpenses.provider.DataBaseAccount.Companion.HOME_AGGREGATE_ID
 import org.totschnig.myexpenses.provider.filter.Criterion
 import org.totschnig.myexpenses.provider.filter.TransactionIdCriterion
@@ -31,10 +31,11 @@ import org.totschnig.myexpenses.viewmodel.data.Transaction2
 class FixedTransactionsViewModel(
     application: Application,
     private val currencyContext: CurrencyContext,
-    private val prefHandler: PrefHandler,
+    private val prefHandler: PrefHandler
 ) : AndroidViewModel(application) {
 
-    private val contentResolver: ContentResolver get() = getApplication<Application>().contentResolver
+    private val contentResolver: ContentResolver
+        get() = getApplication<Application>().contentResolver
 
     /** Never persisted, so that it cannot affect the account screens */
     private val filter = MutableStateFlow<Criterion?>(null)

@@ -41,22 +41,22 @@ import org.totschnig.myexpenses.designsystem.SingleChoiceDialog
 import org.totschnig.myexpenses.designsystem.SwitchRow
 import org.totschnig.myexpenses.designsystem.TextDialog
 import org.totschnig.myexpenses.designsystem.TopBarAction
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
-import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 import org.totschnig.myexpenses.next.core.common.R
-import org.totschnig.myexpenses.next.core.ui.icons.CatalogIcon
-import org.totschnig.myexpenses.next.core.ui.icons.CatalogIconPicker
 import org.totschnig.myexpenses.next.core.common.icons.IconCatalog
 import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
+import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
+import org.totschnig.myexpenses.next.core.ui.icons.CatalogIcon
+import org.totschnig.myexpenses.next.core.ui.icons.CatalogIconPicker
 import org.totschnig.myexpenses.next.core.ui.receipts.labelRes
 import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
 import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
 import org.totschnig.myexpenses.next.data.budgets.Pot
+import org.totschnig.myexpenses.next.data.budgets.PotKind
 import org.totschnig.myexpenses.next.data.budgets.PotSuggestion
 import org.totschnig.myexpenses.next.data.budgets.PotSuggestions
 import org.totschnig.myexpenses.next.data.budgets.PotTemplate
-import org.totschnig.myexpenses.next.data.budgets.PotKind
 
 /**
  * The templates to start a new pot from, grouped by kind, and a pot of one's own
@@ -70,15 +70,19 @@ fun PotTemplateScreen(
     onPick: (PotTemplate?) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
-    kinds: List<PotKind> = PotKind.entries,
+    kinds: List<PotKind> = PotKind.entries
 ) {
     val byId = categories.associateBy { it.id }
-    DetailScaffold(onBack = onBack, title = stringResource(R.string.next_budget_add_pot), modifier = modifier) {
+    DetailScaffold(
+        onBack = onBack,
+        title = stringResource(R.string.next_budget_add_pot),
+        modifier = modifier
+    ) {
         listOf(
             R.string.next_budget_kind_running to listOf(PotKind.RUNNING),
             R.string.next_budget_kind_yearly to listOf(PotKind.YEARLY),
             R.string.next_budget_templates_purpose to listOf(PotKind.GOAL, PotKind.PROJECT),
-            R.string.next_budget_templates_receipts to listOf(PotKind.ITEM_GROUP),
+            R.string.next_budget_templates_receipts to listOf(PotKind.ITEM_GROUP)
         ).forEach { (title, sectionKinds) ->
             val shown = sectionKinds.filter { it in kinds }
             if (shown.isEmpty()) return@forEach
@@ -115,7 +119,19 @@ fun PotTemplateScreen(
 
 /** A dialog of the editor */
 private enum class EditorDialog {
-    Name, Icon, Kind, Amount, Categories, Tags, Contracts, Savings, Start, End, ItemGroups, MaxShare, Delete
+    Name,
+    Icon,
+    Kind,
+    Amount,
+    Categories,
+    Tags,
+    Contracts,
+    Savings,
+    Start,
+    End,
+    ItemGroups,
+    MaxShare,
+    Delete
 }
 
 /**
@@ -132,7 +148,7 @@ fun PotEditorScreen(
     onSave: () -> Unit,
     onBack: () -> Unit,
     onDelete: (() -> Unit)?,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val amount = rememberAmountFormat(currency)
     val dates = rememberDateFormatter()
@@ -156,10 +172,22 @@ fun PotEditorScreen(
 
     DetailScaffold(
         onBack = onBack,
-        title = stringResource(if (onDelete == null) R.string.next_budget_add_pot else R.string.next_budget_edit_pot),
+        title = stringResource(
+            if (onDelete == null) {
+                R.string.next_budget_add_pot
+            } else {
+                R.string.next_budget_edit_pot
+            }
+        ),
         modifier = modifier,
         actions = {
-            if (canSave) TopBarAction(Icons.Default.Check, stringResource(R.string.next_budget_save), onSave)
+            if (canSave) {
+                TopBarAction(
+                    Icons.Default.Check,
+                    stringResource(R.string.next_budget_save),
+                    onSave
+                )
+            }
         }
     ) {
         DetailCard {
@@ -169,14 +197,18 @@ fun PotEditorScreen(
                 { dialog = EditorDialog.Name },
                 isFirst = true
             )
-            EditableRow(stringResource(R.string.next_budget_icon), { dialog = EditorDialog.Icon }) { PotIconTile(pot) }
+            EditableRow(stringResource(R.string.next_budget_icon), {
+                dialog = EditorDialog.Icon
+            }) { PotIconTile(pot) }
             EditableRow(
                 stringResource(R.string.next_budget_kind),
                 stringResource(pot.kind.labelRes),
                 { dialog = EditorDialog.Kind }
             )
             if (pot.kind == PotKind.ITEM_GROUP) {
-                val groups = ItemGroup.entries.filter { it.id in pot.itemGroups }.map { stringResource(it.labelRes) }
+                val groups = ItemGroup.entries.filter {
+                    it.id in pot.itemGroups
+                }.map { stringResource(it.labelRes) }
                 EditableRow(
                     stringResource(R.string.next_budget_item_groups),
                     groups.joinToString().ifEmpty { none },
@@ -184,14 +216,19 @@ fun PotEditorScreen(
                 )
                 EditableRow(
                     stringResource(R.string.next_budget_max_share_label),
-                    pot.maxSharePercent?.let { "$it %" } ?: stringResource(R.string.next_budget_not_set),
+                    pot.maxSharePercent?.let { "$it %" }
+                        ?: stringResource(R.string.next_budget_not_set),
                     { dialog = EditorDialog.MaxShare }
                 )
                 HintRow(stringResource(R.string.next_pot_item_group_explained))
             } else {
                 EditableRow(
                     stringResource(pot.kind.amountLabelRes),
-                    if (pot.amount > 0) amount(pot.amount) else stringResource(R.string.next_budget_not_set),
+                    if (pot.amount > 0) {
+                        amount(pot.amount)
+                    } else {
+                        stringResource(R.string.next_budget_not_set)
+                    },
                     { dialog = EditorDialog.Amount }
                 )
             }
@@ -203,12 +240,15 @@ fun PotEditorScreen(
                     onClick = { onChange(pot.copy(amount = it)) }
                 )
                 HintRow(
-                    if (pot.kind == PotKind.YEARLY) stringResource(R.string.next_budget_suggestion_yearly)
-                    else pluralStringResource(
-                        R.plurals.next_budget_suggestion_running,
-                        suggestion!!.periods,
-                        suggestion!!.periods
-                    )
+                    if (pot.kind == PotKind.YEARLY) {
+                        stringResource(R.string.next_budget_suggestion_yearly)
+                    } else {
+                        pluralStringResource(
+                            R.plurals.next_budget_suggestion_running,
+                            suggestion!!.periods,
+                            suggestion!!.periods
+                        )
+                    }
                 )
             }
         }
@@ -216,7 +256,9 @@ fun PotEditorScreen(
         if (pot.kind != PotKind.ITEM_GROUP) {
             SectionTitle(stringResource(R.string.next_budget_holds))
             DetailCard {
-                val categoryNames = data.categories.filter { it.id in pot.categoryIds }.map { it.label }
+                val categoryNames = data.categories.filter {
+                    it.id in pot.categoryIds
+                }.map { it.label }
                 EditableRow(
                     stringResource(R.string.next_budget_categories),
                     categoryNames.joinToString().ifEmpty { none },
@@ -229,20 +271,31 @@ fun PotEditorScreen(
                     tagNames.joinToString().ifEmpty { none },
                     { dialog = EditorDialog.Tags }
                 )
-                val contractNames = data.contracts.filter { it.rule?.id in pot.contractRuleIds }.map { it.title }
+                val contractNames = data.contracts.filter {
+                    it.rule?.id in pot.contractRuleIds
+                }.map { it.title }
                 EditableRow(
                     stringResource(R.string.next_budget_contracts_label),
                     contractNames.joinToString().ifEmpty { none },
                     { dialog = EditorDialog.Contracts }
                 )
-                suggestion?.contracts?.filter { it.rule!!.id !in pot.contractRuleIds }?.forEach { contract ->
+                suggestion?.contracts?.filter {
+                    it.rule!!.id !in pot.contractRuleIds
+                }?.forEach { contract ->
                     LinkRow(
                         stringResource(
                             R.string.next_budget_add_contract,
                             contract.title,
                             amount(contract.monthlyAmount)
                         ),
-                        onClick = { onChange(pot.copy(contractRuleIds = pot.contractRuleIds + contract.rule!!.id)) }
+                        onClick = {
+                            onChange(
+                                pot.copy(
+                                    contractRuleIds =
+                                        pot.contractRuleIds + contract.rule!!.id
+                                )
+                            )
+                        }
                     )
                 }
                 if (!pot.holdsTransactions && pot.kind != PotKind.GOAL) {
@@ -269,7 +322,8 @@ fun PotEditorScreen(
                     { dialog = EditorDialog.End },
                     isFirst = true
                 )
-                val savedWith = data.reserves.filter { it.rule?.id in pot.reserveRuleIds }.map { it.title } +
+                val savedWith =
+                    data.reserves.filter { it.rule?.id in pot.reserveRuleIds }.map { it.title } +
                         pot.savingAccountIds.mapNotNull { data.savingAccounts[it] }
                 EditableRow(
                     stringResource(R.string.next_budget_saved_with),
@@ -311,7 +365,10 @@ fun PotEditorScreen(
         EditorDialog.Name -> NameDialog(
             title = stringResource(R.string.next_budget_name),
             initialName = pot.name,
-            onConfirm = { onChange(pot.copy(name = it.trim())); close() },
+            onConfirm = {
+                onChange(pot.copy(name = it.trim()))
+                close()
+            },
             onDismiss = close
         )
 
@@ -319,9 +376,15 @@ fun PotEditorScreen(
             title = stringResource(R.string.next_icons_title, pot.name.ifBlank { none }),
             selected = pot.icon,
             suggestions = IconCatalog.suggest(
-                pot.name, *data.categories.filter { it.id in pot.categoryIds }.map { it.label }.toTypedArray()
+                pot.name,
+                *data.categories.filter {
+                    it.id in pot.categoryIds
+                }.map { it.label }.toTypedArray()
             ),
-            onSelect = { onChange(pot.copy(icon = it)); close() },
+            onSelect = {
+                onChange(pot.copy(icon = it))
+                close()
+            },
             onDismiss = close,
             automatic = { PotIconTile(pot.copy(icon = null)) }
         )
@@ -331,7 +394,10 @@ fun PotEditorScreen(
             options = data.kinds,
             selected = pot.kind,
             label = { stringResource(it.labelRes) },
-            onSelect = { onChange(pot.copy(kind = it)); close() },
+            onSelect = {
+                onChange(pot.copy(kind = it))
+                close()
+            },
             onDismiss = close
         )
 
@@ -340,11 +406,23 @@ fun PotEditorScreen(
             TextDialog(
                 title = stringResource(pot.kind.amountLabelRes),
                 initialText =
-                    if (pot.amount > 0) BigDecimal.valueOf(pot.amount, currency.fractionDigits).toPlainString() else "",
-                onConfirm = { text -> parseAmount(text, currency)?.let { onChange(pot.copy(amount = it)) }; close() },
+                    if (pot.amount > 0) {
+                        BigDecimal.valueOf(pot.amount, currency.fractionDigits).toPlainString()
+                    } else {
+                        ""
+                    },
+                onConfirm = { text ->
+                    parseAmount(text, currency)?.let { onChange(pot.copy(amount = it)) }
+                    close()
+                },
                 onDismiss = close,
                 keyboardType = KeyboardType.Decimal,
-                error = { text -> invalid.takeIf { text.isNotBlank() && parseAmount(text, currency) == null } }
+                error = { text ->
+                    invalid.takeIf {
+                        text.isNotBlank() &&
+                            parseAmount(text, currency) == null
+                    }
+                }
             )
         }
 
@@ -353,7 +431,10 @@ fun PotEditorScreen(
             options = data.categories.map { it.id },
             initial = pot.categoryIds,
             label = { id -> data.categories.first { it.id == id }.path },
-            onConfirm = { onChange(pot.copy(categoryIds = it)); close() },
+            onConfirm = {
+                onChange(pot.copy(categoryIds = it))
+                close()
+            },
             onDismiss = close
         )
 
@@ -362,7 +443,10 @@ fun PotEditorScreen(
             options = data.tags.map { it.id },
             initial = pot.tagIds,
             label = { id -> data.tags.first { it.id == id }.label },
-            onConfirm = { onChange(pot.copy(tagIds = it)); close() },
+            onConfirm = {
+                onChange(pot.copy(tagIds = it))
+                close()
+            },
             onDismiss = close
         )
 
@@ -371,29 +455,55 @@ fun PotEditorScreen(
             options = data.contracts.map { it.rule!!.id },
             initial = pot.contractRuleIds,
             label = { id -> data.contracts.first { it.rule!!.id == id }.title },
-            supportingText = { id -> amount(data.contracts.first { it.rule!!.id == id }.monthlyAmount) },
-            onConfirm = { onChange(pot.copy(contractRuleIds = it)); close() },
+            supportingText = { id ->
+                amount(data.contracts.first { it.rule!!.id == id }.monthlyAmount)
+            },
+            onConfirm = {
+                onChange(pot.copy(contractRuleIds = it))
+                close()
+            },
             onDismiss = close
         )
 
         EditorDialog.Savings -> IdsSheet(
             title = stringResource(R.string.next_budget_saved_with),
-            options = data.reserves.map { "r:" + it.rule!!.id } + data.savingAccounts.keys.map { "a:$it" },
-            initial = pot.reserveRuleIds.mapTo(HashSet()) { "r:$it" } + pot.savingAccountIds.map { "a:$it" },
+            options =
+                data.reserves.map {
+                    "r:" + it.rule!!.id
+                } + data.savingAccounts.keys.map { "a:$it" },
+            initial =
+                pot.reserveRuleIds.mapTo(HashSet()) { "r:$it" } +
+                    pot.savingAccountIds.map { "a:$it" },
             label = { key ->
-                if (key.startsWith("r:")) data.reserves.first { it.rule!!.id == key.substring(2) }.title
-                else data.savingAccounts.getValue(key.substring(2).toLong())
+                if (key.startsWith("r:")) {
+                    data.reserves.first { it.rule!!.id == key.substring(2) }.title
+                } else {
+                    data.savingAccounts.getValue(key.substring(2).toLong())
+                }
             },
             supportingText = { key ->
-                stringResource(if (key.startsWith("r:")) R.string.next_budget_reserve else R.string.next_budget_account)
+                stringResource(
+                    if (key.startsWith(
+                            "r:"
+                        )
+                    ) {
+                        R.string.next_budget_reserve
+                    } else {
+                        R.string.next_budget_account
+                    }
+                )
             },
             intro = stringResource(R.string.next_budget_saved_with_intro),
             onConfirm = { keys ->
                 onChange(
                     pot.copy(
-                        reserveRuleIds = keys.filter { it.startsWith("r:") }.mapTo(HashSet()) { it.substring(2) },
+                        reserveRuleIds = keys.filter {
+                            it.startsWith("r:")
+                        }.mapTo(HashSet()) { it.substring(2) },
                         savingAccountIds =
-                            keys.filter { it.startsWith("a:") }.mapTo(HashSet()) { it.substring(2).toLong() }
+                            keys.filter {
+                                it.startsWith("a:")
+                            }.mapTo(HashSet()) { it.substring(2).toLong() }
                     )
                 )
                 close()
@@ -403,17 +513,29 @@ fun PotEditorScreen(
 
         EditorDialog.Start -> DateDialog(
             initial = pot.start,
-            onConfirm = { onChange(pot.copy(start = it)); close() },
+            onConfirm = {
+                onChange(pot.copy(start = it))
+                close()
+            },
             onDismiss = close,
-            onClear = { onChange(pot.copy(start = null)); close() },
+            onClear = {
+                onChange(pot.copy(start = null))
+                close()
+            },
             clearLabel = stringResource(R.string.next_budget_no_date)
         )
 
         EditorDialog.End -> DateDialog(
             initial = pot.end,
-            onConfirm = { onChange(pot.copy(end = it)); close() },
+            onConfirm = {
+                onChange(pot.copy(end = it))
+                close()
+            },
             onDismiss = close,
-            onClear = { onChange(pot.copy(end = null)); close() },
+            onClear = {
+                onChange(pot.copy(end = null))
+                close()
+            },
             clearLabel = stringResource(R.string.next_budget_no_date)
         )
 
@@ -422,7 +544,10 @@ fun PotEditorScreen(
             options = ItemGroup.entries.filter { it != ItemGroup.DEPOSIT }.map { it.id },
             initial = pot.itemGroups,
             label = { id -> stringResource(ItemGroup.ofId(id)!!.labelRes) },
-            onConfirm = { onChange(pot.copy(itemGroups = it)); close() },
+            onConfirm = {
+                onChange(pot.copy(itemGroups = it))
+                close()
+            },
             onDismiss = close
         )
 
@@ -432,11 +557,17 @@ fun PotEditorScreen(
                 title = stringResource(R.string.next_budget_max_share_label),
                 initialText = pot.maxSharePercent?.toString() ?: "",
                 onConfirm =
-                    { text -> text.trim().toIntOrNull()?.let { onChange(pot.copy(maxSharePercent = it)) }; close() },
+                    { text ->
+                        text.trim().toIntOrNull()?.let { onChange(pot.copy(maxSharePercent = it)) }
+                        close()
+                    },
                 onDismiss = close,
                 keyboardType = KeyboardType.Number,
                 error = { text ->
-                    invalid.takeIf { text.isNotBlank() && text.trim().toIntOrNull()?.takeIf { it in 1..100 } == null }
+                    invalid.takeIf {
+                        text.isNotBlank() &&
+                            text.trim().toIntOrNull()?.takeIf { it in 1..100 } == null
+                    }
                 }
             )
         }
@@ -445,7 +576,10 @@ fun PotEditorScreen(
             title = stringResource(R.string.next_budget_delete),
             text = stringResource(R.string.next_budget_delete_text, pot.name),
             confirmLabel = stringResource(R.string.next_budget_delete),
-            onConfirm = { close(); onDelete?.invoke() },
+            onConfirm = {
+                close()
+                onDelete?.invoke()
+            },
             onDismiss = close
         )
 
@@ -463,14 +597,17 @@ private fun <T> IdsSheet(
     onConfirm: (Set<T>) -> Unit,
     onDismiss: () -> Unit,
     supportingText: @Composable (T) -> String? = { null },
-    intro: String? = null,
+    intro: String? = null
 ) {
     var selected by remember { mutableStateOf(initial.toList()) }
     MultiChoiceSheet(
         title = title,
         options = options,
         selected = selected.toSet(),
-        onToggle = { option -> selected = if (option in selected) selected - option else selected + option },
+        onToggle = { option ->
+            selected =
+                if (option in selected) selected - option else selected + option
+        },
         label = label,
         onConfirm = { onConfirm(selected.toSet()) },
         onDismiss = onDismiss,
@@ -496,22 +633,29 @@ private val PotKind.amountLabelRes: Int
     }
 
 /** A new pot from [template], or an empty one of its own without template */
-fun newPot(template: PotTemplate?, name: String, categories: List<CategoryInfo>, today: LocalDate) = Pot(
-    name = name,
-    kind = template?.kind ?: PotKind.RUNNING,
-    icon = template?.icon,
-    categoryIds = template?.categoriesIn(categories).orEmpty(),
-    start = when (template?.kind) {
-        PotKind.PROJECT -> null
-        else -> today
-    }
-)
+fun newPot(template: PotTemplate?, name: String, categories: List<CategoryInfo>, today: LocalDate) =
+    Pot(
+        name = name,
+        kind = template?.kind ?: PotKind.RUNNING,
+        icon = template?.icon,
+        categoryIds = template?.categoriesIn(categories).orEmpty(),
+        start = when (template?.kind) {
+            PotKind.PROJECT -> null
+            else -> today
+        }
+    )
 
 private val previewCategories = listOf(
     CategoryInfo(1, "Lebensmittel", "Lebensmittel"),
     CategoryInfo(2, "Essen gehen", "Essen gehen"),
     CategoryInfo(3, "Freizeit & Hobbys", "Freizeit & Hobbys"),
-    CategoryInfo(4, "Fitnessstudio & Sport", "Freizeit & Hobbys > Fitnessstudio & Sport", mainId = 3, parentId = 3),
+    CategoryInfo(
+        4,
+        "Fitnessstudio & Sport",
+        "Freizeit & Hobbys > Fitnessstudio & Sport",
+        mainId = 3,
+        parentId = 3
+    )
 )
 
 @Preview

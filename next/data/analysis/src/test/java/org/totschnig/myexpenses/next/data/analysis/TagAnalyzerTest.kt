@@ -9,8 +9,8 @@ import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.core.model.ledger.OwnAccounts
-import org.totschnig.myexpenses.next.data.tags.TagMeaning
 import org.totschnig.myexpenses.next.core.model.ledger.TagInfo
+import org.totschnig.myexpenses.next.data.tags.TagMeaning
 
 class TagAnalyzerTest {
 
@@ -20,7 +20,9 @@ class TagAnalyzerTest {
     private val work = TagInfo(3, "Beruflich")
     private val refunded = TagInfo(4, "Erstattet")
     private val meanings = mapOf(
-        italy.id to TagMeaning.TRIP, work.id to TagMeaning.BUSINESS, refunded.id to TagMeaning.REIMBURSED
+        italy.id to TagMeaning.TRIP,
+        work.id to TagMeaning.BUSINESS,
+        refunded.id to TagMeaning.REIMBURSED
     )
     private val food = CategoryInfo(10, "Essen", "Essen")
     private val restaurant = CategoryInfo(11, "Restaurant", "Essen > Restaurant", mainId = 10)
@@ -28,16 +30,30 @@ class TagAnalyzerTest {
     private val categories = listOf(food, restaurant, travel).associateBy { it.id }
     private var nextId = 1L
 
-    private fun transaction(date: LocalDate, amount: Long, vararg tags: TagInfo, category: CategoryInfo? = null) =
-        LedgerTransaction(
-            nextId++, date, amount = amount, homeAmount = amount, accountId = 1,
-            categoryId = category?.id, tagIds = tags.mapTo(HashSet()) { it.id }
-        )
-
-    private fun analyse(vararg transactions: LedgerTransaction, year: Int? = null) = TagAnalyzer.analyse(
-        Ledger(transactions.toList(), OwnAccounts(emptySet(), emptyMap())),
-        listOf(italy, dog, work, refunded), meanings, categories, today, year
+    private fun transaction(
+        date: LocalDate,
+        amount: Long,
+        vararg tags: TagInfo,
+        category: CategoryInfo? = null
+    ) = LedgerTransaction(
+        nextId++,
+        date,
+        amount = amount,
+        homeAmount = amount,
+        accountId = 1,
+        categoryId = category?.id,
+        tagIds = tags.mapTo(HashSet()) { it.id }
     )
+
+    private fun analyse(vararg transactions: LedgerTransaction, year: Int? = null) =
+        TagAnalyzer.analyse(
+            Ledger(transactions.toList(), OwnAccounts(emptySet(), emptyMap())),
+            listOf(italy, dog, work, refunded),
+            meanings,
+            categories,
+            today,
+            year
+        )
 
     @Test
     fun evaluatesTripAsWholeWithoutRefundsAndWithCredits() {
@@ -48,7 +64,7 @@ class TagAnalyzerTest {
             // Paid back, not really spent
             transaction(LocalDate.of(2026, 8, 5), -5000, italy, refunded),
             // Deposit returned
-            transaction(LocalDate.of(2026, 8, 10), 1000, italy, category = travel),
+            transaction(LocalDate.of(2026, 8, 10), 1000, italy, category = travel)
         )
         val trip = analysis.trips.single()
         assertEquals(LocalDate.of(2026, 8, 1), trip.start)
@@ -69,7 +85,7 @@ class TagAnalyzerTest {
         val analysis = analyse(
             transaction(LocalDate.of(2025, 10, 31), -9999, dog),
             transaction(LocalDate.of(2025, 11, 1), -1200, dog),
-            transaction(LocalDate.of(2026, 10, 2), -2400, dog),
+            transaction(LocalDate.of(2026, 10, 2), -2400, dog)
         )
         val theme = analysis.themes.single()
         assertEquals(LocalDate.of(2025, 11, 1), theme.start)
@@ -84,7 +100,7 @@ class TagAnalyzerTest {
     fun evaluatesBusinessPerYear() {
         val transactions = arrayOf(
             transaction(LocalDate.of(2025, 3, 1), -10000, work),
-            transaction(LocalDate.of(2026, 2, 1), -4000, work),
+            transaction(LocalDate.of(2026, 2, 1), -4000, work)
         )
         assertEquals(listOf(2026, 2025), analyse(*transactions).businessYears)
         assertEquals(4000, analyse(*transactions).business.single().total)
@@ -94,7 +110,12 @@ class TagAnalyzerTest {
     @Test
     fun leavesOutTagsWithoutTransactionsAndTransfers() {
         val transfer = LedgerTransaction(
-            99, today, amount = -500, accountId = 1, transferAccountId = 2, tagIds = setOf(dog.id)
+            99,
+            today,
+            amount = -500,
+            accountId = 1,
+            transferAccountId = 2,
+            tagIds = setOf(dog.id)
         )
         assertTrue(analyse(transfer).isEmpty)
     }

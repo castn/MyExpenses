@@ -9,7 +9,8 @@ import org.totschnig.myexpenses.next.feature.tags.label
 
 /** [TagDatabase] through the repository of the app */
 class RepositoryTagDatabase(private val repository: Repository) : TagDatabase {
-    override fun tagIdsOf(transactionId: Long) = repository.loadTagsForTransaction(transactionId).map { it.id }
+    override fun tagIdsOf(transactionId: Long) =
+        repository.loadTagsForTransaction(transactionId).map { it.id }
 
     override fun setTags(transactionId: Long, tagIds: List<Long>) =
         repository.saveTagsForTransaction(tagIds, transactionId)

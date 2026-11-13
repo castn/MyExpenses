@@ -49,7 +49,9 @@ class ReceiptVocabularyTest {
             "Visa"
         )
             .forEach { assertTrue(it, german.isCard(it)) }
-        listOf("BAR 20,00", "Bargeld", "Rückgeld 7,85", "Zurück").forEach { assertTrue(it, german.isCash(it)) }
+        listOf("BAR 20,00", "Bargeld", "Rückgeld 7,85", "Zurück").forEach {
+            assertTrue(it, german.isCash(it))
+        }
         listOf(
             "Balea Med Ultra Sen.Haut Bar.C",
             "BARILLA 1,99"

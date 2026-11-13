@@ -4,8 +4,8 @@ import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.data.budgets.PotKind
 import org.totschnig.myexpenses.next.data.budgets.PotTemplate
 

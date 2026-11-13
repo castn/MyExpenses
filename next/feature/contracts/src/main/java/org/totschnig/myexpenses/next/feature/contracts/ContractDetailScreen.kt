@@ -18,9 +18,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,11 +44,11 @@ import org.totschnig.myexpenses.designsystem.NameDialog
 import org.totschnig.myexpenses.designsystem.SectionTitle
 import org.totschnig.myexpenses.designsystem.Shapes
 import org.totschnig.myexpenses.designsystem.SingleChoiceDialog
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
-import org.totschnig.myexpenses.next.core.ui.icons.CatalogIconPicker
 import org.totschnig.myexpenses.next.core.common.NO_NAME
-import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
+import org.totschnig.myexpenses.next.core.ui.icons.CatalogIconPicker
 import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
 import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
 import org.totschnig.myexpenses.next.data.contracts.AreaChoice
@@ -86,7 +86,7 @@ fun ContractDetailScreen(
     /** Unread news of this contract, shown at the top */
     news: List<ContractNews> = emptyList(),
     /** All news of this contract, newest first */
-    history: List<ContractNews> = emptyList(),
+    history: List<ContractNews> = emptyList()
 ) {
     var showRenameDialog by rememberSaveable { mutableStateOf(false) }
     if (showRenameDialog) {
@@ -113,13 +113,23 @@ fun ContractDetailScreen(
     }
     DetailScaffold(onBack = onBack, modifier = modifier) {
         if (news.isNotEmpty()) {
-            NewsBanner(news, currency, onCancelAgain = { actions.cancel(contract) }.takeIf { !contract.isCancelled })
+            NewsBanner(
+                news,
+                currency,
+                onCancelAgain = {
+                    actions.cancel(contract)
+                }.takeIf { !contract.isCancelled }
+            )
         }
         if (!contract.isConfirmed) {
-            SuggestionQuestion(contract.isIncome, { actions.confirm(contract) }, { actions.dismiss(contract) })
+            SuggestionQuestion(contract.isIncome, {
+                actions.confirm(contract)
+            }, { actions.dismiss(contract) })
         }
         AmountsCard(
-            contract, currency, isSalary,
+            contract,
+            currency,
+            isSalary,
             onRename = { showRenameDialog = true },
             onIconClick = { showIconDialog = true },
             onSalaryClick = onSalaryClick,
@@ -149,9 +159,6 @@ fun ContractDetailScreen(
 }
 
 /**
- * Asks whether a suggestion is a contract (or regular income)
- */
-/**
  * Lets the user choose the category of [contract], create a new one or edit an own one, see [AreaDialog]
  */
 @Composable
@@ -159,10 +166,11 @@ private fun AreaDialogs(
     contract: Contract,
     areas: List<ContractArea>,
     actions: ContractActions,
-    onClose: () -> Unit,
+    onClose: () -> Unit
 ) {
     var showChoice by rememberSaveable { mutableStateOf(true) }
     var showCreateAreaDialog by rememberSaveable { mutableStateOf(false) }
+
     /** Key of the custom category being edited */
     var editedAreaKey by rememberSaveable { mutableStateOf<String?>(null) }
     // Back to the choice after editing, so that the user sees the result
@@ -229,7 +237,7 @@ private fun AmountsCard(
     onIconClick: () -> Unit,
     onSalaryClick: () -> Unit,
     onAreaClick: () -> Unit,
-    onShowTransactions: () -> Unit,
+    onShowTransactions: () -> Unit
 ) {
     val amount = rememberAmountFormat(currency)
     val dateFormatter = rememberDateFormatter()
@@ -237,17 +245,21 @@ private fun AmountsCard(
     DetailCard {
         Header(contract, onRename = onRename, onIconClick = onIconClick)
         val chipModifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-        if (contract.isIncome) LabelChip(
-            text = if (isSalary) stringResource(R.string.next_salary) else null,
-            placeholder = stringResource(R.string.next_salary_set),
-            onClick = onSalaryClick,
-            modifier = chipModifier
-        ) else LabelChip(
-            text = contract.area?.label(),
-            placeholder = stringResource(R.string.next_contracts_area),
-            onClick = onAreaClick,
-            modifier = chipModifier
-        )
+        if (contract.isIncome) {
+            LabelChip(
+                text = if (isSalary) stringResource(R.string.next_salary) else null,
+                placeholder = stringResource(R.string.next_salary_set),
+                onClick = onSalaryClick,
+                modifier = chipModifier
+            )
+        } else {
+            LabelChip(
+                text = contract.area?.label(),
+                placeholder = stringResource(R.string.next_contracts_area),
+                onClick = onAreaClick,
+                modifier = chipModifier
+            )
+        }
         InfoRow(stringResource(contract.interval.labelRes), debit(contract.lastAmount))
         contract.previousAmount?.takeIf { it != contract.lastAmount }?.let {
             InfoRow(stringResource(R.string.next_contracts_previous_amount), debit(it))
@@ -271,7 +283,11 @@ private fun AmountsCard(
         if (contract.isActive) {
             InfoRow(
                 stringResource(
-                    if (contract.isIncome) R.string.next_income_next else R.string.next_contracts_next_debit
+                    if (contract.isIncome) {
+                        R.string.next_income_next
+                    } else {
+                        R.string.next_contracts_next_debit
+                    }
                 ),
                 dateFormatter.format(contract.nextExpectedDate)
             )
@@ -282,14 +298,16 @@ private fun AmountsCard(
             )
         }
         // Payments older than the analysed period cannot be shown
-        if (contract.hasPayments) LinkRow(
-            pluralStringResource(
-                R.plurals.next_contracts_based_on,
-                contract.transactions.size,
-                contract.transactions.size
-            ),
-            onClick = onShowTransactions
-        )
+        if (contract.hasPayments) {
+            LinkRow(
+                pluralStringResource(
+                    R.plurals.next_contracts_based_on,
+                    contract.transactions.size,
+                    contract.transactions.size
+                ),
+                onClick = onShowTransactions
+            )
+        }
     }
 }
 
@@ -299,7 +317,13 @@ private fun DetailsSection(contract: Contract) {
     SectionTitle(stringResource(R.string.next_contracts_details))
     DetailCard {
         InfoRow(
-            stringResource(if (contract.isIncome) R.string.next_income_account else R.string.next_contracts_account),
+            stringResource(
+                if (contract.isIncome) {
+                    R.string.next_income_account
+                } else {
+                    R.string.next_contracts_account
+                }
+            ),
             contract.transactions.mapNotNull { it.accountLabel }.distinct().joinToString()
                 .ifEmpty { NO_NAME },
             isFirst = true
@@ -317,29 +341,39 @@ private fun DetailsSection(contract: Contract) {
 @Composable
 private fun ActionsCard(contract: Contract, actions: ContractActions) {
     DetailCard(Modifier.padding(top = 16.dp)) {
-        if (contract.isCancelled) LinkRow(
-            stringResource(
-                when {
-                    contract.isIncome -> R.string.next_income_uncancel
-                    contract.isReserve -> R.string.next_reserve_uncancel
-                    else -> R.string.next_contracts_uncancel
-                }
-            ),
-            onClick = { actions.revokeCancellation(contract) },
-            isFirst = true
-        ) else LinkRow(
-            stringResource(
-                when {
-                    contract.isIncome -> R.string.next_income_cancel
-                    contract.isReserve -> R.string.next_reserve_cancel
-                    else -> R.string.next_contracts_cancel
-                }
-            ),
-            onClick = { actions.cancel(contract) },
-            isFirst = true
-        )
+        if (contract.isCancelled) {
+            LinkRow(
+                stringResource(
+                    when {
+                        contract.isIncome -> R.string.next_income_uncancel
+                        contract.isReserve -> R.string.next_reserve_uncancel
+                        else -> R.string.next_contracts_uncancel
+                    }
+                ),
+                onClick = { actions.revokeCancellation(contract) },
+                isFirst = true
+            )
+        } else {
+            LinkRow(
+                stringResource(
+                    when {
+                        contract.isIncome -> R.string.next_income_cancel
+                        contract.isReserve -> R.string.next_reserve_cancel
+                        else -> R.string.next_contracts_cancel
+                    }
+                ),
+                onClick = { actions.cancel(contract) },
+                isFirst = true
+            )
+        }
         LinkRow(
-            stringResource(if (contract.isIncome) R.string.next_income_dismiss else R.string.next_contracts_dismiss),
+            stringResource(
+                if (contract.isIncome) {
+                    R.string.next_income_dismiss
+                } else {
+                    R.string.next_contracts_dismiss
+                }
+            ),
             onClick = { actions.dismiss(contract) }
         )
     }
@@ -348,9 +382,17 @@ private fun ActionsCard(contract: Contract, actions: ContractActions) {
 @Composable
 private fun SuggestionQuestion(isIncome: Boolean, onConfirm: () -> Unit, onReject: () -> Unit) {
     Banner(
-        title = stringResource(if (isIncome) R.string.next_income_question else R.string.next_contracts_question),
+        title = stringResource(
+            if (isIncome) R.string.next_income_question else R.string.next_contracts_question
+        ),
         messages = listOf(
-            stringResource(if (isIncome) R.string.next_income_question_hint else R.string.next_contracts_question_hint)
+            stringResource(
+                if (isIncome) {
+                    R.string.next_income_question_hint
+                } else {
+                    R.string.next_contracts_question_hint
+                }
+            )
         )
     ) {
         TextButton(onClick = onReject) {
@@ -370,7 +412,10 @@ private fun Header(contract: Contract, onRename: () -> Unit, onIconClick: () -> 
     ) {
         ContractTile(
             contract,
-            Modifier.clickable(onClickLabel = stringResource(R.string.next_icons_change), onClick = onIconClick),
+            Modifier.clickable(
+                onClickLabel = stringResource(R.string.next_icons_change),
+                onClick = onIconClick
+            ),
             isLarge = true
         )
         Spacer(Modifier.width(16.dp))
@@ -379,7 +424,10 @@ private fun Header(contract: Contract, onRename: () -> Unit, onIconClick: () -> 
             modifier = Modifier
                 .weight(1f)
                 .clip(Shapes.chip)
-                .clickable(onClickLabel = stringResource(R.string.next_contracts_rename), onClick = onRename)
+                .clickable(
+                    onClickLabel = stringResource(R.string.next_contracts_rename),
+                    onClick = onRename
+                )
                 .heightIn(min = 48.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -412,9 +460,10 @@ private fun AreaDialog(
     onSelect: (AreaChoice) -> Unit,
     onCreate: () -> Unit,
     onEdit: (CustomArea) -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
-    val choices = listOf(AreaChoice.Automatic, AreaChoice.Fixed(null)) + areas.map { AreaChoice.Fixed(it) }
+    val choices =
+        listOf(AreaChoice.Automatic, AreaChoice.Fixed(null)) + areas.map { AreaChoice.Fixed(it) }
     SingleChoiceDialog(
         title = stringResource(R.string.next_contracts_area),
         options = choices,
@@ -422,7 +471,11 @@ private fun AreaDialog(
         label = { choice ->
             when (choice) {
                 AreaChoice.Automatic ->
-                    stringResource(R.string.next_contracts_area_automatic, contract.suggestedArea.label())
+                    stringResource(
+                        R.string.next_contracts_area_automatic,
+                        contract.suggestedArea.label()
+                    )
+
                 is AreaChoice.Fixed -> choice.area.label()
             }
         },
@@ -439,12 +492,23 @@ private fun AreaDialog(
                 }
             }
         },
-        footer = { DialogActionRow(Icons.Default.Add, stringResource(R.string.next_contracts_new_area), onCreate) }
+        footer = {
+            DialogActionRow(
+                Icons.Default.Add,
+                stringResource(R.string.next_contracts_new_area),
+                onCreate
+            )
+        }
     )
 }
 
 @Preview(name = "Light", showBackground = true, heightDp = 900)
-@Preview(name = "Dark", showBackground = true, heightDp = 900, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "Dark",
+    showBackground = true,
+    heightDp = 900,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun ContractDetailScreenPreview() {
     val last = LocalDate.now().minusDays(5)

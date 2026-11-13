@@ -30,11 +30,15 @@ import org.totschnig.myexpenses.next.viewModelsOf
 class AnalysisFeature(
     activity: ComponentActivity,
     private val data: NextData,
-    private val guidance: GuidanceFeature,
+    private val guidance: GuidanceFeature
 ) : NextFeature {
     val tags by activity.viewModelsOf { TagAnalysisViewModel(data.ledgerSource, data.tags.facts) }
-    val categorySpending by activity.viewModelsOf { CategorySpendingViewModel(data.ledgerSource, data.tags.facts) }
-    val moneyFlow by activity.viewModelsOf { MoneyFlowViewModel(data.ledgerSource, data.tags.facts) }
+    val categorySpending by activity.viewModelsOf {
+        CategorySpendingViewModel(data.ledgerSource, data.tags.facts)
+    }
+    val moneyFlow by activity.viewModelsOf {
+        MoneyFlowViewModel(data.ledgerSource, data.tags.facts)
+    }
 
     override val tab = NextTab(Icons.Default.Insights, R.string.next_tab_analysis, NextKey.Analysis)
 
@@ -43,7 +47,10 @@ class AnalysisFeature(
             BehindStatusBar(MaterialTheme.colorScheme.surfaceContainer) {
                 val homeCurrency by data.homeCurrency.collectAsStateWithLifecycle()
                 AnalysisFlow(
-                    tags, categorySpending, moneyFlow, shell.fixedTransactions,
+                    tags,
+                    categorySpending,
+                    moneyFlow,
+                    shell.fixedTransactions,
                     homeCurrency,
                     onInsightSettings = shell.openInsightSettings,
                     readiness = guidance.readiness.readiness,

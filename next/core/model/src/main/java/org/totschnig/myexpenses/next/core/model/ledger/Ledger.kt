@@ -8,10 +8,7 @@ import java.time.LocalDate
  * see the README of this package. Equal transactions give an equal ledger, so that the analyses
  * are not computed again when the transactions are read again unchanged.
  */
-data class Ledger(
-    val transactions: List<LedgerTransaction>,
-    val ownAccounts: OwnAccounts,
-) {
+data class Ledger(val transactions: List<LedgerTransaction>, val ownAccounts: OwnAccounts) {
     companion object {
         /** A bit more than two years, so that yearly contracts have been debited at least twice */
         const val HISTORY_MONTHS = 26L
@@ -57,14 +54,16 @@ data class LedgerTransaction(
      * The parts of a split transaction, empty for other transactions. Only analyses by category
      * use them, all others take the transaction as a whole, so nothing is counted twice.
      */
-    val parts: List<LedgerPart> = emptyList(),
+    val parts: List<LedgerPart> = emptyList()
 ) {
     /**
      * How the amount is shared among categories: the [parts] of a split transaction, otherwise the
      * transaction itself as the only part
      */
     val categoryParts: List<LedgerPart>
-        get() = parts.ifEmpty { listOf(LedgerPart(amount, homeAmount, categoryId, transferAccountId)) }
+        get() = parts.ifEmpty {
+            listOf(LedgerPart(amount, homeAmount, categoryId, transferAccountId))
+        }
 
     /** Paid in another currency than the one of the account */
     val isForeign: Boolean
@@ -81,5 +80,5 @@ data class LedgerPart(
     val amount: Long,
     val homeAmount: Long = amount,
     val categoryId: Long? = null,
-    val transferAccountId: Long? = null,
+    val transferAccountId: Long? = null
 )

@@ -1,11 +1,11 @@
 package org.totschnig.myexpenses.next.data.tags
 
+import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.core.model.ledger.OwnAccounts
-import java.time.LocalDate
 
 class TagMeaningTest {
 
@@ -28,14 +28,34 @@ class TagMeaningTest {
 
     @Test
     fun oneOffAndReimbursedAreExcludedFromSpending() {
-        val meanings = mapOf(1L to TagMeaning.ONE_OFF, 2L to TagMeaning.REIMBURSED, 3L to TagMeaning.TRIP)
-        fun transaction(id: Long, vararg tagIds: Long) =
-            LedgerTransaction(id, LocalDate.of(2026, 10, 5), amount = -100, accountId = 1, tagIds = tagIds.toSet())
+        val meanings = mapOf(
+            1L to TagMeaning.ONE_OFF,
+            2L to TagMeaning.REIMBURSED,
+            3L to TagMeaning.TRIP
+        )
+        fun transaction(id: Long, vararg tagIds: Long) = LedgerTransaction(
+            id,
+            LocalDate.of(2026, 10, 5),
+            amount = -100,
+            accountId = 1,
+            tagIds = tagIds.toSet()
+        )
         val ledger = Ledger(
-            listOf(transaction(10, 1, 3), transaction(11, 2), transaction(12, 3), transaction(13, 4), transaction(14)),
+            listOf(
+                transaction(10, 1, 3),
+                transaction(11, 2),
+                transaction(12, 3),
+                transaction(13, 4),
+                transaction(14)
+            ),
             OwnAccounts(emptySet(), emptyMap())
         )
         assertEquals(setOf(10L, 11L), TagMeaning.excludedFromSpending(ledger, meanings))
-        assertEquals(setOf(10L, 12L), TagMeaning.taggedWith(ledger, meanings) { it == TagMeaning.TRIP })
+        assertEquals(
+            setOf(10L, 12L),
+            TagMeaning.taggedWith(ledger, meanings) {
+                it == TagMeaning.TRIP
+            }
+        )
     }
 }

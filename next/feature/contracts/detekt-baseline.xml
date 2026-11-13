@@ -2,7 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ComplexCondition:ContractList.kt:state.isEmpty || !isEditing &amp;&amp; state.active.isEmpty() &amp;&amp; state.ended.isEmpty() &amp;&amp; state.suggestions.isEmpty() &amp;&amp; state.cancelled.isEmpty()</ID>
+    <ID>ComplexCondition:ContractList.kt:state.isEmpty || ( !isEditing &amp;&amp; state.active.isEmpty() &amp;&amp; state.ended.isEmpty() &amp;&amp; state.suggestions.isEmpty() &amp;&amp; state.cancelled.isEmpty() )</ID>
     <ID>MagicNumber:ContractItem.kt:0.6f</ID>
     <ID>MagicNumber:NextContractsScreen.kt:12050</ID>
     <ID>MagicNumber:NextContractsScreen.kt:1299</ID>

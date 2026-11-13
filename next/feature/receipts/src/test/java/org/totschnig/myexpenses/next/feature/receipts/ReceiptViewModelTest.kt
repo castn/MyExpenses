@@ -40,7 +40,8 @@ class ReceiptViewModelTest {
 
     private val dispatcher = UnconfinedTestDispatcher()
 
-    private val receipt = Receipt("REWE", 300, listOf(ReceiptItem("Milch", 100), ReceiptItem("Brot", 200)))
+    private val receipt =
+        Receipt("REWE", 300, listOf(ReceiptItem("Milch", 100), ReceiptItem("Brot", 200)))
 
     private class FakeReceiptDatabase : ReceiptDatabase {
         val saved = HashMap<Long, Receipt>()
@@ -95,13 +96,18 @@ class ReceiptViewModelTest {
     private fun withViewModel(
         database: FakeReceiptDatabase = FakeReceiptDatabase(),
         models: ItemGroupModels = FakeModels(),
-        block: suspend (ReceiptViewModel, ItemGroupModelSetupStore) -> Unit,
+        block: suspend (ReceiptViewModel, ItemGroupModelSetupStore) -> Unit
     ) = withTestDataStore { dataStore ->
         val setupStore = ItemGroupModelSetupStore(dataStore)
         runTest(dispatcher) {
             val viewModel = ReceiptViewModel(
-                SavedStateHandle(), database, models, setupStore, MutableStateFlow(CurrencyInfo.Preview),
-                { null }, dispatcher
+                SavedStateHandle(),
+                database,
+                models,
+                setupStore,
+                MutableStateFlow(CurrencyInfo.Preview),
+                { null },
+                dispatcher
             ) { null }
             block(viewModel, setupStore)
         }
@@ -172,7 +178,9 @@ class ReceiptViewModelTest {
     fun newScanIsCheckedForChosenTransactionInItsCurrency() = withViewModel { viewModel, _ ->
         val chf = CurrencyInfo("CHF", "CHF", 2)
         viewModel.assignments.showScan(receipt, 2, emptyList())
-        viewModel.assignments.assign(BookedTransaction(9, LocalDate.of(2026, 10, 26), -300, currency = chf))
+        viewModel.assignments.assign(
+            BookedTransaction(9, LocalDate.of(2026, 10, 26), -300, currency = chf)
+        )
         assertNull(viewModel.assignments.assignment.value)
         assertEquals(ReceiptTarget.Transaction(9), viewModel.draft.value!!.target)
         assertEquals(chf, viewModel.assignments.standaloneCurrency)
@@ -198,7 +206,10 @@ class ReceiptViewModelTest {
     @Test
     fun downloadWithoutReleaseFails() = withViewModel { viewModel, _ ->
         viewModel.modelInstaller.download()
-        assertEquals(ModelSetup.Failed(ModelSetup.Reason.NoRelease), viewModel.modelInstaller.setup.value)
+        assertEquals(
+            ModelSetup.Failed(ModelSetup.Reason.NoRelease),
+            viewModel.modelInstaller.setup.value
+        )
     }
 
     @Test
@@ -206,6 +217,9 @@ class ReceiptViewModelTest {
         models = FakeModels(ItemGroupModelRelease("de", "1", 1, "https://example.com/m.bin", "", 1))
     ) { viewModel, _ ->
         viewModel.modelInstaller.download()
-        assertEquals(ModelSetup.Failed(ModelSetup.Reason.Network), viewModel.modelInstaller.setup.value)
+        assertEquals(
+            ModelSetup.Failed(ModelSetup.Reason.Network),
+            viewModel.modelInstaller.setup.value
+        )
     }
 }

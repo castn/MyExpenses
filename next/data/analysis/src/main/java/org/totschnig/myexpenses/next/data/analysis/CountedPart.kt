@@ -13,7 +13,7 @@ import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 internal class CountedPart(
     val transaction: LedgerTransaction,
     val part: LedgerPart,
-    val category: CategoryInfo?,
+    val category: CategoryInfo?
 ) {
     /** The main category of the part, null without category */
     val mainId: Long? get() = category?.mainId
@@ -38,9 +38,12 @@ internal fun countedParts(
     ledger: Ledger,
     excluded: Set<Long>,
     categories: Map<Long, CategoryInfo>,
-    period: SpendingPeriod,
+    period: SpendingPeriod
 ): List<CountedPart> = ledger.transactions
-    .filter { it.id !in excluded && it.targetAccountId == null && it.date in period.start..period.end }
+    .filter {
+        it.id !in excluded && it.targetAccountId == null &&
+            it.date in period.start..period.end
+    }
     .flatMap { transaction ->
         transaction.categoryParts
             .filter { it.transferAccountId == null }

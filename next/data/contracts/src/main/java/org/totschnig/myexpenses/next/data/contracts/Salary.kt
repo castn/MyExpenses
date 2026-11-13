@@ -1,6 +1,5 @@
 package org.totschnig.myexpenses.next.data.contracts
 
-
 /**
  * Which regular incomes are salaries. The highest one determines the period of the monthly balance,
  * the others are expected as income within it.
@@ -29,8 +28,12 @@ fun List<Contract>.automaticSalary(): Contract? =
  */
 fun List<Contract>.salaries(choice: SalaryChoice): List<Contract> = when (choice) {
     SalaryChoice.Automatic -> listOfNotNull(automaticSalary())
+
     SalaryChoice.None -> emptyList()
-    is SalaryChoice.Fixed -> filter { it.signature in choice.signatures && it.isIncome && it.isActive }
+
+    is SalaryChoice.Fixed -> filter {
+        it.signature in choice.signatures && it.isIncome && it.isActive
+    }
         .sortedByDescending { it.lastAmount }
         .ifEmpty { listOfNotNull(automaticSalary()) }
 }

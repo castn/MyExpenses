@@ -27,7 +27,7 @@ data class FlowActor(
     val amount: Long,
     val count: Int,
     val transactionIds: List<Long>,
-    val others: Int = 0,
+    val others: Int = 0
 ) {
     val isRest: Boolean get() = others > 0
 }
@@ -48,7 +48,7 @@ data class FlowGroup(
     val amount: Long,
     val count: Int,
     val transactionIds: List<Long>,
-    val actors: List<FlowActor> = emptyList(),
+    val actors: List<FlowActor> = emptyList()
 ) {
     val isRest: Boolean get() = key == MoneyFlow.REST
 }
@@ -71,7 +71,7 @@ data class MoneyFlow(
     val hasEarlier: Boolean,
     val incomes: List<FlowGroup>,
     val expenses: List<FlowGroup>,
-    val expenseOrder: List<Long> = emptyList(),
+    val expenseOrder: List<Long> = emptyList()
 ) {
     val earned: Long get() = incomes.sumOf { it.amount }
     val spent: Long get() = expenses.sumOf { it.amount }
@@ -112,7 +112,7 @@ object MoneyFlowAnalyzer {
         categories: Map<Long, CategoryInfo>,
         kind: PeriodKind,
         offset: Int,
-        today: LocalDate,
+        today: LocalDate
     ): MoneyFlow {
         val period = SpendingPeriod.of(kind, offset, today)
         val (incomes, expenses) = groups(countedParts(ledger, excluded, categories, period))
@@ -127,9 +127,13 @@ object MoneyFlowAnalyzer {
             period = period,
             offset = offset,
             hasEarlier = period.previous().isInLedger(today),
-            incomes = incomes.largest(MoneyFlow.MAX_INCOMES).map { it.toFlowGroup(categories, null) },
-            expenses = expenses.largest(MoneyFlow.MAX_EXPENSES).map { it.toFlowGroup(categories, actors) },
-            expenseOrder = expenseOrder,
+            incomes = incomes.largest(MoneyFlow.MAX_INCOMES).map {
+                it.toFlowGroup(categories, null)
+            },
+            expenses = expenses.largest(MoneyFlow.MAX_EXPENSES).map {
+                it.toFlowGroup(categories, actors)
+            },
+            expenseOrder = expenseOrder
         )
     }
 
@@ -156,10 +160,14 @@ object MoneyFlowAnalyzer {
     private fun List<Group>.largest(limit: Int): List<Group> {
         val sorted = sortedByDescending { abs(it.net) }
         if (sorted.size <= limit) return sorted
-        return sorted.take(limit - 1) + Group(MoneyFlow.REST, sorted.drop(limit - 1).flatMap { it.parts })
+        return sorted.take(limit - 1) +
+            Group(MoneyFlow.REST, sorted.drop(limit - 1).flatMap { it.parts })
     }
 
-    private fun Group.toFlowGroup(categories: Map<Long, CategoryInfo>, actors: ActorNames?): FlowGroup {
+    private fun Group.toFlowGroup(
+        categories: Map<Long, CategoryInfo>,
+        actors: ActorNames?
+    ): FlowGroup {
         val amount = abs(net)
         return FlowGroup(
             key = when (key) {
@@ -181,13 +189,20 @@ object MoneyFlowAnalyzer {
      * others as rest. Actors with more returns than payments are part of the rest, so the actors
      * shown never add up to more than [amount], and the rest is what remains.
      */
-    private fun actorsOf(parts: List<CountedPart>, amount: Long, names: ActorNames): List<FlowActor> {
+    private fun actorsOf(
+        parts: List<CountedPart>,
+        amount: Long,
+        names: ActorNames
+    ): List<FlowActor> {
         fun spentBy(parts: List<CountedPart>) = -parts.sumOf { it.part.homeAmount }
         val byActor = parts.groupBy { names.of(it.transaction) }.toList()
             .sortedByDescending { (_, parts) -> spentBy(parts) }
         val positive = byActor.filter { (_, parts) -> spentBy(parts) > 0 }
-        var shown = if (byActor.size <= MoneyFlow.MAX_ACTORS) positive
-        else positive.take(MoneyFlow.MAX_ACTORS - 1)
+        var shown = if (byActor.size <= MoneyFlow.MAX_ACTORS) {
+            positive
+        } else {
+            positive.take(MoneyFlow.MAX_ACTORS - 1)
+        }
         while (shown.sumOf { spentBy(it.second) } > amount) shown = shown.dropLast(1)
         val result = shown.map { (name, parts) ->
             FlowActor(name, spentBy(parts), parts.transactionIds().size, parts.transactionIds())
@@ -198,9 +213,20 @@ object MoneyFlowAnalyzer {
         val others = byActor.filter { it.first !in shownNames }
         val otherParts = others.flatMap { it.second }
         return result + if (others.size == 1) {
-            FlowActor(others.single().first, restAmount, otherParts.transactionIds().size, otherParts.transactionIds())
+            FlowActor(
+                others.single().first,
+                restAmount,
+                otherParts.transactionIds().size,
+                otherParts.transactionIds()
+            )
         } else {
-            FlowActor(null, restAmount, otherParts.transactionIds().size, otherParts.transactionIds(), others.size)
+            FlowActor(
+                null,
+                restAmount,
+                otherParts.transactionIds().size,
+                otherParts.transactionIds(),
+                others.size
+            )
         }
     }
 

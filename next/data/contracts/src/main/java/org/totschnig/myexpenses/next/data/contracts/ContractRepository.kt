@@ -13,15 +13,15 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
-import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 import org.totschnig.myexpenses.next.core.common.ledger.Memo
-import org.totschnig.myexpenses.next.core.model.ledger.analysisState
 import org.totschnig.myexpenses.next.core.common.ledger.mapMemo
-import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
 import org.totschnig.myexpenses.next.core.common.logTimings
 import org.totschnig.myexpenses.next.core.common.measured
 import org.totschnig.myexpenses.next.core.common.shareWhileShown
+import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
+import org.totschnig.myexpenses.next.core.model.ledger.analysisState
+import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
 
 /**
  * Detects contracts in the debits of all accounts that are not excluded from totals, once for
@@ -35,7 +35,7 @@ import org.totschnig.myexpenses.next.core.common.shareWhileShown
 class ContractRepository(
     val ledgerSource: LedgerSource,
     val store: ContractStore,
-    private val scope: CoroutineScope,
+    private val scope: CoroutineScope
 ) {
     private val settings: Flow<ContractSettings> = store.settings
 
@@ -50,7 +50,7 @@ class ContractRepository(
     private data class AnalysisInput(
         val transactions: List<ContractTransaction>,
         val rules: List<ContractRule>,
-        val today: LocalDate,
+        val today: LocalDate
     )
 
     private val analysisMemo = Memo<AnalysisInput, ContractAnalysis>(
@@ -117,17 +117,21 @@ class ContractRepository(
 
     private fun overviewOf(direction: ContractDirection) =
         combine(ledgerSource.consent, settings, analysis) { consent, settings, analysis ->
-            analysisState(consent, analysis?.let {
-                buildContractsState(
-                    it.contracts.filter { contract -> contract.direction == direction },
-                    settings,
-                    it.dismissed.filter { contract -> contract.direction == direction }
-                )
-            })
+            analysisState(
+                consent,
+                analysis?.let {
+                    buildContractsState(
+                        it.contracts.filter { contract -> contract.direction == direction },
+                        settings,
+                        it.dismissed.filter { contract -> contract.direction == direction }
+                    )
+                }
+            )
         }.shareWhileShown(scope)
 
     /** Contracts, i.e. recurring debits */
-    val expenses: SharedFlow<AnalysisState<ContractsOverview>> = overviewOf(ContractDirection.EXPENSE)
+    val expenses: SharedFlow<AnalysisState<ContractsOverview>> =
+        overviewOf(ContractDirection.EXPENSE)
 
     /** Recurring credits, e.g. salary */
     val incomes: SharedFlow<AnalysisState<ContractsOverview>> = overviewOf(ContractDirection.INCOME)
@@ -144,10 +148,14 @@ class ContractRepository(
                     confirmed = expenses.active + expenses.ended + expenses.cancelled,
                     salaries = incomes.salaries,
                     paymentIds =
-                        analysis.contracts.flatMapTo(HashSet()) { contract -> contract.transactions.map { it.id } },
+                        analysis.contracts.flatMapTo(HashSet()) { contract ->
+                            contract.transactions.map { it.id }
+                        },
                     transactions = analysis.transactions
                 )
-            } else null
+            } else {
+                null
+            }
         }
             .distinctUntilChanged()
             .logTimings("contracts: facts")

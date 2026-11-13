@@ -1,6 +1,5 @@
 package org.totschnig.myexpenses.next.data.tags
 
-
 /** The tags of transactions as stored by the app */
 interface TagDatabase {
     /** The ids of the tags of the transaction */

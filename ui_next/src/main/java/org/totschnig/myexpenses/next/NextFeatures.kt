@@ -17,11 +17,11 @@ import org.totschnig.myexpenses.next.merchants.MerchantsFeature
 import org.totschnig.myexpenses.next.portfolio.PortfolioFeature
 import org.totschnig.myexpenses.next.receipts.ReceiptSettings
 import org.totschnig.myexpenses.next.receipts.ReceiptsFeature
-import org.totschnig.myexpenses.next.tags.TagsFeature
-import org.totschnig.myexpenses.next.tags.TagSettings
 import org.totschnig.myexpenses.next.settings.AreaSettings
 import org.totschnig.myexpenses.next.settings.NextSettings
 import org.totschnig.myexpenses.next.setup.SetupFeature
+import org.totschnig.myexpenses.next.tags.TagSettings
+import org.totschnig.myexpenses.next.tags.TagsFeature
 import org.totschnig.myexpenses.next.tips.SavingTipsFeature
 import org.totschnig.myexpenses.next.transactions.TransactionsFeature
 
@@ -44,7 +44,8 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
         }
     val budgets = BudgetsFeature(activity, data)
     val portfolio = PortfolioFeature(activity)
-    val guidance = GuidanceFeature(activity, data, { categories.isAsking() }, explained = NextKey.Analysis)
+    val guidance =
+        GuidanceFeature(activity, data, { categories.isAsking() }, explained = NextKey.Analysis)
     val savingTips = SavingTipsFeature(activity, data, contracts, tags) { guidance.PendingTips(it) }
     val analysis = AnalysisFeature(activity, data, guidance)
     val receipts = ReceiptsFeature(activity, data) { contracts.isContractPayment(it) }
@@ -68,7 +69,10 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
 
     companion object {
         /** What the areas provide to all screens of the new UI, also outside of the main screen, see [NextTheme] */
-        val locals: Array<ProvidedValue<*>> get() = arrayOf(CategoriesFeature.picker, ReceiptsFeature.editor)
+        val locals: Array<ProvidedValue<*>> get() = arrayOf(
+            CategoriesFeature.picker,
+            ReceiptsFeature.editor
+        )
 
         /** The settings of the areas, in the order they are listed in their groups, see [NextSettings] */
         val settings: List<AreaSettings.Factory> get() =

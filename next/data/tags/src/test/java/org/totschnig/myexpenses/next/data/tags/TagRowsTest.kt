@@ -20,7 +20,7 @@ class TagRowsTest {
                     1, today, amount = -2000, accountId = 1, payeeId = 5, payeeName = "Hotel Roma",
                     currency = "EUR", originalCurrency = "CHF", tagIds = setOf(7)
                 ),
-                LedgerTransaction(2, today, amount = -5000, accountId = 1, transferAccountId = 2),
+                LedgerTransaction(2, today, amount = -5000, accountId = 1, transferAccountId = 2)
             ),
             OwnAccounts(emptySet(), emptyMap())
         )

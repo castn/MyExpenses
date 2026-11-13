@@ -30,7 +30,7 @@ fun SalarySheet(
     incomes: List<Contract>,
     choice: SalaryChoice,
     onSelect: (SalaryChoice) -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     val current = incomes.salaries(choice).map { it.signature }
     var selected by rememberSaveable { mutableStateOf(current) }
@@ -40,14 +40,21 @@ fun SalarySheet(
         options = incomes.filter { it.isIncome && it.isActive },
         selected = incomes.filterTo(HashSet()) { it.signature in selected },
         onToggle = { income ->
-            selected = if (income.signature in selected) selected - income.signature else selected + income.signature
+            selected =
+                if (income.signature in selected) {
+                    selected - income.signature
+                } else {
+                    selected + income.signature
+                }
         },
         label = { it.title },
         onConfirm = {
             when {
                 // Unchanged: keep following the automatic choice
                 selected.toSet() == current.toSet() -> onDismiss()
+
                 selected.isEmpty() -> onSelect(SalaryChoice.None)
+
                 else -> onSelect(SalaryChoice.Fixed(selected.toSet()))
             }
         },
@@ -61,11 +68,14 @@ fun SalarySheet(
                 modifier = Modifier.padding(top = 8.dp)
             )
             if (choice != SalaryChoice.Automatic) {
-                TextButton(onClick = { onSelect(SalaryChoice.Automatic) }, modifier = Modifier.padding(top = 8.dp)) {
+                TextButton(onClick = {
+                    onSelect(SalaryChoice.Automatic)
+                }, modifier = Modifier.padding(top = 8.dp)) {
                     Text(
                         stringResource(
                             R.string.next_salary_automatic,
-                            automatic?.displayName ?: stringResource(R.string.next_salary_none_detected)
+                            automatic?.displayName
+                                ?: stringResource(R.string.next_salary_none_detected)
                         )
                     )
                 }

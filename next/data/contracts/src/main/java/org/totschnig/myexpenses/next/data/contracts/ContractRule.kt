@@ -43,7 +43,7 @@ data class ContractRule(
     val snapshot: Snapshot? = null,
     val reserve: Boolean? = null,
     val targetAccountIds: Set<Long> = emptySet(),
-    val icon: String? = null,
+    val icon: String? = null
 ) {
     /**
      * @param name detected name of the contract
@@ -64,10 +64,15 @@ data class ContractRule(
 
     fun matches(transaction: ContractTransaction): Boolean =
         ContractDirection.of(transaction.amount) == direction &&
-                (transaction.targetAccountId?.let { it in targetAccountIds } ?: (
-                        templateId != null && transaction.templateId == templateId ||
-                                transaction.payeeId != null && transaction.payeeId in payeeIds)) &&
-                (amountRange == null || transaction.amount.absoluteValue in amountRange)
+            (
+                transaction.targetAccountId?.let {
+                    it in targetAccountIds
+                } ?: (
+                    (templateId != null && transaction.templateId == templateId) ||
+                        (transaction.payeeId != null && transaction.payeeId in payeeIds)
+                    )
+                ) &&
+            (amountRange == null || transaction.amount.absoluteValue in amountRange)
 
     companion object {
         const val KEY_PREFIX = "rule:"
@@ -85,14 +90,18 @@ data class ContractRule(
             contract: Contract,
             transactions: List<ContractTransaction>,
             kind: Kind = Kind.CONTRACT,
-            id: String = UUID.randomUUID().toString(),
+            id: String = UUID.randomUUID().toString()
         ): ContractRule {
             val payments = contract.transactions
             val (movements, others) = payments.partition { it.targetAccountId != null }
             val targetAccountIds = movements.mapNotNullTo(HashSet()) { it.targetAccountId }
             // Payments from a template stay with it, even if the payee is changed
             val templateId = others.map { it.templateId }.distinct().singleOrNull()
-            val payeeIds = if (templateId != null) emptySet() else others.mapNotNullTo(HashSet()) { it.payeeId }
+            val payeeIds = if (templateId != null) {
+                emptySet()
+            } else {
+                others.mapNotNullTo(HashSet()) { it.payeeId }
+            }
             val rule = ContractRule(
                 id = id,
                 kind = kind,
@@ -112,10 +121,9 @@ data class ContractRule(
             val otherPayments = transactions.filter { it.id !in ids && rule.matches(it) }
             if (otherPayments.isEmpty()) return rule
             val amounts = payments.map { it.amount.absoluteValue }
-            val withRange = rule.copy(
-                amountRange = (amounts.min() * (1 - AMOUNT_RANGE_TOLERANCE)).roundToLong()..
-                        (amounts.max() * (1 + AMOUNT_RANGE_TOLERANCE)).roundToLong()
-            )
+            val low = (amounts.min() * (1 - AMOUNT_RANGE_TOLERANCE)).roundToLong()
+            val high = (amounts.max() * (1 + AMOUNT_RANGE_TOLERANCE)).roundToLong()
+            val withRange = rule.copy(amountRange = low..high)
             // A range that does not tell anything apart would only cut off a future raise
             return if (otherPayments.any { !withRange.matches(it) }) withRange else rule
         }

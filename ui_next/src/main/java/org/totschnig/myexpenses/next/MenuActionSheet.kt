@@ -19,7 +19,11 @@ import org.totschnig.myexpenses.util.tracking.Tracker
  * @param title above the actions, e.g. what they apply to
  */
 @Composable
-internal fun MenuActionSheet(expanded: MutableState<Boolean>, menu: () -> Menu, title: String? = null) {
+internal fun MenuActionSheet(
+    expanded: MutableState<Boolean>,
+    menu: () -> Menu,
+    title: String? = null
+) {
     if (!expanded.value) return
     val tracker = LocalTracker.current
     val entries = remember { menu() }

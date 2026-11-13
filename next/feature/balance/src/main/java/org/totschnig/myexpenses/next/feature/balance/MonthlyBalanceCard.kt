@@ -19,16 +19,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.totschnig.myexpenses.designsystem.Shapes
-import org.totschnig.myexpenses.designsystem.theme.LocalSemanticColors
-import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
+import java.time.LocalDate
 import org.totschnig.myexpenses.designsystem.LoadingBlock
 import org.totschnig.myexpenses.designsystem.OverviewCard
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
-import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
+import org.totschnig.myexpenses.designsystem.Shapes
+import org.totschnig.myexpenses.designsystem.theme.LocalSemanticColors
 import org.totschnig.myexpenses.next.core.common.R
-import java.time.LocalDate
 import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
+import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 import org.totschnig.myexpenses.next.data.balance.BalanceOverview
 import org.totschnig.myexpenses.next.data.balance.BalancePeriod
 import org.totschnig.myexpenses.next.data.balance.MonthlyBalance
@@ -43,12 +43,20 @@ fun MonthlyBalanceCard(
     state: AnalysisState<BalanceOverview>,
     currency: CurrencyInfo,
     onOpen: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     when (state) {
         AnalysisState.Declined -> {}
+
         AnalysisState.Loading -> LoadingBalanceCard(modifier)
-        is AnalysisState.Ready -> BalanceCard(state.value.balance, state.value.today, currency, onOpen, modifier)
+
+        is AnalysisState.Ready -> BalanceCard(
+            state.value.balance,
+            state.value.today,
+            currency,
+            onOpen,
+            modifier
+        )
     }
 }
 
@@ -69,7 +77,7 @@ private fun BalanceCard(
     today: LocalDate,
     currency: CurrencyInfo,
     onOpen: () -> Unit,
-    modifier: Modifier,
+    modifier: Modifier
 ) {
     val formatter = LocalAmountFormatter.current
     val colors = LocalSemanticColors.current
@@ -98,7 +106,11 @@ private fun BalanceCard(
                 formatter.format(balance.available, currency),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = if (balance.available < 0) colors.expense else MaterialTheme.colorScheme.primary
+                color = if (balance.available < 0) {
+                    colors.expense
+                } else {
+                    MaterialTheme.colorScheme.primary
+                }
             )
             Text(
                 stringResource(R.string.next_balance_available),
@@ -109,9 +121,13 @@ private fun BalanceCard(
         }
         Text(
             pluralStringResource(
-                if (balance.period.isSalaryCycle) R.plurals.next_balance_until_salary
-                else R.plurals.next_balance_until_month_end,
-                daysLeft, daysLeft
+                if (balance.period.isSalaryCycle) {
+                    R.plurals.next_balance_until_salary
+                } else {
+                    R.plurals.next_balance_until_month_end
+                },
+                daysLeft,
+                daysLeft
             ),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -128,7 +144,7 @@ private fun AmountBar(
     amount: String,
     fraction: Float,
     color: Color,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Box(modifier.fillMaxWidth()) {
         Box(

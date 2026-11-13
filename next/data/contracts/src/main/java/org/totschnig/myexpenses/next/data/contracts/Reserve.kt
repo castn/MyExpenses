@@ -12,8 +12,10 @@ object Reserve {
      * Matched at the start of a word. Not just "spar", since "Sparkasse" and "Sparda-Bank" are banks.
      */
     private val PREFIXES = listOf(
-        "bauspar", "sparplan", "sparkonto", "sparbuch", "sparvertrag", "sparrate", "sparbrief", "sparen",
-        "tagesgeld", "festgeld", "depot", "fonds", "wertpapier", "vermögenswirksam", "rücklage", "altersvorsorge",
+        "bauspar", "sparplan", "sparkonto", "sparbuch", "sparvertrag", "sparrate", "sparbrief",
+        "sparen",
+        "tagesgeld", "festgeld", "depot", "fonds", "wertpapier", "vermögenswirksam", "rücklage",
+        "altersvorsorge",
         "saving", "invest", "brokerage", "etf"
     )
 
@@ -44,31 +46,37 @@ object Reserve {
  * accounts, e.g. paying the credit card, and the receiving side of a movement are no contracts.
  * Other transactions are kept.
  */
-fun List<ContractTransaction>.withoutMovementsOtherThanReserves(dailyAccountIds: Set<Long>) = filter { transaction ->
-    val target = transaction.targetAccountId ?: return@filter true
-    transaction.amount < 0 && transaction.accountId in dailyAccountIds && target !in dailyAccountIds
-}
+fun List<ContractTransaction>.withoutMovementsOtherThanReserves(dailyAccountIds: Set<Long>) =
+    filter { transaction ->
+        val target = transaction.targetAccountId ?: return@filter true
+        transaction.amount < 0 && transaction.accountId in dailyAccountIds &&
+            target !in dailyAccountIds
+    }
 
 /**
  * The transactions of [ledger] contracts are detected from, amounts in the home currency.
  * Movements between own accounts are named after the account the money goes to, since their
  * payee is the user or missing.
  */
-fun contractTransactions(ledger: Ledger): List<ContractTransaction> = ledger.transactions.map { transaction ->
-    with(transaction) {
-        ContractTransaction(
-            id = id,
-            date = date,
-            amount = homeAmount,
-            accountId = accountId,
-            accountLabel = accountLabel,
-            payeeId = payeeId,
-            payeeName = targetAccountId?.let { ledger.ownAccounts.labels[it] }?.let { "→ $it" } ?: payeeName,
-            comment = comment,
-            categoryPath = categoryPath,
-            categoryIcon = categoryIcon,
-            templateId = templateId,
-            targetAccountId = targetAccountId
-        )
-    }
-}.withoutMovementsOtherThanReserves(ledger.ownAccounts.dailyIds)
+fun contractTransactions(ledger: Ledger): List<ContractTransaction> =
+    ledger.transactions.map { transaction ->
+        with(transaction) {
+            ContractTransaction(
+                id = id,
+                date = date,
+                amount = homeAmount,
+                accountId = accountId,
+                accountLabel = accountLabel,
+                payeeId = payeeId,
+                payeeName =
+                    targetAccountId?.let {
+                        ledger.ownAccounts.labels[it]
+                    }?.let { "→ $it" } ?: payeeName,
+                comment = comment,
+                categoryPath = categoryPath,
+                categoryIcon = categoryIcon,
+                templateId = templateId,
+                targetAccountId = targetAccountId
+            )
+        }
+    }.withoutMovementsOtherThanReserves(ledger.ownAccounts.dailyIds)

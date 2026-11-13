@@ -53,6 +53,10 @@ class HintStore(private val dataStore: DataStore<Preferences>) {
 
         /** Names no longer known are left out */
         fun topicsOf(names: Set<String>?): Set<HintTopic> =
-            names.orEmpty().mapNotNullTo(HashSet()) { name -> HintTopic.entries.find { it.name == name } }
+            names.orEmpty().mapNotNullTo(HashSet()) { name ->
+                HintTopic.entries.find {
+                    it.name == name
+                }
+            }
     }
 }

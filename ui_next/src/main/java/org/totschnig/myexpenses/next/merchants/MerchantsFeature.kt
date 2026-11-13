@@ -3,23 +3,18 @@ package org.totschnig.myexpenses.next.merchants
 import android.content.Context
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ProvidedValue
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import org.totschnig.myexpenses.injector
-import org.totschnig.myexpenses.next.core.common.R
-import org.totschnig.myexpenses.next.settings.AreaSettings
-import org.totschnig.myexpenses.next.settings.InsightSetting
-import org.totschnig.myexpenses.next.settings.SettingControl
-import org.totschnig.myexpenses.next.settings.SettingKind
-import org.totschnig.myexpenses.next.settings.SettingsGroup
-import androidx.compose.runtime.ProvidedValue
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.totschnig.myexpenses.next.NextData
 import org.totschnig.myexpenses.next.NextFeature
 import org.totschnig.myexpenses.next.RowDecorations
+import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.ui.merchants.LocalPayeeImages
 import org.totschnig.myexpenses.next.data.merchants.MerchantLogoConsent
 import org.totschnig.myexpenses.next.data.merchants.Payee
@@ -27,6 +22,11 @@ import org.totschnig.myexpenses.next.data.merchants.PayeeDomainStore
 import org.totschnig.myexpenses.next.data.merchants.PayeeIconStore
 import org.totschnig.myexpenses.next.feature.merchants.MerchantLogos
 import org.totschnig.myexpenses.next.feature.merchants.PayeeImageDialog
+import org.totschnig.myexpenses.next.settings.AreaSettings
+import org.totschnig.myexpenses.next.settings.InsightSetting
+import org.totschnig.myexpenses.next.settings.SettingControl
+import org.totschnig.myexpenses.next.settings.SettingKind
+import org.totschnig.myexpenses.next.settings.SettingsGroup
 import org.totschnig.myexpenses.next.viewModelsOf
 
 /** Icons and logos of payees, chosen by the user or loaded with their consent */
@@ -83,8 +83,11 @@ class MerchantSettings(private val activity: ComponentActivity) : AreaSettings {
 
     companion object : AreaSettings.Factory {
         val LOGOS = InsightSetting(
-            "MERCHANT_LOGOS", SettingsGroup.LISTS, SettingKind.SWITCH,
-            R.string.next_settings_merchant_logos, R.string.next_settings_merchant_logos_summary
+            "MERCHANT_LOGOS",
+            SettingsGroup.LISTS,
+            SettingKind.SWITCH,
+            R.string.next_settings_merchant_logos,
+            R.string.next_settings_merchant_logos_summary
         )
 
         override val settings = listOf(LOGOS)

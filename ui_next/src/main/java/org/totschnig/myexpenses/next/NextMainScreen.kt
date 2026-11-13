@@ -2,25 +2,23 @@ package org.totschnig.myexpenses.next
 
 import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.displayCutout
-import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import org.totschnig.myexpenses.designsystem.ActionSheet
-import org.totschnig.myexpenses.designsystem.SheetAction
 import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
@@ -54,16 +52,13 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.window.core.layout.WindowSizeClass
 import androidx.navigation3.runtime.NavKey
-import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
-import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactions
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import androidx.window.core.layout.WindowSizeClass
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
-import org.totschnig.myexpenses.next.search.TransactionSearch
 import org.totschnig.myexpenses.activity.HELP_VARIANT_ACCOUNTS
 import org.totschnig.myexpenses.activity.HELP_VARIANT_BALANCE_SHEET
 import org.totschnig.myexpenses.activity.HELP_VARIANT_PORTFOLIO
@@ -75,8 +70,13 @@ import org.totschnig.myexpenses.compose.conditional
 import org.totschnig.myexpenses.compose.isTablet
 import org.totschnig.myexpenses.compose.main.AppEvent
 import org.totschnig.myexpenses.compose.main.AppEventHandler
+import org.totschnig.myexpenses.designsystem.ActionSheet
+import org.totschnig.myexpenses.designsystem.SheetAction
 import org.totschnig.myexpenses.dialog.MenuItem
 import org.totschnig.myexpenses.model.AccountGrouping
+import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
+import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactions
+import org.totschnig.myexpenses.next.search.TransactionSearch
 import org.totschnig.myexpenses.preference.PreferenceState
 import org.totschnig.myexpenses.util.convAmount
 import org.totschnig.myexpenses.viewmodel.AccountsScreenTab
@@ -94,7 +94,6 @@ suspend fun ThreePaneScaffoldNavigator<*>.navigateToRoot(pane: ThreePaneScaffold
         navigateTo(pane)
     }
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -117,9 +116,8 @@ fun NextMainScreen(
     transactionDetails: @Composable (ShownTransaction) -> Unit,
     onInsightSettings: () -> Unit,
     /** What the areas add to the overview, their tabs and their pages, see [NextFeature] */
-    features: List<NextFeature> = emptyList(),
+    features: List<NextFeature> = emptyList()
 ) {
-
     LaunchedEffect(Unit) {
         viewModel.setStartFilter()
     }
@@ -142,7 +140,9 @@ fun NextMainScreen(
         preferredNavModeLoadingState !is PreferenceState.Loaded ||
         accountGroupingLoadingState !is PreferenceState.Loaded ||
         mainMenuLoadingState !is PreferenceState.Loaded
-    ) return
+    ) {
+        return
+    }
 
     val forcedAccountPanelState = forcedAccountPanelLoadingState.value
     val preferredNavMode = preferredNavModeLoadingState.value.validate(isTablet)
@@ -161,14 +161,16 @@ fun NextMainScreen(
                     AccountPanelState.EXPANDED -> 2
                     AccountPanelState.COLLAPSED -> 1
                     AccountPanelState.DEFAULT -> maxHorizontalPartitions
-                },
+                }
             )
         },
         // The overview (list pane) is always the root, so that back from the account page leads there,
         // even if the app starts on the account page
         initialDestinationHistory = buildList {
             add(ThreePaneScaffoldDestinationItem(ListDetailPaneScaffoldRole.List))
-            if (viewModel.startScreen != StartScreen.Accounts && viewModel.startScreen != StartScreen.BalanceSheet) {
+            if (viewModel.startScreen != StartScreen.Accounts &&
+                viewModel.startScreen != StartScreen.BalanceSheet
+            ) {
                 add(ThreePaneScaffoldDestinationItem(ListDetailPaneScaffoldRole.Detail))
             }
         },
@@ -190,7 +192,13 @@ fun NextMainScreen(
     var showBottomSheet by remember { mutableStateOf(false) }
 
     val calculatedLayoutType = NavigationSuiteScaffoldDefaults.navigationSuiteType(adaptiveInfo)
-    val layoutType = navigationSuiteType(preferredNavMode, calculatedLayoutType, isNavigationVisible, isLandscape)
+    val layoutType =
+        navigationSuiteType(
+            preferredNavMode,
+            calculatedLayoutType,
+            isNavigationVisible,
+            isLandscape
+        )
 
     // The tabs are in a bar at the bottom where the navigation suite would show a bar, else in a rail
     val useNextBar = layoutType.isBar()
@@ -208,6 +216,7 @@ fun NextMainScreen(
             }
         }
     }
+
     /** Shows the page of a tab of the bar or rail on top of the overview, so that back leads to the overview */
     fun showTab(key: NextKey) {
         if (backStack.last() == key) return
@@ -221,7 +230,12 @@ fun NextMainScreen(
         // An area that opens the page of the command itself
         if (features.any { it.onMenuCommand(id, navigation) }) return
         val tag = when (this) {
-            MenuItem.Help -> helpVariant(viewModel, navigator.currentDestination?.pane, selectedAccountId)
+            MenuItem.Help -> helpVariant(
+                viewModel,
+                navigator.currentDestination?.pane,
+                selectedAccountId
+            )
+
             else -> null
         }
         onAppEvent(
@@ -232,12 +246,14 @@ fun NextMainScreen(
     fun onTabClick(tab: NextTab) {
         when {
             tab == NextTab.Menu -> showBottomSheet = true
+
             tab == NextTab.Overview -> {
                 showTab(NextKey.Overview)
                 scope.launch {
                     navigator.navigateToRoot(ListDetailPaneScaffoldRole.List)
                 }
             }
+
             else -> tab.key?.let(::showTab)
         }
     }
@@ -260,7 +276,12 @@ fun NextMainScreen(
             // In wide windows, e.g. tablets and phones in landscape, the tabs are in a rail at the
             // start instead of the bar at the bottom
             if (!useNextBar) {
-                NextNavigationRail(tabs, selectedTab = selectedTab, onTabClick = ::onTabClick, badges = badges)
+                NextNavigationRail(
+                    tabs,
+                    selectedTab = selectedTab,
+                    onTabClick = ::onTabClick,
+                    badges = badges
+                )
             }
             Box(
                 Modifier
@@ -304,7 +325,12 @@ fun NextMainScreen(
             }
         }
         if (useNextBar) {
-            NextBottomBar(tabs, selectedTab = selectedTab, badges = badges, onTabClick = ::onTabClick)
+            NextBottomBar(
+                tabs,
+                selectedTab = selectedTab,
+                badges = badges,
+                onTabClick = ::onTabClick
+            )
         }
     }
 
@@ -319,18 +345,35 @@ fun NextMainScreen(
 
 /** The variant of the help for the shown pane */
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
-private fun helpVariant(viewModel: MainViewModel, pane: ThreePaneScaffoldRole?, selectedAccountId: Long) =
-    when (pane) {
-        ListDetailPaneScaffoldRole.List ->
-            if (viewModel.currentAccountsTab.value == AccountsScreenTab.BALANCE_SHEET) HELP_VARIANT_BALANCE_SHEET
-            else HELP_VARIANT_ACCOUNTS
-        ListDetailPaneScaffoldRole.Detail ->
-            if (
-                (viewModel.accountList.value.find { it.id == selectedAccountId } as? FullAccount)?.isPortfolio == true
-            ) HELP_VARIANT_PORTFOLIO
-            else HELP_VARIANT_TRANSACTIONS
-        else -> null
-    }
+private fun helpVariant(
+    viewModel: MainViewModel,
+    pane: ThreePaneScaffoldRole?,
+    selectedAccountId: Long
+) = when (pane) {
+    ListDetailPaneScaffoldRole.List ->
+        if (viewModel.currentAccountsTab.value ==
+            AccountsScreenTab.BALANCE_SHEET
+        ) {
+            HELP_VARIANT_BALANCE_SHEET
+        } else {
+            HELP_VARIANT_ACCOUNTS
+        }
+
+    ListDetailPaneScaffoldRole.Detail ->
+        if (
+            (
+                viewModel.accountList.value.find {
+                    it.id == selectedAccountId
+                } as? FullAccount
+                )?.isPortfolio == true
+        ) {
+            HELP_VARIANT_PORTFOLIO
+        } else {
+            HELP_VARIANT_TRANSACTIONS
+        }
+
+    else -> null
+}
 
 /** The overview and the account page, side by side on wide screens */
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
@@ -351,7 +394,7 @@ private fun AccountPanes(
     onPrepareContextMenuItem: (itemId: Int) -> Boolean,
     onPrepareMenuItem: (itemId: Int) -> Boolean,
     pageContent: @Composable (pageAccount: PageAccount, isCurrent: Boolean) -> Unit,
-    transactionList: @Composable (PageAccount, TransactionSearch) -> Unit,
+    transactionList: @Composable (PageAccount, TransactionSearch) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val is2Pane = navigator.scaffoldDirective.maxHorizontalPartitions > 1
@@ -364,7 +407,13 @@ private fun AccountPanes(
 
     // The rail and the box around the pages keep clear of the other sides
     val customInsets = with(ScaffoldDefaults.contentWindowInsets) {
-        if (useNextBar) only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top) else only(WindowInsetsSides.Top)
+        if (useNextBar) {
+            only(
+                WindowInsetsSides.Horizontal + WindowInsetsSides.Top
+            )
+        } else {
+            only(WindowInsetsSides.Top)
+        }
     }
 
     ListDetailPaneScaffold(
@@ -415,11 +464,23 @@ private fun AccountPanes(
                         pageContent = pageContent,
                         transactionList = transactionList,
                         windowInsets = with(customInsets) {
-                            if (is2Pane) only(WindowInsetsSides.Vertical + WindowInsetsSides.End) else this
+                            if (is2Pane) {
+                                only(
+                                    WindowInsetsSides.Vertical + WindowInsetsSides.End
+                                )
+                            } else {
+                                this
+                            }
                         },
                         bankIcon = bankIcon,
-                        onBack = if (is2Pane) null else {
-                            { scope.launch { navigator.navigateToRoot(ListDetailPaneScaffoldRole.List) } }
+                        onBack = if (is2Pane) {
+                            null
+                        } else {
+                            {
+                                scope.launch {
+                                    navigator.navigateToRoot(ListDetailPaneScaffoldRole.List)
+                                }
+                            }
                         }
                     )
                 }
@@ -438,7 +499,7 @@ private fun OverviewPane(
     navigation: NextNavigation,
     bankIcon: (@Composable (Modifier, Long) -> Unit)?,
     onAppEvent: AppEventHandler,
-    onAccountClick: (OverviewAccount) -> Unit,
+    onAccountClick: (OverviewAccount) -> Unit
 ) {
     LaunchedEffect(Unit) {
         viewModel.setLastVisited(StartScreen.Accounts)
@@ -459,13 +520,18 @@ private fun OverviewPane(
             },
             budgets = shown.mapNotNull { it.overviewBudgets(navigation) }.firstOrNull(),
             sections = overviewSections(
-                accounts.filter { it.visible }, accountGrouping, context, resources
+                accounts.filter { it.visible },
+                accountGrouping,
+                context,
+                resources
             ) { amount, currency -> format.convAmount(amount, currency) },
             bankIcon = bankIcon,
             onAddAccount = { onAppEvent(AppEvent.CreateAccount) },
             onReorderAccounts = { shownIds ->
                 // Hidden accounts are not shown in the overview, they keep their relative order behind the shown ones
-                val hiddenIds = accounts.filter { !it.visible }.sortedBy { it.sortKey }.map { it.id }
+                val hiddenIds = accounts.filter {
+                    !it.visible
+                }.sortedBy { it.sortKey }.map { it.id }
                 viewModel.sortAccounts((shownIds + hiddenIds).toLongArray())
             },
             onAccountClick = onAccountClick
@@ -477,7 +543,6 @@ private fun OverviewPane(
         ) { features.forEach { it.OverviewAction() } }
     }
 }
-
 
 /**
  * A page that fills the status bar with its [color], so that the color reaches the top of the

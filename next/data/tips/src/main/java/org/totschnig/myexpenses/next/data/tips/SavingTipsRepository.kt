@@ -9,15 +9,15 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onStart
-import org.totschnig.myexpenses.next.data.budgets.BudgetFacts
-import org.totschnig.myexpenses.next.data.contracts.ContractFacts
+import org.totschnig.myexpenses.next.core.common.ledger.Memo
+import org.totschnig.myexpenses.next.core.common.logTimings
+import org.totschnig.myexpenses.next.core.common.shareWhileShown
 import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
-import org.totschnig.myexpenses.next.core.common.ledger.Memo
 import org.totschnig.myexpenses.next.core.model.ledger.analysisState
-import org.totschnig.myexpenses.next.core.common.logTimings
 import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
-import org.totschnig.myexpenses.next.core.common.shareWhileShown
+import org.totschnig.myexpenses.next.data.budgets.BudgetFacts
+import org.totschnig.myexpenses.next.data.contracts.ContractFacts
 import org.totschnig.myexpenses.next.data.tags.TagFacts
 
 /**
@@ -32,7 +32,7 @@ class SavingTipsRepository(
     tagFacts: Flow<TagFacts>,
     receiptFacts: Flow<ReceiptFacts>,
     scope: CoroutineScope,
-    budgetFacts: Flow<BudgetFacts?> = flowOf(null),
+    budgetFacts: Flow<BudgetFacts?> = flowOf(null)
 ) {
     /** Decisions of the user only sort the tips, they are not part of it */
     private data class TipsInput(
@@ -40,7 +40,7 @@ class SavingTipsRepository(
         val tags: TagFacts,
         val receipts: ReceiptFacts,
         val today: LocalDate,
-        val budget: BudgetFacts?,
+        val budget: BudgetFacts?
     )
 
     private val memo = Memo<TipsInput, List<SavingTip>>(
@@ -52,7 +52,10 @@ class SavingTipsRepository(
     /** Null while loading or without consent */
     private val input: Flow<TipsInput?> =
         combine(
-            contractFacts, tagFacts, receiptFacts, ledgerSource.today,
+            contractFacts,
+            tagFacts,
+            receiptFacts,
+            ledgerSource.today,
             // The other tips need not wait for the budget
             budgetFacts.onStart { emit(null) }
         ) { contracts, tags, receipts, today, budget ->
@@ -62,15 +65,18 @@ class SavingTipsRepository(
     /** Tips where to spend less, found in the confirmed contracts, see [SavingTip] */
     val savingTips: SharedFlow<AnalysisState<SavingTipsOverview>> =
         combine(ledgerSource.consent, input, store.decisions) { consent, input, decisions ->
-            analysisState(consent, input?.let {
-                val (dismissed, shown) = memo.of(it)
-                    .partition(decisions::isDismissed)
-                SavingTipsOverview(
-                    tips = shown,
-                    dismissed = dismissed,
-                    newIds = shown.filter(decisions::isNew).mapTo(HashSet()) { tip -> tip.id }
-                )
-            })
+            analysisState(
+                consent,
+                input?.let {
+                    val (dismissed, shown) = memo.of(it)
+                        .partition(decisions::isDismissed)
+                    SavingTipsOverview(
+                        tips = shown,
+                        dismissed = dismissed,
+                        newIds = shown.filter(decisions::isNew).mapTo(HashSet()) { tip -> tip.id }
+                    )
+                }
+            )
         }
             .logTimings("tips: saving tips")
             .flowOn(Dispatchers.Default)

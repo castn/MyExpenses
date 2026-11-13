@@ -39,7 +39,8 @@ class NextTab(val icon: ImageVector, @param:StringRes val labelRes: Int, val key
     fun selects(page: NavKey) = key != null && key::class == page::class
 
     companion object {
-        val Overview = NextTab(Icons.Default.DashboardCustomize, R.string.next_tab_overview, NextKey.Overview)
+        val Overview =
+            NextTab(Icons.Default.DashboardCustomize, R.string.next_tab_overview, NextKey.Overview)
 
         /** Opens the menu, has no page */
         val Menu = NextTab(Icons.Default.Menu, R.string.next_tab_menu, null)
@@ -54,7 +55,7 @@ fun NextBottomBar(
     onTabClick: (NextTab) -> Unit,
     modifier: Modifier = Modifier,
     /** Tabs with something new, e.g. unread news about contracts, get a dot */
-    badges: Set<NextTab> = emptySet(),
+    badges: Set<NextTab> = emptySet()
 ) {
     // The Material bar marks the selected tab with an indicator behind its icon, not only by color
     ShortNavigationBar(modifier = modifier) {
@@ -91,7 +92,7 @@ fun NextNavigationRail(
     onTabClick: (NextTab) -> Unit,
     modifier: Modifier = Modifier,
     /** Tabs with something new, e.g. unread news about contracts, get a dot */
-    badges: Set<NextTab> = emptySet(),
+    badges: Set<NextTab> = emptySet()
 ) {
     NavigationRail(modifier = modifier, containerColor = MaterialTheme.colorScheme.surface) {
         Spacer(Modifier.weight(1f))
@@ -104,7 +105,13 @@ fun NextNavigationRail(
                         Icon(tab.icon, contentDescription = null)
                     }
                 },
-                label = { Text(stringResource(tab.labelRes), maxLines = 1, overflow = TextOverflow.Ellipsis) }
+                label = {
+                    Text(
+                        stringResource(tab.labelRes),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             )
         }
         Spacer(Modifier.weight(1f))
@@ -126,7 +133,12 @@ private fun NextBottomBarPreview() {
 }
 
 @Preview(name = "Rail", showBackground = true, heightDp = 480)
-@Preview(name = "Rail, dark", showBackground = true, heightDp = 480, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "Rail, dark",
+    showBackground = true,
+    heightDp = 480,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun NextNavigationRailPreview() {
     NextPreviewTheme {

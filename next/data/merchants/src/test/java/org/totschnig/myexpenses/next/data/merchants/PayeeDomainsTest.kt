@@ -28,18 +28,32 @@ class PayeeDomainsTest {
         RawPayee(1, "REWE Markt GmbH", shortName = null, parentId = null),
         RawPayee(2, "Filiale 4711", shortName = null, parentId = 1),
         RawPayee(3, "Bäckerei Schulz", shortName = null, parentId = null),
-        RawPayee(4, "Schulz Filiale Süd", shortName = null, parentId = 3),
+        RawPayee(4, "Schulz Filiale Süd", shortName = null, parentId = 3)
     )
 
     @Test
     fun theDomainEnteredComesFirstThenThatOfTheParentThenTheMerchant() {
         assertEquals(
-            mapOf(1L to "rewe.de", 2L to "rewe.de", 3L to "baecker-schulz.de", 4L to "baecker-schulz.de"),
+            mapOf(
+                1L to "rewe.de",
+                2L to "rewe.de",
+                3L to "baecker-schulz.de",
+                4L to "baecker-schulz.de"
+            ),
             payeeDomains(payees, mapOf(3L to "baecker-schulz.de"), withCatalog = true)
         )
         assertEquals(
-            mapOf(1L to "rewe.de", 2L to "rewe-filiale.de", 3L to "baecker-schulz.de", 4L to "baecker-schulz.de"),
-            payeeDomains(payees, mapOf(3L to "baecker-schulz.de", 2L to "rewe-filiale.de"), withCatalog = true)
+            mapOf(
+                1L to "rewe.de",
+                2L to "rewe-filiale.de",
+                3L to "baecker-schulz.de",
+                4L to "baecker-schulz.de"
+            ),
+            payeeDomains(
+                payees,
+                mapOf(3L to "baecker-schulz.de", 2L to "rewe-filiale.de"),
+                withCatalog = true
+            )
         )
     }
 
@@ -58,7 +72,7 @@ class PayeeDomainsTest {
                 1L to PayeeLook.Domain("rewe.de"),
                 2L to PayeeLook.Icon("cart-shopping"),
                 3L to PayeeLook.Icon("bread-slice"),
-                4L to PayeeLook.Domain("schulz-sued.de"),
+                4L to PayeeLook.Domain("schulz-sued.de")
             ),
             payeeLooks(
                 payees,
@@ -78,7 +92,12 @@ class PayeeDomainsTest {
                 3L to PayeeLook.Icon("bread-slice"),
                 4L to PayeeLook.Icon("bread-slice")
             ),
-            payeeLooks(payees, entered = emptyMap(), icons = mapOf(3L to "bread-slice"), withCatalog = false)
+            payeeLooks(
+                payees,
+                entered = emptyMap(),
+                icons = mapOf(3L to "bread-slice"),
+                withCatalog = false
+            )
         )
     }
 

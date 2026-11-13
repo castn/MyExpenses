@@ -34,21 +34,28 @@ enum class PendingTip {
  *
  * @param tipIds of all tips, dismissed ones included, see [org.totschnig.myexpenses.next.tips.SavingTip.id]
  */
-fun pendingTips(readiness: DataReadiness, tipIds: Set<String>): List<PendingTip> = PendingTip.entries.filter { tip ->
-    when (tip) {
-        PendingTip.ITEM_GROUPS_RISING -> readiness.canScanReceipts &&
-                tipIds.none { it.startsWith(ItemGroupRising.ID_PREFIX) } &&
-                !ItemGroupRising.hasEnough(readiness.scannedRecent, readiness.scannedUsual)
+fun pendingTips(readiness: DataReadiness, tipIds: Set<String>): List<PendingTip> =
+    PendingTip.entries.filter { tip ->
+        when (tip) {
+            PendingTip.ITEM_GROUPS_RISING ->
+                readiness.canScanReceipts &&
+                    tipIds.none { it.startsWith(ItemGroupRising.ID_PREFIX) } &&
+                    !ItemGroupRising.hasEnough(readiness.scannedRecent, readiness.scannedUsual)
 
-        PendingTip.DRUGSTORE_IN_SUPERMARKETS -> readiness.canScanReceipts &&
-                DrugstoreInSupermarkets.ID !in tipIds &&
-                readiness.scannedSupermarketLastYear < PendingTip.MIN_RECEIPTS
+            PendingTip.DRUGSTORE_IN_SUPERMARKETS ->
+                readiness.canScanReceipts &&
+                    DrugstoreInSupermarkets.ID !in tipIds &&
+                    readiness.scannedSupermarketLastYear < PendingTip.MIN_RECEIPTS
 
-        PendingTip.DEPOSIT_NOT_RETURNED -> readiness.canScanReceipts &&
-                DepositNotReturned.ID !in tipIds &&
-                readiness.scannedLastYear < PendingTip.MIN_RECEIPTS
+            PendingTip.DEPOSIT_NOT_RETURNED ->
+                readiness.canScanReceipts &&
+                    DepositNotReturned.ID !in tipIds &&
+                    readiness.scannedLastYear < PendingTip.MIN_RECEIPTS
 
-        PendingTip.OUTLIERS -> Outliers.ID !in tipIds &&
-                readiness.gaps.any { it is DataGap.Uncategorized || it is DataGap.VagueCategories }
+            PendingTip.OUTLIERS ->
+                Outliers.ID !in tipIds &&
+                    readiness.gaps.any {
+                        it is DataGap.Uncategorized || it is DataGap.VagueCategories
+                    }
+        }
     }
-}

@@ -15,4 +15,5 @@ private object NoNewTransactionEditor : NewTransactionEditor() {
 }
 
 /** The screen of the app for a new expense, see [NewTransactionEditor] */
-val LocalNewTransactionEditor = staticCompositionLocalOf<NewTransactionEditor> { NoNewTransactionEditor }
+val LocalNewTransactionEditor =
+    staticCompositionLocalOf<NewTransactionEditor> { NoNewTransactionEditor }

@@ -1,10 +1,10 @@
 package org.totschnig.myexpenses.next.data.receipts
 
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
-import org.totschnig.myexpenses.next.data.categories.PaymentService
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import kotlin.math.abs
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.data.categories.PaymentService
 
 /** What of a scanned receipt is compared with the transactions */
 data class ReceiptHeader(
@@ -12,7 +12,7 @@ data class ReceiptHeader(
     val date: LocalDate?,
     val total: Long?,
     /** Amount paid by card, differs from [total] by cash back or coupons */
-    val cardAmount: Long? = null,
+    val cardAmount: Long? = null
 ) {
     companion object {
         fun of(receipt: ParsedReceipt) =
@@ -33,7 +33,7 @@ data class BookedTransaction(
     val hasReceipt: Boolean = false,
     /** For showing the transaction */
     val currency: CurrencyInfo? = null,
-    val accountLabel: String? = null,
+    val accountLabel: String? = null
 )
 
 /**
@@ -44,10 +44,11 @@ data class ReceiptMatch(
     val transaction: BookedTransaction,
     val amountFits: Boolean,
     val merchantFits: Boolean,
-    val daysAfter: Long?,
+    val daysAfter: Long?
 ) {
     internal val score: Int
-        get() = (if (amountFits) 100 else 0) + (if (merchantFits) 50 else 0) - 5 * abs(daysAfter ?: 0).toInt()
+        get() = (if (amountFits) 100 else 0) + (if (merchantFits) 50 else 0) -
+            5 * abs(daysAfter ?: 0).toInt()
 }
 
 /**
@@ -63,8 +64,9 @@ object ReceiptMatcher {
     const val DAYS_WITHOUT_DATE = 30L
 
     /** Parts of names that say nothing about the merchant */
-    private val FILLERS =
-        setOf("markt", "filiale", "sagt", "danke", "und", "der", "die", "das", "bei", "fuer", "für", "ihr")
+    private val FILLERS = setOf(
+        "markt", "filiale", "sagt", "danke", "und", "der", "die", "das", "bei", "fuer", "für", "ihr"
+    )
 
     fun candidates(
         receipt: ReceiptHeader,
@@ -85,7 +87,11 @@ object ReceiptMatcher {
                 )
             }
             .filter { it.amountFits || it.merchantFits }
-            .sortedWith(compareByDescending<ReceiptMatch> { it.score }.thenByDescending { it.transaction.date })
+            .sortedWith(
+                compareByDescending<ReceiptMatch> {
+                    it.score
+                }.thenByDescending { it.transaction.date }
+            )
             .toList()
     }
 
@@ -105,14 +111,19 @@ object ReceiptMatcher {
             PaymentService.isPaymentService(transaction.payeeName) -> listOfNotNull(
                 PaymentService.merchantOf(transaction.comment)
             )
+
             transaction.payeeName.isNullOrBlank() -> listOfNotNull(transaction.comment)
+
             else -> listOf(transaction.payeeName)
         }
         val receiptWords = wordsOf(merchant)
         return names.any { name ->
             val words = wordsOf(name)
             receiptWords.any { r ->
-                words.any { w -> r == w || (r.length >= 3 && w.startsWith(r)) || (w.length >= 3 && r.startsWith(w)) }
+                words.any { w ->
+                    r == w || (r.length >= 3 && w.startsWith(r)) ||
+                        (w.length >= 3 && r.startsWith(w))
+                }
             }
         }
     }

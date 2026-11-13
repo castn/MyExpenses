@@ -21,6 +21,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import java.time.LocalDate
+import java.time.format.FormatStyle
 import org.totschnig.myexpenses.designsystem.ChoiceChips
 import org.totschnig.myexpenses.designsystem.DateDialog
 import org.totschnig.myexpenses.designsystem.Dot
@@ -40,27 +42,30 @@ import org.totschnig.myexpenses.provider.filter.AccountCriterion
 import org.totschnig.myexpenses.provider.filter.AmountCriterion
 import org.totschnig.myexpenses.provider.filter.CategoryCriterion
 import org.totschnig.myexpenses.provider.filter.CrStatusCriterion
-import org.totschnig.myexpenses.provider.filter.PayeeCriterion
-import org.totschnig.myexpenses.provider.filter.TagCriterion
 import org.totschnig.myexpenses.provider.filter.DateCriterion
 import org.totschnig.myexpenses.provider.filter.IdCriterion
 import org.totschnig.myexpenses.provider.filter.MethodCriterion
 import org.totschnig.myexpenses.provider.filter.Operation
+import org.totschnig.myexpenses.provider.filter.PayeeCriterion
 import org.totschnig.myexpenses.provider.filter.SimpleCriterion
+import org.totschnig.myexpenses.provider.filter.TagCriterion
 import org.totschnig.myexpenses.provider.filter.TransferCriterion
 import org.totschnig.myexpenses.viewmodel.data.PageAccount
-import java.time.LocalDate
-import java.time.format.FormatStyle
 
 /** Kinds whose values are picked from a list */
 private val listKinds = setOf(
-    SearchKind.Category, SearchKind.Payee, SearchKind.Tag,
-    SearchKind.Method, SearchKind.Transfer, SearchKind.Account
+    SearchKind.Category,
+    SearchKind.Payee,
+    SearchKind.Tag,
+    SearchKind.Method,
+    SearchKind.Transfer,
+    SearchKind.Account
 )
 
 /** Kinds chosen in a sheet of the new UI, the others still open the dialogs of the classic one */
 val SearchKind.hasSheet get() =
-    this == SearchKind.Period || this == SearchKind.Amount || this == SearchKind.Status || this in listKinds
+    this == SearchKind.Period || this == SearchKind.Amount || this == SearchKind.Status ||
+        this in listKinds
 
 /**
  * Chooses the value of the filter of [kind]
@@ -73,7 +78,7 @@ fun SearchKindSheet(
     part: SearchPart?,
     account: PageAccount,
     onApply: (SearchPart?) -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     when (kind) {
         SearchKind.Period -> PeriodSheet(part, onApply, onDismiss)
@@ -95,7 +100,7 @@ private fun KindSheet(
     criterion: SimpleCriterion<*>?,
     onApply: (SearchPart?) -> Unit,
     onDismiss: () -> Unit,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     var excluded by rememberSaveable { mutableStateOf(part?.excluded == true) }
     FilterSheet(
@@ -105,7 +110,7 @@ private fun KindSheet(
         applyLabel = stringResource(R.string.next_search_apply),
         resetLabel = stringResource(R.string.next_search_reset),
         onReset = part?.let { { onApply(null) } },
-        applyEnabled = criterion != null,
+        applyEnabled = criterion != null
     ) {
         content()
         SwitchRow(
@@ -194,11 +199,17 @@ private fun AmountSheet(
     val currency = account.currencyUnit
     val initial = part?.criterion as? AmountCriterion
     val initialUi = remember(initial) { initial?.transformForUi() }
-    val toText = { minor: Long -> minor.toBigDecimal().movePointLeft(currency.fractionDigits).toPlainString() }
+    val toText = { minor: Long ->
+        minor.toBigDecimal().movePointLeft(currency.fractionDigits).toPlainString()
+    }
     var isIncome by rememberSaveable { mutableStateOf(initial?.sign == true) }
     var operation by rememberSaveable { mutableStateOf(initialUi?.first ?: Operation.GTE) }
-    var first by rememberSaveable { mutableStateOf(initialUi?.second?.getOrNull(0)?.let(toText) ?: "") }
-    var second by rememberSaveable { mutableStateOf(initialUi?.second?.getOrNull(1)?.let(toText) ?: "") }
+    var first by rememberSaveable {
+        mutableStateOf(initialUi?.second?.getOrNull(0)?.let(toText) ?: "")
+    }
+    var second by rememberSaveable {
+        mutableStateOf(initialUi?.second?.getOrNull(1)?.let(toText) ?: "")
+    }
 
     val value1 = parseAmount(first, currency.fractionDigits)
     val value2 = parseAmount(second, currency.fractionDigits)
@@ -210,17 +221,24 @@ private fun AmountSheet(
             Operation.EQ to stringResource(R.string.next_search_exactly),
             Operation.GTE to stringResource(R.string.next_search_at_least),
             Operation.LTE to stringResource(R.string.next_search_at_most),
-            Operation.BTW to stringResource(R.string.next_search_between),
+            Operation.BTW to stringResource(R.string.next_search_between)
         )
         val expense = stringResource(R.string.next_search_kind_expense)
         val income = stringResource(R.string.next_search_kind_income)
         val padding = Modifier.padding(horizontal = Spacing.screen, vertical = 4.dp)
-        ChoiceChips(listOf(false, true), isIncome, { if (it) income else expense }, { isIncome = it }, padding)
-        ChoiceChips(amountOperations, operation, { labels.getValue(it) }, { operation = it }, padding)
+        ChoiceChips(listOf(false, true), isIncome, {
+            if (it) income else expense
+        }, { isIncome = it }, padding)
+        ChoiceChips(amountOperations, operation, {
+            labels.getValue(it)
+        }, { operation = it }, padding)
         Row(padding.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             AmountField(first, { first = it }, currency.symbol, Modifier.weight(1f))
             if (operation == Operation.BTW) {
-                Text(stringResource(R.string.next_search_amount_and), Modifier.padding(horizontal = 8.dp))
+                Text(
+                    stringResource(R.string.next_search_amount_and),
+                    Modifier.padding(horizontal = 8.dp)
+                )
                 AmountField(second, { second = it }, currency.symbol, Modifier.weight(1f))
             }
         }
@@ -228,7 +246,12 @@ private fun AmountSheet(
 }
 
 @Composable
-private fun AmountField(value: String, onValueChange: (String) -> Unit, symbol: String, modifier: Modifier) {
+private fun AmountField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    symbol: String,
+    modifier: Modifier
+) {
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
@@ -245,13 +268,22 @@ private fun StatusSheet(part: SearchPart?, onApply: (SearchPart?) -> Unit, onDis
     val initial = (part?.criterion as? CrStatusCriterion)?.values.orEmpty()
     var selected by rememberSaveable { mutableStateOf(initial.toSet()) }
     val criterion =
-        selected.takeIf { it.isNotEmpty() }?.let { CrStatusCriterion(CrStatus.entries.filter { it in selected }) }
+        selected.takeIf { it.isNotEmpty() }?.let {
+            CrStatusCriterion(
+                CrStatus.entries.filter {
+                    it in selected
+                }
+            )
+        }
     KindSheet(SearchKind.Status, part, criterion, onApply, onDismiss) {
         CrStatus.entries.forEach { status ->
             OptionRow(
                 label = stringResource(status.toStringRes()),
                 selected = status in selected,
-                onClick = { selected = if (status in selected) selected - status else selected + status },
+                onClick = {
+                    selected =
+                        if (status in selected) selected - status else selected + status
+                },
                 leading = { Dot(color = colorResource(status.color)) }
             )
         }
@@ -274,7 +306,7 @@ private fun OptionsSheet(
     part: SearchPart?,
     account: PageAccount,
     onApply: (SearchPart?) -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     val contentResolver = LocalContext.current.contentResolver
     val options by produceState<List<SearchOption>?>(null, kind, account) {
@@ -298,10 +330,11 @@ private fun OptionList(
     kind: SearchKind,
     options: List<SearchOption>,
     selected: Set<Long>,
-    onSelectedChange: (Set<Long>) -> Unit,
+    onSelectedChange: (Set<Long>) -> Unit
 ) {
     // Transactions without tag, transfer or account cannot be searched
-    val withNone = kind == SearchKind.Method || kind == SearchKind.Category || kind == SearchKind.Payee
+    val withNone =
+        kind == SearchKind.Method || kind == SearchKind.Category || kind == SearchKind.Payee
     var query by rememberSaveable { mutableStateOf("") }
     if (options.size > SEARCHABLE_SIZE) {
         SearchField(
@@ -326,24 +359,46 @@ private fun OptionList(
             depth = option.depth,
             selected = option.id in selected,
             onClick = {
-                onSelectedChange(if (option.id in selected) selected - option.id else selected - NONE_ID + option.id)
+                onSelectedChange(
+                    if (option.id in selected) {
+                        selected - option.id
+                    } else {
+                        selected - NONE_ID + option.id
+                    }
+                )
             }
         )
     }
 }
 
 /** The criterion for the picked options; null when nothing is picked */
-private fun optionsCriterion(kind: SearchKind, ids: Set<Long>, options: List<SearchOption>): SimpleCriterion<*>? {
+private fun optionsCriterion(
+    kind: SearchKind,
+    ids: Set<Long>,
+    options: List<SearchOption>
+): SimpleCriterion<*>? {
     if (ids.isEmpty()) return null
     val labels = options.associate { it.id to it.label }
     val label = ids.mapNotNull { labels[it] }.joinToString(", ")
     val none = NONE_ID in ids
     return when (kind) {
         SearchKind.Method -> if (none) MethodCriterion() else MethodCriterion(label, ids.toList())
-        SearchKind.Category -> if (none) CategoryCriterion() else CategoryCriterion(label, ids.toList())
+
+        SearchKind.Category -> if (none) {
+            CategoryCriterion()
+        } else {
+            CategoryCriterion(
+                label,
+                ids.toList()
+            )
+        }
+
         SearchKind.Payee -> if (none) PayeeCriterion() else PayeeCriterion(label, ids.toList())
+
         SearchKind.Tag -> TagCriterion(label, ids.toList())
+
         SearchKind.Transfer -> TransferCriterion(label, ids.toList())
+
         else -> AccountCriterion(label, ids.toList())
     }
 }
@@ -354,9 +409,15 @@ fun SearchPart.label(): String {
     val context = LocalContext.current
     val value = when (val criterion = criterion) {
         is DateCriterion -> periodLabel(criterion)
+
         is IdCriterion -> if (
             criterion.values.isEmpty()
-        ) stringResource(R.string.next_search_none) else criterion.prettyPrint(context)
+        ) {
+            stringResource(R.string.next_search_none)
+        } else {
+            criterion.prettyPrint(context)
+        }
+
         else -> criterion.prettyPrint(context)
     }
     return if (excluded) stringResource(R.string.next_search_excluded, value) else value
@@ -369,15 +430,24 @@ private fun periodLabel(criterion: DateCriterion): String {
     val monthFormatter = rememberMonthFormatter()
     if (
         PeriodPreset.of(criterion, today) == PeriodPreset.Last30Days
-    ) return stringResource(R.string.next_search_last_30_days)
+    ) {
+        return stringResource(R.string.next_search_last_30_days)
+    }
     return when (val shape = PeriodShape.of(criterion)) {
         is PeriodShape.Month -> monthFormatter.format(shape.first)
+
         is PeriodShape.Year -> shape.year.toString()
+
         null -> {
             val (start, end) = criterion.bounds()
             when {
                 start != null && end != null -> dateFormatter.formatRange(start, end)
-                start != null -> stringResource(R.string.next_search_from_date, dateFormatter.format(start))
+
+                start != null -> stringResource(
+                    R.string.next_search_from_date,
+                    dateFormatter.format(start)
+                )
+
                 else -> stringResource(R.string.next_search_until_date, dateFormatter.format(end!!))
             }
         }

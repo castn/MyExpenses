@@ -1,7 +1,7 @@
 package org.totschnig.myexpenses.next.data.receipts
 
-import org.junit.Assume.assumeTrue
 import java.io.File
+import org.junit.Assume.assumeTrue
 
 /**
  * Receipts of real purchases to test the parser with, kept outside of the repository: `<name>.json`
@@ -10,7 +10,9 @@ import java.io.File
  * `-PreceiptFixtures=<directory>` and are skipped without.
  */
 object ReceiptFixtures {
-    private val directory: File? = System.getProperty("receiptFixtures")?.let(::File)?.takeIf { it.isDirectory }
+    private val directory: File? = System.getProperty("receiptFixtures")?.let(::File)?.takeIf {
+        it.isDirectory
+    }
 
     /** The directory of the fixtures; skips the test without it */
     fun dir(): File {

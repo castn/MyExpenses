@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,15 +22,15 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
-import org.totschnig.myexpenses.next.core.ui.detailPage
-import org.totschnig.myexpenses.next.core.ui.extraPage
-import org.totschnig.myexpenses.next.core.ui.listPage
-import org.totschnig.myexpenses.next.core.ui.rememberListDetailPages
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.ui.NavDisplay
+import kotlin.math.roundToInt
+import kotlinx.serialization.Serializable
 import org.totschnig.myexpenses.designsystem.DetailCard
-import org.totschnig.myexpenses.designsystem.DialogActionRow
 import org.totschnig.myexpenses.designsystem.DetailScaffold
+import org.totschnig.myexpenses.designsystem.DialogActionRow
 import org.totschnig.myexpenses.designsystem.EmptyState
 import org.totschnig.myexpenses.designsystem.Highlighted
 import org.totschnig.myexpenses.designsystem.HintRow
@@ -40,18 +42,16 @@ import org.totschnig.myexpenses.designsystem.SearchField
 import org.totschnig.myexpenses.designsystem.SectionTitle
 import org.totschnig.myexpenses.designsystem.SingleChoiceDialog
 import org.totschnig.myexpenses.designsystem.SliderRow
+import org.totschnig.myexpenses.designsystem.Spacing
 import org.totschnig.myexpenses.designsystem.SwitchRow
 import org.totschnig.myexpenses.designsystem.TextDialog
 import org.totschnig.myexpenses.designsystem.TimeDialog
-import org.totschnig.myexpenses.designsystem.Spacing
 import org.totschnig.myexpenses.designsystem.ValueRow
 import org.totschnig.myexpenses.next.core.common.R
-import androidx.navigation3.runtime.NavKey
-import androidx.navigation3.runtime.entryProvider
-import androidx.navigation3.runtime.rememberNavBackStack
-import androidx.navigation3.ui.NavDisplay
-import kotlinx.serialization.Serializable
-import kotlin.math.roundToInt
+import org.totschnig.myexpenses.next.core.ui.detailPage
+import org.totschnig.myexpenses.next.core.ui.extraPage
+import org.totschnig.myexpenses.next.core.ui.listPage
+import org.totschnig.myexpenses.next.core.ui.rememberListDetailPages
 
 /** What the settings screens do with an entry */
 interface SettingsActions {
@@ -105,7 +105,7 @@ sealed interface SettingControl {
         val checked: Boolean,
         val summary: String?,
         override val isEnabled: Boolean,
-        val onChange: (Boolean) -> Unit,
+        val onChange: (Boolean) -> Unit
     ) : SettingControl
 
     /**
@@ -119,7 +119,7 @@ sealed interface SettingControl {
         override val isEnabled: Boolean,
         val onSelect: (String) -> Unit,
         val explanation: String? = null,
-        val custom: CustomValue? = null,
+        val custom: CustomValue? = null
     ) : SettingControl {
         /** The label of the option selected, or else how the value of its own looks */
         val selectedLabel: String?
@@ -135,7 +135,7 @@ sealed interface SettingControl {
     data class CustomValue(
         val legend: String,
         val preview: (String) -> String?,
-        val error: (String) -> String?,
+        val error: (String) -> String?
     )
 
     /**
@@ -148,7 +148,7 @@ sealed interface SettingControl {
         override val isEnabled: Boolean,
         val onChange: (String) -> Unit,
         val summary: String? = null,
-        val isPassword: Boolean = false,
+        val isPassword: Boolean = false
     ) : SettingControl
 
     /**
@@ -163,7 +163,7 @@ sealed interface SettingControl {
         val onChange: (Int) -> Unit,
         val isStepped: Boolean = false,
         val valueText: (Int) -> String = { it.toString() },
-        val sampleScale: ((Int) -> Float)? = null,
+        val sampleScale: ((Int) -> Float)? = null
     ) : SettingControl
 
     /** @param options value to label */
@@ -171,7 +171,7 @@ sealed interface SettingControl {
         val selected: Set<String>,
         val options: List<Pair<String, String>>,
         override val isEnabled: Boolean,
-        val onChange: (Set<String>) -> Unit,
+        val onChange: (Set<String>) -> Unit
     ) : SettingControl
 
     data class Time(
@@ -179,14 +179,22 @@ sealed interface SettingControl {
         val minute: Int,
         val text: String,
         override val isEnabled: Boolean,
-        val onChange: (hour: Int, minute: Int) -> Unit,
+        val onChange: (hour: Int, minute: Int) -> Unit
     ) : SettingControl
 
     /** Opens a dialog or does something right away, e.g. resetting hints; [value] tells what is there */
-    data class Action(val value: String?, override val isEnabled: Boolean, val onClick: () -> Unit) : SettingControl
+    data class Action(
+        val value: String?,
+        override val isEnabled: Boolean,
+        val onClick: () -> Unit
+    ) : SettingControl
 
     /** Opens the page of [setting], see [SettingsActions.page]; [value] tells what is there */
-    data class Page(val value: String?, override val isEnabled: Boolean, val setting: InsightSetting) : SettingControl
+    data class Page(
+        val value: String?,
+        override val isEnabled: Boolean,
+        val setting: InsightSetting
+    ) : SettingControl
 
     /** Only explains something, e.g. that the database is encrypted; without [text] the title */
     data class Info(val text: String?) : SettingControl {
@@ -201,8 +209,14 @@ sealed interface SettingControl {
  * @param initialGroup shown instead of the start page, e.g. from the tab of an analysis
  */
 @Composable
-fun NextSettingsScreen(actions: SettingsActions, onBack: () -> Unit, initialGroup: SettingsGroup? = null) {
-    val backStack = rememberNavBackStack(initialGroup?.let { SettingsKey.Group(it) } ?: SettingsKey.Start)
+fun NextSettingsScreen(
+    actions: SettingsActions,
+    onBack: () -> Unit,
+    initialGroup: SettingsGroup? = null
+) {
+    val backStack =
+        rememberNavBackStack(initialGroup?.let { SettingsKey.Group(it) } ?: SettingsKey.Start)
+
     /** Leaves [key], and the settings if it is the page at the bottom */
     fun leave(key: SettingsKey) {
         if (backStack.size == 1) onBack() else backStack.remove(key)
@@ -220,14 +234,21 @@ fun NextSettingsScreen(actions: SettingsActions, onBack: () -> Unit, initialGrou
             entry<SettingsKey.Group>(metadata = detailPage()) { key ->
                 var highlighted by rememberSaveable { mutableStateOf(key.highlighted) }
                 SettingsGroupPage(
-                    key.group, actions, onBack = { leave(key) }, highlighted,
+                    key.group,
+                    actions,
+                    onBack = { leave(key) },
+                    highlighted,
                     onHighlightShown = { highlighted = null },
                     onOpenPage = { backStack.add(SettingsKey.Page(it.id)) }
                 )
             }
             entry<SettingsKey.Page>(metadata = extraPage()) { key ->
                 val setting = InsightSetting.all.firstOrNull { it.id == key.setting }
-                if (setting != null) actions.page(setting) { leave(key) } else LaunchedEffect(key) { leave(key) }
+                if (setting != null) {
+                    actions.page(setting) { leave(key) }
+                } else {
+                    LaunchedEffect(key) { leave(key) }
+                }
             }
         }
     )
@@ -240,7 +261,11 @@ fun NextSettingsScreen(actions: SettingsActions, onBack: () -> Unit, initialGrou
  * @param onOpenGroup opens a group, with the key of an entry found by the search to light up
  */
 @Composable
-private fun SettingsStart(actions: SettingsActions, onBack: () -> Unit, onOpenGroup: (SettingsGroup, String?) -> Unit) {
+private fun SettingsStart(
+    actions: SettingsActions,
+    onBack: () -> Unit,
+    onOpenGroup: (SettingsGroup, String?) -> Unit
+) {
     var query by rememberSaveable { mutableStateOf("") }
     val onGroup: (SettingsGroup) -> Unit = { group ->
         SettingsCatalog.of(group).singleOrNull()?.let(actions::open) ?: onOpenGroup(group, null)
@@ -250,7 +275,10 @@ private fun SettingsStart(actions: SettingsActions, onBack: () -> Unit, onOpenGr
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surfaceContainer)
     ) {
-        PageTopBar(onBack = onBack, title = stringResource(org.totschnig.myexpenses.R.string.settings_label))
+        PageTopBar(
+            onBack = onBack,
+            title = stringResource(org.totschnig.myexpenses.R.string.settings_label)
+        )
         SearchField(
             query = query,
             onQueryChange = { query = it },
@@ -258,11 +286,17 @@ private fun SettingsStart(actions: SettingsActions, onBack: () -> Unit, onOpenGr
             clearLabel = stringResource(R.string.next_settings_clear_search),
             modifier = Modifier.padding(horizontal = Spacing.screen, vertical = 8.dp)
         )
-        if (query.isBlank()) SettingsGroups(onGroup) else SearchResults(query, actions) { entry ->
-            // Settings changed on the page of their group are shown there
-            if (entry.isNative) {
-                onOpenGroup(entry.group, entry.key.toString())
-            } else actions.open(entry)
+        if (query.isBlank()) {
+            SettingsGroups(onGroup)
+        } else {
+            SearchResults(query, actions) { entry ->
+                // Settings changed on the page of their group are shown there
+                if (entry.isNative) {
+                    onOpenGroup(entry.group, entry.key.toString())
+                } else {
+                    actions.open(entry)
+                }
+            }
         }
     }
 }
@@ -296,7 +330,11 @@ private fun SettingsGroups(onGroup: (SettingsGroup) -> Unit) {
 }
 
 @Composable
-private fun SearchResults(query: String, actions: SettingsActions, onResult: (SettingEntry) -> Unit) {
+private fun SearchResults(
+    query: String,
+    actions: SettingsActions,
+    onResult: (SettingEntry) -> Unit
+) {
     val groupTitles = SettingsGroup.entries.associateWith { stringResource(it.title) }
     val sectionTitles = SettingsSection.entries.associateWith { stringResource(it.title) }
     val place: (SettingEntry) -> String = { entry ->
@@ -306,10 +344,19 @@ private fun SearchResults(query: String, actions: SettingsActions, onResult: (Se
         ).joinToString(" › ")
     }
     val details = remember(actions) { SettingsCatalog.entries.associateWith(actions::details) }
-    val results = searchSettings(query, SettingsCatalog.entries, actions::title, place, details::getValue)
+    val results = searchSettings(
+        query,
+        SettingsCatalog.entries,
+        actions::title,
+        place,
+        details::getValue
+    )
         .filter { actions.isVisible(it) && actions.canOpen(it) }
     if (results.isEmpty()) {
-        EmptyState(stringResource(R.string.next_settings_no_results), modifier = Modifier.fillMaxSize())
+        EmptyState(
+            stringResource(R.string.next_settings_no_results),
+            modifier = Modifier.fillMaxSize()
+        )
         return
     }
     LazyColumn {
@@ -337,16 +384,23 @@ private fun SettingsGroupPage(
     onBack: () -> Unit,
     highlighted: String?,
     onHighlightShown: () -> Unit,
-    onOpenPage: (InsightSetting) -> Unit,
+    onOpenPage: (InsightSetting) -> Unit
 ) {
     var editing by remember { mutableStateOf<Pair<String, SettingControl>?>(null) }
     // The value of its own of a choice, typed instead of picking an option
     var editingCustom by remember { mutableStateOf<Pair<String, SettingControl.Choice>?>(null) }
     val onEdit: (String, SettingControl) -> Unit = { title, control ->
-        if (control is SettingControl.Page) onOpenPage(control.setting) else editing = title to control
+        if (control is SettingControl.Page) {
+            onOpenPage(control.setting)
+        } else {
+            editing =
+                title to control
+        }
     }
     DetailScaffold(onBack = onBack, title = stringResource(group.title)) {
-        SettingsCatalog.of(group).filter(actions::isVisible).groupBy { it.section }.forEach { (section, entries) ->
+        SettingsCatalog.of(group).filter(actions::isVisible).groupBy {
+            it.section
+        }.forEach { (section, entries) ->
             if (section == null) {
                 DetailCard(
                     Modifier.padding(top = 8.dp)
@@ -365,48 +419,70 @@ private fun SettingsGroupPage(
                 options = control.options,
                 selected = control.options.firstOrNull { it.first == control.selected },
                 label = { it.second },
-                onSelect = { close(); control.onSelect(it.first) },
+                onSelect = {
+                    close()
+                    control.onSelect(it.first)
+                },
                 onDismiss = close,
                 intro = control.explanation,
                 footer = control.custom?.let {
                     {
-                        DialogActionRow(Icons.Default.Edit, stringResource(R.string.next_settings_custom_format)) {
+                        DialogActionRow(
+                            Icons.Default.Edit,
+                            stringResource(R.string.next_settings_custom_format)
+                        ) {
                             close()
                             editingCustom = title to control
                         }
                     }
                 }
             )
+
             is SettingControl.Text -> TextDialog(
                 title = title,
                 initialText = control.value,
-                onConfirm = { close(); control.onChange(it) },
+                onConfirm = {
+                    close()
+                    control.onChange(it)
+                },
                 onDismiss = close,
                 keyboardType = if (control.isNumber) KeyboardType.Number else KeyboardType.Text,
                 allowBlank = !control.isNumber,
                 isPassword = control.isPassword,
                 supportingText = control.summary
             )
+
             is SettingControl.MultiChoice -> {
                 var picked by remember { mutableStateOf(control.selected) }
                 MultiChoiceSheet(
                     title = title,
                     options = control.options,
                     selected = control.options.filter { it.first in picked }.toSet(),
-                    onToggle = { (value) -> picked = if (value in picked) picked - value else picked + value },
+                    onToggle = { (value) ->
+                        picked =
+                            if (value in picked) picked - value else picked + value
+                    },
                     label = { it.second },
-                    onConfirm = { close(); control.onChange(picked) },
+                    onConfirm = {
+                        close()
+                        control.onChange(picked)
+                    },
                     onDismiss = close,
                     confirmEnabled = picked.isNotEmpty()
                 )
             }
+
             is SettingControl.Time -> TimeDialog(
                 title = title,
                 hour = control.hour,
                 minute = control.minute,
-                onConfirm = { hour, minute -> close(); control.onChange(hour, minute) },
+                onConfirm = { hour, minute ->
+                    close()
+                    control.onChange(hour, minute)
+                },
                 onDismiss = close
             )
+
             else -> close()
         }
     }
@@ -417,10 +493,17 @@ private fun SettingsGroupPage(
         TextDialog(
             title = title,
             initialText = control.selected.orEmpty(),
-            onConfirm = { close(); control.onSelect(it) },
+            onConfirm = {
+                close()
+                control.onSelect(it)
+            },
             onDismiss = close,
             intro = custom.legend,
-            preview = { text -> custom.preview(text)?.let { resources.getString(R.string.next_settings_example, it) } },
+            preview = { text ->
+                custom.preview(text)?.let {
+                    resources.getString(R.string.next_settings_example, it)
+                }
+            },
             error = custom.error
         )
     }
@@ -432,7 +515,7 @@ private fun SettingRows(
     actions: SettingsActions,
     onEdit: (String, SettingControl) -> Unit,
     highlighted: String?,
-    onHighlightShown: () -> Unit,
+    onHighlightShown: () -> Unit
 ) {
     entries.forEachIndexed { index, entry ->
         Highlighted(isActive = entry.key.toString() == highlighted, onShown = onHighlightShown) {
@@ -451,9 +534,14 @@ private fun SettingRow(
     val title = actions.title(entry)
     when (val control = actions.control(entry)) {
         is SettingControl.Switch -> SwitchRow(
-            title, control.checked, control.onChange,
-            supportingText = control.summary, isFirst = isFirst, enabled = control.isEnabled
+            title,
+            control.checked,
+            control.onChange,
+            supportingText = control.summary,
+            isFirst = isFirst,
+            enabled = control.isEnabled
         )
+
         is SettingControl.Slider -> SliderRow(
             title, control.value.toFloat(), { control.onChange(it.roundToInt()) },
             valueRange = control.range.first.toFloat()..control.range.last.toFloat(),
@@ -461,40 +549,77 @@ private fun SettingRow(
             isFirst = isFirst,
             steps = if (control.isStepped) control.range.last - control.range.first - 1 else 0,
             enabled = control.isEnabled,
-            preview = control.sampleScale?.let { scale -> { value -> FontSample(scale(value.roundToInt())) } }
+            preview = control.sampleScale?.let { scale ->
+                { value -> FontSample(scale(value.roundToInt())) }
+            }
         )
+
         is SettingControl.MultiChoice -> ValueRow(
-            title, control.options.filter { it.first in control.selected }.joinToString { it.second },
-            onClick = { onEdit(title, control) }, isFirst = isFirst, enabled = control.isEnabled
+            title,
+            control.options.filter {
+                it.first in control.selected
+            }.joinToString { it.second },
+            onClick = { onEdit(title, control) },
+            isFirst = isFirst,
+            enabled = control.isEnabled
         )
+
         is SettingControl.Choice -> ValueRow(
-            title, control.selectedLabel,
-            onClick = { onEdit(title, control) }, isFirst = isFirst, enabled = control.isEnabled
+            title,
+            control.selectedLabel,
+            onClick = { onEdit(title, control) },
+            isFirst = isFirst,
+            enabled = control.isEnabled
         )
+
         is SettingControl.Text -> ValueRow(
             title,
             if (control.isPassword) control.value.replace(Regex("."), "•") else control.value,
             onClick = { onEdit(title, control) },
-            isFirst = isFirst, enabled = control.isEnabled
+            isFirst = isFirst,
+            enabled = control.isEnabled
         )
+
         is SettingControl.Time -> ValueRow(
-            title, control.text, onClick = { onEdit(title, control) },
-            isFirst = isFirst, enabled = control.isEnabled
+            title,
+            control.text,
+            onClick = { onEdit(title, control) },
+            isFirst = isFirst,
+            enabled = control.isEnabled
         )
+
         is SettingControl.Info -> HintRow(control.text ?: title, isFirst = isFirst)
+
         is SettingControl.Action -> ValueRow(
-            title, control.value ?: actions.explanation(entry), onClick = control.onClick, isFirst = isFirst, enabled =
+            title,
+            control.value ?: actions.explanation(entry),
+            onClick = control.onClick,
+            isFirst = isFirst,
+            enabled =
                 control.isEnabled
         )
+
         is SettingControl.Page -> ValueRow(
-            title, control.value ?: actions.explanation(entry), onClick = { onEdit(title, control) },
-            isFirst = isFirst, enabled = control.isEnabled
+            title,
+            control.value ?: actions.explanation(entry),
+            onClick = {
+                onEdit(title, control)
+            },
+            isFirst = isFirst,
+            enabled = control.isEnabled
         )
+
         null -> {
             val canOpen = actions.canOpen(entry)
             ValueRow(
                 label = title,
-                value = if (canOpen) actions.explanation(entry) else stringResource(R.string.next_coming_soon),
+                value = if (canOpen) {
+                    actions.explanation(
+                        entry
+                    )
+                } else {
+                    stringResource(R.string.next_coming_soon)
+                },
                 onClick = { actions.open(entry) },
                 isFirst = isFirst,
                 enabled = canOpen
@@ -507,5 +632,11 @@ private fun SettingRow(
 @Composable
 private fun FontSample(scale: Float) {
     val style = MaterialTheme.typography.bodyLarge
-    Text(stringResource(R.string.next_settings_font_sample), style = style.copy(fontSize = style.fontSize * scale))
+    Text(
+        stringResource(R.string.next_settings_font_sample),
+        style = style.copy(
+            fontSize =
+                style.fontSize * scale
+        )
+    )
 }

@@ -21,7 +21,7 @@ enum class ContractInterval(
     val maxDays: Int,
     val minOccurrences: Int,
     val perYear: Int,
-    val step: Period,
+    val step: Period
 ) {
     WEEKLY(6, 8, 4, 52, Period.ofWeeks(1)),
     BIWEEKLY(13, 16, 3, 26, Period.ofWeeks(2)),
@@ -58,14 +58,15 @@ data class ContractTransaction(
      * For a movement between own accounts: the account the money goes to. Set for transfers in the
      * app and for payments whose counterpart has the IBAN of an own account.
      */
-    val targetAccountId: Long? = null,
+    val targetAccountId: Long? = null
 )
 
 /**
  * Whether money goes out of (contracts) or comes into (e.g. salary) the accounts
  */
 enum class ContractDirection {
-    EXPENSE, INCOME;
+    EXPENSE,
+    INCOME;
 
     companion object {
         fun of(amount: Long) = if (amount < 0) EXPENSE else INCOME
@@ -105,7 +106,7 @@ data class Contract(
     /** When the user marked the contract as cancelled, see [ContractRule.cancelledOn] */
     val cancelledOn: LocalDate? = null,
     /** Whether the user declared the contract as reserve, null for the suggestion, see [isReserve] */
-    val reserveChoice: Boolean? = null,
+    val reserveChoice: Boolean? = null
 ) {
     val displayName: String get() = customName ?: name
 
@@ -115,7 +116,8 @@ data class Contract(
     val isCancelled: Boolean get() = cancelledOn != null
 
     /** Puts money aside instead of spending it, see [Reserve] */
-    val isReserve: Boolean get() = !isIncome && (reserveChoice ?: (isOwnTransfer || Reserve.suggests(this)))
+    val isReserve: Boolean get() = !isIncome &&
+        (reserveChoice ?: (isOwnTransfer || Reserve.suggests(this)))
 
     /** Money moved to an own account, e.g. a standing order to a savings account */
     val isOwnTransfer: Boolean get() = lastTransaction.targetAccountId != null
@@ -137,7 +139,9 @@ data class Contract(
     val lastAmount: Long get() = lastTransaction.amount.absoluteValue
 
     /** Amount of the payment before the last one, null if there is none */
-    val previousAmount: Long? get() = transactions.getOrNull(transactions.size - 2)?.amount?.absoluteValue
+    val previousAmount: Long? get() = transactions.getOrNull(
+        transactions.size - 2
+    )?.amount?.absoluteValue
 
     val isIncome: Boolean get() = direction == ContractDirection.INCOME
 
@@ -160,17 +164,20 @@ internal fun contractOf(
     interval: ContractInterval,
     direction: ContractDirection,
     today: LocalDate,
-    isConfirmed: Boolean = false,
+    isConfirmed: Boolean = false
 ): Contract {
     val last = transactions.last()
     val daysSinceLast = ChronoUnit.DAYS.between(last.date, today)
     val grace = interval.graceDays()
     return Contract(
         signature = signature,
-        name = transactions.asReversed().firstNotNullOfOrNull { it.payeeName?.takeIf(String::isNotBlank) }
-            ?: last.comment?.takeIf(String::isNotBlank)
-            ?: last.categoryPath
-            ?: "",
+        name =
+            transactions.asReversed().firstNotNullOfOrNull {
+                it.payeeName?.takeIf(String::isNotBlank)
+            }
+                ?: last.comment?.takeIf(String::isNotBlank)
+                ?: last.categoryPath
+                ?: "",
         interval = interval,
         transactions = transactions,
         nextExpectedDate = last.date.plus(interval.step),

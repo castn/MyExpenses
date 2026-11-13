@@ -25,7 +25,12 @@ class ContractStoreTest {
         val store = ContractStore(dataStore)
         val news = ContractNews(
             id = "n", type = ContractNews.Type.NEW_CONTRACT, ruleId = "r", transactionId = 1,
-            date = LocalDate.of(2026, 10, 6), createdAt = LocalDate.of(2026, 10, 6), contractName = "Strom",
+            date = LocalDate.of(
+                2026,
+                10,
+                6
+            ),
+            createdAt = LocalDate.of(2026, 10, 6), contractName = "Strom",
             isIncome = false, amount = 4500
         )
         store.edit { editor ->

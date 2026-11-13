@@ -4,6 +4,5 @@
   <CurrentIssues>
     <ID>MagicNumber:TagAnalysis.kt:TagAnalyzer$12</ID>
     <ID>MagicNumber:TagAnalysis.kt:TagAnalyzer$31</ID>
-    <ID>MatchingDeclarationName:CountedParts.kt:CountedPart</ID>
   </CurrentIssues>
 </SmellBaseline>

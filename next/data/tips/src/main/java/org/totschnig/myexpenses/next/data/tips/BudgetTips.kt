@@ -13,7 +13,7 @@ data class OverspentPot(
     val potId: String,
     val name: String,
     val overspent: Int,
-    val averageOver: Long,
+    val averageOver: Long
 )
 
 /**
@@ -41,11 +41,21 @@ data class PotsOverspent(val pots: List<OverspentPot>) : SavingTip {
 }
 
 internal fun potsOverspent(budget: BudgetFacts?): PotsOverspent? = budget?.pots
-    ?.filter { it.pot.kind == PotKind.RUNNING && it.pot.amount > 0 && it.history.size >= PotsOverspent.PERIODS }
+    ?.filter {
+        it.pot.kind == PotKind.RUNNING && it.pot.amount > 0 &&
+            it.history.size >= PotsOverspent.PERIODS
+    }
     ?.mapNotNull { status ->
-        val over = status.history.takeLast(PotsOverspent.PERIODS).map { it - status.pot.amount }.filter { it > 0 }
-        if (over.size < PotsOverspent.MIN_OVERSPENT) null
-        else OverspentPot(status.pot.id, status.pot.name, over.size, over.sum() / over.size)
+        val over = status.history.takeLast(PotsOverspent.PERIODS).map {
+            it - status.pot.amount
+        }.filter {
+            it > 0
+        }
+        if (over.size < PotsOverspent.MIN_OVERSPENT) {
+            null
+        } else {
+            OverspentPot(status.pot.id, status.pot.name, over.size, over.sum() / over.size)
+        }
     }
     ?.sortedByDescending { it.averageOver }
     ?.takeIf { it.isNotEmpty() }

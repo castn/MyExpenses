@@ -1,13 +1,13 @@
 package org.totschnig.myexpenses.next.data.tips
 
-import org.totschnig.myexpenses.next.core.model.words.Words
-import org.totschnig.myexpenses.next.data.contracts.ContractTransaction
-import org.totschnig.myexpenses.next.data.merchants.EATING_OUT
-import org.totschnig.myexpenses.next.data.merchants.supermarketOf
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 import kotlin.math.absoluteValue
+import org.totschnig.myexpenses.next.core.model.words.Words
+import org.totschnig.myexpenses.next.data.contracts.ContractTransaction
+import org.totschnig.myexpenses.next.data.merchants.EATING_OUT
+import org.totschnig.myexpenses.next.data.merchants.supermarketOf
 
 /*
  * Tips about spending outside of contracts. They look at the debits of the analysis without
@@ -22,7 +22,11 @@ private val List<ContractTransaction>.total: Long get() = sumOf { it.amount.abso
  *
  * @param transactions oldest first
  */
-data class SpendingGroup(val key: String, val label: String, val transactions: List<ContractTransaction>) {
+data class SpendingGroup(
+    val key: String,
+    val label: String,
+    val transactions: List<ContractTransaction>
+) {
     val amount: Long get() = transactions.total
     val count: Int get() = transactions.size
     val average: Long get() = amount / count
@@ -68,7 +72,7 @@ data class EatingOut(
     val usual: Long,
     override val yearlyAmount: Long,
     val transactions: List<ContractTransaction>,
-    val month: YearMonth,
+    val month: YearMonth
 ) : SavingTip {
     override val id: String get() = ID
 
@@ -122,7 +126,9 @@ data class Outliers(
     val averages: Map<String, Long>
 ) : SavingTip {
     override val id: String get() = ID
-    override val yearlyAmount: Long get() = categories.sumOf { it.amount - averages.getValue(it.key) }
+    override val yearlyAmount: Long get() = categories.sumOf {
+        it.amount - averages.getValue(it.key)
+    }
     override val facts: Set<String> get() = categories.mapTo(HashSet()) { "$month:${it.label}" }
     override val transactionGroups get() = categories.associate { it.key to it.transactions }
 
@@ -147,14 +153,15 @@ internal fun spending(
     transactions: List<ContractTransaction>,
     contractPayments: Set<Long>,
     today: LocalDate,
-    excluded: Set<Long> = emptySet(),
+    excluded: Set<Long> = emptySet()
 ) = transactions.filter {
-    it.amount < 0 && it.targetAccountId == null && it.id !in contractPayments && it.id !in excluded &&
-            !it.date.isAfter(today)
+    it.amount < 0 && it.targetAccountId == null && it.id !in contractPayments &&
+        it.id !in excluded && !it.date.isAfter(today)
 }
 
 /** The last year, as other tips */
-private fun List<ContractTransaction>.lastYear(today: LocalDate) = filter { it.date.isAfter(today.minusYears(1)) }
+private fun List<ContractTransaction>.lastYear(today: LocalDate) =
+    filter { it.date.isAfter(today.minusYears(1)) }
 
 /** Payee, or purpose if there is none */
 private fun ContractTransaction.payeeLabel() =
@@ -163,12 +170,21 @@ private fun ContractTransaction.payeeLabel() =
 /**
  * @param spending see [spending]
  */
-internal fun smallPurchases(spending: List<ContractTransaction>, today: LocalDate): SmallPurchases? {
+internal fun smallPurchases(
+    spending: List<ContractTransaction>,
+    today: LocalDate
+): SmallPurchases? {
     val small = spending.lastYear(today).filter { it.amount.absoluteValue < SmallPurchases.LIMIT }
-    if (small.size < SmallPurchases.MIN_COUNT || small.total < SmallPurchases.MIN_AMOUNT) return null
+    if (small.size < SmallPurchases.MIN_COUNT ||
+        small.total < SmallPurchases.MIN_AMOUNT
+    ) {
+        return null
+    }
     val payees = small.filter { it.payeeLabel() != null }
         .groupBy { it.payeeLabel()!!.trim() }
-        .map { (payee, transactions) -> SpendingGroup("${SmallPurchases.ID}:$payee", payee, transactions) }
+        .map { (payee, transactions) ->
+            SpendingGroup("${SmallPurchases.ID}:$payee", payee, transactions)
+        }
         .sortedByDescending { it.amount }
         .take(SmallPurchases.MAX_PAYEES)
     return SmallPurchases(small.size, small.total, payees)
@@ -190,11 +206,29 @@ internal fun eatingOut(spending: List<ContractTransaction>, today: LocalDate): E
     val usualBefore = before.filter { it.date.isAfter(beforeStart) }
     if (recent.isEmpty() || usualBefore.size < EatingOut.MIN_COUNT_BEFORE) return null
     // The days before, from the first visit known, at most a year
-    val days = ChronoUnit.DAYS.between(maxOf(beforeStart, usualBefore.minOf { it.date }.minusDays(1)), recentStart)
+    val days = ChronoUnit.DAYS.between(
+        maxOf(
+            beforeStart,
+            usualBefore.minOf {
+                it.date
+            }.minusDays(1)
+        ),
+        recentStart
+    )
     val usual = usualBefore.total * EatingOut.DAYS / days.coerceAtLeast(EatingOut.DAYS)
     val recentAmount = recent.total
-    if (recentAmount < usual * EatingOut.MIN_FACTOR || recentAmount - usual < EatingOut.MIN_DIFFERENCE) return null
-    return EatingOut(recentAmount, usual, eatingOut.lastYear(today).total, recent, YearMonth.from(today))
+    if (recentAmount < usual * EatingOut.MIN_FACTOR ||
+        recentAmount - usual < EatingOut.MIN_DIFFERENCE
+    ) {
+        return null
+    }
+    return EatingOut(
+        recentAmount,
+        usual,
+        eatingOut.lastYear(today).total,
+        recent,
+        YearMonth.from(today)
+    )
 }
 
 /**
@@ -212,7 +246,10 @@ internal fun supermarkets(spending: List<ContractTransaction>, today: LocalDate)
 }
 
 /** The main category, e.g. "Essen" of "Essen > Restaurant" */
-private fun ContractTransaction.mainCategory() = categoryPath?.substringBefore('>')?.trim()?.takeIf { it.isNotEmpty() }
+private fun ContractTransaction.mainCategory() =
+    categoryPath?.substringBefore('>')?.trim()?.takeIf {
+        it.isNotEmpty()
+    }
 
 /**
  * Compares each main category in the last complete month with its average of the year before.
@@ -221,7 +258,9 @@ private fun ContractTransaction.mainCategory() = categoryPath?.substringBefore('
 internal fun outliers(spending: List<ContractTransaction>, today: LocalDate): Outliers? {
     val month = YearMonth.from(today).minusMonths(1)
     val start = month.minusYears(1)
-    val byMonth = spending.filter { YearMonth.from(it.date) in start..month }.groupBy { YearMonth.from(it.date) }
+    val byMonth = spending.filter {
+        YearMonth.from(it.date) in start..month
+    }.groupBy { YearMonth.from(it.date) }
     val firstMonth = byMonth.keys.minOrNull() ?: return null
     val monthsBefore = ChronoUnit.MONTHS.between(firstMonth, month)
     if (monthsBefore < Outliers.MIN_MONTHS) return null
@@ -233,10 +272,14 @@ internal fun outliers(spending: List<ContractTransaction>, today: LocalDate): Ou
             category ?: return@mapNotNull null
             val average = before.filter { it.mainCategory() == category }.total / monthsBefore
             val group = SpendingGroup("${Outliers.ID}:$category", category, transactions)
-            if (group.amount >= average * Outliers.MIN_FACTOR && group.amount - average >= Outliers.MIN_DIFFERENCE) {
+            if (group.amount >= average * Outliers.MIN_FACTOR &&
+                group.amount - average >= Outliers.MIN_DIFFERENCE
+            ) {
                 averages[group.key] = average
                 group
-            } else null
+            } else {
+                null
+            }
         }
         .sortedByDescending { it.amount - averages.getValue(it.key) }
     return categories.takeIf { it.isNotEmpty() }?.let { Outliers(month, it, averages) }

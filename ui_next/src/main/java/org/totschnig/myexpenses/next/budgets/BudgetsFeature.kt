@@ -1,31 +1,31 @@
 package org.totschnig.myexpenses.next.budgets
 
-import androidx.compose.material3.MaterialTheme
-import androidx.navigation3.runtime.EntryProviderScope
-import androidx.navigation3.runtime.NavKey
-import org.totschnig.myexpenses.activity.BaseActivity
-import org.totschnig.myexpenses.model.ContribFeature
-import org.totschnig.myexpenses.model.ContribPayload
-import org.totschnig.myexpenses.next.BehindStatusBar
-import org.totschnig.myexpenses.next.NextShell
-import org.totschnig.myexpenses.next.feature.budgets.BudgetFlow
 import androidx.activity.viewModels
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.NavKey
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import org.totschnig.myexpenses.activity.BaseActivity
 import org.totschnig.myexpenses.injector
+import org.totschnig.myexpenses.model.ContribFeature
+import org.totschnig.myexpenses.model.ContribPayload
+import org.totschnig.myexpenses.next.BehindStatusBar
 import org.totschnig.myexpenses.next.NextData
 import org.totschnig.myexpenses.next.NextFeature
 import org.totschnig.myexpenses.next.NextKey
 import org.totschnig.myexpenses.next.NextNavigation
+import org.totschnig.myexpenses.next.NextShell
 import org.totschnig.myexpenses.next.OverviewBudgets
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
 import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
 import org.totschnig.myexpenses.next.data.budgets.paceWarning
+import org.totschnig.myexpenses.next.feature.budgets.BudgetFlow
 import org.totschnig.myexpenses.next.feature.budgets.BudgetViewModel
 import org.totschnig.myexpenses.next.feature.budgets.PotSection
 import org.totschnig.myexpenses.next.viewModelsOf
@@ -43,7 +43,9 @@ class BudgetsFeature(private val activity: BaseActivity, private val data: NextD
             data.budgets,
             homeCurrency = data.homeCurrency,
             legacyCount = legacy.data.map { it.size },
-            loadLegacy = { LegacyBudgetReading.load(activity.injector.repository(), legacy.data.first()) },
+            loadLegacy = {
+                LegacyBudgetReading.load(activity.injector.repository(), legacy.data.first())
+            },
             savedState = savedState
         )
     }
@@ -87,14 +89,19 @@ class BudgetsFeature(private val activity: BaseActivity, private val data: NextD
             BehindStatusBar(MaterialTheme.colorScheme.surfaceContainer) {
                 val homeCurrency by data.homeCurrency.collectAsStateWithLifecycle()
                 BudgetFlow(
-                    viewModel, shell.fixedTransactions, homeCurrency,
+                    viewModel,
+                    shell.fixedTransactions,
+                    homeCurrency,
                     onBack = { shell.navigation.close(key) },
                     onConsent = { data.ledgerSource.setConsent(true) },
                     openPot = key.openPot,
                     addPot = key.addPot,
                     requestNewPot = {
                         // Pots are part of the budget feature, so the same licence applies
-                        activity.contribFeatureRequested(ContribFeature.BUDGET, ContribPayload.NewPot)
+                        activity.contribFeatureRequested(
+                            ContribFeature.BUDGET,
+                            ContribPayload.NewPot
+                        )
                     }
                 )
             }

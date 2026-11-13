@@ -5,14 +5,13 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import java.math.BigDecimal
-import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
 import org.totschnig.myexpenses.designsystem.DestructiveTextButton
 import org.totschnig.myexpenses.designsystem.DetailCard
 import org.totschnig.myexpenses.designsystem.EditableRow
@@ -23,9 +22,10 @@ import org.totschnig.myexpenses.designsystem.RemovableRow
 import org.totschnig.myexpenses.designsystem.SectionTitle
 import org.totschnig.myexpenses.designsystem.SingleChoiceDialog
 import org.totschnig.myexpenses.designsystem.SwitchRow
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.common.NO_NAME
 import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
 import org.totschnig.myexpenses.next.data.contracts.Contract
 import org.totschnig.myexpenses.next.data.contracts.ContractInterval
 import org.totschnig.myexpenses.next.data.contracts.ContractRule
@@ -48,7 +48,7 @@ internal fun ContractRuleSettings(
     onRemoveTargetAccount: (Long) -> Unit = {},
     onSetAmountRange: (LongRange?) -> Unit,
     onMerge: (Contract) -> Unit,
-    onSetReserve: (Boolean) -> Unit = {},
+    onSetReserve: (Boolean) -> Unit = {}
 ) {
     var showIntervalDialog by rememberSaveable { mutableStateOf(false) }
     var showAmountRangeDialog by rememberSaveable { mutableStateOf(false) }
@@ -98,21 +98,34 @@ internal fun ContractRuleSettings(
             isFirst = true
         )
         val payeeLabel =
-            stringResource(if (contract.isIncome) R.string.next_income_payers else R.string.next_contracts_payees)
+            stringResource(
+                if (contract.isIncome) {
+                    R.string.next_income_payers
+                } else {
+                    R.string.next_contracts_payees
+                }
+            )
         val removePayeeLabel =
             stringResource(
-                if (contract.isIncome) R.string.next_income_remove_payer else R.string.next_contracts_remove_payee
+                if (contract.isIncome) {
+                    R.string.next_income_remove_payer
+                } else {
+                    R.string.next_contracts_remove_payee
+                }
             )
         val accountLabel = stringResource(R.string.next_contracts_target_account)
         val removeAccountLabel = stringResource(R.string.next_contracts_remove_target_account)
         // At least one payee, account or the template has to remain, or the rule would match nothing
-        val canRemove = rule.payeeIds.size + rule.targetAccountIds.size > 1 || rule.templateId != null
+        val canRemove =
+            rule.payeeIds.size + rule.targetAccountIds.size > 1 || rule.templateId != null
         rule.payeeIds.sortedBy { it }.forEach { payeeId ->
             RemovableRow(
                 label = payeeLabel,
                 value =
-                    contract.transactions.firstOrNull { it.payeeId == payeeId && it.targetAccountId == null }?.payeeName
-                    ?: NO_NAME,
+                    contract.transactions.firstOrNull {
+                        it.payeeId == payeeId && it.targetAccountId == null
+                    }?.payeeName
+                        ?: NO_NAME,
                 removeLabel = removePayeeLabel.takeIf { canRemove },
                 onRemove = { onRemovePayee(payeeId) }
             )
@@ -121,7 +134,9 @@ internal fun ContractRuleSettings(
             RemovableRow(
                 label = accountLabel,
                 // Movements are named after the account they go to
-                value = contract.transactions.firstOrNull { it.targetAccountId == accountId }?.payeeName ?: NO_NAME,
+                value =
+                    contract.transactions.firstOrNull { it.targetAccountId == accountId }?.payeeName
+                        ?: NO_NAME,
                 removeLabel = removeAccountLabel.takeIf { canRemove },
                 onRemove = { onRemoveTargetAccount(accountId) }
             )
@@ -132,7 +147,11 @@ internal fun ContractRuleSettings(
                 checked = contract.isReserve,
                 onCheckedChange = onSetReserve,
                 supportingText = stringResource(
-                    if (contract.reserveChoice == null) R.string.next_reserve_automatic else R.string.next_reserve_hint
+                    if (contract.reserveChoice == null) {
+                        R.string.next_reserve_automatic
+                    } else {
+                        R.string.next_reserve_hint
+                    }
                 )
             )
         }
@@ -148,7 +167,9 @@ internal fun ContractRuleSettings(
             )
         }
         LinkRow(
-            stringResource(if (contract.isIncome) R.string.next_income_merge else R.string.next_contracts_merge),
+            stringResource(
+                if (contract.isIncome) R.string.next_income_merge else R.string.next_contracts_merge
+            ),
             onClick = { showMergeDialog = true }
         )
     }
@@ -159,7 +180,7 @@ internal fun IntervalDialog(
     current: ContractInterval,
     onSelect: (ContractInterval) -> Unit,
     onDismiss: () -> Unit,
-    title: String = stringResource(R.string.next_contracts_interval),
+    title: String = stringResource(R.string.next_contracts_interval)
 ) {
     SingleChoiceDialog(
         title = title,
@@ -189,7 +210,7 @@ private fun AmountRangeDialog(
     range: LongRange?,
     currency: CurrencyInfo,
     onConfirm: (LongRange?) -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     var min by rememberSaveable { mutableStateOf(range?.first?.toDecimalString(currency) ?: "") }
     var max by rememberSaveable { mutableStateOf(range?.last?.toDecimalString(currency) ?: "") }
@@ -212,7 +233,9 @@ private fun AmountRangeDialog(
             isError = min.isNotEmpty() && minValue == null,
             supportingText = if (min.isNotEmpty() && minValue == null) {
                 { Text(stringResource(R.string.next_amount_invalid)) }
-            } else null,
+            } else {
+                null
+            },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
         )
         OutlinedTextField(
@@ -221,15 +244,19 @@ private fun AmountRangeDialog(
             label = { Text(stringResource(R.string.next_contracts_amount_max)) },
             suffix = { Text(currency.symbol) },
             singleLine = true,
-            isError = max.isNotEmpty() && (maxValue == null || minValue != null && maxValue < minValue),
+            isError =
+                max.isNotEmpty() && (maxValue == null || (minValue != null && maxValue < minValue)),
             supportingText = when {
                 max.isEmpty() -> null
+
                 maxValue == null -> {
                     { Text(stringResource(R.string.next_amount_invalid)) }
                 }
+
                 minValue != null && maxValue < minValue -> {
                     { Text(stringResource(R.string.next_contracts_amount_max_below_min)) }
                 }
+
                 else -> null
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
@@ -247,18 +274,25 @@ private fun MergeDialog(
     candidates: List<Contract>,
     currency: CurrencyInfo,
     onSelect: (Contract) -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     val formatter = LocalAmountFormatter.current
     val suggestion = stringResource(R.string.next_contracts_suggestion)
     PickDialog(
-        title = stringResource(if (isIncome) R.string.next_income_merge else R.string.next_contracts_merge),
+        title = stringResource(
+            if (isIncome) R.string.next_income_merge else R.string.next_contracts_merge
+        ),
         options = candidates,
         label = { it.title },
         onSelect = onSelect,
         onDismiss = onDismiss,
-        intro = stringResource(if (isIncome) R.string.next_income_merge_hint else R.string.next_contracts_merge_hint),
-        supportingText = { stringResource(it.interval.labelRes) + if (it.isConfirmed) "" else " · $suggestion" },
+        intro = stringResource(
+            if (isIncome) R.string.next_income_merge_hint else R.string.next_contracts_merge_hint
+        ),
+        supportingText = {
+            stringResource(it.interval.labelRes) +
+                if (it.isConfirmed) "" else " · $suggestion"
+        },
         value = { formatter.format(it.lastAmount, currency) },
         emptyText = stringResource(R.string.next_contracts_merge_empty)
     )

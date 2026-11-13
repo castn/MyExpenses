@@ -1,12 +1,12 @@
 package org.totschnig.myexpenses.next.data.guidance
 
+import java.time.LocalDate
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
-import org.totschnig.myexpenses.next.data.tips.ItemGroupRising
 import org.totschnig.myexpenses.next.core.model.words.Words
 import org.totschnig.myexpenses.next.data.merchants.supermarketOf
-import java.time.LocalDate
+import org.totschnig.myexpenses.next.data.tips.ItemGroupRising
 
 /**
  * How well the transactions are described, so that the analyses can tell something: how many debits
@@ -37,7 +37,7 @@ data class DataReadiness(
     val scannedLastYear: Int,
     val scannedSupermarketLastYear: Int,
     val taggedDebits: Int,
-    val canScanReceipts: Boolean = true,
+    val canScanReceipts: Boolean = true
 ) {
     /** What is missing, the most useful first. Empty when the data is good enough. */
     val gaps: List<DataGap>
@@ -45,15 +45,19 @@ data class DataReadiness(
             if (debits < MIN_DEBITS) return@buildList
             if (isMany(uncategorized)) add(DataGap.Uncategorized(uncategorized, debits))
             if (isMany(vague)) add(DataGap.VagueCategories(vague, debits))
-            if (canScanReceipts && !ItemGroupRising.hasEnough(scannedRecent, scannedUsual)) add(
-                DataGap.FewReceipts(
-                    scanned = scannedRecent,
-                    supermarketPurchases = supermarketPurchases.size,
-                    unscanned = unscanned,
-                    missingRecent = (ItemGroupRising.MIN_RECENT_PURCHASES - scannedRecent).coerceAtLeast(0),
-                    missingUsual = (ItemGroupRising.MIN_USUAL_PURCHASES - scannedUsual).coerceAtLeast(0)
+            if (canScanReceipts && !ItemGroupRising.hasEnough(scannedRecent, scannedUsual)) {
+                add(
+                    DataGap.FewReceipts(
+                        scanned = scannedRecent,
+                        supermarketPurchases = supermarketPurchases.size,
+                        unscanned = unscanned,
+                        missingRecent =
+                            (ItemGroupRising.MIN_RECENT_PURCHASES - scannedRecent).coerceAtLeast(0),
+                        missingUsual =
+                            (ItemGroupRising.MIN_USUAL_PURCHASES - scannedUsual).coerceAtLeast(0)
+                    )
                 )
-            )
+            }
             if (taggedDebits == 0) add(DataGap.NoTags)
         }
 
@@ -82,7 +86,8 @@ data class DataReadiness(
         )
 
         fun isCatchAll(categoryPath: String?): Boolean {
-            val last = categoryPath?.substringAfterLast('>')?.takeIf { it.isNotBlank() } ?: return false
+            val last =
+                categoryPath?.substringAfterLast('>')?.takeIf { it.isNotBlank() } ?: return false
             val text = Words.textOf(last)
             return CATCH_ALL.any { Words.startsWord(text, it) }
         }
@@ -123,7 +128,7 @@ sealed interface DataGap {
         val supermarketPurchases: Int,
         val unscanned: List<Long>,
         val missingRecent: Int,
-        val missingUsual: Int,
+        val missingUsual: Int
     ) : DataGap {
         override val key: String get() = "receipts"
         override val transactionIds: List<Long> get() = unscanned
@@ -140,7 +145,7 @@ sealed interface DataGap {
  * own transfers
  */
 private fun LedgerTransaction.isCategorizableDebit() = amount < 0 && transferAccountId == null &&
-        targetAccountId == null && !isSplit && !isSealed
+    targetAccountId == null && !isSplit && !isSealed
 
 /**
  * @param receipts the transactions with a scanned receipt are the keys

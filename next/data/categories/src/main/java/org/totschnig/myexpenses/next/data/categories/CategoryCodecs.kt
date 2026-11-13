@@ -35,11 +35,14 @@ internal fun serializeRules(rules: List<CategoryRule>, previous: String? = null)
 
 internal fun parseIdMap(json: String): Map<Long, Long> = try {
     JSONObject(json).let { obj ->
-        obj.keys().asSequence().mapNotNull { key -> key.toLongOrNull()?.let { it to obj.getLong(key) } }.toMap()
+        obj.keys().asSequence().mapNotNull { key ->
+            key.toLongOrNull()?.let { it to obj.getLong(key) }
+        }.toMap()
     }
 } catch (_: JSONException) {
     emptyMap()
 }
 
-internal fun serializeIdMap(map: Map<Long, Long>) =
-    JSONObject().apply { map.forEach { (id, categoryId) -> put(id.toString(), categoryId) } }.toString()
+internal fun serializeIdMap(map: Map<Long, Long>) = JSONObject().apply {
+    map.forEach { (id, categoryId) -> put(id.toString(), categoryId) }
+}.toString()

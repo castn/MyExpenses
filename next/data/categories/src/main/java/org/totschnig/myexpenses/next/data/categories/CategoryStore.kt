@@ -17,7 +17,9 @@ import kotlinx.coroutines.flow.map
  */
 class CategoryStore(private val dataStore: DataStore<Preferences>) {
 
-    val decisions: Flow<CategoryDecisions> = dataStore.data.map { it.toDecisions() }.distinctUntilChanged()
+    val decisions: Flow<CategoryDecisions> = dataStore.data.map {
+        it.toDecisions()
+    }.distinctUntilChanged()
 
     /** Replaces the decisions with what [change] makes of them */
     suspend fun update(change: (CategoryDecisions) -> CategoryDecisions) {
@@ -32,8 +34,10 @@ class CategoryStore(private val dataStore: DataStore<Preferences>) {
         val KEY_RULES = stringPreferencesKey("next_category_rules")
         val KEY_FIRST_NEW_ID = longPreferencesKey("next_category_first_new_id")
         val KEY_BACKLOG_ANSWERED = booleanPreferencesKey("next_category_backlog_answered")
+
         /** JSON object mapping transaction ids to the category rejected */
         val KEY_REJECTED = stringPreferencesKey("next_category_rejected")
+
         /** JSON object mapping transaction ids to the category applied without asking */
         val KEY_AUTOMATIC = stringPreferencesKey("next_category_automatic")
 
@@ -55,7 +59,9 @@ class CategoryStore(private val dataStore: DataStore<Preferences>) {
             if (new.firstNewId != old.firstNewId) {
                 new.firstNewId?.let { this[KEY_FIRST_NEW_ID] = it } ?: remove(KEY_FIRST_NEW_ID)
             }
-            if (new.backlogAnswered != old.backlogAnswered) this[KEY_BACKLOG_ANSWERED] = new.backlogAnswered
+            if (new.backlogAnswered != old.backlogAnswered) {
+                this[KEY_BACKLOG_ANSWERED] = new.backlogAnswered
+            }
             if (new.rejected != old.rejected) this[KEY_REJECTED] = serializeIdMap(new.rejected)
             if (new.automatic != old.automatic) this[KEY_AUTOMATIC] = serializeIdMap(new.automatic)
             if (new.unclear != old.unclear) this[KEY_UNCLEAR] = new.unclear

@@ -36,10 +36,13 @@ sealed interface ModelSetup {
     enum class Reason {
         /** No connection, or the download broke off */
         Network,
+
         /** No model for this version of the app offered */
         NoRelease,
+
         /** The picked file is no model or cannot be read */
         Invalid,
+
         /** The model needs a newer version of the app */
         Incompatible
     }
@@ -59,7 +62,7 @@ class ItemGroupModelInstaller(
     private val setupStore: ItemGroupModelSetupStore,
     private val scope: CoroutineScope,
     private val io: CoroutineDispatcher,
-    private val onInstalled: () -> Unit,
+    private val onInstalled: () -> Unit
 ) {
     /** null until the stored model was looked at */
     private val hasModel = MutableStateFlow<Boolean?>(null)
@@ -112,7 +115,11 @@ class ItemGroupModelInstaller(
      *
      * @param ioFailure reason to show when reading fails
      */
-    private fun setUp(source: ItemGroupModelSetupStore.Source, ioFailure: ModelSetup.Reason, install: () -> Unit) {
+    private fun setUp(
+        source: ItemGroupModelSetupStore.Source,
+        ioFailure: ModelSetup.Reason,
+        install: () -> Unit
+    ) {
         _setup.value = ModelSetup.Working
         scope.launch(io) {
             _setup.value = try {
@@ -126,8 +133,13 @@ class ItemGroupModelInstaller(
             } catch (e: InvalidItemGroupModel) {
                 Timber.w(e)
                 ModelSetup.Failed(
-                    if (e.reason == InvalidItemGroupModel.Reason.Incompatible) ModelSetup.Reason.Incompatible
-                    else ModelSetup.Reason.Invalid
+                    if (e.reason ==
+                        InvalidItemGroupModel.Reason.Incompatible
+                    ) {
+                        ModelSetup.Reason.Incompatible
+                    } else {
+                        ModelSetup.Reason.Invalid
+                    }
                 )
             } catch (e: IOException) {
                 Timber.w(e)

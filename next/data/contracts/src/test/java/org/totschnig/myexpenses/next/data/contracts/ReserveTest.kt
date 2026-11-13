@@ -1,9 +1,9 @@
 package org.totschnig.myexpenses.next.data.contracts
 
+import java.time.LocalDate
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.time.LocalDate
 
 class ReserveTest {
 
@@ -14,15 +14,20 @@ class ReserveTest {
         category: String? = null,
         comment: String? = null,
         amount: Long = -15000,
-        reserveChoice: Boolean? = null,
+        reserveChoice: Boolean? = null
     ) = Contract(
         signature = "s",
         name = payee ?: "",
         interval = ContractInterval.MONTHLY,
         transactions = listOf(
             ContractTransaction(
-                id = 1, date = today, amount = amount, accountId = 1,
-                payeeName = payee, categoryPath = category, comment = comment
+                id = 1,
+                date = today,
+                amount = amount,
+                accountId = 1,
+                payeeName = payee,
+                categoryPath = category,
+                comment = comment
             )
         ),
         nextExpectedDate = today.plusMonths(1),

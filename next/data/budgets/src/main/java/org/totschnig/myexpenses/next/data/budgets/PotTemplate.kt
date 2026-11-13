@@ -16,7 +16,7 @@ enum class PotTemplate(
     @StringRes val nameRes: Int,
     val kind: PotKind,
     val icon: String,
-    private vararg val keywords: String,
+    private vararg val keywords: String
 ) {
     DAILY(
         R.string.next_pot_daily,
@@ -59,7 +59,13 @@ enum class PotTemplate(
         "=bars",
         "dining"
     ),
-    DELIVERY(R.string.next_pot_delivery, PotKind.RUNNING, "pizza-slice", "lieferdienst", "delivery"),
+    DELIVERY(
+        R.string.next_pot_delivery,
+        PotKind.RUNNING,
+        "pizza-slice",
+        "lieferdienst",
+        "delivery"
+    ),
     MOBILITY(
         R.string.next_pot_mobility,
         PotKind.RUNNING,
@@ -100,15 +106,48 @@ enum class PotTemplate(
         "leisure",
         "hobbies"
     ),
-    FITNESS(R.string.next_pot_fitness, PotKind.RUNNING, "dumbbell", "fitness", "sport", "vereinsbeiträge", "gym"),
-    PET(R.string.next_pot_pet, PotKind.RUNNING, "paw", "haustier", "futter", "tierarzt", "pet", "pets"),
-    CARE(R.string.next_pot_care, PotKind.RUNNING, "pump-soap", "körperpflege", "friseur", "kosmetik", "personal care"),
+    FITNESS(
+        R.string.next_pot_fitness,
+        PotKind.RUNNING,
+        "dumbbell",
+        "fitness",
+        "sport",
+        "vereinsbeiträge",
+        "gym"
+    ),
+    PET(
+        R.string.next_pot_pet,
+        PotKind.RUNNING,
+        "paw",
+        "haustier",
+        "futter",
+        "tierarzt",
+        "pet",
+        "pets"
+    ),
+    CARE(
+        R.string.next_pot_care,
+        PotKind.RUNNING,
+        "pump-soap",
+        "körperpflege",
+        "friseur",
+        "kosmetik",
+        "personal care"
+    ),
     CHILDREN(R.string.next_pot_children, PotKind.RUNNING, "children", "kinder", "children", "kids"),
     GAMING(R.string.next_pot_gaming, PotKind.RUNNING, "gamepad", "gaming", "games"),
     GIFTS(R.string.next_pot_gifts, PotKind.YEARLY, "gift", "geschenke", "feiern", "gifts"),
     CLOTHING(R.string.next_pot_clothing, PotKind.YEARLY, "shirt", "kleidung", "schuhe", "clothing"),
     CHRISTMAS(R.string.next_pot_christmas, PotKind.YEARLY, "gifts", "weihnacht", "christmas"),
-    CAR(R.string.next_pot_car, PotKind.YEARLY, "oil-can", "werkstatt", "tüv", "wartung", "car repair"),
+    CAR(
+        R.string.next_pot_car,
+        PotKind.YEARLY,
+        "oil-can",
+        "werkstatt",
+        "tüv",
+        "wartung",
+        "car repair"
+    ),
     HEALTH(
         R.string.next_pot_health,
         PotKind.YEARLY,
@@ -130,7 +169,15 @@ enum class PotTemplate(
         "haushaltswaren",
         "furniture"
     ),
-    HOLIDAYS(R.string.next_pot_holidays, PotKind.YEARLY, "umbrella-beach", "urlaub", "reisen", "vacation", "travel"),
+    HOLIDAYS(
+        R.string.next_pot_holidays,
+        PotKind.YEARLY,
+        "umbrella-beach",
+        "urlaub",
+        "reisen",
+        "vacation",
+        "travel"
+    ),
     EDUCATION(
         R.string.next_pot_education,
         PotKind.YEARLY,
@@ -140,7 +187,14 @@ enum class PotTemplate(
         "weiterbildung",
         "education"
     ),
-    DONATIONS(R.string.next_pot_donations, PotKind.YEARLY, "hand-holding-heart", "spenden", "donations", "charity"),
+    DONATIONS(
+        R.string.next_pot_donations,
+        PotKind.YEARLY,
+        "hand-holding-heart",
+        "spenden",
+        "donations",
+        "charity"
+    ),
     GOAL(R.string.next_pot_goal, PotKind.GOAL, "piggy-bank"),
     PROJECT(R.string.next_pot_project, PotKind.PROJECT, "suitcase-rolling"),
     ITEM_GROUP(R.string.next_pot_item_group, PotKind.ITEM_GROUP, "basket-shopping");
@@ -151,19 +205,29 @@ enum class PotTemplate(
      */
     fun categoriesIn(categories: Collection<CategoryInfo>): Set<Long> {
         if (keywords.isEmpty()) return emptySet()
-        val matching = categories.filter { it.isExpense && matches(it.label) }.mapTo(HashSet()) { it.id }
+        val matching = categories.filter {
+            it.isExpense && matches(it.label)
+        }.mapTo(HashSet()) { it.id }
         val byId = categories.associateBy { it.id }
-        fun hasMatchingAncestor(category: CategoryInfo): Boolean =
-            generateSequence(
-                category.parentId?.let(byId::get)
-            ) { it.parentId?.let(byId::get) }.any { it.id in matching }
-        return categories.filter { it.id in matching && !hasMatchingAncestor(it) }.mapTo(LinkedHashSet()) { it.id }
+        fun hasMatchingAncestor(category: CategoryInfo): Boolean = generateSequence(
+            category.parentId?.let(byId::get)
+        ) { it.parentId?.let(byId::get) }.any { it.id in matching }
+        return categories.filter {
+            it.id in matching && !hasMatchingAncestor(it)
+        }.mapTo(LinkedHashSet()) { it.id }
     }
 
     private fun matches(label: String): Boolean {
         val text = Words.textOf(label)
         return keywords.any { keyword ->
-            if (keyword.startsWith("=")) Words.isWord(text, keyword.substring(1)) else Words.startsWord(text, keyword)
+            if (keyword.startsWith(
+                    "="
+                )
+            ) {
+                Words.isWord(text, keyword.substring(1))
+            } else {
+                Words.startsWord(text, keyword)
+            }
         }
     }
 }

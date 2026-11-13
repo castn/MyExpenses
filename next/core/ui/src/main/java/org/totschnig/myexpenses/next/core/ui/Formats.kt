@@ -16,14 +16,18 @@ fun rememberDateFormatter(style: FormatStyle = FormatStyle.MEDIUM): DateTimeForm
 
 /** Month and year, e.g. "August 2026" */
 @Composable
-fun rememberMonthFormatter(): DateTimeFormatter = remember { DateTimeFormatter.ofPattern("LLLL yyyy") }
+fun rememberMonthFormatter(): DateTimeFormatter = remember {
+    DateTimeFormatter.ofPattern("LLLL yyyy")
+}
 
 /** A period from [start] to [end], both included, e.g. "01.08.2026 – 14.08.2026" */
-fun DateTimeFormatter.formatRange(start: LocalDate, end: LocalDate) = "${format(start)} – ${format(end)}"
+fun DateTimeFormatter.formatRange(start: LocalDate, end: LocalDate) =
+    "${format(start)} – ${format(end)}"
 
 /** A period from [start] until the day before [end], e.g. a month or the time from salary to salary */
 @Composable
-fun periodLabel(start: LocalDate, end: LocalDate): String = rememberDateFormatter().formatRange(start, end.minusDays(1))
+fun periodLabel(start: LocalDate, end: LocalDate): String =
+    rememberDateFormatter().formatRange(start, end.minusDays(1))
 
 /** Formats amounts in minor units of [currency] with [LocalAmountFormatter] */
 @Composable
@@ -38,7 +42,10 @@ fun rememberAmountFormat(currency: CurrencyInfo): (Long) -> String {
  */
 @Composable
 fun rememberAxisAmountFormat(currency: CurrencyInfo): (Double) -> String = remember(currency) {
-    val format = NumberFormat.getNumberInstance().apply { maximumFractionDigits = currency.fractionDigits }
+    val format = NumberFormat.getNumberInstance().apply {
+        maximumFractionDigits =
+            currency.fractionDigits
+    }
     val divisor = Math.pow(10.0, currency.fractionDigits.toDouble())
     return@remember { amount: Double -> format.format(amount / divisor) }
 }

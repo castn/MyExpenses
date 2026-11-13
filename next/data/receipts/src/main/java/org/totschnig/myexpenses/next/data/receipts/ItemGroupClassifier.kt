@@ -1,9 +1,9 @@
 package org.totschnig.myexpenses.next.data.receipts
 
+import java.text.Normalizer
 import org.totschnig.itemgroupmodel.Level
 import org.totschnig.itemgroupmodel.ProductGroupModel
 import org.totschnig.myexpenses.feature.productKey
-import java.text.Normalizer
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
 
 /** Where the group of an item comes from */
@@ -31,7 +31,11 @@ enum class ItemGroupSource {
  * @param confident false for a suggestion of the model below its threshold for sure predictions,
  * which the review can mark
  */
-data class ItemGroupSuggestion(val group: ItemGroup, val source: ItemGroupSource, val confident: Boolean = true)
+data class ItemGroupSuggestion(
+    val group: ItemGroup,
+    val source: ItemGroupSource,
+    val confident: Boolean = true
+)
 
 /** A group the user chose for an item, to learn from */
 data class LearnedItemGroup(val name: String, val group: ItemGroup)
@@ -43,9 +47,15 @@ data class LearnedItemGroup(val name: String, val group: ItemGroup)
  * @param learned choices of the user, oldest first, so that the latest choice for a product wins
  * @param model null while it is not loaded or if there is none
  */
-class ItemGroupClassifier(learned: List<LearnedItemGroup>, private val model: ProductGroupModel? = null) {
+class ItemGroupClassifier(
+    learned: List<LearnedItemGroup>,
+    private val model: ProductGroupModel? = null
+) {
 
-    private val products: Map<String, ItemGroup> = learned.associate { productKey(it.name) to it.group }
+    private val products: Map<String, ItemGroup> = learned.associate {
+        productKey(it.name) to
+            it.group
+    }
 
     private val wordGroups: Map<String, List<ItemGroup>> = learned
         .flatMap { item -> ItemWords.of(item.name).distinct().map { it to item.group } }
@@ -59,7 +69,8 @@ class ItemGroupClassifier(learned: List<LearnedItemGroup>, private val model: Pr
         val merchantGroup = merchant?.let(::groupOfMerchant)
         val result = mutableListOf<ItemGroupSuggestion?>()
         items.forEachIndexed { index, item ->
-            result += classify(item, merchant, merchantGroup) { discountGroup(items, result, index) }
+            result +=
+                classify(item, merchant, merchantGroup) { discountGroup(items, result, index) }
         }
         return result
     }
@@ -77,7 +88,9 @@ class ItemGroupClassifier(learned: List<LearnedItemGroup>, private val model: Pr
         if (item.amount < 0) {
             return discountGroup()?.let { ItemGroupSuggestion(it, ItemGroupSource.RULE) }
         }
-        products[productKey(item.name)]?.let { return ItemGroupSuggestion(it, ItemGroupSource.PRODUCT) }
+        products[productKey(item.name)]?.let {
+            return ItemGroupSuggestion(it, ItemGroupSource.PRODUCT)
+        }
         byWords(words)?.let { return ItemGroupSuggestion(it, ItemGroupSource.WORDS) }
         byModel(item.name, merchant)?.let { return it }
         byDictionary(words)?.let { return ItemGroupSuggestion(it, ItemGroupSource.DICTIONARY) }
@@ -88,7 +101,11 @@ class ItemGroupClassifier(learned: List<LearnedItemGroup>, private val model: Pr
      * A discount belongs to the item it names ("Feigen 1 Euro" after the total), otherwise to the
      * item above ("Preisänderung")
      */
-    private fun discountGroup(items: List<ReceiptItem>, groups: List<ItemGroupSuggestion?>, index: Int): ItemGroup? {
+    private fun discountGroup(
+        items: List<ReceiptItem>,
+        groups: List<ItemGroupSuggestion?>,
+        index: Int
+    ): ItemGroup? {
         val words = ItemWords.of(items[index].name)
         val named = (index - 1 downTo 0).firstOrNull { earlier ->
             items[earlier].amount > 0 && ItemWords.of(items[earlier].name).any { candidate ->
@@ -100,13 +117,13 @@ class ItemGroupClassifier(learned: List<LearnedItemGroup>, private val model: Pr
     }
 
     /** Words seen with mostly one group; the one seen most often wins */
-    private fun byWords(words: List<String>): ItemGroup? =
-        words.mapNotNull { word ->
-            val groups = wordGroups[word]?.takeIf { it.size >= MIN_WORD_COUNT } ?: return@mapNotNull null
-            groups.groupingBy { it }.eachCount().maxBy { it.value }
-                .takeIf { it.value >= groups.size * MIN_WORD_SHARE }
-                ?.let { it.key to it.value }
-        }.maxByOrNull { it.second }?.first
+    private fun byWords(words: List<String>): ItemGroup? = words.mapNotNull { word ->
+        val groups =
+            wordGroups[word]?.takeIf { it.size >= MIN_WORD_COUNT } ?: return@mapNotNull null
+        groups.groupingBy { it }.eachCount().maxBy { it.value }
+            .takeIf { it.value >= groups.size * MIN_WORD_SHARE }
+            ?.let { it.key to it.value }
+    }.maxByOrNull { it.second }?.first
 
     /** The model recognizes the chain from the merchant itself; groups this version does not know are skipped */
     private fun byModel(name: String, merchant: String?): ItemGroupSuggestion? {
@@ -137,7 +154,9 @@ class ItemGroupClassifier(learned: List<LearnedItemGroup>, private val model: Pr
     private fun groupOfMerchant(merchant: String): ItemGroup? {
         val words = ItemWords.fold(merchant).split(" ")
         return MERCHANTS.entries.firstOrNull { (_, names) ->
-            names.any { name -> words.any { it == name || (name.length >= 5 && it.startsWith(name)) } }
+            names.any { name ->
+                words.any { it == name || (name.length >= 5 && it.startsWith(name)) }
+            }
         }?.key
     }
 
@@ -150,12 +169,14 @@ class ItemGroupClassifier(learned: List<LearnedItemGroup>, private val model: Pr
 
         /** Kinds of shops whose items mostly belong to one group, folded like [ItemWords.fold] */
         private val MERCHANTS = mapOf(
-            ItemGroup.DRUGSTORE to listOf("dm", "rossmann", "mueller", "drogerie", "budnikowsky", "apotheke"),
+            ItemGroup.DRUGSTORE to
+                listOf("dm", "rossmann", "mueller", "drogerie", "budnikowsky", "apotheke"),
             ItemGroup.PET to listOf("fressnapf", "zooplus", "futterhaus", "zoo"),
-            ItemGroup.NON_FOOD to listOf("obi", "hornbach", "bauhaus", "toom", "hagebau", "baumarkt"),
+            ItemGroup.NON_FOOD to
+                listOf("obi", "hornbach", "bauhaus", "toom", "hagebau", "baumarkt"),
             ItemGroup.BAKERY to listOf("baecker", "baeckerei", "backhaus", "backstube", "backwerk"),
             ItemGroup.MEAT_FISH to listOf("metzger", "metzgerei", "fleischerei", "fischhandel"),
-            ItemGroup.DRINKS to listOf("getraenke", "getraenkemarkt"),
+            ItemGroup.DRINKS to listOf("getraenke", "getraenkemarkt")
         )
     }
 }
@@ -169,7 +190,10 @@ internal object ItemWords {
 
     /** "Grünl.Sch.Räuch." → "gruenl sch raeuch" */
     fun fold(text: String): String = Normalizer.normalize(
-        text.lowercase().replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").replace("ß", "ss"),
+        text.lowercase().replace(
+            "ä",
+            "ae"
+        ).replace("ö", "oe").replace("ü", "ue").replace("ß", "ss"),
         Normalizer.Form.NFD
     ).replace(MARKS, "").replace(NON_LETTERS, " ").trim()
 
@@ -180,7 +204,11 @@ internal object ItemWords {
     fun of(name: String): List<String> {
         val words = fold(name).split(" ").flatMap { word ->
             // Recognition sometimes misses the space before "mit"
-            if (word.length >= 7 && word.endsWith("mit")) listOf(word.dropLast(3), "mit") else listOf(word)
+            if (word.length >= 7 && word.endsWith("mit")) {
+                listOf(word.dropLast(3), "mit")
+            } else {
+                listOf(word)
+            }
         }
         val ingredients = words.indexOfFirst { it in INGREDIENT_MARKERS }
         return (if (ingredients > 0) words.subList(0, ingredients) else words)
@@ -218,16 +246,19 @@ internal object ItemWords {
     }
 
     /** "feigen" and "feige" */
-    fun sameStem(a: String, b: String) = minOf(a.length, b.length) >= 4 && (a.startsWith(b) || b.startsWith(a))
+    fun sameStem(a: String, b: String) =
+        minOf(a.length, b.length) >= 4 && (a.startsWith(b) || b.startsWith(a))
 
     private const val MIN_LENGTH = 3
     private const val MIN_MISREAD_LENGTH = 6
     private val INGREDIENT_MARKERS = setOf("m", "mit")
     private val STOP_WORDS = setOf(
-        "bio", "und", "der", "die", "das", "fuer", "aus", "von", "mix", "neu", "stk", "stueck", "pack", "packung",
+        "bio", "und", "der", "die", "das", "fuer", "aus", "von", "mix", "neu", "stk", "stueck",
+        "pack", "packung",
         "euro", "eur", "ml", "kg",
         // Adjectives, which as shortened keywords would name other goods ("frisch" → "Frischhaltefolie")
-        "frisch", "frische", "rot", "rote", "gruen", "gelb", "weiss", "schwarz", "fein", "grob", "klein", "gross",
+        "frisch", "frische", "rot", "rote", "gruen", "gelb", "weiss", "schwarz", "fein", "grob",
+        "klein", "gross",
         "natur", "classic", "original", "leicht", "light"
     )
 }

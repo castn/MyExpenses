@@ -1,6 +1,8 @@
 package org.totschnig.myexpenses.next.search
 
 import androidx.annotation.StringRes
+import kotlin.reflect.KClass
+import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.provider.filter.AccountCriterion
 import org.totschnig.myexpenses.provider.filter.AmountCriterion
 import org.totschnig.myexpenses.provider.filter.AndCriterion
@@ -16,8 +18,6 @@ import org.totschnig.myexpenses.provider.filter.SearchTextCriterion
 import org.totschnig.myexpenses.provider.filter.SimpleCriterion
 import org.totschnig.myexpenses.provider.filter.TagCriterion
 import org.totschnig.myexpenses.provider.filter.TransferCriterion
-import org.totschnig.myexpenses.next.core.common.R
-import kotlin.reflect.KClass
 
 /**
  * The kinds of filter the search of the new UI offers, in the order of their chips.
@@ -75,14 +75,22 @@ sealed interface SearchFilter {
 
         operator fun get(kind: SearchKind) = parts[kind]
 
-        override val text get() = parts[SearchKind.Text]?.takeIf { !it.excluded }?.criterion as? SearchTextCriterion
+        override val text get() = parts[SearchKind.Text]?.takeIf {
+            !it.excluded
+        }?.criterion as? SearchTextCriterion
 
-        override fun withText(text: SearchTextCriterion?) = with(SearchKind.Text, text?.let { SearchPart(it) })
+        override fun withText(text: SearchTextCriterion?) = with(
+            SearchKind.Text,
+            text?.let {
+                SearchPart(it)
+            }
+        )
 
         /** Sets the filter of [kind], or removes it with null */
         fun with(kind: SearchKind, part: SearchPart?) = Simple(
-            if (part == null) parts - kind
-            else {
+            if (part == null) {
+                parts - kind
+            } else {
                 require(SearchKind.of(part.criterion) == kind) { "${part.criterion} is no $kind" }
                 // Keeps the order of the chips, so the stored criterion does not depend on the order of editing
                 (parts + (kind to part)).toSortedMap().toMap()
@@ -99,7 +107,8 @@ sealed interface SearchFilter {
      * several of the same kind or nested ones. It can only be removed as a whole, but text can
      * still be searched within it.
      */
-    data class Advanced(val criterion: Criterion, override val text: SearchTextCriterion? = null) : SearchFilter {
+    data class Advanced(val criterion: Criterion, override val text: SearchTextCriterion? = null) :
+        SearchFilter {
 
         override fun withText(text: SearchTextCriterion?) = copy(text = text)
 
@@ -112,14 +121,22 @@ sealed interface SearchFilter {
             val criteria = if (criterion is AndCriterion) criterion.criteria else setOf(criterion)
             val parts = criteria.map { it.toPart() ?: return advanced(criteria) }
             val byKind = parts.associateBy { SearchKind.of(it.criterion)!! }
-            return if (byKind.size == parts.size) Simple(byKind.toSortedMap().toMap()) else advanced(criteria)
+            return if (byKind.size == parts.size) {
+                Simple(byKind.toSortedMap().toMap())
+            } else {
+                advanced(criteria)
+            }
         }
 
         /** Keeps the text typed apart, so the search field can show and change it */
         private fun advanced(criteria: Set<Criterion>): Advanced {
             val text = criteria.filterIsInstance<SearchTextCriterion>().singleOrNull()
             val rest = (criteria - setOfNotNull(text)).joined()
-            return if (text != null && rest != null) Advanced(rest, text) else Advanced(criteria.joined()!!)
+            return if (text != null && rest != null) {
+                Advanced(rest, text)
+            } else {
+                Advanced(criteria.joined()!!)
+            }
         }
 
         private fun Collection<Criterion>.joined(): Criterion? = when (size) {
@@ -134,6 +151,7 @@ sealed interface SearchFilter {
                 ?.let { SearchPart(it, excluded = true) }
 
             is SimpleCriterion<*> -> takeIf { SearchKind.of(it) != null }?.let { SearchPart(it) }
+
             else -> null
         }
     }

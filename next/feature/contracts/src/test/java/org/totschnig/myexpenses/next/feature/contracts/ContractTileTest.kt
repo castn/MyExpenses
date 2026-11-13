@@ -37,6 +37,9 @@ class ContractTileTest {
 
     @Test
     fun suggestsTheIconOfTheCategoryAndAreaFirst() {
-        assertEquals(listOf("folder", "tv"), contract("Netflix", "Freizeit > Streaming").iconSuggestions.take(2))
+        assertEquals(
+            listOf("folder", "tv"),
+            contract("Netflix", "Freizeit > Streaming").iconSuggestions.take(2)
+        )
     }
 }

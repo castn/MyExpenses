@@ -26,21 +26,24 @@ data class Counterpart(
 object PaymentService {
     /** Matched at the start of a word of the payee */
     private val SERVICES = listOf(
-        "paypal", "klarna", "amazon payments", "amazon eu", "amzn", "sofort", "stripe", "adyen", "mollie", "unzer",
+        "paypal", "klarna", "amazon payments", "amazon eu", "amzn", "sofort", "stripe", "adyen",
+        "mollie", "unzer",
         "ratepay", "afterpay", "billpay", "payone", "computop", "google payment"
     )
 
     /** What comes before the merchant in the purpose, e.g. "Ihr Einkauf bei Zalando SE" */
     private val MERCHANT = Regex(
-        "(?:ihr einkauf bei|ihre bestellung bei|einkauf bei|bestellung bei|your purchase at|purchase at|payment " +
-            "to|zahlung an)" +
-                "\\s+(.+?)(?=\\s*[,/;]|\\s+\\d|\\s+ref\\b|\\s+end-to-end|\\s*$)",
+        "(?:ihr einkauf bei|ihre bestellung bei|einkauf bei|bestellung bei|your purchase at|" +
+            "purchase at|payment to|zahlung an)" +
+            "\\s+(.+?)(?=\\s*[,/;]|\\s+\\d|\\s+ref\\b|\\s+end-to-end|\\s*$)",
         RegexOption.IGNORE_CASE
     )
 
     /** Legal forms, left out when comparing names of merchants */
-    private val LEGAL_FORMS =
-        setOf("se", "gmbh", "ag", "co", "kg", "ohg", "ug", "mbh", "ltd", "inc", "llc", "sarl", "sa", "bv", "nv")
+    private val LEGAL_FORMS = setOf(
+        "se", "gmbh", "ag", "co", "kg", "ohg", "ug", "mbh", "ltd", "inc",
+        "llc", "sarl", "sa", "bv", "nv"
+    )
 
     fun isPaymentService(payeeName: String?): Boolean {
         val text = Words.textOf(payeeName)
@@ -49,7 +52,9 @@ object PaymentService {
 
     /** The merchant named in the purpose, as written there, null if none is found */
     fun merchantOf(comment: String?): String? =
-        comment?.let(MERCHANT::find)?.groupValues?.get(1)?.trim()?.trimEnd('.')?.takeIf { it.isNotBlank() }
+        comment?.let(MERCHANT::find)?.groupValues?.get(1)?.trim()?.trimEnd('.')?.takeIf {
+            it.isNotBlank()
+        }
 
     /** Merchant names compared without case, punctuation and legal form: "Zalando SE" is "zalando" */
     fun normalizeMerchant(name: String) =
@@ -64,7 +69,8 @@ object PaymentService {
 fun CategoryInput.counterpart(): Counterpart? {
     if (PaymentService.isPaymentService(payeeName)) {
         val merchant = PaymentService.merchantOf(comment) ?: return null
-        val normalized = PaymentService.normalizeMerchant(merchant).takeIf { it.isNotEmpty() } ?: return null
+        val normalized =
+            PaymentService.normalizeMerchant(merchant).takeIf { it.isNotEmpty() } ?: return null
         return Counterpart("m:$normalized", merchant, merchant = normalized)
     }
     val name = payeeName?.takeIf { it.isNotBlank() }

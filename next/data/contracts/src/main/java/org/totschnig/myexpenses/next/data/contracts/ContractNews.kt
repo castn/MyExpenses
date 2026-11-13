@@ -35,7 +35,7 @@ data class ContractNews(
     val previousAmount: Long? = null,
     val cancelledOn: LocalDate? = null,
     val interval: ContractInterval? = null,
-    val isRead: Boolean = false,
+    val isRead: Boolean = false
 ) {
     enum class Type {
         /** A cancelled contract was paid again, which lifted the cancellation */
@@ -90,8 +90,14 @@ fun ContractAnalysis.detectNews(today: LocalDate): NewsDetection {
     val reactivated = mutableSetOf<String>()
     contracts.filter { it.isConfirmed }.forEach { contract ->
         val rule = contract.rule ?: return@forEach
-        val payments = contract.transactions.filter { it.id != SNAPSHOT_TRANSACTION_ID && !it.date.isAfter(today) }
-        fun newsOf(type: ContractNews.Type, payment: ContractTransaction, previousAmount: Long? = null) = ContractNews(
+        val payments = contract.transactions.filter {
+            it.id != SNAPSHOT_TRANSACTION_ID && !it.date.isAfter(today)
+        }
+        fun newsOf(
+            type: ContractNews.Type,
+            payment: ContractTransaction,
+            previousAmount: Long? = null
+        ) = ContractNews(
             id = "${type.name}:${rule.id}:${payment.id}",
             type = type,
             ruleId = rule.id,
@@ -115,13 +121,17 @@ fun ContractAnalysis.detectNews(today: LocalDate): NewsDetection {
         }
 
         if (payments.size >= 3) {
-            val (beforePrevious, previous, last) = payments.takeLast(3).map { it.amount.absoluteValue }
-            fun differ(a: Long, b: Long) = (a - b).absoluteValue > b * ContractNews.PRICE_CHANGE_TOLERANCE
+            val (beforePrevious, previous, last) = payments.takeLast(3).map {
+                it.amount.absoluteValue
+            }
+            fun differ(a: Long, b: Long) =
+                (a - b).absoluteValue > b * ContractNews.PRICE_CHANGE_TOLERANCE
             val lastPayment = payments.last()
             if (!differ(previous, beforePrevious) && differ(last, previous) &&
                 ChronoUnit.DAYS.between(lastPayment.date, today) <= ContractNews.MAX_AGE_DAYS
             ) {
-                news += newsOf(ContractNews.Type.PRICE_CHANGE, lastPayment, previousAmount = previous)
+                news +=
+                    newsOf(ContractNews.Type.PRICE_CHANGE, lastPayment, previousAmount = previous)
             }
         }
 
@@ -136,8 +146,12 @@ fun ContractAnalysis.detectNews(today: LocalDate): NewsDetection {
             }
         } else if (!contract.isCancelled) {
             val endedOn =
-                lastPayment.date.plusDays((contract.interval.maxDays + contract.interval.graceDays()).toLong())
-            if (!endedOn.isAfter(today) && ChronoUnit.DAYS.between(endedOn, today) <= ContractNews.MAX_AGE_DAYS) {
+                lastPayment.date.plusDays(
+                    (contract.interval.maxDays + contract.interval.graceDays()).toLong()
+                )
+            if (!endedOn.isAfter(today) &&
+                ChronoUnit.DAYS.between(endedOn, today) <= ContractNews.MAX_AGE_DAYS
+            ) {
                 news += newsOf(ContractNews.Type.CONTRACT_STOPPED, lastPayment)
             }
         }
@@ -150,30 +164,35 @@ fun ContractAnalysis.detectNews(today: LocalDate): NewsDetection {
  * e.g. 5 days for monthly payments, which are moved by weekends and bank holidays
  */
 private fun ContractInterval.missingTolerance(): Long {
-    val stepDays = ChronoUnit.DAYS.between(LocalDate.of(2001, 1, 1), LocalDate.of(2001, 1, 1).plus(step))
+    val stepDays = ChronoUnit.DAYS.between(
+        LocalDate.of(2001, 1, 1),
+        LocalDate.of(2001, 1, 1).plus(step)
+    )
     return maxOf(ContractNews.MISSING_MIN_DAYS, maxDays - stepDays)
 }
 
 /**
  * News for suggestions that were confirmed automatically
  */
-fun newContractNews(confirmed: List<Pair<Contract, ContractRule>>, today: LocalDate): List<ContractNews> =
-    confirmed.map { (contract, rule) ->
-        val last = contract.lastTransaction
-        ContractNews(
-            id = "${ContractNews.Type.NEW_CONTRACT.name}:${rule.id}:${last.id}",
-            type = ContractNews.Type.NEW_CONTRACT,
-            ruleId = rule.id,
-            transactionId = last.id,
-            date = last.date,
-            createdAt = today,
-            contractName = contract.displayName,
-            isIncome = contract.isIncome,
-            isReserve = contract.isReserve,
-            amount = contract.lastAmount,
-            interval = contract.interval
-        )
-    }
+fun newContractNews(
+    confirmed: List<Pair<Contract, ContractRule>>,
+    today: LocalDate
+): List<ContractNews> = confirmed.map { (contract, rule) ->
+    val last = contract.lastTransaction
+    ContractNews(
+        id = "${ContractNews.Type.NEW_CONTRACT.name}:${rule.id}:${last.id}",
+        type = ContractNews.Type.NEW_CONTRACT,
+        ruleId = rule.id,
+        transactionId = last.id,
+        date = last.date,
+        createdAt = today,
+        contractName = contract.displayName,
+        isIncome = contract.isIncome,
+        isReserve = contract.isReserve,
+        amount = contract.lastAmount,
+        interval = contract.interval
+    )
+}
 
 /**
  * Marks news as read that are settled: a missing payment arrived, a stopped contract was cancelled
@@ -185,8 +204,13 @@ fun List<ContractNews>.settling(analysis: ContractAnalysis): List<ContractNews> 
         if (news.isRead) return@map news
         val contract = contracts[news.contractKey]
         val settled = when (news.type) {
-            ContractNews.Type.PAYMENT_MISSING -> contract == null || contract.nextExpectedDate.isAfter(news.date)
-            ContractNews.Type.CONTRACT_STOPPED -> contract == null || contract.isActive || contract.isCancelled
+            ContractNews.Type.PAYMENT_MISSING ->
+                contract == null ||
+                    contract.nextExpectedDate.isAfter(news.date)
+
+            ContractNews.Type.CONTRACT_STOPPED ->
+                contract == null || contract.isActive || contract.isCancelled
+
             else -> false
         }
         if (settled) news.copy(isRead = true) else news
@@ -210,5 +234,8 @@ fun List<ContractNews>.adding(found: List<ContractNews>, today: LocalDate): List
  * Lifts the cancellation of the rules of contracts that were paid again
  */
 fun List<ContractRule>.reactivating(ruleIds: Set<String>): List<ContractRule> =
-    if (ruleIds.isEmpty()) this
-    else map { if (it.id in ruleIds) it.copy(cancelledOn = null, snapshot = null) else it }
+    if (ruleIds.isEmpty()) {
+        this
+    } else {
+        map { if (it.id in ruleIds) it.copy(cancelledOn = null, snapshot = null) else it }
+    }

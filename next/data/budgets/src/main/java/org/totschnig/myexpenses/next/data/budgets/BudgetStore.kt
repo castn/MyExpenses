@@ -28,7 +28,17 @@ class BudgetStore(private val dataStore: DataStore<Preferences>) {
 
     /** Adds [pot], or replaces the pot with its id in its place */
     suspend fun save(pot: Pot) = editPots { pots ->
-        if (pots.any { it.id == pot.id }) pots.map { if (it.id == pot.id) pot else it } else pots + pot
+        if (pots.any { it.id == pot.id }) {
+            pots.map {
+                if (it.id == pot.id) {
+                    pot
+                } else {
+                    it
+                }
+            }
+        } else {
+            pots + pot
+        }
     }
 
     suspend fun delete(id: String) = editPots { pots -> pots.filter { it.id != id } }

@@ -5,25 +5,25 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import kotlinx.serialization.Serializable
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.totschnig.myexpenses.next.core.ui.detailPage
-import org.totschnig.myexpenses.next.core.ui.extraPage
-import org.totschnig.myexpenses.next.core.ui.listPage
-import org.totschnig.myexpenses.next.core.ui.rememberListDetailPages
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
+import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
+import org.totschnig.myexpenses.next.core.ui.detailPage
+import org.totschnig.myexpenses.next.core.ui.extraPage
+import org.totschnig.myexpenses.next.core.ui.listPage
+import org.totschnig.myexpenses.next.core.ui.rememberListDetailPages
 import org.totschnig.myexpenses.next.core.ui.shownOrLeave
 import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactions
 import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactionsScreen
-import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
 import org.totschnig.myexpenses.next.data.tips.Outliers
 import org.totschnig.myexpenses.next.data.tips.SavingTip
 import org.totschnig.myexpenses.next.data.tips.SavingTipsOverview
@@ -37,7 +37,8 @@ sealed interface SavingTipsKey : NavKey {
 
     /** Transactions a tip is about, by their key in [SavingTip.transactionGroups] */
     @Serializable
-    data class Transactions(val key: String, val title: String, val subtitle: String) : SavingTipsKey
+    data class Transactions(val key: String, val title: String, val subtitle: String) :
+        SavingTipsKey
 }
 
 /**
@@ -58,9 +59,12 @@ fun SavingTipsFlow(
     /** Opens the settings of the analyses */
     onInsightSettings: () -> Unit,
     modifier: Modifier = Modifier,
-    transactionDetails: @Composable (transaction: ShownTransaction, isOutlier: Boolean) -> Unit = { _, _ -> },
+    transactionDetails: @Composable (
+        transaction: ShownTransaction,
+        isOutlier: Boolean
+    ) -> Unit = { _, _ -> },
     /** Below the tips, e.g. the tips that still lack data */
-    footer: @Composable () -> Unit = {},
+    footer: @Composable () -> Unit = {}
 ) {
     val state by tipsViewModel.savingTips.collectAsStateWithLifecycle()
     val backStack = rememberNavBackStack(SavingTipsKey.Home)
@@ -102,7 +106,7 @@ private class SavingTipsContent(
     val onOpenContract: (String) -> Unit,
     val onInsightSettings: () -> Unit,
     val transactionDetails: @Composable (ShownTransaction, Boolean) -> Unit,
-    val footer: @Composable () -> Unit,
+    val footer: @Composable () -> Unit
 )
 
 @Composable
@@ -119,7 +123,9 @@ private fun SavingTipsHome(content: SavingTipsContent, backStack: NavBackStack<N
         navigation = TipNavigation(
             onOpenContract = content.onOpenContract,
             onShowTransactions =
-                { key, title, subtitle -> backStack.add(SavingTipsKey.Transactions(key, title, subtitle)) }
+                { key, title, subtitle ->
+                    backStack.add(SavingTipsKey.Transactions(key, title, subtitle))
+                }
         ),
         footer = content.footer
     )
@@ -146,6 +152,8 @@ private fun TransactionsEntry(
         onBack = { backStack.remove(key) }
     ) {
         val isOutlier = key.key.startsWith(Outliers.ID)
-        content.fixedTransactions.List(it) { transaction -> content.transactionDetails(transaction, isOutlier) }
+        content.fixedTransactions.List(it) { transaction ->
+            content.transactionDetails(transaction, isOutlier)
+        }
     }
 }

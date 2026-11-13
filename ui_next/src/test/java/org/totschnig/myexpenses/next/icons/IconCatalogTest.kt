@@ -4,8 +4,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.totschnig.myexpenses.viewmodel.data.FontAwesomeIcons
 import org.totschnig.myexpenses.next.core.common.icons.IconCatalog
+import org.totschnig.myexpenses.viewmodel.data.FontAwesomeIcons
 
 class IconCatalogTest {
 
@@ -49,7 +49,11 @@ class IconCatalogTest {
 
     @Test
     fun searchFindsCuratedFirstThenAllByLabel() {
-        val all = mapOf("dumbbell" to "Dumbbell", "weight-hanging" to "Hanging Weight", "house" to "House")
+        val all = mapOf(
+            "dumbbell" to "Dumbbell",
+            "weight-hanging" to "Hanging Weight",
+            "house" to "House"
+        )
         assertEquals(listOf("dumbbell"), IconCatalog.search("fitness", all))
         assertEquals(listOf("weight-hanging"), IconCatalog.search("weight", all))
         assertEquals(emptyList<String>(), IconCatalog.search("", all))

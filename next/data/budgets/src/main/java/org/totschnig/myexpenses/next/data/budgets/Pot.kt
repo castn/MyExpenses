@@ -73,7 +73,7 @@ data class Pot(
     val savingAccountIds: Set<Long> = emptySet(),
     val itemGroups: Set<String> = emptySet(),
     val maxSharePercent: Int? = null,
-    val icon: String? = null,
+    val icon: String? = null
 ) {
     /** The icon chosen, else one of the [IconCatalog] that fits the name, null if none does */
     val iconName: String? get() = icon ?: IconCatalog.bestFor(name)
@@ -81,17 +81,18 @@ data class Pot(
     /** Whether the pot holds transactions at all, unlike [PotKind.ITEM_GROUP] */
     val holdsTransactions: Boolean
         get() = kind != PotKind.ITEM_GROUP &&
-                (
-                    categoryIds.isNotEmpty() ||
-                        tagIds.isNotEmpty() ||
-                        payeeIds.isNotEmpty() ||
-                        contractRuleIds.isNotEmpty()
+            (
+                categoryIds.isNotEmpty() || tagIds.isNotEmpty() ||
+                    payeeIds.isNotEmpty() || contractRuleIds.isNotEmpty()
                 )
 
     /**
      * Whether a transaction on [date] can belong to the pot: from [start] and, for a project, until
      * [end]. A running pot holds whole periods, so it is always open.
      */
-    fun isOpenOn(date: LocalDate): Boolean = kind == PotKind.RUNNING ||
-            (start == null || !date.isBefore(start)) && (kind != PotKind.PROJECT || end == null || !date.isAfter(end))
+    fun isOpenOn(date: LocalDate): Boolean {
+        if (kind == PotKind.RUNNING) return true
+        return (start == null || !date.isBefore(start)) &&
+            (kind != PotKind.PROJECT || end == null || !date.isAfter(end))
+    }
 }

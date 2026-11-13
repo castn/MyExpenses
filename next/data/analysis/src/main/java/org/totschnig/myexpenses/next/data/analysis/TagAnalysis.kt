@@ -6,8 +6,8 @@ import java.time.temporal.ChronoUnit
 import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
-import org.totschnig.myexpenses.next.data.tags.TagMeaning
 import org.totschnig.myexpenses.next.core.model.ledger.TagInfo
+import org.totschnig.myexpenses.next.data.tags.TagMeaning
 
 /** How the transactions of a tag are evaluated, from its [TagMeaning] */
 enum class TagGroup {
@@ -58,7 +58,7 @@ data class TagEvaluation(
     val total: Long,
     val months: List<MonthAmount>,
     val byCategory: List<CategoryAmount>,
-    val transactionIds: List<Long>,
+    val transactionIds: List<Long>
 ) {
     val count: Int get() = transactionIds.size
 
@@ -82,7 +82,7 @@ data class TagAnalysis(
     val themes: List<TagEvaluation>,
     val business: List<TagEvaluation>,
     val businessYears: List<Int>,
-    val year: Int,
+    val year: Int
 ) {
     val isEmpty: Boolean get() = trips.isEmpty() && themes.isEmpty() && business.isEmpty()
 }
@@ -101,7 +101,7 @@ object TagAnalyzer {
         meanings: Map<Long, TagMeaning>,
         categories: Map<Long, CategoryInfo>,
         today: LocalDate,
-        year: Int? = null,
+        year: Int? = null
     ): TagAnalysis {
         val reimbursed = meanings.filterValues { it == TagMeaning.REIMBURSED }.keys
         // Transfers are no spending, and what was paid back was not really spent
@@ -110,20 +110,30 @@ object TagAnalyzer {
         }
         val byTag = counted.flatMap { transaction -> transaction.tagIds.map { it to transaction } }
             .groupBy({ it.first }, { it.second })
-        fun evaluations(group: TagGroup, period: (List<LedgerTransaction>) -> ClosedRange<LocalDate>?) =
-            tags.filter { TagGroup.of(meanings[it.id]) == group }.mapNotNull { tag ->
-                val transactions = byTag[tag.id] ?: return@mapNotNull null
-                val range = period(transactions) ?: return@mapNotNull null
-                evaluate(tag, group, transactions, range.start, range.endInclusive, categories)
-            }
+        fun evaluations(
+            group: TagGroup,
+            period: (List<LedgerTransaction>) -> ClosedRange<LocalDate>?
+        ) = tags.filter { TagGroup.of(meanings[it.id]) == group }.mapNotNull { tag ->
+            val transactions = byTag[tag.id] ?: return@mapNotNull null
+            val range = period(transactions) ?: return@mapNotNull null
+            evaluate(tag, group, transactions, range.start, range.endInclusive, categories)
+        }
 
         val themeStart = today.withDayOfMonth(1).minusMonths(THEME_MONTHS - 1)
-        val businessTags = tags.filter { meanings[it.id] == TagMeaning.BUSINESS }.mapTo(HashSet()) { it.id }
-        val businessYears = counted.filter { transaction -> transaction.tagIds.any { it in businessTags } }
+        val businessTags = tags.filter {
+            meanings[it.id] == TagMeaning.BUSINESS
+        }.mapTo(HashSet()) { it.id }
+        val businessYears = counted.filter { transaction ->
+            transaction.tagIds.any {
+                it in businessTags
+            }
+        }
             .map { it.date.year }.distinct().sortedDescending()
         val businessYear = year ?: businessYears.firstOrNull() ?: today.year
         return TagAnalysis(
-            trips = evaluations(TagGroup.TRIP) { it.minOf { t -> t.date }..it.maxOf { t -> t.date } }
+            trips = evaluations(TagGroup.TRIP) {
+                it.minOf { t -> t.date }..it.maxOf { t -> t.date }
+            }
                 .sortedByDescending { it.start },
             themes = evaluations(TagGroup.THEME) { themeStart..today }
                 .filter { it.count > 0 }
@@ -145,17 +155,21 @@ object TagAnalyzer {
         transactions: List<LedgerTransaction>,
         start: LocalDate,
         end: LocalDate,
-        categories: Map<Long, CategoryInfo>,
+        categories: Map<Long, CategoryInfo>
     ): TagEvaluation {
         val inPeriod = transactions.filter { it.date in start..end }.sortedBy { it.date }
         fun List<LedgerTransaction>.spent() = -sumOf { it.homeAmount }
         val months = generateSequence(YearMonth.from(start)) { it.plusMonths(1) }
             .takeWhile { !it.isAfter(YearMonth.from(end)) }
-            .map { month -> MonthAmount(month, inPeriod.filter { YearMonth.from(it.date) == month }.spent()) }
+            .map { month ->
+                MonthAmount(month, inPeriod.filter { YearMonth.from(it.date) == month }.spent())
+            }
             .toList()
         val byCategory = inPeriod
             .groupBy { transaction -> transaction.categoryId?.let { categories[it]?.mainId ?: it } }
-            .map { (mainId, group) -> CategoryAmount(mainId, mainId?.let { categories[it]?.label }, group.spent()) }
+            .map { (mainId, group) ->
+                CategoryAmount(mainId, mainId?.let { categories[it]?.label }, group.spent())
+            }
             .sortedByDescending { it.amount }
         return TagEvaluation(
             tagId = tag.id,

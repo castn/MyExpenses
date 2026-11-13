@@ -1,9 +1,9 @@
 package org.totschnig.myexpenses.next.data.contracts
 
+import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.time.LocalDate
 
 class SalaryTest {
 
@@ -13,12 +13,14 @@ class SalaryTest {
         signature: String,
         amount: Long,
         interval: ContractInterval = ContractInterval.MONTHLY,
-        isActive: Boolean = true,
+        isActive: Boolean = true
     ) = Contract(
         signature = signature,
         name = signature,
         interval = interval,
-        transactions = listOf(ContractTransaction(id = 1, date = today.minusDays(5), amount = amount, accountId = 1)),
+        transactions = listOf(
+            ContractTransaction(id = 1, date = today.minusDays(5), amount = amount, accountId = 1)
+        ),
         nextExpectedDate = today.minusDays(5).plus(interval.step),
         isActive = isActive,
         direction = ContractDirection.INCOME
@@ -38,7 +40,10 @@ class SalaryTest {
 
     @Test
     fun userCanChooseSeveralSalariesHighestFirst() {
-        assertEquals(listOf(salary, childBenefit), incomes.salaries(SalaryChoice.Fixed(setOf("child", "salary"))))
+        assertEquals(
+            listOf(salary, childBenefit),
+            incomes.salaries(SalaryChoice.Fixed(setOf("child", "salary")))
+        )
     }
 
     @Test
@@ -48,11 +53,17 @@ class SalaryTest {
 
     @Test
     fun incomesNoLongerReceivedAreLeftOut() {
-        assertEquals(listOf(salary), incomes.salaries(SalaryChoice.Fixed(setOf("salary", "oldJob"))))
+        assertEquals(
+            listOf(salary),
+            incomes.salaries(SalaryChoice.Fixed(setOf("salary", "oldJob")))
+        )
     }
 
     @Test
     fun fallsBackToAutomaticWhenNoChosenIncomeIsLeft() {
-        assertEquals(listOf(rent), incomes.salaries(SalaryChoice.Fixed(setOf("oldJob", "dismissed"))))
+        assertEquals(
+            listOf(rent),
+            incomes.salaries(SalaryChoice.Fixed(setOf("oldJob", "dismissed")))
+        )
     }
 }

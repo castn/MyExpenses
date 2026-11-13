@@ -4,8 +4,8 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,11 +19,11 @@ import org.totschnig.myexpenses.designsystem.InfoRow
 import org.totschnig.myexpenses.designsystem.NavigationRow
 import org.totschnig.myexpenses.designsystem.PageSubtitle
 import org.totschnig.myexpenses.designsystem.SectionTitle
-import org.totschnig.myexpenses.designsystem.Spacing
 import org.totschnig.myexpenses.designsystem.ShareRow
+import org.totschnig.myexpenses.designsystem.Spacing
+import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
-import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.ui.formatRange
 import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
 import org.totschnig.myexpenses.next.core.ui.rememberAxisAmountFormat
@@ -46,7 +46,7 @@ fun TagEvaluationScreen(
     modifier: Modifier = Modifier,
     years: List<Int> = emptyList(),
     year: Int? = null,
-    onSelectYear: ((Int) -> Unit)? = null,
+    onSelectYear: ((Int) -> Unit)? = null
 ) {
     val amount = rememberAmountFormat(currency)
     val dateFormatter = rememberDateFormatter()
@@ -66,7 +66,11 @@ fun TagEvaluationScreen(
             )
         }
         DetailCard {
-            InfoRow(stringResource(R.string.next_analysis_total), amount(evaluation.total), isFirst = true)
+            InfoRow(
+                stringResource(R.string.next_analysis_total),
+                amount(evaluation.total),
+                isFirst = true
+            )
             when (evaluation.group) {
                 TagGroup.TRIP -> InfoRow(
                     pluralStringResource(
@@ -76,10 +80,15 @@ fun TagEvaluationScreen(
                     ),
                     stringResource(R.string.next_analysis_per_day, amount(evaluation.perDay))
                 )
+
                 TagGroup.THEME -> InfoRow(
                     stringResource(R.string.next_analysis_by_month),
-                    stringResource(R.string.next_analysis_per_month, amount(evaluation.monthlyAverage))
+                    stringResource(
+                        R.string.next_analysis_per_month,
+                        amount(evaluation.monthlyAverage)
+                    )
                 )
+
                 TagGroup.BUSINESS -> {}
             }
         }
@@ -94,7 +103,10 @@ fun TagEvaluationScreen(
                             value = spent.toFloat(),
                             valueLabel = amount(spent),
                             description =
-                                "${month.month.getDisplayName(TextStyle.FULL_STANDALONE, locale)} ${month.year}"
+                                "${month.month.getDisplayName(
+                                    TextStyle.FULL_STANDALONE,
+                                    locale
+                                )} ${month.year}"
                         )
                     },
                     Modifier.padding(Spacing.content),
@@ -110,7 +122,11 @@ fun TagEvaluationScreen(
                     ShareRow(
                         label = category.label ?: noCategory,
                         value = amount(category.amount),
-                        share = if (evaluation.total > 0) category.amount.toFloat() / evaluation.total else 0f,
+                        share = if (evaluation.total > 0) {
+                            category.amount.toFloat() / evaluation.total
+                        } else {
+                            0f
+                        },
                         isFirst = index == 0,
                         isMuted = category.mainCategoryId == null
                     )
@@ -120,7 +136,11 @@ fun TagEvaluationScreen(
         SectionTitle(stringResource(R.string.next_analysis_transactions_title))
         DetailCard {
             NavigationRow(
-                title = pluralStringResource(R.plurals.next_analysis_transactions, evaluation.count, evaluation.count),
+                title = pluralStringResource(
+                    R.plurals.next_analysis_transactions,
+                    evaluation.count,
+                    evaluation.count
+                ),
                 supportingText = evaluation.label,
                 onClick = onShowTransactions,
                 isFirst = true
@@ -147,6 +167,7 @@ private fun TagEvaluationScreenPreview() {
 @Composable
 private fun TripEvaluationPreview() {
     NextPreviewTheme {
-        TagEvaluationScreen(previewAnalysis().trips.first(), CurrencyInfo.Preview, onBack = {}, onShowTransactions = {})
+        TagEvaluationScreen(previewAnalysis().trips.first(), CurrencyInfo.Preview, onBack = {
+        }, onShowTransactions = {})
     }
 }

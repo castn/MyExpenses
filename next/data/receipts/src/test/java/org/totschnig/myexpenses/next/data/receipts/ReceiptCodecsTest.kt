@@ -48,14 +48,27 @@ class ReceiptCodecsTest {
 
     @Test
     fun writesAndReadsEachTarget() {
-        listOf(ReceiptTarget.Unassigned, ReceiptTarget.Waiting(null), ReceiptTarget.Waiting(3)).forEach { target ->
+        listOf(
+            ReceiptTarget.Unassigned,
+            ReceiptTarget.Waiting(null),
+            ReceiptTarget.Waiting(3)
+        ).forEach { target ->
             assertEquals(target, receiptDraftOf(draft.copy(target = target).toJson())?.target)
         }
     }
 
     @Test
     fun writesAndReadsDraftWithoutOptionalFields() {
-        val minimal = ReceiptDraft(ReceiptTarget.Waiting(null), 0, null, null, emptyList(), null, isNewPhoto = false)
+        val minimal =
+            ReceiptDraft(
+                ReceiptTarget.Waiting(null),
+                0,
+                null,
+                null,
+                emptyList(),
+                null,
+                isNewPhoto = false
+            )
         assertEquals(minimal, receiptDraftOf(minimal.toJson()))
     }
 

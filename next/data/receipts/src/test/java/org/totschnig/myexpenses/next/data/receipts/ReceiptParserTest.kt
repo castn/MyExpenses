@@ -1,5 +1,6 @@
 package org.totschnig.myexpenses.next.data.receipts
 
+import java.math.BigDecimal
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -10,7 +11,6 @@ import org.totschnig.myexpenses.feature.RecognizedBlock
 import org.totschnig.myexpenses.feature.RecognizedLine
 import org.totschnig.myexpenses.feature.RecognizedText
 import org.totschnig.myexpenses.feature.recognizedTextFromJson
-import java.math.BigDecimal
 
 class ReceiptParserTest {
 
@@ -18,13 +18,19 @@ class ReceiptParserTest {
         recognizedTextFromJson(ReceiptFixtures.text(name))
     )
 
-    private fun ParsedReceipt.summary() = items.map { Triple(it.name, it.amount, it.quantity.toPlainString()) }
+    private fun ParsedReceipt.summary() = items.map {
+        Triple(it.name, it.amount, it.quantity.toPlainString())
+    }
 
     /** Name column and price column as separate blocks, one line per row of [rows] */
     private fun receipt(vararg rows: Pair<String, String?>) = RecognizedText(
         listOf(
             RecognizedBlock(rows.mapIndexed { i, (name, _) -> line(name, 0, i) }),
-            RecognizedBlock(rows.mapIndexedNotNull { i, (_, price) -> price?.let { line(it, 800, i) } })
+            RecognizedBlock(
+                rows.mapIndexedNotNull { i, (_, price) ->
+                    price?.let { line(it, 800, i) }
+                }
+            )
         )
     )
 
@@ -65,7 +71,7 @@ class ReceiptParserTest {
                 Triple("Spitzpapr ika Mix", 179L, "1"),
                 Triple("Laugenzopf m. Käse", 59L, "1"),
                 // quantity row printed above the item
-                Triple("Körner-Krusti", 178L, "2"),
+                Triple("Körner-Krusti", 178L, "2")
             ),
             receipt.summary()
         )
@@ -142,7 +148,10 @@ class ReceiptParserTest {
     fun diyStoreWithArticleNumberBelowName() {
         val receipt = fixture("baumarkt")
         assertEquals(
-            listOf(Triple("EinschlagMutt. M10", 379L, "1"), Triple("EinschlagMutt. M10", 379L, "1")),
+            listOf(
+                Triple("EinschlagMutt. M10", 379L, "1"),
+                Triple("EinschlagMutt. M10", 379L, "1")
+            ),
             receipt.summary()
         )
         assertEquals("A", receipt.items[0].taxClass)
@@ -258,7 +267,10 @@ class ReceiptParserTest {
     fun discountAndDeposit() {
         val receipt = ReceiptParser.parse(
             receipt(
-                "MILCH" to "1,19 A", "RABATT" to "-0,30 A", "PFAND" to "0,25 A", "LEERGUT" to "0,25- A",
+                "MILCH" to "1,19 A",
+                "RABATT" to "-0,30 A",
+                "PFAND" to "0,25 A",
+                "LEERGUT" to "0,25- A",
                 "SUMME" to "0,89"
             )
         )
@@ -268,7 +280,13 @@ class ReceiptParserTest {
 
     @Test
     fun quantityWithoutMatchingItemIsIgnored() {
-        val receipt = ReceiptParser.parse(receipt("BROT" to "2,49 A", "2 x 0,89" to null, "SUMME" to "2,49"))
+        val receipt = ReceiptParser.parse(
+            receipt(
+                "BROT" to "2,49 A",
+                "2 x 0,89" to null,
+                "SUMME" to "2,49"
+            )
+        )
         assertEquals(BigDecimal.ONE, receipt.items.single().quantity)
         assertNull(receipt.items.single().unitPrice)
     }
@@ -283,7 +301,13 @@ class ReceiptParserTest {
 
     @Test
     fun checkReportsDifferences() {
-        val receipt = ReceiptParser.parse(receipt("BROT" to "2,49 A", "MILCH" to "1,19 A", "SUMME" to "3,98"))
+        val receipt = ReceiptParser.parse(
+            receipt(
+                "BROT" to "2,49 A",
+                "MILCH" to "1,19 A",
+                "SUMME" to "3,98"
+            )
+        )
         val check = ReceiptCheck(receipt, 400)
         assertEquals(-30L, check.itemsDifference)
         assertEquals(-2L, check.totalDifference)
@@ -319,7 +343,12 @@ class ReceiptParserTest {
     @Test
     fun cardAmountBelowTheCardRow() {
         val receipt = ReceiptParser.parse(
-            receipt("BROT" to "2,49 B", "SUMME" to "2,49", "Kartenzahlung" to null, "EUR 2,49" to null)
+            receipt(
+                "BROT" to "2,49 B",
+                "SUMME" to "2,49",
+                "Kartenzahlung" to null,
+                "EUR 2,49" to null
+            )
         )
         assertEquals(249L, receipt.cardAmount)
     }
@@ -353,18 +382,30 @@ class ReceiptParserTest {
 
     @Test
     fun itemOfLeftoverRows() {
-        fun row(text: String, index: Int) = LeftoverRow(text, Box(0, index * 100, 1000, index * 100 + 80))
+        fun row(text: String, index: Int) = LeftoverRow(
+            text,
+            Box(
+                0,
+                index * 100,
+                1000,
+                index * 100 + 80
+            )
+        )
         val single = ReceiptParser.itemOf(listOf(row("KARTOFFELN 2,22 B", 0)))
         assertEquals("KARTOFFELN", single.name)
         assertEquals(222L, single.amount)
         assertEquals("B", single.taxClass)
 
-        val nameAndPrice = ReceiptParser.itemOf(listOf(row("BIO HAFER", 1), row("DRINK", 2), row("1,99 A", 3)))
+        val nameAndPrice = ReceiptParser.itemOf(
+            listOf(row("BIO HAFER", 1), row("DRINK", 2), row("1,99 A", 3))
+        )
         assertEquals("BIO HAFER DRINK", nameAndPrice.name)
         assertEquals(199L, nameAndPrice.amount)
         assertEquals(Box(0, 100, 1000, 380), nameAndPrice.box)
 
-        val withQuantity = ReceiptParser.itemOf(listOf(row("BROETCHEN", 4), row("4 x 0,35", 5), row("1,40 B", 6)))
+        val withQuantity = ReceiptParser.itemOf(
+            listOf(row("BROETCHEN", 4), row("4 x 0,35", 5), row("1,40 B", 6))
+        )
         assertEquals(140L, withQuantity.amount)
         assertEquals(35L, withQuantity.unitPrice)
 

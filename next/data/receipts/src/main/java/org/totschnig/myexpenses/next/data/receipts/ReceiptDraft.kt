@@ -1,11 +1,11 @@
 package org.totschnig.myexpenses.next.data.receipts
 
 import android.net.Uri
-import org.totschnig.myexpenses.feature.productKey
-import org.totschnig.myexpenses.feature.Box
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDate
+import org.totschnig.myexpenses.feature.Box
+import org.totschnig.myexpenses.feature.productKey
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
 
 /** Where a scanned receipt goes */
@@ -46,7 +46,7 @@ data class ReceiptDraft(
     val isStandalone: Boolean = false,
     /** Rows among the items no item was read from, only known right after reading the receipt */
     val leftoverRows: List<LeftoverRow> = emptyList(),
-    val proposals: Map<String, ItemGroup> = emptyMap(),
+    val proposals: Map<String, ItemGroup> = emptyMap()
 ) {
     /** [leftoverRows] not yet taken as an item by the user */
     val openLeftoverRows: List<LeftoverRow>
@@ -54,7 +54,8 @@ data class ReceiptDraft(
 
     /** Where an item read from [box] goes, so that the items keep the order of the receipt */
     fun insertionIndex(box: Box): Int =
-        items.indexOfFirst { item -> item.box?.let { it.top > box.top } == true }.takeIf { it >= 0 } ?: items.size
+        items.indexOfFirst { item -> item.box?.let { it.top > box.top } == true }.takeIf { it >= 0 }
+            ?: items.size
 
     val check: ReceiptCheck
         get() = ReceiptCheck(ParsedReceipt(merchant, items, total, itemCount), transactionAmount)
@@ -67,16 +68,31 @@ data class ReceiptDraft(
         merchant: String? = this.merchant,
         date: LocalDate? = this.date,
         total: Long? = this.total,
-        cardAmount: Long? = this.cardAmount,
-    ) = copy(merchant = merchant, date = date, total = total, cardAmount = cardAmount, isChanged = true)
+        cardAmount: Long? = this.cardAmount
+    ) = copy(
+        merchant = merchant,
+        date = date,
+        total = total,
+        cardAmount = cardAmount,
+        isChanged = true
+    )
 
     fun update(index: Int, item: ReceiptItem) =
         copy(items = items.toMutableList().apply { set(index, item) }, isChanged = true)
 
-    fun remove(index: Int) = copy(items = items.toMutableList().apply { removeAt(index) }, isChanged = true)
+    fun remove(index: Int) = copy(
+        items = items.toMutableList().apply {
+            removeAt(index)
+        },
+        isChanged = true
+    )
 
-    fun insert(index: Int, item: ReceiptItem) =
-        copy(items = items.toMutableList().apply { add(index.coerceIn(0, size), item) }, isChanged = true)
+    fun insert(index: Int, item: ReceiptItem) = copy(
+        items = items.toMutableList().apply {
+            add(index.coerceIn(0, size), item)
+        },
+        isChanged = true
+    )
 
     /** Purchased items without group; discounts and returned deposit are left out */
     val itemsWithoutGroup: List<Int>
@@ -119,11 +135,19 @@ data class ReceiptDraft(
     )
 
     companion object {
-        fun recognized(target: ReceiptTarget, transactionAmount: Long, receipt: ParsedReceipt, photo: Uri) =
-            of(
-                target, transactionAmount, receipt.toReceipt().copy(photo = photo), isNewPhoto = true,
-                receipt.itemCount, receipt.leftoverRows
-            )
+        fun recognized(
+            target: ReceiptTarget,
+            transactionAmount: Long,
+            receipt: ParsedReceipt,
+            photo: Uri
+        ) = of(
+            target,
+            transactionAmount,
+            receipt.toReceipt().copy(photo = photo),
+            isNewPhoto = true,
+            receipt.itemCount,
+            receipt.leftoverRows
+        )
 
         fun saved(target: ReceiptTarget, transactionAmount: Long, receipt: Receipt) =
             of(target, transactionAmount, receipt, isNewPhoto = false)
@@ -134,10 +158,11 @@ data class ReceiptDraft(
             receipt: Receipt,
             isNewPhoto: Boolean,
             itemCount: Int? = null,
-            leftoverRows: List<LeftoverRow> = emptyList(),
+            leftoverRows: List<LeftoverRow> = emptyList()
         ) = ReceiptDraft(
             target, transactionAmount, receipt.merchant, receipt.total, receipt.items,
-            receipt.photo, isNewPhoto, itemCount, date = receipt.date, cardAmount = receipt.cardAmount,
+            receipt.photo, isNewPhoto, itemCount, date = receipt.date,
+            cardAmount = receipt.cardAmount,
             leftoverRows = leftoverRows
         )
     }
@@ -147,10 +172,15 @@ data class ReceiptDraft(
  * Groups found by [ItemGroupClassifier], one per item, for the items that have none; suggestions
  * it is not sure of are left out
  */
-fun List<ReceiptItem>.withSuggestedGroups(suggestions: List<ItemGroupSuggestion?>) = mapIndexed { i, item ->
-    val suggestion = suggestions.getOrNull(i)?.takeIf { it.confident }
-    if (item.group == null && !item.groupByUser && suggestion != null) item.copy(group = suggestion.group.id) else item
-}
+fun List<ReceiptItem>.withSuggestedGroups(suggestions: List<ItemGroupSuggestion?>) =
+    mapIndexed { i, item ->
+        val suggestion = suggestions.getOrNull(i)?.takeIf { it.confident }
+        if (item.group == null && !item.groupByUser && suggestion != null) {
+            item.copy(group = suggestion.group.id)
+        } else {
+            item
+        }
+    }
 
 /**
  * Text of amount fields: minor units shown with [decimalSeparator], read back with comma or dot

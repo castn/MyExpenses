@@ -21,12 +21,20 @@ import androidx.compose.ui.Modifier
  * @return [value], null while the page shows nothing else
  */
 @Composable
-fun <T : Any> shownOrLeave(value: T?, isLoaded: Boolean, awaitNew: Boolean = false, onGone: () -> Unit): T? {
+fun <T : Any> shownOrLeave(
+    value: T?,
+    isLoaded: Boolean,
+    awaitNew: Boolean = false,
+    onGone: () -> Unit
+): T? {
     var wasShown by rememberSaveable { mutableStateOf(false) }
     if (value != null && !wasShown) wasShown = true
     if (value == null) {
-        if (isLoaded && (wasShown || !awaitNew)) LaunchedEffect(Unit) { onGone() }
-        else CircularProgressIndicator(Modifier.fillMaxSize().wrapContentSize())
+        if (isLoaded && (wasShown || !awaitNew)) {
+            LaunchedEffect(Unit) { onGone() }
+        } else {
+            CircularProgressIndicator(Modifier.fillMaxSize().wrapContentSize())
+        }
     }
     return value
 }

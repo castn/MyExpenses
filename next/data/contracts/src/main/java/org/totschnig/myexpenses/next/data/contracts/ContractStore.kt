@@ -60,7 +60,10 @@ class ContractStore(private val dataStore: DataStore<Preferences>) {
 
         /** The salary [old] is now part of the contract with signature [new] */
         fun replaceSalary(old: String, new: String) {
-            preferences[KEY_SALARIES]?.takeIf { old in it }?.let { preferences[KEY_SALARIES] = it - old + new }
+            preferences[KEY_SALARIES]?.takeIf { old in it }?.let {
+                preferences[KEY_SALARIES] =
+                    it - old + new
+            }
         }
 
         /**
@@ -93,19 +96,26 @@ class ContractStore(private val dataStore: DataStore<Preferences>) {
 
     private companion object {
         val KEY_DISMISSED = stringSetPreferencesKey("next_contracts_dismissed")
+
         /** JSON object mapping signatures to custom names */
         val KEY_NAMES = stringPreferencesKey("next_contracts_names")
+
         /** JSON object mapping signatures to the key of a [ContractArea] or [ContractSettings.AREA_NONE] */
         val KEY_AREAS = stringPreferencesKey("next_contracts_areas")
+
         /** JSON array of the categories created by the user */
         val KEY_CUSTOM_AREAS = stringPreferencesKey("next_contracts_custom_areas")
+
         /** [SALARY_NONE] for the calendar month */
         val KEY_SALARY = stringPreferencesKey("next_contracts_salary")
+
         /** Signatures of the incomes chosen as salaries, missing for the automatic choice */
         val KEY_SALARIES = stringSetPreferencesKey("next_contracts_salaries")
+
         /** JSON array of [ContractRule]s */
         val KEY_RULES = stringPreferencesKey("next_contracts_rules")
         val KEY_RULES_MIGRATED = booleanPreferencesKey("next_contracts_rules_migrated")
+
         /** JSON array of [ContractNews] */
         val KEY_NEWS = stringPreferencesKey("next_contracts_news")
         const val SALARY_NONE = "NONE"
@@ -126,6 +136,7 @@ class ContractStore(private val dataStore: DataStore<Preferences>) {
 
         fun Preferences.news() = this[KEY_NEWS]?.let(::parseNews) ?: emptyList()
 
-        fun Preferences.customAreas() = this[KEY_CUSTOM_AREAS]?.let(::parseCustomAreas) ?: emptyList()
+        fun Preferences.customAreas() =
+            this[KEY_CUSTOM_AREAS]?.let(::parseCustomAreas) ?: emptyList()
     }
 }

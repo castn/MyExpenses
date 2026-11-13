@@ -9,7 +9,11 @@ import org.totschnig.myexpenses.next.data.contracts.Contract
  * Like the monthly balance, a period runs from salary to salary, or is the calendar month without
  * salary, see [BalancePeriod.of]. Before the first salary in the history, there are no periods.
  */
-fun budgetPeriods(salary: Contract?, today: LocalDate, historyStart: LocalDate): List<BalancePeriod> {
+fun budgetPeriods(
+    salary: Contract?,
+    today: LocalDate,
+    historyStart: LocalDate
+): List<BalancePeriod> {
     val current = BalancePeriod.of(salary, today)
     val earlier = if (current.isSalaryCycle) {
         val paydays = salary!!.transactions.map { it.date }

@@ -42,26 +42,27 @@ class MerchantLogosTest {
         directory.deleteRecursively()
     }
 
-    private fun withLogos(block: suspend (MerchantLogos, PayeeDomainStore, PayeeIconStore) -> Unit) =
-        withTestDataStore { dataStore ->
-            runTest {
-                val domains = PayeeDomainStore(dataStore)
-                val icons = PayeeIconStore(dataStore)
-                val logos = MerchantLogos(
-                    MutableStateFlow(listOf(RawPayee(1, "Stadtwerke", null, null))),
-                    MerchantLogoConsent(dataStore),
-                    domains,
-                    icons,
-                    MerchantLogoStore(directory, fetch = { MerchantLogoStore.Fetched.Missing })
-                )
-                try {
-                    block(logos, domains, icons)
-                } finally {
-                    // Its coroutines must not outlive the test dispatcher set as Main
-                    logos.viewModelScope.coroutineContext.job.cancelAndJoin()
-                }
+    private fun withLogos(
+        block: suspend (MerchantLogos, PayeeDomainStore, PayeeIconStore) -> Unit
+    ) = withTestDataStore { dataStore ->
+        runTest {
+            val domains = PayeeDomainStore(dataStore)
+            val icons = PayeeIconStore(dataStore)
+            val logos = MerchantLogos(
+                MutableStateFlow(listOf(RawPayee(1, "Stadtwerke", null, null))),
+                MerchantLogoConsent(dataStore),
+                domains,
+                icons,
+                MerchantLogoStore(directory, fetch = { MerchantLogoStore.Fetched.Missing })
+            )
+            try {
+                block(logos, domains, icons)
+            } finally {
+                // Its coroutines must not outlive the test dispatcher set as Main
+                logos.viewModelScope.coroutineContext.job.cancelAndJoin()
             }
         }
+    }
 
     @Test
     fun showsChosenIconUntilAutomaticAgain() = withLogos { logos, _, icons ->

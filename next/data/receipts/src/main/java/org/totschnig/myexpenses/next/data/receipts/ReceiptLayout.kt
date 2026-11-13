@@ -16,6 +16,7 @@ internal object ReceiptLayout {
     /** Segments starting left of this share of the width start a row */
     private const val ANCHOR_SHARE = 0.45
     private const val MIN_OVERLAP = 0.25
+
     /** Minimal distance between first and last word to measure the tilt of a row */
     private const val MIN_SLOPE_DISTANCE = 300
     private const val SLOPE_NEIGHBOURS = 2
@@ -36,10 +37,16 @@ internal object ReceiptLayout {
 
         fun overlapWith(segment: Box): Double {
             val shift = (slope * (segment.left - reference.left)).toInt()
-            return overlap(segment, reference.copy(top = reference.top + shift, bottom = reference.bottom + shift))
+            return overlap(
+                segment,
+                reference.copy(
+                    top = reference.top + shift,
+                    bottom =
+                        reference.bottom + shift
+                )
+            )
         }
     }
-
 
     /** Tilt from the first to the last word, null if the words are too close for a reliable value */
     private fun slopeOf(line: RecognizedLine): Double? {
@@ -59,7 +66,11 @@ internal object ReceiptLayout {
      * @param isLoneSign whether a segment is only the sign between quantity and price, which does
      * not start a row
      */
-    fun rows(lines: List<RecognizedLine>, isPrice: (String) -> Boolean, isLoneSign: (String) -> Boolean): List<Row> {
+    fun rows(
+        lines: List<RecognizedLine>,
+        isPrice: (String) -> Boolean,
+        isLoneSign: (String) -> Boolean
+    ): List<Row> {
         if (lines.isEmpty()) return emptyList()
         val left = lines.minOf { it.box!!.left }
         val right = lines.maxOf { it.box!!.right }
@@ -72,10 +83,19 @@ internal object ReceiptLayout {
         val slopes = lineGroups.map { group -> group.firstNotNullOfOrNull(::slopeOf) }
         val overall = slopes.filterNotNull().median() ?: 0.0
         val rows = lineGroups.mapIndexed { i, group ->
-            val nearby = slopes.subList(maxOf(0, i - SLOPE_NEIGHBOURS), minOf(slopes.size, i + SLOPE_NEIGHBOURS + 1))
+            val nearby = slopes.subList(
+                maxOf(0, i - SLOPE_NEIGHBOURS),
+                minOf(
+                    slopes.size,
+                    i + SLOPE_NEIGHBOURS + 1
+                )
+            )
             val slope = (nearby.filterNotNull().median() ?: overall).coerceIn(-MAX_SLOPE, MAX_SLOPE)
             val anchor = group.first()
-            Row(anchor, anchor.elements.firstOrNull()?.box ?: anchor.box!!, slope).apply { parts += group.drop(1) }
+            Row(anchor, anchor.elements.firstOrNull()?.box ?: anchor.box!!, slope).apply {
+                parts +=
+                    group.drop(1)
+            }
         }
         val unattached = others.toMutableList()
         val (prices, rest) = others.partition { isPrice(it.text) }
@@ -87,7 +107,9 @@ internal object ReceiptLayout {
             }
         }
         // Attach the best overlaps first
-        rest.flatMap { segment -> rows.map { row -> Triple(segment, row, row.overlapWith(segment.box!!)) } }
+        rest.flatMap { segment ->
+            rows.map { row -> Triple(segment, row, row.overlapWith(segment.box!!)) }
+        }
             .filter { it.third >= MIN_OVERLAP }
             .sortedByDescending { it.third }
             .forEach { (segment, row, _) ->
@@ -96,7 +118,9 @@ internal object ReceiptLayout {
                     unattached -= segment
                 }
             }
-        return (rows + unattached.map { Row(it, it.box!!, 0.0) }).sortedBy { it.box.top + it.box.bottom }
+        return (rows + unattached.map { Row(it, it.box!!, 0.0) }).sortedBy {
+            it.box.top + it.box.bottom
+        }
     }
 
     /** Anchors side by side on the same line ("Total" and "5 Pos"), the leftmost first */
@@ -107,7 +131,7 @@ internal object ReceiptLayout {
             groups.takeLast(SAME_LINE_LOOKBACK).firstOrNull { group ->
                 group.all { other ->
                     overlap(box, other.box!!) >= SAME_LINE_OVERLAP &&
-                            (box.left >= other.box!!.right || other.box!!.left >= box.right)
+                        (box.left >= other.box!!.right || other.box!!.left >= box.right)
                 }
             }?.add(anchor) ?: groups.add(mutableListOf(anchor))
         }
@@ -119,26 +143,40 @@ internal object ReceiptLayout {
         val columns = mutableListOf<Pair<IntRange, MutableList<RecognizedLine>>>()
         for (price in prices.sortedBy { it.box!!.left }) {
             val box = price.box!!
-            val index = columns.indexOfFirst { (range, _) -> box.left <= range.last && range.first <= box.right }
+            val index = columns.indexOfFirst { (range, _) ->
+                box.left <= range.last && range.first <= box.right
+            }
             if (index < 0) {
                 columns += (box.left..box.right) to mutableListOf(price)
             } else {
                 val (range, members) = columns[index]
                 members += price
-                columns[index] = minOf(range.first, box.left)..maxOf(range.last, box.right) to members
+                columns[index] =
+                    minOf(range.first, box.left)..maxOf(range.last, box.right) to members
             }
         }
         return columns.map { it.second }
     }
 
     /** Order preserving assignment of [segments] to [rows] with the largest overlap in total */
-    private fun alignment(rows: List<Row>, segments: List<RecognizedLine>): List<Pair<Row, RecognizedLine>> {
+    private fun alignment(
+        rows: List<Row>,
+        segments: List<RecognizedLine>
+    ): List<Pair<Row, RecognizedLine>> {
         val sorted = segments.sortedBy { it.box!!.top + it.box!!.bottom }
-        val score = Array(rows.size) { i -> DoubleArray(sorted.size) { j -> rows[i].overlapWith(sorted[j].box!!) } }
+        val score =
+            Array(rows.size) { i ->
+                DoubleArray(sorted.size) { j -> rows[i].overlapWith(sorted[j].box!!) }
+            }
         val best = Array(rows.size + 1) { DoubleArray(sorted.size + 1) }
-        for (i in 1..rows.size) for (j in 1..sorted.size) {
-            val matched = score[i - 1][j - 1].takeIf { it >= MIN_OVERLAP }?.let { best[i - 1][j - 1] + it }
-            best[i][j] = maxOf(best[i - 1][j], best[i][j - 1], matched ?: Double.NEGATIVE_INFINITY)
+        for (i in 1..rows.size) {
+            for (j in 1..sorted.size) {
+                val matched = score[i - 1][j - 1].takeIf { it >= MIN_OVERLAP }?.let {
+                    best[i - 1][j - 1] + it
+                }
+                best[i][j] =
+                    maxOf(best[i - 1][j], best[i][j - 1], matched ?: Double.NEGATIVE_INFINITY)
+            }
         }
         val pairs = mutableListOf<Pair<Row, RecognizedLine>>()
         var i = rows.size
@@ -151,7 +189,9 @@ internal object ReceiptLayout {
                     i--
                     j--
                 }
+
                 best[i][j] == best[i - 1][j] -> i--
+
                 else -> j--
             }
         }
@@ -168,5 +208,9 @@ internal object ReceiptLayout {
     }
 }
 
-internal fun union(a: Box, b: Box) =
-    Box(minOf(a.left, b.left), minOf(a.top, b.top), maxOf(a.right, b.right), maxOf(a.bottom, b.bottom))
+internal fun union(a: Box, b: Box) = Box(
+    minOf(a.left, b.left),
+    minOf(a.top, b.top),
+    maxOf(a.right, b.right),
+    maxOf(a.bottom, b.bottom)
+)

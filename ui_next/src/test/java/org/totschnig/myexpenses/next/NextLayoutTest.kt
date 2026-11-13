@@ -41,10 +41,40 @@ class NextLayoutTest {
 
     @Test
     fun showsMoreActionsOnWiderWindowsAndFewerAtLargeFonts() {
-        assertEquals(6, visibleActionItems(isExpanded = true, isMedium = true, is2Pane = false, fontScale = 1f))
-        assertEquals(4, visibleActionItems(isExpanded = true, isMedium = true, is2Pane = true, fontScale = 1f))
-        assertEquals(2, visibleActionItems(isExpanded = false, isMedium = false, is2Pane = false, fontScale = 1f))
-        assertEquals(1, visibleActionItems(isExpanded = false, isMedium = false, is2Pane = false, fontScale = 1.2f))
-        assertEquals(0, visibleActionItems(isExpanded = false, isMedium = false, is2Pane = false, fontScale = 2f))
+        assertEquals(
+            6,
+            visibleActionItems(isExpanded = true, isMedium = true, is2Pane = false, fontScale = 1f)
+        )
+        assertEquals(
+            4,
+            visibleActionItems(isExpanded = true, isMedium = true, is2Pane = true, fontScale = 1f)
+        )
+        assertEquals(
+            2,
+            visibleActionItems(
+                isExpanded = false,
+                isMedium = false,
+                is2Pane = false,
+                fontScale = 1f
+            )
+        )
+        assertEquals(
+            1,
+            visibleActionItems(
+                isExpanded = false,
+                isMedium = false,
+                is2Pane = false,
+                fontScale = 1.2f
+            )
+        )
+        assertEquals(
+            0,
+            visibleActionItems(
+                isExpanded = false,
+                isMedium = false,
+                is2Pane = false,
+                fontScale = 2f
+            )
+        )
     }
 }

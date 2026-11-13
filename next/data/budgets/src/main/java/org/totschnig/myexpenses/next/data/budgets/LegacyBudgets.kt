@@ -23,7 +23,7 @@ data class LegacyBudget(
     val categoryAllocations: Map<Long, Long> = emptyMap(),
     val categoryIds: Set<Long> = emptySet(),
     val tagIds: Set<Long> = emptySet(),
-    val payeeIds: Set<Long> = emptySet(),
+    val payeeIds: Set<Long> = emptySet()
 )
 
 object LegacyBudgets {
@@ -42,37 +42,47 @@ object LegacyBudgets {
         homeCurrency: String,
         categories: Map<Long, CategoryInfo>,
         today: LocalDate
-    ): List<Pot> =
-        budgets.filter { it.currency == homeCurrency }.flatMap { budget ->
-            val kind = when (budget.grouping) {
-                LegacyPeriod.YEAR -> PotKind.YEARLY
-                LegacyPeriod.NONE -> PotKind.PROJECT
-                else -> PotKind.RUNNING
-            }
-            fun amount(value: Long) = when (budget.grouping) {
-                LegacyPeriod.WEEK -> value * 52 / 12
-                LegacyPeriod.DAY -> value * 365 / 12
-                else -> value
-            }
-            fun pot(name: String, amount: Long, categoryIds: Set<Long>) = Pot(
-                name = name,
-                kind = kind,
-                amount = amount(amount),
-                categoryIds = categoryIds,
-                tagIds = budget.tagIds,
-                payeeIds = budget.payeeIds,
-                start = if (kind == PotKind.PROJECT) budget.start else today,
-                end = if (kind == PotKind.PROJECT) budget.end else null
-            )
-            val allocations = budget.categoryAllocations.filter { (id, amount) -> amount > 0 && id in categories }
-            if (allocations.isNotEmpty()) {
-                allocations.map { (id, amount) -> pot(categories.getValue(id).label, amount, setOf(id)) }
-            } else if (budget.total > 0) {
-                val holdsAll = budget.categoryIds.isEmpty() && budget.tagIds.isEmpty() && budget.payeeIds.isEmpty()
-                val categoryIds = if (holdsAll) {
-                    categories.values.filter { it.isExpense && it.parentId == null }.mapTo(LinkedHashSet()) { it.id }
-                } else budget.categoryIds
-                listOf(pot(budget.title, budget.total, categoryIds))
-            } else emptyList()
+    ): List<Pot> = budgets.filter { it.currency == homeCurrency }.flatMap { budget ->
+        val kind = when (budget.grouping) {
+            LegacyPeriod.YEAR -> PotKind.YEARLY
+            LegacyPeriod.NONE -> PotKind.PROJECT
+            else -> PotKind.RUNNING
         }
+        fun amount(value: Long) = when (budget.grouping) {
+            LegacyPeriod.WEEK -> value * 52 / 12
+            LegacyPeriod.DAY -> value * 365 / 12
+            else -> value
+        }
+        fun pot(name: String, amount: Long, categoryIds: Set<Long>) = Pot(
+            name = name,
+            kind = kind,
+            amount = amount(amount),
+            categoryIds = categoryIds,
+            tagIds = budget.tagIds,
+            payeeIds = budget.payeeIds,
+            start = if (kind == PotKind.PROJECT) budget.start else today,
+            end = if (kind == PotKind.PROJECT) budget.end else null
+        )
+        val allocations = budget.categoryAllocations.filter { (id, amount) ->
+            amount > 0 && id in categories
+        }
+        if (allocations.isNotEmpty()) {
+            allocations.map { (id, amount) ->
+                pot(categories.getValue(id).label, amount, setOf(id))
+            }
+        } else if (budget.total > 0) {
+            val holdsAll =
+                budget.categoryIds.isEmpty() && budget.tagIds.isEmpty() && budget.payeeIds.isEmpty()
+            val categoryIds = if (holdsAll) {
+                categories.values.filter {
+                    it.isExpense && it.parentId == null
+                }.mapTo(LinkedHashSet()) { it.id }
+            } else {
+                budget.categoryIds
+            }
+            listOf(pot(budget.title, budget.total, categoryIds))
+        } else {
+            emptyList()
+        }
+    }
 }

@@ -1,11 +1,11 @@
 package org.totschnig.myexpenses.next.data.contracts
 
+import java.time.LocalDate
+import java.time.Period
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.time.LocalDate
-import java.time.Period
 
 class ContractDetectorTest {
 
@@ -18,7 +18,7 @@ class ContractDetectorTest {
         amount: Long,
         payeeId: Long? = 1,
         payeeName: String? = "Payee $payeeId",
-        templateId: Long? = null,
+        templateId: Long? = null
     ) = ContractTransaction(
         id = nextId++,
         date = date,
@@ -39,7 +39,7 @@ class ContractDetectorTest {
         last: LocalDate = today.minusDays(3),
         payeeId: Long? = 1,
         templateId: Long? = null,
-        amountAt: (Int) -> Long = { amount },
+        amountAt: (Int) -> Long = { amount }
     ) = (0 until count).map { i ->
         transaction(
             date = last.minus(step.multipliedBy(count - 1 - i)),
@@ -62,8 +62,11 @@ class ContractDetectorTest {
     @Test
     fun toleratesShiftedDebitDates() {
         val dates = listOf(
-            LocalDate.of(2026, 5, 1), LocalDate.of(2026, 6, 2), LocalDate.of(2026, 6, 30),
-            LocalDate.of(2026, 8, 3), LocalDate.of(2026, 9, 1)
+            LocalDate.of(2026, 5, 1),
+            LocalDate.of(2026, 6, 2),
+            LocalDate.of(2026, 6, 30),
+            LocalDate.of(2026, 8, 3),
+            LocalDate.of(2026, 9, 1)
         )
         val contract = detector.detect(dates.map { transaction(it, -4999) }).single()
         assertEquals(ContractInterval.MONTHLY, contract.interval)
@@ -164,9 +167,13 @@ class ContractDetectorTest {
 
     @Test
     fun marksEndedContracts() {
-        val ended = detector.detect(series(6, Period.ofMonths(1), last = today.minusDays(60))).single()
+        val ended = detector.detect(
+            series(6, Period.ofMonths(1), last = today.minusDays(60))
+        ).single()
         assertFalse(ended.isActive)
-        val overdue = detector.detect(series(6, Period.ofMonths(1), last = today.minusDays(38))).single()
+        val overdue = detector.detect(
+            series(6, Period.ofMonths(1), last = today.minusDays(38))
+        ).single()
         assertTrue(overdue.isActive)
     }
 
@@ -179,9 +186,17 @@ class ContractDetectorTest {
 
     @Test
     fun signatureIsStableWhenDebitsAreAdded() {
-        val debits = series(6, Period.ofMonths(1), last = today.minusMonths(1)) { if (it < 3) -999 else -1299 }
+        val debits = series(6, Period.ofMonths(1), last = today.minusMonths(1)) {
+            if (it < 3) {
+                -999
+            } else {
+                -1299
+            }
+        }
         val before = detector.detect(debits).single().signature
-        val after = detector.detect(debits + transaction(today.minusDays(2), -1299)).single().signature
+        val after = detector.detect(
+            debits + transaction(today.minusDays(2), -1299)
+        ).single().signature
         assertEquals("p1|MONTHLY", before)
         assertEquals(before, after)
     }
@@ -245,12 +260,17 @@ class ContractDetectorTest {
             82040, 82040, 82040, 82040, 159520, 161114, 82040, 82040, 82040,
             114000, 114000, 114000, 114000, 114000, 114000, 167962, 169594
         )
-        val salary = series(amounts.size, Period.ofMonths(1), last = LocalDate.of(2026, 8, 31)) { amounts[it] }
+        val salary =
+            series(amounts.size, Period.ofMonths(1), last = LocalDate.of(2026, 8, 31)) {
+                amounts[it]
+            }
         val extras = listOf(
             transaction(LocalDate.of(2024, 11, 18), 37807),
             transaction(LocalDate.of(2025, 11, 18), 33516)
         )
-        val contract = detector.detect(salary + extras).single { it.interval == ContractInterval.MONTHLY }
+        val contract = detector.detect(salary + extras).single {
+            it.interval == ContractInterval.MONTHLY
+        }
         assertEquals(26, contract.transactions.size)
         assertTrue(contract.isActive)
         assertEquals(169594, contract.lastAmount)
@@ -259,7 +279,10 @@ class ContractDetectorTest {
     @Test
     fun detectsYearlyIncomeWithSameAmountOnSameDay() {
         val bonus = detector.detect(
-            listOf(transaction(LocalDate.of(2025, 6, 30), 150000), transaction(LocalDate.of(2026, 6, 30), 150000))
+            listOf(
+                transaction(LocalDate.of(2025, 6, 30), 150000),
+                transaction(LocalDate.of(2026, 6, 30), 150000)
+            )
         ).single()
         assertEquals(ContractInterval.YEARLY, bonus.interval)
     }
@@ -269,7 +292,10 @@ class ContractDetectorTest {
         // Tax refunds and credits from annual statements differ every year
         assertTrue(
             detector.detect(
-                listOf(transaction(LocalDate.of(2025, 7, 22), 50457), transaction(LocalDate.of(2026, 7, 22), 43205))
+                listOf(
+                    transaction(LocalDate.of(2025, 7, 22), 50457),
+                    transaction(LocalDate.of(2026, 7, 22), 43205)
+                )
             ).isEmpty()
         )
     }
@@ -279,7 +305,10 @@ class ContractDetectorTest {
         // Easter: same amount, but two weeks apart from one year to the next
         assertTrue(
             detector.detect(
-                listOf(transaction(LocalDate.of(2025, 4, 17), 2000), transaction(LocalDate.of(2026, 4, 2), 2000))
+                listOf(
+                    transaction(LocalDate.of(2025, 4, 17), 2000),
+                    transaction(LocalDate.of(2026, 4, 2), 2000)
+                )
             ).isEmpty()
         )
     }
@@ -288,7 +317,10 @@ class ContractDetectorTest {
     fun ignoresHalfYearlyIncomeByChance() {
         assertTrue(
             detector.detect(
-                listOf(transaction(LocalDate.of(2025, 9, 1), 3193), transaction(LocalDate.of(2026, 3, 6), 2678))
+                listOf(
+                    transaction(LocalDate.of(2025, 9, 1), 3193),
+                    transaction(LocalDate.of(2026, 3, 6), 2678)
+                )
             ).isEmpty()
         )
     }
@@ -297,7 +329,10 @@ class ContractDetectorTest {
     fun keepsYearlyContractWithChangingAmount() {
         // Only incomes are checked more strictly, e.g. a yearly inspection costs different amounts
         val inspection = detector.detect(
-            listOf(transaction(LocalDate.of(2025, 3, 17), -18697), transaction(LocalDate.of(2026, 3, 16), -25578))
+            listOf(
+                transaction(LocalDate.of(2025, 3, 17), -18697),
+                transaction(LocalDate.of(2026, 3, 16), -25578)
+            )
         ).single()
         assertEquals(ContractInterval.YEARLY, inspection.interval)
     }

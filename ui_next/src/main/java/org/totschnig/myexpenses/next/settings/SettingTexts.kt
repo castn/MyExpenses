@@ -53,7 +53,8 @@ object SettingTexts {
         FEATURE_UNINSTALL_FEATURES to R.string.next_settings_title_uninstall_features,
         FEATURE_UNINSTALL_LANGUAGES to R.string.next_settings_title_uninstall_languages,
         CRITERION_FUTURE to R.string.next_settings_title_criterion_future,
-        EQUIVALENT_AMOUNTS_AUTOMATIC_UPDATE to R.string.next_settings_title_equivalent_amounts_update,
+        EQUIVALENT_AMOUNTS_AUTOMATIC_UPDATE to
+            R.string.next_settings_title_equivalent_amounts_update,
         UI_ITEM_RENDERER_ORIGINAL_AMOUNT to R.string.next_settings_title_original_amount,
         CAMERA_CHOOSER to R.string.next_settings_title_camera_chooser,
         ATTACHMENT_MIME_TYPES to R.string.next_settings_title_mime_types,
@@ -65,7 +66,7 @@ object SettingTexts {
         DEBUG_LOGGING to R.string.next_settings_title_debug_logging,
         DEBUG_ADS to R.string.next_settings_title_debug_ads,
         DB_SAFE_MODE to R.string.next_settings_title_db_safe_mode,
-        DEBUG_REPAIR_987 to R.string.next_settings_title_repair_987,
+        DEBUG_REPAIR_987 to R.string.next_settings_title_repair_987
     )
 
     /**
@@ -75,7 +76,8 @@ object SettingTexts {
     val explanations: Map<PrefKey, Int> = mapOf(
         HOME_CURRENCY to R.string.next_settings_explain_home_currency,
         CRITERION_FUTURE to R.string.next_settings_explain_criterion_future,
-        EQUIVALENT_AMOUNTS_AUTOMATIC_UPDATE to R.string.next_settings_explain_equivalent_amounts_update,
+        EQUIVALENT_AMOUNTS_AUTOMATIC_UPDATE to
+            R.string.next_settings_explain_equivalent_amounts_update,
         UI_ITEM_RENDERER_ORIGINAL_AMOUNT to R.string.next_settings_explain_original_amount,
         OCR_ENGINE to R.string.next_settings_explain_ocr_engine,
         MLKIT_SCRIPT to R.string.next_settings_explain_mlkit_script,
@@ -95,6 +97,6 @@ object SettingTexts {
         DEBUG_LOGGING to R.string.next_settings_explain_debug_logging,
         DEBUG_ADS to R.string.next_settings_explain_debug_ads,
         DB_SAFE_MODE to R.string.next_settings_explain_db_safe_mode,
-        DEBUG_REPAIR_987 to R.string.next_settings_explain_repair_987,
+        DEBUG_REPAIR_987 to R.string.next_settings_explain_repair_987
     )
 }

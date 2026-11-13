@@ -27,17 +27,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import java.time.LocalDate
 import kotlin.math.absoluteValue
-import org.totschnig.myexpenses.designsystem.Shapes
-import org.totschnig.myexpenses.designsystem.theme.LocalSemanticColors
-import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
 import org.totschnig.myexpenses.designsystem.DetailCard
 import org.totschnig.myexpenses.designsystem.DetailScaffold
 import org.totschnig.myexpenses.designsystem.Dot
 import org.totschnig.myexpenses.designsystem.PageSubtitle
 import org.totschnig.myexpenses.designsystem.RowDivider
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
-import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
+import org.totschnig.myexpenses.designsystem.Shapes
+import org.totschnig.myexpenses.designsystem.theme.LocalSemanticColors
 import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
+import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 import org.totschnig.myexpenses.next.core.ui.periodLabel
 import org.totschnig.myexpenses.next.data.balance.BalancePeriod
 import org.totschnig.myexpenses.next.data.balance.MonthlyBalance
@@ -65,7 +65,7 @@ fun MonthlyBalanceScreen(
     salaryName: String?,
     onChangeSalary: () -> Unit,
     modifier: Modifier = Modifier,
-    hasIncomeNews: Boolean = false,
+    hasIncomeNews: Boolean = false
 ) {
     val formatter = LocalAmountFormatter.current
     val colors = LocalSemanticColors.current
@@ -115,20 +115,28 @@ fun MonthlyBalanceScreen(
                 signed(balance.income),
                 colors.income,
                 hasNews = hasIncomeNews,
-                hint = if (balance.incomeUpcoming != 0L) stringResource(
-                    R.string.next_balance_income_upcoming,
-                    formatter.format(balance.incomeUpcoming, currency)
-                ) else null,
+                hint = if (balance.incomeUpcoming != 0L) {
+                    stringResource(
+                        R.string.next_balance_income_upcoming,
+                        formatter.format(balance.incomeUpcoming, currency)
+                    )
+                } else {
+                    null
+                },
                 onClick = onOpenIncome
             )
             BalanceRow(
                 stringResource(R.string.next_tab_contracts),
                 signed(balance.contracts),
                 colors.expense,
-                hint = if (balance.contractsUpcoming != 0L) stringResource(
-                    R.string.next_balance_contracts_upcoming,
-                    formatter.format(-balance.contractsUpcoming, currency)
-                ) else null,
+                hint = if (balance.contractsUpcoming != 0L) {
+                    stringResource(
+                        R.string.next_balance_contracts_upcoming,
+                        formatter.format(-balance.contractsUpcoming, currency)
+                    )
+                } else {
+                    null
+                },
                 onClick = onOpenContracts
             )
             BalanceRow(
@@ -136,10 +144,14 @@ fun MonthlyBalanceScreen(
                 signed(balance.reserves),
                 // Money put aside is no loss
                 MaterialTheme.colorScheme.onSurface,
-                hint = if (balance.savingsUpcoming != 0L) stringResource(
-                    R.string.next_balance_contracts_upcoming,
-                    formatter.format(-balance.savingsUpcoming, currency)
-                ) else null,
+                hint = if (balance.savingsUpcoming != 0L) {
+                    stringResource(
+                        R.string.next_balance_contracts_upcoming,
+                        formatter.format(-balance.savingsUpcoming, currency)
+                    )
+                } else {
+                    null
+                },
                 onClick = onOpenSavings
             )
             BalanceRow(
@@ -164,7 +176,7 @@ private fun BalanceRow(
     color: Color,
     onClick: (() -> Unit)?,
     hint: String? = null,
-    hasNews: Boolean = false,
+    hasNews: Boolean = false
 ) {
     Row(
         modifier = Modifier
@@ -196,7 +208,11 @@ private fun BalanceRow(
         Icon(
             Icons.AutoMirrored.Filled.KeyboardArrowRight,
             contentDescription = null,
-            tint = if (onClick != null) MaterialTheme.colorScheme.onSurfaceVariant else Color.Transparent
+            tint = if (onClick != null) {
+                MaterialTheme.colorScheme.onSurfaceVariant
+            } else {
+                Color.Transparent
+            }
         )
     }
     RowDivider()
@@ -236,7 +252,10 @@ private fun AvailableRow(balance: MonthlyBalance, today: LocalDate, currency: Cu
                     Text(
                         stringResource(
                             R.string.next_balance_per_day,
-                            formatter.format(balance.available / balance.period.daysLeft(today), currency)
+                            formatter.format(
+                                balance.available / balance.period.daysLeft(today),
+                                currency
+                            )
                         ),
                         style = MaterialTheme.typography.labelMedium,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
@@ -248,7 +267,12 @@ private fun AvailableRow(balance: MonthlyBalance, today: LocalDate, currency: Cu
 }
 
 @Preview(name = "Light", showBackground = true, heightDp = 600)
-@Preview(name = "Dark", showBackground = true, heightDp = 600, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "Dark",
+    showBackground = true,
+    heightDp = 600,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun MonthlyBalanceScreenPreview() {
     NextPreviewTheme {

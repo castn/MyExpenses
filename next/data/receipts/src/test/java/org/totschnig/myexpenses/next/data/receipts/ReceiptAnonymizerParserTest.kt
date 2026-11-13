@@ -18,7 +18,9 @@ class ReceiptAnonymizerParserTest {
     @Test
     fun parserReadsAnonymizedFixturesTheSame() {
         val differences = mutableListOf<String>()
-        dir.listFiles { file -> file.name.endsWith(".json") && !file.name.endsWith(".expected.json") }
+        dir.listFiles { file ->
+            file.name.endsWith(".json") && !file.name.endsWith(".expected.json")
+        }
             .orEmpty().sortedBy { it.name }.forEach { file ->
                 val name = file.name.removeSuffix(".json")
                 val text = recognizedTextFromJson(file.readText())
@@ -32,10 +34,18 @@ class ReceiptAnonymizerParserTest {
                 val result = ReceiptAnonymizer.anonymize(text, expected)
                 val after = ReceiptParser.parse(result.text)
                 fun check(what: String, actual: Any?, wanted: Any?) {
-                    if (actual != wanted) differences += "$name, $what: expected <$wanted> but was <$actual>"
+                    if (actual != wanted) {
+                        differences += "$name, $what: expected <$wanted> but was <$actual>"
+                    }
                 }
                 check("merchant", after.merchant, result.merchant)
-                check("items", after.items.map { it.copy(box = null) }, before.items.map { it.copy(box = null) })
+                check(
+                    "items",
+                    after.items.map {
+                        it.copy(box = null)
+                    },
+                    before.items.map { it.copy(box = null) }
+                )
                 check("total", after.total, before.total)
                 check("item count", after.itemCount, before.itemCount)
             }

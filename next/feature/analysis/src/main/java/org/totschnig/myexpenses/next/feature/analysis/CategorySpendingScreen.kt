@@ -28,11 +28,11 @@ import org.totschnig.myexpenses.designsystem.SectionHeader
 import org.totschnig.myexpenses.designsystem.SectionTitle
 import org.totschnig.myexpenses.designsystem.ShareRow
 import org.totschnig.myexpenses.designsystem.Spacing
+import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
-import org.totschnig.myexpenses.next.core.common.R
-import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
 import org.totschnig.myexpenses.next.core.ui.formatRange
+import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
 import org.totschnig.myexpenses.next.core.ui.rememberMonthFormatter
 import org.totschnig.myexpenses.next.data.analysis.CategoryAnalysis
 import org.totschnig.myexpenses.next.data.analysis.CategorySpending
@@ -52,12 +52,15 @@ fun SpendingOverview(
     analysis: CategoryAnalysis,
     currency: CurrencyInfo,
     onOpenCategory: (Long) -> Unit,
-    onOpenAll: () -> Unit,
+    onOpenAll: () -> Unit
 ) {
     val amount = rememberAmountFormat(currency)
     val periodLabel = rememberPeriodLabel()
     Column {
-        SectionHeader(title = stringResource(R.string.next_analysis_spending), trailing = amount(analysis.total))
+        SectionHeader(
+            title = stringResource(R.string.next_analysis_spending),
+            trailing = amount(analysis.total)
+        )
         DetailCard {
             SpendingChart(analysis, amount, onOpenCategory, onOpenAll)
             NavigationRow(
@@ -83,7 +86,7 @@ fun CategorySpendingScreen(
     onEarlier: () -> Unit,
     onLater: () -> Unit,
     onOpenCategory: (Long) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val amount = rememberAmountFormat(currency)
     val periodLabel = rememberPeriodLabel()
@@ -136,7 +139,11 @@ fun CategorySpendingScreen(
                 ShareRow(
                     label = category.label ?: noCategory,
                     value = amount(category.amount),
-                    share = if (analysis.total > 0) category.amount.toFloat() / analysis.total else 0f,
+                    share = if (analysis.total > 0) {
+                        category.amount.toFloat() / analysis.total
+                    } else {
+                        0f
+                    },
                     isFirst = index == 0,
                     isMuted = category.mainCategoryId == null,
                     onClick = { onOpenCategory(category.key) }
@@ -157,7 +164,7 @@ fun CategoryDetailScreen(
     currency: CurrencyInfo,
     onBack: () -> Unit,
     onShowTransactions: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val amount = rememberAmountFormat(currency)
     val periodLabel = rememberPeriodLabel()
@@ -179,7 +186,11 @@ fun CategoryDetailScreen(
                     ShareRow(
                         label = subcategory.label,
                         value = amount(subcategory.amount),
-                        share = if (category.amount > 0) subcategory.amount.toFloat() / category.amount else 0f,
+                        share = if (category.amount > 0) {
+                            subcategory.amount.toFloat() / category.amount
+                        } else {
+                            0f
+                        },
                         isFirst = index == 0
                     )
                 }
@@ -208,13 +219,16 @@ private fun Totals(
     previous: Long?,
     analysis: CategoryAnalysis,
     amount: (Long) -> String,
-    periodLabel: (SpendingPeriod) -> String,
+    periodLabel: (SpendingPeriod) -> String
 ) {
     InfoRow(stringResource(R.string.next_analysis_total), amount(total), isFirst = true)
     if (previous != null) {
         InfoRow(periodLabel(analysis.period.previous()), amount(previous))
         if (!analysis.isCurrent) {
-            InfoRow(stringResource(R.string.next_analysis_change), changeText(total, previous, amount))
+            InfoRow(
+                stringResource(R.string.next_analysis_change),
+                changeText(total, previous, amount)
+            )
         }
     }
 }
@@ -226,12 +240,19 @@ private fun changeText(total: Long, previous: Long, amount: (Long) -> String): S
     val percent = if (previous > 0) {
         val format = NumberFormat.getPercentInstance()
         " ($sign${format.format(difference.toDouble() / previous)})"
-    } else ""
+    } else {
+        ""
+    }
     return "$sign${amount(difference)}$percent"
 }
 
 /** A bar of the chart, null [key] for the one that sums up the smaller categories */
-private data class SpendingBar(val key: Long?, val label: String, val amount: Long, val previous: Long?)
+private data class SpendingBar(
+    val key: Long?,
+    val label: String,
+    val amount: Long,
+    val previous: Long?
+)
 
 /**
  * The largest categories as bars, the others summed up, compared with the period before
@@ -243,18 +264,22 @@ private fun SpendingChart(
     analysis: CategoryAnalysis,
     amount: (Long) -> String,
     onOpenCategory: (Long) -> Unit,
-    onOpenAll: (() -> Unit)?,
+    onOpenAll: (() -> Unit)?
 ) {
     val noCategory = stringResource(R.string.next_analysis_no_category)
     val others = stringResource(R.string.next_analysis_others)
     val nameOf = rememberPeriodName()
     val bars = remember(analysis, noCategory, others) {
         largestWithRest(
-            analysis.categories.map { SpendingBar(it.key, it.label ?: noCategory, it.amount, it.previous) },
+            analysis.categories.map {
+                SpendingBar(it.key, it.label ?: noCategory, it.amount, it.previous)
+            },
             value = { it.amount.toDouble() }
         ) { rest ->
             SpendingBar(
-                null, others, rest.sumOf { it.amount },
+                null,
+                others,
+                rest.sumOf { it.amount },
                 rest.mapNotNull { it.previous }.takeIf { it.isNotEmpty() }?.sum()
             )
         }
@@ -307,12 +332,27 @@ private fun rememberPeriodName(): (SpendingPeriod) -> String = remember {
     }
 }
 
-internal fun previewSpending(kind: PeriodKind = PeriodKind.MONTH, offset: Int = 0): CategoryAnalysis {
+internal fun previewSpending(
+    kind: PeriodKind = PeriodKind.MONTH,
+    offset: Int = 0
+): CategoryAnalysis {
     fun category(id: Long?, label: String?, amount: Long, previous: Long?) = CategorySpending(
-        id, label, amount, previous,
-        subcategories = if (id == null) emptyList() else listOf(
-            SubcategorySpending(id, label!!, amount * 2 / 3), SubcategorySpending(id + 100, "Sub", amount / 3)
-        ),
+        id,
+        label,
+        amount,
+        previous,
+        subcategories = if (id == null) {
+            emptyList()
+        } else {
+            listOf(
+                SubcategorySpending(id, label!!, amount * 2 / 3),
+                SubcategorySpending(
+                    id + 100,
+                    "Sub",
+                    amount / 3
+                )
+            )
+        },
         transactionIds = (1L..8L).toList()
     )
     val categories = listOf(
@@ -322,7 +362,7 @@ internal fun previewSpending(kind: PeriodKind = PeriodKind.MONTH, offset: Int = 
         category(4, "Freizeit", 12000, 15000),
         category(null, null, 7000, 2000),
         category(5, "Gesundheit", 4000, 0),
-        category(6, "Kleidung", 2500, 8000),
+        category(6, "Kleidung", 2500, 8000)
     )
     return CategoryAnalysis(
         period = SpendingPeriod.of(kind, offset, LocalDate.of(2026, 10, 12)),
@@ -338,7 +378,8 @@ internal fun previewSpending(kind: PeriodKind = PeriodKind.MONTH, offset: Int = 
 @Composable
 private fun SpendingOverviewPreview() {
     NextPreviewTheme {
-        SpendingOverview(previewSpending(), CurrencyInfo.Preview, onOpenCategory = {}, onOpenAll = {})
+        SpendingOverview(previewSpending(), CurrencyInfo.Preview, onOpenCategory = {
+        }, onOpenAll = {})
     }
 }
 
@@ -348,8 +389,13 @@ private fun SpendingOverviewPreview() {
 private fun CategorySpendingScreenPreview() {
     NextPreviewTheme {
         CategorySpendingScreen(
-            previewSpending(offset = 1), CurrencyInfo.Preview,
-            onBack = {}, onSelectKind = {}, onEarlier = {}, onLater = {}, onOpenCategory = {}
+            previewSpending(offset = 1),
+            CurrencyInfo.Preview,
+            onBack = {},
+            onSelectKind = {},
+            onEarlier = {},
+            onLater = {},
+            onOpenCategory = {}
         )
     }
 }

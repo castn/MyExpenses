@@ -25,7 +25,9 @@ class ItemGroupModelSetupStore(private val dataStore: DataStore<Preferences>) {
     }
 
     /** The user said no to setting up a model, it is not offered again */
-    val declined: Flow<Boolean> = dataStore.data.map { it[KEY_DECLINED] == true }.distinctUntilChanged()
+    val declined: Flow<Boolean> = dataStore.data.map {
+        it[KEY_DECLINED] == true
+    }.distinctUntilChanged()
 
     /** Where the installed model came from, null if none was installed */
     val source: Flow<Source?> = dataStore.data
@@ -51,7 +53,9 @@ class ItemGroupModelSetupStore(private val dataStore: DataStore<Preferences>) {
     suspend fun claimUpdateCheck(now: Long): Boolean {
         var due = false
         dataStore.edit {
-            due = it[KEY_SOURCE] == Source.DOWNLOAD.value && now - (it[KEY_CHECKED] ?: 0) >= UPDATE_INTERVAL
+            due =
+                it[KEY_SOURCE] == Source.DOWNLOAD.value &&
+                now - (it[KEY_CHECKED] ?: 0) >= UPDATE_INTERVAL
             if (due) it[KEY_CHECKED] = now
         }
         return due

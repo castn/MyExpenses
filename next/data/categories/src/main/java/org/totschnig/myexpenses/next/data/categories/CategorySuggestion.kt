@@ -3,9 +3,9 @@ package org.totschnig.myexpenses.next.data.categories
 import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
+import org.totschnig.myexpenses.next.core.model.words.Words
 import org.totschnig.myexpenses.next.data.merchants.EATING_OUT
 import org.totschnig.myexpenses.next.data.merchants.SUPERMARKETS
-import org.totschnig.myexpenses.next.core.model.words.Words
 
 /**
  * A transaction as input for [CategorySuggester]: with a category to learn from, or without to get a
@@ -17,7 +17,7 @@ data class CategoryInput(
     val payeeId: Long? = null,
     val payeeName: String? = null,
     val comment: String? = null,
-    val categoryId: Long? = null,
+    val categoryId: Long? = null
 )
 
 /**
@@ -41,10 +41,10 @@ data class CategoryRule(
     val id: String,
     val payeeIds: Set<Long>,
     val categoryId: Long,
-    val merchants: Set<String> = emptySet(),
+    val merchants: Set<String> = emptySet()
 ) {
-    fun matches(counterpart: Counterpart) =
-        counterpart.payeeId?.let { it in payeeIds } == true || counterpart.merchant?.let { it in merchants } == true
+    fun matches(counterpart: Counterpart) = counterpart.payeeId?.let { it in payeeIds } == true ||
+        counterpart.merchant?.let { it in merchants } == true
 }
 
 /** Where a suggestion comes from, the most reliable first */
@@ -69,7 +69,7 @@ data class CategorySuggestion(
     val transactionId: Long,
     val categoryId: Long,
     val source: SuggestionSource,
-    val isCertain: Boolean,
+    val isCertain: Boolean
 )
 
 /**
@@ -82,7 +82,7 @@ data class CategorySuggestion(
 class CategorySuggester(
     history: List<CategoryInput>,
     rules: List<CategoryRule>,
-    private val categories: List<CategoryInfo>,
+    private val categories: List<CategoryInfo>
 ) {
     private val rules = rules
 
@@ -90,7 +90,9 @@ class CategorySuggester(
 
     /** Categories of the earlier transactions by [counterpartKey] */
     private val payeeCategories: Map<String, List<Long>> =
-        categorized.groupBy({ it.counterpartKey() }, { it.categoryId!! }).filterKeys { it != null }.mapKeys { it.key!! }
+        categorized.groupBy({
+            it.counterpartKey()
+        }, { it.categoryId!! }).filterKeys { it != null }.mapKeys { it.key!! }
 
     /** Categories of the earlier transactions by word, see [wordsOf] */
     private val wordCategories: Map<String, List<Long>> =
@@ -115,7 +117,13 @@ class CategorySuggester(
         }
         transaction.counterpartKey()?.let(payeeCategories::get)?.let { earlier ->
             majority(earlier)?.let { (categoryId, count) ->
-                suggestion(categoryId, SuggestionSource.PAYEE, isCertain(count, earlier.size))?.let { return it }
+                suggestion(
+                    categoryId,
+                    SuggestionSource.PAYEE,
+                    isCertain(count, earlier.size)
+                )?.let {
+                    return it
+                }
             }
         }
         byWords(transaction)?.let { categoryId ->
@@ -124,24 +132,27 @@ class CategorySuggester(
         return byMerchant(transaction)?.let { suggestion(it, SuggestionSource.MERCHANT) }
     }
 
-    fun suggestAll(transactions: List<CategoryInput>): List<CategorySuggestion> = transactions.mapNotNull(::suggest)
+    fun suggestAll(transactions: List<CategoryInput>): List<CategorySuggestion> =
+        transactions.mapNotNull(::suggest)
 
     /** Words that led to one category in most cases add up, the category with most of them wins */
-    private fun byWords(transaction: CategoryInput): Long? =
-        transaction.wordsOf()
-            .mapNotNull { word -> wordCategories[word]?.takeIf { it.size >= MIN_WORD_COUNT } }
-            .mapNotNull { earlier ->
-                majority(earlier)?.takeIf { (_, count) -> count >= earlier.size * MIN_WORD_SHARE }
-            }
-            .groupBy({ it.first }, { it.second })
-            .maxByOrNull { (_, counts) -> counts.sum() }
-            ?.key
+    private fun byWords(transaction: CategoryInput): Long? = transaction.wordsOf()
+        .mapNotNull { word -> wordCategories[word]?.takeIf { it.size >= MIN_WORD_COUNT } }
+        .mapNotNull { earlier ->
+            majority(earlier)?.takeIf { (_, count) -> count >= earlier.size * MIN_WORD_SHARE }
+        }
+        .groupBy({ it.first }, { it.second })
+        .maxByOrNull { (_, counts) -> counts.sum() }
+        ?.key
 
     private fun byMerchant(transaction: CategoryInput): Long? {
         if (transaction.amount >= 0) return null
         val text = Words.textOf(transaction.payeeName, transaction.comment)
-        val labels = MERCHANTS.firstOrNull { (patterns, _) -> patterns.any { Words.startsWord(text, it) } }?.second
-            ?: return null
+        val labels =
+            MERCHANTS.firstOrNull { (patterns, _) ->
+                patterns.any { Words.startsWord(text, it) }
+            }?.second
+                ?: return null
         return labels.firstNotNullOfOrNull { label ->
             val wanted = " " + Words.normalize(label)
             // "Essen" matches the main category rather than "Haustiere > Essen"
@@ -184,7 +195,8 @@ class CategorySuggester(
         const val CERTAIN_MIN_COUNT = 5
         const val CERTAIN_MIN_SHARE = 0.9
 
-        fun isCertain(count: Int, total: Int) = total >= CERTAIN_MIN_COUNT && count >= total * CERTAIN_MIN_SHARE
+        fun isCertain(count: Int, total: Int) =
+            total >= CERTAIN_MIN_COUNT && count >= total * CERTAIN_MIN_SHARE
 
         private const val MIN_WORD_LENGTH = 3
 
@@ -194,7 +206,8 @@ class CategorySuggester(
 
         /** Words of payment methods, legal forms and filler words, which tell nothing about the purchase */
         private val STOP_WORDS = setOf(
-            "sepa", "lastschrift", "basislastschrift", "kartenzahlung", "karte", "kartennr", "girocard", "debitkarte",
+            "sepa", "lastschrift", "basislastschrift", "kartenzahlung", "karte", "kartennr",
+            "girocard", "debitkarte",
             "visa",
             "mastercard",
             "maestro",
@@ -216,7 +229,8 @@ class CategorySuggester(
             "referenz",
             "datum",
             "uhr",
-            "folgenr", "verfalld", "gmbh", "und", "der", "die", "das", "den", "dem", "des", "vom", "fuer", "für", "mit",
+            "folgenr", "verfalld", "gmbh", "und", "der", "die", "das", "den", "dem", "des", "vom",
+            "fuer", "für", "mit",
             "bei",
             "nach",
             "ohne",
@@ -230,7 +244,8 @@ class CategorySuggester(
             "debit",
             "credit",
             "transfer",
-            "ltd", "inc", "llc", "markt", "filiale", "sagt", "danke", "deutschland", "germany", "gmbhco", "kgaa",
+            "ltd", "inc", "llc", "markt", "filiale", "sagt", "danke", "deutschland", "germany",
+            "gmbhco", "kgaa",
             // Payment services and their purposes, see [PaymentService]
             "paypal",
             "klarna",
@@ -261,7 +276,8 @@ class CategorySuggester(
                 "Groceries",
                 "Einkauf"
             ),
-            EATING_OUT to listOf("Restaurant", "Restaurants", "Essen gehen", "Eating out", "Lieferdienst"),
+            EATING_OUT to
+                listOf("Restaurant", "Restaurants", "Essen gehen", "Eating out", "Lieferdienst"),
             listOf(
                 "bäckerei",
                 "baeckerei",
@@ -281,7 +297,7 @@ class CategorySuggester(
                 "totalenergies",
                 "star tankstelle"
             ) to
-                    listOf("Kraftstoff", "Fuel", "Tanken", "Benzin", "Sprit"),
+                listOf("Kraftstoff", "Fuel", "Tanken", "Benzin", "Sprit"),
             listOf("apotheke", "docmorris", "shop apotheke", "pharmacy") to listOf(
                 "Apotheker",
                 "Chemist",
@@ -289,8 +305,21 @@ class CategorySuggester(
                 "Medikamente",
                 "Pharmacy"
             ),
-            listOf("rossmann", "dm drogerie", "dm fil", "drogerie", "müller drogerie", "budnikowsky") to
-                    listOf("Drogerie & Reinigungsmittel", "Drogerie", "Drugstore", "Körperpflege", "Hygiene"),
+            listOf(
+                "rossmann",
+                "dm drogerie",
+                "dm fil",
+                "drogerie",
+                "müller drogerie",
+                "budnikowsky"
+            ) to
+                listOf(
+                    "Drogerie & Reinigungsmittel",
+                    "Drogerie",
+                    "Drugstore",
+                    "Körperpflege",
+                    "Hygiene"
+                ),
             listOf(
                 "deutsche bahn",
                 "db vertrieb",
@@ -298,16 +327,18 @@ class CategorySuggester(
                 "flixbus",
                 "flixtrain"
             ) to listOf("Zug", "Bahn (Fernverkehr)", "Train", "Bahn"),
-            listOf("bvg", "mvg", "hvv", "rmv", "vrr", "kvb", "üstra", "vvs", "vgn", "deutschlandticket") to
-                    listOf(
-                        "U-Bahn",
-                        "ÖPNV & Deutschlandticket",
-                        "Metro",
-                        "Bus",
-                        "ÖPNV",
-                        "Nahverkehr",
-                        "Public transport"
-                    ),
+            listOf(
+                "bvg", "mvg", "hvv", "rmv", "vrr", "kvb", "üstra", "vvs", "vgn", "deutschlandticket"
+            ) to
+                listOf(
+                    "U-Bahn",
+                    "ÖPNV & Deutschlandticket",
+                    "Metro",
+                    "Bus",
+                    "ÖPNV",
+                    "Nahverkehr",
+                    "Public transport"
+                ),
             listOf(
                 "lufthansa",
                 "eurowings",
@@ -316,8 +347,17 @@ class CategorySuggester(
                 "condor",
                 "tuifly"
             ) to listOf("Flugzeug", "Airplane", "Flug", "Flüge"),
-            listOf("zara", "primark", "zalando", "about you", "peek cloppenburg", "tk maxx", "uniqlo", "deichmann") to
-                    listOf("Kleidung", "Clothing", "Bekleidung", "Schuhe"),
+            listOf(
+                "zara",
+                "primark",
+                "zalando",
+                "about you",
+                "peek cloppenburg",
+                "tk maxx",
+                "uniqlo",
+                "deichmann"
+            ) to
+                listOf("Kleidung", "Clothing", "Bekleidung", "Schuhe"),
             listOf("obi", "bauhaus", "hornbach", "toom", "hagebau") to listOf(
                 "Baumarkt",
                 "Heimwerken",
@@ -325,7 +365,8 @@ class CategorySuggester(
                 "Werkzeug",
                 "Equipment"
             ),
-            listOf("ikea", "höffner", "xxxlutz", "poco") to listOf("Möbel", "Furniture", "Einrichtung"),
+            listOf("ikea", "höffner", "xxxlutz", "poco") to
+                listOf("Möbel", "Furniture", "Einrichtung"),
             listOf(
                 "mediamarkt",
                 "media markt",
@@ -333,11 +374,20 @@ class CategorySuggester(
                 "cyberport",
                 "notebooksbilliger"
             ) to listOf("Technik", "Elektronik & Geräte", "IT", "Elektronik", "Electronics"),
-            listOf("cinemaxx", "cineplex", "uci kinowelt", "kino") to listOf("Kino", "Movies", "Cinema"),
+            listOf("cinemaxx", "cineplex", "uci kinowelt", "kino") to
+                listOf("Kino", "Movies", "Cinema"),
             listOf("fressnapf", "zooplus", "das futterhaus") to
-                    listOf("Haustiere > Essen", "Haustiere > Futter", "Pets > Food", "Tierbedarf", "Haustiere", "Pets"),
+                listOf(
+                    "Haustiere > Essen",
+                    "Haustiere > Futter",
+                    "Pets > Food",
+                    "Tierbedarf",
+                    "Haustiere",
+                    "Pets"
+                ),
             listOf("friseur", "klier", "hairdresser") to listOf("Friseur", "Hairdresser"),
-            listOf("thalia", "hugendubel", "buchhandlung") to listOf("Bücher", "Bücher & Zeitschriften", "Books")
+            listOf("thalia", "hugendubel", "buchhandlung") to
+                listOf("Bücher", "Bücher & Zeitschriften", "Books")
         )
     }
 }

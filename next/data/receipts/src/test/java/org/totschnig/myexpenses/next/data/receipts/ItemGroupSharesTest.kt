@@ -21,7 +21,12 @@ class ItemGroupSharesTest {
             )
         )
         assertEquals(
-            listOf(ItemGroup.HOUSEHOLD to 745L, ItemGroup.PRODUCE to 312L, ItemGroup.DAIRY to 180L, null to 500L),
+            listOf(
+                ItemGroup.HOUSEHOLD to 745L,
+                ItemGroup.PRODUCE to 312L,
+                ItemGroup.DAIRY to 180L,
+                null to 500L
+            ),
             shares.map { it.group to it.amount }
         )
         // the discount is no item of its own

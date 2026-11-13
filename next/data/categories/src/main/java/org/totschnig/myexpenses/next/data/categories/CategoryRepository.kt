@@ -33,11 +33,13 @@ class CategoryRepository(
     val ledgerSource: LedgerSource,
     val store: CategoryStore,
     val writing: CategoryWriting,
-    scope: CoroutineScope,
+    scope: CoroutineScope
 ) {
     private val decisions: Flow<CategoryDecisions> = store.decisions
 
-    private val categories: Flow<List<CategoryInfo>> = ledgerSource.catalog.map { it.categories }.distinctUntilChanged()
+    private val categories: Flow<List<CategoryInfo>> = ledgerSource.catalog.map {
+        it.categories
+    }.distinctUntilChanged()
 
     private val inputs: Flow<List<CategoryInput>> =
         ledgerSource.ledger.mapMemo(Memo("categories: inputs", ::categoryInputs)).filterNotNull()
@@ -46,30 +48,40 @@ class CategoryRepository(
     private data class SuggestionInput(
         val inputs: List<CategoryInput>,
         val rules: List<CategoryRule>,
-        val categories: List<CategoryInfo>,
+        val categories: List<CategoryInfo>
     )
 
     private val suggestionMemo = Memo<SuggestionInput, List<CategorySuggestion>>(
         "categories: suggestions"
     ) { (inputs, rules, categories) ->
-        CategorySuggester(inputs, rules, categories).suggestAll(inputs.filter { it.categoryId == null })
+        CategorySuggester(inputs, rules, categories).suggestAll(
+            inputs.filter {
+                it.categoryId == null
+            }
+        )
     }
 
     /** Null without consent or while loading */
     val analysis: SharedFlow<CategoryAnalysis?> =
         ledgerSource.consent
             .flatMapLatest { hasConsent ->
-                if (hasConsent) combine(inputs, categories, decisions) { inputs, categories, decisions ->
-                    val suggestions = suggestionMemo.of(SuggestionInput(inputs, decisions.rules, categories))
-                    val unclear = unclearIds(inputs, decisions.unclear)
-                    CategoryAnalysis(
-                        inputs,
-                        decisions,
-                        decisions.plan(suggestions, unclear),
-                        categories,
-                        unclear
-                    )
-                } else flowOf(null)
+                if (hasConsent) {
+                    combine(inputs, categories, decisions) { inputs, categories, decisions ->
+                        val suggestions = suggestionMemo.of(
+                            SuggestionInput(inputs, decisions.rules, categories)
+                        )
+                        val unclear = unclearIds(inputs, decisions.unclear)
+                        CategoryAnalysis(
+                            inputs,
+                            decisions,
+                            decisions.plan(suggestions, unclear),
+                            categories,
+                            unclear
+                        )
+                    }
+                } else {
+                    flowOf(null)
+                }
             }
             .logTimings("categories: suggestions")
             .flowOn(Dispatchers.Default)

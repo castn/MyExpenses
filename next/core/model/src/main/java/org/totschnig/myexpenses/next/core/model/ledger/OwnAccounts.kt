@@ -23,5 +23,5 @@ fun ownTransferTarget(
     transferAccountId: Long?,
     counterpartIban: String?,
     ownIbans: Map<String, Long>
-) =
-    transferAccountId ?: counterpartIban?.let { ownIbans[normalizeIban(it)] }?.takeIf { it != accountId }
+) = transferAccountId
+    ?: counterpartIban?.let { ownIbans[normalizeIban(it)] }?.takeIf { it != accountId }

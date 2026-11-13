@@ -9,7 +9,7 @@ package org.totschnig.myexpenses.next.core.model.ledger
  */
 data class Catalog(
     val categories: List<CategoryInfo> = emptyList(),
-    val tags: List<TagInfo> = emptyList(),
+    val tags: List<TagInfo> = emptyList()
 ) {
     /** Paths of the categories by id */
     val categoryPaths: Map<Long, String> by lazy { categories.associate { it.id to it.path } }
@@ -32,7 +32,7 @@ data class CategoryInfo(
     val isExpense: Boolean = true,
     val isIncome: Boolean = true,
     val mainId: Long = id,
-    val parentId: Long? = null,
+    val parentId: Long? = null
 )
 
 /**
@@ -40,8 +40,4 @@ data class CategoryInfo(
  *
  * @param color as ARGB, null if the user chose none
  */
-data class TagInfo(
-    val id: Long,
-    val label: String,
-    val color: Int? = null,
-)
+data class TagInfo(val id: Long, val label: String, val color: Int? = null)

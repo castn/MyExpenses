@@ -6,49 +6,49 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
-import org.totschnig.myexpenses.util.TransactionImports
+import org.totschnig.myexpenses.injector
+import org.totschnig.myexpenses.myApplication
 import org.totschnig.myexpenses.next.categories.ProviderCategoryWriting
+import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
+import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
+import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
+import org.totschnig.myexpenses.next.data.balance.BalanceRepository
+import org.totschnig.myexpenses.next.data.budgets.BudgetRepository
+import org.totschnig.myexpenses.next.data.budgets.BudgetStore
 import org.totschnig.myexpenses.next.data.categories.CategoryRepository
 import org.totschnig.myexpenses.next.data.categories.CategoryStore
 import org.totschnig.myexpenses.next.data.categories.categoryInput
-import org.totschnig.myexpenses.next.data.transactions.CategorySuggestions
-import org.totschnig.myexpenses.next.transactions.AnalysisCategorySuggestions
-import org.totschnig.myexpenses.next.tags.RepositoryTagDatabase
-import org.totschnig.myexpenses.next.data.tags.TagRepository
-import org.totschnig.myexpenses.next.data.tags.TagStore
-import kotlinx.coroutines.flow.StateFlow
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
-import org.totschnig.myexpenses.injector
-import org.totschnig.myexpenses.next.data.balance.BalanceRepository
 import org.totschnig.myexpenses.next.data.contracts.ContractRepository
 import org.totschnig.myexpenses.next.data.contracts.ContractStore
-import org.totschnig.myexpenses.next.insights.ProviderLedgerSource
-import org.totschnig.myexpenses.next.insights.today
-import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
-import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
-import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
-import kotlinx.coroutines.flow.Flow
-import org.totschnig.myexpenses.myApplication
-import org.totschnig.myexpenses.next.receipts.ProviderReceiptDatabase
-import org.totschnig.myexpenses.next.data.receipts.ReceiptRepository
-import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
-import org.totschnig.myexpenses.next.data.budgets.BudgetRepository
-import org.totschnig.myexpenses.next.data.budgets.BudgetStore
-import org.totschnig.myexpenses.next.data.tips.SavingTipsRepository
-import org.totschnig.myexpenses.next.data.tips.TipStore
 import org.totschnig.myexpenses.next.data.guidance.DataReadinessRepository
-import org.totschnig.myexpenses.next.data.setup.SetupContracts
-import org.totschnig.myexpenses.next.data.setup.SetupRepository
-import org.totschnig.myexpenses.next.data.setup.SetupStore
 import org.totschnig.myexpenses.next.data.merchants.MerchantLogoConsent
 import org.totschnig.myexpenses.next.data.merchants.MerchantLogoStore
 import org.totschnig.myexpenses.next.data.merchants.PayeeDomainStore
 import org.totschnig.myexpenses.next.data.merchants.keepLogosOnlyWithConsent
+import org.totschnig.myexpenses.next.data.receipts.ReceiptRepository
+import org.totschnig.myexpenses.next.data.setup.SetupContracts
+import org.totschnig.myexpenses.next.data.setup.SetupRepository
+import org.totschnig.myexpenses.next.data.setup.SetupStore
+import org.totschnig.myexpenses.next.data.tags.TagRepository
+import org.totschnig.myexpenses.next.data.tags.TagStore
+import org.totschnig.myexpenses.next.data.tips.SavingTipsRepository
+import org.totschnig.myexpenses.next.data.tips.TipStore
+import org.totschnig.myexpenses.next.data.transactions.CategorySuggestions
+import org.totschnig.myexpenses.next.insights.ProviderLedgerSource
+import org.totschnig.myexpenses.next.insights.today
+import org.totschnig.myexpenses.next.receipts.ProviderReceiptDatabase
+import org.totschnig.myexpenses.next.tags.RepositoryTagDatabase
+import org.totschnig.myexpenses.next.transactions.AnalysisCategorySuggestions
+import org.totschnig.myexpenses.util.TransactionImports
 
 /**
  * The data of the new UI, once per process: the ledger and the facts of the areas, so that they
@@ -70,12 +70,18 @@ class NextData private constructor(context: Context) {
     /** The currency all amounts of the analyses are in, which the user can change */
     val homeCurrency: StateFlow<CurrencyInfo> = homeCurrencyOf(context, scope)
 
-    val ledgerSource: LedgerSource = ProviderLedgerSource(context.contentResolver, dataStore, scope, today(context))
+    val ledgerSource: LedgerSource =
+        ProviderLedgerSource(context.contentResolver, dataStore, scope, today(context))
 
     val contracts = ContractRepository(ledgerSource, ContractStore(dataStore), scope)
 
     val tags =
-        TagRepository(ledgerSource, TagStore(dataStore), scope, RepositoryTagDatabase(context.injector.repository()))
+        TagRepository(
+            ledgerSource,
+            TagStore(dataStore),
+            scope,
+            RepositoryTagDatabase(context.injector.repository())
+        )
 
     val categories = CategoryRepository(
         ledgerSource,
@@ -111,13 +117,24 @@ class NextData private constructor(context: Context) {
     val receiptFacts: Flow<ReceiptFacts> = receipts.facts
 
     val budgets = BudgetRepository(
-        ledgerSource, contracts.facts, tags.facts, BudgetStore(dataStore), scope, receiptFacts
+        ledgerSource,
+        contracts.facts,
+        tags.facts,
+        BudgetStore(dataStore),
+        scope,
+        receiptFacts
     )
 
     val balance = BalanceRepository(ledgerSource, contracts.facts, scope)
 
     val savingTips = SavingTipsRepository(
-        ledgerSource, TipStore(dataStore), contracts.facts, tags.facts, receiptFacts, scope, budgets.facts
+        ledgerSource,
+        TipStore(dataStore),
+        contracts.facts,
+        tags.facts,
+        receiptFacts,
+        scope,
+        budgets.facts
     )
 
     val readiness = DataReadinessRepository(ledgerSource, receiptFacts, scope, unclearTransactions)

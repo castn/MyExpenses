@@ -25,7 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
 import org.totschnig.myexpenses.designsystem.Banner
 import org.totschnig.myexpenses.designsystem.BannerStyle
 import org.totschnig.myexpenses.designsystem.DetailCard
@@ -37,9 +36,10 @@ import org.totschnig.myexpenses.designsystem.PageTopBar
 import org.totschnig.myexpenses.designsystem.RowDivider
 import org.totschnig.myexpenses.designsystem.SectionTitle
 import org.totschnig.myexpenses.designsystem.TopBarAction
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.common.NO_NAME
 import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
 import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
 import org.totschnig.myexpenses.next.data.contracts.ContractNews
 import org.totschnig.myexpenses.next.data.contracts.labelRes
@@ -120,11 +120,12 @@ internal fun ContractNews.text(currency: CurrencyInfo): String {
 internal fun NewsBanner(
     news: List<ContractNews>,
     currency: CurrencyInfo,
-    onCancelAgain: (() -> Unit)?,
+    onCancelAgain: (() -> Unit)?
 ) {
     // News that suggest the contract has ended, the user confirms with one tap
     val cancelling = news.firstOrNull {
-        it.type == ContractNews.Type.PAYMENT_AFTER_CANCELLATION || it.type == ContractNews.Type.CONTRACT_STOPPED
+        it.type == ContractNews.Type.PAYMENT_AFTER_CANCELLATION ||
+            it.type == ContractNews.Type.CONTRACT_STOPPED
     }
     Banner(
         title = stringResource(R.string.next_news),
@@ -135,20 +136,26 @@ internal fun NewsBanner(
                 Button(onClick = onCancelAgain) {
                     Text(
                         stringResource(
-                            if (cancelling.type == ContractNews.Type.CONTRACT_STOPPED) when {
-                                cancelling.isIncome -> R.string.next_income_cancel
-                                cancelling.isReserve -> R.string.next_reserve_cancel
-                                else -> R.string.next_contracts_cancel
-                            } else when {
-                                cancelling.isIncome -> R.string.next_news_income_cancel_again
-                                cancelling.isReserve -> R.string.next_news_reserve_cancel_again
-                                else -> R.string.next_news_cancel_again
+                            if (cancelling.type == ContractNews.Type.CONTRACT_STOPPED) {
+                                when {
+                                    cancelling.isIncome -> R.string.next_income_cancel
+                                    cancelling.isReserve -> R.string.next_reserve_cancel
+                                    else -> R.string.next_contracts_cancel
+                                }
+                            } else {
+                                when {
+                                    cancelling.isIncome -> R.string.next_news_income_cancel_again
+                                    cancelling.isReserve -> R.string.next_news_reserve_cancel_again
+                                    else -> R.string.next_news_cancel_again
+                                }
                             }
                         )
                     )
                 }
             }
-        } else null
+        } else {
+            null
+        }
     )
 }
 
@@ -164,7 +171,7 @@ internal fun NewsHistoryScreen(
     onBack: () -> Unit,
     onOpen: (ContractNews) -> Unit,
     onMarkAllRead: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val dateFormatter = rememberDateFormatter()
     Column(
@@ -173,11 +180,13 @@ internal fun NewsHistoryScreen(
             .background(MaterialTheme.colorScheme.surfaceContainer)
     ) {
         PageTopBar(onBack = onBack, title = stringResource(R.string.next_news), actions = {
-            if (news.any { !it.isRead }) TopBarAction(
-                Icons.Default.DoneAll,
-                contentDescription = stringResource(R.string.next_news_mark_all_read),
-                onClick = onMarkAllRead
-            )
+            if (news.any { !it.isRead }) {
+                TopBarAction(
+                    Icons.Default.DoneAll,
+                    contentDescription = stringResource(R.string.next_news_mark_all_read),
+                    onClick = onMarkAllRead
+                )
+            }
         })
         if (news.isEmpty()) {
             EmptyState(
@@ -210,7 +219,11 @@ internal fun NewsHistoryScreen(
                                 Text(
                                     item.contractName.ifEmpty { NO_NAME },
                                     style = MaterialTheme.typography.bodyLarge,
-                                    fontWeight = if (item.isRead) FontWeight.Normal else FontWeight.SemiBold,
+                                    fontWeight = if (item.isRead) {
+                                        FontWeight.Normal
+                                    } else {
+                                        FontWeight.SemiBold
+                                    },
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                     modifier = Modifier.weight(1f)
@@ -256,4 +269,3 @@ internal fun NewsHistorySection(news: List<ContractNews>, currency: CurrencyInfo
         }
     }
 }
-

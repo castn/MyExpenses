@@ -21,7 +21,7 @@ fun ContractTransactionsScreen(
     contract: Contract,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
-    transactionList: @Composable (Modifier) -> Unit,
+    transactionList: @Composable (Modifier) -> Unit
 ) {
     FixedTransactionsScreen(
         title = contract.title,
@@ -46,7 +46,7 @@ fun ContractTransactionList(
     viewModel: ContractsViewModel,
     fixedTransactions: FixedTransactions,
     contract: Contract,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     LaunchedEffect(contract.transactions) {
         fixedTransactions.show(contract.displayName, contract.transactions.map { it.id })

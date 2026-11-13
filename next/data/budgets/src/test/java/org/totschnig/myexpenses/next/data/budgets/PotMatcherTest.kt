@@ -11,8 +11,10 @@ import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 class PotMatcherTest {
 
     private val food = CategoryInfo(10, "Essen", "Essen")
-    private val restaurant = CategoryInfo(11, "Restaurant", "Essen > Restaurant", mainId = 10, parentId = 10)
-    private val bar = CategoryInfo(12, "Bar", "Essen > Restaurant > Bar", mainId = 10, parentId = 11)
+    private val restaurant =
+        CategoryInfo(11, "Restaurant", "Essen > Restaurant", mainId = 10, parentId = 10)
+    private val bar =
+        CategoryInfo(12, "Bar", "Essen > Restaurant > Bar", mainId = 10, parentId = 11)
     private val leisure = CategoryInfo(20, "Freizeit", "Freizeit")
     private val categories = listOf(food, restaurant, bar, leisure).associateBy { it.id }
 
@@ -25,9 +27,10 @@ class PotMatcherTest {
         tagIds: Set<Long> = emptySet(),
         date: LocalDate = day,
         targetAccountId: Long? = null,
-        parts: List<LedgerPart> = emptyList(),
+        parts: List<LedgerPart> = emptyList()
     ) = LedgerTransaction(
-        id = id, date = date, amount = -1000, accountId = 1, categoryId = categoryId, payeeId = payeeId,
+        id = id, date = date, amount = -1000, accountId = 1, categoryId = categoryId,
+        payeeId = payeeId,
         tagIds = tagIds, targetAccountId = targetAccountId, parts = parts
     )
 
@@ -48,7 +51,8 @@ class PotMatcherTest {
     @Test
     fun deeperCategoryWins() {
         val food = Pot(name = "Essen", kind = PotKind.RUNNING, categoryIds = setOf(food.id))
-        val going = Pot(name = "Ausgehen", kind = PotKind.RUNNING, categoryIds = setOf(restaurant.id))
+        val going =
+            Pot(name = "Ausgehen", kind = PotKind.RUNNING, categoryIds = setOf(restaurant.id))
         assertEquals(going, matcher(food, going).potOf(transaction()))
         assertEquals(going, matcher(going, food).potOf(transaction()))
     }
@@ -75,18 +79,25 @@ class PotMatcherTest {
     fun purposeComesBeforeEverydayPots() {
         val going = Pot(name = "Ausgehen", kind = PotKind.RUNNING, payeeIds = setOf(7))
         val trip = Pot(
-            name = "Italien", kind = PotKind.PROJECT, tagIds = setOf(3),
-            start = day.minusDays(3), end = day.plusDays(3)
+            name = "Italien",
+            kind = PotKind.PROJECT,
+            tagIds = setOf(3),
+            start = day.minusDays(3),
+            end = day.plusDays(3)
         )
         val matcher = matcher(going, trip)
         assertEquals(trip, matcher.potOf(transaction(payeeId = 7, tagIds = setOf(3))))
         // After the trip, the tag alone no longer counts
-        assertEquals(going, matcher.potOf(transaction(payeeId = 7, tagIds = setOf(3), date = day.plusDays(4))))
+        assertEquals(
+            going,
+            matcher.potOf(transaction(payeeId = 7, tagIds = setOf(3), date = day.plusDays(4)))
+        )
     }
 
     @Test
     fun contractPaymentsOnlyInPotsListingTheContract() {
-        val leisurePot = Pot(name = "Freizeit", kind = PotKind.RUNNING, categoryIds = setOf(leisure.id))
+        val leisurePot =
+            Pot(name = "Freizeit", kind = PotKind.RUNNING, categoryIds = setOf(leisure.id))
         val fitness = Pot(name = "Fitness", kind = PotKind.RUNNING, contractRuleIds = setOf("gym"))
         val gym = transaction(id = 2, categoryId = leisure.id)
         val stream = transaction(id = 3, categoryId = leisure.id)
@@ -101,7 +112,10 @@ class PotMatcherTest {
         assertNull(matcher(pot).potOf(transaction(targetAccountId = 4)))
         val split = transaction(
             categoryId = null,
-            parts = listOf(LedgerPart(-600, categoryId = restaurant.id), LedgerPart(-400, transferAccountId = 4))
+            parts = listOf(
+                LedgerPart(-600, categoryId = restaurant.id),
+                LedgerPart(-400, transferAccountId = 4)
+            )
         )
         assertEquals(listOf(pot, null), matcher(pot).potsOf(split).map { it.second })
     }
@@ -120,8 +134,19 @@ class PotMatcherTest {
 
     @Test
     fun yearlyPotCountsFromItsStart() {
-        val gifts = Pot(name = "Geschenke", kind = PotKind.YEARLY, categoryIds = setOf(leisure.id), start = day)
-        assertNull(matcher(gifts).potOf(transaction(categoryId = leisure.id, date = day.minusDays(1))))
-        assertEquals(gifts, matcher(gifts).potOf(transaction(categoryId = leisure.id, date = day.plusYears(2))))
+        val gifts =
+            Pot(
+                name = "Geschenke",
+                kind = PotKind.YEARLY,
+                categoryIds = setOf(leisure.id),
+                start = day
+            )
+        assertNull(
+            matcher(gifts).potOf(transaction(categoryId = leisure.id, date = day.minusDays(1)))
+        )
+        assertEquals(
+            gifts,
+            matcher(gifts).potOf(transaction(categoryId = leisure.id, date = day.plusYears(2)))
+        )
     }
 }

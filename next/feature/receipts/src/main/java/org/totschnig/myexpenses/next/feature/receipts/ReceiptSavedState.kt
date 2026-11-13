@@ -20,7 +20,7 @@ internal class ReceiptSavedState(
     val draft: ReceiptDraft?,
     val draftPayee: String?,
     val standaloneCurrency: CurrencyInfo?,
-    val assignment: ReceiptAssignment?,
+    val assignment: ReceiptAssignment?
 ) {
     fun toBundle() = Bundle().apply {
         draft?.let { putString(KEY_DRAFT, it.toJson()) }
@@ -45,7 +45,11 @@ internal class ReceiptSavedState(
             draft = bundle.getString(KEY_DRAFT)?.let(::receiptDraftOf),
             draftPayee = bundle.getString(KEY_DRAFT_PAYEE),
             standaloneCurrency = bundle.getString(KEY_CURRENCY_CODE)?.let { code ->
-                CurrencyInfo(code, bundle.getString(KEY_CURRENCY_SYMBOL) ?: code, bundle.getInt(KEY_CURRENCY_DIGITS))
+                CurrencyInfo(
+                    code,
+                    bundle.getString(KEY_CURRENCY_SYMBOL) ?: code,
+                    bundle.getInt(KEY_CURRENCY_DIGITS)
+                )
             },
             assignment = bundle.getString(KEY_ASSIGNMENT)?.let(::receiptAssignmentOf)
         )

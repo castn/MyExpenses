@@ -17,7 +17,7 @@ class AutomaticDecisions(
     val rules: List<ContractRule>,
     val news: List<ContractNews>,
     val migratedSalary: SalaryChoice? = null,
-    val marksMigration: Boolean = false,
+    val marksMigration: Boolean = false
 )
 
 /**
@@ -31,7 +31,7 @@ fun automaticDecisions(
     settings: ContractSettings,
     storedNews: List<ContractNews>,
     analysis: ContractAnalysis,
-    today: LocalDate,
+    today: LocalDate
 ): AutomaticDecisions {
     var rules = settings.rules
     var migratedSalary: SalaryChoice? = null
@@ -44,7 +44,14 @@ fun automaticDecisions(
     val detection = analysis.detectNews(today)
     val confirmations = analysis.automaticConfirmations(rules)
     // The first analysis confirms all contracts found so far, which are nothing new to the user
-    val newContracts = if (settings.rulesMigrated) newContractNews(confirmations, today) else emptyList()
+    val newContracts = if (settings.rulesMigrated) {
+        newContractNews(
+            confirmations,
+            today
+        )
+    } else {
+        emptyList()
+    }
     return AutomaticDecisions(
         rules = (rules + confirmations.map { it.second }).reactivating(detection.reactivated),
         news = storedNews.settling(analysis).adding(detection.news + newContracts, today),

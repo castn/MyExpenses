@@ -1,11 +1,11 @@
 package org.totschnig.myexpenses.next.data.receipts
 
+import java.math.BigDecimal
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.math.BigDecimal
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
 
 class ReceiptDraftTest {
@@ -15,7 +15,11 @@ class ReceiptDraftTest {
         transactionAmount = 400,
         merchant = "REWE",
         total = 400,
-        items = listOf(ReceiptItem("BROT", 249), ReceiptItem("MILCH", 119), ReceiptItem("FEHLER", 30)),
+        items = listOf(
+            ReceiptItem("BROT", 249),
+            ReceiptItem("MILCH", 119),
+            ReceiptItem("FEHLER", 30)
+        ),
         photo = null,
         isNewPhoto = false
     )
@@ -54,7 +58,12 @@ class ReceiptDraftTest {
         val unsure = ItemGroupSuggestion(ItemGroup.DAIRY, ItemGroupSource.MODEL, confident = false)
         val proposed = draft.copy(items = draft.items + ReceiptItem("Milch.", 119))
             .withSuggestedGroups(
-                listOf(ItemGroupSuggestion(ItemGroup.BAKERY, ItemGroupSource.MODEL), unsure, null, unsure)
+                listOf(
+                    ItemGroupSuggestion(ItemGroup.BAKERY, ItemGroupSource.MODEL),
+                    unsure,
+                    null,
+                    unsure
+                )
             )
         assertEquals(listOf("bakery", null, null, null), proposed.items.map { it.group })
         assertEquals(listOf(1, 2, 3), proposed.itemsWithoutGroup)
@@ -68,17 +77,26 @@ class ReceiptDraftTest {
         assertEquals(listOf("bakery", "dairy", null, "dairy"), confirmed.items.map { it.group })
         assertNull(confirmed.proposal(3))
         // saved receipts only get sure groups
-        assertEquals(listOf("bakery", null, null), draft.items.withSuggestedGroups(listOf(
-            ItemGroupSuggestion(ItemGroup.BAKERY, ItemGroupSource.MODEL), unsure, null
-        )).map { it.group })
+        assertEquals(
+            listOf("bakery", null, null),
+            draft.items.withSuggestedGroups(
+                listOf(
+                    ItemGroupSuggestion(ItemGroup.BAKERY, ItemGroupSource.MODEL),
+                    unsure,
+                    null
+                )
+            ).map { it.group }
+        )
     }
 
     @Test
     fun chosenGroupAppliesToSameProduct() {
         val receipt = draft.copy(
             items = listOf(
-                ReceiptItem("Milch 1,5%", 119), ReceiptItem("MILCH 1,5 %", 119),
-                ReceiptItem("milch 1.5", 119, group = "other", groupByUser = true), ReceiptItem("Rabatt", -30)
+                ReceiptItem("Milch 1,5%", 119),
+                ReceiptItem("MILCH 1,5 %", 119),
+                ReceiptItem("milch 1.5", 119, group = "other", groupByUser = true),
+                ReceiptItem("Rabatt", -30)
             )
         )
         val chosen = receipt.setGroup(0, ItemGroup.DAIRY)
@@ -129,7 +147,11 @@ class ReceiptDraftTest {
     @Test
     fun correctedDetailsAreSavedAndChecked() {
         val corrected =
-            draft.withDetails(merchant = "REWE Markt", date = java.time.LocalDate.of(2026, 10, 9), total = 398)
+            draft.withDetails(
+                merchant = "REWE Markt",
+                date = java.time.LocalDate.of(2026, 10, 9),
+                total = 398
+            )
         assertTrue(corrected.isChanged)
         assertEquals(0L, corrected.check.itemsDifference)
         assertEquals(-2L, corrected.check.totalDifference)
@@ -142,7 +164,10 @@ class ReceiptDraftTest {
         fun box(row: Int) = org.totschnig.myexpenses.feature.Box(0, row * 100, 1000, row * 100 + 80)
         val missed = LeftoverRow("BUTTER 1,99 A", box(1))
         val withRows = draft.copy(
-            items = listOf(ReceiptItem("BROT", 249, box = box(0)), ReceiptItem("MILCH", 119, box = box(2))),
+            items = listOf(
+                ReceiptItem("BROT", 249, box = box(0)),
+                ReceiptItem("MILCH", 119, box = box(2))
+            ),
             leftoverRows = listOf(missed)
         )
         assertEquals(listOf(missed), withRows.openLeftoverRows)

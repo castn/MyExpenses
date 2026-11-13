@@ -10,10 +10,10 @@ import org.totschnig.myexpenses.compose.transactions.TransactionEvent
 import org.totschnig.myexpenses.compose.transactions.TransactionEventHandler
 import org.totschnig.myexpenses.compose.transactions.TransactionListContent
 import org.totschnig.myexpenses.next.NextTransactionList
-import org.totschnig.myexpenses.viewmodel.data.HeaderDataEmpty
-import org.totschnig.myexpenses.viewmodel.data.Transaction2
 import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
 import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactions
+import org.totschnig.myexpenses.viewmodel.data.HeaderDataEmpty
+import org.totschnig.myexpenses.viewmodel.data.Transaction2
 
 /**
  * What can be done with a transaction from its details, like in the transaction list of an account
@@ -37,7 +37,7 @@ internal fun FixedTransactionList(
     /** Offered in the details of a transaction, null if transactions cannot be changed */
     actions: TransactionActions? = null,
     /** Added to the details of a transaction, which a tap opens */
-    detailsContent: (@Composable (Transaction2) -> Unit)? = null,
+    detailsContent: (@Composable (Transaction2) -> Unit)? = null
 ) {
     val content = remember(items, actions) {
         TransactionListContent(
@@ -66,12 +66,15 @@ internal fun FixedTransactionList(
  */
 class AppFixedTransactions(
     private val viewModel: FixedTransactionsViewModel,
-    private val actions: TransactionActions?,
+    private val actions: TransactionActions?
 ) : FixedTransactions {
     override fun show(label: String, ids: List<Long>) = viewModel.show(label, ids)
 
     @Composable
-    override fun List(modifier: Modifier, detailsContent: (@Composable (ShownTransaction) -> Unit)?) {
+    override fun List(
+        modifier: Modifier,
+        detailsContent: (@Composable (ShownTransaction) -> Unit)?
+    ) {
         FixedTransactionList(
             viewModel.transactions.collectAsLazyPagingItems(),
             modifier,

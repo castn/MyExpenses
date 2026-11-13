@@ -20,7 +20,7 @@ data class ReceiptCheck(val receipt: ParsedReceipt, val transactionAmount: Long)
      */
     val countDiffers: Boolean
         get() = receipt.itemCount != null && receipt.itemCount != receipt.pieces &&
-                receipt.itemCount != receipt.items.count { it.amount > 0 }
+            receipt.itemCount != receipt.items.count { it.amount > 0 }
 
     val isConsistent: Boolean
         get() = itemsDifference == 0L && (totalDifference ?: 0L) == 0L && !countDiffers

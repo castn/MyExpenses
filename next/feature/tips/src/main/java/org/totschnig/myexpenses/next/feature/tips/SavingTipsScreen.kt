@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -35,34 +35,34 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import java.time.LocalDate
-import org.totschnig.myexpenses.designsystem.theme.LocalSemanticColors
-import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
-import org.totschnig.myexpenses.designsystem.ExpandableCard
-import org.totschnig.myexpenses.designsystem.InfoRow
-import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
 import org.totschnig.myexpenses.designsystem.Dot
 import org.totschnig.myexpenses.designsystem.EmptyState
+import org.totschnig.myexpenses.designsystem.ExpandableCard
+import org.totschnig.myexpenses.designsystem.InfoRow
 import org.totschnig.myexpenses.designsystem.LoadingBlock
 import org.totschnig.myexpenses.designsystem.NavigationRow
 import org.totschnig.myexpenses.designsystem.OverviewCard
 import org.totschnig.myexpenses.designsystem.PageTopBar
-import org.totschnig.myexpenses.designsystem.TopBarAction
 import org.totschnig.myexpenses.designsystem.PromptCard
 import org.totschnig.myexpenses.designsystem.RowDivider
 import org.totschnig.myexpenses.designsystem.SectionHeader
 import org.totschnig.myexpenses.designsystem.Spacing
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
-import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
+import org.totschnig.myexpenses.designsystem.TopBarAction
+import org.totschnig.myexpenses.designsystem.theme.LocalSemanticColors
 import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
+import org.totschnig.myexpenses.next.core.ui.LocalAmountFormatter
+import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
+import org.totschnig.myexpenses.next.core.ui.receipts.labelRes
+import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
+import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
+import org.totschnig.myexpenses.next.core.ui.rememberMonthFormatter
 import org.totschnig.myexpenses.next.data.contracts.Contract
 import org.totschnig.myexpenses.next.data.contracts.ContractInterval
 import org.totschnig.myexpenses.next.data.contracts.ContractTransaction
 import org.totschnig.myexpenses.next.data.contracts.labelRes
-import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
-import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
-import org.totschnig.myexpenses.next.core.ui.receipts.labelRes
-import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
-import org.totschnig.myexpenses.next.core.ui.rememberMonthFormatter
 import org.totschnig.myexpenses.next.data.tips.BankFeeGroup
 import org.totschnig.myexpenses.next.data.tips.BankFeeKind
 import org.totschnig.myexpenses.next.data.tips.DepositNotReturned
@@ -86,7 +86,7 @@ import org.totschnig.myexpenses.next.data.tips.Supermarkets
  */
 class TipNavigation(
     val onOpenContract: (String) -> Unit = {},
-    val onShowTransactions: (key: String, title: String, subtitle: String) -> Unit = { _, _, _ -> },
+    val onShowTransactions: (key: String, title: String, subtitle: String) -> Unit = { _, _, _ -> }
 )
 
 /**
@@ -106,7 +106,7 @@ fun SavingTipsScreen(
     onMarkSeen: (List<SavingTip>) -> Unit = {},
     navigation: TipNavigation = TipNavigation(),
     /** Below the tips, e.g. the tips that still lack data */
-    footer: @Composable () -> Unit = {},
+    footer: @Composable () -> Unit = {}
 ) {
     Column(modifier.fillMaxSize()) {
         PageTopBar(onBack = null, title = stringResource(R.string.next_tab_saving_tips), actions = {
@@ -120,7 +120,10 @@ fun SavingTipsScreen(
         })
         val contentModifier = Modifier.weight(1f)
         when (state) {
-            AnalysisState.Loading -> Box(contentModifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            AnalysisState.Loading -> Box(
+                contentModifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
                 CircularProgressIndicator()
             }
 
@@ -143,7 +146,16 @@ fun SavingTipsScreen(
                         onMarkSeen(overview.tips.filter { it.id in overview.newIds })
                     }
                 }
-                TipList(overview, newIds, currency, onDismiss, onRestore, navigation, footer, contentModifier)
+                TipList(
+                    overview,
+                    newIds,
+                    currency,
+                    onDismiss,
+                    onRestore,
+                    navigation,
+                    footer,
+                    contentModifier
+                )
             }
         }
     }
@@ -158,7 +170,7 @@ private fun TipList(
     onRestore: (SavingTip) -> Unit,
     navigation: TipNavigation,
     footer: @Composable () -> Unit,
-    modifier: Modifier,
+    modifier: Modifier
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -183,7 +195,10 @@ private fun TipList(
         }
         if (state.dismissed.isNotEmpty()) {
             item(key = "dismissed") {
-                SectionHeader(title = stringResource(R.string.next_contracts_hidden), count = state.dismissed.size)
+                SectionHeader(
+                    title = stringResource(R.string.next_contracts_hidden),
+                    count = state.dismissed.size
+                )
             }
             items(state.dismissed, key = { "dismissed_${it.id}" }) { tip ->
                 TipCard(tip, currency, isNew = false, isFaded = true, navigation = navigation) {
@@ -204,7 +219,7 @@ private fun TipCard(
     isNew: Boolean,
     navigation: TipNavigation,
     isFaded: Boolean = false,
-    action: @Composable () -> Unit,
+    action: @Composable () -> Unit
 ) {
     val text = tip.text(currency)
     // Only title, amount and message at first, the advice and what the tip is about on a tap
@@ -212,7 +227,11 @@ private fun TipCard(
     ExpandableCard(expanded, { expanded = it }, summary = {
         Column(Modifier.alpha(if (isFaded) 0.6f else 1f)) {
             TipHeader(text, isNew)
-            Text(text.message, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 8.dp))
+            Text(
+                text.message,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(top = 8.dp)
+            )
         }
     }) {
         text.hint?.let {
@@ -220,7 +239,11 @@ private fun TipCard(
                 it,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(start = Spacing.content, end = Spacing.content, bottom = 8.dp)
+                modifier = Modifier.padding(
+                    start = Spacing.content,
+                    end = Spacing.content,
+                    bottom = 8.dp
+                )
             )
         }
         when (tip) {
@@ -244,7 +267,9 @@ private fun TipCard(
             }
 
             is EatingOut -> Column(Modifier.padding(top = 8.dp)) {
-                val title = EatingOut.DAYS.toInt().let { pluralStringResource(R.plurals.next_tips_last_days, it, it) }
+                val title = EatingOut.DAYS.toInt().let {
+                    pluralStringResource(R.plurals.next_tips_last_days, it, it)
+                }
                 NavigationRow(
                     title = title,
                     supportingText = pluralStringResource(
@@ -262,7 +287,9 @@ private fun TipCard(
                 val formatter = LocalAmountFormatter.current
                 tip.chains.forEach {
                     SpendingRow(
-                        it, currency, navigation,
+                        it,
+                        currency,
+                        navigation,
                         stringResource(
                             R.string.next_tips_purchases_average,
                             pluralStringResource(R.plurals.next_tips_purchases, it.count, it.count),
@@ -276,7 +303,9 @@ private fun TipCard(
                 val formatter = LocalAmountFormatter.current
                 tip.categories.forEach {
                     SpendingRow(
-                        it, currency, navigation,
+                        it,
+                        currency,
+                        navigation,
                         stringResource(
                             R.string.next_tips_usually,
                             formatter.format(tip.averages.getValue(it.key), currency)
@@ -294,8 +323,13 @@ private fun TipCard(
                 val monthFormatter = rememberMonthFormatter()
                 tip.contracts.forEach {
                     ContractRow(
-                        it.contract, currency, navigation.onOpenContract,
-                        supportingText = stringResource(R.string.next_tips_since, monthFormatter.format(it.since))
+                        it.contract,
+                        currency,
+                        navigation.onOpenContract,
+                        supportingText = stringResource(
+                            R.string.next_tips_since,
+                            monthFormatter.format(it.since)
+                        )
                     )
                 }
             }
@@ -305,18 +339,29 @@ private fun TipCard(
             }
 
             is ItemGroupRising -> ScannedPurchasesRow(
-                tip.id, tip.transactions.size, text.title,
+                tip.id,
+                tip.transactions.size,
+                text.title,
                 ItemGroupRising.RECENT_MONTHS.toInt().let {
                     pluralStringResource(R.plurals.next_tips_last_months, it, it)
-                }, navigation
+                },
+                navigation
             )
 
             is DepositNotReturned -> ScannedPurchasesRow(
-                tip.id, tip.transactions.size, text.title, stringResource(R.string.next_tips_last_year), navigation
+                tip.id,
+                tip.transactions.size,
+                text.title,
+                stringResource(R.string.next_tips_last_year),
+                navigation
             )
 
             is DrugstoreInSupermarkets -> ScannedPurchasesRow(
-                tip.id, tip.transactions.size, text.title, stringResource(R.string.next_tips_last_year), navigation
+                tip.id,
+                tip.transactions.size,
+                text.title,
+                stringResource(R.string.next_tips_last_year),
+                navigation
             )
 
             is PotsOverspent -> Column(Modifier.padding(top = 8.dp)) {
@@ -367,7 +412,11 @@ private fun TipHeader(text: TipText, isNew: Boolean) {
 }
 
 @Composable
-private fun PriceIncreaseRow(increase: PriceIncrease, currency: CurrencyInfo, onOpenContract: (String) -> Unit) {
+private fun PriceIncreaseRow(
+    increase: PriceIncrease,
+    currency: CurrencyInfo,
+    onOpenContract: (String) -> Unit
+) {
     val formatter = LocalAmountFormatter.current
     val dateFormatter = rememberDateFormatter()
     NavigationRow(
@@ -387,7 +436,7 @@ private fun ContractRow(
     contract: Contract,
     currency: CurrencyInfo,
     onOpenContract: (String) -> Unit,
-    supportingText: String = stringResource(contract.interval.labelRes),
+    supportingText: String = stringResource(contract.interval.labelRes)
 ) {
     NavigationRow(
         title = contract.displayName,
@@ -404,8 +453,14 @@ private fun BankFeeRow(group: BankFeeGroup, currency: CurrencyInfo, navigation: 
     NavigationRow(
         title = title,
         supportingText =
-            pluralStringResource(R.plurals.next_tips_fee_count, group.transactions.size, group.transactions.size),
-        onClick = { navigation.onShowTransactions(SavingTip.BankFees.keyOf(group.kind), title, subtitle) },
+            pluralStringResource(
+                R.plurals.next_tips_fee_count,
+                group.transactions.size,
+                group.transactions.size
+            ),
+        onClick = {
+            navigation.onShowTransactions(SavingTip.BankFees.keyOf(group.kind), title, subtitle)
+        },
         value = LocalAmountFormatter.current.format(group.amount, currency),
         valueColor = LocalSemanticColors.current.expense
     )
@@ -420,7 +475,7 @@ private fun SpendingRow(
     currency: CurrencyInfo,
     navigation: TipNavigation,
     supportingText: String,
-    subtitle: String = stringResource(R.string.next_tips_last_year),
+    subtitle: String = stringResource(R.string.next_tips_last_year)
 ) {
     NavigationRow(
         title = group.label,
@@ -433,7 +488,13 @@ private fun SpendingRow(
 
 /** Leads to the purchases whose receipts a tip is based on, see [SavingTip.transactionGroups] */
 @Composable
-private fun ScannedPurchasesRow(key: String, count: Int, title: String, subtitle: String, navigation: TipNavigation) {
+private fun ScannedPurchasesRow(
+    key: String,
+    count: Int,
+    title: String,
+    subtitle: String,
+    navigation: TipNavigation
+) {
     Column(Modifier.padding(top = 8.dp)) {
         NavigationRow(
             title = stringResource(R.string.next_tips_scanned_purchases),
@@ -452,7 +513,7 @@ fun SavingTipCard(
     state: AnalysisState<SavingTipsOverview>,
     currency: CurrencyInfo,
     onOpen: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     if (state == AnalysisState.Loading) {
         OverviewCard(stringResource(R.string.next_tips_card_title), modifier) {
@@ -467,7 +528,11 @@ fun SavingTipCard(
     val text = tip.text(currency)
     OverviewCard(stringResource(R.string.next_tips_card_title), modifier, onClick = onOpen) {
         TipHeader(text, isNew = tip.id in overview.newIds)
-        Text(text.message, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp))
+        Text(
+            text.message,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(top = 4.dp)
+        )
     }
 }
 
@@ -496,9 +561,14 @@ private fun previewTips(): SavingTipsOverview {
                 listOf(
                     BankFeeGroup(
                         BankFeeKind.ACCOUNT,
-                        List(12) { ContractTransaction(10L + it, today.minusMonths(it.toLong()), -299, 1) }
+                        List(12) {
+                            ContractTransaction(10L + it, today.minusMonths(it.toLong()), -299, 1)
+                        }
                     ),
-                    BankFeeGroup(BankFeeKind.FOREIGN, listOf(ContractTransaction(30, today.minusMonths(4), -175, 1)))
+                    BankFeeGroup(
+                        BankFeeKind.FOREIGN,
+                        listOf(ContractTransaction(30, today.minusMonths(4), -175, 1))
+                    )
                 )
             )
         ),
@@ -507,7 +577,12 @@ private fun previewTips(): SavingTipsOverview {
 }
 
 @Preview(name = "Light", showBackground = true, heightDp = 600)
-@Preview(name = "Dark", showBackground = true, heightDp = 600, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "Dark",
+    showBackground = true,
+    heightDp = 600,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun SavingTipsScreenPreview() {
     NextPreviewTheme {
@@ -522,7 +597,10 @@ private fun SavingTipsScreenPreview() {
 private fun SavingTipsEmptyPreview() {
     NextPreviewTheme {
         Surface {
-            SavingTipsScreen(AnalysisState.Ready(SavingTipsOverview(emptyList())), CurrencyInfo.Preview)
+            SavingTipsScreen(
+                AnalysisState.Ready(SavingTipsOverview(emptyList())),
+                CurrencyInfo.Preview
+            )
         }
     }
 }

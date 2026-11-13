@@ -5,13 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import androidx.core.content.ContextCompat
+import java.time.Duration
+import java.time.LocalDate
+import java.time.LocalDateTime
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.withTimeoutOrNull
-import java.time.Duration
-import java.time.LocalDate
-import java.time.LocalDateTime
 
 /**
  * The day of the device, for [org.totschnig.myexpenses.next.core.model.ledger.LedgerSource.today].
@@ -31,12 +31,19 @@ fun today(context: Context): Flow<LocalDate> = channelFlow {
         addAction(Intent.ACTION_TIMEZONE_CHANGED)
     }
     val appContext = context.applicationContext
-    ContextCompat.registerReceiver(appContext, receiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED)
+    ContextCompat.registerReceiver(
+        appContext,
+        receiver,
+        filter,
+        ContextCompat.RECEIVER_NOT_EXPORTED
+    )
     try {
         while (true) {
             val now = LocalDateTime.now()
             send(now.toLocalDate())
-            val untilMidnight = Duration.between(now, now.toLocalDate().plusDays(1).atStartOfDay()).toMillis() + 1000
+            val untilMidnight =
+                Duration.between(now, now.toLocalDate().plusDays(1).atStartOfDay()).toMillis() +
+                    1000
             withTimeoutOrNull(untilMidnight) { changes.receive() }
         }
     } finally {

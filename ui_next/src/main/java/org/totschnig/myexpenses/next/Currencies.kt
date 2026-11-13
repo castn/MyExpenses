@@ -14,11 +14,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.model.CurrencyUnit
-import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.core.ui.AmountFormatter
+import org.totschnig.myexpenses.preference.PrefKey
 import org.totschnig.myexpenses.util.ICurrencyFormatter
 import org.totschnig.myexpenses.util.convAmount
-import org.totschnig.myexpenses.next.core.ui.AmountFormatter
 
 /** The currency as the features of the new UI know it */
 fun CurrencyUnit.toInfo() = CurrencyInfo(code, symbol, fractionDigits)

@@ -14,7 +14,7 @@ class CategoryInfosTest {
             listOf(
                 RawCategory(1, null, "Essen", FLAG_EXPENSE.toInt()),
                 RawCategory(2, 1, "Supermarkt", 0),
-                RawCategory(3, null, "Sonstiges", 0),
+                RawCategory(3, null, "Sonstiges", 0)
             )
         )
         assertEquals(
@@ -29,7 +29,7 @@ class CategoryInfosTest {
                     mainId = 1,
                     parentId = 1
                 ),
-                CategoryInfo(3, "Sonstiges", "Sonstiges", isExpense = true, isIncome = true),
+                CategoryInfo(3, "Sonstiges", "Sonstiges", isExpense = true, isIncome = true)
             ),
             categories
         )

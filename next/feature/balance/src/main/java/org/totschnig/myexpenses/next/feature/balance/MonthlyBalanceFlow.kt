@@ -1,6 +1,5 @@
 package org.totschnig.myexpenses.next.feature.balance
 
-import org.totschnig.myexpenses.next.data.contracts.salaries
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -22,15 +21,16 @@ import androidx.navigation3.ui.NavDisplay
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import org.totschnig.myexpenses.next.core.common.R
-import org.totschnig.myexpenses.next.data.contracts.ContractNews
-import org.totschnig.myexpenses.next.data.contracts.ContractsOverview
 import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
-import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactionsScreen
-import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactions
 import org.totschnig.myexpenses.next.core.model.transactions.ShownTransaction
+import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactions
+import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactionsScreen
 import org.totschnig.myexpenses.next.data.balance.BalanceOverview
+import org.totschnig.myexpenses.next.data.contracts.ContractNews
+import org.totschnig.myexpenses.next.data.contracts.ContractsOverview
+import org.totschnig.myexpenses.next.data.contracts.salaries
 
 /** The pages behind the balance card, the breakdown at the bottom of the back stack */
 @Serializable
@@ -66,7 +66,7 @@ fun MonthlyBalanceFlow(
     onBack: () -> Unit,
     onOpenContracts: () -> Unit,
     modifier: Modifier = Modifier,
-    transactionDetails: @Composable (ShownTransaction) -> Unit = {},
+    transactionDetails: @Composable (ShownTransaction) -> Unit = {}
 ) {
     val backStack = rememberNavBackStack(BalanceKey.Details)
     val ready = balanceViewModel.balance.collectAsStateWithLifecycle().value.valueOrNull
@@ -75,7 +75,15 @@ fun MonthlyBalanceFlow(
         return
     }
     val current by rememberUpdatedState(
-        BalanceContent(incomes, currency, fixedTransactions, ready, onBack, onOpenContracts, transactionDetails)
+        BalanceContent(
+            incomes,
+            currency,
+            fixedTransactions,
+            ready,
+            onBack,
+            onOpenContracts,
+            transactionDetails
+        )
     )
     NavDisplay(
         backStack = backStack,
@@ -100,7 +108,7 @@ class BalanceIncomes(
     val state: StateFlow<AnalysisState<ContractsOverview>>,
     val news: StateFlow<List<ContractNews>>,
     val page: @Composable (onBack: () -> Unit) -> Unit,
-    val salarySheet: @Composable (onDismiss: () -> Unit) -> Unit,
+    val salarySheet: @Composable (onDismiss: () -> Unit) -> Unit
 )
 
 /** What the pages on the back stack of [MonthlyBalanceFlow] need */
@@ -111,7 +119,7 @@ private class BalanceContent(
     val ready: BalanceOverview,
     val onBack: () -> Unit,
     val onOpenContracts: () -> Unit,
-    val transactionDetails: @Composable (ShownTransaction) -> Unit,
+    val transactionDetails: @Composable (ShownTransaction) -> Unit
 )
 
 @Composable
@@ -133,7 +141,9 @@ private fun DetailsEntry(content: BalanceContent, backStack: NavBackStack<NavKey
             .takeIf { balance.savingsTransactionIds.isNotEmpty() },
         onOpenOther = { backStack += BalanceKey.Transactions(savings = false) }
             .takeIf { balance.otherTransactionIds.isNotEmpty() },
-        hasIncomeNews = content.incomes.news.collectAsStateWithLifecycle().value.any { !it.isRead && it.isIncome },
+        hasIncomeNews = content.incomes.news.collectAsStateWithLifecycle().value.any {
+            !it.isRead && it.isIncome
+        },
         salaryName = incomes?.salaries?.takeIf { balance.period.isSalaryCycle && it.isNotEmpty() }
             ?.joinToString { it.displayName },
         onChangeSalary = { showSalarySheet = true }
@@ -146,9 +156,16 @@ private fun IncomeEntry(content: BalanceContent, backStack: NavBackStack<NavKey>
 }
 
 @Composable
-private fun TransactionsEntry(content: BalanceContent, backStack: NavBackStack<NavKey>, key: BalanceKey.Transactions) {
+private fun TransactionsEntry(
+    content: BalanceContent,
+    backStack: NavBackStack<NavKey>,
+    key: BalanceKey.Transactions
+) {
     val balance = content.ready.balance
-    val label = stringResource(if (key.savings) R.string.next_balance_savings else R.string.next_balance_other)
+    val label =
+        stringResource(
+            if (key.savings) R.string.next_balance_savings else R.string.next_balance_other
+        )
     val ids = if (key.savings) balance.savingsTransactionIds else balance.otherTransactionIds
     LaunchedEffect(ids) { content.fixedTransactions.show(label, ids) }
     FixedTransactionsScreen(

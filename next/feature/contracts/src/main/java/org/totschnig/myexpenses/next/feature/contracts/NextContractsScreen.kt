@@ -32,33 +32,33 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import kotlinx.serialization.Serializable
 import java.time.LocalDate
+import kotlinx.serialization.Serializable
+import org.totschnig.myexpenses.designsystem.NameDialog
+import org.totschnig.myexpenses.designsystem.PageTopBar
+import org.totschnig.myexpenses.designsystem.PromptCard
+import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
+import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 import org.totschnig.myexpenses.next.core.ui.detailPage
 import org.totschnig.myexpenses.next.core.ui.extraPage
 import org.totschnig.myexpenses.next.core.ui.listPage
 import org.totschnig.myexpenses.next.core.ui.rememberListDetailPages
-import org.totschnig.myexpenses.designsystem.NameDialog
-import org.totschnig.myexpenses.designsystem.PageTopBar
-import org.totschnig.myexpenses.designsystem.PromptCard
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
-import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
-import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.ui.shownOrLeave
-import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
-import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
+import org.totschnig.myexpenses.next.data.contracts.Contract
 import org.totschnig.myexpenses.next.data.contracts.ContractArea
 import org.totschnig.myexpenses.next.data.contracts.ContractInterval
 import org.totschnig.myexpenses.next.data.contracts.ContractNews
 import org.totschnig.myexpenses.next.data.contracts.ContractSettings
 import org.totschnig.myexpenses.next.data.contracts.ContractTransaction
+import org.totschnig.myexpenses.next.data.contracts.ContractsOverview
 import org.totschnig.myexpenses.next.data.contracts.SalaryChoice
 import org.totschnig.myexpenses.next.data.contracts.buildContractsState
 import org.totschnig.myexpenses.next.data.contracts.contractTransactions
 import org.totschnig.myexpenses.next.data.contracts.icon
 import org.totschnig.myexpenses.next.data.contracts.salaries
-import org.totschnig.myexpenses.next.data.contracts.ContractsOverview
-import org.totschnig.myexpenses.next.data.contracts.Contract
 
 /** The screens of the contracts, the list at the bottom of the back stack */
 @Serializable
@@ -126,14 +126,28 @@ fun NextContractsScreen(
     /** News about contracts and incomes, the ones of this list are shown */
     news: List<ContractNews> = emptyList(),
     /** Signature of a contract shown on top of the list from the start */
-    openContract: String? = null,
+    openContract: String? = null
 ) {
     val backStack = rememberNavBackStack(
-        *listOfNotNull<NavKey>(ContractsKey.Home, openContract?.let { ContractsKey.Detail(it, null) }).toTypedArray()
+        *listOfNotNull<NavKey>(
+            ContractsKey.Home,
+            openContract?.let {
+                ContractsKey.Detail(it, null)
+            }
+        ).toTypedArray()
     )
     // The entries read the latest values, whenever NavDisplay creates their content
     val current by rememberUpdatedState(
-        ContractsContent(state, currency, actions, onConsent, contractTransactions, isIncome, onBack, news)
+        ContractsContent(
+            state,
+            currency,
+            actions,
+            onConsent,
+            contractTransactions,
+            isIncome,
+            onBack,
+            news
+        )
     )
     NavDisplay(
         backStack = backStack,
@@ -142,13 +156,19 @@ fun NextContractsScreen(
         sceneStrategies = listOf(rememberListDetailPages()),
         entryProvider = entryProvider {
             entry<ContractsKey.Home>(
-                metadata = listPage(if (isIncome) R.string.next_pick_income else R.string.next_pick_contract)
+                metadata = listPage(
+                    if (isIncome) R.string.next_pick_income else R.string.next_pick_contract
+                )
             ) { ContractsHome(current, backStack) }
-            entry<ContractsKey.Detail>(metadata = detailPage()) { key -> ContractDetailEntry(current, backStack, key) }
+            entry<ContractsKey.Detail>(metadata = detailPage()) { key ->
+                ContractDetailEntry(current, backStack, key)
+            }
             entry<ContractsKey.Transactions>(metadata = extraPage()) { key ->
                 ContractTransactionsEntry(current, backStack, key)
             }
-            entry<ContractsKey.NewsHistory>(metadata = detailPage()) { NewsHistoryEntry(current, backStack) }
+            entry<ContractsKey.NewsHistory>(metadata = detailPage()) {
+                NewsHistoryEntry(current, backStack)
+            }
             entry<ContractsKey.Suggestions>(metadata = detailPage()) { key ->
                 SuggestionsEntry(current, backStack, key)
             }
@@ -165,7 +185,7 @@ private class ContractsContent(
     val contractTransactions: @Composable (Contract, Modifier) -> Unit,
     val isIncome: Boolean,
     val onBack: () -> Unit,
-    news: List<ContractNews>,
+    news: List<ContractNews>
 ) {
     val ready = state.valueOrNull
 
@@ -182,11 +202,16 @@ private fun shownContract(
     key: ContractsKey,
     signature: String,
     payment: Long?
-) =
-    shownOrLeave(content.ready?.find(signature, payment), isLoaded = content.ready != null) { backStack.remove(key) }
+) = shownOrLeave(content.ready?.find(signature, payment), isLoaded = content.ready != null) {
+    backStack.remove(key)
+}
 
 @Composable
-private fun ContractDetailEntry(content: ContractsContent, backStack: NavBackStack<NavKey>, key: ContractsKey.Detail) {
+private fun ContractDetailEntry(
+    content: ContractsContent,
+    backStack: NavBackStack<NavKey>,
+    key: ContractsKey.Detail
+) {
     val contract = shownContract(content, backStack, key, key.signature, key.payment) ?: return
     val ready = content.ready ?: return
     var showSalarySheet by rememberSaveable { mutableStateOf(false) }
@@ -207,7 +232,13 @@ private fun ContractDetailEntry(content: ContractsContent, backStack: NavBackSta
         content.unreadNews.filter { it.contractKey == contract.signature }
     }
     LaunchedEffect(contract.signature) {
-        if (openedNews.isNotEmpty()) content.actions.markNewsRead(openedNews.mapTo(HashSet()) { it.id })
+        if (openedNews.isNotEmpty()) {
+            content.actions.markNewsRead(
+                openedNews.mapTo(HashSet()) {
+                    it.id
+                }
+            )
+        }
     }
     ContractDetailScreen(
         contract = contract,
@@ -219,14 +250,23 @@ private fun ContractDetailEntry(content: ContractsContent, backStack: NavBackSta
         mergeCandidates = (ready.active + ready.ended + ready.suggestions + ready.cancelled)
             .filter { it.signature != contract.signature },
         areas = ready.selectableAreas,
-        onShowTransactions = { backStack.add(ContractsKey.Transactions(key.signature, key.payment)) },
+        onShowTransactions = {
+            backStack.add(ContractsKey.Transactions(key.signature, key.payment))
+        },
         isSalary = isSalary,
         // Adding an income to the salaries is one tap, changing them needs the choice
         onSalaryClick = {
-            if (isSalary) showSalarySheet = true
-            else content.actions.setSalary(
-                SalaryChoice.Fixed(ready.salaries.map { it.signature }.toSet() + contract.signature)
-            )
+            if (isSalary) {
+                showSalarySheet = true
+            } else {
+                content.actions.setSalary(
+                    SalaryChoice.Fixed(
+                        ready.salaries.map {
+                            it.signature
+                        }.toSet() + contract.signature
+                    )
+                )
+            }
         }
     )
 }
@@ -251,7 +291,9 @@ private fun NewsHistoryEntry(content: ContractsContent, backStack: NavBackStack<
         onBack = { backStack.remove(ContractsKey.NewsHistory) },
         onOpen = { item ->
             val contract = content.ready?.let {
-                (it.active + it.ended + it.cancelled).find { contract -> contract.signature == item.contractKey }
+                (it.active + it.ended + it.cancelled).find { contract ->
+                    contract.signature == item.contractKey
+                }
             }
             if (contract != null) {
                 backStack.add(contract.toDetail())
@@ -260,7 +302,9 @@ private fun NewsHistoryEntry(content: ContractsContent, backStack: NavBackStack<
                 content.actions.markNewsRead(setOf(item.id))
             }
         },
-        onMarkAllRead = { content.actions.markNewsRead(content.unreadNews.mapTo(HashSet()) { it.id }) }
+        onMarkAllRead = {
+            content.actions.markNewsRead(content.unreadNews.mapTo(HashSet()) { it.id })
+        }
     )
 }
 
@@ -287,6 +331,7 @@ private fun ContractsHome(content: ContractsContent, backStack: NavBackStack<Nav
     val state = content.state
     val ready = content.ready
     val actions = content.actions
+
     /** Key of the category of the selected tab, null for all contracts */
     var selectedAreaKey by rememberSaveable { mutableStateOf<String?>(null) }
     var showCreateAreaDialog by rememberSaveable { mutableStateOf(false) }
@@ -307,12 +352,14 @@ private fun ContractsHome(content: ContractsContent, backStack: NavBackStack<Nav
         }
         if (content.isIncome) {
             PageTopBar(onBack = content.onBack, title = stringResource(R.string.next_income_title))
-        } else AreaTabs(
-            areas = areas,
-            selected = selectedArea,
-            onSelect = { selectedAreaKey = it?.key },
-            onCreate = { showCreateAreaDialog = true }.takeIf { ready != null }
-        )
+        } else {
+            AreaTabs(
+                areas = areas,
+                selected = selectedArea,
+                onSelect = { selectedAreaKey = it?.key },
+                onCreate = { showCreateAreaDialog = true }.takeIf { ready != null }
+            )
+        }
         val contentModifier = Modifier.weight(1f)
         when (state) {
             AnalysisState.Loading -> CircularProgressIndicator(
@@ -334,7 +381,9 @@ private fun ContractsHome(content: ContractsContent, backStack: NavBackStack<Nav
                 actions = actions,
                 onOpen = { backStack.add(it.toDetail()) },
                 news = content.unreadNews,
-                onOpenNews = { backStack += ContractsKey.NewsHistory }.takeIf { content.listNews.isNotEmpty() },
+                onOpenNews = {
+                    backStack += ContractsKey.NewsHistory
+                }.takeIf { content.listNews.isNotEmpty() },
                 onOpenSuggestions = { backStack.add(ContractsKey.Suggestions(selectedArea?.key)) },
                 modifier = contentModifier
             )
@@ -342,10 +391,6 @@ private fun ContractsHome(content: ContractsContent, backStack: NavBackStack<Nav
     }
 }
 
-
-/**
- * Asks whether transactions may be analysed. Once declined, only offers to start the analysis.
- */
 /**
  * Tabs for all contracts and each category, and one to create a category
  *
@@ -357,7 +402,7 @@ private fun AreaTabs(
     areas: List<ContractArea>,
     selected: ContractArea?,
     onSelect: (ContractArea?) -> Unit,
-    onCreate: (() -> Unit)?,
+    onCreate: (() -> Unit)?
 ) {
     PrimaryScrollableTabRow(
         selectedTabIndex = selected?.let { areas.indexOf(it) + 1 } ?: 0,
@@ -380,7 +425,10 @@ private fun AreaTabs(
                 selected = false,
                 onClick = onCreate,
                 icon = {
-                    Icon(Icons.Default.Add, contentDescription = stringResource(R.string.next_contracts_new_area))
+                    Icon(
+                        Icons.Default.Add,
+                        contentDescription = stringResource(R.string.next_contracts_new_area)
+                    )
                 }
             )
         }
@@ -414,30 +462,43 @@ private fun previewState(): ContractsOverview {
         vararg amounts: Long,
         category: String? = null,
         last: LocalDate = today.minusDays(5),
-        isConfirmed: Boolean = true,
-    ) =
-        Contract(
-            signature = name,
-            name = name,
-            interval = interval,
-            transactions = amounts.mapIndexed { i, amount ->
-                ContractTransaction(
-                    id = i.toLong(),
-                    date = last.minus(interval.step.multipliedBy(amounts.size - 1 - i)),
-                    amount = -amount,
-                    accountId = 1,
-                    accountLabel = "Girokonto",
-                    categoryPath = category
-                )
-            },
-            nextExpectedDate = last.plus(interval.step),
-            isActive = last.isAfter(today.minusDays(interval.maxDays.toLong())),
-            isConfirmed = isConfirmed
-        )
+        isConfirmed: Boolean = true
+    ) = Contract(
+        signature = name,
+        name = name,
+        interval = interval,
+        transactions = amounts.mapIndexed { i, amount ->
+            ContractTransaction(
+                id = i.toLong(),
+                date = last.minus(interval.step.multipliedBy(amounts.size - 1 - i)),
+                amount = -amount,
+                accountId = 1,
+                accountLabel = "Girokonto",
+                categoryPath = category
+            )
+        },
+        nextExpectedDate = last.plus(interval.step),
+        isActive = last.isAfter(today.minusDays(interval.maxDays.toLong())),
+        isConfirmed = isConfirmed
+    )
     return buildContractsState(
         listOf(
-            contract("Netflix", ContractInterval.MONTHLY, 1299, 1299, 1799, category = "Freizeit > Streaming"),
-            contract("Stadtwerke", ContractInterval.MONTHLY, 8500, 8500, 8500, category = "Wohnen > Strom"),
+            contract(
+                "Netflix",
+                ContractInterval.MONTHLY,
+                1299,
+                1299,
+                1799,
+                category = "Freizeit > Streaming"
+            ),
+            contract(
+                "Stadtwerke",
+                ContractInterval.MONTHLY,
+                8500,
+                8500,
+                8500,
+                category = "Wohnen > Strom"
+            ),
             contract(
                 "Kfz-Versicherung",
                 ContractInterval.QUARTERLY,
@@ -448,17 +509,27 @@ private fun previewState(): ContractsOverview {
             ),
             contract("ADAC", ContractInterval.YEARLY, 9400, 9400, isConfirmed = false),
             contract(
-                "Fitnessstudio", ContractInterval.MONTHLY, 2990, 2990, 2990,
-                category = "Freizeit > Fitness", last = today.minusMonths(5)
+                "Fitnessstudio",
+                ContractInterval.MONTHLY,
+                2990,
+                2990,
+                2990,
+                category = "Freizeit > Fitness",
+                last = today.minusMonths(5)
             ),
-            contract("Bäckerei", ContractInterval.WEEKLY, 450, 480, 450, 470),
+            contract("Bäckerei", ContractInterval.WEEKLY, 450, 480, 450, 470)
         ),
         ContractSettings(dismissed = setOf("Bäckerei"), names = mapOf("Stadtwerke" to "Strom"))
     )
 }
 
 @Preview(name = "Light", showBackground = true, heightDp = 800)
-@Preview(name = "Dark", showBackground = true, heightDp = 800, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "Dark",
+    showBackground = true,
+    heightDp = 800,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun NextContractsScreenPreview() {
     PreviewTheme {
@@ -467,8 +538,12 @@ private fun NextContractsScreenPreview() {
             currency = CurrencyInfo.Preview,
             news = listOf(
                 ContractNews(
-                    id = "preview", type = ContractNews.Type.PRICE_CHANGE, ruleId = "netflix", transactionId = 1,
-                    date = LocalDate.now().minusDays(5), createdAt = LocalDate.now(), contractName = "Netflix",
+                    id = "preview", type = ContractNews.Type.PRICE_CHANGE, ruleId = "netflix",
+                    transactionId = 1,
+                    date = LocalDate.now().minusDays(
+                        5
+                    ),
+                    createdAt = LocalDate.now(), contractName = "Netflix",
                     isIncome = false, amount = 1799, previousAmount = 1299
                 )
             )

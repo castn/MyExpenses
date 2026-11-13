@@ -3,8 +3,6 @@ package org.totschnig.myexpenses.next.data.receipts
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
-import org.totschnig.itemgroupmodel.ProductGroupModel
-import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
@@ -13,6 +11,8 @@ import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.Locale
+import org.totschnig.itemgroupmodel.ProductGroupModel
+import timber.log.Timber
 
 /**
  * The model for item groups on the device, see [ItemGroupModelStore]. All functions block, call
@@ -40,7 +40,7 @@ interface ItemGroupModels {
  */
 class ItemGroupModelStore private constructor(
     private val dir: File,
-    private val contentResolver: ContentResolver,
+    private val contentResolver: ContentResolver
 ) : ItemGroupModels {
 
     private val file = File(dir, "model.bin")
@@ -51,12 +51,16 @@ class ItemGroupModelStore private constructor(
     @Synchronized
     override fun model(): ProductGroupModel? {
         if (!loaded) {
-            model = if (file.exists()) try {
-                checkItemGroupModel(file.readBytes())
-            } catch (e: Exception) {
-                Timber.w(e, "Item group model not usable")
+            model = if (file.exists()) {
+                try {
+                    checkItemGroupModel(file.readBytes())
+                } catch (e: Exception) {
+                    Timber.w(e, "Item group model not usable")
+                    null
+                }
+            } else {
                 null
-            } else null
+            }
             loaded = true
         }
         return model
@@ -84,7 +88,10 @@ class ItemGroupModelStore private constructor(
 
     /** @throws InvalidItemGroupModel, IOException */
     override fun install(uri: Uri) {
-        install(contentResolver.openInputStream(uri)?.use { it.readLimited() } ?: throw IOException("Cannot open $uri"))
+        install(
+            contentResolver.openInputStream(uri)?.use { it.readLimited() }
+                ?: throw IOException("Cannot open $uri")
+        )
     }
 
     /**
@@ -98,7 +105,10 @@ class ItemGroupModelStore private constructor(
         } catch (_: FileNotFoundException) {
             return null
         }
-        return ItemGroupModelRelease.choose(ItemGroupModelRelease.parseManifest(manifest), Locale.getDefault().language)
+        return ItemGroupModelRelease.choose(
+            ItemGroupModelRelease.parseManifest(manifest),
+            Locale.getDefault().language
+        )
     }
 
     /** @throws InvalidItemGroupModel, IOException */
@@ -115,7 +125,11 @@ class ItemGroupModelStore private constructor(
         try {
             connection.connectTimeout = TIMEOUT
             connection.readTimeout = TIMEOUT
-            if (connection.responseCode == HttpURLConnection.HTTP_NOT_FOUND) throw FileNotFoundException(url)
+            if (connection.responseCode ==
+                HttpURLConnection.HTTP_NOT_FOUND
+            ) {
+                throw FileNotFoundException(url)
+            }
             if (connection.responseCode != HttpURLConnection.HTTP_OK) {
                 throw IOException("HTTP ${connection.responseCode} for $url")
             }

@@ -1,20 +1,20 @@
 package org.totschnig.myexpenses.next.core.ui.icons
 
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
-import androidx.compose.material3.MaterialTheme
 import org.totschnig.myexpenses.designsystem.IconPickerDialog
 import org.totschnig.myexpenses.designsystem.IconPickerOption
 import org.totschnig.myexpenses.designsystem.IconSection
 import org.totschnig.myexpenses.designsystem.IconTile
 import org.totschnig.myexpenses.next.core.common.R
-import org.totschnig.myexpenses.next.core.ui.LocalFontIcons
 import org.totschnig.myexpenses.next.core.common.icons.CatalogIcon
 import org.totschnig.myexpenses.next.core.common.icons.IconCatalog
+import org.totschnig.myexpenses.next.core.ui.LocalFontIcons
 
 /**
  * An icon of the [IconCatalog] or any other of Font Awesome, in the colour of icons on tiles
@@ -58,17 +58,22 @@ fun CatalogIconPicker(
     isAutomatic: Boolean = selected == null,
     automatic: (@Composable () -> Unit)? = null,
     automaticHint: String = stringResource(R.string.next_icons_automatic_hint),
-    header: (@Composable ColumnScope.() -> Unit)? = null,
+    header: (@Composable ColumnScope.() -> Unit)? = null
 ) {
     val labels = LocalFontIcons.current.labels()
     val themes = IconCatalog.themes.map { stringResource(it.labelRes) }
     val suggestedTitle = stringResource(R.string.next_icons_suggested)
     val distinctSuggestions = remember(suggestions) { suggestions.distinct() }
-    val filters = (if (distinctSuggestions.isEmpty()) emptyList() else listOf(suggestedTitle)) + themes
+    val filters =
+        (if (distinctSuggestions.isEmpty()) emptyList() else listOf(suggestedTitle)) + themes
     val sections = remember(distinctSuggestions, themes, labels) {
         { query: String, filter: Int? ->
             val all = buildList {
-                if (distinctSuggestions.isNotEmpty()) add(IconSection(suggestedTitle, distinctSuggestions))
+                if (distinctSuggestions.isNotEmpty()) {
+                    add(
+                        IconSection(suggestedTitle, distinctSuggestions)
+                    )
+                }
                 IconCatalog.themes.forEachIndexed { index, theme ->
                     add(IconSection(themes[index], theme.icons.map { it.name }))
                 }
@@ -101,6 +106,8 @@ fun CatalogIconPicker(
                 }
                 header?.invoke(this)
             }
-        } else null
+        } else {
+            null
+        }
     ) { name -> CatalogIcon(name) }
 }

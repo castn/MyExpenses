@@ -6,9 +6,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.unit.TextUnit
-import org.totschnig.myexpenses.viewmodel.data.FontAwesomeIcons
 import org.totschnig.myexpenses.compose.Icon as FontIcon
 import org.totschnig.myexpenses.next.core.ui.FontIcons
+import org.totschnig.myexpenses.viewmodel.data.FontAwesomeIcons
 
 /** The Font Awesome icons of the app for the features of the new UI */
 object AppFontIcons : FontIcons {
@@ -20,6 +20,8 @@ object AppFontIcons : FontIcons {
     @Composable
     override fun labels(): Map<String, String> {
         val resources = LocalResources.current
-        return remember(resources) { FontAwesomeIcons.mapValues { (_, info) -> resources.getString(info.label) } }
+        return remember(resources) {
+            FontAwesomeIcons.mapValues { (_, info) -> resources.getString(info.label) }
+        }
     }
 }

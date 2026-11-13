@@ -20,10 +20,7 @@ import org.totschnig.myexpenses.next.core.ui.LocalFontIcons
  * are also handed to [LocalColors], so screens that still use them look the same.
  */
 @Composable
-fun NextTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit,
-) {
+fun NextTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val contrast = Contrast.current()
     AppTheme(darkTheme = darkTheme, colorScheme = colorScheme(darkTheme, contrast)) {
         val semanticColors = semanticColors(darkTheme, contrast)
@@ -38,4 +35,5 @@ fun NextTheme(
     }
 }
 
-private fun SemanticColors.toColors() = Colors(income = income, expense = expense, transfer = transfer)
+private fun SemanticColors.toColors() =
+    Colors(income = income, expense = expense, transfer = transfer)

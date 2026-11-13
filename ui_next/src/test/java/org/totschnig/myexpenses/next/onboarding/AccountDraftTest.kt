@@ -1,9 +1,9 @@
 package org.totschnig.myexpenses.next.onboarding
 
+import java.math.BigDecimal
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
-import java.math.BigDecimal
 
 class AccountDraftTest {
 

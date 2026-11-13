@@ -1,5 +1,7 @@
 package org.totschnig.myexpenses.next.data.contracts
 
+import java.time.LocalDate
+import java.time.Period
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -7,8 +9,6 @@ import org.junit.Test
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.core.model.ledger.OwnAccounts
-import java.time.LocalDate
-import java.time.Period
 
 class OwnTransferTest {
 
@@ -25,17 +25,33 @@ class OwnTransferTest {
         target: Long? = null,
         payeeId: Long? = 9,
         last: LocalDate = today.minusDays(3),
-        monthsBack: Int = 0,
+        monthsBack: Int = 0
     ) = ContractTransaction(
-        id = nextId++, date = last.minus(Period.ofMonths(monthsBack)), amount = amount, accountId = account,
-        payeeId = payeeId, payeeName = if (target != null) "→ Tagesgeld" else "Payee $payeeId", targetAccountId = target
+        id = nextId++,
+        date = last.minus(Period.ofMonths(monthsBack)),
+        amount = amount,
+        accountId = account,
+        payeeId = payeeId,
+        payeeName = if (target != null) {
+            "→ Tagesgeld"
+        } else {
+            "Payee $payeeId"
+        },
+        targetAccountId = target
     )
 
     @Test
     fun readsContractTransactionsFromLedgerInHomeCurrency() {
         val ledger = Ledger(
             listOf(
-                LedgerTransaction(1, today, amount = -1000, homeAmount = -1100, accountId = giro, payeeName = "Shop"),
+                LedgerTransaction(
+                    1,
+                    today,
+                    amount = -1000,
+                    homeAmount = -1100,
+                    accountId = giro,
+                    payeeName = "Shop"
+                ),
                 LedgerTransaction(
                     2,
                     today,
@@ -44,7 +60,13 @@ class OwnTransferTest {
                     payeeName = "Ich",
                     targetAccountId = savings
                 ),
-                LedgerTransaction(3, today, amount = 5000, accountId = savings, targetAccountId = giro),
+                LedgerTransaction(
+                    3,
+                    today,
+                    amount = 5000,
+                    accountId = savings,
+                    targetAccountId = giro
+                )
             ),
             OwnAccounts(daily, mapOf(savings to "Tagesgeld"))
         )
@@ -71,7 +93,9 @@ class OwnTransferTest {
     @Test
     fun detectsStandingOrderToSavingsAccountAsReserve() {
         // Payee is the user, as imported from the bank: grouped by target account nevertheless
-        val standingOrder = (0 until 6).map { payment(-10000, target = savings, monthsBack = it) }.reversed()
+        val standingOrder = (0 until 6).map {
+            payment(-10000, target = savings, monthsBack = it)
+        }.reversed()
         val contract = ContractDetector(today).detect(standingOrder).single()
         assertEquals("a$savings|MONTHLY", contract.signature)
         assertEquals("→ Tagesgeld", contract.name)
@@ -120,10 +144,15 @@ class OwnTransferTest {
             payment(-10000, payeeId = 7, monthsBack = it).copy(comment = "Übertrag auf Tagesgeld")
         }.reversed()
         // Since the account is connected: movements to it
-        val movements = (0 until 3).map { payment(-10000, target = savings, monthsBack = it) }.reversed()
+        val movements = (0 until 3).map {
+            payment(-10000, target = savings, monthsBack = it)
+        }.reversed()
         val transactions = byPayee + movements
         val (payeeRules, _) = emptyList<ContractRule>().withRuleFor(
-            ContractAnalysis.of(transactions, emptyList(), today).contracts.single { !it.isOwnTransfer }, transactions
+            ContractAnalysis.of(transactions, emptyList(), today).contracts.single {
+                !it.isOwnTransfer
+            },
+            transactions
         ) { it.copy(name = "Tagesgeld") }
         val before = ContractAnalysis.of(transactions, payeeRules, today)
         val oldContract = before.contracts.single { it.isConfirmed }

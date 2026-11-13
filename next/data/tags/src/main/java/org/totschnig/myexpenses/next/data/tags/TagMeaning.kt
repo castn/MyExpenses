@@ -43,10 +43,17 @@ enum class TagMeaning {
         val MARKERS = listOf(ONE_OFF, REIMBURSED, BUSINESS)
 
         /** Ids of the transactions of [ledger] with a tag whose meaning matches [predicate] */
-        fun taggedWith(ledger: Ledger, meanings: Map<Long, TagMeaning>, predicate: (TagMeaning) -> Boolean): Set<Long> =
-            ledger.transactions
-                .filter { transaction -> transaction.tagIds.any { tagId -> meanings[tagId]?.let(predicate) == true } }
-                .mapTo(HashSet()) { it.id }
+        fun taggedWith(
+            ledger: Ledger,
+            meanings: Map<Long, TagMeaning>,
+            predicate: (TagMeaning) -> Boolean
+        ): Set<Long> = ledger.transactions
+            .filter { transaction ->
+                transaction.tagIds.any { tagId ->
+                    meanings[tagId]?.let(predicate) == true
+                }
+            }
+            .mapTo(HashSet()) { it.id }
 
         /** Transactions with a tag whose meaning is [isExcludedFromSpending] */
         fun excludedFromSpending(ledger: Ledger, meanings: Map<Long, TagMeaning>): Set<Long> =
@@ -56,7 +63,8 @@ enum class TagMeaning {
         fun decode(text: String?): Map<Long, TagMeaning> = text.orEmpty()
             .split(',')
             .mapNotNull { entry ->
-                val (id, meaning) = entry.split('=').takeIf { it.size == 2 } ?: return@mapNotNull null
+                val (id, meaning) = entry.split('=').takeIf { it.size == 2 }
+                    ?: return@mapNotNull null
                 val tagId = id.toLongOrNull() ?: return@mapNotNull null
                 entries.find { it.name == meaning }?.let { tagId to it }
             }

@@ -1,13 +1,13 @@
 package org.totschnig.myexpenses.next.settings
 
+import java.io.File
+import javax.xml.parsers.DocumentBuilderFactory
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.totschnig.myexpenses.R
 import org.totschnig.myexpenses.preference.PrefKey
 import org.w3c.dom.Element
-import java.io.File
-import javax.xml.parsers.DocumentBuilderFactory
 
 /** Checks the catalog against the preference screens of the main module */
 class SettingsCatalogTest {
@@ -17,25 +17,32 @@ class SettingsCatalogTest {
         val key: String,
         val widget: String,
         val hasTitle: Boolean,
-        val hasOptions: Boolean,
+        val hasOptions: Boolean
     )
 
     private val xmlDir = File("../myExpenses/src/main/res/xml")
 
-    private val settings: List<XmlSetting> = xmlDir.listFiles { file -> file.name.startsWith("preference") }!!
+    private val settings: List<XmlSetting> = xmlDir.listFiles { file ->
+        file.name.startsWith("preference")
+    }!!
         .flatMap { file ->
             val document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file)
             val elements = document.getElementsByTagName("*")
             (0 until elements.length).map { elements.item(it) as Element }
                 .filter { element ->
                     element.hasAttribute(KEY) && !element.hasAttribute(FRAGMENT) &&
-                            element.widget !in STRUCTURE
+                        element.widget !in STRUCTURE
                 }
                 .map {
                     XmlSetting(
-                        file.nameWithoutExtension, it.getAttribute(KEY), it.widget,
-                        hasTitle = it.hasAttribute("android:title") || it.hasAttribute("android:summary"),
-                        hasOptions = it.hasAttribute("android:entries") && it.hasAttribute("android:entryValues")
+                        file.nameWithoutExtension,
+                        it.getAttribute(KEY),
+                        it.widget,
+                        hasTitle =
+                            it.hasAttribute("android:title") || it.hasAttribute("android:summary"),
+                        hasOptions =
+                            it.hasAttribute("android:entries") &&
+                                it.hasAttribute("android:entryValues")
                     )
                 }
         }
@@ -48,10 +55,15 @@ class SettingsCatalogTest {
     /** The key as written in the preference screens, e.g. `@string/pref_ui_theme_key` */
     private val PrefKey.token: String
         get() {
-            val resId = PrefKey::class.java.getDeclaredField("resId").apply { isAccessible = true }.getInt(this)
-            return if (resId == 0) PrefKey::class.java.getDeclaredField("keyName").apply { isAccessible = true }
-                .get(this) as String
-            else "@string/" + stringNames.getValue(resId)
+            val resId = PrefKey::class.java.getDeclaredField("resId").apply {
+                isAccessible = true
+            }.getInt(this)
+            return if (resId == 0) {
+                PrefKey::class.java.getDeclaredField("keyName").apply { isAccessible = true }
+                    .get(this) as String
+            } else {
+                "@string/" + stringNames.getValue(resId)
+            }
         }
 
     private val SettingKey.token: String?
@@ -62,18 +74,28 @@ class SettingsCatalogTest {
         }
 
     private val LegacyScreen.files: Set<String>
-        get() = if (xml == 0) emptySet() else setOfNotNull(
-            xmlNames.getValue(xml),
-            // included by both screens
-            "preferences_include_share".takeIf { this == LegacyScreen.IO || this == LegacyScreen.BACKUP_RESTORE }
-        )
+        get() = if (xml == 0) {
+            emptySet()
+        } else {
+            setOfNotNull(
+                xmlNames.getValue(xml),
+                // included by both screens
+                "preferences_include_share".takeIf {
+                    this == LegacyScreen.IO ||
+                        this == LegacyScreen.BACKUP_RESTORE
+                }
+            )
+        }
 
     @Test
     fun everySettingOfTheOldScreensIsInTheCatalogOrOmitted() {
         assertTrue("found ${settings.size} settings", settings.size > 130)
         val known = SettingsCatalog.entries.mapNotNull { it.key.token } +
-                SettingsCatalog.omitted.keys.map { it.token }
-        val missing = settings.map { "${it.file}: ${it.key}" }.filter { it.substringAfter(": ") !in known }
+            SettingsCatalog.omitted.keys.map { it.token }
+        val missing = settings.map { "${it.file}: ${it.key}" }.filter {
+            it.substringAfter(": ") !in
+                known
+        }
         assertEquals(emptyList<String>(), missing)
     }
 
@@ -91,7 +113,7 @@ class SettingsCatalogTest {
         val wrong = SettingsCatalog.entries.filter { it.legacy != null }.filterNot { entry ->
             val legacy = entry.legacy!!
             entry.key == legacy.header ||
-                    settings.any { it.key == entry.key.token && it.file in legacy.files }
+                settings.any { it.key == entry.key.token && it.file in legacy.files }
         }
         assertEquals(emptyList<SettingEntry>(), wrong)
     }
@@ -101,7 +123,8 @@ class SettingsCatalogTest {
         val widgets = settings.groupBy({ it.key }, { it.widget })
         val wrong = SettingsCatalog.entries.filter { entry ->
             val token = entry.key.token ?: return@filter false
-            widgets[token]?.any { entry.kind !in (KINDS[it] ?: error("unknown widget $it")) } ?: false
+            widgets[token]?.any { entry.kind !in (KINDS[it] ?: error("unknown widget $it")) }
+                ?: false
         }
         assertEquals(emptyList<SettingEntry>(), wrong)
     }
@@ -109,7 +132,9 @@ class SettingsCatalogTest {
     @Test
     fun headersOfTheOldScreensExist() {
         val headers = Regex("""android:key="([^"]+)"""")
-            .findAll(xmlDir.resolve("preference_headers.xml").readText()).map { it.groupValues[1] }.toSet()
+            .findAll(xmlDir.resolve("preference_headers.xml").readText()).map {
+                it.groupValues[1]
+            }.toSet()
         LegacyScreen.entries.forEach { screen ->
             screen.header?.token?.let { assertTrue("${screen.name}: $it", it in headers) }
         }
@@ -120,9 +145,9 @@ class SettingsCatalogTest {
         val untitled = SettingsCatalog.entries.filter { entry ->
             val token = entry.key.token ?: return@filter false
             (entry.key as? SettingKey.Pref)?.prefKey !in LegacySpecs.titleOverrides &&
-                    settings.none { it.key == token && it.hasTitle } &&
-                    // a header of the list of all screens, e.g. premium
-                    entry.key != entry.legacy?.header
+                settings.none { it.key == token && it.hasTitle } &&
+                // a header of the list of all screens, e.g. premium
+                entry.key != entry.legacy?.header
         }
         assertEquals(emptyList<SettingEntry>(), untitled)
     }
@@ -133,12 +158,19 @@ class SettingsCatalogTest {
         val wrong = NativeSettings.all.filter { (prefKey, native) ->
             val entry = byKey[prefKey] ?: return@filter true
             when (entry.kind) {
-                SettingKind.CHOICE, SettingKind.MULTI_CHOICE -> native.options == null &&
+                SettingKind.CHOICE, SettingKind.MULTI_CHOICE ->
+                    native.options == null &&
                         settings.none { it.key == prefKey.token && it.hasOptions }
+
                 SettingKind.SWITCH, SettingKind.TEXT, SettingKind.NUMBER, SettingKind.SLIDER,
                 SettingKind.TIME, SettingKind.INFO, SettingKind.PASSWORD -> false
+
                 else -> true
-            } || native.storage == Storage.DATA_STORE && entry.kind !in setOf(SettingKind.SWITCH, SettingKind.CHOICE)
+            } ||
+                (
+                    native.storage == Storage.DATA_STORE &&
+                        entry.kind !in setOf(SettingKind.SWITCH, SettingKind.CHOICE)
+                    )
         }.keys
         assertEquals(emptySet<PrefKey>(), wrong)
     }
@@ -150,7 +182,9 @@ class SettingsCatalogTest {
 
     @Test
     fun textsInEverydayWordsAreForEntriesOfTheCatalog() {
-        val keys = SettingsCatalog.entries.mapNotNull { (it.key as? SettingKey.Pref)?.prefKey }.toSet()
+        val keys = SettingsCatalog.entries.mapNotNull {
+            (it.key as? SettingKey.Pref)?.prefKey
+        }.toSet()
         val explained = SettingTexts.titles.keys + SettingTexts.explanations.keys
         assertEquals(emptySet<PrefKey>(), explained - keys)
     }
@@ -159,7 +193,11 @@ class SettingsCatalogTest {
     fun groupsWithSectionsHaveOneForEveryEntry() {
         val withSections = SettingsSection.entries.map { it.group }.toSet()
         val wrong = SettingsCatalog.entries.filter { entry ->
-            if (entry.group in withSections) entry.section?.group != entry.group else entry.section != null
+            if (entry.group in withSections) {
+                entry.section?.group != entry.group
+            } else {
+                entry.section != null
+            }
         }.map { it.key }
         assertEquals(emptyList<SettingKey>(), wrong)
     }
@@ -172,7 +210,13 @@ class SettingsCatalogTest {
             val blocks = SettingsCatalog.of(group).mapNotNull { it.section }
                 .fold(
                     emptyList<SettingsSection>()
-                ) { blocks, section -> if (blocks.lastOrNull() == section) blocks else blocks + section }
+                ) { blocks, section ->
+                    if (blocks.lastOrNull() == section) {
+                        blocks
+                    } else {
+                        blocks + section
+                    }
+                }
             assertEquals(group.name, blocks.sorted(), blocks)
             assertEquals(group.name, blocks.distinct(), blocks)
         }
@@ -190,7 +234,8 @@ class SettingsCatalogTest {
             "ListPreference" to setOf(SettingKind.CHOICE),
             "MultiSelectListPreference" to setOf(SettingKind.MULTI_CHOICE),
             // Some are picked from options instead, e.g. kinds of files instead of MIME types
-            "EditTextPreference" to setOf(SettingKind.TEXT, SettingKind.CHOICE, SettingKind.MULTI_CHOICE),
+            "EditTextPreference" to
+                setOf(SettingKind.TEXT, SettingKind.CHOICE, SettingKind.MULTI_CHOICE),
             "LongSummaryEditTextPreference" to setOf(SettingKind.TEXT),
             "EditNumberPreference" to setOf(SettingKind.NUMBER, SettingKind.CHOICE),
             "SeekBarPreference" to setOf(SettingKind.SLIDER, SettingKind.CHOICE),

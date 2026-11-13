@@ -11,7 +11,7 @@ class FakeLedgerSource(
     consent: Boolean = true,
     ledger: Ledger? = null,
     catalog: Catalog = Catalog(),
-    today: LocalDate = LocalDate.now(),
+    today: LocalDate = LocalDate.now()
 ) : LedgerSource {
     override val consent = MutableStateFlow(consent)
     override val ledger = MutableStateFlow(ledger)

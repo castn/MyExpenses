@@ -1,11 +1,11 @@
 package org.totschnig.myexpenses.next.data.categories
 
-import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
 
 class CategorySuggesterTest {
 
@@ -25,11 +25,13 @@ class CategorySuggesterTest {
         payeeName: String? = null,
         comment: String? = null,
         categoryId: Long? = null,
-        amount: Long = -2500,
+        amount: Long = -2500
     ) = CategoryInput(nextId++, amount, payeeId, payeeName, comment, categoryId)
 
-    private fun suggester(history: List<CategoryInput> = emptyList(), rules: List<CategoryRule> = emptyList()) =
-        CategorySuggester(history, rules, categories)
+    private fun suggester(
+        history: List<CategoryInput> = emptyList(),
+        rules: List<CategoryRule> = emptyList()
+    ) = CategorySuggester(history, rules, categories)
 
     @Test
     fun ruleIsCertain() {
@@ -48,7 +50,8 @@ class CategorySuggesterTest {
     @Test
     fun payeeHistoryIsCertainFromFiveWithNinetyPercent() {
         val history =
-            List(9) { input(payeeId = 10, categoryId = supermarket.id) } + input(payeeId = 10, categoryId = leisure.id)
+            List(9) { input(payeeId = 10, categoryId = supermarket.id) } +
+                input(payeeId = 10, categoryId = leisure.id)
         val suggestion = suggester(history).suggest(input(payeeId = 10))!!
         assertEquals(supermarket.id, suggestion.categoryId)
         assertEquals(SuggestionSource.PAYEE, suggestion.source)
@@ -76,7 +79,11 @@ class CategorySuggesterTest {
     @Test
     fun refundOfAShopIsNoPurchase() {
         val history = List(6) { input(payeeId = 10, categoryId = supermarket.id) }
-        assertNull(suggester(history).suggest(input(payeeId = 10, payeeName = "Kaufhaus Schmidt", amount = 2500)))
+        assertNull(
+            suggester(
+                history
+            ).suggest(input(payeeId = 10, payeeName = "Kaufhaus Schmidt", amount = 2500))
+        )
     }
 
     @Test
@@ -91,8 +98,16 @@ class CategorySuggesterTest {
     fun wordsOfOtherPayeesLeadToASuggestion() {
         // Every branch is a payee of its own
         val history =
-            (1L..4L).map { input(payeeId = it, payeeName = "Rhein Center Markt $it", categoryId = supermarket.id) }
-        val suggestion = suggester(history).suggest(input(payeeId = 99, payeeName = "Rhein Center Markt 7"))!!
+            (1L..4L).map {
+                input(
+                    payeeId = it,
+                    payeeName = "Rhein Center Markt $it",
+                    categoryId = supermarket.id
+                )
+            }
+        val suggestion = suggester(
+            history
+        ).suggest(input(payeeId = 99, payeeName = "Rhein Center Markt 7"))!!
         assertEquals(supermarket.id, suggestion.categoryId)
         assertEquals(SuggestionSource.WORDS, suggestion.source)
         assertFalse(suggestion.isCertain)
@@ -101,8 +116,18 @@ class CategorySuggesterTest {
     @Test
     fun paymentWordsTellNothing() {
         val history =
-            List(5) { input(payeeName = "Kino $it", comment = "Kartenzahlung girocard", categoryId = leisure.id) }
-        assertNull(suggester(history).suggest(input(payeeName = "Unbekannt", comment = "Kartenzahlung girocard")))
+            List(5) {
+                input(
+                    payeeName = "Kino $it",
+                    comment = "Kartenzahlung girocard",
+                    categoryId = leisure.id
+                )
+            }
+        assertNull(
+            suggester(
+                history
+            ).suggest(input(payeeName = "Unbekannt", comment = "Kartenzahlung girocard"))
+        )
     }
 
     @Test
@@ -118,7 +143,13 @@ class CategorySuggesterTest {
 
     @Test
     fun merchantWithoutMatchingCategoryGetsNoSuggestion() {
-        assertNull(CategorySuggester(emptyList(), emptyList(), listOf(leisure)).suggest(input(payeeName = "REWE")))
+        assertNull(
+            CategorySuggester(
+                emptyList(),
+                emptyList(),
+                listOf(leisure)
+            ).suggest(input(payeeName = "REWE"))
+        )
     }
 
     @Test

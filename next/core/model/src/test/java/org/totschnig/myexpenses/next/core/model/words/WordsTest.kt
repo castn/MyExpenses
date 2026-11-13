@@ -6,7 +6,8 @@ import org.junit.Test
 class WordsTest {
 
     /** What [Words.normalize] did before it was written out */
-    private fun byRegex(text: String) = text.lowercase().replace(Regex("[^\\p{L}\\p{N}+]+"), " ").trim()
+    private fun byRegex(text: String) =
+        text.lowercase().replace(Regex("[^\\p{L}\\p{N}+]+"), " ").trim()
 
     @Test
     fun normalizesLikeTheRegex() {

@@ -30,7 +30,8 @@ class ContractsFeature(activity: ComponentActivity, data: NextData) : NextFeatur
 
     /** Whether [transaction] pays a contract, null while that is not known yet */
     @Composable
-    fun isContractPayment(transaction: ShownTransaction): Boolean? = rememberIsContractPayment(viewModel, transaction)
+    fun isContractPayment(transaction: ShownTransaction): Boolean? =
+        rememberIsContractPayment(viewModel, transaction)
 
     @Composable
     override fun TransactionSections(transaction: ShownTransaction) {
@@ -48,11 +49,14 @@ class ContractsFeature(activity: ComponentActivity, data: NextData) : NextFeatur
         ContractSuggestionsSection(viewModel)
     }
 
-    override val tab = NextTab(Icons.Default.Description, R.string.next_tab_contracts, NextKey.Contracts())
+    override val tab =
+        NextTab(Icons.Default.Description, R.string.next_tab_contracts, NextKey.Contracts())
 
     /** Unread news about contracts; those about incomes are shown in the balance */
     @Composable
-    override fun hasNews() = viewModel.news.collectAsStateWithLifecycle().value.any { !it.isRead && !it.isIncome }
+    override fun hasNews() = viewModel.news.collectAsStateWithLifecycle().value.any {
+        !it.isRead && !it.isIncome
+    }
 
     override fun EntryProviderScope<NavKey>.pages(shell: NextShell) {
         entry<NextKey.Contracts> { key ->

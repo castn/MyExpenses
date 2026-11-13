@@ -45,17 +45,26 @@ class MerchantsTest {
                 RawPayee(1, "Supermarkt um die Ecke", shortName = "REWE", parentId = null),
                 RawPayee(2, "Filiale 4711", shortName = null, parentId = 1),
                 RawPayee(3, "Netflix", shortName = null, parentId = 1),
-                RawPayee(4, "Bäckerei Schulz", shortName = null, parentId = null),
+                RawPayee(4, "Bäckerei Schulz", shortName = null, parentId = null)
             )
         )
-        assertEquals(mapOf(1L to "REWE", 2L to "REWE", 3L to "Netflix"), merchants.mapValues { it.value.name })
+        assertEquals(
+            mapOf(1L to "REWE", 2L to "REWE", 3L to "Netflix"),
+            merchants.mapValues {
+                it.value.name
+            }
+        )
     }
 
     @Test
     fun savingTipsCheckTheSupermarketsInTheirOrder() {
         assertEquals(
-            listOf("REWE", "EDEKA", "ALDI", "Lidl", "Netto", "Penny", "Kaufland", "tegut", "Norma", "Globus", "famila",
-                "Alnatura", "denn's", "Tesco", "Sainsbury's", "Asda", "Waitrose", "Walmart", "Kroger"),
+            listOf(
+                "REWE", "EDEKA", "ALDI", "Lidl", "Netto", "Penny", "Kaufland", "tegut", "Norma",
+                "Globus", "famila",
+                "Alnatura", "denn's", "Tesco", "Sainsbury's", "Asda", "Waitrose", "Walmart",
+                "Kroger"
+            ),
             SUPERMARKETS.map { it.first }
         )
         assertEquals(listOf("edeka", "e center", "marktkauf"), SUPERMARKETS[1].second)

@@ -30,6 +30,9 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import kotlinx.coroutines.launch
 import org.totschnig.myexpenses.MyApplication
 import org.totschnig.myexpenses.R
@@ -62,23 +65,20 @@ import org.totschnig.myexpenses.service.AutoBackupWorker
 import org.totschnig.myexpenses.sync.GenericAccountService
 import org.totschnig.myexpenses.util.AppDirHelper
 import org.totschnig.myexpenses.util.FileInfo
+import org.totschnig.myexpenses.util.TextUtils
 import org.totschnig.myexpenses.util.Utils
 import org.totschnig.myexpenses.util.ui.setNightMode
-import org.totschnig.myexpenses.util.TextUtils
 import org.totschnig.myexpenses.viewmodel.CurrencyViewModel
-import org.totschnig.myexpenses.viewmodel.data.Currency
 import org.totschnig.myexpenses.viewmodel.ManageCategoriesViewModel
 import org.totschnig.myexpenses.viewmodel.ModalProgressViewModel
 import org.totschnig.myexpenses.viewmodel.PriceCalculationViewModel
 import org.totschnig.myexpenses.viewmodel.SettingsViewModel
+import org.totschnig.myexpenses.viewmodel.data.Currency
 import org.totschnig.myexpenses.widget.AccountWidget
 import org.totschnig.myexpenses.widget.BudgetWidget
 import org.totschnig.myexpenses.widget.TemplateWidget
 import org.totschnig.myexpenses.widget.WIDGET_CONTEXT_CHANGED
 import org.totschnig.myexpenses.widget.updateWidgets
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 
 /**
  * The settings of the new UI, see [SettingsCatalog]. Settings in [NativeSettings] are changed
@@ -138,20 +138,24 @@ class NextSettings : ProtectedFragmentActivity() {
         override fun boolean(key: PrefKey) = prefHandler.getBoolean(key, false)
     }
 
-    private val legacyScreen = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        // Handed on to the main screen, which restarts after a restore
-        if (it.resultCode == RESULT_RESTORE_OK || it.resultCode == RESULT_INVALIDATE_OPTIONS_MENU) {
-            setResult(it.resultCode)
-            if (it.resultCode == RESULT_RESTORE_OK) finish()
+    private val legacyScreen =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            // Handed on to the main screen, which restarts after a restore
+            if (it.resultCode == RESULT_RESTORE_OK ||
+                it.resultCode == RESULT_INVALIDATE_OPTIONS_MENU
+            ) {
+                setResult(it.resultCode)
+                if (it.resultCode == RESULT_RESTORE_OK) finish()
+            }
         }
-    }
 
-    private val restore = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_RESTORE_OK) {
-            setResult(RESULT_RESTORE_OK)
-            finish()
+    private val restore =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_RESTORE_OK) {
+                setResult(RESULT_RESTORE_OK)
+                finish()
+            }
         }
-    }
 
     private val pickAppDir = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
         if (it != null) {
@@ -169,7 +173,9 @@ class NextSettings : ProtectedFragmentActivity() {
         override fun title(entry: SettingEntry) = specs.title(entry)
 
         override fun explanation(entry: SettingEntry) =
-            (entry.key as? SettingKey.Pref)?.prefKey?.let(SettingTexts.explanations::get)?.let(::getString)
+            (entry.key as? SettingKey.Pref)?.prefKey?.let(
+                SettingTexts.explanations::get
+            )?.let(::getString)
 
         override fun details(entry: SettingEntry): String {
             (entry.key as? SettingKey.Next)?.setting?.summary?.let { return getString(it) }
@@ -180,7 +186,9 @@ class NextSettings : ProtectedFragmentActivity() {
                 native?.summary?.invoke(this@NextSettings) ?: spec?.summary,
                 spec?.summaryOn,
                 spec?.summaryOff,
-                (native?.options?.invoke(this@NextSettings) ?: spec?.options)?.joinToString(" ") { it.second }
+                (native?.options?.invoke(this@NextSettings) ?: spec?.options)?.joinToString(" ") {
+                    it.second
+                }
             ).joinToString(" ")
         }
 
@@ -192,12 +200,19 @@ class NextSettings : ProtectedFragmentActivity() {
             // As the old screens
             return when (prefKey) {
                 PrefKey.MANAGE_STALE_IMAGES -> hasStaleImages
+
                 PrefKey.MANAGE_APP_DIR_FILES -> appFiles.isNotEmpty()
+
                 PrefKey.DEBUG_REPAIR_987 -> isDataCorrupted
+
                 PrefKey.NO_ADS -> !adHandlerFactory.isAdDisabled
-                PrefKey.PERSONALIZED_AD_CONSENT -> !adHandlerFactory.isAdDisabled && isPrivacyOptionsRequired
+
+                PrefKey.PERSONALIZED_AD_CONSENT ->
+                    !adHandlerFactory.isAdDisabled && isPrivacyOptionsRequired
+
                 PrefKey.FEATURE_UNINSTALL_FEATURES, PrefKey.FEATURE_UNINSTALL_LANGUAGES ->
                     featureManager.allowsUninstall()
+
                 else -> true
             }
         }
@@ -213,42 +228,68 @@ class NextSettings : ProtectedFragmentActivity() {
             val intent = specs.spec(entry)?.intent
             when {
                 entry.legacy == null -> {}
+
                 entry.legacy == LegacyScreen.MAIN -> openMainEntry(prefKey!!)
+
                 // As the old screen: after a restore the main screen starts anew
                 prefKey == PrefKey.RESTORE && intent != null -> restore.launch(intent)
+
                 // The old screen starts the intent itself, unless it handles the click
                 intent != null -> startActivity(intent)
+
                 prefKey == PrefKey.IMPORT_CSV -> contribFeatureRequested(ContribFeature.CSV_IMPORT)
+
                 prefKey == PrefKey.CUSTOMIZE_MENU_V2 -> customizeMenu(specs.title(entry))
+
                 prefKey == PrefKey.RATE -> {
                     prefHandler.putLong(PrefKey.NEXT_REMINDER_RATE, -1)
                     dispatchCommand(R.id.RATE_COMMAND, null)
                 }
+
                 prefKey == PrefKey.SEND_FEEDBACK -> dispatchCommand(R.id.FEEDBACK_COMMAND, null)
+
                 prefKey == PrefKey.TELL_A_FRIEND -> startActivity(
-                    Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
-                    putExtra(Intent.EXTRA_TEXT, Utils.getTellAFriendMessage(this@NextSettings).toString())
-                    type = "text/plain"
-                }, getString(R.string.menu_share)))
+                    Intent.createChooser(
+                        Intent(Intent.ACTION_SEND).apply {
+                            putExtra(
+                                Intent.EXTRA_TEXT,
+                                Utils.getTellAFriendMessage(this@NextSettings).toString()
+                            )
+                            type = "text/plain"
+                        },
+                        getString(R.string.menu_share)
+                    )
+                )
+
                 prefKey == PrefKey.DEFAULT_TRANSFER_CATEGORY ->
-                    SelectDefaultTransferCategoryDialogFragment().show(supportFragmentManager, "SELECT_DEFAULT")
+                    SelectDefaultTransferCategoryDialogFragment().show(
+                        supportFragmentManager,
+                        "SELECT_DEFAULT"
+                    )
+
                 prefKey == PrefKey.NO_ADS -> contribFeatureRequested(ContribFeature.AD_FREE)
+
                 prefKey == PrefKey.PERSONALIZED_AD_CONSENT -> checkGdprConsent(true)
+
                 entry.legacy == LegacyScreen.CONTRIB && !licenceHandler.hasAnyLicence ->
                     dispatchCommand(R.id.CONTRIB_INFO_COMMAND, null)
+
                 else -> openLegacy(entry.legacy)
             }
         }
 
         @Composable
-        override fun page(setting: InsightSetting, onBack: () -> Unit) = InsightPage(setting, onBack)
+        override fun page(setting: InsightSetting, onBack: () -> Unit) =
+            InsightPage(setting, onBack)
 
         @Composable
         override fun control(entry: SettingEntry): SettingControl? {
             (entry.key as? SettingKey.Next)?.let { return insightControl(it.setting) }
             val prefKey = (entry.key as? SettingKey.Pref)?.prefKey ?: return null
             if (prefKey == PrefKey.DEFAULT_TRANSFER_CATEGORY) {
-                return SettingControl.Action(defaultTransferCategory, isEnabled = true) { open(entry) }
+                return SettingControl.Action(defaultTransferCategory, isEnabled = true) {
+                    open(entry)
+                }
             }
             val native = NativeSettings.all[prefKey] ?: return null
             val spec = specs.spec(entry) ?: return null
@@ -258,16 +299,20 @@ class NextSettings : ProtectedFragmentActivity() {
             val stored = dataStorePreferences
             val key = prefHandler.getKey(prefKey)
             val default = native.defaultValue?.invoke(this@NextSettings) ?: spec.defaultValue
-            val dependencyMet = spec.dependency?.let { settings.getBoolean(it, specs.defaultOf(it) == "true") } ?: true
+            val dependencyMet =
+                spec.dependency?.let { settings.getBoolean(it, specs.defaultOf(it) == "true") }
+                    ?: true
             val nativeEnabled = native.isEnabled?.invoke(values) ?: true
             val isEnabled = dependencyMet && nativeEnabled &&
-                    // until the values of the data store are read
-                    (native.storage == Storage.PREFERENCES || stored != null)
+                // until the values of the data store are read
+                (native.storage == Storage.PREFERENCES || stored != null)
             return when (entry.kind) {
                 SettingKind.SWITCH -> {
-                    val checked = if (native.storage == Storage.DATA_STORE)
+                    val checked = if (native.storage == Storage.DATA_STORE) {
                         stored?.get(booleanPreferencesKey(key)) ?: (default == "true")
-                    else settings.getBoolean(key, default == "true")
+                    } else {
+                        settings.getBoolean(key, default == "true")
+                    }
                     SettingControl.Switch(
                         checked = checked,
                         summary = native.summary?.invoke(this@NextSettings) ?: explanation
@@ -276,16 +321,25 @@ class NextSettings : ProtectedFragmentActivity() {
                         onChange = { checked ->
                             if (
                                 native.storage == Storage.DATA_STORE
-                            ) editDataStore(prefKey) { it[booleanPreferencesKey(key)] = checked }
-                            else settings.edit().putBoolean(key, checked).apply()
+                            ) {
+                                editDataStore(prefKey) { it[booleanPreferencesKey(key)] = checked }
+                            } else {
+                                settings.edit().putBoolean(key, checked).apply()
+                            }
                         }
                     )
                 }
+
                 SettingKind.CHOICE -> SettingControl.Choice(
-                    selected = native.read?.invoke(this@NextSettings) ?: if (native.storage == Storage.DATA_STORE)
-                        stored?.get(stringPreferencesKey(key)) ?: default
-                    else settings.getString(key, default),
-                    options = native.options?.invoke(this@NextSettings) ?: spec.options ?: return null,
+                    selected =
+                        native.read?.invoke(this@NextSettings)
+                            ?: if (native.storage == Storage.DATA_STORE) {
+                                stored?.get(stringPreferencesKey(key)) ?: default
+                            } else {
+                                settings.getString(key, default)
+                            },
+                    options =
+                        native.options?.invoke(this@NextSettings) ?: spec.options ?: return null,
                     explanation = explanation,
                     custom = native.legend?.let { legend ->
                         SettingControl.CustomValue(
@@ -298,14 +352,19 @@ class NextSettings : ProtectedFragmentActivity() {
                     onSelect = { value ->
                         when {
                             native.write != null -> native.write.invoke(this@NextSettings, value)
+
                             native.storage == Storage.DATA_STORE ->
                                 editDataStore(prefKey) { it[stringPreferencesKey(key)] = value }
+
                             else -> settings.edit().putString(key, value).apply()
                         }
                     }
                 )
+
                 SettingKind.TEXT, SettingKind.PASSWORD -> SettingControl.Text(
-                    value = native.read?.invoke(this@NextSettings) ?: settings.getString(key, default) ?: "",
+                    value =
+                        native.read?.invoke(this@NextSettings) ?: settings.getString(key, default)
+                            ?: "",
                     isNumber = false,
                     isEnabled = isEnabled,
                     onChange = { text ->
@@ -316,9 +375,11 @@ class NextSettings : ProtectedFragmentActivity() {
                             else -> settings.edit().putString(key, text).apply()
                         }
                     },
-                    summary = native.summary?.invoke(this@NextSettings) ?: explanation ?: spec.summary,
+                    summary =
+                        native.summary?.invoke(this@NextSettings) ?: explanation ?: spec.summary,
                     isPassword = entry.kind == SettingKind.PASSWORD
                 )
+
                 SettingKind.NUMBER -> SettingControl.Text(
                     value = settings.getInt(key, default?.toIntOrNull() ?: 0).toString(),
                     isNumber = true,
@@ -329,36 +390,54 @@ class NextSettings : ProtectedFragmentActivity() {
                         }
                     }
                 )
+
                 SettingKind.SLIDER -> SettingControl.Slider(
                     value = settings.getInt(key, default?.toIntOrNull() ?: 0),
                     range = native.range ?: (spec.min ?: 0)..(spec.max ?: 100),
                     isEnabled = isEnabled,
                     onChange = { settings.edit().putInt(key, it).apply() },
                     isStepped = native.range != null,
-                    valueText = { value -> native.valueText?.invoke(this@NextSettings, value) ?: value.toString() },
-                    sampleScale = native.sampleScale?.let { scale -> { scale(this@NextSettings, it) } }
+                    valueText = { value ->
+                        native.valueText?.invoke(this@NextSettings, value)
+                            ?: value.toString()
+                    },
+                    sampleScale = native.sampleScale?.let { scale ->
+                        { scale(this@NextSettings, it) }
+                    }
                 )
+
                 SettingKind.MULTI_CHOICE -> SettingControl.MultiChoice(
                     // As the old screen: the values separated by commas
                     selected = (settings.getString(key, default) ?: "").split(',')
                         .map { it.trim() }.filter { it.isNotEmpty() }.toSet(),
-                    options = native.options?.invoke(this@NextSettings) ?: spec.options ?: return null,
+                    options =
+                        native.options?.invoke(this@NextSettings) ?: spec.options ?: return null,
                     isEnabled = isEnabled,
-                    onChange = { values -> settings.edit().putString(key, values.joinToString(",")).apply() }
+                    onChange = { values ->
+                        settings.edit().putString(key, values.joinToString(",")).apply()
+                    }
                 )
+
                 SettingKind.TIME -> {
                     // As TimePreference: hours times 100 plus minutes
-                    val value = settings.getInt(key, default?.toIntOrNull() ?: TimePreference.DEFAULT_VALUE)
+                    val value = settings.getInt(
+                        key,
+                        default?.toIntOrNull() ?: TimePreference.DEFAULT_VALUE
+                    )
                     val time = LocalTime.of(value / 100, value % 100)
                     SettingControl.Time(
                         hour = time.hour,
                         minute = time.minute,
                         text = time.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)),
                         isEnabled = isEnabled,
-                        onChange = { hour, minute -> settings.edit().putInt(key, 100 * hour + minute).apply() }
+                        onChange = { hour, minute ->
+                            settings.edit().putInt(key, 100 * hour + minute).apply()
+                        }
                     )
                 }
+
                 SettingKind.INFO -> SettingControl.Info(native.summary?.invoke(this@NextSettings))
+
                 else -> null
             }
         }
@@ -391,7 +470,10 @@ class NextSettings : ProtectedFragmentActivity() {
         injector.inject(currencyViewModel)
         injector.inject(priceCalculationViewModel)
         categoryViewModel.defaultTransferCategory().observe(this) { defaultTransferCategory = it }
-        supportFragmentManager.setFragmentResultListener(SELECT_CATEGORY_REQUEST, this) { _, result ->
+        supportFragmentManager.setFragmentResultListener(SELECT_CATEGORY_REQUEST, this) {
+                _,
+                result
+            ->
             defaultTransferCategory = result.getString(KEY_PATH)
         }
         // What the old screens show only in some cases
@@ -419,17 +501,23 @@ class NextSettings : ProtectedFragmentActivity() {
             NextTheme {
                 Box {
                     NextSettingsScreen(
-                    actions,
-                    onBack = ::finish,
-                    initialGroup = intent.getStringExtra(EXTRA_GROUP)?.let { SettingsGroup.valueOf(it) }
-                )
+                        actions,
+                        onBack = ::finish,
+                        initialGroup = intent.getStringExtra(EXTRA_GROUP)?.let {
+                            SettingsGroup.valueOf(it)
+                        }
+                    )
                 }
                 areaSettings.values.forEach { it.Dialogs() }
                 homeCurrencyRequest?.let { code ->
                     ConfirmDialog(
-                        title = getString(R.string.pref_home_currency_title) + ": " + currencyContext[code].description,
+                        title =
+                            getString(R.string.pref_home_currency_title) + ": " +
+                                currencyContext[code].description,
                         text = TextUtils.concatResStrings(
-                            this, R.string.recalculate_equivalent_amounts_warning, R.string.continue_confirmation
+                            this,
+                            R.string.recalculate_equivalent_amounts_warning,
+                            R.string.continue_confirmation
                         ),
                         confirmLabel = getString(NextR.string.next_change),
                         onConfirm = {
@@ -445,7 +533,10 @@ class NextSettings : ProtectedFragmentActivity() {
                         title = request.title,
                         options = request.options,
                         label = { it.first },
-                        onSelect = { pickRequest = null; it.second() },
+                        onSelect = {
+                            pickRequest = null
+                            it.second()
+                        },
                         onDismiss = { pickRequest = null }
                     )
                 }
@@ -462,7 +553,9 @@ class NextSettings : ProtectedFragmentActivity() {
     override fun contribFeatureCalled(feature: ContribFeature, tag: ContribPayload?) {
         if (feature == ContribFeature.CSV_IMPORT) {
             startActivity(Intent(this, CsvImportActivity::class.java))
-        } else super.contribFeatureCalled(feature, tag)
+        } else {
+            super.contribFeatureCalled(feature, tag)
+        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
@@ -474,8 +567,10 @@ class NextSettings : ProtectedFragmentActivity() {
         when (key) {
             prefHandler.getKey(PrefKey.AUTO_BACKUP) -> {
                 val autoBackup = sharedPreferences.getBoolean(key, false)
-                if (autoBackup && (prefHandler.getBoolean(PrefKey.PROTECTION_LEGACY, false) ||
-                            prefHandler.getBoolean(PrefKey.PROTECTION_DEVICE_LOCK_SCREEN, false)) &&
+                if (autoBackup && (
+                        prefHandler.getBoolean(PrefKey.PROTECTION_LEGACY, false) ||
+                            prefHandler.getBoolean(PrefKey.PROTECTION_DEVICE_LOCK_SCREEN, false)
+                        ) &&
                     prefHandler.getString(PrefKey.EXPORT_PASSWORD, null) == null
                 ) {
                     showMessage(unencryptedBackupWarning)
@@ -483,34 +578,70 @@ class NextSettings : ProtectedFragmentActivity() {
                 if (autoBackup) checkNotificationPermissionForAutoBackup()
                 AutoBackupWorker.enqueueOrCancel(this, prefHandler)
             }
-            prefHandler.getKey(PrefKey.AUTO_BACKUP_TIME) -> AutoBackupWorker.enqueueOrCancel(this, prefHandler)
-            prefHandler.getKey(PrefKey.SYNC_FREQUCENCY) -> GenericAccountService.getAccounts(this).forEach {
+
+            prefHandler.getKey(
+                PrefKey.AUTO_BACKUP_TIME
+            ) -> AutoBackupWorker.enqueueOrCancel(this, prefHandler)
+
+            prefHandler.getKey(
+                PrefKey.SYNC_FREQUCENCY
+            ) -> GenericAccountService.getAccounts(this).forEach {
                 GenericAccountService.configureAutomaticAndPeriod(it, prefHandler)
             }
+
             // kept in the database too, for the sync adapter
-            prefHandler.getKey(PrefKey.SYNC_NOTIFICATION), prefHandler.getKey(PrefKey.SYNC_WIFI_ONLY) ->
-                settingsViewModel.storeSetting(key, sharedPreferences.getBoolean(key, false).toString())
+            prefHandler.getKey(
+                PrefKey.SYNC_NOTIFICATION
+            ), prefHandler.getKey(PrefKey.SYNC_WIFI_ONLY) ->
+                settingsViewModel.storeSetting(
+                    key,
+                    sharedPreferences.getBoolean(key, false).toString()
+                )
                     .observe(this) { if (!it) showSnackBar("ERROR") }
+
             prefHandler.getKey(PrefKey.UI_THEME) -> {
                 setNightMode(prefHandler, this)
                 updateWidgets(AccountWidget::class.java, TemplateWidget::class.java)
             }
+
             prefHandler.getKey(PrefKey.UI_FONT_SIZE) -> {
-                updateWidgets(AccountWidget::class.java, TemplateWidget::class.java, BudgetWidget::class.java)
+                updateWidgets(
+                    AccountWidget::class.java,
+                    TemplateWidget::class.java,
+                    BudgetWidget::class.java
+                )
                 recreate()
             }
-            prefHandler.getKey(PrefKey.CUSTOM_DECIMAL_FORMAT) -> currencyFormatter.invalidate(contentResolver)
-            prefHandler.getKey(PrefKey.PROTECTION_ENABLE_ACCOUNT_WIDGET) -> updateWidgets(AccountWidget::class.java)
-            prefHandler.getKey(PrefKey.PROTECTION_ENABLE_TEMPLATE_WIDGET) -> updateWidgets(TemplateWidget::class.java)
-            prefHandler.getKey(PrefKey.PROTECTION_ENABLE_BUDGET_WIDGET) -> updateWidgets(BudgetWidget::class.java)
-            prefHandler.getKey(PrefKey.TRACKING) -> tracker.setEnabled(sharedPreferences.getBoolean(key, false))
+
+            prefHandler.getKey(
+                PrefKey.CUSTOM_DECIMAL_FORMAT
+            ) -> currencyFormatter.invalidate(contentResolver)
+
+            prefHandler.getKey(
+                PrefKey.PROTECTION_ENABLE_ACCOUNT_WIDGET
+            ) -> updateWidgets(AccountWidget::class.java)
+
+            prefHandler.getKey(
+                PrefKey.PROTECTION_ENABLE_TEMPLATE_WIDGET
+            ) -> updateWidgets(TemplateWidget::class.java)
+
+            prefHandler.getKey(
+                PrefKey.PROTECTION_ENABLE_BUDGET_WIDGET
+            ) -> updateWidgets(BudgetWidget::class.java)
+
+            prefHandler.getKey(
+                PrefKey.TRACKING
+            ) -> tracker.setEnabled(sharedPreferences.getBoolean(key, false))
+
             prefHandler.getKey(PrefKey.CRASHREPORT_USEREMAIL) -> crashHandler.setUserEmail(
                 sharedPreferences.getString(key, null)
             )
+
             prefHandler.getKey(PrefKey.CRASHREPORT_ENABLED) -> {
                 crashHandler.setEnabled(sharedPreferences.getBoolean(key, false))
                 showSnackBar(R.string.app_restart_required)
             }
+
             prefHandler.getKey(PrefKey.UNMAPPED_TRANSACTION_AS_TRANSFER) -> {
                 contentResolver.notifyChange(TRANSACTIONS_URI, null, false)
                 contentResolver.notifyChange(ACCOUNTS_URI, null, false)
@@ -526,13 +657,17 @@ class NextSettings : ProtectedFragmentActivity() {
         lifecycleScope.launch {
             dataStore.edit(change)
             // As the old screen does, the list of an account shows future transactions differently
-            if (prefKey == PrefKey.CRITERION_FUTURE) contentResolver.notifyChange(ACCOUNTS_URI, null, false)
+            if (prefKey == PrefKey.CRITERION_FUTURE) {
+                contentResolver.notifyChange(ACCOUNTS_URI, null, false)
+            }
         }
     }
 
     /** As the old screen does, a language that is not installed yet is downloaded first */
     internal fun changeLanguage(language: String) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU && language != MyApplication.DEFAULT_LANGUAGE) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU &&
+            language != MyApplication.DEFAULT_LANGUAGE
+        ) {
             featureManager.requestLocale(language)
         } else {
             setLanguage(language)
@@ -542,9 +677,14 @@ class NextSettings : ProtectedFragmentActivity() {
     private fun customizeMenu(title: String) {
         pickRequest = PickRequest(
             title,
-            listOf(MenuItem.MenuContext.V2Navigation, MenuItem.MenuContext.V2Transactions).map { menuContext ->
+            listOf(
+                MenuItem.MenuContext.V2Navigation,
+                MenuItem.MenuContext.V2Transactions
+            ).map { menuContext ->
                 menuContext.title(this) to {
-                    CustomizeMenuDialogFragment.newInstance(menuContext).show(supportFragmentManager, "CUSTOMIZE_MENU")
+                    CustomizeMenuDialogFragment.newInstance(
+                        menuContext
+                    ).show(supportFragmentManager, "CUSTOMIZE_MENU")
                 }
             }
         )
@@ -552,17 +692,27 @@ class NextSettings : ProtectedFragmentActivity() {
 
     @Composable
     private fun AppFilesSheet() {
-        val close = { isAppFilesSheetShown = false; pickedAppFiles = emptySet() }
+        val close = {
+            isAppFilesSheetShown = false
+            pickedAppFiles = emptySet()
+        }
         MultiChoiceSheet(
             title = stringResource(R.string.files_label),
             options = appFiles,
             selected = appFiles.filterTo(mutableSetOf()) { it.name in pickedAppFiles },
             onToggle = { file ->
                 pickedAppFiles =
-                    if (file.name in pickedAppFiles) pickedAppFiles - file.name else pickedAppFiles + file.name
+                    if (file.name in pickedAppFiles) {
+                        pickedAppFiles - file.name
+                    } else {
+                        pickedAppFiles + file.name
+                    }
             },
             label = { it.format(this) },
-            onConfirm = { shareAppFiles(pickedAppFiles); close() },
+            onConfirm = {
+                shareAppFiles(pickedAppFiles)
+                close()
+            },
             onDismiss = close,
             footer = {
                 DestructiveTextButton(
@@ -584,7 +734,9 @@ class NextSettings : ProtectedFragmentActivity() {
                 confirmLabel = stringResource(R.string.menu_delete),
                 onConfirm = {
                     isDeleteConfirmationShown = false
-                    settingsViewModel.deleteAppFiles(pickedAppFiles.toTypedArray()).observe(this@NextSettings) {
+                    settingsViewModel.deleteAppFiles(
+                        pickedAppFiles.toTypedArray()
+                    ).observe(this@NextSettings) {
                         showSnackBar(resources.getQuantityString(R.plurals.delete_success, it, it))
                     }
                     close()
@@ -597,18 +749,22 @@ class NextSettings : ProtectedFragmentActivity() {
     /** As the old main screen */
     private fun shareAppFiles(names: Set<String>) {
         val appDir = settingsViewModel.appDirInfo.value?.getOrNull() ?: return
-        startActivity(Intent(Intent.ACTION_SEND_MULTIPLE).apply {
-            type = "text/plain"
-            putParcelableArrayListExtra(
-                Intent.EXTRA_STREAM,
-                ArrayList(names.mapNotNull { name ->
-                    appDir.documentFile.findFile(name)
-                        ?.uri
-                        ?.let { AppDirHelper.ensureContentUri(it, this@NextSettings) }
-                })
-            )
-            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-        })
+        startActivity(
+            Intent(Intent.ACTION_SEND_MULTIPLE).apply {
+                type = "text/plain"
+                putParcelableArrayListExtra(
+                    Intent.EXTRA_STREAM,
+                    ArrayList(
+                        names.mapNotNull { name ->
+                            appDir.documentFile.findFile(name)
+                                ?.uri
+                                ?.let { AppDirHelper.ensureContentUri(it, this@NextSettings) }
+                        }
+                    )
+                )
+                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            }
+        )
     }
 
     private fun openLegacy(screen: LegacyScreen) {
@@ -623,18 +779,28 @@ class NextSettings : ProtectedFragmentActivity() {
     /** Entries of the list of all old screens, which the new settings do not show */
     private fun openMainEntry(prefKey: PrefKey) {
         when (prefKey) {
-            PrefKey.MORE_INFO_DIALOG -> MoreInfoDialogFragment().show(supportFragmentManager, "MORE_INFO")
+            PrefKey.MORE_INFO_DIALOG -> MoreInfoDialogFragment().show(
+                supportFragmentManager,
+                "MORE_INFO"
+            )
+
             PrefKey.BANKING_FINTS -> contribFeatureRequested(ContribFeature.BANKING)
+
             PrefKey.MANAGE_APP_DIR_FILES -> isAppFilesSheetShown = true
-            PrefKey.APP_DIR -> if (prefHandler.getString(PrefKey.APP_DIR) == null) launchAppDirPicker() else {
+
+            PrefKey.APP_DIR -> if (prefHandler.getString(PrefKey.APP_DIR) == null) {
+                launchAppDirPicker()
+            } else {
                 pickRequest = PickRequest(
                     getString(R.string.pref_app_dir_title),
                     listOf(
-                        getString(R.string.checkbox_is_default) to { prefHandler.putString(PrefKey.APP_DIR, null) },
+                        getString(R.string.checkbox_is_default) to
+                            { prefHandler.putString(PrefKey.APP_DIR, null) },
                         getString(R.string.select) to ::launchAppDirPicker
                     )
                 )
             }
+
             else -> {}
         }
     }
@@ -643,7 +809,9 @@ class NextSettings : ProtectedFragmentActivity() {
         try {
             pickAppDir.launch(null)
         } catch (_: ActivityNotFoundException) {
-            showSnackBar("Could not open directory picker. This feature may not be supported on your device.")
+            showSnackBar(
+                "Could not open directory picker. This feature may not be supported on your device."
+            )
         }
     }
 
@@ -656,6 +824,11 @@ class NextSettings : ProtectedFragmentActivity() {
 
         /** Entries of the list of all old screens that [openMainEntry] handles */
         private val nativeMainEntries =
-            setOf(PrefKey.MORE_INFO_DIALOG, PrefKey.BANKING_FINTS, PrefKey.APP_DIR, PrefKey.MANAGE_APP_DIR_FILES)
+            setOf(
+                PrefKey.MORE_INFO_DIALOG,
+                PrefKey.BANKING_FINTS,
+                PrefKey.APP_DIR,
+                PrefKey.MANAGE_APP_DIR_FILES
+            )
     }
 }

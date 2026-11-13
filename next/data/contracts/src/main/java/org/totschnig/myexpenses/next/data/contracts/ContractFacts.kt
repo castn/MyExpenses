@@ -14,5 +14,5 @@ data class ContractFacts(
     val confirmed: List<Contract>,
     val salaries: List<Contract>,
     val paymentIds: Set<Long>,
-    val transactions: List<ContractTransaction>,
+    val transactions: List<ContractTransaction>
 )

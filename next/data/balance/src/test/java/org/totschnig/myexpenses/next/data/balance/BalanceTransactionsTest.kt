@@ -1,11 +1,11 @@
 package org.totschnig.myexpenses.next.data.balance
 
+import java.time.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.core.model.ledger.OwnAccounts
-import java.time.LocalDate
 
 class BalanceTransactionsTest {
 
@@ -18,7 +18,13 @@ class BalanceTransactionsTest {
         val ledger = Ledger(
             listOf(
                 LedgerTransaction(1, LocalDate.of(2026, 8, 31), amount = -500, accountId = giro),
-                LedgerTransaction(2, LocalDate.of(2026, 9, 1), amount = -1000, homeAmount = -1100, accountId = giro),
+                LedgerTransaction(
+                    2,
+                    LocalDate.of(2026, 9, 1),
+                    amount = -1000,
+                    homeAmount = -1100,
+                    accountId = giro
+                ),
                 LedgerTransaction(
                     3,
                     LocalDate.of(2026, 9, 15),
@@ -26,7 +32,7 @@ class BalanceTransactionsTest {
                     accountId = giro,
                     targetAccountId = savings
                 ),
-                LedgerTransaction(4, LocalDate.of(2026, 10, 1), amount = -700, accountId = giro),
+                LedgerTransaction(4, LocalDate.of(2026, 10, 1), amount = -700, accountId = giro)
             ),
             OwnAccounts(setOf(giro), emptyMap())
         )
@@ -34,7 +40,13 @@ class BalanceTransactionsTest {
             listOf(
                 BalanceTransaction(2, LocalDate.of(2026, 9, 1), -1100, giro),
                 // Movements between own accounts count as transfers
-                BalanceTransaction(3, LocalDate.of(2026, 9, 15), -5000, giro, transferAccountId = savings),
+                BalanceTransaction(
+                    3,
+                    LocalDate.of(2026, 9, 15),
+                    -5000,
+                    giro,
+                    transferAccountId = savings
+                )
             ),
             balanceTransactions(ledger, period)
         )

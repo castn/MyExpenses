@@ -1,5 +1,6 @@
 package org.totschnig.myexpenses.next.data.receipts
 
+import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup.ALCOHOL
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup.BABY
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup.BAKERY
@@ -15,7 +16,6 @@ import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup.PRODUCE
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup.READY_MEALS
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup.SWEETS_SNACKS
 import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup.TOBACCO
-import org.totschnig.myexpenses.next.core.model.receipts.ItemGroup
 
 /**
  * Built-in German words of goods. Receipts shorten names ("SCHLAGSAH", "HAFERFL.") and German
@@ -108,16 +108,26 @@ internal object ItemDictionary {
         """,
         NON_FOOD to """
             schraube schrauben dübel nägel kabel lampe socken strümpfe spielzeug zeitschrift zeitung blumenerde
-        """,
+        """
     )
 
-    class Keyword(val word: String, val group: ItemGroup, val isWeak: Boolean, val wholeWordOnly: Boolean)
+    class Keyword(
+        val word: String,
+        val group: ItemGroup,
+        val isWeak: Boolean,
+        val wholeWordOnly: Boolean
+    )
 
     val keywords: List<Keyword> = entries.flatMap { (group, words) ->
         words.trim().split(Regex("\\s+")).map { raw ->
             val isWeak = raw.startsWith("~")
             val unmarked = raw.removePrefix("~")
-            Keyword(ItemWords.fold(unmarked.removePrefix("=")), group, isWeak, unmarked.startsWith("="))
+            Keyword(
+                ItemWords.fold(unmarked.removePrefix("=")),
+                group,
+                isWeak,
+                unmarked.startsWith("=")
+            )
         }
     }
 }

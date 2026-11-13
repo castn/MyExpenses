@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
+import org.totschnig.myexpenses.next.core.common.stateWhileShown
 import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 import org.totschnig.myexpenses.next.core.model.ledger.analysisState
-import org.totschnig.myexpenses.next.core.common.stateWhileShown
-import org.totschnig.myexpenses.next.data.tags.TagFacts
 import org.totschnig.myexpenses.next.data.analysis.CategoryAnalysis
 import org.totschnig.myexpenses.next.data.analysis.CategoryAnalyzer
 import org.totschnig.myexpenses.next.data.analysis.PeriodKind
+import org.totschnig.myexpenses.next.data.tags.TagFacts
 
 /**
  * What was spent per category, see [CategoryAnalyzer]: the current month for the analysis tab
@@ -58,7 +58,8 @@ class CategorySpendingViewModel(
             .stateWhileShown(viewModelScope, AnalysisState.Loading)
 
     /** The current month, compared with the one before */
-    val currentMonth: StateFlow<AnalysisState<CategoryAnalysis>> = analyses(MutableStateFlow(Selection()))
+    val currentMonth: StateFlow<AnalysisState<CategoryAnalysis>> =
+        analyses(MutableStateFlow(Selection()))
 
     /** The month or year picked by the user */
     val analysis: StateFlow<AnalysisState<CategoryAnalysis>> = analyses(selection)

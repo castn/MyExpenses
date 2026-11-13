@@ -36,13 +36,16 @@ fun hintAfterSave(
     isUnclear: Boolean = false
 ): HintTopic? {
     val isPurchase = transaction.amount < 0 && transaction.transferAccountId == null &&
-            transaction.targetAccountId == null && !transaction.isSplit && !transaction.isSealed
+        transaction.targetAccountId == null && !transaction.isSplit && !transaction.isSealed
     if (!isPurchase) return null
     return when {
         transaction.categoryId == null && !isUnclear && HintTopic.CATEGORY !in hidden ->
             HintTopic.CATEGORY
-        canScanReceipts && isSupermarket(transaction.payeeName) && !hasReceipt && HintTopic.RECEIPT !in hidden ->
+
+        canScanReceipts && isSupermarket(transaction.payeeName) && !hasReceipt &&
+            HintTopic.RECEIPT !in hidden ->
             HintTopic.RECEIPT
+
         else -> null
     }
 }

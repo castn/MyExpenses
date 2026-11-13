@@ -12,7 +12,7 @@ class SearchOptionsTest {
             SearchOption(2, "Bäcker", parentId = 1),
             SearchOption(4, "Getränke", parentId = 1),
             SearchOption(5, "Miete", parentId = 3),
-            SearchOption(6, "Waise", parentId = 99),
+            SearchOption(6, "Waise", parentId = 99)
         )
     )
 

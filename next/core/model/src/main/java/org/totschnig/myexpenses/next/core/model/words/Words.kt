@@ -38,14 +38,20 @@ object Words {
         return result.toString()
     }
 
-    private fun isWordChar(codePoint: Int) = codePoint == '+'.code || Character.isLetter(codePoint) ||
+    private fun isWordChar(codePoint: Int) =
+        codePoint == '+'.code || Character.isLetter(codePoint) ||
             when (Character.getType(codePoint).toByte()) {
-                Character.DECIMAL_DIGIT_NUMBER, Character.LETTER_NUMBER, Character.OTHER_NUMBER -> true
+                Character.DECIMAL_DIGIT_NUMBER,
+                Character.LETTER_NUMBER,
+                Character.OTHER_NUMBER
+                -> true
+
                 else -> false
             }
 
     /** The normalized [parts] with a space at start and end, as [startsWord] and [isWord] expect */
-    fun textOf(vararg parts: String?) = " " + parts.filterNotNull().joinToString(" ") { normalize(it) } + " "
+    fun textOf(vararg parts: String?) =
+        " " + parts.filterNotNull().joinToString(" ") { normalize(it) } + " "
 
     /** [pattern] starts a word of [text], it may span several words, e.g. "apple music" */
     fun startsWord(text: String, pattern: String) = text.contains(" ${pattern(pattern)}")

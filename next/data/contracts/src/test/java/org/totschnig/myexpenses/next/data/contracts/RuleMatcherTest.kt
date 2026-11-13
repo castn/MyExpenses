@@ -1,11 +1,11 @@
 package org.totschnig.myexpenses.next.data.contracts
 
+import java.time.LocalDate
+import java.time.Period
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.time.LocalDate
-import java.time.Period
 
 class RuleMatcherTest {
 
@@ -14,13 +14,21 @@ class RuleMatcherTest {
     private var nextId = 1L
 
     private fun transaction(date: LocalDate, amount: Long, payeeId: Long = 1) = ContractTransaction(
-        id = nextId++, date = date, amount = amount, accountId = 1, payeeId = payeeId, payeeName = "Payee $payeeId"
+        id = nextId++,
+        date = date,
+        amount = amount,
+        accountId = 1,
+        payeeId = payeeId,
+        payeeName = "Payee $payeeId"
     )
 
-    private fun monthly(amounts: List<Long>, payeeId: Long = 1, last: LocalDate = today.minusDays(3)) =
-        amounts.mapIndexed { i, amount ->
-            transaction(last.minus(Period.ofMonths(amounts.size - 1 - i)), amount, payeeId)
-        }
+    private fun monthly(
+        amounts: List<Long>,
+        payeeId: Long = 1,
+        last: LocalDate = today.minusDays(3)
+    ) = amounts.mapIndexed { i, amount ->
+        transaction(last.minus(Period.ofMonths(amounts.size - 1 - i)), amount, payeeId)
+    }
 
     private fun rule(
         id: String,
@@ -29,17 +37,25 @@ class RuleMatcherTest {
         payeeId: Long = 1,
         amountRange: LongRange? = null,
         interval: ContractInterval = ContractInterval.MONTHLY,
-        name: String? = null,
+        name: String? = null
     ) = ContractRule(
-        id = id, kind = kind, direction = direction, payeeIds = setOf(payeeId),
-        amountRange = amountRange, interval = interval, name = name
+        id = id,
+        kind = kind,
+        direction = direction,
+        payeeIds = setOf(payeeId),
+        amountRange = amountRange,
+        interval = interval,
+        name = name
     )
 
     @Test
     fun confirmedContractContainsAllPaymentsWhateverTheAmount() {
         // Heuristics would split this, the rule does not care
         val salary = monthly(listOf(40000, 130000, 49000, 82000, 82000, 160000, 114000, 170000))
-        val result = matcher.apply(listOf(rule("salary", direction = ContractDirection.INCOME, name = "Job")), salary)
+        val result = matcher.apply(
+            listOf(rule("salary", direction = ContractDirection.INCOME, name = "Job")),
+            salary
+        )
         val contract = result.confirmed.single()
         assertEquals(8, contract.transactions.size)
         assertTrue(contract.isConfirmed)
@@ -57,7 +73,8 @@ class RuleMatcherTest {
         // Only one payment so far, the detector would not suggest it
         val payment = transaction(today.minusDays(100), -23000)
         val contract = matcher.apply(
-            listOf(rule("insurance", interval = ContractInterval.YEARLY)), listOf(payment)
+            listOf(rule("insurance", interval = ContractInterval.YEARLY)),
+            listOf(payment)
         ).confirmed.single()
         assertEquals(ContractInterval.YEARLY, contract.interval)
         assertTrue(contract.isActive)
@@ -66,7 +83,8 @@ class RuleMatcherTest {
     @Test
     fun confirmedContractEndsWhenNoLongerPaid() {
         val contract = matcher.apply(
-            listOf(rule("gym")), monthly(listOf(-3000, -3000, -3000), last = today.minusMonths(4))
+            listOf(rule("gym")),
+            monthly(listOf(-3000, -3000, -3000), last = today.minusMonths(4))
         ).confirmed.single()
         assertFalse(contract.isActive)
     }
@@ -88,7 +106,10 @@ class RuleMatcherTest {
     @Test
     fun separatesIgnoredPayments() {
         val shop = monthly(listOf(-4296, -4535), payeeId = 2)
-        val result = matcher.apply(listOf(rule("shop", kind = ContractRule.Kind.IGNORE, payeeId = 2)), shop)
+        val result = matcher.apply(
+            listOf(rule("shop", kind = ContractRule.Kind.IGNORE, payeeId = 2)),
+            shop
+        )
         assertTrue(result.confirmed.isEmpty())
         assertEquals(shop, result.ignored.getValue("shop"))
         assertTrue(result.remaining.isEmpty())
@@ -102,7 +123,7 @@ class RuleMatcherTest {
             listOf(
                 // A general rule from dismissing all other payments of the payee
                 rule("orders", kind = ContractRule.Kind.IGNORE),
-                rule("prime", amountRange = 719L..1079L),
+                rule("prime", amountRange = 719L..1079L)
             ),
             subscription + order
         )
@@ -112,7 +133,10 @@ class RuleMatcherTest {
 
     @Test
     fun ruleWithoutPaymentsGivesNoContract() {
-        val result = matcher.apply(listOf(rule("old", payeeId = 9)), monthly(listOf(-1000, -1000, -1000)))
+        val result = matcher.apply(
+            listOf(rule("old", payeeId = 9)),
+            monthly(listOf(-1000, -1000, -1000))
+        )
         assertTrue(result.confirmed.isEmpty())
         assertEquals(3, result.remaining.size)
     }
@@ -121,7 +145,8 @@ class RuleMatcherTest {
     fun cancelledContractIsNotActive() {
         val payments = monthly(listOf(-3000, -3000, -3000))
         val contract = matcher.apply(
-            listOf(rule("gym").copy(cancelledOn = today.minusDays(1))), payments
+            listOf(rule("gym").copy(cancelledOn = today.minusDays(1))),
+            payments
         ).confirmed.single()
         assertTrue(contract.isCancelled)
         assertFalse(contract.isActive)

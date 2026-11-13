@@ -1,10 +1,5 @@
 package org.totschnig.myexpenses.next
 
-import androidx.compose.ui.semantics.selected
-import androidx.compose.ui.semantics.semantics
-import org.totschnig.myexpenses.designsystem.R as DesignR
-import org.totschnig.myexpenses.next.core.ui.merchants.TransactionTile
-import org.totschnig.myexpenses.designsystem.EmptyState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
@@ -35,6 +30,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -46,6 +43,7 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.FormatStyle
 import kotlin.math.absoluteValue
+import org.totschnig.myexpenses.activity.canBeEdited
 import org.totschnig.myexpenses.compose.LocalColors
 import org.totschnig.myexpenses.compose.LocalCurrencyFormatter
 import org.totschnig.myexpenses.compose.Menu
@@ -59,26 +57,28 @@ import org.totschnig.myexpenses.compose.transactions.TransactionEventHandler
 import org.totschnig.myexpenses.compose.transactions.TransactionListContent
 import org.totschnig.myexpenses.compose.transactions.transactionMenu
 import org.totschnig.myexpenses.compose.transactions.voidMarker
-import org.totschnig.myexpenses.next.transactions.TransactionDetailSheet
-import org.totschnig.myexpenses.activity.canBeEdited
-import org.totschnig.myexpenses.next.transactions.TransactionEditing
 import org.totschnig.myexpenses.designsystem.BadgeStyle
+import org.totschnig.myexpenses.designsystem.EmptyState
 import org.totschnig.myexpenses.designsystem.GroupItem
 import org.totschnig.myexpenses.designsystem.GroupPosition
+import org.totschnig.myexpenses.designsystem.R as DesignR
 import org.totschnig.myexpenses.designsystem.Spacing
 import org.totschnig.myexpenses.designsystem.TextBadge
 import org.totschnig.myexpenses.model.Grouping
 import org.totschnig.myexpenses.model.Money
 import org.totschnig.myexpenses.model.sort.SortDirection
-import org.totschnig.myexpenses.util.convAmount
-import org.totschnig.myexpenses.viewmodel.data.HeaderData
-import org.totschnig.myexpenses.ui.DisplayParty
-import org.totschnig.myexpenses.viewmodel.data.Transaction2
-import org.totschnig.myexpenses.next.core.ui.merchants.PayeeImage
 import org.totschnig.myexpenses.next.core.common.NO_NAME
 import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.ui.LabelIcons
+import org.totschnig.myexpenses.next.core.ui.merchants.PayeeImage
+import org.totschnig.myexpenses.next.core.ui.merchants.TransactionTile
 import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
+import org.totschnig.myexpenses.next.transactions.TransactionDetailSheet
+import org.totschnig.myexpenses.next.transactions.TransactionEditing
+import org.totschnig.myexpenses.ui.DisplayParty
+import org.totschnig.myexpenses.util.convAmount
+import org.totschnig.myexpenses.viewmodel.data.HeaderData
+import org.totschnig.myexpenses.viewmodel.data.Transaction2
 
 /**
  * Transaction list of the new design: transactions are grouped by day, each day has a header
@@ -119,7 +119,9 @@ fun NextTransactionList(
      * Lets the user choose the icon of a payee or load its logo from its web address, opened from
      * the details of [transaction], whose category helps to suggest icons
      */
-    payeeImageDialog: (@Composable (payee: DisplayParty, transaction: Transaction2?, onDismiss: () -> Unit) -> Unit)? =
+    payeeImageDialog: (
+        @Composable (payee: DisplayParty, transaction: Transaction2?, onDismiss: () -> Unit) -> Unit
+    )? =
         null,
     editing: TransactionEditing? = null
 ) {
@@ -159,7 +161,11 @@ fun NextTransactionList(
         // Keep the last transaction clear of the FAB
         contentPadding = PaddingValues(bottom = 88.dp)
     ) {
-        transactionItems(lazyPagingItems, content.headerData as? HeaderData) { transaction, isFirst, isLast ->
+        transactionItems(lazyPagingItems, content.headerData as? HeaderData) {
+                transaction,
+                isFirst,
+                isLast
+            ->
             TransactionItem(
                 transaction = transaction,
                 isFirst = isFirst,
@@ -167,12 +173,18 @@ fun NextTransactionList(
                 isFuture = transaction.date >= futureCriterionDate,
                 isReadOnly = isReadOnly,
                 showDateAndAccount = showDateAndAccount,
-                suggestedCategory = if (transaction.catId == null) suggestedCategory(transaction.id) else null,
+                suggestedCategory = if (transaction.catId == null) {
+                    suggestedCategory(transaction.id)
+                } else {
+                    null
+                },
                 isMarker = isMarker,
                 image = transaction.party?.id?.let(payeeImage),
                 onOpen = if (detailsContent != null) {
                     { openedId = transaction.id }
-                } else null,
+                } else {
+                    null
+                },
                 selectionHandler = content.selectionHandler,
                 menu = {
                     transactionMenu(
@@ -200,15 +212,18 @@ private fun OpenedTransaction(
     categoryChip: (Transaction2) -> (@Composable (Modifier) -> Unit)?,
     tagChips: (Transaction2) -> (@Composable (Modifier) -> Unit)?,
     payeeImage: (payeeId: Long) -> PayeeImage?,
-    payeeImageDialog: (@Composable (payee: DisplayParty, transaction: Transaction2?, onDismiss: () -> Unit) -> Unit)?,
+    payeeImageDialog: (
+        @Composable (payee: DisplayParty, transaction: Transaction2?, onDismiss: () -> Unit) -> Unit
+    )?,
     editing: TransactionEditing?,
-    detailsContent: @Composable (Transaction2) -> Unit,
+    detailsContent: @Composable (Transaction2) -> Unit
 ) {
     // The last version found is kept while the list reloads, e.g. after editing the transaction
     // from its details. Not observed, it only bridges until the list has the transaction again.
     val lastOpened = remember { arrayOfNulls<Transaction2>(1) }
     val opened = openedId?.let { id ->
-        content.lazyPagingItems.itemSnapshotList.find { it?.id == id } ?: lastOpened[0]?.takeIf { it.id == id }
+        content.lazyPagingItems.itemSnapshotList.find { it?.id == id }
+            ?: lastOpened[0]?.takeIf { it.id == id }
     }
     lastOpened[0] = opened
     val context = LocalContext.current
@@ -221,7 +236,9 @@ private fun OpenedTransaction(
     TransactionDetailSheet(
         transaction = transaction,
         image = transaction.party?.id?.let(payeeImage),
-        onImageClick = transaction.party?.takeIf { it.id != null && payeeImageDialog != null && !isReadOnly }
+        onImageClick = transaction.party?.takeIf {
+            it.id != null && payeeImageDialog != null && !isReadOnly
+        }
             ?.let { payee -> { logoPayee = payee } },
         menu = {
             transactionMenu(
@@ -273,7 +290,10 @@ private fun NoTransactions(isFiltered: Boolean, modifier: Modifier) {
 /** From when on transactions are shown as planned */
 private fun FutureCriterion.startOfFuture(): ZonedDateTime = when (this) {
     FutureCriterion.Current -> ZonedDateTime.now(ZoneId.systemDefault())
-    FutureCriterion.EndOfDay -> LocalDate.now().plusDays(1).atStartOfDay().atZone(ZoneId.systemDefault())
+
+    FutureCriterion.EndOfDay -> LocalDate.now().plusDays(
+        1
+    ).atStartOfDay().atZone(ZoneId.systemDefault())
 }
 
 /**
@@ -283,7 +303,7 @@ private fun FutureCriterion.startOfFuture(): ZonedDateTime = when (this) {
 private fun LazyListScope.transactionItems(
     lazyPagingItems: LazyPagingItems<Transaction2>,
     headerData: HeaderData?,
-    itemContent: @Composable (transaction: Transaction2, isFirst: Boolean, isLast: Boolean) -> Unit,
+    itemContent: @Composable (transaction: Transaction2, isFirst: Boolean, isLast: Boolean) -> Unit
 ) {
     val withDayHeaders = headerData?.account?.grouping == Grouping.DAY
     val snapshot = lazyPagingItems.itemSnapshotList
@@ -303,7 +323,11 @@ private fun LazyListScope.transactionItems(
 
         if (withDayHeaders && lastHeaderId == null) {
             val placeholderCount = headerData.groups.keys.count {
-                if (headerData.account.sortDirection == SortDirection.DESC) it > headerId else it < headerId
+                if (headerData.account.sortDirection == SortDirection.DESC) {
+                    it > headerId
+                } else {
+                    it < headerId
+                }
             }
             repeat(placeholderCount) {
                 item(key = "placeholder_header_$it") {}
@@ -320,7 +344,11 @@ private fun LazyListScope.transactionItems(
             }
         }
 
-        val nextItem = if (index + 1 < lazyPagingItems.itemCount) lazyPagingItems.peek(index + 1) else null
+        val nextItem = if (index + 1 < lazyPagingItems.itemCount) {
+            lazyPagingItems.peek(index + 1)
+        } else {
+            null
+        }
         val isLastInGroup = nextItem == null || (withDayHeaders && nextItem.headerId != headerId)
 
         item(key = "trans_${item.id}") {
@@ -332,10 +360,7 @@ private fun LazyListScope.transactionItems(
 }
 
 @Composable
-private fun DayHeader(
-    date: LocalDate,
-    balance: Money?,
-) {
+private fun DayHeader(date: LocalDate, balance: Money?) {
     val today = LocalDate.now()
     val formatter = rememberDateFormatter(FormatStyle.FULL)
     Row(
@@ -359,7 +384,10 @@ private fun DayHeader(
         )
         if (balance != null) {
             Text(
-                text = LocalCurrencyFormatter.current.convAmount(balance.amountMinor, balance.currencyUnit),
+                text = LocalCurrencyFormatter.current.convAmount(
+                    balance.amountMinor,
+                    balance.currencyUnit
+                ),
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(start = 8.dp)
@@ -389,7 +417,7 @@ private fun TransactionItem(
     onOpen: (() -> Unit)?,
     selectionHandler: SelectionHandler?,
     menu: () -> Menu,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val showMenu = rememberSaveable { mutableStateOf(false) }
     val isSelectable = selectionHandler?.isSelectable(transaction) == true
@@ -400,8 +428,11 @@ private fun TransactionItem(
     GroupItem(
         position = GroupPosition(isFirst, isLast),
         modifier = modifier,
-        color = if (isSelected) MaterialTheme.colorScheme.secondaryContainer
-        else MaterialTheme.colorScheme.surfaceContainerLowest
+        color = if (isSelected) {
+            MaterialTheme.colorScheme.secondaryContainer
+        } else {
+            MaterialTheme.colorScheme.surfaceContainerLowest
+        }
     ) {
         Row(
             modifier = Modifier
@@ -414,7 +445,9 @@ private fun TransactionItem(
                         onLongClickLabel = chooseSeveralLabel.takeIf { isSelectable },
                         onLongClick = if (isSelectable) {
                             { selectionHandler.toggle(transaction) }
-                        } else null,
+                        } else {
+                            null
+                        },
                         onClick = {
                             if ((selectionHandler?.selectionCount ?: 0) == 0) {
                                 if (onOpen != null) onOpen() else showMenu.value = true
@@ -437,10 +470,14 @@ private fun TransactionItem(
             Spacer(Modifier.width(16.dp))
             val (title, details, category) = transaction.itemTexts()
             val dateFormatter = rememberDateFormatter()
-            val subtitle = if (showDateAndAccount) listOfNotNull(
-                dateFormatter.format(transaction.date),
-                transaction.accountLabel?.takeIf { it.isNotBlank() }
-            ).joinToString(" · ") else details
+            val subtitle = if (showDateAndAccount) {
+                listOfNotNull(
+                    dateFormatter.format(transaction.date),
+                    transaction.accountLabel?.takeIf { it.isNotBlank() }
+                ).joinToString(" · ")
+            } else {
+                details
+            }
             Column(Modifier.weight(1f)) {
                 Text(
                     text = title ?: NO_NAME,
@@ -463,11 +500,23 @@ private fun TransactionItem(
 }
 
 /** Groups and markers next to the category, each the first one and how many more */
-private fun tagBadges(transaction: Transaction2, isMarker: (tagId: Long) -> Boolean): List<Pair<String, ImageVector>> {
+private fun tagBadges(
+    transaction: Transaction2,
+    isMarker: (tagId: Long) -> Boolean
+): List<Pair<String, ImageVector>> {
     val (markers, groups) = transaction.tagList.partition { isMarker(it.id) }
     return listOf(groups to LabelIcons.group, markers to LabelIcons.marker)
         .mapNotNull { (tags, icon) ->
-            tags.firstOrNull()?.let { (if (tags.size > 1) "${it.label} +${tags.size - 1}" else it.label) to icon }
+            tags.firstOrNull()?.let {
+                (
+                    if (tags.size > 1) {
+                        "${it.label} +${tags.size - 1}"
+                    } else {
+                        it.label
+                    }
+                    ) to
+                    icon
+            }
         }
 }
 
@@ -476,7 +525,7 @@ private fun tagBadges(transaction: Transaction2, isMarker: (tagId: Long) -> Bool
 private fun TransactionSubtitle(
     subtitle: String?,
     badge: Pair<String, BadgeStyle>?,
-    tagBadges: List<Pair<String, ImageVector>>,
+    tagBadges: List<Pair<String, ImageVector>>
 ) {
     if (subtitle == null && badge == null && tagBadges.isEmpty()) return
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -500,7 +549,13 @@ private fun TransactionSubtitle(
         tagBadges.forEachIndexed { index, (text, icon) ->
             TextBadge(
                 text,
-                Modifier.padding(start = if (subtitle != null || badge != null || index > 0) Spacing.small else 0.dp),
+                Modifier.padding(
+                    start = if (subtitle != null || badge != null || index > 0) {
+                        Spacing.small
+                    } else {
+                        0.dp
+                    }
+                ),
                 style = BadgeStyle.Outlined,
                 icon = icon
             )
@@ -515,11 +570,14 @@ private fun TransactionSubtitle(
 internal fun SignedAmount(
     money: Money,
     modifier: Modifier = Modifier,
-    style: TextStyle = MaterialTheme.typography.bodyLarge,
+    style: TextStyle = MaterialTheme.typography.bodyLarge
 ) {
     val amount = money.amountMinor
     val colors = LocalColors.current
-    val formatted = LocalCurrencyFormatter.current.convAmount(amount.absoluteValue, money.currencyUnit)
+    val formatted = LocalCurrencyFormatter.current.convAmount(
+        amount.absoluteValue,
+        money.currencyUnit
+    )
     Text(
         text = when {
             amount > 0 -> "+ $formatted"
@@ -551,8 +609,11 @@ private fun Transaction2.itemTexts(): ItemTexts {
     val transferLabel = transferAccountLabel?.let {
         if (displayAmount.amountMinor > 0) "← $it" else "→ $it"
     }
-    val categoryLabel = if (isSplit) stringResource(org.totschnig.myexpenses.R.string.split_transaction)
-    else categoryPath
+    val categoryLabel = if (isSplit) {
+        stringResource(org.totschnig.myexpenses.R.string.split_transaction)
+    } else {
+        categoryPath
+    }
     val commentLabel = comment?.takeIf { it.isNotBlank() }
     val title = party?.name ?: transferLabel ?: categoryLabel ?: commentLabel
     return ItemTexts(
@@ -561,7 +622,9 @@ private fun Transaction2.itemTexts(): ItemTexts {
             transferLabel,
             commentLabel
         ).filter { it != title }.takeIf { it.isNotEmpty() }?.joinToString(" · "),
-        category = categoryLabel?.takeIf { it != title }?.let { if (isSplit) it else it.lastCategoryPart() }
+        category = categoryLabel?.takeIf {
+            it != title
+        }?.let { if (isSplit) it else it.lastCategoryPart() }
     )
 }
 
@@ -571,8 +634,9 @@ private fun String.lastCategoryPart() = substringAfterLast('>').trim()
 /**
  * Leaves out the actions that work on the list of an account: selecting, and the filter submenu
  */
-private fun Menu.withoutListActions() = filterNot { it.command == "SELECT_TRANSACTION" || it is SubMenuEntry }
-
+private fun Menu.withoutListActions() = filterNot {
+    it.command == "SELECT_TRANSACTION" || it is SubMenuEntry
+}
 
 /** The menu of details that change the transaction themselves: no entry to show the details */
 private fun Menu.forEditingDetails() = filterNot { it.command == "DETAILS" }

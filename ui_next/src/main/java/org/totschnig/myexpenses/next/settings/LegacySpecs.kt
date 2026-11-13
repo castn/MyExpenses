@@ -33,7 +33,7 @@ data class LegacySpec(
     val dependency: String?,
     val min: Int?,
     val max: Int?,
-    val intent: Intent? = null,
+    val intent: Intent? = null
 )
 
 /**
@@ -61,7 +61,9 @@ class LegacySpecs(private val context: Context, private val prefHandler: PrefHan
     fun title(entry: SettingEntry): String = when (val key = entry.key) {
         is SettingKey.Pref -> SettingTexts.titles[key.prefKey]?.let(context::getString)
             ?: titleOverrides[key.prefKey]?.invoke(context) ?: spec(entry)?.title
+
         is SettingKey.Plain -> spec(entry)?.title
+
         is SettingKey.Next -> context.getString(key.setting.title)
     } ?: entry.key.toString()
 
@@ -73,7 +75,13 @@ class LegacySpecs(private val context: Context, private val prefHandler: PrefHan
                 if (parser.eventType != XmlPullParser.START_TAG) continue
                 if (parser.name == "intent") {
                     if (parser.depth == settingDepth + 1) {
-                        set(lastIndex, last().let { (key, spec) -> key to spec.copy(intent = parser.intent()) })
+                        set(
+                            lastIndex,
+                            last().let { (key, spec) ->
+                                key to
+                                    spec.copy(intent = parser.intent())
+                            }
+                        )
                     }
                     continue
                 }
@@ -90,7 +98,11 @@ class LegacySpecs(private val context: Context, private val prefHandler: PrefHan
                         summary = summary.takeIf { title != null },
                         summaryOn = parser.text("summaryOn"),
                         summaryOff = parser.text("summaryOff"),
-                        options = if (entries != null && values != null) values.zip(entries) else null,
+                        options = if (entries != null && values != null) {
+                            values.zip(entries)
+                        } else {
+                            null
+                        },
                         defaultValue = parser.value("defaultValue"),
                         dependency = parser.text("dependency"),
                         min = parser.getAttributeValue(APP, "min")?.toIntOrNull(),
@@ -141,10 +153,14 @@ class LegacySpecs(private val context: Context, private val prefHandler: PrefHan
             PrefKey.MANAGE_CURRENCIES to { CommodityType.title(it.resources) },
             PrefKey.IMPORT_CSV to { it.getString(R.string.pref_import_title, "CSV") },
             PrefKey.CSV_EXPORT_ORIGINAL_EQUIVALENT_AMOUNTS to {
-                it.getString(R.string.menu_original_amount) + " / " + it.getString(R.string.menu_equivalent_amount)
+                it.getString(R.string.menu_original_amount) + " / " +
+                    it.getString(R.string.menu_equivalent_amount)
             },
             PrefKey.SYNC_NOW_ALL to {
-                it.getString(R.string.pref_sync_now_all_summary, it.getString(R.string.menu_sync_now))
+                it.getString(
+                    R.string.pref_sync_now_all_summary,
+                    it.getString(R.string.menu_sync_now)
+                )
             },
             PrefKey.UI_ITEM_RENDERER_LEGACY to { it.compactItemRendererTitle() },
             PrefKey.OPTIMIZE_PICTURE_MAX_SIZE to {

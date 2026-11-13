@@ -14,18 +14,19 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.totschnig.myexpenses.next.core.model.FakeLedgerSource
-import org.totschnig.myexpenses.next.data.contracts.ContractFacts
 import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.core.model.ledger.OwnAccounts
 import org.totschnig.myexpenses.next.data.balance.BalanceRepository
+import org.totschnig.myexpenses.next.data.contracts.ContractFacts
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class BalanceViewModelTest {
 
     private val giro = 1L
-    private val facts = ContractFacts(emptyList(), emptyList(), emptyList(), emptySet(), emptyList())
+    private val facts =
+        ContractFacts(emptyList(), emptyList(), emptyList(), emptySet(), emptyList())
 
     @Before
     fun setUp() {
@@ -42,7 +43,12 @@ class BalanceViewModelTest {
         val source = FakeLedgerSource(consent = false)
         val repository = BalanceRepository(source, MutableStateFlow(facts), backgroundScope)
         val viewModel = BalanceViewModel(repository)
-        assertEquals(AnalysisState.Declined, viewModel.balance.first { it != AnalysisState.Loading })
+        assertEquals(
+            AnalysisState.Declined,
+            viewModel.balance.first {
+                it != AnalysisState.Loading
+            }
+        )
     }
 
     @Test
@@ -53,7 +59,11 @@ class BalanceViewModelTest {
             OwnAccounts(setOf(giro), emptyMap())
         )
         val viewModel = BalanceViewModel(
-            BalanceRepository(FakeLedgerSource(ledger = ledger), MutableStateFlow(facts), backgroundScope)
+            BalanceRepository(
+                FakeLedgerSource(ledger = ledger),
+                MutableStateFlow(facts),
+                backgroundScope
+            )
         )
         val state = viewModel.balance.first { it is AnalysisState.Ready } as AnalysisState.Ready
         // Without salary the balance runs over the calendar month

@@ -22,17 +22,17 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import kotlinx.serialization.Serializable
+import org.totschnig.myexpenses.next.core.common.R
+import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
+import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
+import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
 import org.totschnig.myexpenses.next.core.ui.detailPage
 import org.totschnig.myexpenses.next.core.ui.extraPage
 import org.totschnig.myexpenses.next.core.ui.listPage
 import org.totschnig.myexpenses.next.core.ui.rememberListDetailPages
-import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
-import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
-import org.totschnig.myexpenses.next.core.common.R
 import org.totschnig.myexpenses.next.core.ui.shownOrLeave
-import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
-import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactionsScreen
 import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactions
+import org.totschnig.myexpenses.next.core.ui.transactions.FixedTransactionsScreen
 import org.totschnig.myexpenses.next.data.budgets.BudgetOverview
 import org.totschnig.myexpenses.next.data.budgets.Pot
 import org.totschnig.myexpenses.next.data.budgets.PotKind
@@ -94,13 +94,18 @@ fun BudgetFlow(
     modifier: Modifier = Modifier,
     openPot: String? = null,
     addPot: Boolean = false,
-    requestNewPot: () -> Unit = viewModel::grantNewPot,
+    requestNewPot: () -> Unit = viewModel::grantNewPot
 ) {
     val state by viewModel.overview.collectAsStateWithLifecycle()
     val editorData by viewModel.editorData.collectAsStateWithLifecycle()
     val legacyCount = viewModel.legacyOffer.collectAsStateWithLifecycle().value
     val backStack = rememberNavBackStack(
-        *listOfNotNull<NavKey>(BudgetKey.Home, openPot?.let { BudgetKey.PotDetail(it) }).toTypedArray()
+        *listOfNotNull<NavKey>(
+            BudgetKey.Home,
+            openPot?.let {
+                BudgetKey.PotDetail(it)
+            }
+        ).toTypedArray()
     )
     LaunchedEffect(Unit) { viewModel.showCurrent() }
     // Asked once, not again when the page is created anew, e.g. after rotating
@@ -139,13 +144,21 @@ fun BudgetFlow(
         modifier = modifier,
         sceneStrategies = listOf(rememberListDetailPages()),
         entryProvider = entryProvider {
-            entry<BudgetKey.Home>(metadata = listPage(R.string.next_pick_pot)) { BudgetHome(current, backStack) }
-            entry<BudgetKey.PotDetail>(metadata = detailPage()) { key -> PotEntry(current, backStack, key) }
+            entry<BudgetKey.Home>(metadata = listPage(R.string.next_pick_pot)) {
+                BudgetHome(current, backStack)
+            }
+            entry<BudgetKey.PotDetail>(metadata = detailPage()) { key ->
+                PotEntry(current, backStack, key)
+            }
             entry<BudgetKey.Transactions>(metadata = extraPage()) { key ->
                 PotTransactionsEntry(current, backStack, key)
             }
-            entry<BudgetKey.Templates>(metadata = detailPage()) { TemplatesEntry(current, backStack) }
-            entry<BudgetKey.Editor>(metadata = detailPage()) { key -> EditorEntry(current, backStack, key) }
+            entry<BudgetKey.Templates>(metadata = detailPage()) {
+                TemplatesEntry(current, backStack)
+            }
+            entry<BudgetKey.Editor>(metadata = detailPage()) { key ->
+                EditorEntry(current, backStack, key)
+            }
         }
     )
 }
@@ -160,7 +173,7 @@ private class BudgetContent(
     val legacyCount: Int,
     val onBack: () -> Unit,
     val onConsent: () -> Unit,
-    val requestNewPot: () -> Unit,
+    val requestNewPot: () -> Unit
 ) {
     val overview = state.valueOrNull
 
@@ -176,12 +189,11 @@ private fun shownPot(
     key: BudgetKey,
     potId: String,
     isNew: Boolean = false
-) =
-    shownOrLeave(
-        content.statusOf(potId),
-        isLoaded = content.overview != null,
-        awaitNew = isNew
-    ) { backStack.remove(key) }
+) = shownOrLeave(
+    content.statusOf(potId),
+    isLoaded = content.overview != null,
+    awaitNew = isNew
+) { backStack.remove(key) }
 
 @Composable
 private fun BudgetHome(content: BudgetContent, backStack: NavBackStack<NavKey>) {
@@ -202,7 +214,11 @@ private fun BudgetHome(content: BudgetContent, backStack: NavBackStack<NavKey>) 
 }
 
 @Composable
-private fun PotEntry(content: BudgetContent, backStack: NavBackStack<NavKey>, key: BudgetKey.PotDetail) {
+private fun PotEntry(
+    content: BudgetContent,
+    backStack: NavBackStack<NavKey>,
+    key: BudgetKey.PotDetail
+) {
     val status = shownPot(content, backStack, key, key.id, key.isNew) ?: return
     val overview = content.overview ?: return
     PotDetailScreen(
@@ -217,19 +233,35 @@ private fun PotEntry(content: BudgetContent, backStack: NavBackStack<NavKey>, ke
 }
 
 @Composable
-private fun PotTransactionsEntry(content: BudgetContent, backStack: NavBackStack<NavKey>, key: BudgetKey.Transactions) {
+private fun PotTransactionsEntry(
+    content: BudgetContent,
+    backStack: NavBackStack<NavKey>,
+    key: BudgetKey.Transactions
+) {
     val status = shownPot(content, backStack, key, key.potId) ?: return
     val ids = if (key.oneOffs) status.oneOffIds else status.transactionIds
     val title =
-        if (key.oneOffs) pluralStringResource(R.plurals.next_budget_one_offs, ids.size, ids.size) else status.pot.name
+        if (key.oneOffs) {
+            pluralStringResource(
+                R.plurals.next_budget_one_offs,
+                ids.size,
+                ids.size
+            )
+        } else {
+            status.pot.name
+        }
     LaunchedEffect(ids) { content.fixedTransactions.show(title, ids) }
     FixedTransactionsScreen(
         title = title,
-        subtitle = if (key.oneOffs) status.pot.name else pluralStringResource(
-            R.plurals.next_analysis_transactions,
-            ids.size,
-            ids.size
-        ),
+        subtitle = if (key.oneOffs) {
+            status.pot.name
+        } else {
+            pluralStringResource(
+                R.plurals.next_analysis_transactions,
+                ids.size,
+                ids.size
+            )
+        },
         onBack = { backStack.remove(key) }
     ) {
         content.fixedTransactions.List(it, null)
@@ -247,15 +279,22 @@ private fun TemplatesEntry(content: BudgetContent, backStack: NavBackStack<NavKe
 }
 
 @Composable
-private fun EditorEntry(content: BudgetContent, backStack: NavBackStack<NavKey>, key: BudgetKey.Editor) {
+private fun EditorEntry(
+    content: BudgetContent,
+    backStack: NavBackStack<NavKey>,
+    key: BudgetKey.Editor
+) {
     val data = content.editorData
     val resources = LocalResources.current
     val existing = key.potId?.let { content.statusOf(it)?.pot }
     val initial = remember(key, data?.categories, existing) {
-        if (key.potId != null) existing
-        else data?.let {
-            val name = key.template?.let { resources.getString(it.nameRes) } ?: ""
-            newPot(key.template, name, it.categories, java.time.LocalDate.now())
+        if (key.potId != null) {
+            existing
+        } else {
+            data?.let {
+                val name = key.template?.let { resources.getString(it.nameRes) } ?: ""
+                newPot(key.template, name, it.categories, java.time.LocalDate.now())
+            }
         }
     }
     var draft by rememberSaveable(stateSaver = PotSaver) { mutableStateOf<Pot?>(null) }
@@ -276,7 +315,9 @@ private fun EditorEntry(content: BudgetContent, backStack: NavBackStack<NavKey>,
             backStack.add(BudgetKey.PotDetail(pot.id, isNew = key.potId == null))
         },
         onBack = { backStack.remove(key) },
-        onDelete = if (key.potId == null) null else {
+        onDelete = if (key.potId == null) {
+            null
+        } else {
             {
                 content.viewModel.deletePot(pot.id)
                 backToBudget()

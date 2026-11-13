@@ -40,7 +40,7 @@ internal fun EditAreaDialog(
     area: CustomArea,
     onRename: (String) -> Unit,
     onDelete: () -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     var name by rememberSaveable { mutableStateOf(area.name) }
     var confirmDelete by rememberSaveable { mutableStateOf(false) }
@@ -76,7 +76,11 @@ internal fun EditAreaDialog(
 
 /** Renames [contract]; an empty name goes back to the detected one */
 @Composable
-internal fun RenameContractDialog(contract: Contract, actions: ContractActions, onDismiss: () -> Unit) {
+internal fun RenameContractDialog(
+    contract: Contract,
+    actions: ContractActions,
+    onDismiss: () -> Unit
+) {
     NameDialog(
         title = stringResource(R.string.next_contracts_rename),
         initialName = contract.displayName,
@@ -89,4 +93,3 @@ internal fun RenameContractDialog(contract: Contract, actions: ContractActions, 
         onDismiss = onDismiss
     )
 }
-

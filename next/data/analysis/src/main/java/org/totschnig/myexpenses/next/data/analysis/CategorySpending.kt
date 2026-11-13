@@ -5,7 +5,9 @@ import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 
 enum class PeriodKind {
-    MONTH, YEAR,
+    MONTH,
+    YEAR,
+
     /** The twelve months up to today, e.g. from 14 October 2025 to 13 October 2026 */
     TWELVE_MONTHS
 }
@@ -18,8 +20,14 @@ data class SpendingPeriod(val kind: PeriodKind, val start: LocalDate, val end: L
 
     /** The whole period before this one */
     fun previous(): SpendingPeriod = when (kind) {
-        PeriodKind.MONTH -> start.minusMonths(1).let { SpendingPeriod(kind, it, it.plusMonths(1).minusDays(1)) }
-        PeriodKind.YEAR -> start.minusYears(1).let { SpendingPeriod(kind, it, it.plusYears(1).minusDays(1)) }
+        PeriodKind.MONTH -> start.minusMonths(1).let {
+            SpendingPeriod(kind, it, it.plusMonths(1).minusDays(1))
+        }
+
+        PeriodKind.YEAR -> start.minusYears(1).let {
+            SpendingPeriod(kind, it, it.plusYears(1).minusDays(1))
+        }
+
         PeriodKind.TWELVE_MONTHS -> SpendingPeriod(kind, start.minusYears(1), start.minusDays(1))
     }
 
@@ -33,8 +41,14 @@ data class SpendingPeriod(val kind: PeriodKind, val start: LocalDate, val end: L
         fun of(kind: PeriodKind, offset: Int, today: LocalDate): SpendingPeriod {
             val current = when (kind) {
                 PeriodKind.MONTH -> SpendingPeriod(kind, today.withDayOfMonth(1), today)
+
                 PeriodKind.YEAR -> SpendingPeriod(kind, today.withDayOfYear(1), today)
-                PeriodKind.TWELVE_MONTHS -> SpendingPeriod(kind, today.minusYears(1).plusDays(1), today)
+
+                PeriodKind.TWELVE_MONTHS -> SpendingPeriod(
+                    kind,
+                    today.minusYears(1).plusDays(1),
+                    today
+                )
             }
             return (0 until offset).fold(current) { period, _ -> period.previous() }
         }
@@ -65,7 +79,7 @@ data class CategorySpending(
     val amount: Long,
     val previous: Long?,
     val subcategories: List<SubcategorySpending>,
-    val transactionIds: List<Long>,
+    val transactionIds: List<Long>
 ) {
     /** Tells the categories apart, also the one for transactions without category */
     val key: Long get() = mainCategoryId ?: NO_CATEGORY
@@ -90,7 +104,7 @@ data class CategoryAnalysis(
     val total: Long,
     val previousTotal: Long?,
     val categories: List<CategorySpending>,
-    val hasEarlier: Boolean,
+    val hasEarlier: Boolean
 ) {
     val isCurrent: Boolean get() = offset == 0
 }
@@ -113,7 +127,7 @@ object CategoryAnalyzer {
         categories: Map<Long, CategoryInfo>,
         kind: PeriodKind,
         offset: Int,
-        today: LocalDate,
+        today: LocalDate
     ): CategoryAnalysis {
         val period = SpendingPeriod.of(kind, offset, today)
         val previousPeriod = period.previous()
@@ -131,7 +145,11 @@ object CategoryAnalyzer {
                 label = main?.label,
                 amount = amount,
                 previous = previous?.filter { it.mainId == mainId }?.spent()?.coerceAtLeast(0),
-                subcategories = if (main == null) emptyList() else subcategories(main, parts, categories),
+                subcategories = if (main == null) {
+                    emptyList()
+                } else {
+                    subcategories(main, parts, categories)
+                },
                 transactionIds = parts.map { it.transaction.id }.distinct()
             )
         }.sortedByDescending { it.amount }
@@ -152,13 +170,17 @@ object CategoryAnalyzer {
     private fun subcategories(
         main: CategoryInfo,
         parts: List<CountedPart>,
-        categories: Map<Long, CategoryInfo>,
+        categories: Map<Long, CategoryInfo>
     ): List<SubcategorySpending> =
         parts.groupBy { it.category!!.id }.mapNotNull { (categoryId, group) ->
             val amount = group.spent()
             if (amount <= 0) return@mapNotNull null
             val category = categories.getValue(categoryId)
-            val label = if (categoryId == main.id) main.label else category.path.removePrefix("${main.path} > ")
+            val label = if (categoryId == main.id) {
+                main.label
+            } else {
+                category.path.removePrefix("${main.path} > ")
+            }
             SubcategorySpending(categoryId, label, amount)
         }.sortedByDescending { it.amount }
 }
