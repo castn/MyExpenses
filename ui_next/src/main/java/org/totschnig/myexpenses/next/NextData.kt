@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import org.totschnig.myexpenses.injector
@@ -21,6 +22,7 @@ import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
+import org.totschnig.myexpenses.next.core.model.ledger.valueOrNull
 import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
 import org.totschnig.myexpenses.next.data.balance.BalanceRepository
 import org.totschnig.myexpenses.next.data.budgets.BudgetRepository
@@ -143,16 +145,23 @@ class NextData private constructor(context: Context) {
     val readiness = DataReadinessRepository(ledgerSource, receiptFacts, scope, unclearTransactions)
 
     /**
-     * What the setup knows about contracts, nothing while loading; `flowOf(SetupContracts.None)`
-     * without contracts
+     * What the setup knows about contracts and regular incomes, nothing while loading;
+     * `flowOf(SetupContracts.None)` without contracts
      */
-    val setupContracts: Flow<SetupContracts> = contracts.expenses.mapNotNull { state ->
-        when (state) {
-            AnalysisState.Loading -> null
-            AnalysisState.Declined -> SetupContracts.None
-            is AnalysisState.Ready -> SetupContracts.Available(state.value.suggestions.size)
-        }
-    }
+    val setupContracts: Flow<SetupContracts> =
+        combine(contracts.expenses, contracts.incomes) { expenses, incomes ->
+            when (expenses) {
+                AnalysisState.Loading -> null
+
+                AnalysisState.Declined -> SetupContracts.None
+
+                is AnalysisState.Ready -> SetupContracts.Available(
+                    suggestions = expenses.value.suggestions.size,
+                    incomeSuggestions = incomes.valueOrNull?.suggestions?.size ?: 0,
+                    incomes = incomes.valueOrNull?.active?.size ?: 0
+                )
+            }
+        }.filterNotNull()
 
     /** The cash account of the user, created from the setup */
     val cash =
