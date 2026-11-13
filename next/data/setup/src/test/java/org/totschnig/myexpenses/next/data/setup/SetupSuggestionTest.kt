@@ -9,7 +9,7 @@ import org.totschnig.myexpenses.next.data.categories.CategorySuggestion
 import org.totschnig.myexpenses.next.data.categories.Counterpart
 import org.totschnig.myexpenses.next.data.categories.SuggestionSource
 
-class PayeeSuggestionTest {
+class SetupSuggestionTest {
 
     private val payee =
         SetupPayee(
@@ -19,15 +19,26 @@ class PayeeSuggestionTest {
             LocalDate.of(2026, 1, 1)
         )
 
-    private fun suggestion(transactionId: Long, categoryId: Long) =
-        CategorySuggestion(transactionId, categoryId, SuggestionSource.WORDS, isCertain = false)
+    private fun suggestion(transactionId: Long, categoryId: Long, isCertain: Boolean = false) =
+        CategorySuggestion(transactionId, categoryId, SuggestionSource.WORDS, isCertain)
 
     @Test
     fun suggestsWhatMostDebitsOfThePayeeGet() {
         val suggestions =
             listOf(suggestion(1, 10), suggestion(2, 11), suggestion(3, 11), suggestion(9, 12))
-        assertEquals(11L, suggestionFor(payee, suggestions.associateBy { it.transactionId }))
+        assertEquals(
+            SetupSuggestion(11, isCertain = false),
+            suggestionFor(payee, suggestions.associateBy { it.transactionId })
+        )
         assertNull(suggestionFor(payee, mapOf(9L to suggestion(9, 12))))
+    }
+
+    @Test
+    fun isCertainOnlyIfAllDebitsAreSuggestedItForSure() {
+        val certain = listOf(1L, 2L, 3L).associateWith { suggestion(it, 10, isCertain = true) }
+        assertEquals(SetupSuggestion(10, isCertain = true), suggestionFor(payee, certain))
+        val mixed = certain + (3L to suggestion(3, 10))
+        assertEquals(SetupSuggestion(10, isCertain = false), suggestionFor(payee, mixed))
     }
 
     @Test
@@ -37,9 +48,15 @@ class PayeeSuggestionTest {
         val income = CategoryInfo(21, "Bargeld", "Einnahmen > Bargeld", isExpense = false)
         val other = CategoryInfo(22, "Lebensmittel", "Lebensmittel")
         val categories = listOf(other, income, withdrawal)
-        assertEquals(20L, suggestionFor(cash, emptyMap(), categories))
+        assertEquals(
+            SetupSuggestion(20, isCertain = false),
+            suggestionFor(cash, emptyMap(), categories)
+        )
         // What the withdrawals are suggested comes first
-        assertEquals(22L, suggestionFor(cash, mapOf(1L to suggestion(1, 22)), categories))
+        assertEquals(
+            SetupSuggestion(22, isCertain = false),
+            suggestionFor(cash, mapOf(1L to suggestion(1, 22)), categories)
+        )
         assertNull(suggestionFor(cash, emptyMap(), listOf(other)))
     }
 }

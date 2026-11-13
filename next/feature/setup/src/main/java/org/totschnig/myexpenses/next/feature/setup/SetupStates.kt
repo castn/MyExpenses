@@ -242,7 +242,7 @@ private fun SetupVisit.payeeCard(
     analysis: CategoryAnalysis?
 ): PayeeCard {
     val suggestion = revisit?.categoryId?.takeIf { isRevisited }
-        ?: analysis?.let { suggestionFor(payee, it.plan.suggestions) }
+        ?: analysis?.let { suggestionFor(payee, it.plan.suggestions)?.categoryId }
     return PayeeCard(payee, suggestion, suggestion?.let { analysis?.paths?.get(it) })
 }
 
@@ -253,7 +253,7 @@ private fun SetupVisit.cashCard(
 ): CashCard {
     val categoryId = cashCategory
         ?: revisit?.takeIf { it.key == SetupCash.KEY }?.categoryId
-        ?: analysis?.let { suggestionFor(cash, it.plan.suggestions, it.categories) }
+        ?: analysis?.let { suggestionFor(cash, it.plan.suggestions, it.categories)?.categoryId }
     return CashCard(cash, categoryId, categoryId?.let { analysis?.paths?.get(it) }, canOpenAccount)
 }
 
