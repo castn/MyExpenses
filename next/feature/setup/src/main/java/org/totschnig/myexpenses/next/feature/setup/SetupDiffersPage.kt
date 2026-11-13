@@ -74,7 +74,7 @@ internal fun SetupDiffersPage(
                     ),
                     actionLabel = stringResource(R.string.next_setup_choose_category),
                     onAction = {
-                        viewModel.pickCategory(PayeeCard(payee, null, null), selected)
+                        viewModel.pickCategory(PayeeCard(payee), selected)
                         // Expenses only, the payees of the setup are those of debits
                         pick.launch(false)
                     },

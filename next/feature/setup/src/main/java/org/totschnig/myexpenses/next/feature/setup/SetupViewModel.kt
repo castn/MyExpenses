@@ -35,6 +35,7 @@ class SetupViewModel(
     private val clock: () -> Long = System::currentTimeMillis
 ) : ViewModel(),
     SetupActions,
+    PayeeCardActions,
     CashActions,
     SetupCardActions {
 
@@ -44,6 +45,7 @@ class SetupViewModel(
     private val beyondTarget = savedState.getStateFlow(KEY_BEYOND_TARGET, false)
     private val revisit = savedState.getStateFlow<Revisit?>(KEY_REVISIT, null)
     private val cashCategory = savedState.getStateFlow<Long?>(KEY_CASH_CATEGORY, null)
+    private val draft = savedState.getStateFlow<PayeeDraft?>(KEY_DRAFT, null)
 
     /** The decisions of this visit, the last one last, see [back] */
     private val history = savedState.getStateFlow(KEY_HISTORY, ArrayList<SetupDecision>())
@@ -83,11 +85,11 @@ class SetupViewModel(
     private val visit = combine(
         combine(decided, skipped, unclear) { d, s, u -> Triple(d.toSet(), s.toSet(), u.toSet()) },
         beyondTarget,
-        revisit,
+        combine(revisit, draft, ::Pair),
         history,
         cashCategory
-    ) { (d, s, u), beyond, revisit, history, cashCategory ->
-        SetupVisit(d, s, u, beyond, revisit, canGoBack = history.isNotEmpty(), cashCategory)
+    ) { (d, s, u), beyond, (revisit, draft), history, cashCategory ->
+        SetupVisit(d, s, u, beyond, revisit, history.lastOrNull(), cashCategory, draft)
     }
 
     /** Null while loading */
@@ -120,10 +122,6 @@ class SetupViewModel(
         viewModelScope.launch { repository.answerBacklog(accept) }
     }
 
-    override fun acceptSuggestion(card: PayeeCard) {
-        card.suggestion?.let { categorize(card.payee, it) }
-    }
-
     override fun pickCategory(card: PayeeCard, transactionIds: List<Long>?) {
         savedState[KEY_PENDING] = card.key
         if (transactionIds != null) {
@@ -138,34 +136,52 @@ class SetupViewModel(
         val ids = savedState.get<LongArray>(KEY_PENDING_IDS)
         savedState.remove<String>(KEY_PENDING)
         savedState.remove<LongArray>(KEY_PENDING_IDS)
-        if (categoryId == null) return
-        // For the cash withdrawals the choice only shows on the card until the user decides
-        if (key == SetupCash.KEY) {
-            savedState[KEY_CASH_CATEGORY] = categoryId
-            return
-        }
-        viewModelScope.launch {
-            val queue = repository.categoryQueue.filterNotNull().first()
-            val payee = queue.all.find { it.counterpart.key == key } ?: return@launch
-            if (ids == null) {
-                categorize(payee, categoryId)
-            } else {
+        when {
+            categoryId == null -> Unit
+
+            // For the cash withdrawals and the card the choice only fills them in until the user
+            // confirms it
+            key == SetupCash.KEY -> savedState[KEY_CASH_CATEGORY] = categoryId
+
+            ids == null -> savedState[KEY_DRAFT] = PayeeDraft(key, PayeeAnswer.CATEGORY, categoryId)
+
+            else -> viewModelScope.launch {
+                val queue = repository.categoryQueue.filterNotNull().first()
+                val payee = queue.all.find { it.counterpart.key == key } ?: return@launch
                 assign(payee, ids.toList(), categoryId)
             }
         }
+    }
+
+    override fun answer(card: PayeeCard, answer: PayeeAnswer) {
+        val current = draft.value?.takeIf { it.key == card.key }
+        savedState[KEY_DRAFT] = PayeeDraft(card.key, answer, current?.categoryId)
+    }
+
+    override fun takeSuggestion(card: PayeeCard) {
+        card.offer?.let { savedState[KEY_DRAFT] = PayeeDraft(card.key, card.answer, it) }
     }
 
     override fun setAlways(always: Boolean) {
         savedState[KEY_ALWAYS] = always
     }
 
-    override fun leave(card: PayeeCard, unclear: Boolean) {
-        if (unclear) {
-            savedState[KEY_UNCLEAR] = ArrayList(this.unclear.value + card.key)
-            decide(card.key) { repository.markUnclear(card.payee) }
-        } else {
-            putOff(card.key)
+    override fun confirm(card: PayeeCard) {
+        when (card.answer) {
+            PayeeAnswer.CATEGORY -> card.categoryId?.let { categorize(card.payee, it) }
+
+            PayeeAnswer.UNCLEAR -> {
+                savedState[KEY_UNCLEAR] = ArrayList(unclear.value + card.key)
+                decide(card.key) { repository.markUnclear(card.payee) }
+            }
+
+            // The page of its debits is opened, which decides on them one by one
+            PayeeAnswer.DIFFERS -> Unit
         }
+    }
+
+    override fun later(card: PayeeCard) {
+        putOff(card.key)
     }
 
     override fun pickCashCategory() {
@@ -175,7 +191,7 @@ class SetupViewModel(
 
     override fun keepCash(card: CashCard, balance: Long?) {
         val categoryId = card.categoryId ?: return
-        savedState.remove<Long>(KEY_CASH_CATEGORY)
+        savedState[KEY_CASH_CATEGORY] = null
         decide(SetupCash.KEY) { repository.keepCash(card.cash, categoryId, balance) }
     }
 
@@ -186,7 +202,8 @@ class SetupViewModel(
     /** [key] comes again after the others ("Später"), nothing is written */
     private fun putOff(key: String) {
         savedState[KEY_SKIPPED] = ArrayList(skipped.value + key)
-        savedState.remove<Revisit>(KEY_REVISIT)
+        savedState[KEY_REVISIT] = null
+        savedState[KEY_DRAFT] = null
         viewModelScope.launch {
             writes.withLock { remember(SetupDecision.Later(key)) }
         }
@@ -203,7 +220,8 @@ class SetupViewModel(
                     else -> null
                 }
                 // The card comes back with the decided payees, so all else is set before
-                savedState[KEY_REVISIT] = Revisit(key, categoryId)
+                savedState[KEY_REVISIT] = Revisit(key, categoryId, last is SetupDecision.Unclear)
+                savedState[KEY_DRAFT] = null
                 savedState[KEY_HISTORY] = ArrayList(history.value.dropLast(1))
                 savedState[KEY_SKIPPED] = ArrayList(skipped.value - key)
                 savedState[KEY_UNCLEAR] = ArrayList(unclear.value - key)
@@ -263,7 +281,8 @@ class SetupViewModel(
         savedState[KEY_DECIDED] = ArrayList(decided.value + key)
         savedState[KEY_SKIPPED] = ArrayList(skipped.value - key)
         val isRevisit = revisit.value?.key == key
-        savedState.remove<Revisit>(KEY_REVISIT)
+        savedState[KEY_REVISIT] = null
+        savedState[KEY_DRAFT] = null
         val millis = shown?.takeIf { it.first == key && !isRevisit }?.let { clock() - it.second }
         viewModelScope.launch {
             writes.withLock { remember(write()) }
@@ -286,6 +305,7 @@ class SetupViewModel(
         const val KEY_PENDING = "setup_pending"
         const val KEY_PENDING_IDS = "setup_pending_ids"
         const val KEY_CASH_CATEGORY = "setup_cash_category"
+        const val KEY_DRAFT = "setup_draft"
 
         /** Decisions kept to go back to, so that the saved state stays small */
         const val MAX_HISTORY = 30

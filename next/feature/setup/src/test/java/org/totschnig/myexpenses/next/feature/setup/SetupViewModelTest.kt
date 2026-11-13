@@ -107,6 +107,10 @@ class SetupViewModelTest {
             now += 5000
             viewModel.pickCategory(card)
             viewModel.picked(10)
+            // The pick only fills in the card, "Next" decides
+            val filled = viewModel.categories.first { it?.card?.categoryId == 10L }!!.card!!
+            assertEquals(emptyList<Pair<List<Long>, Long>>(), setup.writing.set)
+            viewModel.confirm(filled)
             // The next card comes at once, before the ledger knows the category
             assertEquals("p:2", viewModel.categories.first { it?.card?.key != "p:1" }!!.card!!.key)
             assertEquals(listOf(listOf(1L) to 10L), setup.writing.set)
@@ -120,9 +124,12 @@ class SetupViewModelTest {
             val viewModel = backgroundScope.setup(dataStore).viewModel
             viewModel.categories.launchIn(backgroundScope)
             val first = viewModel.categories.first { it?.card != null }!!.card!!
-            viewModel.leave(first, unclear = false)
+            viewModel.later(first)
             val second = viewModel.categories.first { it?.card?.key == "p:2" }!!.card!!
-            viewModel.leave(second, unclear = true)
+            viewModel.answer(second, PayeeAnswer.UNCLEAR)
+            viewModel.confirm(
+                viewModel.categories.first { it?.card?.answer == PayeeAnswer.UNCLEAR }!!.card!!
+            )
             // Only the payee put off is left up to the target
             val step = viewModel.categories.first { it?.card?.key == "p:3" }!!
             assertEquals(true, step.hasSkipped)
@@ -141,18 +148,24 @@ class SetupViewModelTest {
             assertEquals(false, viewModel.categories.value!!.canGoBack)
             viewModel.pickCategory(rent)
             viewModel.picked(10)
+            viewModel.confirm(viewModel.categories.first { it?.card?.categoryId == 10L }!!.card!!)
             val rewe = viewModel.categories.first { it?.card?.key == "p:2" }!!.card!!
-            viewModel.leave(rewe, unclear = true)
+            viewModel.answer(rewe, PayeeAnswer.UNCLEAR)
+            viewModel.confirm(
+                viewModel.categories.first { it?.card?.answer == PayeeAnswer.UNCLEAR }!!.card!!
+            )
             // The target is reached without the payee
             viewModel.categories.first { it?.isTargetReached == true }
             viewModel.back()
             val again = viewModel.categories.first { it?.card?.key == "p:2" }!!
-            assertEquals(null, again.card!!.suggestion)
-            assertEquals(true, again.canGoBack)
+            // Gone back to, it comes with the answer given before
+            assertEquals(PayeeAnswer.UNCLEAR, again.card!!.answer)
+            assertEquals(LastKind.CATEGORY, again.last?.kind)
             viewModel.back()
             // The rent comes first again, with the category chosen before
             val first = viewModel.categories.first { it?.card?.key == "p:1" }!!
-            assertEquals(10L, first.card!!.suggestion)
+            assertEquals(10L, first.card!!.categoryId)
+            assertEquals(false, first.card!!.isSuggested)
             assertEquals(false, first.canGoBack)
             assertEquals(listOf(1L to 10L), setup.writing.removed)
         }
@@ -173,9 +186,9 @@ class SetupViewModelTest {
             assertEquals("p:1", viewModel.categories.value!!.card!!.key)
             assertEquals(0, setup.store.progress.first().pace.decisions)
             viewModel.back()
-            // Going back offers no category for the whole payee
+            // Going back fills in no category for the whole payee
             val again = viewModel.categories.first { it?.canGoBack == false }!!
-            assertEquals(null, again.card!!.suggestion)
+            assertEquals(null, again.card!!.categoryId)
             assertEquals(listOf(1L to 10L), setup.writing.removed)
         }
     }
@@ -189,7 +202,7 @@ class SetupViewModelTest {
             val viewModel = setup.viewModel
             viewModel.categories.launchIn(backgroundScope)
             val rent = viewModel.categories.first { it?.card != null }!!.card!!
-            viewModel.leave(rent, unclear = false)
+            viewModel.later(rent)
             viewModel.categories.first { it?.cashCard != null }
             viewModel.pickCashCategory()
             viewModel.picked(10)
@@ -220,6 +233,8 @@ class SetupViewModelTest {
             after.viewModel.categories.launchIn(backgroundScope)
             after.viewModel.categories.first { it != null }
             after.viewModel.picked(10)
+            val filled = after.viewModel.categories.first { it?.card?.categoryId == 10L }!!.card!!
+            after.viewModel.confirm(filled)
             assertEquals(listOf(listOf(1L) to 10L), after.writing.set)
             assertEquals(false, after.viewModel.always.value)
         }

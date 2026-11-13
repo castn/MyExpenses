@@ -6,12 +6,19 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
+import org.totschnig.myexpenses.next.data.categories.CategoryAnalysis
+import org.totschnig.myexpenses.next.data.categories.CategoryDecisions
+import org.totschnig.myexpenses.next.data.categories.CategoryPlan
+import org.totschnig.myexpenses.next.data.categories.CategorySuggestion
 import org.totschnig.myexpenses.next.data.categories.Counterpart
+import org.totschnig.myexpenses.next.data.categories.SuggestionSource
 import org.totschnig.myexpenses.next.data.setup.CategoryCoverage
 import org.totschnig.myexpenses.next.data.setup.CategoryQueue
 import org.totschnig.myexpenses.next.data.setup.Pace
 import org.totschnig.myexpenses.next.data.setup.SetupCash
 import org.totschnig.myexpenses.next.data.setup.SetupContracts
+import org.totschnig.myexpenses.next.data.setup.SetupDecision
 import org.totschnig.myexpenses.next.data.setup.SetupPayee
 import org.totschnig.myexpenses.next.data.setup.SetupProgress
 import org.totschnig.myexpenses.next.data.setup.SetupStep
@@ -126,12 +133,13 @@ class SetupStatesTest {
             decided = setOf("p:2"),
             skipped = setOf("p:3"),
             revisit = Revisit("p:3", categoryId = 10),
-            canGoBack = true
+            last = SetupDecision.Later("p:3")
         )
         val step = categoriesStep(queue, null, visit, Pace(), backlog = 0)
         assertEquals("p:3", step.card?.key)
-        assertEquals(10L, step.card?.suggestion)
-        assertTrue(step.canGoBack)
+        assertEquals(10L, step.card?.categoryId)
+        assertFalse(step.card!!.isSuggested)
+        assertEquals(LastDecision(LastKind.LATER, "Payee 3", null), step.last)
         // Until the ledger has its transactions without category again, the next payee is shown
         val before = queue.copy(optional = emptyList())
         assertEquals("p:1", categoriesStep(before, null, visit, Pace(), backlog = 0).card?.key)
@@ -183,5 +191,50 @@ class SetupStatesTest {
         val revisit = SetupVisit(revisit = Revisit(SetupCash.KEY, categoryId = 10))
         assertEquals(10L, cashStep(revisit).cashCard?.categoryId)
         assertEquals(11L, cashStep(revisit.copy(cashCategory = 11)).cashCard?.categoryId)
+    }
+
+    private fun analysis(vararg suggestions: CategorySuggestion) = CategoryAnalysis(
+        inputs = emptyList(),
+        decisions = CategoryDecisions(),
+        plan = CategoryPlan(emptyList(), emptyList(), suggestions.associateBy { it.transactionId }),
+        categories = listOf(CategoryInfo(10, "Wohnen", "Wohnen"), CategoryInfo(11, "Kino", "Kino"))
+    )
+
+    private fun suggestion(id: Long, categoryId: Long, isCertain: Boolean) =
+        CategorySuggestion(id, categoryId, SuggestionSource.PAYEE, isCertain)
+
+    @Test
+    fun fillsInCertainSuggestionsAndOffersUncertainOnes() {
+        val certain =
+            categoriesStep(queue, analysis(suggestion(1, 10, true)), SetupVisit(), Pace(), 0)
+        assertEquals(10L, certain.card!!.categoryId)
+        assertEquals("Wohnen", certain.card!!.categoryPath)
+        assertTrue(certain.card!!.isSuggested)
+        assertEquals(null, certain.card!!.offer)
+        val uncertain =
+            categoriesStep(queue, analysis(suggestion(1, 10, false)), SetupVisit(), Pace(), 0)
+        assertEquals(null, uncertain.card!!.categoryId)
+        assertFalse(uncertain.card!!.canConfirm)
+        assertEquals(10L, uncertain.card!!.offer)
+        assertEquals("Wohnen", uncertain.card!!.offerPath)
+    }
+
+    @Test
+    fun keepsWhatTheUserChoseOnTheCard() {
+        val analysis = analysis(suggestion(1, 10, true))
+        val picked = SetupVisit(draft = PayeeDraft("p:1", PayeeAnswer.CATEGORY, 11))
+        val card = categoriesStep(queue, analysis, picked, Pace(), 0).card!!
+        assertEquals(11L, card.categoryId)
+        assertFalse(card.isSuggested)
+        val unclear = SetupVisit(draft = PayeeDraft("p:1", PayeeAnswer.UNCLEAR))
+        val answered = categoriesStep(queue, analysis, unclear, Pace(), 0).card!!
+        assertEquals(PayeeAnswer.UNCLEAR, answered.answer)
+        assertTrue(answered.canConfirm)
+        // A draft of another payee does not change the card
+        val other = SetupVisit(draft = PayeeDraft("p:2", PayeeAnswer.UNCLEAR))
+        assertEquals(
+            PayeeAnswer.CATEGORY,
+            categoriesStep(queue, analysis, other, Pace(), 0).card!!.answer
+        )
     }
 }

@@ -4,36 +4,11 @@ import org.totschnig.myexpenses.next.data.setup.SetupOffer
 import org.totschnig.myexpenses.next.data.setup.SetupReminder
 import org.totschnig.myexpenses.next.data.setup.SetupStep
 
-/** What the user can do in the setup */
+/** What the user can do in the setup, besides deciding on a card, see [PayeeCardActions] */
 interface SetupActions {
 
     /** The transactions that can be categorized for sure get their category, or not */
     fun answerBacklog(accept: Boolean)
-
-    /** The card of [card] is shown, from now on the time to decide counts */
-    fun cardShown(card: PayeeCard)
-
-    /** The debits of the payee get the suggested category */
-    fun acceptSuggestion(card: PayeeCard)
-
-    /**
-     * The category picker is opened for [card], see [picked]. With [transactionIds] only these
-     * debits of the payee get the category, without a rule: they are for different things
-     * ("Unterschiedlich").
-     */
-    fun pickCategory(card: PayeeCard, transactionIds: List<Long>? = null)
-
-    /** The category picker returned [categoryId] for the card of [pickCategory], null for none */
-    fun picked(categoryId: Long?)
-
-    /** Whether a choice also applies to later transactions of the payee ("Immer so machen") */
-    fun setAlways(always: Boolean)
-
-    /**
-     * The payee stays without category: it comes again after the others ("Später"), or with
-     * [unclear] the user knows no category for it ("Weiß ich nicht")
-     */
-    fun leave(card: PayeeCard, unclear: Boolean)
 
     /** Takes back the last decision of this visit, its payee is shown again */
     fun back()
@@ -46,6 +21,47 @@ interface SetupActions {
 
     /** The user finished or skipped the whole setup, which is not offered anymore */
     fun close()
+}
+
+/**
+ * What the user can do on the card of a payee: choose an answer and a category, which only fill
+ * in the card, then confirm it with [confirm] ("Next") or put the payee off with [later]
+ */
+interface PayeeCardActions {
+
+    /** The card of [card] is shown, from now on the time to decide counts */
+    fun cardShown(card: PayeeCard)
+
+    /** The user chose [answer] for [card], see [PayeeAnswer] */
+    fun answer(card: PayeeCard, answer: PayeeAnswer)
+
+    /**
+     * The category picker is opened for [card], see [picked]. With [transactionIds] only these
+     * debits of the payee get the category at once, without a rule: they are for different things
+     * ("Unterschiedlich").
+     */
+    fun pickCategory(card: PayeeCard, transactionIds: List<Long>? = null)
+
+    /**
+     * The category picker returned [categoryId], null for none: it fills in the card of
+     * [pickCategory], or the cash withdrawals, or gives the debits chosen their category
+     */
+    fun picked(categoryId: Long?)
+
+    /** The suggestion offered on [card] is filled in, see [PayeeCard.offer] */
+    fun takeSuggestion(card: PayeeCard)
+
+    /** Whether a choice also applies to later transactions of the payee ("Immer so machen") */
+    fun setAlways(always: Boolean)
+
+    /**
+     * The answer of [card] is confirmed ("Next"): its debits get the category, or the payee is one
+     * the user knows no category for; [PayeeAnswer.DIFFERS] opens its debits instead
+     */
+    fun confirm(card: PayeeCard)
+
+    /** The payee comes again after the others ("Später") */
+    fun later(card: PayeeCard)
 }
 
 /** What the user can do with the cash withdrawals in the setup, see [CashCard] */

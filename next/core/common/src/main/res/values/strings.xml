@@ -1307,14 +1307,25 @@
         <item quantity="other">Show all %d transactions</item>
     </plurals>
     <string name="next_setup_suggestion">Suggestion</string>
-    <string name="next_setup_other_category">Other category</string>
     <string name="next_setup_choose_category">Choose category</string>
     <string name="next_setup_accept">Use</string>
     <string name="next_setup_always">Also for later transactions</string>
     <string name="next_setup_unclear">Don\'t know</string>
     <string name="next_setup_later">Later</string>
-    <string name="next_setup_back">Change last decision</string>
     <string name="next_setup_differs">Different</string>
+    <string name="next_setup_question">What applies?</string>
+    <string name="next_setup_answer_category">One category</string>
+    <string name="next_setup_category">Category</string>
+    <string name="next_setup_differs_hint">Next shows its transactions, so that you give them their categories one by one.</string>
+    <string name="next_setup_unclear_hint">The payee stays without category and no longer counts. You can change that later.</string>
+    <string name="next_setup_change">Change</string>
+    <string name="next_setup_last_category">Last: %1$s → %2$s</string>
+    <string name="next_setup_last_some">Last: %1$s, some transactions → %2$s</string>
+    <string name="next_setup_last_unclear">Last: %1$s, don\'t know</string>
+    <string name="next_setup_last_later">Last: %1$s, later</string>
+    <string name="next_setup_last_cash">Last: cash → %1$s</string>
+    <string name="next_setup_last_cash_later">Last: cash, later</string>
+    <string name="next_setup_last_cash_account">Last: cash → cash account</string>
     <string name="next_setup_differs_text">Choose the transactions that belong together and give them a category. This applies only to them, later transactions of the payee are asked again.</string>
     <string name="next_setup_cash_title">Cash</string>
     <string name="next_setup_cash_per_month">About %1$s a month since %2$s</string>

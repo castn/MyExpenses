@@ -1307,14 +1307,25 @@
         <item quantity="other">Alle %d Buchungen ansehen</item>
     </plurals>
     <string name="next_setup_suggestion">Vorschlag</string>
-    <string name="next_setup_other_category">Andere Kategorie</string>
     <string name="next_setup_choose_category">Kategorie wählen</string>
     <string name="next_setup_accept">Übernehmen</string>
     <string name="next_setup_always">Auch für spätere Buchungen</string>
     <string name="next_setup_unclear">Weiß ich nicht</string>
     <string name="next_setup_later">Später</string>
-    <string name="next_setup_back">Letzte Entscheidung ändern</string>
     <string name="next_setup_differs">Unterschiedlich</string>
+    <string name="next_setup_question">Was trifft zu?</string>
+    <string name="next_setup_answer_category">Eine Kategorie</string>
+    <string name="next_setup_category">Kategorie</string>
+    <string name="next_setup_differs_hint">Weiter zeigt die Buchungen, damit du ihnen einzeln Kategorien gibst.</string>
+    <string name="next_setup_unclear_hint">Der Empfänger bleibt ohne Kategorie und zählt nicht mehr mit. Du kannst das später ändern.</string>
+    <string name="next_setup_change">Ändern</string>
+    <string name="next_setup_last_category">Zuletzt: %1$s → %2$s</string>
+    <string name="next_setup_last_some">Zuletzt: %1$s, einzelne Buchungen → %2$s</string>
+    <string name="next_setup_last_unclear">Zuletzt: %1$s, weiß ich nicht</string>
+    <string name="next_setup_last_later">Zuletzt: %1$s, später</string>
+    <string name="next_setup_last_cash">Zuletzt: Bargeld → %1$s</string>
+    <string name="next_setup_last_cash_later">Zuletzt: Bargeld, später</string>
+    <string name="next_setup_last_cash_account">Zuletzt: Bargeld → Bargeldkonto</string>
     <string name="next_setup_differs_text">Wähle die Buchungen, die zusammengehören, und gib ihnen eine Kategorie. Das gilt nur für sie, spätere Buchungen des Empfängers werden wieder gefragt.</string>
     <string name="next_setup_cash_title">Bargeld</string>
     <string name="next_setup_cash_per_month">Etwa %1$s im Monat seit %2$s</string>
