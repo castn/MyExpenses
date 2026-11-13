@@ -8,8 +8,12 @@ package "ledger" {
 }
 package "categories" {
   [CategoryRepository] as categoryRepository
-  database "CategoryStore\n(rules, unclear)" as categoryStore
+  database "CategoryStore\n(rules, rule for cash,\nunclear)" as categoryStore
   [CategorySuggester] as suggester
+}
+package "cash" {
+  [CashRepository] as cashRepository
+  database "CashStore\n(cash account, since)" as cashStore
 }
 package "contracts (optional)" {
   artifact "SetupContracts\n(from NextData)" as setupContracts
@@ -21,12 +25,14 @@ package "setup" {
   [automaticShare()] as shareFn
   artifact AutomaticShare as share
   [SetupRepository] as repository
+  artifact "SetupDecision\n(Categorized, Assigned,\nUnclear, Cash, Later)" as decision
   database "SetupStore\n(steps, pace)" as store
   artifact "Pace" as pace
 }
 
 Ledger --> queueFn
 categoryStore --> queueFn : unclear payees
+cashStore --> queueFn : since, withdrawals\nleft out
 queueFn --> queue
 Ledger --> shareFn
 categoryStore --> shareFn : rules
@@ -34,7 +40,11 @@ suggester --> shareFn : certain?
 shareFn --> share
 repository --> queueFn : Memo
 repository --> shareFn : Memo
-repository --> categoryRepository : categorize,\nmark unclear,\ntake back
+repository --> categoryRepository : categorize, assign,\ncategorize cash,\nmark unclear, take back
+repository --> cashRepository : open cash account,\ntake back
+repository --> decision
+cashRepository --> cashStore
+Ledger --> cashRepository : withdrawals\nto move
 categoryRepository --> categoryStore
 setupContracts --> repository : steps
 store --> repository : progress

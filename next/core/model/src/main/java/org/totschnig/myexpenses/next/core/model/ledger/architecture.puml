@@ -23,6 +23,8 @@ package "shell: NextData (once per process)" as nextData {
   [BalanceRepository] as balanceRepo
   [SavingTipsRepository] as tipsRepo
   [DataReadinessRepository] as readinessRepo
+  [CashRepository] as cashRepo
+  [SetupRepository] as setupRepo
 }
 
 package "ledger" {
@@ -48,6 +50,7 @@ package "view models (…Feature of the shell)" as viewModels {
   [SavingTipsViewModel] as tipsVM
   [DataReadinessViewModel] as readinessVM
   [CategorySuggestionsViewModel] as categoriesVM
+  [SetupViewModel] as setupVM
   [TagLearningViewModel] as tagLearningVM
   [TagDetectionsViewModel] as tagDetectionsVM
   [TagAnalysisViewModel] as analysisVM
@@ -84,6 +87,7 @@ tagsRepo ..> tagRows
 categoriesRepo -up-> LedgerSource
 receiptsRepo -up-> db : receipts
 receiptsRepo ..> ReceiptFacts
+cashRepo -up-> LedgerSource
 
 ' Level 2
 budgetsRepo -up-> ContractFacts
@@ -92,6 +96,8 @@ budgetsRepo -up-> ReceiptFacts
 budgetsRepo ..> BudgetFacts
 balanceRepo -up-> ContractFacts
 readinessRepo -up-> ReceiptFacts
+setupRepo -up-> categoriesRepo
+setupRepo -up-> cashRepo
 
 ' Level 3
 tipsRepo -up-> BudgetFacts
@@ -108,6 +114,7 @@ balanceVM -up-> balanceRepo
 tipsVM -up-> tipsRepo
 readinessVM -up-> readinessRepo
 categoriesVM -up-> categoriesRepo
+setupVM -up-> setupRepo
 tagLearningVM -up-> tagsRepo
 
 ' View models that offer nothing read what they show themselves

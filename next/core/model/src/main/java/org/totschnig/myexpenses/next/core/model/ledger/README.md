@@ -29,6 +29,8 @@ offer; a view model shows the flows of its repository and changes its store.
 | `BalanceRepository` | ledger, `ContractFacts` | the balance from salary to salary |
 | `SavingTipsRepository` | consent, `ContractFacts`, `TagFacts`, `ReceiptFacts`, `BudgetFacts`, its decisions | the saving tips |
 | `DataReadinessRepository` | ledger, `ReceiptFacts` | how well the transactions are described |
+| `CashRepository` | ledger, the cash account | moves new cash withdrawals to the cash account (`movedToAccount`), opens and takes back the account for the setup |
+| `SetupRepository` | ledger, `CategoryRepository`, `CashRepository`, `SetupContracts`, its progress | to `SetupViewModel` the payees and cash withdrawals to decide on, coverage, automatic share, steps |
 
 `ReceiptFacts` come from `NextData.receiptFacts`, the facts of `ReceiptRepository`; without the area of
 receipts they are `ReceiptFacts.None`, and what needs scanned receipts is not offered (rule `feat-optional-area`).
