@@ -1293,6 +1293,10 @@
         <item quantity="one">%1$d Buchung seit %2$s</item>
         <item quantity="other">%1$d Buchungen seit %2$s</item>
     </plurals>
+    <plurals name="next_setup_show_transactions">
+        <item quantity="one">Buchung ansehen</item>
+        <item quantity="other">Alle %d Buchungen ansehen</item>
+    </plurals>
     <string name="next_setup_suggestion">Vorschlag</string>
     <string name="next_setup_other_category">Andere Kategorie</string>
     <string name="next_setup_choose_category">Kategorie wählen</string>

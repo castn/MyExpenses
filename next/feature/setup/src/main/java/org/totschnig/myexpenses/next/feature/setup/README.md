@@ -11,6 +11,7 @@ README): which payees come first, how much of the money has a category, time est
 | --- | --- |
 | `Start` | what the setup brings, the steps with what they take (`GuideStepRow`), "Get started" or "Go on", "Skip setup" closes it for good |
 | `Categories` | `GuideProgressHeader` with the share of the money with a category, a mark at 80 % and the time left; first the backlog question (`Banner`), then one payee after the other (`DecisionCard`), at the target "Next" or "Go on" |
+| `Transactions` | the debits without category of one payee, through the `FixedTransactions` of the shell (`SetupTransactions`); it leaves once they all have a category |
 | `Automatic` | how many of the recent debits now get their category without asking |
 | `Contracts` | the suggestions of contracts the shell hands in (`contracts`), finish or skip |
 | `Done` | back to the overview; the setup is closed if no step is left |
@@ -23,7 +24,7 @@ The card shows the payee, the money spent there without category, since when, an
 debits with the purposes from the bank (`EntryPreview`), which tell e.g. the merchant behind a
 direct debit. With a suggestion "Use" takes it and "Other category" opens the category picker,
 else "Choose category" does. "Also for later transactions" adds a rule ("Immer so machen"), on at
-first.
+first. "Show all 7 transactions" opens the debits without category with their details.
 
 - "Don't know" marks the payee as unclear (`CategoryDecisions.unclear`): its money no longer counts
   and nothing asks about it again.

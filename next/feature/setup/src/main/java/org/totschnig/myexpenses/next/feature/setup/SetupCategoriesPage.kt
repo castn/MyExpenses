@@ -43,17 +43,21 @@ import org.totschnig.myexpenses.next.core.ui.rememberAmountFormat
 import org.totschnig.myexpenses.next.core.ui.rememberDateFormatter
 import org.totschnig.myexpenses.next.core.ui.rememberMonthFormatter
 import org.totschnig.myexpenses.next.core.ui.rememberPercentFormat
+import org.totschnig.myexpenses.next.data.categories.Counterpart
 import org.totschnig.myexpenses.next.data.setup.TARGET_SHARE
 
 /**
  * The categories step: first the question about the transactions that can be categorized for sure,
  * then one payee after the other up to the target, with what helps to decide
+ *
+ * @param onShowTransactions shows the transactions of a payee, if the app can
  */
 @Composable
 internal fun SetupCategoriesPage(
     viewModel: SetupViewModel,
     currency: CurrencyInfo,
     onBack: () -> Unit,
+    onShowTransactions: ((Counterpart) -> Unit)?,
     onSkip: () -> Unit,
     onFinish: () -> Unit
 ) {
@@ -108,7 +112,7 @@ internal fun SetupCategoriesPage(
             when {
                 current.backlog > 0 -> BacklogQuestion(current.backlog, viewModel)
 
-                card != null -> PayeeDecision(card, always, currency, viewModel)
+                card != null -> PayeeDecision(card, always, currency, viewModel, onShowTransactions)
 
                 current.isTargetReached || !current.hasSkipped -> ActionCard(
                     icon = Icons.Outlined.CheckCircle,
@@ -176,7 +180,8 @@ private fun PayeeDecision(
     card: PayeeCard,
     always: Boolean,
     currency: CurrencyInfo,
-    actions: SetupActions
+    actions: SetupActions,
+    onShowTransactions: ((Counterpart) -> Unit)?
 ) {
     val amount = rememberAmountFormat(currency)
     val month = rememberMonthFormatter()
@@ -211,7 +216,11 @@ private fun PayeeDecision(
                 EntryPreview(
                     payee.recent.map {
                         PreviewEntry(date.format(it.date), it.purpose, amount(it.amount))
-                    }
+                    },
+                    moreLabel = onShowTransactions?.let {
+                        pluralStringResource(R.plurals.next_setup_show_transactions, count, count)
+                    },
+                    onMore = { onShowTransactions?.invoke(payee.counterpart) }
                 )
             }
             card.suggestionPath?.let { path ->

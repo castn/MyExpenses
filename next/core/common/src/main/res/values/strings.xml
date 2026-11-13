@@ -1293,6 +1293,10 @@
         <item quantity="one">%1$d transaction since %2$s</item>
         <item quantity="other">%1$d transactions since %2$s</item>
     </plurals>
+    <plurals name="next_setup_show_transactions">
+        <item quantity="one">Show the transaction</item>
+        <item quantity="other">Show all %d transactions</item>
+    </plurals>
     <string name="next_setup_suggestion">Suggestion</string>
     <string name="next_setup_other_category">Other category</string>
     <string name="next_setup_choose_category">Choose category</string>

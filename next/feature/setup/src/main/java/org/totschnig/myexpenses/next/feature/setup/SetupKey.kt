@@ -12,6 +12,10 @@ sealed interface SetupKey : NavKey {
     @Serializable
     data object Categories : SetupKey
 
+    /** The debits without category of the payee of [payeeKey], named [title] */
+    @Serializable
+    data class Transactions(val payeeKey: String, val title: String) : SetupKey
+
     /** What the categories step brought: the share categorized without asking from now on */
     @Serializable
     data object Automatic : SetupKey

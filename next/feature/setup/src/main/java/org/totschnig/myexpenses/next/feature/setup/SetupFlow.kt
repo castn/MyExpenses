@@ -19,6 +19,8 @@ import org.totschnig.myexpenses.next.data.setup.SetupStep
  * @param onClose leaves the setup; it is offered again from the overview unless it was closed
  * @param contracts the suggestions of contracts to confirm, from the contracts area; without it
  * there is no contracts step
+ * @param transactions shows the transactions of a payee; without it the cards show only the last
+ * ones
  */
 @Composable
 fun SetupFlow(
@@ -26,7 +28,8 @@ fun SetupFlow(
     currency: CurrencyInfo,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    contracts: (@Composable ColumnScope.() -> Unit)? = null
+    contracts: (@Composable ColumnScope.() -> Unit)? = null,
+    transactions: SetupTransactions? = null
 ) {
     val overview by viewModel.overview.collectAsStateWithLifecycle()
     val backStack = rememberNavBackStack(SetupKey.Start)
@@ -61,6 +64,9 @@ fun SetupFlow(
                     viewModel = viewModel,
                     currency = currency,
                     onBack = { backStack.remove(SetupKey.Categories) },
+                    onShowTransactions = transactions?.let {
+                        { payee -> backStack.add(SetupKey.Transactions(payee.key, payee.name)) }
+                    },
                     onSkip = {
                         viewModel.endStep(SetupStep.CATEGORIES, skipped = true)
                         backStack.remove(SetupKey.Categories)
@@ -72,6 +78,11 @@ fun SetupFlow(
                         backStack.add(SetupKey.Automatic)
                     }
                 )
+            }
+            entry<SetupKey.Transactions> { key ->
+                transactions?.let {
+                    SetupTransactionsPage(viewModel, it, key, onBack = { backStack.remove(key) })
+                }
             }
             entry<SetupKey.Automatic> {
                 SetupAutomaticPage(

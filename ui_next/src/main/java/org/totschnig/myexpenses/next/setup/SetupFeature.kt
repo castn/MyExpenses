@@ -16,6 +16,7 @@ import org.totschnig.myexpenses.next.NextNavigation
 import org.totschnig.myexpenses.next.NextShell
 import org.totschnig.myexpenses.next.feature.setup.SetupCard
 import org.totschnig.myexpenses.next.feature.setup.SetupFlow
+import org.totschnig.myexpenses.next.feature.setup.SetupTransactions
 import org.totschnig.myexpenses.next.feature.setup.SetupViewModel
 import org.totschnig.myexpenses.next.viewModelsOf
 
@@ -49,7 +50,11 @@ class SetupFeature(
                     viewModel = viewModel,
                     currency = currency,
                     onClose = { shell.navigation.close(NextKey.Setup) },
-                    contracts = contracts
+                    contracts = contracts,
+                    transactions = SetupTransactions(
+                        shell.fixedTransactions,
+                        shell.transactionDetails
+                    )
                 )
             }
         }

@@ -84,6 +84,10 @@ class SetupViewModel(
         ::categoriesStep
     ).stateWhileShown(viewModelScope, null)
 
+    /** The payees to decide on, to look up the transactions of one, null while loading */
+    val payees: StateFlow<List<SetupPayee>?> =
+        repository.categoryQueue.map { it?.all }.stateWhileShown(viewModelScope, null)
+
     /** What will be categorized without asking, null while loading */
     val automaticShare: StateFlow<AutomaticShare?> =
         repository.automaticShare.stateWhileShown(viewModelScope, null)
