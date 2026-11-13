@@ -41,4 +41,6 @@ the others are shown in the details.
   `CategoryRepository.unclear`). A rule for the counterpart ends it, and the other way round.
 
 `CategoryRepository.categorize` gives the transactions of a counterpart a category and, if asked,
-a rule; `markUnclear` and `unmarkUnclear` change the unclear counterparts.
+a rule, and returns what it changed (`Categorization`) for `takeBack`, which removes the category
+again where it is still set and restores the rule the counterpart had; `markUnclear` and
+`unmarkUnclear` change the unclear counterparts.

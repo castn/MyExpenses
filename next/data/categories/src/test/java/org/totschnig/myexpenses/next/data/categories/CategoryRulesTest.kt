@@ -27,4 +27,15 @@ class CategoryRulesTest {
             .withRule(rewe, 11) { "new" }
         assertEquals(listOf(CategoryRule("new", setOf(1), 11)), decisions.rules)
     }
+
+    @Test
+    fun findsAndDropsTheRuleOfACounterpart() {
+        val rule = CategoryRule("r", setOf(1, 2), 10, setOf("shop"))
+        val decisions = CategoryDecisions(rules = listOf(rule))
+        assertEquals(10L, decisions.ruleCategory(rewe))
+        assertEquals(10L, decisions.ruleCategory(amazonShop))
+        assertEquals(null, decisions.ruleCategory(Counterpart("p:3", "Aldi", payeeId = 3)))
+        val withoutRewe = decisions.withoutRule(rewe).rules
+        assertEquals(listOf(CategoryRule("r", setOf(2), 10, setOf("shop"))), withoutRewe)
+    }
 }

@@ -84,6 +84,16 @@ fun CategoryDecisions.withRule(counterpart: Counterpart, categoryId: Long, newId
     )
 }
 
+/** The category of the rule [counterpart] is in, null if it is in none */
+fun CategoryDecisions.ruleCategory(counterpart: Counterpart): Long? = rules.find { rule ->
+    counterpart.payeeId?.let { it in rule.payeeIds } == true ||
+        counterpart.merchant?.let { it in rule.merchants } == true
+}?.categoryId
+
+/** [counterpart] is taken out of the rule it had; a rule left without counterparts is dropped */
+fun CategoryDecisions.withoutRule(counterpart: Counterpart) =
+    copy(rules = rulesWithout(counterpart))
+
 /** The rules without [counterpart]; a rule left without counterparts is dropped */
 private fun CategoryDecisions.rulesWithout(counterpart: Counterpart): List<CategoryRule> {
     val payeeIds = setOfNotNull(counterpart.payeeId)

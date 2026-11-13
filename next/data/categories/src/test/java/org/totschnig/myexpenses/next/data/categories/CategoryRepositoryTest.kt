@@ -27,7 +27,10 @@ class CategoryRepositoryTest {
     private class FakeWriting : CategoryWriting {
         val set = mutableListOf<Pair<List<Long>, Long>>()
         override suspend fun changeCategory(transactionId: Long, fromCategoryId: Long?, categoryId: Long) = Unit
-        override suspend fun removeCategory(transactionId: Long, categoryId: Long) = Unit
+        val removed = mutableListOf<Pair<Long, Long>>()
+        override suspend fun removeCategory(transactionId: Long, categoryId: Long) {
+            removed += transactionId to categoryId
+        }
         override suspend fun setMissingCategory(transactionIds: List<Long>, categoryId: Long) {
             set += transactionIds to categoryId
         }
@@ -92,6 +95,31 @@ class CategoryRepositoryTest {
             val byName = Counterpart("n:kiosk", "Kiosk")
             repository.categorize(byName, listOf(4), 12, always = true)
             assertEquals(1, store.decisions.first().rules.size)
+        }
+    }
+
+    @Test
+    fun takesBackACategorizationAndRestoresTheRuleBefore() = withTestDataStore { dataStore ->
+        runTest {
+            val store = CategoryStore(dataStore)
+            val before = CategoryRule("r", setOf(5), 9)
+            store.update { it.copy(rules = listOf(before)) }
+            val writing = FakeWriting()
+            val repository = CategoryRepository(FakeLedgerSource(), store, writing, backgroundScope)
+            val rewe = Counterpart("p:5", "REWE", payeeId = 5)
+            val withRule = repository.categorize(rewe, listOf(1, 2), 10, always = true)
+            val expected = Categorization(rewe, listOf(1, 2), 10, hasSetRule = true, ruleBefore = 9)
+            assertEquals(expected, withRule)
+            repository.takeBack(withRule)
+            assertEquals(listOf(1L to 10L, 2L to 10L), writing.removed)
+            assertEquals(9L, store.decisions.first().ruleCategory(rewe))
+            // Without a rule before, the counterpart is in none afterwards
+            repository.takeBack(withRule.copy(ruleBefore = null))
+            assertTrue(store.decisions.first().rules.isEmpty())
+            // Without "Immer so machen" the rules stay
+            store.update { it.copy(rules = listOf(before)) }
+            repository.takeBack(repository.categorize(rewe, listOf(3), 10, always = false))
+            assertEquals(listOf(before), store.decisions.first().rules)
         }
     }
 

@@ -94,20 +94,43 @@ class CategoryRepository(
      * The user chose [categoryId] for [counterpart]: those of [transactionIds] without category get
      * it, and with [always] the transactions of the counterpart get it from now on ("Immer so
      * machen"), if a rule can name it, see [CategoryRule]. The counterpart is no longer unclear.
+     *
+     * @return what was changed, for [takeBack]
      */
     suspend fun categorize(
         counterpart: Counterpart,
         transactionIds: List<Long>,
         categoryId: Long,
         always: Boolean
-    ) {
+    ): Categorization {
         writing.setMissingCategory(transactionIds, categoryId)
-        val canHaveRule = counterpart.payeeId != null || counterpart.merchant != null
+        val withRule = always && (counterpart.payeeId != null || counterpart.merchant != null)
+        var ruleBefore: Long? = null
         store.update { decisions ->
-            if (always && canHaveRule) {
+            if (withRule) {
+                ruleBefore = decisions.ruleCategory(counterpart)
                 decisions.withRule(counterpart, categoryId) { UUID.randomUUID().toString() }
             } else {
                 decisions.withoutUnclear(counterpart)
+            }
+        }
+        return Categorization(counterpart, transactionIds, categoryId, withRule, ruleBefore)
+    }
+
+    /**
+     * Takes back [categorize]: the transactions lose the category, if they still have it, and the
+     * counterpart gets back the rule it had. That it was unclear is not restored, the setup only
+     * asks for counterparts that are not.
+     */
+    suspend fun takeBack(categorization: Categorization) {
+        with(categorization) {
+            transactionIds.forEach { writing.removeCategory(it, categoryId) }
+            if (hasSetRule) {
+                store.update { decisions ->
+                    ruleBefore?.let { before ->
+                        decisions.withRule(counterpart, before) { UUID.randomUUID().toString() }
+                    } ?: decisions.withoutRule(counterpart)
+                }
             }
         }
     }

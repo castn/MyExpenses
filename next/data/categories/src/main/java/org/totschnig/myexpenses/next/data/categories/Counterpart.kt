@@ -1,16 +1,27 @@
 package org.totschnig.myexpenses.next.data.categories
 
+import java.io.Serializable
 import org.totschnig.myexpenses.next.core.model.words.Words
 
 /**
  * Who a transaction is really with: the payee, or for a payment service like PayPal the merchant
  * named in the purpose. Transactions with the same counterpart are categorized alike.
+ * [Serializable] for the saved state, e.g. of a decision that can be taken back.
  *
  * @param key identifies the counterpart, without the direction of the transaction
  * @param name to show, e.g. "Zalando SE"
  * @param merchant normalized name of the merchant, for a transaction through a payment service
  */
-data class Counterpart(val key: String, val name: String, val payeeId: Long? = null, val merchant: String? = null)
+data class Counterpart(
+    val key: String,
+    val name: String,
+    val payeeId: Long? = null,
+    val merchant: String? = null
+) : Serializable {
+    private companion object {
+        private const val serialVersionUID = 1L
+    }
+}
 
 object PaymentService {
     /** Matched at the start of a word of the payee */
