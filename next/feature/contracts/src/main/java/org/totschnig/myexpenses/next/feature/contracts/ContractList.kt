@@ -519,12 +519,18 @@ internal fun ContractSuggestionsScreen(
 }
 
 /**
- * The suggested contracts to decide on within another page, e.g. the contracts step of the setup;
- * nothing while loading, without the analysis or without suggestions
+ * The suggested contracts, or with [isIncome] regular incomes, to decide on within another page,
+ * e.g. the contracts or income step of the setup; nothing while loading, without the analysis or
+ * without suggestions
  */
 @Composable
-fun ContractSuggestionsSection(viewModel: ContractsViewModel, modifier: Modifier = Modifier) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+fun ContractSuggestionsSection(
+    viewModel: ContractsViewModel,
+    modifier: Modifier = Modifier,
+    isIncome: Boolean = false
+) {
+    val state by (if (isIncome) viewModel.incomeState else viewModel.state)
+        .collectAsStateWithLifecycle()
     val currency by viewModel.homeCurrency.collectAsStateWithLifecycle()
     val suggestions = state.valueOrNull?.suggestions ?: return
     Column(modifier) {
@@ -534,7 +540,7 @@ fun ContractSuggestionsSection(viewModel: ContractsViewModel, modifier: Modifier
                     contract,
                     index,
                     suggestions.size,
-                    isIncome = false,
+                    isIncome = isIncome,
                     currency,
                     viewModel
                 ) {}
