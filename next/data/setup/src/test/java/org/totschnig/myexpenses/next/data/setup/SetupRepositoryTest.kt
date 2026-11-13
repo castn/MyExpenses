@@ -90,6 +90,24 @@ class SetupRepositoryTest {
     }
 
     @Test
+    fun assignsSomeDebitsWithoutRule() = withTestDataStore { dataStore ->
+        runTest {
+            val source = FakeLedgerSource(ledger = ledger, today = today)
+            val categoryStore = CategoryStore(dataStore)
+            val writing = FakeWriting()
+            val categories = CategoryRepository(source, categoryStore, writing, backgroundScope)
+            val store = SetupStore(dataStore)
+            val repository = SetupRepository(source, categories, store, backgroundScope)
+            val queue = repository.categoryQueue.first { it != null }!!
+            val some = repository.assign(queue.required.single(), listOf(1L), 10)
+            assertEquals(listOf(listOf(1L) to 10L), writing.set)
+            assertEquals(emptyList<CategoryRule>(), categoryStore.decisions.first().rules)
+            repository.takeBack(some)
+            assertEquals(listOf(1L to 10L), writing.removed)
+        }
+    }
+
+    @Test
     fun appliesTheBacklogOnlyIfTheUserAgrees() = withTestDataStore { dataStore ->
         runTest {
             val catalog = Catalog(listOf(CategoryInfo(10, "Wohnen", "Wohnen")))

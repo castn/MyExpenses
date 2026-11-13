@@ -122,6 +122,18 @@ class SetupRepository(
         categories.categorize(payee.counterpart, payee.transactionIds, categoryId, always)
     )
 
+    /**
+     * The debits [transactionIds] of [payee] get [categoryId], no rule: the payee's debits are for
+     * different things ("Unterschiedlich")
+     */
+    suspend fun assign(
+        payee: SetupPayee,
+        transactionIds: List<Long>,
+        categoryId: Long
+    ): SetupDecision.Assigned = SetupDecision.Assigned(
+        categories.categorize(payee.counterpart, transactionIds, categoryId, always = false)
+    )
+
     /** The user knows no category for [payee] ("Weiß ich nicht") */
     suspend fun markUnclear(payee: SetupPayee): SetupDecision.Unclear {
         categories.markUnclear(payee.counterpart)
@@ -132,6 +144,7 @@ class SetupRepository(
     suspend fun takeBack(decision: SetupDecision) {
         when (decision) {
             is SetupDecision.Categorized -> categories.takeBack(decision.categorization)
+            is SetupDecision.Assigned -> categories.takeBack(decision.categorization)
             is SetupDecision.Unclear -> categories.unmarkUnclear(decision.counterpart)
             is SetupDecision.Later -> Unit
         }

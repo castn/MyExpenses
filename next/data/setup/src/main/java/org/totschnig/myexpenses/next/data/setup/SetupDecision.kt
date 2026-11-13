@@ -21,6 +21,18 @@ sealed interface SetupDecision : Serializable {
         }
     }
 
+    /**
+     * Some debits of the payee got a category, without a rule: they are for different things
+     * ("Unterschiedlich")
+     */
+    data class Assigned(val categorization: Categorization) : SetupDecision {
+        override val key get() = categorization.counterpart.key
+
+        private companion object {
+            private const val serialVersionUID = 1L
+        }
+    }
+
     /** The user knows no category for the payee ("Weiß ich nicht") */
     data class Unclear(val counterpart: Counterpart) : SetupDecision {
         override val key get() = counterpart.key
