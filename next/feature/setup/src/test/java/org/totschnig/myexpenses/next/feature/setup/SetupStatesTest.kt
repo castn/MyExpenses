@@ -36,7 +36,10 @@ class SetupStatesTest {
         skipped: Set<String> = emptySet(),
         unclear: Set<String> = emptySet(),
         beyondTarget: Boolean = false
-    ) = categoriesStep(queue, null, decided, skipped, unclear, Pace(), backlog = 0, beyondTarget)
+    ): CategoriesStep {
+        val visit = SetupVisit(decided, skipped, unclear, beyondTarget)
+        return categoriesStep(queue, null, visit, Pace(), backlog = 0)
+    }
 
     @Test
     fun overviewTellsWhatEachStepTakes() {
@@ -100,5 +103,22 @@ class SetupStatesTest {
         assertNull(allSkipped.card)
         assertTrue(allSkipped.hasSkipped)
         assertFalse(allSkipped.isTargetReached)
+    }
+
+    @Test
+    fun showsThePayeeGoneBackToFirstWithTheCategoryChosenBefore() {
+        val visit = SetupVisit(
+            decided = setOf("p:2"),
+            skipped = setOf("p:3"),
+            revisit = Revisit("p:3", categoryId = 10),
+            canGoBack = true
+        )
+        val step = categoriesStep(queue, null, visit, Pace(), backlog = 0)
+        assertEquals("p:3", step.card?.key)
+        assertEquals(10L, step.card?.suggestion)
+        assertTrue(step.canGoBack)
+        // Until the ledger has its transactions without category again, the next payee is shown
+        val before = queue.copy(optional = emptyList())
+        assertEquals("p:1", categoriesStep(before, null, visit, Pace(), backlog = 0).card?.key)
     }
 }

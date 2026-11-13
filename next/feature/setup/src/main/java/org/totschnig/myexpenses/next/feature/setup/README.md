@@ -27,6 +27,9 @@ does. "Also for later transactions" adds a rule ("Immer so machen"), on at first
 - "Don't know" marks the payee as unclear (`CategoryDecisions.unclear`): its money no longer counts
   and nothing asks about it again.
 - "Later" puts the payee off until the others are done; "Show again" brings it back.
+- "Change last decision" takes back the last decision of the visit (`SetupRepository.takeBack`)
+  and shows its payee first again, with the category chosen before as the suggestion. Pressed
+  again, it goes further back.
 
 ## State
 
@@ -35,8 +38,10 @@ of the repository's flows and the visit:
 
 - Payees decided on in this visit are hidden at once and their money counted in, since the ledger
   knows their categories only a moment later.
-- The visit (decided, unclear and put off payees, going on after the target, "always") and the
-  payee waiting for the category picker are in the `SavedStateHandle`, so that the picker can
-  return to a new process.
+- The visit (`SetupVisit`: decided, unclear and put off payees, going on after the target, the
+  payee gone back to), the decisions to go back to, "always" and the payee waiting for the
+  category picker are in the `SavedStateHandle`, so that the picker can return to a new process.
+- Decisions are written and taken back one after the other (a `Mutex`), so that going back right
+  after a decision finds it.
 - The time of a decision runs from `cardShown` to the decision and goes to `SetupStore.recordDecision`
-  (`Pace`); `clock` is a parameter for tests.
+  (`Pace`); a payee gone back to does not count twice. `clock` is a parameter for tests.

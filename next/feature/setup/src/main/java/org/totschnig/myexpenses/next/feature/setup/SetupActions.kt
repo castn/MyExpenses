@@ -23,11 +23,14 @@ interface SetupActions {
     /** Whether a choice also applies to later transactions of the payee ("Immer so machen") */
     fun setAlways(always: Boolean)
 
-    /** The user knows no category for the payee ("Weiß ich nicht") */
-    fun markUnclear(card: PayeeCard)
+    /**
+     * The payee stays without category: it comes again after the others ("Später"), or with
+     * [unclear] the user knows no category for it ("Weiß ich nicht")
+     */
+    fun leave(card: PayeeCard, unclear: Boolean)
 
-    /** The payee comes again after the others */
-    fun later(card: PayeeCard)
+    /** Takes back the last decision of this visit, its payee is shown again */
+    fun back()
 
     /** The user goes on: the payees put off come again, else those beyond the target */
     fun goOn()

@@ -62,7 +62,10 @@ class SetupViewModelTest {
             fromCategoryId: Long?,
             categoryId: Long
         ) = Unit
-        override suspend fun removeCategory(transactionId: Long, categoryId: Long) = Unit
+        val removed = mutableListOf<Pair<Long, Long>>()
+        override suspend fun removeCategory(transactionId: Long, categoryId: Long) {
+            removed += transactionId to categoryId
+        }
         override suspend fun setMissingCategory(transactionIds: List<Long>, categoryId: Long) {
             set += transactionIds to categoryId
         }
@@ -115,14 +118,41 @@ class SetupViewModelTest {
             val viewModel = backgroundScope.setup(dataStore).viewModel
             viewModel.categories.launchIn(backgroundScope)
             val first = viewModel.categories.first { it?.card != null }!!.card!!
-            viewModel.later(first)
+            viewModel.leave(first, unclear = false)
             val second = viewModel.categories.first { it?.card?.key == "p:2" }!!.card!!
-            viewModel.markUnclear(second)
+            viewModel.leave(second, unclear = true)
             // Only the payee put off is left up to the target
             val step = viewModel.categories.first { it?.card?.key == "p:3" }!!
             assertEquals(true, step.hasSkipped)
             viewModel.goOn()
             assertEquals("p:1", viewModel.categories.first { it?.card?.key == "p:1" }!!.card!!.key)
+        }
+    }
+
+    @Test
+    fun goesBackOneDecisionAfterTheOther() = withTestDataStore { dataStore ->
+        runTest {
+            val setup = backgroundScope.setup(dataStore)
+            val viewModel = setup.viewModel
+            viewModel.categories.launchIn(backgroundScope)
+            val rent = viewModel.categories.first { it?.card != null }!!.card!!
+            assertEquals(false, viewModel.categories.value!!.canGoBack)
+            viewModel.pickCategory(rent)
+            viewModel.picked(10)
+            val rewe = viewModel.categories.first { it?.card?.key == "p:2" }!!.card!!
+            viewModel.leave(rewe, unclear = true)
+            // The target is reached without the payee
+            viewModel.categories.first { it?.isTargetReached == true }
+            viewModel.back()
+            val again = viewModel.categories.first { it?.card?.key == "p:2" }!!
+            assertEquals(null, again.card!!.suggestion)
+            assertEquals(true, again.canGoBack)
+            viewModel.back()
+            // The rent comes first again, with the category chosen before
+            val first = viewModel.categories.first { it?.card?.key == "p:1" }!!
+            assertEquals(10L, first.card!!.suggestion)
+            assertEquals(false, first.canGoBack)
+            assertEquals(listOf(1L to 10L), setup.writing.removed)
         }
     }
 

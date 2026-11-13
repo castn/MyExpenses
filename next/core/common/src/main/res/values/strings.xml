@@ -1300,6 +1300,7 @@
     <string name="next_setup_always">Also for later transactions</string>
     <string name="next_setup_unclear">Don\'t know</string>
     <string name="next_setup_later">Later</string>
+    <string name="next_setup_back">Change last decision</string>
     <string name="next_setup_more">More</string>
     <string name="next_setup_less">Less</string>
     <string name="next_setup_target_title">Most of your spending has a category</string>

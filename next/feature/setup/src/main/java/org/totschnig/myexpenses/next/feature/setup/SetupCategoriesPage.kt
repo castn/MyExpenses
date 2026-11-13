@@ -3,12 +3,16 @@ package org.totschnig.myexpenses.next.feature.setup
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Undo
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Storefront
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -84,6 +88,20 @@ internal fun SetupCategoriesPage(
         if (current == null) return@DetailScaffold
         Column(verticalArrangement = Arrangement.spacedBy(Spacing.content)) {
             val card = current.card
+            if (current.canGoBack && current.backlog == 0) {
+                TextButton(
+                    onClick = viewModel::back,
+                    contentPadding = ButtonDefaults.TextButtonWithIconContentPadding
+                ) {
+                    Icon(
+                        Icons.AutoMirrored.Outlined.Undo,
+                        contentDescription = null,
+                        modifier = Modifier.size(ButtonDefaults.IconSize)
+                    )
+                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                    Text(stringResource(R.string.next_setup_back))
+                }
+            }
             when {
                 current.backlog > 0 -> BacklogQuestion(current.backlog, viewModel)
 
@@ -213,10 +231,10 @@ private fun PayeeDecision(
             )
         },
         actions = {
-            TextButton(onClick = { actions.markUnclear(card) }) {
+            TextButton(onClick = { actions.leave(card, unclear = true) }) {
                 Text(stringResource(R.string.next_setup_unclear))
             }
-            TextButton(onClick = { actions.later(card) }) {
+            TextButton(onClick = { actions.leave(card, unclear = false) }) {
                 Text(stringResource(R.string.next_setup_later))
             }
             if (card.suggestion != null) {

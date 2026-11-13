@@ -1300,6 +1300,7 @@
     <string name="next_setup_always">Auch für spätere Buchungen</string>
     <string name="next_setup_unclear">Weiß ich nicht</string>
     <string name="next_setup_later">Später</string>
+    <string name="next_setup_back">Letzte Entscheidung ändern</string>
     <string name="next_setup_more">Mehr</string>
     <string name="next_setup_less">Weniger</string>
     <string name="next_setup_target_title">Der Großteil deiner Ausgaben hat eine Kategorie</string>
