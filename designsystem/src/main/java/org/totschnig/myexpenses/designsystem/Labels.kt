@@ -1,53 +1,53 @@
 package org.totschnig.myexpenses.designsystem
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.foundation.selection.toggleable
-import androidx.compose.material3.AssistChip
-import androidx.compose.material3.AssistChipDefaults
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.ui.semantics.Role
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.res.stringResource
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.FlowRowScope
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.layout
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontStyle
@@ -82,11 +82,15 @@ fun TextBadge(
     text: String,
     modifier: Modifier = Modifier,
     style: BadgeStyle = BadgeStyle.Filled,
-    icon: ImageVector? = null,
+    icon: ImageVector? = null
 ) {
     Surface(
         shape = Shapes.badge,
-        color = if (style == BadgeStyle.Filled) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent,
+        color = if (style == BadgeStyle.Filled) {
+            MaterialTheme.colorScheme.secondaryContainer
+        } else {
+            Color.Transparent
+        },
         contentColor = when (style) {
             BadgeStyle.Filled -> MaterialTheme.colorScheme.onSecondaryContainer
             BadgeStyle.Suggestion -> MaterialTheme.colorScheme.onSurfaceVariant
@@ -137,7 +141,7 @@ fun LabelChip(
     placeholder: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: ImageVector? = null,
+    icon: ImageVector? = null
 ) {
     val leading = if (text == null) Icons.Default.Add else icon
     AssistChip(
@@ -145,17 +149,27 @@ fun LabelChip(
         label = { Text(text ?: placeholder) },
         modifier = modifier,
         leadingIcon = leading?.let {
-            { Icon(it, contentDescription = null, modifier = Modifier.size(AssistChipDefaults.IconSize)) }
+            {
+                Icon(
+                    it,
+                    contentDescription = null,
+                    modifier = Modifier.size(AssistChipDefaults.IconSize)
+                )
+            }
         },
         shape = Shapes.chip,
-        colors = if (text != null) AssistChipDefaults.assistChipColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            labelColor = MaterialTheme.colorScheme.onSecondaryContainer,
-            leadingIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer
-        ) else AssistChipDefaults.assistChipColors(
-            labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-            leadingIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
-        ),
+        colors = if (text != null) {
+            AssistChipDefaults.assistChipColors(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                labelColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                leadingIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+        } else {
+            AssistChipDefaults.assistChipColors(
+                labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                leadingIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        },
         border = if (text != null) null else AssistChipDefaults.assistChipBorder(enabled = true)
     )
 }
@@ -169,7 +183,7 @@ fun ToggleChip(
     text: String,
     selected: Boolean,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     FilterChip(
         selected = selected,
@@ -184,7 +198,9 @@ fun ToggleChip(
                     modifier = Modifier.size(FilterChipDefaults.IconSize)
                 )
             }
-        } else null,
+        } else {
+            null
+        },
         shape = Shapes.chip
     )
 }
@@ -200,7 +216,7 @@ fun <T> ChoiceChips(
     selected: T?,
     label: @Composable (T) -> String,
     onSelect: (T) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     FlowRow(
         modifier = modifier
@@ -209,7 +225,9 @@ fun <T> ChoiceChips(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         options.forEach { option ->
-            ToggleChip(text = label(option), selected = option == selected, onClick = { onSelect(option) })
+            ToggleChip(text = label(option), selected = option == selected, onClick = {
+                onSelect(option)
+            })
         }
     }
 }
@@ -227,7 +245,7 @@ fun ChipRow(
     label: String,
     modifier: Modifier = Modifier,
     hint: String? = null,
-    content: @Composable FlowRowScope.() -> Unit,
+    content: @Composable FlowRowScope.() -> Unit
 ) {
     var showHint by rememberSaveable { mutableStateOf(false) }
     Row(modifier = modifier.fillMaxWidth()) {
@@ -236,10 +254,16 @@ fun ChipRow(
                 .width(ChipRowLabelWidth)
                 .padding(end = 8.dp)
                 .then(
-                    if (hint != null) Modifier
-                        .clip(Shapes.badge)
-                        .toggleable(value = showHint, role = Role.Button, onValueChange = { showHint = it })
-                    else Modifier
+                    if (hint != null) {
+                        Modifier
+                            .clip(Shapes.badge)
+                            .toggleable(value = showHint, role = Role.Button, onValueChange = {
+                                showHint =
+                                    it
+                            })
+                    } else {
+                        Modifier
+                    }
                 )
                 // As high as the touch area of a chip, so the label stays next to the first row of chips
                 .heightIn(min = 48.dp),
@@ -291,13 +315,19 @@ fun ActionChip(
     text: String,
     icon: ImageVector,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     AssistChip(
         onClick = onClick,
         label = { Text(text) },
         modifier = modifier,
-        leadingIcon = { Icon(icon, contentDescription = null, modifier = Modifier.size(AssistChipDefaults.IconSize)) },
+        leadingIcon = {
+            Icon(
+                icon,
+                contentDescription = null,
+                modifier = Modifier.size(AssistChipDefaults.IconSize)
+            )
+        },
         shape = Shapes.chip
     )
 }
@@ -309,18 +339,18 @@ fun ActionChip(
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ActionChipRow(
-    modifier: Modifier = Modifier,
-    content: @Composable FlowRowScope.() -> Unit,
-) {
+fun ActionChipRow(modifier: Modifier = Modifier, content: @Composable FlowRowScope.() -> Unit) {
     FlowRow(
         modifier = modifier
             .fillMaxWidth()
             .layout { measurable, constraints ->
                 val top = Spacing.section.roundToPx()
                 val placeable = measurable.measure(constraints)
-                if (placeable.height == 0) layout(placeable.width, 0) {}
-                else layout(placeable.width, placeable.height + top) { placeable.place(0, top) }
+                if (placeable.height == 0) {
+                    layout(placeable.width, 0) {}
+                } else {
+                    layout(placeable.width, placeable.height + top) { placeable.place(0, top) }
+                }
             },
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         content = content
@@ -357,11 +387,14 @@ fun PeriodSwitcher(
     onNext: (() -> Unit)?,
     previousDescription: String,
     nextDescription: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = { onPrevious?.invoke() }, enabled = onPrevious != null) {
-            Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = previousDescription)
+            Icon(
+                Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                contentDescription = previousDescription
+            )
         }
         Text(
             label,

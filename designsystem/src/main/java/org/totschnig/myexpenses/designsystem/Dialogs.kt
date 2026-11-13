@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -66,9 +66,16 @@ fun NameDialog(
     onConfirm: (String) -> Unit,
     onDismiss: () -> Unit,
     placeholder: String? = null,
-    allowBlank: Boolean = false,
+    allowBlank: Boolean = false
 ) {
-    TextDialog(title, initialName, onConfirm, onDismiss, placeholder = placeholder, allowBlank = allowBlank)
+    TextDialog(
+        title,
+        initialName,
+        onConfirm,
+        onDismiss,
+        placeholder = placeholder,
+        allowBlank = allowBlank
+    )
 }
 
 /**
@@ -98,7 +105,7 @@ fun TextDialog(
     supportingText: String? = null,
     intro: String? = null,
     preview: ((String) -> String?)? = null,
-    error: ((String) -> String?)? = null,
+    error: ((String) -> String?)? = null
 ) {
     var text by rememberSaveable { mutableStateOf(initialText) }
     val errorText = error?.invoke(text)
@@ -121,7 +128,11 @@ fun TextDialog(
                     keyboardOptions = KeyboardOptions(
                         keyboardType = if (isPassword) KeyboardType.Password else keyboardType
                     ),
-                    visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None
+                    visualTransformation = if (isPassword) {
+                        PasswordVisualTransformation()
+                    } else {
+                        VisualTransformation.None
+                    }
                 )
             }
         },
@@ -151,9 +162,10 @@ fun TimeDialog(
     hour: Int,
     minute: Int,
     onConfirm: (hour: Int, minute: Int) -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
-    val state = rememberTimePickerState(hour, minute, DateFormat.is24HourFormat(LocalContext.current))
+    val state =
+        rememberTimePickerState(hour, minute, DateFormat.is24HourFormat(LocalContext.current))
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(title) },
@@ -186,10 +198,12 @@ fun DateDialog(
     onConfirm: (LocalDate) -> Unit,
     onDismiss: () -> Unit,
     onClear: (() -> Unit)? = null,
-    clearLabel: String? = null,
+    clearLabel: String? = null
 ) {
     val state = rememberDatePickerState(
-        initialSelectedDateMillis = (initial ?: LocalDate.now()).atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
+        initialSelectedDateMillis = (initial ?: LocalDate.now()).atStartOfDay(
+            ZoneOffset.UTC
+        ).toInstant().toEpochMilli()
     )
     DatePickerDialog(
         onDismissRequest = onDismiss,
@@ -252,7 +266,7 @@ fun FormDialog(
     intro: String? = null,
     secondaryLabel: String? = null,
     onSecondary: (() -> Unit)? = null,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -263,11 +277,14 @@ fun FormDialog(
                     IconButton(onClick = onDismiss) {
                         Icon(
                             Icons.Default.Close,
-                            contentDescription = dismissLabel ?: stringResource(android.R.string.cancel)
+                            contentDescription =
+                                dismissLabel ?: stringResource(android.R.string.cancel)
                         )
                     }
                 }
-            } else Text(title)
+            } else {
+                Text(title)
+            }
         },
         text = {
             Column(
@@ -286,8 +303,10 @@ fun FormDialog(
         dismissButton = {
             if (onSecondary != null && secondaryLabel != null) {
                 TextButton(onClick = onSecondary) { Text(secondaryLabel) }
-            } else TextButton(onClick = onDismiss) {
-                Text(dismissLabel ?: stringResource(android.R.string.cancel))
+            } else {
+                TextButton(onClick = onDismiss) {
+                    Text(dismissLabel ?: stringResource(android.R.string.cancel))
+                }
             }
         }
     )
@@ -310,7 +329,7 @@ fun <T> SingleChoiceDialog(
     onDismiss: () -> Unit,
     intro: String? = null,
     trailing: (@Composable (T) -> Unit)? = null,
-    footer: (@Composable () -> Unit)? = null,
+    footer: (@Composable () -> Unit)? = null
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -327,7 +346,9 @@ fun <T> SingleChoiceDialog(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .selectable(selected = isSelected, role = Role.RadioButton, onClick = { onSelect(option) })
+                            .selectable(selected = isSelected, role = Role.RadioButton, onClick = {
+                                onSelect(option)
+                            })
                             .padding(vertical = 12.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -362,7 +383,7 @@ fun ConfirmDialog(
     text: String,
     confirmLabel: String,
     onConfirm: () -> Unit,
-    onDismiss: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -399,7 +420,7 @@ fun <T> PickDialog(
     intro: String? = null,
     supportingText: @Composable (T) -> String? = { null },
     value: @Composable (T) -> String? = { null },
-    emptyText: String? = null,
+    emptyText: String? = null
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -407,7 +428,11 @@ fun <T> PickDialog(
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 intro?.let { DialogIntro(it) }
-                if (options.isEmpty()) emptyText?.let { Text(it, style = MaterialTheme.typography.bodyLarge) }
+                if (options.isEmpty()) {
+                    emptyText?.let {
+                        Text(it, style = MaterialTheme.typography.bodyLarge)
+                    }
+                }
                 options.forEach { option ->
                     Row(
                         modifier = Modifier
@@ -480,7 +505,7 @@ fun DestructiveTextButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: ImageVector? = null,
+    icon: ImageVector? = null
 ) {
     TextButton(
         onClick = onClick,
@@ -502,4 +527,3 @@ internal fun DialogIntro(text: String) {
         modifier = Modifier.padding(bottom = 8.dp)
     )
 }
-

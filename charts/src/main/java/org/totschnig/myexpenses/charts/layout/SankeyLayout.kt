@@ -24,7 +24,7 @@ data class LinkBand(
     val sourceTop: Float,
     val targetX: Float,
     val targetTop: Float,
-    val thickness: Float,
+    val thickness: Float
 ) {
     /** How far along the band [x] is, from 0 at the source to 1 at the target */
     private fun parameterAt(x: Float): Float {
@@ -69,7 +69,7 @@ class SankeyLayout(
     val height: Float,
     nodeWidth: Float,
     nodeGap: Float,
-    trailing: Float = 0f,
+    trailing: Float = 0f
 ) {
     val nodes: List<NodeBox>
     val bands: List<LinkBand>
@@ -81,7 +81,9 @@ class SankeyLayout(
 
     init {
         links.forEach {
-            require(columns[it.source] < columns[it.target]) { "A link must go to a later column: $it" }
+            require(columns[it.source] < columns[it.target]) {
+                "A link must go to a later column: $it"
+            }
             require(it.value >= 0) { "A link cannot be negative: $it" }
         }
         val values = columns.indices.map { node ->
@@ -96,7 +98,11 @@ class SankeyLayout(
         }
         val scale = byColumn.minOfOrNull { (column, nodes) ->
             val sum = nodes.sumOf { values[it] }
-            if (sum <= 0) Double.MAX_VALUE else (height - gaps.getValue(column) * (nodes.size - 1)) / sum
+            if (sum <= 0) {
+                Double.MAX_VALUE
+            } else {
+                (height - gaps.getValue(column) * (nodes.size - 1)) / sum
+            }
         }?.takeIf { it != Double.MAX_VALUE } ?: 0.0
         val step = if (lastColumn == 0) 0f else (width - trailing - nodeWidth) / lastColumn
         val boxes = arrayOfNulls<NodeBox>(columns.size)
@@ -115,12 +121,16 @@ class SankeyLayout(
         val targetTops = FloatArray(links.size)
         columns.indices.forEach { node ->
             var top = nodes[node].top
-            links.indices.filter { links[it].source == node }.sortedBy { nodes[links[it].target].top }.forEach {
+            links.indices.filter {
+                links[it].source == node
+            }.sortedBy { nodes[links[it].target].top }.forEach {
                 sourceTops[it] = top
                 top += (links[it].value * scale).toFloat()
             }
             top = nodes[node].top
-            links.indices.filter { links[it].target == node }.sortedBy { nodes[links[it].source].top }.forEach {
+            links.indices.filter {
+                links[it].target == node
+            }.sortedBy { nodes[links[it].source].top }.forEach {
                 targetTops[it] = top
                 top += (links[it].value * scale).toFloat()
             }
@@ -143,8 +153,11 @@ class SankeyLayout(
      */
     fun labelSpace(node: Int, padding: Float): Float {
         val box = nodes[node]
-        val end = if (columnOf[node] == lastColumn) width
-        else nodes[columnOf.indexOfFirst { it == columnOf[node] + 1 }].x
+        val end = if (columnOf[node] == lastColumn) {
+            width
+        } else {
+            nodes[columnOf.indexOfFirst { it == columnOf[node] + 1 }].x
+        }
         return (end - box.x - box.width - 2 * padding).coerceAtLeast(0f)
     }
 
@@ -157,7 +170,8 @@ class SankeyLayout(
         nodes.indices
             .filter { node ->
                 nodes[node].let {
-                    x in it.x - slop..it.x + (nodeWidth ?: it.width) + slop && y in it.top - slop..it.bottom + slop
+                    x in it.x - slop..it.x + (nodeWidth ?: it.width) + slop &&
+                        y in it.top - slop..it.bottom + slop
                 }
             }
             .minByOrNull { node -> abs(y - (nodes[node].top + nodes[node].bottom) / 2) }

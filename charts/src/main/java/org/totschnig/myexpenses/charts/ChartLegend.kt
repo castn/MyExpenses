@@ -23,7 +23,7 @@ enum class LegendMark {
     Bar,
 
     /** A thin line, e.g. the mark of a comparison */
-    Line,
+    Line
 }
 
 /**
@@ -52,8 +52,13 @@ fun ChartLegend(items: List<LegendItem>, modifier: Modifier = Modifier) {
                     }
                 }
                 when (item.mark) {
-                    LegendMark.Bar -> Box(Modifier.size(12.dp).background(color, RoundedCornerShape(4.dp)))
-                    LegendMark.Line -> Box(Modifier.size(width = 2.dp, height = 16.dp).background(color))
+                    LegendMark.Bar -> Box(
+                        Modifier.size(12.dp).background(color, RoundedCornerShape(4.dp))
+                    )
+
+                    LegendMark.Line -> Box(
+                        Modifier.size(width = 2.dp, height = 16.dp).background(color)
+                    )
                 }
                 Text(
                     item.name,

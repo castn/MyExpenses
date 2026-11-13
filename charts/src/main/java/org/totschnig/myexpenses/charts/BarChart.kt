@@ -48,7 +48,7 @@ data class ChartBar(
     val valueLabel: String,
     val description: String = label,
     val comparison: Float? = null,
-    val comparisonLabel: String? = null,
+    val comparisonLabel: String? = null
 )
 
 /**
@@ -69,21 +69,31 @@ fun BarChart(
     modifier: Modifier = Modifier,
     valueName: String? = null,
     comparisonName: String? = null,
-    onClick: ((Int) -> Unit)? = null,
+    onClick: ((Int) -> Unit)? = null
 ) {
-    require(bars.size <= MAX_ENTRIES) { "At most $MAX_ENTRIES bars, bundle the rest with largestWithRest" }
+    require(bars.size <= MAX_ENTRIES) {
+        "At most $MAX_ENTRIES bars, bundle the rest with largestWithRest"
+    }
     val max = bars.maxOfOrNull { maxOf(it.value, it.comparison ?: 0f) }?.takeIf { it > 0f } ?: 1f
     val valueStyle = MaterialTheme.typography.labelLarge
     val measurer = rememberTextMeasurer()
     val density = LocalDensity.current
     val valueWidth = remember(bars, valueStyle) {
-        with(density) { (bars.maxOfOrNull { measurer.measure(it.valueLabel, valueStyle).size.width } ?: 0).toDp() }
+        with(density) {
+            (
+                bars.maxOfOrNull { measurer.measure(it.valueLabel, valueStyle).size.width }
+                    ?: 0
+                ).toDp()
+        }
     }
     val hasComparison = bars.any { it.comparison != null }
     Column(modifier.fillMaxWidth()) {
         if (hasComparison && valueName != null && comparisonName != null) {
             ChartLegend(
-                listOf(LegendItem(valueName, LegendMark.Bar), LegendItem(comparisonName, LegendMark.Line)),
+                listOf(
+                    LegendItem(valueName, LegendMark.Bar),
+                    LegendItem(comparisonName, LegendMark.Line)
+                ),
                 Modifier.padding(bottom = 8.dp)
             )
         }
@@ -109,10 +119,10 @@ fun BarChart(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier
-                        .weight(LabelShare)
+                        .weight(LABEL_SHARE)
                         .padding(end = 12.dp)
                 )
-                BoxWithConstraints(Modifier.weight(1f - LabelShare)) {
+                BoxWithConstraints(Modifier.weight(1f - LABEL_SHARE)) {
                     val plot = (maxWidth - valueWidth - ValueGap).coerceAtLeast(0.dp)
                     val length = plot * (bar.value.coerceAtLeast(0f) / max)
                     val comparison = bar.comparison?.let { plot * (it.coerceAtLeast(0f) / max) }
@@ -133,7 +143,9 @@ fun BarChart(
                             if (comparison != null) {
                                 Box(
                                     Modifier
-                                        .offset(x = (comparison - MarkWidth / 2).coerceAtLeast(0.dp))
+                                        .offset(
+                                            x = (comparison - MarkWidth / 2).coerceAtLeast(0.dp)
+                                        )
                                         .width(MarkWidth)
                                         .height(MarkHeight)
                                         .background(MaterialTheme.colorScheme.onSurface)
@@ -163,7 +175,7 @@ private val MarkHeight = 24.dp
 private val ValueGap = 8.dp
 
 /** Of the width, for the labels before the bars */
-private const val LabelShare = 0.35f
+private const val LABEL_SHARE = 0.35f
 
 @Preview(showBackground = true)
 @Composable
@@ -172,9 +184,15 @@ private fun BarChartPreview() {
         BarChart(
             listOf(
                 ChartBar("Wohnen", 950f, "950 €", comparison = 950f, comparisonLabel = "950 €"),
-                ChartBar("Lebensmittel", 420f, "420 €", comparison = 510f, comparisonLabel = "510 €"),
+                ChartBar(
+                    "Lebensmittel",
+                    420f,
+                    "420 €",
+                    comparison = 510f,
+                    comparisonLabel = "510 €"
+                ),
                 ChartBar("Mobilität", 180f, "180 €", comparison = 90f, comparisonLabel = "90 €"),
-                ChartBar("Others", 75f, "75 €"),
+                ChartBar("Others", 75f, "75 €")
             ),
             Modifier.padding(16.dp),
             valueName = "October",

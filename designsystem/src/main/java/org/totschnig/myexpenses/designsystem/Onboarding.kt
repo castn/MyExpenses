@@ -10,13 +10,13 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -46,8 +46,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
@@ -62,18 +62,17 @@ import androidx.compose.ui.unit.min
  * @param maxHeight smaller where there is less room, e.g. above the content in [IntroPage]
  */
 @Composable
-fun HeroIllustration(
-    @DrawableRes id: Int,
-    modifier: Modifier = Modifier,
-    maxHeight: Dp = 280.dp,
-) {
+fun HeroIllustration(@DrawableRes id: Int, modifier: Modifier = Modifier, maxHeight: Dp = 280.dp) {
     val image = illustration(id)
     Image(
         image,
         contentDescription = null,
         modifier = modifier
             .heightIn(max = maxHeight)
-            .aspectRatio(image.viewportWidth / image.viewportHeight, matchHeightConstraintsFirst = true)
+            .aspectRatio(
+                image.viewportWidth / image.viewportHeight,
+                matchHeightConstraintsFirst = true
+            )
             .growIn()
     )
 }
@@ -82,7 +81,10 @@ fun HeroIllustration(
 private fun Modifier.growIn(): Modifier {
     val scale = remember { Animatable(0.85f) }
     LaunchedEffect(Unit) {
-        scale.animateTo(1f, spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow))
+        scale.animateTo(
+            1f,
+            spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow)
+        )
     }
     return graphicsLayer {
         scaleX = scale.value
@@ -103,14 +105,24 @@ fun StepIndicator(count: Int, current: Int, description: String, modifier: Modif
         verticalAlignment = Alignment.CenterVertically
     ) {
         repeat(count) { index ->
-            val width by animateDpAsState(if (index == current) 24.dp else 8.dp, label = "step width")
+            val width by animateDpAsState(
+                if (index == current) {
+                    24.dp
+                } else {
+                    8.dp
+                },
+                label = "step width"
+            )
             Box(
                 Modifier
                     .size(width, 8.dp)
                     .clip(CircleShape)
                     .background(
-                        if (index <= current) MaterialTheme.colorScheme.primary
-                        else MaterialTheme.colorScheme.surfaceContainerHighest
+                        if (index <= current) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.surfaceContainerHighest
+                        }
                     )
             )
         }
@@ -129,11 +141,19 @@ fun FeatureRow(icon: ImageVector, title: String, text: String, modifier: Modifie
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconTile(color = MaterialTheme.colorScheme.secondaryContainer) {
-            Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
+            Icon(
+                icon,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSecondaryContainer
+            )
         }
         Column(Modifier.padding(start = Spacing.content)) {
             Text(title, style = MaterialTheme.typography.titleMedium)
-            Text(text, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(
+                text,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
     }
 }
@@ -150,7 +170,7 @@ fun IntroPage(
     text: String?,
     modifier: Modifier = Modifier,
     hero: @Composable () -> Unit,
-    content: @Composable ColumnScope.() -> Unit = {},
+    content: @Composable ColumnScope.() -> Unit = {}
 ) {
     BoxWithConstraints(modifier.fillMaxSize()) {
         val heading = @Composable {
@@ -226,7 +246,7 @@ fun IntroBottomBar(
     modifier: Modifier = Modifier,
     nextEnabled: Boolean = true,
     skipLabel: String? = null,
-    onSkip: () -> Unit = {},
+    onSkip: () -> Unit = {}
 ) {
     Row(
         modifier = modifier
@@ -257,7 +277,7 @@ fun ChoiceCard(
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    details: (@Composable ColumnScope.() -> Unit)? = null,
+    details: (@Composable ColumnScope.() -> Unit)? = null
 ) {
     Surface(
         shape = Shapes.card,
@@ -266,8 +286,11 @@ fun ChoiceCard(
         } else {
             MaterialTheme.colorScheme.surfaceContainerLow
         },
-        border = if (selected) BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
-        else BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+        border = if (selected) {
+            BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
+        } else {
+            BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+        },
         modifier = modifier
             .fillMaxWidth()
             .clip(Shapes.card)
@@ -283,7 +306,8 @@ fun ChoiceCard(
                     }
                 ) {
                     Icon(
-                        icon, contentDescription = null,
+                        icon,
+                        contentDescription = null,
                         tint = if (selected) {
                             MaterialTheme.colorScheme.onPrimary
                         } else {
@@ -326,11 +350,15 @@ fun ChoiceOption(
     text: String,
     selected: Boolean,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Surface(
         shape = Shapes.tile,
-        color = if (selected) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surfaceContainerLow,
+        color = if (selected) {
+            MaterialTheme.colorScheme.surface
+        } else {
+            MaterialTheme.colorScheme.surfaceContainerLow
+        },
         border = if (selected) BorderStroke(1.dp, MaterialTheme.colorScheme.primary) else null,
         modifier = modifier
             .fillMaxWidth()
@@ -342,8 +370,13 @@ fun ChoiceOption(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 12.dp)
         ) {
             Icon(
-                icon, contentDescription = null,
-                tint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                icon,
+                contentDescription = null,
+                tint = if (selected) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                }
             )
             Column(
                 Modifier

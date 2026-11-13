@@ -20,28 +20,49 @@ import androidx.compose.ui.res.vectorResource
  * illustrations/build_illustrations.py paint them with a placeholder color each, in this order.
  */
 enum class IllustrationSlot {
-    PRIMARY, PRIMARY_SHADE, SECONDARY, SECONDARY_SHADE, TERTIARY, TERTIARY_SHADE,
-    NEUTRAL, NEUTRAL_SHADE, PAPER, LINE, INK;
+    PRIMARY,
+    PRIMARY_SHADE,
+    SECONDARY,
+    SECONDARY_SHADE,
+    TERTIARY,
+    TERTIARY_SHADE,
+    NEUTRAL,
+    NEUTRAL_SHADE,
+    PAPER,
+    LINE,
+    INK;
 
     val placeholder = 0xFFFE0001.toInt() + ordinal
 
     fun color(scheme: ColorScheme): Color = when (this) {
         PRIMARY -> scheme.primary
+
         SECONDARY -> scheme.secondary
+
         TERTIARY -> scheme.tertiary
+
         NEUTRAL -> scheme.surfaceVariant
+
         // a receipt, a card or a screen, as cards of the app
-        PAPER -> if (scheme.isLight) scheme.surfaceContainerLowest else scheme.surfaceContainerHighest
+        PAPER -> if (scheme.isLight) {
+            scheme.surfaceContainerLowest
+        } else {
+            scheme.surfaceContainerHighest
+        }
+
         // lines of text on paper
         LINE -> if (scheme.isLight) scheme.outlineVariant else scheme.outline
+
         INK -> scheme.onSurfaceVariant
+
         else -> entries[ordinal - 1].color(scheme).shaded()
     }
 }
 
 private val ColorScheme.isLight get() = surface.luminance() > 0.5f
 
-private fun Color.shaded() = Color(red * (1 - SHADE), green * (1 - SHADE), blue * (1 - SHADE), alpha)
+private fun Color.shaded() =
+    Color(red * (1 - SHADE), green * (1 - SHADE), blue * (1 - SHADE), alpha)
 
 // same as SHADE in build_illustrations.py
 private const val SHADE = 0.22f
@@ -76,7 +97,8 @@ private fun ImageVector.recolored(scheme: ColorScheme): ImageVector {
             when (node) {
                 is VectorGroup -> {
                     builder.addGroup(
-                        node.name, node.rotation, node.pivotX, node.pivotY, node.scaleX, node.scaleY,
+                        node.name, node.rotation, node.pivotX, node.pivotY, node.scaleX,
+                        node.scaleY,
                         node.translationX, node.translationY, node.clipPathData
                     )
                     copy(node)

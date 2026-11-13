@@ -9,8 +9,13 @@ class ViewportTest {
     private val width = 400f
     private val height = 300f
 
-    private fun Viewport.zoom(factor: Float, x: Float = 0f, y: Float = 0f, panX: Float = 0f, panY: Float = 0f) =
-        transformed(factor, x, y, panX, panY, width, height)
+    private fun Viewport.zoom(
+        factor: Float,
+        x: Float = 0f,
+        y: Float = 0f,
+        panX: Float = 0f,
+        panY: Float = 0f
+    ) = transformed(factor, x, y, panX, panY, width, height)
 
     @Test
     fun keepsTheFocusInPlace() {

@@ -73,10 +73,15 @@ fun OverviewCard(
     actionLabel: String? = null,
     onAction: () -> Unit = {},
     edgeToEdge: Boolean = false,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     val body: @Composable () -> Unit = {
-        Column(Modifier.padding(vertical = Spacing.content, horizontal = if (edgeToEdge) 0.dp else Spacing.content)) {
+        Column(
+            Modifier.padding(
+                vertical = Spacing.content,
+                horizontal = if (edgeToEdge) 0.dp else Spacing.content
+            )
+        ) {
             Row(
                 modifier = Modifier
                     .padding(bottom = 8.dp)
@@ -126,7 +131,12 @@ fun OverviewCard(
             content = body
         )
     } else {
-        Surface(modifier = modifier.fillMaxWidth(), shape = Shapes.card, color = color, content = body)
+        Surface(
+            modifier = modifier.fillMaxWidth(),
+            shape = Shapes.card,
+            color = color,
+            content = body
+        )
     }
 }
 
@@ -143,7 +153,7 @@ fun GroupItem(
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colorScheme.surfaceContainerLowest,
     isLifted: Boolean = false,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     val elevation by animateDpAsState(if (isLifted) 6.dp else 0.dp)
     Surface(
@@ -175,7 +185,7 @@ fun RowDivider(modifier: Modifier = Modifier) {
 fun GroupTitle(
     title: String,
     modifier: Modifier = Modifier,
-    action: (@Composable () -> Unit)? = null,
+    action: (@Composable () -> Unit)? = null
 ) {
     Row(
         // Vertical padding is reduced by the extra height of the 48dp touch target of the action
@@ -201,7 +211,11 @@ fun GroupTitle(
  * Bold title above a card of a detail page
  */
 @Composable
-fun SectionTitle(text: String, modifier: Modifier = Modifier, color: Color = MaterialTheme.colorScheme.primary) {
+fun SectionTitle(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colorScheme.primary
+) {
     Text(
         text,
         style = MaterialTheme.typography.titleMedium,
@@ -220,7 +234,7 @@ fun SectionHeader(
     title: String,
     modifier: Modifier = Modifier,
     count: Int? = null,
-    trailing: String? = null,
+    trailing: String? = null
 ) {
     Row(
         modifier = modifier
@@ -271,7 +285,7 @@ fun ExpandableCard(
     onExpandedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     summary: @Composable ColumnScope.() -> Unit,
-    details: @Composable ColumnScope.() -> Unit,
+    details: @Composable ColumnScope.() -> Unit
 ) {
     val rotation by animateFloatAsState(if (expanded) 180f else 0f)
     val toggleLabel = stringResource(if (expanded) R.string.ds_show_less else R.string.ds_show_more)
@@ -282,7 +296,12 @@ fun ExpandableCard(
                 .fillMaxWidth()
                 .clickable(onClickLabel = toggleLabel) { onExpandedChange(!expanded) }
                 .semantics { stateDescription = state }
-                .padding(start = Spacing.content, end = 8.dp, top = Spacing.content, bottom = Spacing.content),
+                .padding(
+                    start = Spacing.content,
+                    end = 8.dp,
+                    top = Spacing.content,
+                    bottom = Spacing.content
+                ),
             verticalAlignment = Alignment.Top
         ) {
             Column(Modifier.weight(1f), content = summary)
@@ -310,7 +329,7 @@ fun IconTile(
     modifier: Modifier = Modifier,
     isLarge: Boolean = false,
     color: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
-    content: @Composable BoxScope.() -> Unit,
+    content: @Composable BoxScope.() -> Unit
 ) {
     Box(
         modifier = modifier
@@ -335,7 +354,7 @@ fun PayeeTile(
     logo: ImageBitmap?,
     modifier: Modifier = Modifier,
     isLarge: Boolean = false,
-    fallback: @Composable BoxScope.() -> Unit,
+    fallback: @Composable BoxScope.() -> Unit
 ) {
     val initial = name?.let(::monogramOf)
     when {
@@ -354,7 +373,11 @@ fun PayeeTile(
                 Text(
                     text = initial,
                     color = content,
-                    style = if (isLarge) MaterialTheme.typography.titleLarge else MaterialTheme.typography.titleMedium,
+                    style = if (isLarge) {
+                        MaterialTheme.typography.titleLarge
+                    } else {
+                        MaterialTheme.typography.titleMedium
+                    }
                 )
             }
         }
@@ -377,7 +400,7 @@ fun EditableTile(
     onClickLabel: String,
     modifier: Modifier = Modifier,
     background: Color = MaterialTheme.colorScheme.surfaceContainerLowest,
-    tile: @Composable () -> Unit,
+    tile: @Composable () -> Unit
 ) {
     Box(modifier.clickable(onClickLabel = onClickLabel, onClick = onClick)) {
         tile()
@@ -414,7 +437,7 @@ private fun monogramColors(name: String): Pair<Color, Color> {
         scheme.primaryContainer to scheme.onPrimaryContainer,
         scheme.secondaryContainer to scheme.onSecondaryContainer,
         scheme.tertiaryContainer to scheme.onTertiaryContainer,
-        scheme.surfaceContainerHighest to scheme.onSurfaceVariant,
+        scheme.surfaceContainerHighest to scheme.onSurfaceVariant
     )
     return pairs[Math.floorMod(name.trim().lowercase().hashCode(), pairs.size)]
 }

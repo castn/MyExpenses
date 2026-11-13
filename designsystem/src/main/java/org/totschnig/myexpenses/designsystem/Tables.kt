@@ -56,7 +56,7 @@ fun ReceiptTable(
     total: String,
     modifier: Modifier = Modifier,
     collapsedLines: Int = Int.MAX_VALUE,
-    showAllLabel: String = "",
+    showAllLabel: String = ""
 ) {
     var showAll by rememberSaveable { mutableStateOf(false) }
     val isShortened = !showAll && lines.size > collapsedLines
@@ -125,7 +125,11 @@ fun ReceiptTable(
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.weight(1f)
             )
-            Text(total, style = MaterialTheme.typography.titleMedium.tabular, fontWeight = FontWeight.Bold)
+            Text(
+                total,
+                style = MaterialTheme.typography.titleMedium.tabular,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }

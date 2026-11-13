@@ -47,7 +47,7 @@ fun PageTopBar(
     modifier: Modifier = Modifier,
     title: String? = null,
     subtitle: (@Composable () -> Unit)? = null,
-    actions: @Composable RowScope.() -> Unit = {},
+    actions: @Composable RowScope.() -> Unit = {}
 ) {
     Row(
         // As high with or without back
@@ -58,14 +58,24 @@ fun PageTopBar(
     ) {
         if (onBack != null) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.ds_back))
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = stringResource(R.string.ds_back)
+                )
             }
         }
         Column(
             Modifier
                 .weight(1f)
                 // Without back, the title lines up with the cards
-                .padding(start = if (onBack != null) 4.dp else Spacing.screen - 4.dp, end = Spacing.content)
+                .padding(
+                    start = if (onBack != null) {
+                        4.dp
+                    } else {
+                        Spacing.screen - 4.dp
+                    },
+                    end = Spacing.content
+                )
         ) {
             title?.let {
                 Text(
@@ -89,7 +99,11 @@ fun PageTopBar(
 @Composable
 fun TopBarAction(icon: ImageVector, contentDescription: String, onClick: () -> Unit) {
     IconButton(onClick = onClick) {
-        Icon(icon, contentDescription = contentDescription, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+        Icon(
+            icon,
+            contentDescription = contentDescription,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
 
@@ -105,21 +119,35 @@ fun BadgedTopBarAction(
     contentDescription: String,
     count: Int,
     onClick: () -> Unit,
-    isAlert: Boolean = true,
+    isAlert: Boolean = true
 ) {
     // The badge is outside of the button, which clips its content to a circle, and is moved
     // from the corner of the button to the corner of the icon
     BadgedBox(badge = {
-        if (count > 0) Badge(
-            containerColor = if (isAlert) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.tertiary,
-            contentColor = if (isAlert) MaterialTheme.colorScheme.onError else MaterialTheme.colorScheme.onTertiary,
-            modifier = Modifier.offset(x = (-12).dp, y = 12.dp)
-        ) {
-            Text(if (count > 99) "99+" else count.toString())
+        if (count > 0) {
+            Badge(
+                containerColor = if (isAlert) {
+                    MaterialTheme.colorScheme.error
+                } else {
+                    MaterialTheme.colorScheme.tertiary
+                },
+                contentColor = if (isAlert) {
+                    MaterialTheme.colorScheme.onError
+                } else {
+                    MaterialTheme.colorScheme.onTertiary
+                },
+                modifier = Modifier.offset(x = (-12).dp, y = 12.dp)
+            ) {
+                Text(if (count > 99) "99+" else count.toString())
+            }
         }
     }) {
         IconButton(onClick = onClick) {
-            Icon(icon, contentDescription = contentDescription, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+            Icon(
+                icon,
+                contentDescription = contentDescription,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
     }
 }
@@ -184,7 +212,7 @@ fun DetailScaffold(
     actions: @Composable RowScope.() -> Unit = {},
     header: (@Composable ColumnScope.() -> Unit)? = null,
     scrollable: Boolean = true,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
         modifier = modifier

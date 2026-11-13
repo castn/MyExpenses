@@ -1,7 +1,10 @@
 package org.totschnig.myexpenses.designsystem
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
@@ -21,12 +25,17 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.HourglassEmpty
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.WarningAmber
+import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -36,11 +45,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.foundation.Image
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -48,15 +57,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.TextButton
-import androidx.compose.ui.res.stringResource
 
 /*
  * Rows of a card. Each row draws a divider above itself, except the first one of a card
@@ -76,13 +76,19 @@ fun InfoRow(
     value: String,
     isFirst: Boolean = false,
     valueColor: Color = Color.Unspecified,
-    onClick: (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null
 ) {
     if (!isFirst) RowDivider()
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .then(if (onClick != null) Modifier.clickable(onClickLabel = label, onClick = onClick) else Modifier)
+            .then(
+                if (onClick != null) {
+                    Modifier.clickable(onClickLabel = label, onClick = onClick)
+                } else {
+                    Modifier
+                }
+            )
             .padding(horizontal = Spacing.content, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -135,7 +141,12 @@ fun EditableRow(label: String, value: String, onClick: () -> Unit, isFirst: Bool
  * [EditableRow] whose value is no text, e.g. the icon of a pot on its tile
  */
 @Composable
-fun EditableRow(label: String, onClick: () -> Unit, isFirst: Boolean = false, value: @Composable () -> Unit) {
+fun EditableRow(
+    label: String,
+    onClick: () -> Unit,
+    isFirst: Boolean = false,
+    value: @Composable () -> Unit
+) {
     if (!isFirst) RowDivider()
     Row(
         modifier = Modifier
@@ -188,7 +199,11 @@ fun PendingRow(
                 .size(20.dp)
         )
         Column(Modifier.padding(start = Spacing.content)) {
-            Text(title, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(
+                title,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
             Text(
                 text,
                 style = MaterialTheme.typography.bodyMedium,
@@ -236,7 +251,7 @@ fun ShareRow(
     share: Float,
     isFirst: Boolean = false,
     isMuted: Boolean = false,
-    onClick: (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null
 ) {
     if (!isFirst) RowDivider()
     Column(
@@ -249,7 +264,11 @@ fun ShareRow(
             Text(
                 label,
                 style = MaterialTheme.typography.bodyLarge,
-                color = if (isMuted) MaterialTheme.colorScheme.onSurfaceVariant else Color.Unspecified,
+                color = if (isMuted) {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                } else {
+                    Color.Unspecified
+                },
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.weight(1f)
@@ -276,7 +295,13 @@ fun ShareRow(
                     .fillMaxWidth(share.coerceIn(0f, 1f))
                     .height(ShareBarHeight)
                     .clip(ShareBarShape)
-                    .background(if (isMuted) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.primary)
+                    .background(
+                        if (isMuted) {
+                            MaterialTheme.colorScheme.outline
+                        } else {
+                            MaterialTheme.colorScheme.primary
+                        }
+                    )
             )
         }
     }
@@ -310,12 +335,16 @@ fun MeterRow(
     supportingText: String? = null,
     icon: ImageVector? = null,
     leadingIcon: (@Composable () -> Unit)? = null,
-    onClick: (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null
 ) {
     if (!isFirst) RowDivider()
     val isOver = used + committed > 1f
     val fill = if (isOver) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
-    val track = if (isOver) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.primaryContainer
+    val track = if (isOver) {
+        MaterialTheme.colorScheme.errorContainer
+    } else {
+        MaterialTheme.colorScheme.primaryContainer
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -484,7 +513,7 @@ fun NavigationRow(
     isFirst: Boolean = false,
     value: String? = null,
     valueColor: Color = Color.Unspecified,
-    hasNews: Boolean = false,
+    hasNews: Boolean = false
 ) {
     if (!isFirst) RowDivider()
     Row(
@@ -538,15 +567,20 @@ fun SwitchRow(
     onCheckedChange: (Boolean) -> Unit,
     supportingText: String? = null,
     isFirst: Boolean = false,
-    enabled: Boolean = true,
+    enabled: Boolean = true
 ) {
     if (!isFirst) RowDivider()
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange)
+            .toggleable(
+                value = checked,
+                enabled = enabled,
+                role = Role.Switch,
+                onValueChange = onCheckedChange
+            )
             .padding(horizontal = Spacing.content, vertical = 12.dp)
-            .alpha(if (enabled) 1f else DisabledAlpha),
+            .alpha(if (enabled) 1f else DISABLED_ALPHA),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(Modifier.weight(1f)) {
@@ -585,7 +619,7 @@ fun ValueRow(
     value: String?,
     onClick: () -> Unit,
     isFirst: Boolean = false,
-    enabled: Boolean = true,
+    enabled: Boolean = true
 ) {
     if (!isFirst) RowDivider()
     Column(
@@ -594,7 +628,7 @@ fun ValueRow(
             .clickable(enabled = enabled, onClickLabel = label, onClick = onClick)
             .heightIn(min = 56.dp)
             .padding(horizontal = Spacing.content, vertical = 12.dp)
-            .alpha(if (enabled) 1f else DisabledAlpha),
+            .alpha(if (enabled) 1f else DISABLED_ALPHA),
         verticalArrangement = Arrangement.Center
     ) {
         Text(label, style = MaterialTheme.typography.bodyLarge)
@@ -628,7 +662,7 @@ fun SliderRow(
     isFirst: Boolean = false,
     steps: Int = 0,
     enabled: Boolean = true,
-    preview: (@Composable (Float) -> Unit)? = null,
+    preview: (@Composable (Float) -> Unit)? = null
 ) {
     if (!isFirst) RowDivider()
     var current by remember(value) { mutableFloatStateOf(value) }
@@ -636,7 +670,7 @@ fun SliderRow(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = Spacing.content, end = Spacing.content, top = 12.dp)
-            .alpha(if (enabled) 1f else DisabledAlpha)
+            .alpha(if (enabled) 1f else DISABLED_ALPHA)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(label, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
@@ -671,7 +705,7 @@ fun HintRow(
     text: String,
     isFirst: Boolean = false,
     icon: ImageVector = Icons.Outlined.Info,
-    isWarning: Boolean = false,
+    isWarning: Boolean = false
 ) {
     if (!isFirst) RowDivider()
     Row(
@@ -682,13 +716,21 @@ fun HintRow(
         Icon(
             if (isWarning && icon == Icons.Outlined.Info) Icons.Outlined.WarningAmber else icon,
             contentDescription = null,
-            tint = if (isWarning) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = if (isWarning) {
+                MaterialTheme.colorScheme.error
+            } else {
+                MaterialTheme.colorScheme.onSurfaceVariant
+            },
             modifier = Modifier.size(20.dp)
         )
         Text(
             text,
             style = MaterialTheme.typography.bodyMedium,
-            color = if (isWarning) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
+            color = if (isWarning) {
+                MaterialTheme.colorScheme.onSurface
+            } else {
+                MaterialTheme.colorScheme.onSurfaceVariant
+            },
             modifier = Modifier.padding(start = Spacing.content)
         )
     }
@@ -706,7 +748,7 @@ fun IconNavigationRow(
     title: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    supportingText: String? = null,
+    supportingText: String? = null
 ) {
     IconNavigationRow(title, onClick, modifier, supportingText) {
         Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -724,7 +766,7 @@ fun IconNavigationRow(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     supportingText: String? = null,
-    icon: @Composable () -> Unit,
+    icon: @Composable () -> Unit
 ) {
     Row(
         modifier = modifier
@@ -755,7 +797,7 @@ fun IconNavigationRow(
 }
 
 /** Of rows that another setting turns off */
-private const val DisabledAlpha = 0.38f
+private const val DISABLED_ALPHA = 0.38f
 
 /**
  * Entry of a list the user corrects: tapping it edits the entry, the button removes it
@@ -772,9 +814,10 @@ fun EditableItemRow(
     supportingText: String? = null,
     isFirst: Boolean = false,
     badge: String? = null,
-    badgeStyle: BadgeStyle = BadgeStyle.Outlined,
+    badgeStyle: BadgeStyle = BadgeStyle.Outlined
 ) = ItemRow(
-    title, value, Icons.Default.RemoveCircleOutline, removeLabel, onClick, onRemove, supportingText, isFirst, badge,
+    title, value, Icons.Default.RemoveCircleOutline, removeLabel, onClick, onRemove, supportingText,
+    isFirst, badge,
     badgeStyle
 )
 
@@ -796,9 +839,10 @@ fun ActionItemRow(
     isFirst: Boolean = false,
     badge: String? = null,
     badgeStyle: BadgeStyle = BadgeStyle.Outlined,
-    onClickLabel: String = title,
+    onClickLabel: String = title
 ) = ItemRow(
-    title, value, Icons.Default.MoreVert, actionsLabel, onClick, onActions, supportingText, isFirst, badge, badgeStyle,
+    title, value, Icons.Default.MoreVert, actionsLabel, onClick, onActions, supportingText, isFirst,
+    badge, badgeStyle,
     onClickLabel
 )
 
@@ -814,7 +858,7 @@ private fun ItemRow(
     isFirst: Boolean,
     badge: String?,
     badgeStyle: BadgeStyle,
-    onClickLabel: String = title,
+    onClickLabel: String = title
 ) {
     if (!isFirst) RowDivider()
     Row(
@@ -869,7 +913,7 @@ fun RemovableRow(
     value: String,
     removeLabel: String?,
     onRemove: () -> Unit,
-    isFirst: Boolean = false,
+    isFirst: Boolean = false
 ) {
     if (!isFirst) RowDivider()
     Row(
@@ -1041,7 +1085,7 @@ fun RadioRow(
     note: String? = null,
     value: String? = null,
     valueColor: Color = Color.Unspecified,
-    isFirst: Boolean = false,
+    isFirst: Boolean = false
 ) {
     if (!isFirst) RowDivider()
     Row(
@@ -1051,7 +1095,11 @@ fun RadioRow(
             .padding(start = 4.dp, end = Spacing.content, top = 8.dp, bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        RadioButton(selected = selected, onClick = null, modifier = Modifier.padding(horizontal = 12.dp))
+        RadioButton(
+            selected = selected,
+            onClick = null,
+            modifier = Modifier.padding(horizontal = 12.dp)
+        )
         Column(Modifier.weight(1f)) {
             Text(
                 title,
@@ -1100,7 +1148,7 @@ fun SelectableTextRow(
     selected: Boolean?,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
-    isFirst: Boolean = false,
+    isFirst: Boolean = false
 ) {
     if (!isFirst) RowDivider()
     val chooseSeveralLabel = stringResource(R.string.ds_choose_several)
@@ -1108,22 +1156,29 @@ fun SelectableTextRow(
         modifier = Modifier
             .fillMaxWidth()
             .then(
-                if (selected != null) Modifier.toggleable(
-                    value = selected,
-                    role = Role.Checkbox,
-                    onValueChange = { onClick() }
-                )
-                else Modifier.combinedClickable(
-                    onClick = onClick,
-                    onLongClickLabel = chooseSeveralLabel,
-                    onLongClick = onLongClick
-                )
+                if (selected != null) {
+                    Modifier.toggleable(
+                        value = selected,
+                        role = Role.Checkbox,
+                        onValueChange = { onClick() }
+                    )
+                } else {
+                    Modifier.combinedClickable(
+                        onClick = onClick,
+                        onLongClickLabel = chooseSeveralLabel,
+                        onLongClick = onLongClick
+                    )
+                }
             )
             .padding(horizontal = Spacing.content, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (selected != null) {
-            Checkbox(checked = selected, onCheckedChange = null, modifier = Modifier.padding(end = 12.dp))
+            Checkbox(
+                checked = selected,
+                onCheckedChange = null,
+                modifier = Modifier.padding(end = 12.dp)
+            )
         }
         Text(text, style = MaterialTheme.typography.bodyMedium)
     }

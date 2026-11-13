@@ -36,7 +36,12 @@ import kotlin.math.roundToInt
  * @param filled covers the area, e.g. with a translucent colour to highlight it or black to hide it
  */
 @Immutable
-data class PhotoMark(val rect: Rect, val color: Color, val width: Dp = 1.5.dp, val filled: Boolean = false)
+data class PhotoMark(
+    val rect: Rect,
+    val color: Color,
+    val width: Dp = 1.5.dp,
+    val filled: Boolean = false
+)
 
 /**
  * A photo in the full width with [marks] drawn on it, e.g. a scanned receipt with the lines read
@@ -54,7 +59,7 @@ fun MarkedPhoto(
     modifier: Modifier = Modifier,
     collapsedHeight: Dp? = null,
     focus: Rect? = null,
-    onTap: ((Offset) -> Unit)? = null,
+    onTap: ((Offset) -> Unit)? = null
 ) {
     BoxWithConstraints(modifier.fillMaxWidth()) {
         val density = LocalDensity.current
@@ -62,11 +67,23 @@ fun MarkedPhoto(
         // From pixels of the bitmap to pixels on screen
         val scale = widthPx / bitmap.width
         val photoHeightPx = bitmap.height * scale
-        val windowPx = collapsedHeight?.let { with(density) { it.toPx() } }?.coerceAtMost(photoHeightPx)
-        val shift = if (windowPx == null) 0f else focus
-            ?.let { (it.center.y * scale - windowPx / 2).coerceIn(0f, photoHeightPx - windowPx) } ?:
+        val windowPx = collapsedHeight?.let {
+            with(density) { it.toPx() }
+        }?.coerceAtMost(photoHeightPx)
+        val shift = if (windowPx == null) {
             0f
-        val frame = if (windowPx == null) Modifier else Modifier.height(with(density) { windowPx.toDp() })
+        } else {
+            focus
+                ?.let {
+                    (it.center.y * scale - windowPx / 2).coerceIn(0f, photoHeightPx - windowPx)
+                }
+                ?: 0f
+        }
+        val frame = if (windowPx == null) {
+            Modifier
+        } else {
+            Modifier.height(with(density) { windowPx.toDp() })
+        }
         Box(frame.clipToBounds()) {
             Image(
                 bitmap = bitmap,

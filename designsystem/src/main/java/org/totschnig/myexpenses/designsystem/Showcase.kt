@@ -4,10 +4,10 @@ import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,32 +37,42 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import java.time.LocalDate
-import androidx.compose.ui.unit.sp
-import org.totschnig.myexpenses.designsystem.theme.DesignSystemTheme
-import org.totschnig.myexpenses.designsystem.theme.LocalSemanticColors
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import java.time.LocalDate
+import org.totschnig.myexpenses.designsystem.theme.DesignSystemTheme
+import org.totschnig.myexpenses.designsystem.theme.LocalSemanticColors
 
 /**
  * All building blocks on one page, to check how they look together. The charts have their own
  * previews in `:charts`.
  */
 @Preview(name = "Light", showBackground = true, heightDp = 2600)
-@Preview(name = "Dark", showBackground = true, heightDp = 2600, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "Dark",
+    showBackground = true,
+    heightDp = 2600,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun Showcase() {
     DesignSystemTheme {
         DetailScaffold(onBack = {}, title = "Design system") {
             PageTopBar(onBack = null, title = "Page without back", actions = {
                 TopBarAction(Icons.Default.Search, contentDescription = "Action", onClick = {})
-                BadgedTopBarAction(Icons.Default.Search, contentDescription = "With news", count = 3, onClick = {})
+                BadgedTopBarAction(
+                    Icons.Default.Search,
+                    contentDescription = "With news",
+                    count = 3,
+                    onClick = {}
+                )
                 BadgedTopBarAction(
                     Icons.Default.Search,
                     contentDescription = "Calm",
@@ -88,14 +98,19 @@ private fun Showcase() {
                     modifier = Modifier.padding(start = 8.dp)
                 )
                 TextBadge("Badge", Modifier.padding(start = 8.dp))
-                TextBadge("Suggestion", Modifier.padding(start = 8.dp), style = BadgeStyle.Suggestion)
+                TextBadge(
+                    "Suggestion",
+                    Modifier.padding(start = 8.dp),
+                    style = BadgeStyle.Suggestion
+                )
                 TextBadge("Group", Modifier.padding(start = 8.dp), style = BadgeStyle.Outlined)
                 TextBadge("Missing", Modifier.padding(start = 8.dp), style = BadgeStyle.Missing)
                 Dot(Modifier.padding(start = 8.dp))
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 ToggleChip(text = "On", selected = true, onClick = {})
-                ToggleChip(text = "Off", selected = false, onClick = {}, modifier = Modifier.padding(start = 8.dp))
+                ToggleChip(text = "Off", selected = false, onClick = {
+                }, modifier = Modifier.padding(start = 8.dp))
                 TextBadge(
                     "With icon",
                     Modifier.padding(start = 8.dp),
@@ -104,11 +119,18 @@ private fun Showcase() {
                 )
             }
             DetailCard {
-                Column(Modifier.padding(Spacing.content), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Column(
+                    Modifier.padding(Spacing.content),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
                     ChipRow("Chip row") {
-                        LabelChip(text = "With icon", placeholder = "", onClick = {}, icon = Icons.Outlined.Folder)
+                        LabelChip(text = "With icon", placeholder = "", onClick = {
+                        }, icon = Icons.Outlined.Folder)
                     }
-                    ChipRow("With hint", hint = "Explains the chips, shown after tapping the label") {
+                    ChipRow(
+                        "With hint",
+                        hint = "Explains the chips, shown after tapping the label"
+                    ) {
                         ToggleChip(text = "On", selected = true, onClick = {})
                         ToggleChip(text = "Off", selected = false, onClick = {})
                     }
@@ -128,28 +150,53 @@ private fun Showcase() {
                 InfoRow("Detail", "Value", isFirst = true)
             }
             MenuFab(
-                label = "Create", icon = Icons.Outlined.Folder, menuLabel = "Choose", closeLabel = "Close",
+                label = "Create",
+                icon = Icons.Outlined.Folder,
+                menuLabel = "Choose",
+                closeLabel = "Close",
                 items = listOf(FabMenuItem("Kind", Icons.Outlined.Info) {}),
                 modifier = Modifier.align(Alignment.End)
             )
             InviteCard(
-                icon = Icons.Outlined.Info, title = "Invite", text = "Something optional to start, can be closed",
-                onClick = {}, onDismiss = {}, dismissLabel = "Close"
+                icon = Icons.Outlined.Info,
+                title = "Invite",
+                text = "Something optional to start, can be closed",
+                onClick = {},
+                onDismiss = {},
+                dismissLabel = "Close"
             )
             InviteCard(
-                icon = Icons.Outlined.Info, title = "Information", text = "Only tells, nothing to open",
-                onClick = null, onDismiss = {}, dismissLabel = "Close"
+                icon = Icons.Outlined.Info,
+                title = "Information",
+                text = "Only tells, nothing to open",
+                onClick = null,
+                onDismiss = {},
+                dismissLabel = "Close"
             )
             InfoBox(
                 title = "Info box",
                 points = listOf(
-                    InfoPoint("Tells what is missing, goes away by itself", actionLabel = "What helps") {},
+                    InfoPoint(
+                        "Tells what is missing, goes away by itself",
+                        actionLabel = "What helps"
+                    ) {
+                    },
                     InfoPoint("A point without action")
                 )
             )
-            HintCard("Short hint the user can close for good", dismissLabel = "Close", onDismiss = {})
+            HintCard(
+                "Short hint the user can close for good",
+                dismissLabel = "Close",
+                onDismiss = {}
+            )
             GroupTitle("Group with menu", action = {
-                MenuButton(listOf(MenuEntry("Entry", Icons.Outlined.Folder) {}), contentDescription = "More")
+                MenuButton(
+                    listOf(
+                        MenuEntry("Entry", Icons.Outlined.Folder) {
+                        }
+                    ),
+                    contentDescription = "More"
+                )
             })
             ActionChipRow {
                 ActionChip("Rare action", Icons.Outlined.Folder, onClick = {})
@@ -160,7 +207,10 @@ private fun Showcase() {
             DetailCard {
                 InfoRow("Info", "Value", isFirst = true)
                 InfoRow("Changeable", "Tap to change", onClick = {})
-                HintRow("Warning about a consequence, e.g. no longer matching the bank", isWarning = true)
+                HintRow(
+                    "Warning about a consequence, e.g. no longer matching the bank",
+                    isWarning = true
+                )
                 EditableRow("Editable", "Value", onClick = {})
                 EditableRow(
                     "Editable icon",
@@ -183,9 +233,11 @@ private fun Showcase() {
                     onRemove = {},
                     supportingText = "PDF"
                 )
-                SwitchRow("Switch", checked = true, onCheckedChange = {}, supportingText = "Explanation")
+                SwitchRow("Switch", checked = true, onCheckedChange = {
+                }, supportingText = "Explanation")
                 NavigationRow("Navigation", "Supporting text", onClick = {}, value = "12,00 €")
-                NavigationRow("Navigation with news", "Something new behind it", onClick = {}, hasNews = true)
+                NavigationRow("Navigation with news", "Something new behind it", onClick = {
+                }, hasNews = true)
                 RadioRow(
                     "Radio",
                     selected = true,
@@ -194,9 +246,12 @@ private fun Showcase() {
                     note = "Note",
                     value = "12,00 €"
                 )
-                RadioRow("Radio", selected = false, onClick = {}, supportingText = "Supporting text", value = "9,99 €")
-                SelectableTextRow("Selectable text", selected = null, onClick = {}, onLongClick = {})
-                SelectableTextRow("Selectable text, choosing several", selected = true, onClick = {}, onLongClick = {})
+                RadioRow("Radio", selected = false, onClick = {
+                }, supportingText = "Supporting text", value = "9,99 €")
+                SelectableTextRow("Selectable text", selected = null, onClick = {
+                }, onLongClick = {})
+                SelectableTextRow("Selectable text, choosing several", selected = true, onClick = {
+                }, onLongClick = {})
                 LinkRow("Link", onClick = {})
                 ProgressRow("Progress")
                 LoadingRow()
@@ -221,7 +276,8 @@ private fun Showcase() {
                 optionLabel = { it },
                 onSelect = {}
             )
-            SearchField(query = "", onQueryChange = {}, placeholder = "Search", clearLabel = "Clear")
+            SearchField(query = "", onQueryChange = {
+            }, placeholder = "Search", clearLabel = "Clear")
             IconNavigationRow(
                 Icons.Outlined.Palette,
                 "Icon navigation",
@@ -235,9 +291,15 @@ private fun Showcase() {
                 SwitchRow("Turns others off", checked = false, onCheckedChange = {})
                 SwitchRow("Disabled switch", checked = true, onCheckedChange = {}, enabled = false)
                 ValueRow("Disabled value", "Current value", onClick = {}, enabled = false)
-                SliderRow("Slider", 80f, onValueChange = {}, valueRange = 0f..100f, valueText = { "${it.toInt()} %" })
+                SliderRow("Slider", 80f, onValueChange = {
+                }, valueRange = 0f..100f, valueText = { "${it.toInt()} %" })
                 SliderRow(
-                    "Slider with steps and preview", 1f, onValueChange = {}, valueRange = 0f..3f, steps = 2,
+                    "Slider with steps and preview",
+                    1f,
+                    onValueChange = {
+                    },
+                    valueRange = 0f..3f,
+                    steps = 2,
                     valueText = { "+${it.toInt() * 10} %" },
                     preview = { Text("Sample text", fontSize = 16.sp * (1 + it / 10)) }
                 )
@@ -245,13 +307,22 @@ private fun Showcase() {
                 PendingRow("Pending", "Not possible yet, and what it still needs")
                 var isHighlighted by remember { mutableStateOf(true) }
                 Highlighted(isHighlighted, onShown = { isHighlighted = false }) {
-                    ValueRow("Highlighted", "Tap to light up again", onClick = { isHighlighted = true })
+                    ValueRow("Highlighted", "Tap to light up again", onClick = {
+                        isHighlighted =
+                            true
+                    })
                 }
             }
             DetailCard {
                 val photo = remember {
                     ImageBitmap(300, 900).also { bitmap ->
-                        Canvas(bitmap).drawRect(Rect(0f, 0f, 300f, 900f), Paint().apply { color = Color.LightGray })
+                        Canvas(bitmap).drawRect(
+                            Rect(0f, 0f, 300f, 900f),
+                            Paint().apply {
+                                color =
+                                    Color.LightGray
+                            }
+                        )
                     }
                 }
                 MarkedPhoto(
@@ -309,8 +380,14 @@ private fun Showcase() {
                     badge = "Group"
                 )
                 EditableItemRow(
-                    "Item with missing badge", "0,59 €", removeLabel = "Remove", onClick = {}, onRemove = {},
-                    badge = "Missing", badgeStyle = BadgeStyle.Missing
+                    "Item with missing badge",
+                    "0,59 €",
+                    removeLabel = "Remove",
+                    onClick = {
+                    },
+                    onRemove = {},
+                    badge = "Missing",
+                    badgeStyle = BadgeStyle.Missing
                 )
             }
             DetailCard {
@@ -324,7 +401,12 @@ private fun Showcase() {
                     isFirst = true
                 )
                 ActionItemRow(
-                    "Item with badge", "−4,50 €", actionsLabel = "Actions", onClick = {}, onActions = {},
+                    "Item with badge",
+                    "−4,50 €",
+                    actionsLabel = "Actions",
+                    onClick = {
+                    },
+                    onActions = {},
                     badge = "Saves at once"
                 )
             }
@@ -334,9 +416,20 @@ private fun Showcase() {
                 ShareRow("Rest", "13,90 € · 13 %", share = 0.13f, isMuted = true, onClick = {})
             }
             DetailCard {
-                MeterRow("Meter", "80 € left", used = 0.6f, isFirst = true, supportingText = "of 200 €", onClick = {})
                 MeterRow(
-                    "Committed and projected", "15 € left", used = 0.4f, committed = 0.5f, projected = 0.95f,
+                    "Meter",
+                    "80 € left",
+                    used = 0.6f,
+                    isFirst = true,
+                    supportingText = "of 200 €",
+                    onClick = {}
+                )
+                MeterRow(
+                    "Committed and projected",
+                    "15 € left",
+                    used = 0.4f,
+                    committed = 0.5f,
+                    projected = 0.95f,
                     supportingText = "of 150 € · 35 € still due"
                 )
                 MeterRow("Overspent", "20 € over", used = 1.2f, supportingText = "of 100 €")
@@ -398,7 +491,8 @@ private fun Showcase() {
                     Icon(Icons.Default.Search, contentDescription = null)
                 }
                 PayeeTile("REWE", logo = null, Modifier.padding(end = 16.dp), isLarge = true) {}
-                EditableTile(onClick = {}, onClickLabel = "Change", background = MaterialTheme.colorScheme.surface) {
+                EditableTile(onClick = {
+                }, onClickLabel = "Change", background = MaterialTheme.colorScheme.surface) {
                     PayeeTile("REWE", logo = null, isLarge = true) {}
                 }
             }
@@ -432,7 +526,8 @@ private fun Showcase() {
 @Composable
 private fun FormDialogShowcase() {
     DesignSystemTheme {
-        FormDialog(title = "Form dialog", onConfirm = {}, onDismiss = {}, intro = "What the values mean") {
+        FormDialog(title = "Form dialog", onConfirm = {
+        }, onDismiss = {}, intro = "What the values mean") {
             OutlinedTextField(value = "Name", onValueChange = {}, label = { Text("Field") })
             OutlinedTextField(value = "2,29", onValueChange = {}, label = { Text("Amount") })
             DestructiveTextButton("Remove", onClick = {}, icon = Icons.Default.Delete)
@@ -474,7 +569,8 @@ private fun TextDialogPreviewShowcase() {
 @Composable
 private fun TimeDialogShowcase() {
     DesignSystemTheme {
-        TimeDialog(title = "Time dialog", hour = 3, minute = 30, onConfirm = { _, _ -> }, onDismiss = {})
+        TimeDialog(title = "Time dialog", hour = 3, minute = 30, onConfirm = { _, _ ->
+        }, onDismiss = {})
     }
 }
 
@@ -517,7 +613,8 @@ private fun FormDialogProposalShowcase() {
 }
 
 private val sheetOptions = listOf(
-    "Holiday", "Dog", "Renovation", "Garden", "Car", "Wedding", "Bike", "Christmas", "Birthday", "Moving"
+    "Holiday", "Dog", "Renovation", "Garden", "Car", "Wedding", "Bike", "Christmas", "Birthday",
+    "Moving"
 )
 
 /** The content of a [MultiChoiceSheet] as it comes up from the bottom, with a search for the long list */
@@ -604,12 +701,15 @@ private fun SideSheetShowcase() {
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.32f))
             )
-            SideSheetPanel(title = "Side sheet", onClose = {}, modifier = Modifier.align(Alignment.CenterEnd)) {
+            SideSheetPanel(title = "Side sheet", onClose = {
+            }, modifier = Modifier.align(Alignment.CenterEnd)) {
                 SheetBody(
                     actions = { Button(onClick = {}) { Text("Apply") } },
                     scrollable = true
                 ) {
-                    sheetOptions.take(5).forEach { OptionRow(it, selected = it == "Dog", onClick = {}) }
+                    sheetOptions.take(5).forEach {
+                        OptionRow(it, selected = it == "Dog", onClick = {})
+                    }
                 }
             }
         }
@@ -618,7 +718,11 @@ private fun SideSheetShowcase() {
 
 /** The content of an [ActionSheet]: actions with icons, one opens a second level */
 @Preview(name = "Action sheet", showBackground = true)
-@Preview(name = "Action sheet, dark", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "Action sheet, dark",
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun ActionSheetShowcase() {
     DesignSystemTheme {
@@ -635,7 +739,7 @@ private fun ActionSheetShowcase() {
                         "Delete",
                         icon = { rememberVectorPainter(Icons.Default.Delete) },
                         tint = MaterialTheme.colorScheme.error
-                    ),
+                    )
                 ),
                 title = "Rewe · −23,40 €",
                 onDismiss = {}
@@ -657,8 +761,10 @@ private fun SingleChoiceDialogShowcase() {
             onDismiss = {},
             intro = "Picking one closes the dialog",
             trailing = {
-                if (it == "Own category") IconButton(onClick = {}) {
-                    Icon(Icons.Default.Edit, contentDescription = null)
+                if (it == "Own category") {
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Default.Edit, contentDescription = null)
+                    }
                 }
             },
             footer = { DialogActionRow(Icons.Default.Add, "New option", onClick = {}) }
@@ -684,12 +790,21 @@ private fun PickDialogShowcase() {
 }
 
 @Preview(name = "Icon picker", showBackground = true, heightDp = 640)
-@Preview(name = "Icon picker, dark", showBackground = true, heightDp = 640, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "Icon picker, dark",
+    showBackground = true,
+    heightDp = 640,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun IconPickerShowcase() {
     val icons = mapOf(
-        "folder" to Icons.Outlined.Folder, "info" to Icons.Outlined.Info, "groups" to Icons.Outlined.Workspaces,
-        "search" to Icons.Default.Search, "edit" to Icons.Default.Edit, "add" to Icons.Default.Add
+        "folder" to Icons.Outlined.Folder,
+        "info" to Icons.Outlined.Info,
+        "groups" to Icons.Outlined.Workspaces,
+        "search" to Icons.Default.Search,
+        "edit" to Icons.Default.Edit,
+        "add" to Icons.Default.Add
     )
     DesignSystemTheme {
         Column(Modifier.background(MaterialTheme.colorScheme.surfaceContainer)) {
@@ -707,7 +822,12 @@ private fun IconPickerShowcase() {
                 onSelect = {},
                 label = { it },
                 header = {
-                    IconPickerOption("Automatic", "Chosen from the name", isSelected = false, onClick = {}) {
+                    IconPickerOption(
+                        "Automatic",
+                        "Chosen from the name",
+                        isSelected = false,
+                        onClick = {}
+                    ) {
                         IconTile { Icon(Icons.Outlined.Palette, contentDescription = null) }
                     }
                 }
@@ -717,18 +837,29 @@ private fun IconPickerShowcase() {
 }
 
 @Preview(name = "Search", showBackground = true, heightDp = 640)
-@Preview(name = "Search dark", showBackground = true, heightDp = 640, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "Search dark",
+    showBackground = true,
+    heightDp = 640,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun SearchShowcase() {
     DesignSystemTheme {
         Column(Modifier.background(MaterialTheme.colorScheme.surfaceContainer)) {
             SearchTopBar(
-                query = "Rewe", onQueryChange = {}, placeholder = "Search transactions",
-                onClose = {}, closeLabel = "Close", clearLabel = "Clear"
+                query = "Rewe",
+                onQueryChange = {},
+                placeholder = "Search transactions",
+                onClose = {},
+                closeLabel = "Close",
+                clearLabel = "Clear"
             )
             SearchFilterRow {
-                SearchFilterChip("Period", value = "October 2026", onClick = {}, icon = Icons.Outlined.Info)
-                SearchFilterChip("Category", value = null, onClick = {}, icon = Icons.Outlined.Folder)
+                SearchFilterChip("Period", value = "October 2026", onClick = {
+                }, icon = Icons.Outlined.Info)
+                SearchFilterChip("Category", value = null, onClick = {
+                }, icon = Icons.Outlined.Folder)
                 SearchFilterChip("Amount", value = null, onClick = {})
             }
             SearchResultRow("23 transactions · −412,30 €", actionLabel = "Reset", onAction = {})
@@ -750,7 +881,12 @@ private fun SearchShowcase() {
 }
 
 @Preview(name = "Intro page", showBackground = true, heightDp = 800)
-@Preview(name = "Intro page, dark", showBackground = true, heightDp = 800, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "Intro page, dark",
+    showBackground = true,
+    heightDp = 800,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Preview(name = "Intro page, wide", showBackground = true, widthDp = 840, heightDp = 480)
 @Composable
 private fun IntroPageShowcase() {
@@ -769,7 +905,13 @@ private fun IntroPageShowcase() {
                 hero = { HeroIllustration(R.drawable.illustration_welcome) }
             ) {
                 FeatureRow(Icons.Outlined.Info, "Feature row", "One thing that is offered")
-                ChoiceCard(Icons.Outlined.Folder, "Choice card", "One way to go on", selected = true, onClick = {}) {
+                ChoiceCard(
+                    Icons.Outlined.Folder,
+                    "Choice card",
+                    "One way to go on",
+                    selected = true,
+                    onClick = {}
+                ) {
                     Text("Details while picked")
                     Column(
                         Modifier.padding(top = 8.dp).selectableGroup(),
@@ -815,14 +957,25 @@ private fun IntroPageShowcase() {
 }
 
 @Preview(name = "Illustrations", showBackground = true, widthDp = 480)
-@Preview(name = "Illustrations, dark", showBackground = true, widthDp = 480, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(
+    name = "Illustrations, dark",
+    showBackground = true,
+    widthDp = 480,
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
 @Composable
 private fun IllustrationShowcase() {
     DesignSystemTheme {
-        FlowRow(Modifier.padding(Spacing.screen), horizontalArrangement = Arrangement.spacedBy(Spacing.content)) {
+        FlowRow(
+            Modifier.padding(Spacing.screen),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.content)
+        ) {
             listOf(
-                R.drawable.illustration_welcome, R.drawable.illustration_privacy, R.drawable.illustration_start,
-                R.drawable.illustration_account, R.drawable.illustration_done
+                R.drawable.illustration_welcome,
+                R.drawable.illustration_privacy,
+                R.drawable.illustration_start,
+                R.drawable.illustration_account,
+                R.drawable.illustration_done
             ).forEach { HeroIllustration(it, maxHeight = 120.dp) }
         }
     }

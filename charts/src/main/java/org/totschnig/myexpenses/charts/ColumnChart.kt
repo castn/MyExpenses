@@ -34,8 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import org.totschnig.myexpenses.charts.scale.ValueAxis
 import java.text.NumberFormat
+import org.totschnig.myexpenses.charts.scale.ValueAxis
 
 /**
  * One column of a [ColumnChart]
@@ -49,7 +49,7 @@ data class ChartColumn(
     val label: String,
     val value: Float,
     val valueLabel: String,
-    val description: String = label,
+    val description: String = label
 )
 
 /**
@@ -66,10 +66,15 @@ fun ColumnChart(
     columns: List<ChartColumn>,
     modifier: Modifier = Modifier,
     height: Dp = 140.dp,
-    axisLabel: (Double) -> String = defaultAxisLabel(),
+    axisLabel: (Double) -> String = defaultAxisLabel()
 ) {
     var selected by remember(columns.size) { mutableIntStateOf(columns.lastIndex) }
-    val axis = remember(columns) { ValueAxis.of(0.0, columns.maxOfOrNull { it.value.toDouble() } ?: 0.0) }
+    val axis = remember(columns) {
+        ValueAxis.of(
+            0.0,
+            columns.maxOfOrNull { it.value.toDouble() } ?: 0.0
+        )
+    }
     val color = MaterialTheme.colorScheme.primary
     val gridColor = MaterialTheme.colorScheme.outlineVariant
     val baselineColor = MaterialTheme.colorScheme.outline
@@ -93,7 +98,11 @@ fun ColumnChart(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1f)
                 )
-                Text(column.valueLabel, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold)
+                Text(
+                    column.valueLabel,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.SemiBold
+                )
             }
         }
         Box(
@@ -104,6 +113,7 @@ fun ColumnChart(
         ) {
             Canvas(Modifier.matchParentSize()) {
                 val isRtl = layoutDirection == LayoutDirection.Rtl
+
                 // Drawn from the start, mirrored for right-to-left
                 fun x(start: Float) = if (isRtl) size.width - start else start
                 val gutterPx = gutter.toPx()
@@ -141,7 +151,7 @@ fun ColumnChart(
                                 right = center + columnWidth / 2,
                                 bottom = size.height,
                                 topLeftCornerRadius = radius,
-                                topRightCornerRadius = radius,
+                                topRightCornerRadius = radius
                             )
                         )
                     }

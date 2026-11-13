@@ -71,7 +71,7 @@ class FabMenuItem(
     val label: String,
     val icon: ImageVector,
     val iconTint: Color = Color.Unspecified,
-    val onClick: () -> Unit,
+    val onClick: () -> Unit
 )
 
 /**
@@ -95,7 +95,7 @@ fun MenuFab(
     onClick: (() -> Unit)? = null,
     isExtended: Boolean = true,
     containerColor: Color = MaterialTheme.colorScheme.primaryContainer,
-    contentColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimaryContainer
 ) {
     var isOpen by rememberSaveable { mutableStateOf(false) }
     // The box is the anchor of the popup with the items
@@ -140,7 +140,7 @@ private fun MenuFabButton(
     onClick: (() -> Unit)?,
     isExtended: Boolean,
     containerColor: Color,
-    contentColor: Color,
+    contentColor: Color
 ) {
     val haptic = LocalHapticFeedback.current
     Surface(
@@ -153,14 +153,22 @@ private fun MenuFabButton(
             modifier = Modifier
                 .combinedClickable(
                     role = Role.Button,
-                    onClickLabel = if (isOpen) closeLabel else if (onClick == null) menuLabel else null,
+                    onClickLabel = if (isOpen) {
+                        closeLabel
+                    } else if (onClick == null) {
+                        menuLabel
+                    } else {
+                        null
+                    },
                     onLongClickLabel = menuLabel.takeIf { onClick != null && !isOpen },
                     onLongClick = if (onClick != null) {
                         {
                             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                             onOpenChange(!isOpen)
                         }
-                    } else null,
+                    } else {
+                        null
+                    },
                     onClick = {
                         when {
                             isOpen -> onOpenChange(false)
@@ -197,7 +205,7 @@ private fun MenuFabPopup(
     closeLabel: String,
     onClose: () -> Unit,
     containerColor: Color,
-    contentColor: Color,
+    contentColor: Color
 ) {
     Popup(
         popupPositionProvider = WholeWindow,
@@ -251,7 +259,7 @@ private fun BoxScope.MenuFabItems(
     items: List<FabMenuItem>,
     popup: Rect,
     anchor: IntRect,
-    onClose: () -> Unit,
+    onClose: () -> Unit
 ) {
     val isLtr = LocalLayoutDirection.current == LayoutDirection.Ltr
     with(LocalDensity.current) {
@@ -311,7 +319,7 @@ private object WholeWindow : PopupPositionProvider {
         anchorBounds: IntRect,
         windowSize: IntSize,
         layoutDirection: LayoutDirection,
-        popupContentSize: IntSize,
+        popupContentSize: IntSize
     ) = IntOffset.Zero
 }
 

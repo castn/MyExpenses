@@ -70,11 +70,14 @@ fun IconPicker(
     label: (String) -> String?,
     modifier: Modifier = Modifier,
     header: (@Composable ColumnScope.() -> Unit)? = null,
-    icon: @Composable (key: String) -> Unit,
+    icon: @Composable (key: String) -> Unit
 ) {
     var query by rememberSaveable { mutableStateOf("") }
     var filter by rememberSaveable { mutableStateOf<Int?>(null) }
-    val shown = remember(query, filter, sections) { sections(query.trim(), filter.takeIf { query.isBlank() }) }
+    val shown =
+        remember(query, filter, sections) {
+            sections(query.trim(), filter.takeIf { query.isBlank() })
+        }
     Column(modifier) {
         SearchField(
             query = query,
@@ -138,7 +141,12 @@ fun IconPicker(
 
 /** One icon of an [IconPicker] on a tile, the chosen one in the primary container colour with a frame */
 @Composable
-fun IconChoice(isSelected: Boolean, label: String?, onClick: () -> Unit, content: @Composable () -> Unit) {
+fun IconChoice(
+    isSelected: Boolean,
+    label: String?,
+    onClick: () -> Unit,
+    content: @Composable () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -152,7 +160,15 @@ fun IconChoice(isSelected: Boolean, label: String?, onClick: () -> Unit, content
     ) {
         IconTile(
             modifier =
-                if (isSelected) Modifier.border(2.dp, MaterialTheme.colorScheme.primary, CircleShape) else Modifier,
+                if (isSelected) {
+                    Modifier.border(
+                        2.dp,
+                        MaterialTheme.colorScheme.primary,
+                        CircleShape
+                    )
+                } else {
+                    Modifier
+                },
             color = if (isSelected) {
                 MaterialTheme.colorScheme.primaryContainer
             } else {
@@ -172,7 +188,7 @@ fun IconPickerOption(
     supportingText: String?,
     isSelected: Boolean,
     onClick: () -> Unit,
-    tile: @Composable () -> Unit,
+    tile: @Composable () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -185,12 +201,24 @@ fun IconPickerOption(
     ) {
         Box(
             modifier =
-                if (isSelected) Modifier.border(2.dp, MaterialTheme.colorScheme.primary, CircleShape) else Modifier,
+                if (isSelected) {
+                    Modifier.border(
+                        2.dp,
+                        MaterialTheme.colorScheme.primary,
+                        CircleShape
+                    )
+                } else {
+                    Modifier
+                }
         ) { tile() }
         Column(Modifier.padding(start = Spacing.content).weight(1f)) {
             Text(title, style = MaterialTheme.typography.bodyLarge)
             supportingText?.let {
-                Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     }
@@ -211,11 +239,14 @@ fun IconPickerDialog(
     onDismiss: () -> Unit,
     label: (String) -> String?,
     header: (@Composable ColumnScope.() -> Unit)? = null,
-    icon: @Composable (key: String) -> Unit,
+    icon: @Composable (key: String) -> Unit
 ) {
     Dialog(
         onDismissRequest = onDismiss,
-        properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false,
+            decorFitsSystemWindows = false
+        )
     ) {
         Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surfaceContainer) {
             Column(Modifier.windowInsetsPadding(WindowInsets.safeDrawing)) {

@@ -69,7 +69,7 @@ fun SearchTopBar(
     closeLabel: String,
     clearLabel: String,
     windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceContainer,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceContainer
 ) {
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
@@ -90,7 +90,9 @@ fun SearchTopBar(
                     .padding(end = 8.dp)
                     .focusRequester(focusRequester),
                 placeholder = { Text(placeholder, maxLines = 1, overflow = TextOverflow.Ellipsis) },
-                trailingIcon = if (query.isEmpty()) null else {
+                trailingIcon = if (query.isEmpty()) {
+                    null
+                } else {
                     {
                         IconButton(onClick = { onQueryChange("") }) {
                             Icon(Icons.Default.Close, contentDescription = clearLabel)
@@ -106,7 +108,7 @@ fun SearchTopBar(
                     focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                     unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                     focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
                 )
             )
         }
@@ -121,7 +123,7 @@ fun SearchTopBar(
 fun SearchFilterRow(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(horizontal = Spacing.screen),
-    content: @Composable RowScope.() -> Unit,
+    content: @Composable RowScope.() -> Unit
 ) {
     Row(
         modifier = modifier
@@ -146,14 +148,20 @@ fun SearchFilterChip(
     value: String?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: ImageVector? = null,
+    icon: ImageVector? = null
 ) {
     FilterChip(
         selected = value != null,
         onClick = onClick,
         label = { Text(value ?: label, maxLines = 1, overflow = TextOverflow.Ellipsis) },
         leadingIcon = icon?.let {
-            { Icon(it, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
+            {
+                Icon(
+                    it,
+                    contentDescription = null,
+                    modifier = Modifier.size(FilterChipDefaults.IconSize)
+                )
+            }
         },
         trailingIcon = {
             Icon(
@@ -182,7 +190,7 @@ fun FilterSheet(
     resetLabel: String,
     onReset: (() -> Unit)?,
     applyEnabled: Boolean = true,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     AdaptiveSheet(
         onDismiss = onDismiss,
@@ -212,21 +220,33 @@ fun OptionRow(
     isMultiple: Boolean = true,
     supportingText: String? = null,
     depth: Int = 0,
-    leading: (@Composable () -> Unit)? = null,
+    leading: (@Composable () -> Unit)? = null
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .then(
-                if (isMultiple) Modifier.toggleable(
-                    value = selected,
-                    role = Role.Checkbox,
-                    onValueChange = { onClick() }
-                )
-                else Modifier.selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
+                if (isMultiple) {
+                    Modifier.toggleable(
+                        value = selected,
+                        role = Role.Checkbox,
+                        onValueChange = { onClick() }
+                    )
+                } else {
+                    Modifier.selectable(
+                        selected = selected,
+                        role = Role.RadioButton,
+                        onClick = onClick
+                    )
+                }
             )
             .heightIn(min = 48.dp)
-            .padding(start = Spacing.screen + 24.dp * depth, end = Spacing.screen, top = 4.dp, bottom = 4.dp),
+            .padding(
+                start = Spacing.screen + 24.dp * depth,
+                end = Spacing.screen,
+                top = 4.dp,
+                bottom = 4.dp
+            ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (leading != null) {
@@ -234,13 +254,25 @@ fun OptionRow(
             Spacer(Modifier.size(12.dp))
         }
         Column(Modifier.weight(1f)) {
-            Text(label, style = MaterialTheme.typography.bodyLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(
+                label,
+                style = MaterialTheme.typography.bodyLarge,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
             supportingText?.let {
-                Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
-        if (isMultiple) Checkbox(checked = selected, onCheckedChange = null)
-        else RadioButton(selected = selected, onClick = null)
+        if (isMultiple) {
+            Checkbox(checked = selected, onCheckedChange = null)
+        } else {
+            RadioButton(selected = selected, onClick = null)
+        }
     }
 }
 
@@ -252,7 +284,7 @@ fun SearchResultRow(
     text: String,
     actionLabel: String,
     onAction: () -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier

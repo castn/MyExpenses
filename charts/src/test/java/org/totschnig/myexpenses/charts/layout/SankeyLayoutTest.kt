@@ -15,11 +15,18 @@ class SankeyLayoutTest {
         FlowLink(2, 3, 30.0),
         FlowLink(2, 4, 70.0),
         FlowLink(3, 5, 20.0),
-        FlowLink(3, 6, 10.0),
+        FlowLink(3, 6, 10.0)
     )
 
-    private fun layout(gap: Float = 10f) =
-        SankeyLayout(columns, links, width = 400f, height = 210f, nodeWidth = 10f, nodeGap = gap, trailing = 100f)
+    private fun layout(gap: Float = 10f) = SankeyLayout(
+        columns,
+        links,
+        width = 400f,
+        height = 210f,
+        nodeWidth = 10f,
+        nodeGap = gap,
+        trailing = 100f
+    )
 
     @Test
     fun scalesAllColumnsAlikeSoThatTheFullestFits() {
@@ -67,7 +74,14 @@ class SankeyLayoutTest {
 
     @Test
     fun bandsAreCurvesFromSourceToTarget() {
-        val band = LinkBand(sourceX = 0f, sourceTop = 0f, targetX = 100f, targetTop = 100f, thickness = 10f)
+        val band =
+            LinkBand(
+                sourceX = 0f,
+                sourceTop = 0f,
+                targetX = 100f,
+                targetTop = 100f,
+                thickness = 10f
+            )
         assertEquals(0f, band.topAt(0f), 0.1f)
         assertEquals(50f, band.topAt(50f), 0.1f)
         assertEquals(100f, band.topAt(100f), 0.1f)
@@ -95,7 +109,10 @@ class SankeyLayoutTest {
         assertEquals(SankeyHit.Node(2), layout.hit(layout.nodes[2].x + 5f, 100f, slop = 4f))
         val band = layout.bands[4]
         val x = (band.sourceX + band.targetX) / 2
-        assertEquals(SankeyHit.Link(4), layout.hit(x, band.topAt(x) + band.thickness / 2, slop = 4f))
+        assertEquals(
+            SankeyHit.Link(4),
+            layout.hit(x, band.topAt(x) + band.thickness / 2, slop = 4f)
+        )
         assertNull(layout.hit(x, 209f, slop = 4f))
     }
 

@@ -9,7 +9,9 @@ import androidx.compose.ui.platform.LocalContext
  * Contrast level selected in the system settings
  */
 enum class Contrast {
-    Standard, Medium, High;
+    Standard,
+    Medium,
+    High;
 
     companion object {
         /**
@@ -18,7 +20,8 @@ enum class Contrast {
         @Composable
         fun current(): Contrast {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) return Standard
-            val contrast = LocalContext.current.getSystemService(UiModeManager::class.java)?.contrast ?: 0f
+            val contrast =
+                LocalContext.current.getSystemService(UiModeManager::class.java)?.contrast ?: 0f
             return when {
                 contrast >= 1f -> High
                 contrast >= 0.5f -> Medium

@@ -15,7 +15,7 @@ fun <T> largestWithRest(
     entries: List<T>,
     value: (T) -> Double,
     limit: Int = MAX_ENTRIES,
-    rest: (List<T>) -> T,
+    rest: (List<T>) -> T
 ): List<T> {
     require(limit >= 2) { "limit must leave room for one entry and the rest" }
     val sorted = entries.sortedByDescending(value)

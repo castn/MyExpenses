@@ -38,7 +38,10 @@ class ValueAxisTest {
             (3..6).forEach { maxTicks ->
                 val ticks = ticks(-max / 3, max, maxTicks)
                 assertTrue("$max/$maxTicks: $ticks", ticks.size <= maxTicks)
-                assertTrue("$max/$maxTicks: $ticks", ticks.last() >= max && ticks.first() <= -max / 3)
+                assertTrue(
+                    "$max/$maxTicks: $ticks",
+                    ticks.last() >= max && ticks.first() <= -max / 3
+                )
             }
         }
     }

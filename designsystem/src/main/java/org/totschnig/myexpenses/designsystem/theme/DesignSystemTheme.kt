@@ -16,7 +16,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 fun DesignSystemTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     contrast: Contrast = Contrast.current(),
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     MaterialTheme(colorScheme = colorScheme(darkTheme, contrast)) {
         CompositionLocalProvider(

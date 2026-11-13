@@ -1,22 +1,12 @@
 package org.totschnig.myexpenses.designsystem
 
-import androidx.compose.foundation.background
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.relocation.BringIntoViewRequester
-import androidx.compose.foundation.relocation.bringIntoViewRequester
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.IconButton
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.withFrameNanos
-import kotlinx.coroutines.delay
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
@@ -26,15 +16,24 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,6 +42,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 
 /**
  * How strongly a [Banner] stands out
@@ -60,12 +60,16 @@ fun Banner(
     messages: List<String>,
     modifier: Modifier = Modifier,
     style: BannerStyle = BannerStyle.Question,
-    actions: (@Composable RowScope.() -> Unit)? = null,
+    actions: (@Composable RowScope.() -> Unit)? = null
 ) {
     val (color, contentColor) = when (style) {
         BannerStyle.Question ->
-            MaterialTheme.colorScheme.tertiaryContainer to MaterialTheme.colorScheme.onTertiaryContainer
-        BannerStyle.Alert -> MaterialTheme.colorScheme.errorContainer to MaterialTheme.colorScheme.onErrorContainer
+            MaterialTheme.colorScheme.tertiaryContainer to
+                MaterialTheme.colorScheme.onTertiaryContainer
+
+        BannerStyle.Alert ->
+            MaterialTheme.colorScheme.errorContainer to
+                MaterialTheme.colorScheme.onErrorContainer
     }
     Surface(
         shape = Shapes.card,
@@ -77,13 +81,19 @@ fun Banner(
     ) {
         Column(
             Modifier.padding(
-                start = Spacing.content, end = Spacing.content, top = Spacing.content,
+                start = Spacing.content,
+                end = Spacing.content,
+                top = Spacing.content,
                 bottom = if (actions != null) 8.dp else Spacing.content
             )
         ) {
             Text(title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
             messages.forEach {
-                Text(it, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp))
+                Text(
+                    it,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
             }
             if (actions != null) {
                 Row(
@@ -104,7 +114,11 @@ fun Banner(
  *
  * @param actionLabel of a button below the text that leads to what helps, none if null
  */
-data class InfoPoint(val text: String, val actionLabel: String? = null, val onAction: () -> Unit = {})
+data class InfoPoint(
+    val text: String,
+    val actionLabel: String? = null,
+    val onAction: () -> Unit = {}
+)
 
 /**
  * Calm card that tells what is missing and what helps, e.g. why an analysis cannot say much yet.
@@ -118,7 +132,7 @@ fun InfoBox(
     title: String,
     points: List<InfoPoint>,
     modifier: Modifier = Modifier,
-    icon: ImageVector = Icons.Outlined.Info,
+    icon: ImageVector = Icons.Outlined.Info
 ) {
     Surface(
         shape = Shapes.card,
@@ -126,7 +140,14 @@ fun InfoBox(
         contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
         modifier = modifier.fillMaxWidth()
     ) {
-        Column(Modifier.padding(start = Spacing.content, end = Spacing.content, top = Spacing.content, bottom = 4.dp)) {
+        Column(
+            Modifier.padding(
+                start = Spacing.content,
+                end = Spacing.content,
+                top = Spacing.content,
+                bottom = 4.dp
+            )
+        ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp))
                 Text(
@@ -139,7 +160,14 @@ fun InfoBox(
                 Text(
                     point.text,
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 8.dp, bottom = if (point.actionLabel == null) 8.dp else 0.dp)
+                    modifier = Modifier.padding(
+                        top = 8.dp,
+                        bottom = if (point.actionLabel == null) {
+                            8.dp
+                        } else {
+                            0.dp
+                        }
+                    )
                 )
                 point.actionLabel?.let { label ->
                     // The label starts where the text does
@@ -164,7 +192,7 @@ fun HintCard(
     dismissLabel: String,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: ImageVector = Icons.Outlined.Info,
+    icon: ImageVector = Icons.Outlined.Info
 ) {
     Surface(
         shape = Shapes.card,
@@ -199,7 +227,7 @@ fun EmptyState(
     title: String,
     modifier: Modifier = Modifier,
     hint: String? = null,
-    color: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    color: Color = MaterialTheme.colorScheme.onSurfaceVariant
 ) {
     Column(
         modifier = modifier
@@ -236,7 +264,7 @@ fun PromptCard(
     onConfirm: () -> Unit,
     modifier: Modifier = Modifier,
     dismissLabel: String? = null,
-    onDismiss: () -> Unit = {},
+    onDismiss: () -> Unit = {}
 ) {
     Box(
         modifier = modifier
@@ -244,7 +272,15 @@ fun PromptCard(
             .padding(Spacing.screen),
         contentAlignment = Alignment.Center
     ) {
-        ActionCard(icon, title, text, confirmLabel, onConfirm, dismissLabel = dismissLabel, onDismiss = onDismiss)
+        ActionCard(
+            icon,
+            title,
+            text,
+            confirmLabel,
+            onConfirm,
+            dismissLabel = dismissLabel,
+            onDismiss = onDismiss
+        )
     }
 }
 
@@ -265,7 +301,7 @@ fun ActionCard(
     modifier: Modifier = Modifier,
     confirmIcon: ImageVector? = null,
     dismissLabel: String? = null,
-    onDismiss: () -> Unit = {},
+    onDismiss: () -> Unit = {}
 ) {
     Surface(
         shape = Shapes.card,
@@ -283,7 +319,11 @@ fun ActionCard(
                     .background(MaterialTheme.colorScheme.primaryContainer),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimaryContainer)
+                Icon(
+                    icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                )
             }
             Text(
                 title,
@@ -308,7 +348,11 @@ fun ActionCard(
                 modifier = Modifier.padding(top = 24.dp)
             ) {
                 if (confirmIcon != null) {
-                    Icon(confirmIcon, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
+                    Icon(
+                        confirmIcon,
+                        contentDescription = null,
+                        modifier = Modifier.size(ButtonDefaults.IconSize)
+                    )
                     Spacer(Modifier.width(ButtonDefaults.IconSpacing))
                 }
                 Text(confirmLabel)
@@ -337,15 +381,24 @@ fun InviteCard(
     onClick: (() -> Unit)?,
     onDismiss: () -> Unit,
     dismissLabel: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val content: @Composable () -> Unit = {
         Row(
-            modifier = Modifier.padding(start = Spacing.content, top = 12.dp, bottom = 12.dp, end = 4.dp),
+            modifier = Modifier.padding(
+                start = Spacing.content,
+                top = 12.dp,
+                bottom = 12.dp,
+                end = 4.dp
+            ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconTile(color = MaterialTheme.colorScheme.primaryContainer) {
-                Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimaryContainer)
+                Icon(
+                    icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                )
             }
             Column(
                 Modifier
@@ -371,7 +424,13 @@ fun InviteCard(
     val shape = Shapes.card
     val color = MaterialTheme.colorScheme.surfaceContainerLowest
     if (onClick != null) {
-        Surface(onClick = onClick, shape = shape, color = color, modifier = modifier.fillMaxWidth(), content = content)
+        Surface(
+            onClick = onClick,
+            shape = shape,
+            color = color,
+            modifier = modifier.fillMaxWidth(),
+            content = content
+        )
     } else {
         Surface(shape = shape, color = color, modifier = modifier.fillMaxWidth(), content = content)
     }
@@ -384,7 +443,11 @@ fun InviteCard(
  * @param onShown called when the light has faded, so that it is not shown again
  */
 @Composable
-fun Highlighted(isActive: Boolean, onShown: () -> Unit, content: @Composable ColumnScope.() -> Unit) {
+fun Highlighted(
+    isActive: Boolean,
+    onShown: () -> Unit,
+    content: @Composable ColumnScope.() -> Unit
+) {
     val requester = remember { BringIntoViewRequester() }
     val light = remember { Animatable(0f) }
     LaunchedEffect(isActive) {

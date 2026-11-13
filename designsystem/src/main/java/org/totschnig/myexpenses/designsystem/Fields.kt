@@ -50,7 +50,7 @@ fun SearchField(
     onQueryChange: (String) -> Unit,
     placeholder: String,
     clearLabel: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val focusManager = LocalFocusManager.current
     TextField(
@@ -59,7 +59,9 @@ fun SearchField(
         modifier = modifier.fillMaxWidth(),
         placeholder = { Text(placeholder) },
         leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-        trailingIcon = if (query.isEmpty()) null else {
+        trailingIcon = if (query.isEmpty()) {
+            null
+        } else {
             {
                 IconButton(onClick = { onQueryChange("") }) {
                     Icon(Icons.Default.Close, contentDescription = clearLabel)
@@ -74,7 +76,7 @@ fun SearchField(
             focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
         )
     )
 }
@@ -102,7 +104,7 @@ fun FormTextField(
     isError: Boolean = false,
     supportingText: String? = null,
     leading: (@Composable () -> Unit)? = null,
-    trailing: (@Composable () -> Unit)? = null,
+    trailing: (@Composable () -> Unit)? = null
 ) {
     OutlinedTextField(
         value = value,
@@ -120,9 +122,13 @@ fun FormTextField(
             keyboardType = keyboardType,
             capitalization = if (
                 keyboardType == KeyboardType.Text
-            ) KeyboardCapitalization.Sentences else KeyboardCapitalization.None,
+            ) {
+                KeyboardCapitalization.Sentences
+            } else {
+                KeyboardCapitalization.None
+            },
             imeAction = if (singleLine) ImeAction.Next else ImeAction.Default
-        ),
+        )
     )
 }
 
@@ -136,7 +142,7 @@ fun FormPickerField(
     value: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
+    enabled: Boolean = true
 ) {
     Box(modifier.fillMaxWidth()) {
         OutlinedTextField(
@@ -147,7 +153,7 @@ fun FormPickerField(
             readOnly = true,
             enabled = enabled,
             singleLine = true,
-            trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null) },
+            trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null) }
         )
         // The field itself would take the tap to place a cursor
         Box(
@@ -155,7 +161,12 @@ fun FormPickerField(
                 .matchParentSize()
                 .padding(top = 8.dp)
                 .clip(OutlinedTextFieldDefaults.shape)
-                .clickable(enabled = enabled, onClickLabel = label, role = Role.Button, onClick = onClick)
+                .clickable(
+                    enabled = enabled,
+                    onClickLabel = label,
+                    role = Role.Button,
+                    onClick = onClick
+                )
         )
     }
 }
@@ -172,16 +183,21 @@ fun <T> AutocompleteField(
     options: List<T>,
     optionLabel: (T) -> String,
     onSelect: (T) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val selectedLabel = optionLabel(selected)
     var query by rememberSaveable(selectedLabel) { mutableStateOf(selectedLabel) }
     var expanded by remember { mutableStateOf(false) }
     val suggestions = remember(query, options) {
-        if (query == selectedLabel) options
-        else options.filter { optionLabel(it).contains(query.trim(), ignoreCase = true) }
+        if (query == selectedLabel) {
+            options
+        } else {
+            options.filter { optionLabel(it).contains(query.trim(), ignoreCase = true) }
+        }
     }
-    ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = it }, modifier = modifier) {
+    ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = {
+        expanded = it
+    }, modifier = modifier) {
         OutlinedTextField(
             value = query,
             onValueChange = {

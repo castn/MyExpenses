@@ -40,7 +40,7 @@ object Shapes {
         topStart = if (position.isFirst) 16.dp else 0.dp,
         topEnd = if (position.isFirst) 16.dp else 0.dp,
         bottomStart = if (position.isLast) 16.dp else 0.dp,
-        bottomEnd = if (position.isLast) 16.dp else 0.dp,
+        bottomEnd = if (position.isLast) 16.dp else 0.dp
     )
 }
 
@@ -52,6 +52,10 @@ data class GroupPosition(val isFirst: Boolean, val isLast: Boolean) {
     companion object {
         val Single = GroupPosition(isFirst = true, isLast = true)
 
-        fun of(index: Int, count: Int) = GroupPosition(isFirst = index == 0, isLast = index == count - 1)
+        fun of(index: Int, count: Int) = GroupPosition(
+            isFirst = index == 0,
+            isLast =
+                index == count - 1
+        )
     }
 }

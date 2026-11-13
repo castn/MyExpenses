@@ -21,21 +21,21 @@ data class Viewport(val scale: Float = 1f, val offsetX: Float = 0f, val offsetY:
         panY: Float,
         width: Float,
         height: Float,
-        maxScale: Float = MAX_SCALE,
+        maxScale: Float = MAX_SCALE
     ): Viewport {
         val newScale = (scale * factor).coerceIn(MIN_SCALE, maxScale)
         val applied = newScale / scale
         return Viewport(
             newScale,
             focusX - (focusX - offsetX) * applied + panX,
-            focusY - (focusY - offsetY) * applied + panY,
+            focusY - (focusY - offsetY) * applied + panY
         ).clamped(width, height)
     }
 
     /** Kept inside a view of [width] × [height] */
     fun clamped(width: Float, height: Float) = copy(
         offsetX = offsetX.coerceIn(minOf(0f, width * (1 - scale)), 0f),
-        offsetY = offsetY.coerceIn(minOf(0f, height * (1 - scale)), 0f),
+        offsetY = offsetY.coerceIn(minOf(0f, height * (1 - scale)), 0f)
     )
 
     /** The point of the chart drawn at [x], [y] of the view */

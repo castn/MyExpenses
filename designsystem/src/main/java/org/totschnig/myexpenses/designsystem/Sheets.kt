@@ -8,7 +8,6 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,6 +29,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -124,7 +124,7 @@ fun AdaptiveSheet(
     skipPartiallyExpanded: Boolean = true,
     closeLabel: String? = null,
     snackbarHostState: SnackbarHostState? = null,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     if (isWideWindow()) {
         SideSheet(onDismiss = onDismiss, title = title, closeLabel = closeLabel) {
@@ -133,12 +133,18 @@ fun AdaptiveSheet(
     } else {
         ModalBottomSheet(
             onDismissRequest = onDismiss,
-            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = skipPartiallyExpanded),
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+            sheetState = rememberModalBottomSheetState(
+                skipPartiallyExpanded = skipPartiallyExpanded
+            ),
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
         ) {
             if (closeLabel != null) {
                 TitleRow(title, closeLabel, onDismiss)
-            } else title?.let { SheetTitle(it, Modifier.padding(horizontal = Spacing.screen, vertical = 8.dp)) }
+            } else {
+                title?.let {
+                    SheetTitle(it, Modifier.padding(horizontal = Spacing.screen, vertical = 8.dp))
+                }
+            }
             SheetBody(actions, scrollable, snackbarHostState, content)
         }
     }
@@ -153,7 +159,7 @@ private fun SideSheet(
     onDismiss: () -> Unit,
     title: String?,
     closeLabel: String?,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     val visible = remember { MutableTransitionState(false).apply { targetState = true } }
     val close = { visible.targetState = false }
@@ -163,7 +169,10 @@ private fun SideSheet(
     }
     Dialog(
         onDismissRequest = close,
-        properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false,
+            decorFitsSystemWindows = false
+        )
     ) {
         // The scrim below is drawn by the sheet so that it fades with it
         val window = (LocalView.current.parent as? DialogWindowProvider)?.window
@@ -188,7 +197,12 @@ private fun SideSheet(
                 enter = slideInHorizontally { it * towardsEnd },
                 exit = slideOutHorizontally { it * towardsEnd }
             ) {
-                SideSheetPanel(title = title, onClose = close, closeLabel = closeLabel, content = content)
+                SideSheetPanel(
+                    title = title,
+                    onClose = close,
+                    closeLabel = closeLabel,
+                    content = content
+                )
             }
         }
     }
@@ -203,7 +217,7 @@ internal fun SideSheetPanel(
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
     closeLabel: String? = null,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     BoxWithConstraints(modifier) {
         Surface(
@@ -211,7 +225,7 @@ internal fun SideSheetPanel(
                 .width(minOf(SideSheetWidth, maxWidth - SideSheetMinGap))
                 .fillMaxHeight(),
             shape = RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp),
-            color = MaterialTheme.colorScheme.surfaceContainerLow,
+            color = MaterialTheme.colorScheme.surfaceContainerLow
         ) {
             Column(Modifier.windowInsetsPadding(WindowInsets.safeDrawing)) {
                 TitleRow(title, closeLabel ?: stringResource(R.string.ds_close), onClose)
@@ -250,7 +264,7 @@ internal fun ColumnScope.SheetBody(
     actions: (@Composable RowScope.() -> Unit)?,
     scrollable: Boolean,
     snackbarHostState: SnackbarHostState? = null,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
         Modifier
@@ -294,7 +308,7 @@ fun <T> MultiChoiceSheet(
     intro: String? = null,
     header: (@Composable () -> Unit)? = null,
     footer: (@Composable () -> Unit)? = null,
-    confirmEnabled: Boolean = true,
+    confirmEnabled: Boolean = true
 ) {
     AdaptiveSheet(
         onDismiss = onDismiss,
@@ -306,7 +320,16 @@ fun <T> MultiChoiceSheet(
             ) { TextButton(onClick = onDismiss) { Text(stringResource(android.R.string.cancel)) } }
         }
     ) {
-        MultiChoiceContent(options, selected, onToggle, label, supportingText, intro, header, footer)
+        MultiChoiceContent(
+            options,
+            selected,
+            onToggle,
+            label,
+            supportingText,
+            intro,
+            header,
+            footer
+        )
     }
 }
 
@@ -333,7 +356,7 @@ fun FormSheet(
     intro: String? = null,
     secondaryLabel: String? = null,
     onSecondary: (() -> Unit)? = null,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     val hasSecondary = onSecondary != null && secondaryLabel != null
     val dismiss = dismissLabel ?: stringResource(android.R.string.cancel)
@@ -345,8 +368,11 @@ fun FormSheet(
             ConfirmActions(onConfirm, confirmEnabled, confirmLabel) {
                 if (
                     onSecondary != null && secondaryLabel != null
-                ) TextButton(onClick = onSecondary) { Text(secondaryLabel) }
-                else TextButton(onClick = onDismiss) { Text(dismiss) }
+                ) {
+                    TextButton(onClick = onSecondary) { Text(secondaryLabel) }
+                } else {
+                    TextButton(onClick = onDismiss) { Text(dismiss) }
+                }
             }
         }
     ) {
@@ -368,10 +394,12 @@ private fun ConfirmActions(
     onConfirm: () -> Unit,
     confirmEnabled: Boolean,
     confirmLabel: String? = null,
-    dismiss: @Composable () -> Unit,
+    dismiss: @Composable () -> Unit
 ) {
     dismiss()
-    Button(onClick = onConfirm, enabled = confirmEnabled) { Text(confirmLabel ?: stringResource(R.string.ds_apply)) }
+    Button(onClick = onConfirm, enabled = confirmEnabled) {
+        Text(confirmLabel ?: stringResource(R.string.ds_apply))
+    }
 }
 
 @Composable
@@ -383,11 +411,17 @@ internal fun <T> MultiChoiceContent(
     supportingText: @Composable (T) -> String?,
     intro: String? = null,
     header: (@Composable () -> Unit)? = null,
-    footer: (@Composable () -> Unit)? = null,
+    footer: (@Composable () -> Unit)? = null
 ) {
     var query by rememberSaveable { mutableStateOf("") }
     val labels = options.map { it to label(it) }
-    val shown = if (query.isBlank()) labels else labels.filter { it.second.contains(query.trim(), ignoreCase = true) }
+    val shown = if (query.isBlank()) {
+        labels
+    } else {
+        labels.filter {
+            it.second.contains(query.trim(), ignoreCase = true)
+        }
+    }
     if (intro != null || header != null) {
         Column(Modifier.padding(horizontal = Spacing.screen)) {
             intro?.let { DialogIntro(it) }
@@ -440,7 +474,7 @@ class SheetAction(
     val subActions: List<SheetAction> = emptyList(),
     /** Whether an action that switches something on and off is on, announced as a checkbox */
     val checked: Boolean? = null,
-    val onClick: () -> Unit = {},
+    val onClick: () -> Unit = {}
 )
 
 /**
@@ -451,11 +485,7 @@ class SheetAction(
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ActionSheet(
-    actions: List<SheetAction>,
-    onDismiss: () -> Unit,
-    title: String? = null,
-) {
+fun ActionSheet(actions: List<SheetAction>, onDismiss: () -> Unit, title: String? = null) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
@@ -476,8 +506,12 @@ internal fun ActionSheetContent(actions: List<SheetAction>, title: String?, onDi
     ) {
         val parent = opened
         if (parent != null) {
-            ActionRow(parent.label, icon = rememberBackIcon(), onClick = { opened = null }, isTitle = true)
-            parent.subActions.forEach { action -> ActionSheetRow(action, onDismiss) { opened = it } }
+            ActionRow(parent.label, icon = rememberBackIcon(), onClick = {
+                opened = null
+            }, isTitle = true)
+            parent.subActions.forEach { action ->
+                ActionSheetRow(action, onDismiss) { opened = it }
+            }
         } else {
             title?.let {
                 Text(
@@ -497,7 +531,11 @@ private fun rememberBackIcon(): @Composable () -> Painter = {
 }
 
 @Composable
-private fun ActionSheetRow(action: SheetAction, onDismiss: () -> Unit, onOpen: (SheetAction) -> Unit) {
+private fun ActionSheetRow(
+    action: SheetAction,
+    onDismiss: () -> Unit,
+    onOpen: (SheetAction) -> Unit
+) {
     val hasSub = action.subActions.isNotEmpty()
     ActionRow(
         label = action.label,
@@ -505,11 +543,16 @@ private fun ActionSheetRow(action: SheetAction, onDismiss: () -> Unit, onOpen: (
         tint = action.tint,
         modifier = Modifier
             .then(action.testTag?.let { Modifier.testTag(it) } ?: Modifier)
-            .then(action.contentDescription?.let { Modifier.semantics { contentDescription = it } } ?: Modifier),
+            .then(
+                action.contentDescription?.let { Modifier.semantics { contentDescription = it } }
+                    ?: Modifier
+            ),
         hasSub = hasSub,
         checked = action.checked,
         onClick = {
-            if (hasSub) onOpen(action) else {
+            if (hasSub) {
+                onOpen(action)
+            } else {
                 onDismiss()
                 action.onClick()
             }
@@ -526,14 +569,19 @@ private fun ActionRow(
     tint: Color? = null,
     hasSub: Boolean = false,
     isTitle: Boolean = false,
-    checked: Boolean? = null,
+    checked: Boolean? = null
 ) {
     Row(
         modifier
             .fillMaxWidth()
             .then(
-                if (checked != null) Modifier.toggleable(checked, role = Role.Checkbox, onValueChange = { onClick() })
-                else Modifier.clickable(onClick = onClick)
+                if (checked != null) {
+                    Modifier.toggleable(checked, role = Role.Checkbox, onValueChange = {
+                        onClick()
+                    })
+                } else {
+                    Modifier.clickable(onClick = onClick)
+                }
             )
             .heightIn(min = 56.dp)
             .padding(horizontal = Spacing.screen),
@@ -552,7 +600,11 @@ private fun ActionRow(
         }
         Text(
             label,
-            style = if (isTitle) MaterialTheme.typography.titleMedium else MaterialTheme.typography.bodyLarge,
+            style = if (isTitle) {
+                MaterialTheme.typography.titleMedium
+            } else {
+                MaterialTheme.typography.bodyLarge
+            },
             color = LocalContentColor.current,
             modifier = Modifier.weight(1f)
         )
@@ -565,4 +617,3 @@ private fun ActionRow(
         }
     }
 }
-

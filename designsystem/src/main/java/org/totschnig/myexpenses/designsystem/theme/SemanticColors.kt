@@ -13,7 +13,7 @@ data class SemanticColors(
     val expense: Color,
     val transfer: Color,
     /** Something needs attention soon, e.g. a budget that is nearly used up */
-    val warning: Color,
+    val warning: Color
 ) {
     /**
      * Color of an amount: income if positive, expense if negative, unchanged if zero
@@ -32,17 +32,43 @@ data class SemanticColors(
 fun semanticColors(darkTheme: Boolean, contrast: Contrast): SemanticColors {
     val transfer = colorScheme(darkTheme, contrast).secondary
     return when (contrast) {
-        Contrast.High -> if (darkTheme)
-            SemanticColors(incomeDarkHighContrast, expenseDarkHighContrast, transfer, warningDarkHighContrast)
-        else SemanticColors(incomeLightHighContrast, expenseLightHighContrast, transfer, warningLightHighContrast)
+        Contrast.High -> if (darkTheme) {
+            SemanticColors(
+                incomeDarkHighContrast,
+                expenseDarkHighContrast,
+                transfer,
+                warningDarkHighContrast
+            )
+        } else {
+            SemanticColors(
+                incomeLightHighContrast,
+                expenseLightHighContrast,
+                transfer,
+                warningLightHighContrast
+            )
+        }
 
-        Contrast.Medium -> if (darkTheme)
-            SemanticColors(incomeDarkMediumContrast, expenseDarkMediumContrast, transfer, warningDarkMediumContrast)
-        else SemanticColors(incomeLightMediumContrast, expenseLightMediumContrast, transfer, warningLightMediumContrast)
+        Contrast.Medium -> if (darkTheme) {
+            SemanticColors(
+                incomeDarkMediumContrast,
+                expenseDarkMediumContrast,
+                transfer,
+                warningDarkMediumContrast
+            )
+        } else {
+            SemanticColors(
+                incomeLightMediumContrast,
+                expenseLightMediumContrast,
+                transfer,
+                warningLightMediumContrast
+            )
+        }
 
-        Contrast.Standard -> if (darkTheme)
+        Contrast.Standard -> if (darkTheme) {
             SemanticColors(incomeDark, expenseDark, transfer, warningDark)
-        else SemanticColors(incomeLight, expenseLight, transfer, warningLight)
+        } else {
+            SemanticColors(incomeLight, expenseLight, transfer, warningLight)
+        }
     }
 }
 
@@ -54,4 +80,5 @@ private val warningDark = Color(0xFFFFB870)
 private val warningDarkMediumContrast = Color(0xFFFFCF9E)
 private val warningDarkHighContrast = Color(0xFFFFE9D4)
 
-val LocalSemanticColors = staticCompositionLocalOf { semanticColors(darkTheme = false, Contrast.Standard) }
+val LocalSemanticColors =
+    staticCompositionLocalOf { semanticColors(darkTheme = false, Contrast.Standard) }
