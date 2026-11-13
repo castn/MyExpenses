@@ -25,18 +25,18 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.totschnig.myexpenses.designsystem.ChoiceCard
 import org.totschnig.myexpenses.designsystem.ChoiceOption
 import org.totschnig.myexpenses.designsystem.HeroIllustration
-import org.totschnig.myexpenses.designsystem.R as DesignR
 import org.totschnig.myexpenses.designsystem.IntroPage
-import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
+import org.totschnig.myexpenses.designsystem.R as DesignR
 import org.totschnig.myexpenses.next.core.common.R as NextR
+import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 
 /** How the user starts: with a new account or with data they already have */
 enum class StartChoice { NEW_ACCOUNT, BACKUP_FILE, SYNC, BANK }
@@ -48,7 +48,11 @@ private val RESTORE_CHOICES = setOf(StartChoice.BACKUP_FILE, StartChoice.SYNC)
  * @param offersBanking false where the app cannot connect to banks
  */
 @Composable
-internal fun StartPage(selected: StartChoice, offersBanking: Boolean, onSelect: (StartChoice) -> Unit) {
+internal fun StartPage(
+    selected: StartChoice,
+    offersBanking: Boolean,
+    onSelect: (StartChoice) -> Unit
+) {
     IntroPage(
         title = stringResource(NextR.string.next_onboarding_start_title),
         text = stringResource(NextR.string.next_onboarding_start_text),
@@ -62,20 +66,24 @@ internal fun StartPage(selected: StartChoice, offersBanking: Boolean, onSelect: 
                 title: Int,
                 text: Int,
                 details: (@Composable () -> Unit)? = null
-            ) =
-                ChoiceCard(
-                    icon = icon,
-                    title = stringResource(title),
-                    text = stringResource(text),
-                    selected = selected == choice,
-                    onClick = { onSelect(choice) },
-                    details = details?.let { content -> { content() } }
-                )
+            ) = ChoiceCard(
+                icon = icon,
+                title = stringResource(title),
+                text = stringResource(text),
+                selected = selected == choice,
+                onClick = { onSelect(choice) },
+                details = details?.let { content -> { content() } }
+            )
 
-            Choice(
-                StartChoice.NEW_ACCOUNT, Icons.Outlined.AddCircleOutline,
-                NextR.string.next_onboarding_start_new, NextR.string.next_onboarding_start_new_text
-            ) { ManualHint() }
+            if (offersBanking) {
+                Choice(
+                    StartChoice.BANK,
+                    Icons.Outlined.AccountBalance,
+                    NextR.string.next_onboarding_restore_bank,
+                    NextR.string.next_onboarding_restore_bank_text
+                ) { BankExplanation() }
+            }
+
             ChoiceCard(
                 icon = Icons.Outlined.SettingsBackupRestore,
                 title = stringResource(NextR.string.next_onboarding_restore),
@@ -86,12 +94,12 @@ internal fun StartPage(selected: StartChoice, offersBanking: Boolean, onSelect: 
             ) {
                 RestoreOptions(selected, onSelect)
             }
-            if (offersBanking) {
-                Choice(
-                    StartChoice.BANK, Icons.Outlined.AccountBalance,
-                    NextR.string.next_onboarding_restore_bank, NextR.string.next_onboarding_restore_bank_text
-                ) { BankExplanation() }
-            }
+            Choice(
+                StartChoice.NEW_ACCOUNT,
+                Icons.Outlined.AddCircleOutline,
+                NextR.string.next_onboarding_start_new,
+                NextR.string.next_onboarding_start_new_text
+            ) { ManualHint() }
         }
     }
 }
@@ -154,9 +162,18 @@ private fun BankExplanation() {
             stringResource(NextR.string.next_onboarding_bank_how),
             style = MaterialTheme.typography.bodyMedium
         )
-        ExplanationRow(Icons.Outlined.Key, stringResource(NextR.string.next_onboarding_bank_credentials))
-        ExplanationRow(Icons.Outlined.PhonelinkLock, stringResource(NextR.string.next_onboarding_bank_tan))
-        ExplanationRow(Icons.Outlined.Lock, stringResource(NextR.string.next_onboarding_bank_direct))
+        ExplanationRow(
+            Icons.Outlined.Key,
+            stringResource(NextR.string.next_onboarding_bank_credentials)
+        )
+        ExplanationRow(
+            Icons.Outlined.PhonelinkLock,
+            stringResource(NextR.string.next_onboarding_bank_tan)
+        )
+        ExplanationRow(
+            Icons.Outlined.Lock,
+            stringResource(NextR.string.next_onboarding_bank_direct)
+        )
         ExplanationRow(
             Icons.Outlined.PhoneAndroid,
             stringResource(NextR.string.next_onboarding_bank_on_device)
@@ -168,7 +185,8 @@ private fun BankExplanation() {
 private fun ExplanationRow(icon: ImageVector, text: String) {
     Row(verticalAlignment = Alignment.Top) {
         Icon(
-            icon, contentDescription = null,
+            icon,
+            contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .padding(top = 2.dp)
