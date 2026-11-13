@@ -21,6 +21,14 @@ class SetupStoreTest {
             decisionsWhenDismissed = 4
         )
         assertEquals(expected, store.progress.first().reminder)
+        store.close()
+        store.finish(SetupStep.INCOME)
+        // Resumed, the card is shown again, small, and what was done stays
+        store.resume()
+        val resumed = store.progress.first()
+        assertEquals(false, resumed.closed)
+        assertEquals(SetupReminder(opened = true), resumed.reminder)
+        assertEquals(setOf(SetupStep.INCOME), resumed.finished)
         store.reset()
         assertEquals(SetupReminder(), store.progress.first().reminder)
     }

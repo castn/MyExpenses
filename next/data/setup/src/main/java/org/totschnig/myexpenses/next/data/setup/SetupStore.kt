@@ -77,6 +77,19 @@ class SetupStore(private val dataStore: DataStore<Preferences>) {
         }
     }
 
+    /**
+     * Offers the setup again where the user left it, e.g. from the settings: no longer closed, and
+     * its card is shown right away, counting the times it is put away from the start
+     */
+    suspend fun resume() {
+        dataStore.edit {
+            it.remove(KEY_CLOSED)
+            it.remove(KEY_DISMISSALS)
+            it.remove(KEY_HIDDEN_UNTIL)
+            it.remove(KEY_DISMISSED_DECISIONS)
+        }
+    }
+
     /** Offers the setup again from the start, its card included; the measured pace is kept */
     suspend fun reset() {
         dataStore.edit {
