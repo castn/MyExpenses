@@ -6,15 +6,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.totschnig.myexpenses.designsystem.DetailCard
 import org.totschnig.myexpenses.designsystem.HeroIllustration
-import org.totschnig.myexpenses.designsystem.R as DesignR
 import org.totschnig.myexpenses.designsystem.IntroPage
+import org.totschnig.myexpenses.designsystem.R as DesignR
 import org.totschnig.myexpenses.designsystem.SectionTitle
 import org.totschnig.myexpenses.designsystem.SwitchRow
+import org.totschnig.myexpenses.next.core.common.R as NextR
 import org.totschnig.myexpenses.next.core.ui.NextPreviewTheme
 import org.totschnig.myexpenses.next.settings.AreaSettings
 import org.totschnig.myexpenses.next.settings.InsightSetting
 import org.totschnig.myexpenses.next.settings.SettingControl
-import org.totschnig.myexpenses.next.core.common.R as NextR
 
 /** What the user decides about their data on the first start */
 enum class PrivacySetting { CRASH_REPORTS, TRACKING, AUTO_BACKUP, ENCRYPTION }
@@ -31,7 +31,7 @@ data class PrivacyChoices(
     val offersReporting: Boolean,
     val autoBackupTime: String,
     val checked: Set<PrivacySetting>,
-    val areaSettings: List<FirstStartSetting> = emptyList(),
+    val areaSettings: List<FirstStartSetting> = emptyList()
 )
 
 /** A switch of an area on the page about privacy, see [AreaSettings.Factory.onFirstStart] */
@@ -45,14 +45,18 @@ internal fun PrivacyPage(choices: PrivacyChoices, onChange: (PrivacySetting, Boo
         hero = { HeroIllustration(DesignR.drawable.illustration_privacy) }
     ) {
         @Composable
-        fun Switch(setting: PrivacySetting, label: String, supportingText: String, isFirst: Boolean = false) =
-            SwitchRow(
-                label,
-                checked = setting in choices.checked,
-                onCheckedChange = { onChange(setting, it) },
-                supportingText = supportingText,
-                isFirst = isFirst
-            )
+        fun Switch(
+            setting: PrivacySetting,
+            label: String,
+            supportingText: String,
+            isFirst: Boolean = false
+        ) = SwitchRow(
+            label,
+            checked = setting in choices.checked,
+            onCheckedChange = { onChange(setting, it) },
+            supportingText = supportingText,
+            isFirst = isFirst
+        )
 
         if (choices.offersReporting || choices.areaSettings.isNotEmpty()) {
             SectionTitle(stringResource(NextR.string.next_onboarding_privacy_sent))
@@ -71,7 +75,8 @@ internal fun PrivacyPage(choices: PrivacyChoices, onChange: (PrivacySetting, Boo
                     )
                 }
                 choices.areaSettings.forEachIndexed { index, (setting, area) ->
-                    val control = area.control(setting) as? SettingControl.Switch ?: return@forEachIndexed
+                    val control =
+                        area.control(setting) as? SettingControl.Switch ?: return@forEachIndexed
                     SwitchRow(
                         stringResource(setting.title),
                         checked = control.checked,
@@ -82,19 +87,26 @@ internal fun PrivacyPage(choices: PrivacyChoices, onChange: (PrivacySetting, Boo
                 }
             }
         }
-        SectionTitle(stringResource(NextR.string.next_onboarding_privacy_protection))
-        DetailCard {
-            Switch(
-                PrivacySetting.AUTO_BACKUP,
-                stringResource(NextR.string.next_onboarding_auto_backup),
-                stringResource(NextR.string.next_onboarding_auto_backup_text, choices.autoBackupTime),
-                isFirst = true
-            )
-            Switch(
-                PrivacySetting.ENCRYPTION,
-                stringResource(NextR.string.next_onboarding_encryption),
-                stringResource(NextR.string.next_onboarding_encryption_text)
-            )
+        // Hidden for now until issues with encryption are fixed
+        val showsProtection = false
+        if (showsProtection) {
+            SectionTitle(stringResource(NextR.string.next_onboarding_privacy_protection))
+            DetailCard {
+                Switch(
+                    PrivacySetting.AUTO_BACKUP,
+                    stringResource(NextR.string.next_onboarding_auto_backup),
+                    stringResource(
+                        NextR.string.next_onboarding_auto_backup_text,
+                        choices.autoBackupTime
+                    ),
+                    isFirst = true
+                )
+                Switch(
+                    PrivacySetting.ENCRYPTION,
+                    stringResource(NextR.string.next_onboarding_encryption),
+                    stringResource(NextR.string.next_onboarding_encryption_text)
+                )
+            }
         }
     }
 }
