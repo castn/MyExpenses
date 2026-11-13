@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import org.totschnig.myexpenses.injector
 import org.totschnig.myexpenses.myApplication
+import org.totschnig.myexpenses.next.cash.ProviderCashWriting
 import org.totschnig.myexpenses.next.categories.ProviderCategoryWriting
 import org.totschnig.myexpenses.next.core.model.ledger.AnalysisState
 import org.totschnig.myexpenses.next.core.model.ledger.CurrencyInfo
@@ -24,6 +25,8 @@ import org.totschnig.myexpenses.next.core.model.receipts.ReceiptFacts
 import org.totschnig.myexpenses.next.data.balance.BalanceRepository
 import org.totschnig.myexpenses.next.data.budgets.BudgetRepository
 import org.totschnig.myexpenses.next.data.budgets.BudgetStore
+import org.totschnig.myexpenses.next.data.cash.CashRepository
+import org.totschnig.myexpenses.next.data.cash.CashStore
 import org.totschnig.myexpenses.next.data.categories.CategoryRepository
 import org.totschnig.myexpenses.next.data.categories.CategoryStore
 import org.totschnig.myexpenses.next.data.categories.categoryInput
@@ -151,8 +154,17 @@ class NextData private constructor(context: Context) {
         }
     }
 
-    val setup =
-        SetupRepository(ledgerSource, categories, SetupStore(dataStore), scope, setupContracts)
+    /** The cash account of the user, created from the setup */
+    val cash = CashRepository(CashStore(dataStore), ProviderCashWriting(context))
+
+    val setup = SetupRepository(
+        ledgerSource,
+        categories,
+        SetupStore(dataStore),
+        scope,
+        setupContracts,
+        cash
+    )
 
     /** The logos of payees, loaded only with consent, see [keepLogosOnlyWithConsent] */
     val merchantLogos = MerchantLogoStore(context.noBackupFilesDir.resolve("merchant-logos"))
