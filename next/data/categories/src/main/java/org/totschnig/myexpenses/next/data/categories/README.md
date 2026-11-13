@@ -19,7 +19,7 @@ to learn from.
 | Source | From | Certain |
 | --- | --- | --- |
 | `RULE` | a rule of the user ("Immer so machen") | always |
-| `PAYEE` | earlier transactions of the counterpart, more than half with one category | from 5 with 90 % |
+| `PAYEE` | earlier transactions of the counterpart, more than half with one category; not for cash withdrawals, which do not count as its transactions either | from 5 with 90 % |
 | `WORDS` | words of payee and purpose that led to a category before | never |
 | `MERCHANT` | a well-known chain matched to a category of the user's tree by name | never |
 

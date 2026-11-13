@@ -180,8 +180,13 @@ class CategorySuggester(
             ?.takeIf { it.value * 2 > categoryIds.size }
             ?.toPair()
 
-    /** [Counterpart.key] with the direction, so that credits and debits of a payee are told apart */
+    /**
+     * [Counterpart.key] with the direction, so that credits and debits of a payee are told apart.
+     * Null for cash withdrawals, which are no purchase at their payee, e.g. the bank: they neither
+     * learn nor follow its earlier categories.
+     */
     private fun CategoryInput.counterpartKey(): String? {
+        if (isCashWithdrawal) return null
         val direction = if (amount < 0) "-" else "+"
         return counterpart()?.let { "$direction${it.key}" }
     }

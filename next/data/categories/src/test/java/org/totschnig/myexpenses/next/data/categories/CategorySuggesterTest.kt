@@ -53,6 +53,12 @@ class CategorySuggesterTest {
         assertEquals(leisure.id, suggester(rules = rules).suggest(input(payeeId = 10))!!.categoryId)
         // Without a rule for cash, the rule of the payee does not apply to cash withdrawals
         assertNull(suggester(rules = rules.take(1)).suggest(cash))
+        // Nor do the categories of earlier debits of the payee, which they do not change either
+        val history = List(5) { input(payeeId = 10, categoryId = supermarket.id) } +
+            List(5) { input(payeeId = 10, categoryId = fuel.id).copy(isCashWithdrawal = true) }
+        assertNull(suggester(history).suggest(cash))
+        assertEquals(supermarket.id, suggester(history).suggest(input(payeeId = 10))!!.categoryId)
+        assertTrue(suggester(history).suggest(input(payeeId = 10))!!.isCertain)
     }
 
     @Test
