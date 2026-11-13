@@ -18,6 +18,7 @@ import org.totschnig.myexpenses.next.core.common.shareWhileShown
 import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerSource
+import org.totschnig.myexpenses.next.data.cash.CashRepository
 import org.totschnig.myexpenses.next.data.categories.CategoryAnalysis
 import org.totschnig.myexpenses.next.data.categories.CategoryPlan
 import org.totschnig.myexpenses.next.data.categories.CategoryRepository
@@ -29,13 +30,16 @@ import org.totschnig.myexpenses.next.data.categories.CategoryRule
  * Categories are written through [categories]. The flows run in [scope] while they are collected.
  *
  * @param contracts what the contracts step needs, [SetupContracts.None] without contracts
+ * @param cash creates a cash account for the cash withdrawals; without it they can only get a
+ * category
  */
 class SetupRepository(
-    ledgerSource: LedgerSource,
+    private val ledgerSource: LedgerSource,
     private val categories: CategoryRepository,
     val store: SetupStore,
     scope: CoroutineScope,
-    val contracts: Flow<SetupContracts> = flowOf(SetupContracts.None)
+    val contracts: Flow<SetupContracts> = flowOf(SetupContracts.None),
+    private val cash: CashRepository? = null
 ) {
     private val decisions = categories.store.decisions
 
@@ -134,6 +138,29 @@ class SetupRepository(
         categories.categorize(payee.counterpart, transactionIds, categoryId, always = false)
     )
 
+    /** Whether the cash withdrawals can go to a cash account: the app can create one, and there is none yet */
+    val canOpenCashAccount: Flow<Boolean> =
+        cash?.account?.map { it == null }?.distinctUntilChanged() ?: flowOf(false)
+
+    /** The category suggested for the cash withdrawals, see [suggestionFor] */
+    fun cashSuggestion(cash: SetupCash, analysis: CategoryAnalysis?): Long? =
+        analysis?.let { suggestionFor(cash, it.plan.suggestions, it.categories) }
+
+    /**
+     * The withdrawals of [cash] get [categoryId]. With [balance], what the user holds in cash now in
+     * minor units of the home currency, a cash account is created holding it, which later
+     * withdrawals go to; otherwise they get [categoryId] too, by a rule for cash.
+     */
+    suspend fun keepCash(cash: SetupCash, categoryId: Long, balance: Long?): SetupDecision.Cash {
+        val account = balance?.let {
+            requireNotNull(this.cash) { "No cash account without CashRepository" }
+                .open(it, ledgerSource.today.first())
+        }
+        val categorization =
+            categories.categorizeCash(cash.transactionIds, categoryId, always = account == null)
+        return SetupDecision.Cash(categorization, account)
+    }
+
     /** The user knows no category for [payee] ("Weiß ich nicht") */
     suspend fun markUnclear(payee: SetupPayee): SetupDecision.Unclear {
         categories.markUnclear(payee.counterpart)
@@ -144,8 +171,16 @@ class SetupRepository(
     suspend fun takeBack(decision: SetupDecision) {
         when (decision) {
             is SetupDecision.Categorized -> categories.takeBack(decision.categorization)
+
             is SetupDecision.Assigned -> categories.takeBack(decision.categorization)
+
+            is SetupDecision.Cash -> {
+                categories.takeBack(decision.categorization)
+                decision.account?.let { cash?.takeBack(it) }
+            }
+
             is SetupDecision.Unclear -> categories.unmarkUnclear(decision.counterpart)
+
             is SetupDecision.Later -> Unit
         }
     }

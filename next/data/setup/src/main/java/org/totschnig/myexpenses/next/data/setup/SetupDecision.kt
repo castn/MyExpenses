@@ -1,6 +1,8 @@
 package org.totschnig.myexpenses.next.data.setup
 
 import java.io.Serializable
+import org.totschnig.myexpenses.next.data.cash.CashAccount
+import org.totschnig.myexpenses.next.data.categories.CashCategorization
 import org.totschnig.myexpenses.next.data.categories.Categorization
 import org.totschnig.myexpenses.next.data.categories.Counterpart
 
@@ -36,6 +38,19 @@ sealed interface SetupDecision : Serializable {
     /** The user knows no category for the payee ("Weiß ich nicht") */
     data class Unclear(val counterpart: Counterpart) : SetupDecision {
         override val key get() = counterpart.key
+
+        private companion object {
+            private const val serialVersionUID = 1L
+        }
+    }
+
+    /**
+     * The cash withdrawals got a category, and either a rule for later ones or, with [account], a
+     * cash account they go to from now on
+     */
+    data class Cash(val categorization: CashCategorization, val account: CashAccount? = null) :
+        SetupDecision {
+        override val key get() = SetupCash.KEY
 
         private companion object {
             private const val serialVersionUID = 1L

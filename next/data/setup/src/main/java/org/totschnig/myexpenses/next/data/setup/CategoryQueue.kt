@@ -90,6 +90,11 @@ data class SetupCash(
 
     /** About the money taken in a month */
     val perMonth: Long get() = amount / months
+
+    companion object {
+        /** Stands for the cash withdrawals where the setup keeps keys of payees, see [Counterpart.key] */
+        const val KEY = "cash"
+    }
 }
 
 /**

@@ -13,10 +13,15 @@ import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
 import org.totschnig.myexpenses.next.core.model.ledger.OwnAccounts
+import org.totschnig.myexpenses.next.data.cash.CashAccount
+import org.totschnig.myexpenses.next.data.cash.CashRepository
+import org.totschnig.myexpenses.next.data.cash.CashStore
+import org.totschnig.myexpenses.next.data.cash.CashWriting
 import org.totschnig.myexpenses.next.data.categories.CategoryRepository
 import org.totschnig.myexpenses.next.data.categories.CategoryRule
 import org.totschnig.myexpenses.next.data.categories.CategoryStore
 import org.totschnig.myexpenses.next.data.categories.CategoryWriting
+import org.totschnig.myexpenses.next.data.categories.cashRuleCategory
 
 class SetupRepositoryTest {
 
@@ -104,6 +109,51 @@ class SetupRepositoryTest {
             assertEquals(emptyList<CategoryRule>(), categoryStore.decisions.first().rules)
             repository.takeBack(some)
             assertEquals(listOf(1L to 10L), writing.removed)
+        }
+    }
+
+    private class FakeCashWriting : CashWriting {
+        val deleted = mutableListOf<Long>()
+        override suspend fun createAccount(balance: Long) = 42L
+        override suspend fun deleteIfEmpty(accountId: Long): Boolean {
+            deleted += accountId
+            return true
+        }
+    }
+
+    @Test
+    fun keepsCashAsSpendingOrInACashAccount() = withTestDataStore { dataStore ->
+        runTest {
+            val source = FakeLedgerSource(ledger = ledger, today = today)
+            val categoryStore = CategoryStore(dataStore)
+            val writing = FakeWriting()
+            val categories = CategoryRepository(source, categoryStore, writing, backgroundScope)
+            val cashWriting = FakeCashWriting()
+            val cashAccounts = CashRepository(CashStore(dataStore), cashWriting)
+            val repository = SetupRepository(
+                source,
+                categories,
+                SetupStore(dataStore),
+                backgroundScope,
+                cash = cashAccounts
+            )
+            val cash = SetupCash(300, listOf(5, 6), today, today)
+            assertEquals(true, repository.canOpenCashAccount.first())
+            // As spending: later withdrawals get the category by rule
+            val spending = repository.keepCash(cash, 30, balance = null)
+            assertEquals(null, spending.account)
+            assertEquals(30L, categoryStore.decisions.first().cashRuleCategory)
+            repository.takeBack(spending)
+            assertEquals(null, categoryStore.decisions.first().cashRuleCategory)
+            // In a cash account: no rule, the account is created and deleted again
+            val account = repository.keepCash(cash, 30, balance = 4500)
+            assertEquals(CashAccount(42, today), account.account)
+            assertEquals(null, categoryStore.decisions.first().cashRuleCategory)
+            assertEquals(false, repository.canOpenCashAccount.first())
+            repository.takeBack(account)
+            assertEquals(listOf(42L), cashWriting.deleted)
+            assertEquals(true, repository.canOpenCashAccount.first())
+            assertEquals(listOf(listOf(5L, 6L) to 30L, listOf(5L, 6L) to 30L), writing.set)
         }
     }
 

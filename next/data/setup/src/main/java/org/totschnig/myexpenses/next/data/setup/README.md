@@ -28,6 +28,10 @@ source [`setup.puml`](setup.puml) next to this file.
   the purpose) are taken out of their payee, e.g. the own bank, and decided on once for all of
   them (`SetupCash`). They count towards the target like a payee: `isCashRequired` says whether
   they are needed for it.
+- The cash withdrawals are kept as spending, with a rule for cash for later ones, or in a cash
+  account (`keepCash`, `:next:data:cash`): the user tells what it holds now, and the withdrawals so
+  far keep the category they get, without a correction booking. `suggestionFor(cash, …)` offers the
+  category most of them are suggested, else one named for cash, e.g. "Bargeldabhebung".
 - Debits without counterpart, e.g. Amazon through a payment service, count, but cannot be decided
   on by payee.
 

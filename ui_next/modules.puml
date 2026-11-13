@@ -26,6 +26,7 @@ package "next/data" as pNextData {
     [:attachments] as mNextDataAttachments
     [:balance] as mNextDataBalance
     [:budgets] as mNextDataBudgets
+    [:cash] as mNextDataCash
     [:categories] as mNextDataCategories
     [:contracts] as mNextDataContracts
     [:debts] as mNextDataDebts
@@ -71,6 +72,7 @@ mNextDataAttachments --> mNextCoreCommon
 mNextDataBalance --> mNextDataContracts
 mNextDataBudgets --> mNextDataBalance
 mNextDataBudgets --> mNextDataTags
+mNextDataCash --> mNextCoreCommon
 mNextDataCategories --> mNextDataMerchants
 mNextDataContracts --> mNextDataMerchants
 mNextDataDebts --> mNextDataTransactions
@@ -80,6 +82,7 @@ mNextDataPortfolio --> mNextCoreCommon
 mNextDataReceipts --> mItemGroupModel
 mNextDataReceipts --> mNextDataCategories
 mNextDataReceipts --> mOcrModel
+mNextDataSetup --> mNextDataCash
 mNextDataSetup --> mNextDataCategories
 mNextDataTags --> mNextDataCategories
 mNextDataTags --> mNextDataContracts
