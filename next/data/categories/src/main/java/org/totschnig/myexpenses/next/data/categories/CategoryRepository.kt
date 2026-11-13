@@ -147,6 +147,42 @@ class CategoryRepository(
         }
     }
 
+    /**
+     * The user chose [categoryId] for cash withdrawals: those of [transactionIds] without category
+     * get it, and with [always] cash withdrawals get it from now on, see [CategoryRule.isCash]
+     *
+     * @return what was changed, for [takeBack]
+     */
+    suspend fun categorizeCash(
+        transactionIds: List<Long>,
+        categoryId: Long,
+        always: Boolean
+    ): CashCategorization {
+        writing.setMissingCategory(transactionIds, categoryId)
+        var ruleBefore: Long? = null
+        if (always) {
+            store.update { decisions ->
+                ruleBefore = decisions.cashRuleCategory
+                decisions.withCashRule(categoryId) { UUID.randomUUID().toString() }
+            }
+        }
+        return CashCategorization(transactionIds, categoryId, always, ruleBefore)
+    }
+
+    /** Takes back [categorizeCash]: the transactions lose the category, the rule before comes back */
+    suspend fun takeBack(categorization: CashCategorization) {
+        with(categorization) {
+            transactionIds.forEach { writing.removeCategory(it, categoryId) }
+            if (hasSetRule) {
+                store.update { decisions ->
+                    ruleBefore?.let { before ->
+                        decisions.withCashRule(before) { UUID.randomUUID().toString() }
+                    } ?: decisions.withoutCashRule()
+                }
+            }
+        }
+    }
+
     /** Takes back [markUnclear] */
     suspend fun unmarkUnclear(counterpart: Counterpart) {
         store.update { it.withoutUnclear(counterpart) }

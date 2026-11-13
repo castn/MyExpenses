@@ -141,6 +141,26 @@ class CategoryRepositoryTest {
     }
 
     @Test
+    fun categorizesCashWithdrawalsAndTakesItBack() = withTestDataStore { dataStore ->
+        runTest {
+            val store = CategoryStore(dataStore)
+            val writing = FakeWriting()
+            val repository = CategoryRepository(FakeLedgerSource(), store, writing, backgroundScope)
+            store.update { it.withCashRule(9) { "before" } }
+            val cash = repository.categorizeCash(listOf(1, 2), 10, always = true)
+            assertEquals(CashCategorization(listOf(1, 2), 10, true, ruleBefore = 9), cash)
+            assertEquals(listOf(listOf(1L, 2L) to 10L), writing.set)
+            assertEquals(10L, store.decisions.first().cashRuleCategory)
+            repository.takeBack(cash)
+            assertEquals(listOf(1L to 10L, 2L to 10L), writing.removed)
+            assertEquals(9L, store.decisions.first().cashRuleCategory)
+            // Without "Immer so machen" the rule stays
+            repository.takeBack(repository.categorizeCash(listOf(3), 11, always = false))
+            assertEquals(9L, store.decisions.first().cashRuleCategory)
+        }
+    }
+
+    @Test
     fun suggestsForATransactionThatIsTyped() = withTestDataStore { dataStore ->
         runTest {
             val source = FakeLedgerSource(

@@ -3,6 +3,7 @@ package org.totschnig.myexpenses.next.data.categories
 import org.totschnig.myexpenses.next.core.model.ledger.CategoryInfo
 import org.totschnig.myexpenses.next.core.model.ledger.Ledger
 import org.totschnig.myexpenses.next.core.model.ledger.LedgerTransaction
+import org.totschnig.myexpenses.next.core.model.ledger.isCashWithdrawal
 import org.totschnig.myexpenses.next.core.model.words.Words
 import org.totschnig.myexpenses.next.data.merchants.EATING_OUT
 import org.totschnig.myexpenses.next.data.merchants.SUPERMARKETS
@@ -17,7 +18,9 @@ data class CategoryInput(
     val payeeId: Long? = null,
     val payeeName: String? = null,
     val comment: String? = null,
-    val categoryId: Long? = null
+    val categoryId: Long? = null,
+    /** See [org.totschnig.myexpenses.next.core.model.ledger.isCashWithdrawal] */
+    val isCashWithdrawal: Boolean = false
 )
 
 /**
@@ -30,18 +33,21 @@ fun categoryInputs(ledger: Ledger) = ledger.transactions
 
 /** The transaction as input for [CategorySuggester], e.g. to look at its counterpart */
 fun LedgerTransaction.categoryInput() =
-    CategoryInput(id, amount, payeeId, payeeName, comment, categoryId)
+    CategoryInput(id, amount, payeeId, payeeName, comment, categoryId, isCashWithdrawal)
 
 /**
  * The user decided: transactions with these counterparts always get this category ("Immer so machen")
  *
  * @param merchants normalized names of merchants paid through a payment service, see [Counterpart.merchant]
+ * @param isCash the rule is for all cash withdrawals instead, whatever their counterpart, see
+ * [CategoryInput.isCashWithdrawal]; there is at most one
  */
 data class CategoryRule(
     val id: String,
     val payeeIds: Set<Long>,
     val categoryId: Long,
-    val merchants: Set<String> = emptySet()
+    val merchants: Set<String> = emptySet(),
+    val isCash: Boolean = false
 ) {
     fun matches(counterpart: Counterpart) = counterpart.payeeId?.let { it in payeeIds } == true ||
         counterpart.merchant?.let { it in merchants } == true
@@ -111,10 +117,9 @@ class CategorySuggester(
                 ?.takeIf { if (transaction.amount < 0) it.isExpense else it.isIncome }
                 ?.let { CategorySuggestion(transaction.id, it.id, source, isCertain) }
 
-        val counterpart = transaction.counterpart()
-        counterpart?.let { rules.firstOrNull { rule -> rule.matches(it) } }?.let { rule ->
-            suggestion(rule.categoryId, SuggestionSource.RULE, isCertain = true)?.let { return it }
-        }
+        ruleFor(transaction)
+            ?.let { suggestion(it.categoryId, SuggestionSource.RULE, isCertain = true) }
+            ?.let { return it }
         transaction.counterpartKey()?.let(payeeCategories::get)?.let { earlier ->
             majority(earlier)?.let { (categoryId, count) ->
                 suggestion(
@@ -134,6 +139,14 @@ class CategorySuggester(
 
     fun suggestAll(transactions: List<CategoryInput>): List<CategorySuggestion> =
         transactions.mapNotNull(::suggest)
+
+    /** Cash withdrawals follow the rule for cash, not the one of their counterpart, e.g. the bank */
+    private fun ruleFor(transaction: CategoryInput): CategoryRule? =
+        if (transaction.isCashWithdrawal) {
+            rules.firstOrNull { it.isCash }
+        } else {
+            transaction.counterpart()?.let { rules.firstOrNull { rule -> rule.matches(it) } }
+        }
 
     /** Words that led to one category in most cases add up, the category with most of them wins */
     private fun byWords(transaction: CategoryInput): Long? = transaction.wordsOf()

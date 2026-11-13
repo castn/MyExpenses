@@ -75,7 +75,7 @@ fun CategoryDecisions.withRule(
     val payeeIds = setOfNotNull(counterpart.payeeId)
     val merchants = setOfNotNull(counterpart.merchant)
     val others = rulesWithout(counterpart)
-    val existing = others.find { it.categoryId == categoryId }
+    val existing = others.find { !it.isCash && it.categoryId == categoryId }
     return copy(
         unclear = unclear - counterpart.key,
         rules = if (existing != null) {
@@ -111,7 +111,7 @@ private fun CategoryDecisions.rulesWithout(counterpart: Counterpart): List<Categ
     val merchants = setOfNotNull(counterpart.merchant)
     return rules
         .map { it.copy(payeeIds = it.payeeIds - payeeIds, merchants = it.merchants - merchants) }
-        .filter { it.payeeIds.isNotEmpty() || it.merchants.isNotEmpty() }
+        .filter { it.isCash || it.payeeIds.isNotEmpty() || it.merchants.isNotEmpty() }
 }
 
 /**

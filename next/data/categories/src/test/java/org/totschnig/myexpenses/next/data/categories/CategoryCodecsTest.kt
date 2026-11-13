@@ -9,7 +9,8 @@ class CategoryCodecsTest {
     fun writesAndReadsRules() {
         val rules = listOf(
             CategoryRule("r1", setOf(1, 2), 10, setOf("rewe")),
-            CategoryRule("r2", setOf(3), 11)
+            CategoryRule("r2", setOf(3), 11),
+            CategoryRule("r3", emptySet(), 12, isCash = true)
         )
         assertEquals(rules, parseRules(serializeRules(rules)))
         assertEquals(emptyList<CategoryRule>(), parseRules("broken"))

@@ -32,7 +32,9 @@ the others are shown in the details.
 
 `CategoryDecisions`, kept by `CategoryStore` in the data store, which is part of the backup:
 
-- `rules`: counterparts that always get a category; a counterpart is in one rule at most
+- `rules`: counterparts that always get a category; a counterpart is in one rule at most. One rule
+  may be for cash withdrawals instead (`CategoryRule.isCash`, `withCashRule`): they follow it rather
+  than the rule of their counterpart, e.g. the bank, which they never follow.
 - `rejected`: a category the user took back from a transaction, which is not suggested again
 - `automatic`: categories applied without asking, so that the details can say so
 - `unclear`: counterparts the user knows no category for ("Weiß ich nicht"). Their transactions stay
@@ -43,4 +45,5 @@ the others are shown in the details.
 `CategoryRepository.categorize` gives the transactions of a counterpart a category and, if asked,
 a rule, and returns what it changed (`Categorization`) for `takeBack`, which removes the category
 again where it is still set and restores the rule the counterpart had; `markUnclear` and
-`unmarkUnclear` change the unclear counterparts.
+`unmarkUnclear` change the unclear counterparts. `categorizeCash` does the same for cash withdrawals
+(`CashCategorization`).

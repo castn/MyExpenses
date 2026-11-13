@@ -20,7 +20,8 @@ private fun ruleOf(rule: JSONObject) = CategoryRule(
     id = rule.getString("id"),
     payeeIds = rule.getJSONArray("payees").longs(),
     categoryId = rule.getLong("category"),
-    merchants = rule.optJSONArray("merchants")?.strings() ?: emptySet()
+    merchants = rule.optJSONArray("merchants")?.strings() ?: emptySet(),
+    isCash = rule.optBoolean("cash")
 )
 
 internal fun serializeRules(rules: List<CategoryRule>, previous: String? = null) =
@@ -30,6 +31,7 @@ internal fun serializeRules(rules: List<CategoryRule>, previous: String? = null)
             put("payees", JSONArray(rule.payeeIds.toList()))
             put("category", rule.categoryId)
             if (rule.merchants.isNotEmpty()) put("merchants", JSONArray(rule.merchants.toList()))
+            if (rule.isCash) put("cash", true)
         }
     }
 

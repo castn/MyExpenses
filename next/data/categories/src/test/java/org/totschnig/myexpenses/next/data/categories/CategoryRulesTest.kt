@@ -38,4 +38,24 @@ class CategoryRulesTest {
         val withoutRewe = decisions.withoutRule(rewe).rules
         assertEquals(listOf(CategoryRule("r", setOf(2), 10, setOf("shop"))), withoutRewe)
     }
+
+    @Test
+    fun keepsOneRuleForCashApartFromThePayees() {
+        val decisions = CategoryDecisions()
+            .withCashRule(10) { "cash" }
+            .withRule(rewe, 10) { "rewe" }
+            .withCashRule(11) { "cash2" }
+        // The payee does not join the rule for cash, which is replaced
+        assertEquals(
+            listOf(
+                CategoryRule("rewe", setOf(1), 10),
+                CategoryRule("cash2", emptySet(), 11, isCash = true)
+            ),
+            decisions.rules
+        )
+        assertEquals(11L, decisions.cashRuleCategory)
+        // Taking a payee out keeps the rule for cash without payees
+        assertEquals(11L, decisions.withoutRule(rewe).cashRuleCategory)
+        assertEquals(null, decisions.withoutCashRule().cashRuleCategory)
+    }
 }

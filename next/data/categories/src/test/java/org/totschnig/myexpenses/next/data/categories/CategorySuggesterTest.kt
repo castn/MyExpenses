@@ -43,6 +43,19 @@ class CategorySuggesterTest {
     }
 
     @Test
+    fun cashWithdrawalsFollowTheCashRuleNotTheirPayee() {
+        val rules = listOf(
+            CategoryRule("bank", setOf(10), leisure.id),
+            CategoryRule("cash", emptySet(), food.id, isCash = true)
+        )
+        val cash = input(payeeId = 10).copy(isCashWithdrawal = true)
+        assertEquals(food.id, suggester(rules = rules).suggest(cash)!!.categoryId)
+        assertEquals(leisure.id, suggester(rules = rules).suggest(input(payeeId = 10))!!.categoryId)
+        // Without a rule for cash, the rule of the payee does not apply to cash withdrawals
+        assertNull(suggester(rules = rules.take(1)).suggest(cash))
+    }
+
+    @Test
     fun transactionWithCategoryGetsNoSuggestion() {
         assertNull(suggester().suggest(input(payeeName = "REWE", categoryId = leisure.id)))
     }
