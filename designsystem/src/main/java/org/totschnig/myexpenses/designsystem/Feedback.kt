@@ -491,7 +491,8 @@ fun Highlighted(
 /**
  * Lets its content light up for a moment each time [trigger] grows, after scrolling it into view,
  * e.g. a field that is still empty when the user wants to go on; nothing while [trigger] is 0.
- * Changes of the content, e.g. an error that appears, are read out by screen readers.
+ * Changes of the content, e.g. an error that appears, are read out by screen readers. Its parts
+ * stand a small space apart.
  */
 @Composable
 fun Highlighted(
@@ -508,12 +509,16 @@ fun Highlighted(
         delay(FLASH_HOLD_MILLIS)
         light.animateTo(0f, tween(durationMillis = FLASH_FADE_MILLIS))
     }
+    // Drawn behind, not clipped, so that e.g. the outline and label of a field stay whole
     Column(
         modifier
             .bringIntoViewRequester(requester)
-            .clip(Shapes.tile)
-            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.16f * light.value))
+            .background(
+                MaterialTheme.colorScheme.primary.copy(alpha = 0.16f * light.value),
+                Shapes.tile
+            )
             .semantics { liveRegion = LiveRegionMode.Polite },
+        verticalArrangement = Arrangement.spacedBy(Spacing.small),
         content = content
     )
 }
