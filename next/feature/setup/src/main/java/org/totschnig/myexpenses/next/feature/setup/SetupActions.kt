@@ -14,8 +14,12 @@ interface SetupActions {
     /** The debits of the payee get the suggested category */
     fun acceptSuggestion(card: PayeeCard)
 
-    /** The category picker is opened for [card], see [picked] */
-    fun pickCategory(card: PayeeCard)
+    /**
+     * The category picker is opened for [card], see [picked]. With [transactionIds] only these
+     * debits of the payee get the category, without a rule: they are for different things
+     * ("Unterschiedlich").
+     */
+    fun pickCategory(card: PayeeCard, transactionIds: List<Long>? = null)
 
     /** The category picker returned [categoryId] for the card of [pickCategory], null for none */
     fun picked(categoryId: Long?)

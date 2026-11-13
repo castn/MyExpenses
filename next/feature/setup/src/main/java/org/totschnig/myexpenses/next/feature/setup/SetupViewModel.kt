@@ -107,17 +107,29 @@ class SetupViewModel(
         card.suggestion?.let { categorize(card.payee, it) }
     }
 
-    override fun pickCategory(card: PayeeCard) {
+    override fun pickCategory(card: PayeeCard, transactionIds: List<Long>?) {
         savedState[KEY_PENDING] = card.key
+        if (transactionIds != null) {
+            savedState[KEY_PENDING_IDS] = transactionIds.toLongArray()
+        } else {
+            savedState.remove<LongArray>(KEY_PENDING_IDS)
+        }
     }
 
     override fun picked(categoryId: Long?) {
         val key = savedState.get<String>(KEY_PENDING) ?: return
+        val ids = savedState.get<LongArray>(KEY_PENDING_IDS)
         savedState.remove<String>(KEY_PENDING)
+        savedState.remove<LongArray>(KEY_PENDING_IDS)
         if (categoryId == null) return
         viewModelScope.launch {
             val queue = repository.categoryQueue.filterNotNull().first()
-            queue.all.find { it.counterpart.key == key }?.let { categorize(it, categoryId) }
+            val payee = queue.all.find { it.counterpart.key == key } ?: return@launch
+            if (ids == null) {
+                categorize(payee, categoryId)
+            } else {
+                assign(payee, ids.toList(), categoryId)
+            }
         }
     }
 
@@ -178,6 +190,18 @@ class SetupViewModel(
     }
 
     /**
+     * The open debits of [ids] get [categoryId], without a rule; the card of the payee stays for
+     * the others. No time is counted, it is not a decision on the whole payee.
+     */
+    private fun assign(payee: SetupPayee, ids: List<Long>, categoryId: Long) {
+        val open = ids.filter { it in payee.transactionIds }
+        if (open.isEmpty()) return
+        viewModelScope.launch {
+            writes.withLock { remember(repository.assign(payee, open, categoryId)) }
+        }
+    }
+
+    /**
      * Hides the card of [key] at once, writes the decision and counts its time, unless the user
      * went back to the payee and decides a second time
      */
@@ -206,6 +230,7 @@ class SetupViewModel(
         const val KEY_HISTORY = "setup_history"
         const val KEY_ALWAYS = "setup_always"
         const val KEY_PENDING = "setup_pending"
+        const val KEY_PENDING_IDS = "setup_pending_ids"
 
         /** Decisions kept to go back to, so that the saved state stays small */
         const val MAX_HISTORY = 30

@@ -157,6 +157,28 @@ class SetupViewModelTest {
     }
 
     @Test
+    fun assignsSomeDebitsAndKeepsTheCard() = withTestDataStore { dataStore ->
+        runTest {
+            val setup = backgroundScope.setup(dataStore)
+            val viewModel = setup.viewModel
+            viewModel.categories.launchIn(backgroundScope)
+            val rent = viewModel.categories.first { it?.card != null }!!.card!!
+            viewModel.pickCategory(rent, transactionIds = listOf(1L, 99L))
+            viewModel.picked(10)
+            // Only debits still open of the payee, and its card stays for the others
+            viewModel.categories.first { it?.canGoBack == true }
+            assertEquals(listOf(listOf(1L) to 10L), setup.writing.set)
+            assertEquals("p:1", viewModel.categories.value!!.card!!.key)
+            assertEquals(0, setup.store.progress.first().pace.decisions)
+            viewModel.back()
+            // Going back offers no category for the whole payee
+            val again = viewModel.categories.first { it?.canGoBack == false }!!
+            assertEquals(null, again.card!!.suggestion)
+            assertEquals(listOf(1L to 10L), setup.writing.removed)
+        }
+    }
+
+    @Test
     fun keepsTheVisitWhenTheProcessEnds() = withTestDataStore { dataStore ->
         runTest {
             val savedState = SavedStateHandle()
