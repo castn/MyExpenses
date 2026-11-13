@@ -1,0 +1,9 @@
+plugins {
+    id 'next.data'
+}
+
+android {
+    namespace 'org.totschnig.myexpenses.next.data.cash'
+}
+
+// Cash: the cash account the user keeps, created from the setup.
