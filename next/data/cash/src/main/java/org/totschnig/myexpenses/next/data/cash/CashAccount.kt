@@ -20,4 +20,10 @@ interface CashWriting {
 
     /** Deletes the account [accountId] unless something was booked on it; false if it is kept */
     suspend fun deleteIfEmpty(accountId: Long): Boolean
+
+    /**
+     * The debits [transactionIds] become transfers to the account [accountId]; those in another
+     * currency than it stay as they are
+     */
+    suspend fun moveToAccount(transactionIds: List<Long>, accountId: Long)
 }

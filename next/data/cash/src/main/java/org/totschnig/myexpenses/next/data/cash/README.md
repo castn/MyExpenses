@@ -13,3 +13,15 @@ setup the user decides how to keep it (see `:next:data:setup`):
 which is part of the backup) and creates or deletes it through `CashWriting`, which the shell
 implements with the provider of the app. Taking it back deletes the account only while nothing was
 booked on it.
+
+## Withdrawals to the cash account
+
+While `movedToAccount` is collected, with the other automatic decisions in `NextData` (while the
+app is shown and right after an import), cash withdrawals from the day the cash account was
+created on that have no category become transfers to it (`withdrawalsToMove`,
+`CashWriting.moveToAccount`, which uses the provider's transform to transfer). A withdrawal in
+another currency than the cash account stays as it is; each is tried once per process.
+
+Suggestions of categories leave cash withdrawals to the rule for cash: they neither learn nor
+follow the earlier categories of their payee, so that a certain category of the bank is not
+applied to them before they move (`:next:data:categories`).
