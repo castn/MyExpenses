@@ -19,12 +19,14 @@ enum class SetupStep {
  * @param skipped steps the user skipped, offered again from the overview
  * @param closed the user finished or skipped the whole setup, which is not offered anymore
  * @param pace how fast the user decides, see [Pace]
+ * @param reminder what the user did with the card on the overview, see [offer]
  */
 data class SetupProgress(
     val finished: Set<SetupStep> = emptySet(),
     val skipped: Set<SetupStep> = emptySet(),
     val closed: Boolean = false,
-    val pace: Pace = Pace()
+    val pace: Pace = Pace(),
+    val reminder: SetupReminder = SetupReminder()
 ) {
     /** The steps of [available] not finished yet, skipped ones included, in their order */
     fun open(available: Collection<SetupStep>): List<SetupStep> =
