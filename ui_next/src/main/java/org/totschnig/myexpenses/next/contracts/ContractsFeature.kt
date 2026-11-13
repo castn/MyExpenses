@@ -21,6 +21,7 @@ import org.totschnig.myexpenses.next.feature.contracts.ContractsFlow
 import org.totschnig.myexpenses.next.feature.contracts.ContractsViewModel
 import org.totschnig.myexpenses.next.feature.contracts.PaymentContractChip
 import org.totschnig.myexpenses.next.feature.contracts.PaymentContractSection
+import org.totschnig.myexpenses.next.feature.contracts.SalaryChoiceSection
 import org.totschnig.myexpenses.next.feature.contracts.rememberIsContractPayment
 import org.totschnig.myexpenses.next.viewModelsOf
 
@@ -47,6 +48,13 @@ class ContractsFeature(activity: ComponentActivity, data: NextData) : NextFeatur
     @Composable
     fun Suggestions() {
         ContractSuggestionsSection(viewModel)
+    }
+
+    /** The suggested regular incomes and the choice of the salary, e.g. for the income step of the setup */
+    @Composable
+    fun Incomes() {
+        ContractSuggestionsSection(viewModel, isIncome = true)
+        SalaryChoiceSection(viewModel)
     }
 
     override val tab =

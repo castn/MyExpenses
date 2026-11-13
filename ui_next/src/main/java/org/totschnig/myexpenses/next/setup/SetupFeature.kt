@@ -25,11 +25,14 @@ import org.totschnig.myexpenses.next.viewModelsOf
  * overview over while the setup is offered, and its pages
  *
  * @param contracts the suggestions of contracts for the contracts step, from the contracts area
+ * @param incomes the regular incomes and the choice of the salary for the income step, from the
+ * contracts area
  */
 class SetupFeature(
     activity: ComponentActivity,
     private val data: NextData,
-    private val contracts: (@Composable ColumnScope.() -> Unit)? = null
+    private val contracts: (@Composable ColumnScope.() -> Unit)? = null,
+    private val incomes: (@Composable ColumnScope.() -> Unit)? = null
 ) : NextFeature {
     val viewModel by activity.viewModelsOf { SetupViewModel(data.setup, it) }
 
@@ -51,6 +54,7 @@ class SetupFeature(
                     currency = currency,
                     onClose = { shell.navigation.close(NextKey.Setup) },
                     contracts = contracts,
+                    incomes = incomes,
                     transactions = SetupTransactions(
                         shell.fixedTransactions,
                         shell.transactionDetails

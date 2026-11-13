@@ -49,7 +49,12 @@ class NextFeatures(activity: BaseActivity, data: NextData = NextData.of(activity
     val savingTips = SavingTipsFeature(activity, data, contracts, tags) { guidance.PendingTips(it) }
     val analysis = AnalysisFeature(activity, data, guidance)
     val receipts = ReceiptsFeature(activity, data) { contracts.isContractPayment(it) }
-    val setup = SetupFeature(activity, data) { contracts.Suggestions() }
+    val setup = SetupFeature(
+        activity,
+        data,
+        contracts = { contracts.Suggestions() },
+        incomes = { contracts.Incomes() }
+    )
 
     val all: List<NextFeature> = listOf(
         setup,
