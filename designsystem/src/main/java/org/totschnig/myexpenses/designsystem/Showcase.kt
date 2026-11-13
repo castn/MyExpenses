@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Checklist
 import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.Info
@@ -164,6 +165,15 @@ private fun Showcase() {
                 onClick = {},
                 onDismiss = {},
                 dismissLabel = "Close"
+            )
+            InviteCard(
+                icon = Icons.Outlined.Checklist,
+                title = "Invite with progress",
+                text = "A guide that was started, 2 steps left",
+                onClick = {},
+                onDismiss = {},
+                dismissLabel = "Close",
+                progress = 0.4f
             )
             InviteCard(
                 icon = Icons.Outlined.Info,

@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -372,6 +373,8 @@ fun ActionCard(
  *
  * @param onClick starts it, null if there is nothing to open and the card only tells
  * @param onDismiss closes the card, the caller remembers that
+ * @param progress how far it is, 0 to 1, as a ring around the icon, e.g. of a guide that was started;
+ * null for none
  */
 @Composable
 fun InviteCard(
@@ -381,7 +384,8 @@ fun InviteCard(
     onClick: (() -> Unit)?,
     onDismiss: () -> Unit,
     dismissLabel: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    progress: Float? = null
 ) {
     val content: @Composable () -> Unit = {
         Row(
@@ -393,12 +397,25 @@ fun InviteCard(
             ),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconTile(color = MaterialTheme.colorScheme.primaryContainer) {
-                Icon(
-                    icon,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onPrimaryContainer
-                )
+            Box(contentAlignment = Alignment.Center) {
+                IconTile(
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    modifier = if (progress != null) Modifier.padding(4.dp) else Modifier
+                ) {
+                    Icon(
+                        icon,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+                if (progress != null) {
+                    CircularProgressIndicator(
+                        progress = { progress },
+                        modifier = Modifier.size(48.dp),
+                        strokeWidth = 3.dp,
+                        trackColor = MaterialTheme.colorScheme.surfaceContainerHigh
+                    )
+                }
             }
             Column(
                 Modifier
