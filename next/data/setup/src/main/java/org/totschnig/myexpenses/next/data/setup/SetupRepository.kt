@@ -43,19 +43,24 @@ class SetupRepository(
 ) {
     private val decisions = categories.store.decisions
 
-    private data class QueueInput(val ledger: Ledger, val unclear: Set<String>)
+    private data class QueueInput(
+        val ledger: Ledger,
+        val unclear: Set<String>,
+        val cashSince: LocalDate?
+    )
 
-    private val queueMemo = Memo<QueueInput, CategoryQueue>("setup: queue") { (ledger, unclear) ->
-        categoryQueue(ledger, unclear)
+    private val queueMemo = Memo<QueueInput, CategoryQueue>("setup: queue") { input ->
+        categoryQueue(input.ledger, input.unclear, cashSince = input.cashSince)
     }
 
     /** Null while loading */
     val categoryQueue: SharedFlow<CategoryQueue?> =
         combine(
             ledgerSource.ledger,
-            decisions.map { it.unclear }.distinctUntilChanged()
-        ) { ledger, unclear ->
-            ledger?.let { QueueInput(it, unclear) }
+            decisions.map { it.unclear }.distinctUntilChanged(),
+            cash?.account?.map { it?.since } ?: flowOf(null)
+        ) { ledger, unclear, cashSince ->
+            ledger?.let { QueueInput(it, unclear, cashSince) }
         }
             .mapMemo(queueMemo)
             .logTimings("setup: queue")
@@ -145,15 +150,17 @@ class SetupRepository(
     /**
      * The withdrawals of [cash] get [categoryId]. With [balance], what the user holds in cash now in
      * minor units of the home currency, a cash account is created holding it, which later
-     * withdrawals go to; otherwise they get [categoryId] too, by a rule for cash.
+     * withdrawals go to; otherwise they get [categoryId] too, by a rule for cash, unless there is a
+     * cash account already, which they go to.
      */
     suspend fun keepCash(cash: SetupCash, categoryId: Long, balance: Long?): SetupDecision.Cash {
+        val hasAccount = this.cash?.account?.first() != null
         val account = balance?.let {
             requireNotNull(this.cash) { "No cash account without CashRepository" }
                 .open(it, ledgerSource.today.first())
         }
-        val categorization =
-            categories.categorizeCash(cash.transactionIds, categoryId, always = account == null)
+        val always = account == null && !hasAccount
+        val categorization = categories.categorizeCash(cash.transactionIds, categoryId, always)
         return SetupDecision.Cash(categorization, account)
     }
 

@@ -125,13 +125,20 @@ const val TARGET_SHARE = 0.8
  * Debits without counterpart, e.g. through a payment service without merchant, count, but cannot be
  * decided on by payee. Cash withdrawals are not decided on with their payee, e.g. the own bank,
  * but once for all of them, see [SetupCash].
+ *
+ * @param cashSince the day the cash account was created: cash withdrawals from then on are left
+ * out, they become transfers to it
  */
 fun categoryQueue(
     ledger: Ledger,
     unclear: Set<String>,
-    target: Double = TARGET_SHARE
+    target: Double = TARGET_SHARE,
+    cashSince: LocalDate? = null
 ): CategoryQueue {
-    val debits = ledger.transactions.filter { it.isCategorizableDebit() }
+    val debits = ledger.transactions.filter {
+        it.isCategorizableDebit() &&
+            !(cashSince != null && it.isCashWithdrawal && !it.date.isBefore(cashSince))
+    }
     val (cashDebits, open) = debits.filter { it.categoryId == null }
         .partition { it.isCashWithdrawal }
     val (unclearDebits, toDecide) = open.map { it to it.categoryInput().counterpart() }

@@ -115,6 +115,7 @@ class SetupRepositoryTest {
     private class FakeCashWriting : CashWriting {
         val deleted = mutableListOf<Long>()
         override suspend fun createAccount(balance: Long) = 42L
+        override suspend fun moveToAccount(transactionIds: List<Long>, accountId: Long) = Unit
         override suspend fun deleteIfEmpty(accountId: Long): Boolean {
             deleted += accountId
             return true
@@ -129,7 +130,8 @@ class SetupRepositoryTest {
             val writing = FakeWriting()
             val categories = CategoryRepository(source, categoryStore, writing, backgroundScope)
             val cashWriting = FakeCashWriting()
-            val cashAccounts = CashRepository(CashStore(dataStore), cashWriting)
+            val cashAccounts =
+                CashRepository(CashStore(dataStore), cashWriting, source, backgroundScope)
             val repository = SetupRepository(
                 source,
                 categories,
@@ -150,10 +152,16 @@ class SetupRepositoryTest {
             assertEquals(CashAccount(42, today), account.account)
             assertEquals(null, categoryStore.decisions.first().cashRuleCategory)
             assertEquals(false, repository.canOpenCashAccount.first())
+            // With the account, withdrawals from before get no rule, later ones go to the account
+            repository.takeBack(repository.keepCash(cash, 31, balance = null))
+            assertEquals(null, categoryStore.decisions.first().cashRuleCategory)
             repository.takeBack(account)
             assertEquals(listOf(42L), cashWriting.deleted)
             assertEquals(true, repository.canOpenCashAccount.first())
-            assertEquals(listOf(listOf(5L, 6L) to 30L, listOf(5L, 6L) to 30L), writing.set)
+            assertEquals(
+                listOf(listOf(5L, 6L) to 30L, listOf(5L, 6L) to 30L, listOf(5L, 6L) to 31L),
+                writing.set
+            )
         }
     }
 

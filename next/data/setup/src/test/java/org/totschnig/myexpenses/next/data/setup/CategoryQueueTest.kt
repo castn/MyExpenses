@@ -90,6 +90,15 @@ class CategoryQueueTest {
     }
 
     @Test
+    fun leavesOutWithdrawalsThatGoToTheCashAccount() {
+        val before = debit(1, "Bank", 100).copy(methodLabel = "GAA", date = today.minusDays(1))
+        val since = debit(1, "Bank", 200).copy(methodLabel = "GAA")
+        val queue = categoryQueue(ledger(before, since), unclear = emptySet(), cashSince = today)
+        assertEquals(100L, queue.cash!!.amount)
+        assertEquals(100L, queue.coverage.spent)
+    }
+
+    @Test
     fun cashIsNotRequiredWhenThePayeesReachTheTarget() {
         val ledger = ledger(
             debit(1, "Vermieter", 900),

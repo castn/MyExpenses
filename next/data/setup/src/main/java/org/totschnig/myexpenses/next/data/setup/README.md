@@ -32,6 +32,8 @@ source [`setup.puml`](setup.puml) next to this file.
   account (`keepCash`, `:next:data:cash`): the user tells what it holds now, and the withdrawals so
   far keep the category they get, without a correction booking. `suggestionFor(cash, …)` offers the
   category most of them are suggested, else one named for cash, e.g. "Bargeldabhebung".
+  With a cash account, withdrawals from the day it was created are left out (`cashSince`): they
+  become transfers to it, and deciding on older ones sets no rule for cash.
 - Debits without counterpart, e.g. Amazon through a payment service, count, but cannot be decided
   on by payee.
 
