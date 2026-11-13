@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.dp
  * A card that asks for one decision, e.g. the category of a payee in the setup: [leading] tile,
  * [title] and [value] in the head, then [content] that helps to decide, e.g. the last
  * transactions and a suggestion, and the [actions] at the bottom, the main one last, wrapped into
- * lines where there is little room
+ * lines where there is little room; without them, e.g. when a bar below the page decides
  *
  * @param supportingText below the title, e.g. "12 transactions since March"
  */
@@ -51,7 +51,7 @@ fun DecisionCard(
     modifier: Modifier = Modifier,
     supportingText: String? = null,
     content: @Composable ColumnScope.() -> Unit = {},
-    actions: @Composable FlowRowScope.() -> Unit
+    actions: (@Composable FlowRowScope.() -> Unit)? = null
 ) {
     Surface(
         shape = Shapes.card,
@@ -92,14 +92,16 @@ fun DecisionCard(
                 verticalArrangement = Arrangement.spacedBy(Spacing.small),
                 content = content
             )
-            FlowRow(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp),
-                horizontalArrangement = Arrangement.spacedBy(Spacing.small, Alignment.End),
-                itemVerticalAlignment = Alignment.CenterVertically,
-                content = actions
-            )
+            if (actions != null) {
+                FlowRow(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.small, Alignment.End),
+                    itemVerticalAlignment = Alignment.CenterVertically,
+                    content = actions
+                )
+            }
         }
     }
 }
