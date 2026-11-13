@@ -66,4 +66,25 @@ class SalaryTest {
             incomes.salaries(SalaryChoice.Fixed(setOf("oldJob", "dismissed")))
         )
     }
+
+    @Test
+    fun togglesSalariesFromTheAutomaticChoice() {
+        // The automatic salary is checked, a second job is added
+        assertEquals(
+            SalaryChoice.Fixed(setOf("rent", "salary")),
+            incomes.toggleSalary(SalaryChoice.Automatic, "salary")
+        )
+        // Unchecking the last one leaves the calendar month
+        assertEquals(SalaryChoice.None, incomes.toggleSalary(SalaryChoice.Automatic, "rent"))
+    }
+
+    @Test
+    fun fixesTheSalariesAsTheyAre() {
+        assertEquals(SalaryChoice.Fixed(setOf("rent")), incomes.fixSalary(SalaryChoice.Automatic))
+        assertEquals(SalaryChoice.None, incomes.fixSalary(SalaryChoice.None))
+        assertEquals(
+            SalaryChoice.None,
+            listOf(childBenefit.copy(isActive = false)).fixSalary(SalaryChoice.Automatic)
+        )
+    }
 }

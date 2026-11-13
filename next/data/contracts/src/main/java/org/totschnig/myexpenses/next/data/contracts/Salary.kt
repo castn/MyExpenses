@@ -37,3 +37,23 @@ fun List<Contract>.salaries(choice: SalaryChoice): List<Contract> = when (choice
         .sortedByDescending { it.lastAmount }
         .ifEmpty { listOfNotNull(automaticSalary()) }
 }
+
+/**
+ * The choice after the income [signature] was checked or unchecked among the salaries of [choice]:
+ * the incomes checked, [SalaryChoice.None] for the calendar month if none is left
+ */
+fun List<Contract>.toggleSalary(choice: SalaryChoice, signature: String): SalaryChoice {
+    val current = salaries(choice).mapTo(HashSet()) { it.signature }
+    val next = if (signature in current) current - signature else current + signature
+    return if (next.isEmpty()) SalaryChoice.None else SalaryChoice.Fixed(next)
+}
+
+/**
+ * The salaries of [choice] kept as they are, also when the automatic choice would change, e.g. when
+ * another income becomes the highest; [SalaryChoice.None] if there are none
+ */
+fun List<Contract>.fixSalary(choice: SalaryChoice): SalaryChoice =
+    salaries(choice).mapTo(HashSet()) { it.signature }
+        .takeIf { it.isNotEmpty() }
+        ?.let { SalaryChoice.Fixed(it) }
+        ?: SalaryChoice.None
